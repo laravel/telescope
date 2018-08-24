@@ -1,0 +1,11 @@
+@import "variables";
+@import "node_modules/bootstrap/scss/bootstrap";
+
+
+body {
+  padding-bottom: 20px;
+}
+
+[v-cloak] {
+  display: none;
+}
