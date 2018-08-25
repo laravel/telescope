@@ -133,7 +133,10 @@ class EventsWatcher extends AbstractWatcher
      */
     private function eventIsFiredByTheFramework($eventName)
     {
-        return ! Str::is('App\*', $eventName);
+        return Str::is(
+            ['Illuminate\*', 'eloquent*', 'bootstrapped*', 'bootstrapping*', 'creating*', 'composing*'],
+            $eventName
+        );
     }
 
     /**
