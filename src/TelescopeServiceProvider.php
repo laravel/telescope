@@ -39,16 +39,20 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/telescope.php', 'telescope'
+        );
+
         $watchers = [
-            Watchers\LogWatcher::class,
-            Watchers\MailWatcher::class,
-            Watchers\QueueWatcher::class,
-            Watchers\CacheWatcher::class,
-            Watchers\EventsWatcher::class,
-            Watchers\NotificationWatcher::class,
+            Watchers\LogWatcher::class => config('telescope.watchers.log.enabled'),
+            Watchers\MailWatcher::class => config('telescope.watchers.mail.enabled'),
+            Watchers\QueueWatcher::class => config('telescope.watchers.queue.enabled'),
+            Watchers\CacheWatcher::class => config('telescope.watchers.cache.enabled'),
+            Watchers\EventsWatcher::class => config('telescope.watchers.events.enabled'),
+            Watchers\NotificationsWatcher::class => config('telescope.watchers.notifications.enabled'),
         ];
 
-        foreach ($watchers as $watcher) {
+        foreach (array_keys(array_filter($watchers)) as $watcher) {
             (new $watcher)->register($this->app);
         }
 
