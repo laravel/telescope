@@ -39,7 +39,6 @@
             <thead>
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Internal</th>
                 <th scope="col">Time</th>
                 <th scope="col"></th>
             </tr>
@@ -47,7 +46,6 @@
             <tbody>
             <tr v-for="entry in entries">
                 <td>{{entry.content.event_name}}</td>
-                <td>{{entry.content.is_internal}}</td>
                 <td>{{entry.created_at}}</td>
                 <td>
                     <router-link :to="{name:'event-preview', params:{id: entry.id}}"

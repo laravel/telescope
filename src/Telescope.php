@@ -11,7 +11,14 @@ class Telescope
      *
      * @var array
      */
-    static $entriesQueue;
+    public static $entriesQueue;
+
+    /**
+     * Indicates if Telescope should ignore events fired by Laravel.
+     *
+     * @var bool
+     */
+    public static $ignoreFrameworkEvents = false;
 
     /**
      * Record the given entry.
@@ -39,5 +46,25 @@ class Telescope
         $storage->store(static::$entriesQueue);
 
         static::$entriesQueue = [];
+    }
+
+    /**
+     * Determines if Telescope is ignoring events fired by Laravel.
+     *
+     * @return bool
+     */
+    public static function ignoresFrameworkEvents()
+    {
+        return static::$ignoreFrameworkEvents;
+    }
+
+    /**
+     * Specifies that Telescope should ignore events fired by Laravel.
+     *
+     * @return void
+     */
+    public static function ignoreFrameworkEvents()
+    {
+        static::$ignoreFrameworkEvents = true;
     }
 }

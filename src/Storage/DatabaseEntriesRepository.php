@@ -17,6 +17,7 @@ class DatabaseEntriesRepository implements Contract
     {
         return DB::table('telescope_entries')
             ->whereType($type)
+            ->orderByDesc('id')
             ->get()
             ->map(function ($entry) {
                 $entry->content = json_decode($entry->content);

@@ -45,11 +45,6 @@
                     <td class="font-weight-bold pl-0">Name</td>
                     <td>{{entry.content.event_name}}</td>
                 </tr>
-
-                <tr>
-                    <td class="font-weight-bold pl-0">Internal</td>
-                    <td>{{entry.content.is_internal}}</td>
-                </tr>
             </table>
 
             <div class="card">

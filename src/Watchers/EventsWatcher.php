@@ -37,7 +37,6 @@ class EventsWatcher extends AbstractWatcher
 
         Telescope::record(5, [
             'event_name' => $eventName,
-            'is_internal' => ! $this->eventIsFiredFromApp($eventName),
             'event_payload' => $this->formatEventPayload($eventName, $payload),
             'listeners' => $this->formatListeners($eventName),
         ]);
@@ -51,6 +50,10 @@ class EventsWatcher extends AbstractWatcher
      */
     private function eventShouldBeRecorded($eventName)
     {
+        if (Telescope::ignoresFrameworkEvents() && $this->eventIsFiredByTheFramework($eventName)) {
+            return false;
+        }
+
         return true;
     }
 
@@ -123,12 +126,12 @@ class EventsWatcher extends AbstractWatcher
     }
 
     /**
-     * Determine if the event was fired from the application.
+     * Determine if the event was fired internally by Laravel.
      *
      * @param  string $eventName
      * @return bool
      */
-    private function eventIsFiredFromApp($eventName)
+    private function eventIsFiredByTheFramework($eventName)
     {
         return Str::is('App\*', $eventName);
     }
@@ -156,11 +159,11 @@ class EventsWatcher extends AbstractWatcher
             ->map(function ($listener) {
                 $listener = (new \ReflectionFunction($listener))->getStaticVariables()['listener'];
 
-                if(is_string($listener)){
+                if (is_string($listener)) {
                     return (str_contains($listener, '@') ? $listener : $listener.'@handle');
-                }elseif(is_array($listener)){
+                } elseif (is_array($listener)) {
                     return get_class($listener[0]).'@'.$listener[1];
-                }else{
+                } else {
                     return $this->formatClosureListener($listener);
                 }
             })

@@ -48059,7 +48059,7 @@ exports = module.exports = __webpack_require__(5)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48132,14 +48132,6 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(_vm.entry.content.event_name))])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticClass: "font-weight-bold pl-0" }, [
-                _vm._v("Internal")
-              ]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.entry.content.is_internal))])
             ])
           ]),
           _vm._v(" "),
@@ -48286,8 +48278,6 @@ var render = function() {
         _c("tr", [
           _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
           _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Internal")]),
-          _vm._v(" "),
           _c("th", { attrs: { scope: "col" } }, [_vm._v("Time")]),
           _vm._v(" "),
           _c("th", { attrs: { scope: "col" } })
@@ -48299,8 +48289,6 @@ var render = function() {
         _vm._l(_vm.entries, function(entry) {
           return _c("tr", [
             _c("td", [_vm._v(_vm._s(entry.content.event_name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(entry.content.is_internal))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(entry.created_at))]),
             _vm._v(" "),
