@@ -21,6 +21,10 @@ class TelescopeServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__.'/Storage/migrations');
+
+            $this->publishes([
+                __DIR__.'/../config/telescope.php' => config_path('telescope.php'),
+            ], 'telescope-config');
         }
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'telescope');

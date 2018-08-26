@@ -18,6 +18,8 @@ class CreateTelescopeEntriesTable extends Migration
             $table->tinyInteger('type');
             $table->json('content');
             $table->timestamp('created_at');
+
+            $table->index('type');
         });
     }
 
