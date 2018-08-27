@@ -36,5 +36,13 @@ return [
         'queue' => [
             'enabled' => true,
         ],
+
+        'queries' => [
+            'enabled' => true,
+        ],
+
+        'requests' => [
+            'enabled' => true,
+        ],
     ],
 ];
