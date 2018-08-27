@@ -36,6 +36,20 @@ class MailWatcher extends AbstractWatcher
             'subject' => $event->message->getSubject(),
             'html' => $event->message->getBody(),
             'raw' => $event->message->toString(),
-        ]);
+        ], $this->extractTagsFromMessage($event->message));
+    }
+
+    /**
+     * Extract tags from the given message.
+     *
+     * @param  \Swift_Message $message
+     * return array
+     */
+    private function extractTagsFromMessage($message)
+    {
+        return array_merge(
+            array_keys($message->getTo() ?: []), array_keys($message->getCc() ?: []),
+            array_keys($message->getBcc() ?: []), array_keys($message->getFrom() ?: [])
+        );
     }
 }

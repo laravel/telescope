@@ -32,7 +32,7 @@ class NotificationsWatcher extends AbstractWatcher
             'response' => $event->response,
             'notifiable' => $this->formatNotifiable($event->notifiable),
             'notification' => $this->formatNotification($event->notification),
-        ]);
+        ], $this->extractTagsFromEvent($event));
     }
 
     /**
@@ -58,6 +58,17 @@ class NotificationsWatcher extends AbstractWatcher
      */
     private function formatNotification($notification)
     {
-        return get_class($notification).':'.$notification->id;
+        return get_class($notification);
+    }
+
+    /**
+     * Extract tags from the given event.
+     *
+     * @param  NotificationSent $event
+     * @return array
+     */
+    private function extractTagsFromEvent($event)
+    {
+        return [$this->formatNotification($event->notification), $this->formatNotifiable($event->notifiable)];
     }
 }

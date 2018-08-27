@@ -53,12 +53,19 @@ class DatabaseEntriesRepository implements Contract
      */
     public function store($data)
     {
-        DB::table('telescope_entries')->insert(
-            collect($data)->map(function ($entry) {
-                $entry['content'] = json_encode($entry['content']);
+        collect($data)->each(function ($entry) {
+            $entry['content'] = json_encode($entry['content']);
 
-                return $entry;
-            })->toArray()
-        );
+            $tags = $entry['tags'];
+
+            unset($entry['tags']);
+
+            $id = DB::table('telescope_entries')->insertGetId($entry);
+
+            DB::table('telescope_entries_tags')->insert(collect($tags)->map(function ($tag) use ($id) {
+                return ['entry_id' => $id, 'tag' => $tag,];
+            })->toArray());
+        });
+
     }
 }

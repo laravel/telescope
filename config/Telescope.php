@@ -18,7 +18,7 @@ return [
         ],
 
         'events' => [
-            'enabled' => false,
+            'enabled' => true,
         ],
 
         'log' => [

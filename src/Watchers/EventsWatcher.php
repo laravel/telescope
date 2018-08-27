@@ -35,11 +35,13 @@ class EventsWatcher extends AbstractWatcher
             return;
         }
 
+        list($payload, $tags) = $this->extractPayloadAndTags($eventName, $payload);
+
         Telescope::record(5, [
             'event_name' => $eventName,
-            'event_payload' => $this->formatEventPayload($eventName, $payload),
+            'event_payload' => $payload,
             'listeners' => $this->formatListeners($eventName),
-        ]);
+        ], $tags);
     }
 
     /**
@@ -58,32 +60,45 @@ class EventsWatcher extends AbstractWatcher
     }
 
     /**
-     * Format the event payload.
+     * Extract the payload and tags from the event.
      *
      * @param  string $eventName
      * @param  array $payload
      * @return array
      */
-    private function formatEventPayload($eventName, $payload)
+    private function extractPayloadAndTags($eventName, $payload)
     {
-        return $this->eventIsAnObject($eventName)
-            ? $this->formatEventObject($payload[0]) : $this->formatRawPayload($payload);
+        if (! $this->eventIsAnObject($eventName)) {
+            return [$this->formatRawPayload($payload), []];
+        }
+
+        return $this->extractPayloadAndTagsFromEventObject($payload[0]);
     }
 
     /**
-     * Format the event object.
+     * Extract the payload and tags from the event object.
      *
      * @param  object $payload
      * @return array
      */
-    private function formatEventObject($event)
+    private function extractPayloadAndTagsFromEventObject($event)
     {
-        return collect((new ReflectionClass($event))->getProperties())
-            ->mapWithKeys(function ($property) use ($event) {
-                return [
-                    $property->getName() => $this->formatEventObjectProperty($property->getValue($event))
-                ];
+        $tags = [];
+
+        $payload = collect((new ReflectionClass($event))->getProperties())
+            ->mapWithKeys(function ($property) use ($event, &$tags) {
+                $property->setAccessible(true);
+
+                if (($value = $property->getValue($event)) instanceof Model) {
+                    $tags[] = $model = get_class($value).':'.$value->getKey();
+
+                    return [$property->getName() => $model];
+                }else{
+                    return [$property->getName() => json_decode(json_encode($value), true)];
+                }
             })->toArray();
+
+        return [$payload, $tags];
     }
 
     /**
@@ -100,29 +115,6 @@ class EventsWatcher extends AbstractWatcher
                 'properties' => json_decode(json_encode($value), true),
             ];
         })->toArray();
-    }
-
-    /**
-     * Format an event object property.
-     *
-     * @param  mixed $value
-     * @return mixed
-     */
-    private function formatEventObjectProperty($value)
-    {
-        if ($value instanceof Model) {
-            return get_class($value).':'.$value->getKey();
-        } elseif ($value instanceOf Job) {
-            return [
-                'jobId' => $value->getJobId(),
-                'queue' => $value->getQueue(),
-                'payload' => $value->payload(),
-            ];
-        } elseif (is_object($value)) {
-            return json_decode(json_encode($value), true);
-        }
-
-        return $value;
     }
 
     /**

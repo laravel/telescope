@@ -33,8 +33,10 @@ class Telescope
      *
      * @param  int $type
      * @param  array $entry
+     * @param  array $tags
+     * @return void
      */
-    public static function record($type, $entry)
+    public static function record($type, $entry, $tags = [])
     {
         if (static::$filterUsing && ! (static::$filterUsing)($type, $entry)) {
             return;
@@ -44,6 +46,7 @@ class Telescope
             'type' => $type,
             'content' => $entry,
             'created_at' => now()->toDateTimeString(),
+            'tags' => $tags
         ];
     }
 

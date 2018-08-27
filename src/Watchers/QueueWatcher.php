@@ -2,6 +2,8 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Database\Eloquent\Model;
+use ReflectionClass;
 use Throwable;
 use Whoops\Exception\Inspector;
 use Laravel\Telescope\Telescope;
@@ -30,6 +32,8 @@ class QueueWatcher extends AbstractWatcher
      */
     public function recordJobProcessed(JobProcessed $event)
     {
+        list($payload, $tags) = $this->extractPayloadAndTags($event->job);
+
         Telescope::record(4, [
             'id' => $event->job->getJobId(),
             'status' => 'processed',
@@ -38,8 +42,8 @@ class QueueWatcher extends AbstractWatcher
             'timeout' => $event->job->payload()['timeout'],
             'queue' => $event->job->getQueue(),
             'connection' => $event->job->getConnectionName(),
-            'data' => $this->formatJobData($event->job),
-        ]);
+            'data' => $payload,
+        ], $tags);
     }
 
     /**
@@ -50,6 +54,8 @@ class QueueWatcher extends AbstractWatcher
      */
     public function recordJobFailed(JobFailed $event)
     {
+        list($payload, $tags) = $this->extractPayloadAndTags($event->job);
+
         Telescope::record(4, [
             'id' => $event->job->getJobId(),
             'status' => 'failed',
@@ -64,21 +70,45 @@ class QueueWatcher extends AbstractWatcher
             'timeout' => $event->job->payload()['timeout'],
             'queue' => $event->job->getQueue(),
             'connection' => $event->job->getConnectionName(),
-            'data' => $this->formatJobData($event->job),
-        ]);
+            'data' => $payload,
+        ], $tags);
     }
 
     /**
-     * @param  \Illuminate\Queue\Jobs\Job $job
-     * @return mixed
+     * Extract the payload and tags from the job.
+     *
+     * @param  \Illuminate\Contracts\Queue\Job $job
+     * @return array
      */
-    private function formatJobData($job)
+    private function extractPayloadAndTags($job)
     {
         if (! isset($job->payload()['data']['command'])) {
-            return $job->payload()['data'];
+            return [$job->payload()['data'], []];
         }
 
-        return json_decode(json_encode(unserialize($job->payload()['data']['command'])), true);
+        $tags = [];
+
+        $command = unserialize($job->payload()['data']['command']);
+
+        $payload = collect((new ReflectionClass($command))->getProperties())
+            ->mapWithKeys(function ($property) use ($command, &$tags) {
+                $property->setAccessible(true);
+
+                if (($value = $property->getValue($command)) instanceof Model) {
+                    $tags[] = $model = get_class($value).':'.$value->getKey();
+
+                    return [$property->getName() => $model];
+                }elseif(is_object($value)){
+                    return [$property->getName() => [
+                        'class' => get_class($value),
+                        'properties' => json_decode(json_encode($value), true)
+                    ]];
+                }else{
+                    return [$property->getName() => json_decode(json_encode($value), true)];
+                }
+            })->toArray();
+
+        return [$payload, $tags];
     }
 
     /**
@@ -92,5 +122,36 @@ class QueueWatcher extends AbstractWatcher
         return (new Inspector($exception))
             ->getFrames()[0]
             ->getFileLines($exception->getLine() - 10, 20);
+    }
+
+    /**
+     * Extract tags from the given job.
+     *
+     * @param  \Illuminate\Contracts\Queue\Job $job
+     * @param  bool $processed
+     * @return array
+     */
+    private function extractTagsFromJob($job, $processed = true)
+    {
+        $tags = [
+            ($processed ? 'processed' : 'failed'),
+            $job->payload()['displayName'],
+            'queue:'.$job->getQueue(),
+            'connection:'.$job->getConnectionName(),
+        ];
+
+        if (isset($job->payload()['data']['command'])) {
+            $command = unserialize($job->payload()['data']['command']);
+
+            foreach ((new ReflectionClass($command))->getProperties() as $property) {
+                $property->setAccessible(true);
+
+                if (($value = $property->getValue($command)) instanceof Model) {
+                    $tags[] = get_class($value).':'.$value->getKey();
+                }
+            }
+        }
+
+        return $tags;
     }
 }

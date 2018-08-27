@@ -21,6 +21,14 @@ class CreateTelescopeEntriesTable extends Migration
 
             $table->index('type');
         });
+
+        Schema::create('telescope_entries_tags', function (Blueprint $table) {
+            $table->bigInteger('entry_id');
+            $table->string('tag');
+
+            $table->index(['entry_id', 'tag']);
+            $table->index('tag');
+        });
     }
 
     /**
@@ -31,5 +39,7 @@ class CreateTelescopeEntriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('telescope_entries');
+        Schema::dropIfExists('telescope_tags');
+        Schema::dropIfExists('telescope_entries_tags');
     }
 }
