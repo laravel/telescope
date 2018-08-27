@@ -26,6 +26,8 @@
                     <router-link active-class="active" to="/queue" class="list-group-item list-group-item-action">Queue</router-link>
                     <router-link active-class="active" to="/events" class="list-group-item list-group-item-action">Events</router-link>
                     <router-link active-class="active" to="/cache" class="list-group-item list-group-item-action">Cache</router-link>
+                    <router-link active-class="active" to="/queries" class="list-group-item list-group-item-action">Queries</router-link>
+                    <router-link active-class="active" to="/requests" class="list-group-item list-group-item-action">Requests</router-link>
                 </div>
             </div>
 

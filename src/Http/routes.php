@@ -26,6 +26,15 @@ Route::get('/telescope-api/events/{id}', 'EventsController@show');
 Route::get('/telescope-api/cache', 'CacheController@index');
 Route::get('/telescope-api/cache/{id}', 'CacheController@show');
 
+// Queries entries...
+Route::get('/telescope-api/queries', 'QueriesController@index');
+Route::get('/telescope-api/queries/{id}', 'QueriesController@show');
+
+// Requests entries...
+Route::get('/telescope-api/requests', 'RequestsController@index');
+Route::get('/telescope-api/requests/{id}', 'RequestsController@show');
+
+
 Route::get('/{view?}', function () {
     return view('telescope::layout');
 })->where('view', '(.*)');

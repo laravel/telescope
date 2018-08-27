@@ -52,7 +52,7 @@ class RequestsWatcher extends AbstractWatcher
             return json_decode($response->getContent(), true);
         }
 
-        return $response->getContent();
+        return "HTML Response";
     }
 
     /**

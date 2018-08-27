@@ -78,4 +78,28 @@ export default [
         name: 'cache',
         component: require('./screens/cache/index')
     },
+
+    {
+        path: '/queries/:id',
+        name: 'queries-preview',
+        component: require('./screens/queries/preview')
+    },
+
+    {
+        path: '/queries',
+        name: 'queries',
+        component: require('./screens/queries/index')
+    },
+
+    {
+        path: '/requests/:id',
+        name: 'requests-preview',
+        component: require('./screens/requests/preview')
+    },
+
+    {
+        path: '/requests',
+        name: 'requests',
+        component: require('./screens/requests/index')
+    },
 ];
