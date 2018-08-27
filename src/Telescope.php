@@ -15,6 +15,13 @@ class Telescope
     public static $filterUsing;
 
     /**
+     * The callback that adds tags to the record.
+     *
+     * @var \Closure
+     */
+    public static $tagUsing;
+
+    /**
      * The list of queued entries to be stored.
      *
      * @var array
@@ -38,8 +45,14 @@ class Telescope
      */
     public static function record($type, $entry, $tags = [])
     {
-        if (static::$filterUsing && ! (static::$filterUsing)($type, $entry)) {
+        if (static::$filterUsing && ! call_user_func(static::$filterUsing, $type, $entry)) {
             return;
+        }
+
+        if (static::$tagUsing) {
+            $tags = array_unique(
+                array_merge($tags, call_user_func(static::$tagUsing, $type, $entry))
+            );
         }
 
         static::$entriesQueue[] = [
@@ -59,6 +72,19 @@ class Telescope
     public static function filter(Closure $callback)
     {
         static::$filterUsing = $callback;
+
+        return new static;
+    }
+
+    /**
+     * Set the callback that adds tags to the record.
+     *
+     * @param  \Closure $callback
+     * @return static
+     */
+    public static function tag(Closure $callback)
+    {
+        static::$tagUsing = $callback;
 
         return new static;
     }
