@@ -9,3 +9,24 @@ body {
 [v-cloak] {
   display: none;
 }
+
+.nav-item{
+  a{
+    color: #2a5164;;
+
+    svg{
+      width: 1rem;
+      height: 1rem;
+      margin-right: 15px;
+      fill: #D4D6D8;
+    }
+
+    &.active{
+      color: $primary;
+
+      svg{
+        fill: $primary;
+      }
+    }
+  }
+}
