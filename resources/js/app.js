@@ -16,6 +16,7 @@ const router = new VueRouter({
 });
 
 Vue.component('loader', require('./components/loader.vue'));
+Vue.component('table-card', require('./components/TableCard.vue'));
 
 Vue.mixin(Base);
 

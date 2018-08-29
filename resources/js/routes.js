@@ -81,7 +81,7 @@ export default [
 
     {
         path: '/queries/:id',
-        name: 'queries-preview',
+        name: 'query-preview',
         component: require('./screens/queries/preview')
     },
 
@@ -93,7 +93,7 @@ export default [
 
     {
         path: '/requests/:id',
-        name: 'requests-preview',
+        name: 'request-preview',
         component: require('./screens/requests/preview')
     },
 

@@ -1976,7 +1976,7 @@ pre code {
 }
 
 .table-hover tbody tr:hover {
-  background-color: rgba(0, 0, 0, 0.075);
+  background-color: #f1f7fa;
 }
 
 .table-primary,
@@ -2102,16 +2102,16 @@ pre code {
 .table-active,
 .table-active > th,
 .table-active > td {
-  background-color: rgba(0, 0, 0, 0.075);
+  background-color: #f1f7fa;
 }
 
 .table-hover .table-active:hover {
-  background-color: rgba(0, 0, 0, 0.075);
+  background-color: #deecf3;
 }
 
 .table-hover .table-active:hover > td,
 .table-hover .table-active:hover > th {
-  background-color: rgba(0, 0, 0, 0.075);
+  background-color: #deecf3;
 }
 
 .table .thead-dark th {
@@ -10563,6 +10563,14 @@ svg.icon {
   fill: #17a2b8;
 }
 
+.fill-success {
+  fill: #28a745;
+}
+
+.fill-primary {
+  fill: #4246C7;
+}
+
 .control-action svg {
   fill: #ccd2df;
   width: 1.2rem;
@@ -10585,5 +10593,34 @@ svg.icon {
 
 .paginator .btn:hover {
   color: #4246C7;
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
 }
 
