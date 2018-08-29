@@ -10509,6 +10509,11 @@ svg.icon {
   border: none;
 }
 
+.card .bottom-radius {
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
 .card .card-header {
   padding-top: 0.7rem;
   padding-bottom: 0.7rem;
@@ -10579,11 +10584,6 @@ svg.icon {
 
 .control-action svg:hover {
   fill: #4246C7;
-}
-
-.paginator {
-  border-bottom-left-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
 }
 
 .paginator .btn {

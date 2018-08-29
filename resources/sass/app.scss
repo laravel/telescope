@@ -40,6 +40,11 @@ svg.icon{
   box-shadow: 0 2px 3px #cdd8df;
   border: none;
 
+  .bottom-radius{
+    border-bottom-left-radius: $card-border-radius;
+    border-bottom-right-radius: $card-border-radius;
+  }
+
   .card-header {
     padding-top: 0.7rem;
     padding-bottom: 0.7rem;
@@ -117,9 +122,6 @@ svg.icon{
 }
 
 .paginator{
-  border-bottom-left-radius: $card-border-radius;
-  border-bottom-right-radius: $card-border-radius;
-
   .btn{
     text-decoration: none;
     color: #9ea7ac;
