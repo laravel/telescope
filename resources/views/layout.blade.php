@@ -8,6 +8,7 @@
     <title>Telescope</title>
 
     <!-- Style sheets-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link href='{{asset('vendors/telescope/app.css')}}' rel='stylesheet' type='text/css'>
 
     <!-- Icons -->

@@ -10,6 +10,11 @@ body {
   display: none;
 }
 
+svg.icon{
+  width: 1rem;
+  height: 1rem;
+}
+
 .nav-item{
   a{
     color: #2a5164;;
@@ -18,7 +23,7 @@ body {
       width: 1rem;
       height: 1rem;
       margin-right: 15px;
-      fill: #D4D6D8;
+      fill: #c3cbd3;
     }
 
     &.active{
@@ -27,6 +32,92 @@ body {
       svg{
         fill: $primary;
       }
+    }
+  }
+}
+
+.card {
+  box-shadow: 0 2px 3px #cdd8df;
+  border: none;
+
+  .card-header {
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    background-color: #fff;
+    border-bottom: none;
+
+    .btn-group{
+      .btn{
+        padding: 0.2rem 0.5rem;
+      }
+    }
+
+    h5{
+      margin: 0;
+    }
+  }
+
+  .table{
+    th, td {
+      padding: 0.75rem 1.25rem;
+    }
+
+    th{
+      background-color: $table-headers-color;
+      font-weight: 400;
+      padding: .5rem 1.25rem;
+      border-bottom: 0;
+    }
+
+    td{
+      border-top: 1px solid $table-border-color;
+    }
+
+    th:nth-last-child(2), td:nth-last-child(2){
+      text-align: right;
+    }
+
+    th.table-fit, td.table-fit{
+      width: 1%;
+      white-space: nowrap;
+    }
+  }
+}
+
+.fill-danger{
+  fill: $danger;
+}
+
+.fill-warning{
+  fill: $warning;
+}
+
+.fill-info{
+  fill: $info;
+}
+
+.control-action{
+  svg{
+    fill: #ccd2df;
+    width: 1.2rem;
+    height: 1.2rem;
+
+    &:hover{
+      fill: $primary;
+    }
+  }
+}
+
+.paginator{
+  border-bottom-left-radius: $card-border-radius;
+  border-bottom-right-radius: $card-border-radius;
+
+  .btn{
+    text-decoration: none;
+    color: #9ea7ac;
+
+    &:hover{
+      color: $primary;
     }
   }
 }

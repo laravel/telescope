@@ -1,6 +1,7 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Base from './base'
 import Routes from './routes'
+import VueRouter from 'vue-router'
 
 require('bootstrap');
 
@@ -15,6 +16,8 @@ const router = new VueRouter({
 });
 
 Vue.component('loader', require('./components/loader.vue'));
+
+Vue.mixin(Base);
 
 const admin = new Vue({
     el: '#telescope',
