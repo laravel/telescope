@@ -6,8 +6,16 @@ export default {
         /**
          * Show the time ago format for the given time.
          */
-        timeAgo(time){
-            return moment(time + ' Z').utc().local().fromNow(true);
+        timeAgo(time, withoutSuffex = true){
+            return moment(time + ' Z').utc().local().fromNow(withoutSuffex);
+        },
+
+
+        /**
+         * Show the time in local time.
+         */
+        localTime(time){
+            return moment(time + ' Z').utc().local().format('MMMM Do YYYY, h:mm:ss A');
         },
 
 

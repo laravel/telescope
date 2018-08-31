@@ -10534,6 +10534,11 @@ svg.icon {
   padding: 0.75rem 1.25rem;
 }
 
+.card .table.table-sm th,
+.card .table.table-sm td {
+  padding: 0.5rem 1.25rem;
+}
+
 .card .table th {
   background-color: #F3F4F6;
   font-weight: 400;
@@ -10541,12 +10546,12 @@ svg.icon {
   border-bottom: 0;
 }
 
-.card .table td {
+.card .table:not(.table-borderless) td {
   border-top: 1px solid #EFEFEF;
 }
 
-.card .table th:nth-last-child(2),
-.card .table td:nth-last-child(2) {
+.card .table.penultimate-column-right th:nth-last-child(2),
+.card .table.penultimate-column-right td:nth-last-child(2) {
   text-align: right;
 }
 

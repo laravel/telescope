@@ -30,7 +30,6 @@ class MailWatcher extends AbstractWatcher
             'from' => $event->message->getFrom(),
             'to' => $event->message->getTo(),
             'replyTo' => $event->message->getReplyTo(),
-            'time' => $event->message->getDate()->format('Y-m-d H:i:s'),
             'cc' => $event->message->getCc(),
             'bcc' => $event->message->getBcc(),
             'subject' => $event->message->getSubject(),

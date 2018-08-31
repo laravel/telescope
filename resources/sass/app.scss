@@ -67,6 +67,12 @@ svg.icon{
       padding: 0.75rem 1.25rem;
     }
 
+    &.table-sm{
+      th, td {
+        padding: 0.5rem 1.25rem;
+      }
+    }
+
     th{
       background-color: $table-headers-color;
       font-weight: 400;
@@ -74,12 +80,16 @@ svg.icon{
       border-bottom: 0;
     }
 
-    td{
-      border-top: 1px solid $table-border-color;
+    &:not(.table-borderless){
+      td{
+        border-top: 1px solid $table-border-color;
+      }
     }
 
-    th:nth-last-child(2), td:nth-last-child(2){
-      text-align: right;
+    &.penultimate-column-right{
+      th:nth-last-child(2), td:nth-last-child(2){
+        text-align: right;
+      }
     }
 
     th.table-fit, td.table-fit{
