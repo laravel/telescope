@@ -1,83 +1,64 @@
 <script type="text/ecmascript-6">
-    import _ from 'lodash';
-    import axios from 'axios';
-    import $ from 'jquery';
-
-    export default {
-        components: {},
-
-
-        /**
-         * The component's data.
-         */
-        data() {
-            return {
-                entry: null,
-                ready: false,
-            };
-        },
-
-
-        /**
-         * Prepare the component.
-         */
-        mounted() {
-            document.title = "Log Entries - Telescope";
-
-            axios.get('/telescope/telescope-api/log/' + this.$route.params.id).then(response => {
-                this.entry = response.data.entry;
-
-                this.ready = true;
-            }).catch(error => {
-                this.ready = true;
-            })
-        },
-    }
+    export default {}
 </script>
 
 <template>
-    <loader :loading="!ready">
-        <div v-if="!entry">No entry found.</div>
+    <preview-screen title="Log Preview" resource="log" :id="$route.params.id">
+        <tbody slot="table-parameters" slot-scope="slotProps">
+        <tr>
+            <td class="table-fit font-weight-bold">Time</td>
+            <td>
+                {{localTime(slotProps.entry.created_at)}} ({{timeAgo(slotProps.entry.created_at, false)}})
+            </td>
+        </tr>
 
-        <div v-else>
-            <table class="table table-sm">
-                <tr>
-                    <td class="font-weight-bold pl-0">Time</td>
-                    <td>{{entry.created_at}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Level</td>
+            <td>
+                {{slotProps.entry.content.level}}
+            </td>
+        </tr>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Level</td>
-                    <td>{{entry.content.level}}</td>
-                </tr>
+        <tr v-if="slotProps.entry.content.exception">
+            <td class="table-fit font-weight-bold">Location</td>
+            <td>
+                {{slotProps.entry.content.exception.file}}:{{slotProps.entry.content.exception.line}}
+            </td>
+        </tr>
 
-                <tr v-if="entry.content.exception">
-                    <td class="font-weight-bold pl-0">File</td>
-                    <td>
-                        {{entry.content.exception.file}}:{{entry.content.exception.line}}
-                    </td>
-                </tr>
+        <tr v-if="slotProps.entry.content.exception">
+            <td class="table-fit font-weight-bold">Message</td>
+            <td>
+                {{slotProps.entry.content.message}}
+            </td>
+        </tr>
+        </tbody>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Message</td>
-                    <td>{{entry.content.message}}</td>
-                </tr>
-            </table>
-
-            <pre class="bg-dark text-white" v-if="entry.content.exception">
-                <p v-for="(content, number) in entry.content.exception.line_preview" class="mb-0" :class="{'text-danger': number == entry.content.exception.line}">{{number}} {{content}}</p>
+        <div slot="below-table" slot-scope="slotProps">
+            <pre class="bg-dark px-4 mb-0 text-white" v-if="slotProps.entry.content.exception">
+                <p v-for="(content, number) in slotProps.entry.content.exception.line_preview"
+                   class="mb-0"
+                   :class="{'text-danger': number == slotProps.entry.content.exception.line}"><span class="mr-4">{{number}}</span> <span>{{content}}</span></p>
             </pre>
 
-            <ul v-if="entry.content.exception && entry.content.exception.trace.length">
-                <li v-for="line in entry.content.exception.trace">
-                    {{line.file}}:{{line.line}}
-                </li>
-            </ul>
-
-            {{entry.content.context}}
+            <pre class="bg-dark p-4 mb-0 text-white" v-if="!slotProps.entry.content.exception">{{slotProps.entry.content.message}}</pre>
         </div>
-    </loader>
+
+        <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
+            <div class="card" v-if="slotProps.entry.content.exception && slotProps.entry.content.exception.trace.length">
+                <div class="card-header"><h5>Stacktrace</h5></div>
+                <table class="table mb-0">
+                    <tbody>
+                    <tr v-for="line in slotProps.entry.content.exception.trace">
+                        <td class="bg-secondary">{{line.file}}:{{line.line}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </preview-screen>
 </template>
 
 <style scoped>
+
 </style>

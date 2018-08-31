@@ -1,94 +1,93 @@
 <script type="text/ecmascript-6">
-    import _ from 'lodash';
-    import axios from 'axios';
-    import $ from 'jquery';
-
-    export default {
-        components: {},
-
-
-        /**
-         * The component's data.
-         */
-        data() {
-            return {
-                entry: null,
-                ready: false,
-            };
-        },
-
-
-        /**
-         * Prepare the component.
-         */
-        mounted() {
-            document.title = "Queue - Telescope";
-
-            axios.get('/telescope/telescope-api/queue/' + this.$route.params.id).then(response => {
-                this.entry = response.data.entry;
-
-                this.ready = true;
-            }).catch(error => {
-                this.ready = true;
-            })
-        },
-    }
+    export default {}
 </script>
 
 <template>
-    <loader :loading="!ready">
-        <div v-if="!entry">No entry found.</div>
+    <preview-screen title="Job Preview" resource="queue" :id="$route.params.id">
+        <tbody slot="table-parameters" slot-scope="slotProps">
+        <tr>
+            <td class="table-fit font-weight-bold">Time</td>
+            <td>
+                {{localTime(slotProps.entry.created_at)}} ({{timeAgo(slotProps.entry.created_at, false)}})
+            </td>
+        </tr>
 
-        <div v-else>
-            <table class="table table-sm">
-                <tr>
-                    <td class="font-weight-bold pl-0">Status</td>
-                    <td>{{entry.content.status}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Status</td>
+            <td>
+                {{slotProps.entry.content.status}}
+            </td>
+        </tr>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Job</td>
-                    <td>{{entry.content.name}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Job</td>
+            <td>
+                {{slotProps.entry.content.name}}
+            </td>
+        </tr>
 
-                <tr v-if="entry.content.tries">
-                    <td class="font-weight-bold pl-0">Tries</td>
-                    <td>{{entry.content.tries}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Tries</td>
+            <td>
+                {{slotProps.entry.content.tries}}
+            </td>
+        </tr>
 
-                <tr v-if="entry.content.timeout">
-                    <td class="font-weight-bold pl-0">Timeout</td>
-                    <td>{{entry.content.timeout}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Timeout</td>
+            <td>
+                {{slotProps.entry.content.timeout}}
+            </td>
+        </tr>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Queue</td>
-                    <td>{{entry.content.queue}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Queue</td>
+            <td>
+                {{slotProps.entry.content.queue}}
+            </td>
+        </tr>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Connection</td>
-                    <td>{{entry.content.connection}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Connection</td>
+            <td>
+                {{slotProps.entry.content.connection}}
+            </td>
+        </tr>
 
-                <tr v-if="entry.content.status == 'failed'">
-                    <td class="font-weight-bold pl-0">Exception</td>
-                    <td>{{entry.content.exception.message}}</td>
-                </tr>
-            </table>
+        <tr v-if="slotProps.entry.content.status == 'failed'">
+            <td class="table-fit font-weight-bold">Exception</td>
+            <td>
+                {{slotProps.entry.content.exception.message}}
+            </td>
+        </tr>
 
-            <pre class="bg-dark text-white" v-if="entry.content.status == 'failed'">
-                <p v-for="(content, number) in entry.content.exception.line_preview" class="mb-0" :class="{'text-danger': number == entry.content.exception.line}">{{number}} {{content}}</p>
+        </tbody>
+
+        <div slot="below-table" slot-scope="slotProps">
+            <pre class="bg-dark px-4 mb-0 text-white" v-if="slotProps.entry.content.exception">
+                <p v-for="(content, number) in slotProps.entry.content.exception.line_preview"
+                   class="mb-0"
+                   :class="{'text-danger': number == slotProps.entry.content.exception.line}"><span class="mr-4">{{number}}</span> <span>{{content}}</span></p>
             </pre>
 
-            <div class="card">
-                <code>
-                    {{entry.content.data}}
-                </code>
+            <pre class="bg-dark p-4 mb-0 text-white" v-if="!slotProps.entry.content.exception">{{slotProps.entry.content.message}}</pre>
+        </div>
+
+        <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
+            <div class="card" v-if="slotProps.entry.content.exception && slotProps.entry.content.exception.trace.length">
+                <div class="card-header"><h5>Stacktrace</h5></div>
+                <table class="table mb-0">
+                    <tbody>
+                    <tr v-for="line in slotProps.entry.content.exception.trace">
+                        <td class="bg-secondary">{{line.file}}:{{line.line}}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </loader>
+    </preview-screen>
 </template>
 
 <style scoped>
+
 </style>

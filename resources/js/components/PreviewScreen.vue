@@ -74,9 +74,9 @@
                 <slot name="table-parameters" :entry="entry"></slot>
             </table>
 
-            <slot name="below-table" :entry="entry"></slot>
+            <slot v-if="ready && entry" name="below-table" :entry="entry"></slot>
         </div>
 
-        <slot name="after-attributes-card" :entry="entry"></slot>
+        <slot v-if="ready && entry" name="after-attributes-card" :entry="entry"></slot>
     </div>
 </template>
