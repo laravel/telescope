@@ -18,7 +18,7 @@ class QueriesController extends Controller
     public function index(Request $request, EntriesRepository $storage)
     {
         return response()->json([
-            'entries' => $storage->all(7)
+            'entries' => $storage->get(7, $request->all())
         ]);
     }
 

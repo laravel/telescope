@@ -18,7 +18,7 @@ class RequestsController extends Controller
     public function index(Request $request, EntriesRepository $storage)
     {
         return response()->json([
-            'entries' => $storage->all(8)
+            'entries' => $storage->get(8, $request->all())
         ]);
     }
 

@@ -8,9 +8,10 @@ interface EntriesRepository
      * Return all the entries of a given type.
      *
      * @param  int $type
+     * @param  array $params
      * @return \Illuminate\Support\Collection
      */
-    public function all($type);
+    public function get($type, $params = []);
 
     /**
      * Return an entry with the given ID.

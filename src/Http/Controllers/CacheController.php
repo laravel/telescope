@@ -18,7 +18,7 @@ class CacheController extends Controller
     public function index(Request $request, EntriesRepository $storage)
     {
         return response()->json([
-            'entries' => $storage->all(6)
+            'entries' => $storage->get(6, $request->all())
         ]);
     }
 

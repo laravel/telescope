@@ -11,13 +11,18 @@ class DatabaseEntriesRepository implements Contract
      * Return all the entries of a given type.
      *
      * @param  int $type
-     * @return Collection
+     * @param  array $params
+     * @return \Illuminate\Support\Collection
      */
-    public function all($type)
+    public function get($type, $params = [])
     {
         return DB::table('telescope_entries')
             ->whereType($type)
             ->orderByDesc('id')
+            ->take(3)
+            ->when($params['before'] ?? false, function($q, $value){
+                return $q->where('id', '<', $value);
+            })
             ->get()
             ->map(function ($entry) {
                 $entry->content = json_decode($entry->content);

@@ -18,7 +18,7 @@ class NotificationsController extends Controller
     public function index(Request $request, EntriesRepository $storage)
     {
         return response()->json([
-            'entries' => $storage->all(3)
+            'entries' => $storage->get(3, $request->all())
         ]);
     }
 

@@ -18,8 +18,10 @@
                 entries: [],
                 ready: false,
                 loadingMoreEntries: false,
+                hasMoreEntries: true,
                 tag: '',
-                lastEntryIndex: null,
+                lastEntryIndex: '',
+                firstEntryIndex: '',
             };
         },
 
@@ -33,6 +35,10 @@
             this.loadEntries((response) => {
                 this.entries = response.data.entries;
 
+                if (response.data.entries.length) {
+                    this.firstEntryIndex = _.first(response.data.entries).id;
+                }
+
                 this.ready = true;
             });
         },
@@ -40,7 +46,11 @@
         methods: {
             loadEntries(after){
                 axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex).then(response => {
-                    this.lastEntryIndex = _.last(this.entries) ? _.last(this.entries).id : null;
+                    if (response.data.entries.length) {
+                        this.lastEntryIndex = _.last(response.data.entries).id;
+                    } else {
+                        this.hasMoreEntries = false;
+                    }
 
                     if (_.isFunction(after)) {
                         after(response);
@@ -54,10 +64,14 @@
              */
             search(){
                 this.debouncer(() => {
-                    this.lastEntryIndex = null;
+                    this.lastEntryIndex = '';
 
                     this.loadEntries((response) => {
                         this.entries = response.data.entries;
+
+                        if (response.data.entries.length) {
+                            this.firstEntryIndex = _.first(response.data.entries).id;
+                        }
                     });
                 });
             },
@@ -115,7 +129,7 @@
         </table>
 
 
-        <div class="d-flex align-items-center justify-content-center bg-secondary p-1 border-top paginator bottom-radius" v-if="entries.length">
+        <div class="d-flex align-items-center justify-content-center bg-secondary p-1 border-top paginator bottom-radius" v-if="hasMoreEntries">
             <button class="btn btn-link" v-on:click.prevent="loadOlderEntries" v-if="!loadingMoreEntries">Load Older Entries</button>
 
             <div v-if="loadingMoreEntries" class="p-2">

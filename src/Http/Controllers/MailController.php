@@ -18,7 +18,7 @@ class MailController extends Controller
     public function index(Request $request, EntriesRepository $storage)
     {
         return response()->json([
-            'entries' => $storage->all(1)
+            'entries' => $storage->get(1, $request->all())
         ]);
     }
 

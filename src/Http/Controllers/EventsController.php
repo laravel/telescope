@@ -18,7 +18,7 @@ class EventsController extends Controller
     public function index(Request $request, EntriesRepository $storage)
     {
         return response()->json([
-            'entries' => $storage->all(5)
+            'entries' => $storage->get(5, $request->all())
         ]);
     }
 

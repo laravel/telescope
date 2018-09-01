@@ -18,7 +18,7 @@ class LogController extends Controller
     public function index(Request $request, EntriesRepository $storage)
     {
         return response()->json([
-            'entries' => $storage->all(2)
+            'entries' => $storage->get(2, $request->all())
         ]);
     }
 

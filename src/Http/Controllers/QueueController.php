@@ -18,7 +18,7 @@ class QueueController extends Controller
     public function index(Request $request, EntriesRepository $storage)
     {
         return response()->json([
-            'entries' => $storage->all(4)
+            'entries' => $storage->get(4, $request->all())
         ]);
     }
 
