@@ -1,5 +1,10 @@
 <script type="text/ecmascript-6">
-    export default {}
+    export default {
+        components: {
+            'code-preview': require('./../../components/ExceptionCodePreview'),
+            'stack-trace': require('./../../components/Stacktrace')
+        }
+    }
 </script>
 
 <template>
@@ -35,11 +40,11 @@
         </tbody>
 
         <div slot="below-table" slot-scope="slotProps">
-            <pre class="bg-dark px-4 mb-0 text-white" v-if="slotProps.entry.content.exception">
-                <p v-for="(content, number) in slotProps.entry.content.exception.line_preview"
-                   class="mb-0"
-                   :class="{'text-danger': number == slotProps.entry.content.exception.line}"><span class="mr-4">{{number}}</span> <span>{{content}}</span></p>
-            </pre>
+            <code-preview
+                    v-if="slotProps.entry.content.exception"
+                    :lines="slotProps.entry.content.exception.line_preview"
+                    :highlighted-line="slotProps.entry.content.exception.line">
+            </code-preview>
 
             <pre class="bg-dark p-4 mb-0 text-white" v-if="!slotProps.entry.content.exception">{{slotProps.entry.content.message}}</pre>
         </div>
@@ -47,13 +52,8 @@
         <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
             <div class="card" v-if="slotProps.entry.content.exception && slotProps.entry.content.exception.trace.length">
                 <div class="card-header"><h5>Stacktrace</h5></div>
-                <table class="table mb-0">
-                    <tbody>
-                    <tr v-for="line in slotProps.entry.content.exception.trace">
-                        <td class="bg-secondary">{{line.file}}:{{line.line}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+
+                <stack-trace :trace="slotProps.entry.content.exception.trace"></stack-trace>
             </div>
         </div>
     </preview-screen>
