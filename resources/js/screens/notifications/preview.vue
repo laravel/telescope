@@ -1,69 +1,37 @@
 <script type="text/ecmascript-6">
-    import _ from 'lodash';
-    import axios from 'axios';
-    import $ from 'jquery';
-
-    export default {
-        components: {},
-
-
-        /**
-         * The component's data.
-         */
-        data() {
-            return {
-                entry: null,
-                ready: false,
-            };
-        },
-
-
-        /**
-         * Prepare the component.
-         */
-        mounted() {
-            document.title = "Notifications - Telescope";
-
-            axios.get('/telescope/telescope-api/notifications/' + this.$route.params.id).then(response => {
-                this.entry = response.data.entry;
-
-                this.ready = true;
-            }).catch(error => {
-                this.ready = true;
-            })
-        },
-    }
+    export default {}
 </script>
 
 <template>
-    <loader :loading="!ready">
-        <div v-if="!entry">No entry found.</div>
+    <preview-screen title="Notification Preview" resource="notifications" :id="$route.params.id">
+        <tbody slot="table-parameters" slot-scope="slotProps">
+        <tr>
+            <td class="table-fit font-weight-bold">Time</td>
+            <td>
+                {{localTime(slotProps.entry.created_at)}} ({{timeAgo(slotProps.entry.created_at, false)}})
+            </td>
+        </tr>
 
-        <div v-else>
-            <table class="table table-sm">
-                <tr>
-                    <td class="font-weight-bold pl-0">Time</td>
-                    <td>{{entry.created_at}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Channel</td>
+            <td>
+                {{slotProps.entry.content.channel}}
+            </td>
+        </tr>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Channel</td>
-                    <td>{{entry.content.channel}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Notification</td>
+            <td>
+                {{slotProps.entry.content.notification}}
+            </td>
+        </tr>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Notifiable</td>
-                    <td>{{entry.content.notifiable}}</td>
-                </tr>
-
-                <tr>
-                    <td class="font-weight-bold pl-0">Notification</td>
-                    <td>{{entry.content.notification}}</td>
-                </tr>
-            </table>
-        </div>
-    </loader>
+        <tr>
+            <td class="table-fit font-weight-bold">Notifiable</td>
+            <td>
+                {{slotProps.entry.content.notifiable}}
+            </td>
+        </tr>
+        </tbody>
+    </preview-screen>
 </template>
-
-<style scoped>
-</style>

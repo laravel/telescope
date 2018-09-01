@@ -1,70 +1,39 @@
 <script type="text/ecmascript-6">
-    import _ from 'lodash';
-    import axios from 'axios';
-    import $ from 'jquery';
-
-    export default {
-        components: {},
-
-
-        /**
-         * The component's data.
-         */
-        data() {
-            return {
-                entry: null,
-                ready: false,
-            };
-        },
-
-
-        /**
-         * Prepare the component.
-         */
-        mounted() {
-            document.title = "Queries - Telescope";
-
-            axios.get('/telescope/telescope-api/queries/' + this.$route.params.id).then(response => {
-                this.entry = response.data.entry;
-
-                this.ready = true;
-            }).catch(error => {
-                this.ready = true;
-            })
-        },
-    }
+    export default {}
 </script>
 
 <template>
-    <loader :loading="!ready">
-        <div v-if="!entry">No entry found.</div>
+    <preview-screen title="Query Preview" resource="queries" :id="$route.params.id">
+        <tbody slot="table-parameters" slot-scope="slotProps">
+        <tr>
+            <td class="table-fit font-weight-bold">Time</td>
+            <td>
+                {{localTime(slotProps.entry.created_at)}} ({{timeAgo(slotProps.entry.created_at, false)}})
+            </td>
+        </tr>
 
-        <div v-else>
-            <table class="table table-sm">
-                <tr>
-                    <td class="font-weight-bold pl-0">Time</td>
-                    <td>{{entry.created_at}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Connection</td>
+            <td>
+                {{slotProps.entry.content.connection}}
+            </td>
+        </tr>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Connection</td>
-                    <td>{{entry.content.connection}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Duration</td>
+            <td>
+                {{slotProps.entry.content.time}}
+            </td>
+        </tr>
+        </tbody>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Duration</td>
-                    <td>{{entry.content.time}}</td>
-                </tr>
-            </table>
+        <div slot="after-attributes-card" slot-scope="slotProps">
+            <div class="card mt-5">
+                <div class="card-header"><h5>Query & Bindings</h5></div>
 
-            <pre class="bg-dark text-white" v-if="entry.content.sql">
-                {{entry.content.sql}}
-            </pre>
-
-            {{entry.content.bindings}}
+                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.sql}}</pre>
+                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.bindings}}</pre>
+            </div>
         </div>
-    </loader>
+    </preview-screen>
 </template>
-
-<style scoped>
-</style>

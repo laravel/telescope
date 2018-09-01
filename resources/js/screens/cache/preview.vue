@@ -1,70 +1,45 @@
 <script type="text/ecmascript-6">
-    import _ from 'lodash';
-    import axios from 'axios';
-    import $ from 'jquery';
-
-    export default {
-        components: {},
-
-
-        /**
-         * The component's data.
-         */
-        data() {
-            return {
-                entry: null,
-                ready: false,
-            };
-        },
-
-
-        /**
-         * Prepare the component.
-         */
-        mounted() {
-            document.title = "Cache - Telescope";
-
-            axios.get('/telescope/telescope-api/cache/' + this.$route.params.id).then(response => {
-                this.entry = response.data.entry;
-
-                this.ready = true;
-            }).catch(error => {
-                this.ready = true;
-            })
-        },
-    }
+    export default {}
 </script>
 
 <template>
-    <loader :loading="!ready">
-        <div v-if="!entry">No entry found.</div>
+    <preview-screen title="Cache Preview" resource="cache" :id="$route.params.id">
+        <tbody slot="table-parameters" slot-scope="slotProps">
+        <tr>
+            <td class="table-fit font-weight-bold">Time</td>
+            <td>
+                {{localTime(slotProps.entry.created_at)}} ({{timeAgo(slotProps.entry.created_at, false)}})
+            </td>
+        </tr>
 
-        <div v-else>
-            <table class="table table-sm">
-                <tr>
-                    <td class="font-weight-bold pl-0">Action</td>
-                    <td>{{entry.content.type}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Action</td>
+            <td>
+                {{slotProps.entry.content.type}}
+            </td>
+        </tr>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Key</td>
-                    <td>{{entry.content.key}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Key</td>
+            <td>
+                {{slotProps.entry.content.key}}
+            </td>
+        </tr>
 
-                <tr v-if="entry.content.expiration">
-                    <td class="font-weight-bold pl-0">Expiration</td>
-                    <td>{{entry.content.expiration}}</td>
-                </tr>
-            </table>
+        <tr v-if="slotProps.entry.content.expiration">
+            <td class="table-fit font-weight-bold">Expiration</td>
+            <td>
+                {{slotProps.entry.content.expiration}}
+            </td>
+        </tr>
+        </tbody>
 
-            <div class="card" v-if="entry.content.value">
-                <code>
-                    {{entry.content.value}}
-                </code>
+        <div slot="after-attributes-card" slot-scope="slotProps">
+            <div class="card mt-5" v-if="slotProps.entry.content.value">
+                <div class="card-header"><h5>Value</h5></div>
+
+                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.value}}</pre>
             </div>
         </div>
-    </loader>
+    </preview-screen>
 </template>
-
-<style scoped>
-</style>

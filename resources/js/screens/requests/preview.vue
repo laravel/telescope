@@ -1,73 +1,57 @@
 <script type="text/ecmascript-6">
-    import _ from 'lodash';
-    import axios from 'axios';
-    import $ from 'jquery';
-
-    export default {
-        components: {},
-
-
-        /**
-         * The component's data.
-         */
-        data() {
-            return {
-                entry: null,
-                ready: false,
-            };
-        },
-
-
-        /**
-         * Prepare the component.
-         */
-        mounted() {
-            document.title = "Requests - Telescope";
-
-            axios.get('/telescope/telescope-api/requests/' + this.$route.params.id).then(response => {
-                this.entry = response.data.entry;
-
-                this.ready = true;
-            }).catch(error => {
-                this.ready = true;
-            })
-        },
-    }
+    export default {}
 </script>
 
 <template>
-    <loader :loading="!ready">
-        <div v-if="!entry">No entry found.</div>
+    <preview-screen title="Request Preview" resource="requests" :id="$route.params.id">
+        <tbody slot="table-parameters" slot-scope="slotProps">
+        <tr>
+            <td class="table-fit font-weight-bold">Time</td>
+            <td>
+                {{localTime(slotProps.entry.created_at)}} ({{timeAgo(slotProps.entry.created_at, false)}})
+            </td>
+        </tr>
 
-        <div v-else>
-            <table class="table table-sm">
-                <tr>
-                    <td class="font-weight-bold pl-0">Time</td>
-                    <td>{{entry.created_at}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Path</td>
+            <td>
+                {{slotProps.entry.content.uri}}
+            </td>
+        </tr>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Path</td>
-                    <td>{{entry.content.uri}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Method</td>
+            <td>
+                {{slotProps.entry.content.method}}
+            </td>
+        </tr>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Method</td>
-                    <td>{{entry.content.method}}</td>
-                </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Status</td>
+            <td>
+                {{slotProps.entry.content.response_status}}
+            </td>
+        </tr>
+        </tbody>
 
-                <tr>
-                    <td class="font-weight-bold pl-0">Status</td>
-                    <td>{{entry.content.response_status}}</td>
-                </tr>
-            </table>
+        <div slot="after-attributes-card" slot-scope="slotProps">
+            <div class="card mt-5" v-if="slotProps.entry.content.payload">
+                <div class="card-header"><h5>Payload</h5></div>
 
-            {{entry.content.payload}}
-            {{entry.content.response}}
-            {{entry.content.headers}}
+                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.payload}}</pre>
+            </div>
+
+            <div class="card mt-5" v-if="slotProps.entry.content.headers">
+                <div class="card-header"><h5>Headers</h5></div>
+
+                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.headers}}</pre>
+            </div>
+
+            <div class="card mt-5" v-if="slotProps.entry.content.response">
+                <div class="card-header"><h5>Response</h5></div>
+
+                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.response}}</pre>
+            </div>
         </div>
-    </loader>
+    </preview-screen>
 </template>
-
-<style scoped>
-</style>

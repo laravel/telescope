@@ -1,66 +1,43 @@
 <script type="text/ecmascript-6">
-    import _ from 'lodash';
-    import axios from 'axios';
-    import $ from 'jquery';
-
-    export default {
-        components: {},
-
-
-        /**
-         * The component's data.
-         */
-        data() {
-            return {
-                entry: null,
-                ready: false,
-            };
-        },
-
-
-        /**
-         * Prepare the component.
-         */
-        mounted() {
-            document.title = "Events - Telescope";
-
-            axios.get('/telescope/telescope-api/events/' + this.$route.params.id).then(response => {
-                this.entry = response.data.entry;
-
-                this.ready = true;
-            }).catch(error => {
-                this.ready = true;
-            })
-        },
-    }
+    export default {}
 </script>
 
 <template>
-    <loader :loading="!ready">
-        <div v-if="!entry">No entry found.</div>
+    <preview-screen title="Event Preview" resource="events" :id="$route.params.id">
+        <tbody slot="table-parameters" slot-scope="slotProps">
+        <tr>
+            <td class="table-fit font-weight-bold">Time</td>
+            <td>
+                {{localTime(slotProps.entry.created_at)}} ({{timeAgo(slotProps.entry.created_at, false)}})
+            </td>
+        </tr>
 
-        <div v-else>
-            <table class="table table-sm">
-                <tr>
-                    <td class="font-weight-bold pl-0">Name</td>
-                    <td>{{entry.content.event_name}}</td>
-                </tr>
-            </table>
+        <tr>
+            <td class="table-fit font-weight-bold">Event</td>
+            <td>
+                {{slotProps.entry.content.event_name}}
+            </td>
+        </tr>
+        </tbody>
 
-            <div class="card">
-                <code>
-                    {{entry.content.event_payload}}
-                </code>
+        <div slot="after-attributes-card" slot-scope="slotProps">
+            <div class="card mt-5" v-if="slotProps.entry.content.event_payload.length">
+                <div class="card-header"><h5>Event Data</h5></div>
+
+                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.event_payload}}</pre>
             </div>
 
-            <ul v-if="entry.content.listeners && entry.content.listeners.length">
-                <li v-for="listener in entry.content.listeners">
-                    {{listener}}
-                </li>
-            </ul>
-        </div>
-    </loader>
-</template>
+            <div class="card mt-5" v-if="slotProps.entry.content.listeners && slotProps.entry.content.listeners.length">
+                <div class="card-header"><h5>Registered Listeners</h5></div>
 
-<style scoped>
-</style>
+                <table class="table mb-0">
+                    <tbody>
+                    <tr v-for="listener in slotProps.entry.content.listeners">
+                        <td class="bg-secondary">{{listener}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </preview-screen>
+</template>
