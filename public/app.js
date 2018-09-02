@@ -52392,6 +52392,10 @@ var render = function() {
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.uri, 90)))
               ]),
               _vm._v(" "),
+              _c("td", [
+                _vm._v(_vm._s(slotProps.entry.content.response_status))
+              ]),
+              _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
                 _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
               ]),
@@ -52444,6 +52448,8 @@ var render = function() {
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Method")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Path")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Since")]),
         _vm._v(" "),
