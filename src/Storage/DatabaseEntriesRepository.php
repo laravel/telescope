@@ -19,7 +19,7 @@ class DatabaseEntriesRepository implements Contract
         return DB::table('telescope_entries')
             ->whereType($type)
             ->orderByDesc('id')
-            ->take(3)
+            ->take($params['take'] ?? 50)
             ->when($params['before'] ?? false, function($q, $value){
                 return $q->where('id', '<', $value);
             })

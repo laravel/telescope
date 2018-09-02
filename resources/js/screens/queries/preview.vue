@@ -31,7 +31,7 @@
             <div class="card mt-5">
                 <div class="card-header"><h5>Query & Bindings</h5></div>
 
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.sql}}</pre>
+                <code class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.sql}}</code>
                 <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.bindings}}</pre>
             </div>
         </div>

@@ -51944,7 +51944,7 @@ var render = function() {
                 _c("h5", [_vm._v("Query & Bindings")])
               ]),
               _vm._v(" "),
-              _c("pre", { staticClass: "bg-dark p-4 mb-0 text-white" }, [
+              _c("code", { staticClass: "bg-dark p-4 mb-0 text-white" }, [
                 _vm._v(_vm._s(slotProps.entry.content.sql))
               ]),
               _vm._v(" "),
@@ -69647,7 +69647,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         loadEntries: function loadEntries(after) {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex).then(function (response) {
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=50').then(function (response) {
                 if (response.data.entries.length) {
                     _this2.lastEntryIndex = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.last(response.data.entries).id;
                 } else {
