@@ -7,8 +7,6 @@
             'resource', 'title'
         ],
 
-        components: {},
-
 
         /**
          * The component's data.
@@ -21,11 +19,11 @@
                 lastEntryIndex: '',
                 hasMoreEntries: true,
                 hasNewEntries: false,
+                entriesPerRequest: 10,
                 newEntriesTimeout: null,
                 loadingNewEntries: false,
                 loadingMoreEntries: false,
                 newEntriesTimeoutInSeconds: 5000,
-                entriesPerRequest: 10,
             };
         },
 
@@ -65,7 +63,7 @@
 
                     if (response.data.entries.length < this.entriesPerRequest) {
                         this.hasMoreEntries = false;
-                    }else{
+                    } else {
                         this.hasMoreEntries = true;
                     }
 
@@ -192,7 +190,9 @@
                 </td>
             </tr>
 
+
             <slot name="row" v-for="entry in entries" :entry="entry"></slot>
+
 
             <tr v-if="hasMoreEntries">
                 <td colspan="100" class="text-center bg-secondary py-2">

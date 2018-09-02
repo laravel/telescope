@@ -7,9 +7,6 @@
             'resource', 'title', 'id'
         ],
 
-        components: {},
-
-
         /**
          * The component's data.
          */
@@ -33,6 +30,7 @@
                 this.ready = true;
             });
         },
+
 
         methods: {
             loadEntry(after){
@@ -73,6 +71,7 @@
             <table v-if="ready && entry" class="table mb-0 bg-secondary table-borderless table-sm">
                 <slot name="table-parameters" :entry="entry"></slot>
             </table>
+
 
             <slot v-if="ready && entry" name="below-table" :entry="entry"></slot>
         </div>
