@@ -18,10 +18,13 @@
                 entries: [],
                 ready: false,
                 loadingMoreEntries: false,
+                loadingNewEntries: false,
                 hasMoreEntries: true,
+                hasNewEntries: false,
+                newEntriesTimeout: null,
+                newEntriesTimeoutInSeconds: 5000,
                 tag: '',
                 lastEntryIndex: '',
-                firstEntryIndex: '',
             };
         },
 
@@ -35,13 +38,22 @@
             this.loadEntries((response) => {
                 this.entries = response.data.entries;
 
-                if (response.data.entries.length) {
-                    this.firstEntryIndex = _.first(response.data.entries).id;
-                }
-
                 this.ready = true;
+
+                this.newEntriesTimeout = setTimeout(() => {
+                    this.checkForNewEntries();
+                }, this.newEntriesTimeoutInSeconds);
             });
         },
+
+
+        /**
+         * Clean after the component is destroyed.
+         */
+        destroyed() {
+            clearTimeout(this.newEntriesTimeout);
+        },
+
 
         methods: {
             loadEntries(after){
@@ -60,18 +72,38 @@
 
 
             /**
+             * Keep checking if there are new entries.
+             */
+            checkForNewEntries(){
+                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1')
+                        .then(response => {
+                            if (response.data.entries.length && _.first(response.data.entries).id != _.first(this.entries).id) {
+                                this.hasNewEntries = true;
+                            } else {
+                                this.newEntriesTimeout = setTimeout(() => {
+                                    this.checkForNewEntries();
+                                }, this.newEntriesTimeoutInSeconds);
+                            }
+                        })
+            },
+
+
+            /**
              * Search the entries of this type.
              */
             search(){
                 this.debouncer(() => {
+                    this.hasNewEntries = false;
                     this.lastEntryIndex = '';
+
+                    clearTimeout(this.newEntriesTimeout);
 
                     this.loadEntries((response) => {
                         this.entries = response.data.entries;
 
-                        if (response.data.entries.length) {
-                            this.firstEntryIndex = _.first(response.data.entries).id;
-                        }
+                        this.newEntriesTimeout = setTimeout(() => {
+                            this.checkForNewEntries();
+                        }, this.newEntriesTimeoutInSeconds);
                     });
                 });
             },
@@ -89,6 +121,26 @@
                     this.loadingMoreEntries = false;
                 });
             },
+
+
+            loadNewEntries(){
+                this.hasMoreEntries = true;
+                this.hasNewEntries = false;
+                this.lastEntryIndex = '';
+                this.loadingNewEntries = true;
+
+                clearTimeout(this.newEntriesTimeout);
+
+                this.loadEntries((response) => {
+                    this.entries = response.data.entries;
+
+                    this.loadingNewEntries = false;
+
+                    this.newEntriesTimeout = setTimeout(() => {
+                        this.checkForNewEntries();
+                    }, this.newEntriesTimeoutInSeconds);
+                });
+            }
         }
     }
 </script>
@@ -124,21 +176,24 @@
 
 
             <tbody>
+            <tr v-if="hasNewEntries">
+                <td colspan="100" class="text-center bg-secondary py-2">
+                    <small><a href="#" v-on:click.prevent="loadNewEntries" v-if="!loadingNewEntries">Load New Entries</a></small>
+
+                    <small v-if="loadingNewEntries">Loading...</small>
+                </td>
+            </tr>
+
             <slot name="row" v-for="entry in entries" :entry="entry"></slot>
+
+            <tr v-if="hasMoreEntries">
+                <td colspan="100" class="text-center bg-secondary py-2">
+                    <small><a href="#" v-on:click.prevent="loadOlderEntries" v-if="!loadingMoreEntries">Load Older Entries</a></small>
+
+                    <small v-if="loadingMoreEntries">Loading...</small>
+                </td>
+            </tr>
             </tbody>
         </table>
-
-
-        <div class="d-flex align-items-center justify-content-center bg-secondary p-1 border-top paginator bottom-radius" v-if="hasMoreEntries">
-            <button class="btn btn-link" v-on:click.prevent="loadOlderEntries" v-if="!loadingMoreEntries">Load Older Entries</button>
-
-            <div v-if="loadingMoreEntries" class="p-2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon spin mr-2">
-                    <path d="M12 10a2 2 0 0 1-3.41 1.41A2 2 0 0 1 10 8V0a9.97 9.97 0 0 1 10 10h-8zm7.9 1.41A10 10 0 1 1 8.59.1v2.03a8 8 0 1 0 9.29 9.29h2.02zm-4.07 0a6 6 0 1 1-7.25-7.25v2.1a3.99 3.99 0 0 0-1.4 6.57 4 4 0 0 0 6.56-1.42h2.1z"/>
-                </svg>
-
-                <span>Scanning...</span>
-            </div>
-        </div>
     </div>
 </template>

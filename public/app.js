@@ -69598,10 +69598,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             entries: [],
             ready: false,
             loadingMoreEntries: false,
+            loadingNewEntries: false,
             hasMoreEntries: true,
+            hasNewEntries: false,
+            newEntriesTimeout: null,
+            newEntriesTimeoutInSeconds: 5000,
             tag: '',
-            lastEntryIndex: '',
-            firstEntryIndex: ''
+            lastEntryIndex: ''
         };
     },
 
@@ -69617,12 +69620,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         this.loadEntries(function (response) {
             _this.entries = response.data.entries;
 
-            if (response.data.entries.length) {
-                _this.firstEntryIndex = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.first(response.data.entries).id;
-            }
-
             _this.ready = true;
+
+            _this.newEntriesTimeout = setTimeout(function () {
+                _this.checkForNewEntries();
+            }, _this.newEntriesTimeoutInSeconds);
         });
+    },
+
+
+    /**
+     * Clean after the component is destroyed.
+     */
+    destroyed: function destroyed() {
+        clearTimeout(this.newEntriesTimeout);
     },
 
 
@@ -69645,20 +69656,41 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 
         /**
+         * Keep checking if there are new entries.
+         */
+        checkForNewEntries: function checkForNewEntries() {
+            var _this3 = this;
+
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1').then(function (response) {
+                if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.first(_this3.entries).id) {
+                    _this3.hasNewEntries = true;
+                } else {
+                    _this3.newEntriesTimeout = setTimeout(function () {
+                        _this3.checkForNewEntries();
+                    }, _this3.newEntriesTimeoutInSeconds);
+                }
+            });
+        },
+
+
+        /**
          * Search the entries of this type.
          */
         search: function search() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.debouncer(function () {
-                _this3.lastEntryIndex = '';
+                _this4.hasNewEntries = false;
+                _this4.lastEntryIndex = '';
 
-                _this3.loadEntries(function (response) {
-                    _this3.entries = response.data.entries;
+                clearTimeout(_this4.newEntriesTimeout);
 
-                    if (response.data.entries.length) {
-                        _this3.firstEntryIndex = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.first(response.data.entries).id;
-                    }
+                _this4.loadEntries(function (response) {
+                    _this4.entries = response.data.entries;
+
+                    _this4.newEntriesTimeout = setTimeout(function () {
+                        _this4.checkForNewEntries();
+                    }, _this4.newEntriesTimeoutInSeconds);
                 });
             });
         },
@@ -69668,16 +69700,36 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
          * Load more entries.
          */
         loadOlderEntries: function loadOlderEntries() {
-            var _this4 = this;
+            var _this5 = this;
 
             this.loadingMoreEntries = true;
 
             this.loadEntries(function (response) {
                 var _entries;
 
-                (_entries = _this4.entries).push.apply(_entries, _toConsumableArray(response.data.entries));
+                (_entries = _this5.entries).push.apply(_entries, _toConsumableArray(response.data.entries));
 
-                _this4.loadingMoreEntries = false;
+                _this5.loadingMoreEntries = false;
+            });
+        },
+        loadNewEntries: function loadNewEntries() {
+            var _this6 = this;
+
+            this.hasMoreEntries = true;
+            this.hasNewEntries = false;
+            this.lastEntryIndex = '';
+            this.loadingNewEntries = true;
+
+            clearTimeout(this.newEntriesTimeout);
+
+            this.loadEntries(function (response) {
+                _this6.entries = response.data.entries;
+
+                _this6.loadingNewEntries = false;
+
+                _this6.newEntriesTimeout = setTimeout(function () {
+                    _this6.checkForNewEntries();
+                }, _this6.newEntriesTimeoutInSeconds);
             });
         }
     }
@@ -70668,64 +70720,82 @@ var render = function() {
             _c(
               "tbody",
               [
+                _vm.hasNewEntries
+                  ? _c("tr", [
+                      _c(
+                        "td",
+                        {
+                          staticClass: "text-center bg-secondary py-2",
+                          attrs: { colspan: "100" }
+                        },
+                        [
+                          _c("small", [
+                            !_vm.loadingNewEntries
+                              ? _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.loadNewEntries($event)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Load New Entries")]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _vm.loadingNewEntries
+                            ? _c("small", [_vm._v("Loading...")])
+                            : _vm._e()
+                        ]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _vm._l(_vm.entries, function(entry) {
                   return _vm._t("row", null, { entry: entry })
-                })
+                }),
+                _vm._v(" "),
+                _vm.hasMoreEntries
+                  ? _c("tr", [
+                      _c(
+                        "td",
+                        {
+                          staticClass: "text-center bg-secondary py-2",
+                          attrs: { colspan: "100" }
+                        },
+                        [
+                          _c("small", [
+                            !_vm.loadingMoreEntries
+                              ? _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.loadOlderEntries($event)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Load Older Entries")]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _vm.loadingMoreEntries
+                            ? _c("small", [_vm._v("Loading...")])
+                            : _vm._e()
+                        ]
+                      )
+                    ])
+                  : _vm._e()
               ],
               2
             )
-          ]
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.hasMoreEntries
-      ? _c(
-          "div",
-          {
-            staticClass:
-              "d-flex align-items-center justify-content-center bg-secondary p-1 border-top paginator bottom-radius"
-          },
-          [
-            !_vm.loadingMoreEntries
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-link",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.loadOlderEntries($event)
-                      }
-                    }
-                  },
-                  [_vm._v("Load Older Entries")]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.loadingMoreEntries
-              ? _c("div", { staticClass: "p-2" }, [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "icon spin mr-2",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        viewBox: "0 0 20 20"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M12 10a2 2 0 0 1-3.41 1.41A2 2 0 0 1 10 8V0a9.97 9.97 0 0 1 10 10h-8zm7.9 1.41A10 10 0 1 1 8.59.1v2.03a8 8 0 1 0 9.29 9.29h2.02zm-4.07 0a6 6 0 1 1-7.25-7.25v2.1a3.99 3.99 0 0 0-1.4 6.57 4 4 0 0 0 6.56-1.42h2.1z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Scanning...")])
-                ])
-              : _vm._e()
           ]
         )
       : _vm._e()
