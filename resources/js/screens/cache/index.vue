@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <table-card title="Cache" resource="cache">
+    <index-screen title="Cache" resource="cache">
         <tr slot="table-header">
             <th scope="col">Action</th>
             <th scope="col">Key</th>
@@ -24,5 +24,5 @@
                 </router-link>
             </td>
         </tr>
-    </table-card>
+    </index-screen>
 </template>

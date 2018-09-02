@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <table-card title="Queries" resource="queries">
+    <index-screen title="Queries" resource="queries">
         <tr slot="table-header">
             <th scope="col">Query</th>
             <th scope="col">Connection</th>
@@ -24,5 +24,5 @@
                 </router-link>
             </td>
         </tr>
-    </table-card>
+    </index-screen>
 </template>

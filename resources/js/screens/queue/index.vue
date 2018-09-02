@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <table-card title="Queue" resource="queue">
+    <index-screen title="Queue" resource="queue">
         <tr slot="table-header">
             <th scope="col">Job</th>
             <th scope="col">Queue</th>
@@ -36,5 +36,5 @@
                 </router-link>
             </td>
         </tr>
-    </table-card>
+    </index-screen>
 </template>

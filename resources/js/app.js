@@ -16,7 +16,7 @@ const router = new VueRouter({
 });
 
 Vue.component('loader', require('./components/loader.vue'));
-Vue.component('table-card', require('./components/TableCard.vue'));
+Vue.component('index-screen', require('./components/IndexScreen.vue'));
 Vue.component('preview-screen', require('./components/PreviewScreen.vue'));
 
 Vue.mixin(Base);

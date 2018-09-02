@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <table-card title="Notifications" resource="notifications">
+    <index-screen title="Notifications" resource="notifications">
         <tr slot="table-header">
             <th scope="col">Channel</th>
             <th scope="col">Notifiable</th>
@@ -26,5 +26,5 @@
                 </router-link>
             </td>
         </tr>
-    </table-card>
+    </index-screen>
 </template>

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <table-card title="Events" resource="events">
+    <index-screen title="Events" resource="events">
         <tr slot="table-header">
             <th scope="col">Name</th>
             <th scope="col">Listeners</th>
@@ -24,5 +24,5 @@
                 </router-link>
             </td>
         </tr>
-    </table-card>
+    </index-screen>
 </template>

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <table-card title="Log Entries" resource="log">
+    <index-screen title="Log Entries" resource="log">
         <tr slot="table-header">
             <th scope="col">Message</th>
             <th scope="col">Type</th>
@@ -32,5 +32,5 @@
                 </router-link>
             </td>
         </tr>
-    </table-card>
+    </index-screen>
 </template>

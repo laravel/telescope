@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <table-card title="Requests" resource="requests">
+    <index-screen title="Requests" resource="requests">
         <tr slot="table-header">
             <th scope="col">Method</th>
             <th scope="col">Path</th>
@@ -26,6 +26,6 @@
                 </router-link>
             </td>
         </tr>
-    </table-card>
+    </index-screen>
 </template>
 

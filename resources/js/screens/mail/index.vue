@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <table-card title="Mail" resource="mail">
+    <index-screen title="Mail" resource="mail">
         <tr slot="table-header">
             <th scope="col">From</th>
             <th scope="col">To</th>
@@ -26,5 +26,5 @@
                 </router-link>
             </td>
         </tr>
-    </table-card>
+    </index-screen>
 </template>

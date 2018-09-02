@@ -15,16 +15,17 @@
          */
         data() {
             return {
+                tag: '',
                 entries: [],
                 ready: false,
-                loadingMoreEntries: false,
-                loadingNewEntries: false,
+                lastEntryIndex: '',
                 hasMoreEntries: true,
                 hasNewEntries: false,
                 newEntriesTimeout: null,
+                loadingNewEntries: false,
+                loadingMoreEntries: false,
                 newEntriesTimeoutInSeconds: 5000,
-                tag: '',
-                lastEntryIndex: '',
+                entriesPerRequest: 10,
             };
         },
 
@@ -57,11 +58,15 @@
 
         methods: {
             loadEntries(after){
-                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=50').then(response => {
+                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest).then(response => {
                     if (response.data.entries.length) {
                         this.lastEntryIndex = _.last(response.data.entries).id;
-                    } else {
+                    }
+
+                    if (response.data.entries.length < this.entriesPerRequest) {
                         this.hasMoreEntries = false;
+                    }else{
+                        this.hasMoreEntries = true;
                     }
 
                     if (_.isFunction(after)) {
@@ -123,6 +128,9 @@
             },
 
 
+            /**
+             * Load new entries.
+             */
             loadNewEntries(){
                 this.hasMoreEntries = true;
                 this.hasNewEntries = false;
