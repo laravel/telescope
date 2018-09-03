@@ -37566,32 +37566,15 @@ var router = new __WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]({
 });
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('loader', __webpack_require__(216));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('index-screen', __webpack_require__(247));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('index-screen', __webpack_require__(219));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('preview-screen', __webpack_require__(240));
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_1__base__["a" /* default */]);
 
-var admin = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#telescope',
 
-    router: router,
-
-    components: {},
-
-    data: function data() {
-        return {
-            loaded: true
-        };
-    },
-
-
-    /**
-     * The component has been created by Vue.
-     */
-    created: function created() {},
-
-
-    methods: {}
+    router: router
 });
 
 /***/ }),
@@ -49929,7 +49912,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49957,12 +49940,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             showAll: false
         };
     },
-
-
-    /**
-     * Prepare the component.
-     */
-    mounted: function mounted() {},
 
 
     computed: {
@@ -69530,8 +69507,226 @@ if (false) {
 }
 
 /***/ }),
-/* 219 */,
-/* 220 */,
+/* 219 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(220)
+/* template */
+var __vue_template__ = __webpack_require__(239)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/IndexScreen.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-30504bc3", Component.options)
+  } else {
+    hotAPI.reload("data-v-30504bc3", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 220 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['resource', 'title'],
+
+    /**
+     * The component's data.
+     */
+    data: function data() {
+        return {
+            tag: '',
+            entries: [],
+            ready: false,
+            lastEntryIndex: '',
+            hasMoreEntries: true,
+            hasNewEntries: false,
+            entriesPerRequest: 10,
+            newEntriesTimeout: null,
+            loadingNewEntries: false,
+            loadingMoreEntries: false,
+            newEntriesTimeoutInSeconds: 5000
+        };
+    },
+
+
+    /**
+     * Prepare the component.
+     */
+    mounted: function mounted() {
+        var _this = this;
+
+        document.title = this.title + " - Telescope";
+
+        this.loadEntries(function (response) {
+            _this.entries = response.data.entries;
+
+            _this.ready = true;
+
+            _this.newEntriesTimeout = setTimeout(function () {
+                _this.checkForNewEntries();
+            }, _this.newEntriesTimeoutInSeconds);
+        });
+    },
+
+
+    /**
+     * Clean after the component is destroyed.
+     */
+    destroyed: function destroyed() {
+        clearTimeout(this.newEntriesTimeout);
+    },
+
+
+    methods: {
+        loadEntries: function loadEntries(after) {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest).then(function (response) {
+                if (response.data.entries.length) {
+                    _this2.lastEntryIndex = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.last(response.data.entries).id;
+                }
+
+                if (response.data.entries.length < _this2.entriesPerRequest) {
+                    _this2.hasMoreEntries = false;
+                } else {
+                    _this2.hasMoreEntries = true;
+                }
+
+                if (__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.isFunction(after)) {
+                    after(response);
+                }
+            });
+        },
+
+
+        /**
+         * Keep checking if there are new entries.
+         */
+        checkForNewEntries: function checkForNewEntries() {
+            var _this3 = this;
+
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1').then(function (response) {
+                if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.first(_this3.entries).id) {
+                    _this3.hasNewEntries = true;
+                } else {
+                    _this3.newEntriesTimeout = setTimeout(function () {
+                        _this3.checkForNewEntries();
+                    }, _this3.newEntriesTimeoutInSeconds);
+                }
+            });
+        },
+
+
+        /**
+         * Search the entries of this type.
+         */
+        search: function search() {
+            var _this4 = this;
+
+            this.debouncer(function () {
+                _this4.hasNewEntries = false;
+                _this4.lastEntryIndex = '';
+
+                clearTimeout(_this4.newEntriesTimeout);
+
+                _this4.loadEntries(function (response) {
+                    _this4.entries = response.data.entries;
+
+                    _this4.newEntriesTimeout = setTimeout(function () {
+                        _this4.checkForNewEntries();
+                    }, _this4.newEntriesTimeoutInSeconds);
+                });
+            });
+        },
+
+
+        /**
+         * Load more entries.
+         */
+        loadOlderEntries: function loadOlderEntries() {
+            var _this5 = this;
+
+            this.loadingMoreEntries = true;
+
+            this.loadEntries(function (response) {
+                var _entries;
+
+                (_entries = _this5.entries).push.apply(_entries, _toConsumableArray(response.data.entries));
+
+                _this5.loadingMoreEntries = false;
+            });
+        },
+
+
+        /**
+         * Load new entries.
+         */
+        loadNewEntries: function loadNewEntries() {
+            var _this6 = this;
+
+            this.hasMoreEntries = true;
+            this.hasNewEntries = false;
+            this.lastEntryIndex = '';
+            this.loadingNewEntries = true;
+
+            clearTimeout(this.newEntriesTimeout);
+
+            this.loadEntries(function (response) {
+                _this6.entries = response.data.entries;
+
+                _this6.loadingNewEntries = false;
+
+                _this6.newEntriesTimeout = setTimeout(function () {
+                    _this6.checkForNewEntries();
+                }, _this6.newEntriesTimeoutInSeconds);
+            });
+        }
+    }
+});
+
+/***/ }),
 /* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -70414,450 +70609,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 239 */,
-/* 240 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(241)
-/* template */
-var __vue_template__ = __webpack_require__(242)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/PreviewScreen.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-a25f280e", Component.options)
-  } else {
-    hotAPI.reload("data-v-a25f280e", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 241 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['resource', 'title', 'id'],
-
-    components: {},
-
-    /**
-     * The component's data.
-     */
-    data: function data() {
-        return {
-            entry: null,
-            ready: false
-        };
-    },
-
-
-    /**
-     * Prepare the component.
-     */
-    mounted: function mounted() {
-        var _this = this;
-
-        document.title = this.title + " - Telescope";
-
-        this.loadEntry(function (response) {
-            _this.entry = response.data.entry;
-
-            _this.ready = true;
-        });
-    },
-
-
-    methods: {
-        loadEntry: function loadEntry(after) {
-            var _this2 = this;
-
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/' + this.resource + '/' + this.id).then(function (response) {
-                if (__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.isFunction(after)) {
-                    after(response);
-                }
-            }).catch(function (error) {
-                _this2.ready = true;
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 242 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "div",
-        { staticClass: "card" },
-        [
-          _c(
-            "div",
-            {
-              staticClass:
-                "card-header d-flex align-items-center justify-content-between"
-            },
-            [_c("h5", [_vm._v(_vm._s(this.title))])]
-          ),
-          _vm._v(" "),
-          !_vm.ready
-            ? _c(
-                "div",
-                {
-                  staticClass:
-                    "d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius"
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "icon spin mr-2",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        viewBox: "0 0 20 20"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        attrs: {
-                          d:
-                            "M12 10a2 2 0 0 1-3.41 1.41A2 2 0 0 1 10 8V0a9.97 9.97 0 0 1 10 10h-8zm7.9 1.41A10 10 0 1 1 8.59.1v2.03a8 8 0 1 0 9.29 9.29h2.02zm-4.07 0a6 6 0 1 1-7.25-7.25v2.1a3.99 3.99 0 0 0-1.4 6.57 4 4 0 0 0 6.56-1.42h2.1z"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Fetching...")])
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.ready && !_vm.entry
-            ? _c(
-                "div",
-                {
-                  staticClass:
-                    "d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius"
-                },
-                [_c("span", [_vm._v("No entry found.")])]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.ready && _vm.entry
-            ? _c(
-                "table",
-                {
-                  staticClass:
-                    "table mb-0 bg-secondary table-borderless table-sm"
-                },
-                [_vm._t("table-parameters", null, { entry: _vm.entry })],
-                2
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.ready && _vm.entry
-            ? _vm._t("below-table", null, { entry: _vm.entry })
-            : _vm._e()
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _vm.ready && _vm.entry
-        ? _vm._t("after-attributes-card", null, { entry: _vm.entry })
-        : _vm._e()
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-a25f280e", module.exports)
-  }
-}
-
-/***/ }),
-/* 243 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(248)
-/* template */
-var __vue_template__ = __webpack_require__(249)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/IndexScreen.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-30504bc3", Component.options)
-  } else {
-    hotAPI.reload("data-v-30504bc3", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 248 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['resource', 'title'],
-
-    components: {},
-
-    /**
-     * The component's data.
-     */
-    data: function data() {
-        return {
-            tag: '',
-            entries: [],
-            ready: false,
-            lastEntryIndex: '',
-            hasMoreEntries: true,
-            hasNewEntries: false,
-            newEntriesTimeout: null,
-            loadingNewEntries: false,
-            loadingMoreEntries: false,
-            newEntriesTimeoutInSeconds: 5000,
-            entriesPerRequest: 10
-        };
-    },
-
-
-    /**
-     * Prepare the component.
-     */
-    mounted: function mounted() {
-        var _this = this;
-
-        document.title = this.title + " - Telescope";
-
-        this.loadEntries(function (response) {
-            _this.entries = response.data.entries;
-
-            _this.ready = true;
-
-            _this.newEntriesTimeout = setTimeout(function () {
-                _this.checkForNewEntries();
-            }, _this.newEntriesTimeoutInSeconds);
-        });
-    },
-
-
-    /**
-     * Clean after the component is destroyed.
-     */
-    destroyed: function destroyed() {
-        clearTimeout(this.newEntriesTimeout);
-    },
-
-
-    methods: {
-        loadEntries: function loadEntries(after) {
-            var _this2 = this;
-
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest).then(function (response) {
-                if (response.data.entries.length) {
-                    _this2.lastEntryIndex = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.last(response.data.entries).id;
-                }
-
-                if (response.data.entries.length < _this2.entriesPerRequest) {
-                    _this2.hasMoreEntries = false;
-                } else {
-                    _this2.hasMoreEntries = true;
-                }
-
-                if (__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.isFunction(after)) {
-                    after(response);
-                }
-            });
-        },
-
-
-        /**
-         * Keep checking if there are new entries.
-         */
-        checkForNewEntries: function checkForNewEntries() {
-            var _this3 = this;
-
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1').then(function (response) {
-                if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.first(_this3.entries).id) {
-                    _this3.hasNewEntries = true;
-                } else {
-                    _this3.newEntriesTimeout = setTimeout(function () {
-                        _this3.checkForNewEntries();
-                    }, _this3.newEntriesTimeoutInSeconds);
-                }
-            });
-        },
-
-
-        /**
-         * Search the entries of this type.
-         */
-        search: function search() {
-            var _this4 = this;
-
-            this.debouncer(function () {
-                _this4.hasNewEntries = false;
-                _this4.lastEntryIndex = '';
-
-                clearTimeout(_this4.newEntriesTimeout);
-
-                _this4.loadEntries(function (response) {
-                    _this4.entries = response.data.entries;
-
-                    _this4.newEntriesTimeout = setTimeout(function () {
-                        _this4.checkForNewEntries();
-                    }, _this4.newEntriesTimeoutInSeconds);
-                });
-            });
-        },
-
-
-        /**
-         * Load more entries.
-         */
-        loadOlderEntries: function loadOlderEntries() {
-            var _this5 = this;
-
-            this.loadingMoreEntries = true;
-
-            this.loadEntries(function (response) {
-                var _entries;
-
-                (_entries = _this5.entries).push.apply(_entries, _toConsumableArray(response.data.entries));
-
-                _this5.loadingMoreEntries = false;
-            });
-        },
-
-
-        /**
-         * Load new entries.
-         */
-        loadNewEntries: function loadNewEntries() {
-            var _this6 = this;
-
-            this.hasMoreEntries = true;
-            this.hasNewEntries = false;
-            this.lastEntryIndex = '';
-            this.loadingNewEntries = true;
-
-            clearTimeout(this.newEntriesTimeout);
-
-            this.loadEntries(function (response) {
-                _this6.entries = response.data.entries;
-
-                _this6.loadingNewEntries = false;
-
-                _this6.newEntriesTimeout = setTimeout(function () {
-                    _this6.checkForNewEntries();
-                }, _this6.newEntriesTimeoutInSeconds);
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 249 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -71049,6 +70801,221 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-30504bc3", module.exports)
   }
 }
+
+/***/ }),
+/* 240 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(241)
+/* template */
+var __vue_template__ = __webpack_require__(242)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/PreviewScreen.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a25f280e", Component.options)
+  } else {
+    hotAPI.reload("data-v-a25f280e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 241 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['resource', 'title', 'id'],
+
+    /**
+     * The component's data.
+     */
+    data: function data() {
+        return {
+            entry: null,
+            ready: false
+        };
+    },
+
+
+    /**
+     * Prepare the component.
+     */
+    mounted: function mounted() {
+        var _this = this;
+
+        document.title = this.title + " - Telescope";
+
+        this.loadEntry(function (response) {
+            _this.entry = response.data.entry;
+
+            _this.ready = true;
+        });
+    },
+
+
+    methods: {
+        loadEntry: function loadEntry(after) {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/' + this.resource + '/' + this.id).then(function (response) {
+                if (__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.isFunction(after)) {
+                    after(response);
+                }
+            }).catch(function (error) {
+                _this2.ready = true;
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 242 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "div",
+        { staticClass: "card" },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "card-header d-flex align-items-center justify-content-between"
+            },
+            [_c("h5", [_vm._v(_vm._s(this.title))])]
+          ),
+          _vm._v(" "),
+          !_vm.ready
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius"
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "icon spin mr-2",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        viewBox: "0 0 20 20"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "M12 10a2 2 0 0 1-3.41 1.41A2 2 0 0 1 10 8V0a9.97 9.97 0 0 1 10 10h-8zm7.9 1.41A10 10 0 1 1 8.59.1v2.03a8 8 0 1 0 9.29 9.29h2.02zm-4.07 0a6 6 0 1 1-7.25-7.25v2.1a3.99 3.99 0 0 0-1.4 6.57 4 4 0 0 0 6.56-1.42h2.1z"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Fetching...")])
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.ready && !_vm.entry
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius"
+                },
+                [_c("span", [_vm._v("No entry found.")])]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.ready && _vm.entry
+            ? _c(
+                "table",
+                {
+                  staticClass:
+                    "table mb-0 bg-secondary table-borderless table-sm"
+                },
+                [_vm._t("table-parameters", null, { entry: _vm.entry })],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.ready && _vm.entry
+            ? _vm._t("below-table", null, { entry: _vm.entry })
+            : _vm._e()
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm.ready && _vm.entry
+        ? _vm._t("after-attributes-card", null, { entry: _vm.entry })
+        : _vm._e()
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a25f280e", module.exports)
+  }
+}
+
+/***/ }),
+/* 243 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

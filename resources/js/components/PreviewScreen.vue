@@ -7,6 +7,7 @@
             'resource', 'title', 'id'
         ],
 
+
         /**
          * The component's data.
          */

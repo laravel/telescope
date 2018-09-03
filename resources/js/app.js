@@ -21,25 +21,8 @@ Vue.component('preview-screen', require('./components/PreviewScreen.vue'));
 
 Vue.mixin(Base);
 
-const admin = new Vue({
+new Vue({
     el: '#telescope',
 
     router,
-
-    components: {},
-
-    data() {
-        return {
-            loaded: true
-        };
-    },
-
-    /**
-     * The component has been created by Vue.
-     */
-    created() {
-
-    },
-
-    methods: {}
 });
