@@ -23,6 +23,11 @@ class DatabaseEntriesRepository implements Contract
             ->when($params['before'] ?? false, function($q, $value){
                 return $q->where('id', '<', $value);
             })
+            ->when($params['tag'] ?? false, function($q, $value){
+                $records = DB::table('telescope_entries_tags')->whereTag($value)->pluck('entry_id')->toArray();
+
+                return $q->whereIn('id', $records);
+            })
             ->get()
             ->map(function ($entry) {
                 $entry->content = json_decode($entry->content);
