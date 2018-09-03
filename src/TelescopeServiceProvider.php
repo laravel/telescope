@@ -19,21 +19,17 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-            $this->loadMigrationsFrom(__DIR__.'/Storage/migrations');
-
-            $this->publishes([
-                __DIR__.'/../config/telescope.php' => config_path('telescope.php'),
-            ], 'telescope-config');
-        }
-
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'telescope');
-
         $this->registerRoutes();
+
+        $this->registerMigrations();
+
+        $this->registerPublishing();
 
         $this->storeEntriesBeforeTermination();
 
         $this->storeEntriesAfterWorkerLoop();
+
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'telescope');
     }
 
     /**
@@ -47,20 +43,7 @@ class TelescopeServiceProvider extends ServiceProvider
             __DIR__.'/../config/telescope.php', 'telescope'
         );
 
-        $watchers = [
-            Watchers\LogWatcher::class => config('telescope.watchers.log.enabled'),
-            Watchers\MailWatcher::class => config('telescope.watchers.mail.enabled'),
-            Watchers\QueueWatcher::class => config('telescope.watchers.queue.enabled'),
-            Watchers\CacheWatcher::class => config('telescope.watchers.cache.enabled'),
-            Watchers\EventsWatcher::class => config('telescope.watchers.events.enabled'),
-            Watchers\NotificationsWatcher::class => config('telescope.watchers.notifications.enabled'),
-            Watchers\QueriesWatcher::class => config('telescope.watchers.queries.enabled'),
-            Watchers\RequestsWatcher::class => config('telescope.watchers.requests.enabled'),
-        ];
-
-        foreach (array_keys(array_filter($watchers)) as $watcher) {
-            (new $watcher)->register($this->app);
-        }
+        $this->registerWatchers();
 
         $this->app->singleton(EntriesRepository::class, DatabaseEntriesRepository::class);
     }
@@ -131,5 +114,58 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->app['events']->listen(JobFailed::class, function ($event) {
             Telescope::store($this->app[EntriesRepository::class]);
         });
+    }
+
+    /**
+     * Register the package's publishable resources.
+     *
+     * @return void
+     */
+    private function registerPublishing()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/telescope.php' => config_path('telescope.php'),
+            ], 'telescope-config');
+
+            $this->publishes([
+                __DIR__.'/../public' => public_path('vendors/telescope'),
+            ], 'telescope-assets');
+        }
+    }
+
+    /**
+     * Register the package's migrations.
+     *
+     * @return void
+     */
+    private function registerMigrations()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->loadMigrationsFrom(__DIR__.'/Storage/migrations');
+        }
+    }
+
+    /**
+     * Register Telescope watchers.
+     *
+     * @return void
+     */
+    private function registerWatchers()
+    {
+        $watchers = [
+            Watchers\LogWatcher::class => config('telescope.watchers.log.enabled'),
+            Watchers\MailWatcher::class => config('telescope.watchers.mail.enabled'),
+            Watchers\QueueWatcher::class => config('telescope.watchers.queue.enabled'),
+            Watchers\CacheWatcher::class => config('telescope.watchers.cache.enabled'),
+            Watchers\EventsWatcher::class => config('telescope.watchers.events.enabled'),
+            Watchers\NotificationsWatcher::class => config('telescope.watchers.notifications.enabled'),
+            Watchers\QueriesWatcher::class => config('telescope.watchers.queries.enabled'),
+            Watchers\RequestsWatcher::class => config('telescope.watchers.requests.enabled'),
+        ];
+
+        foreach (array_keys(array_filter($watchers)) as $watcher) {
+            (new $watcher)->register($this->app);
+        }
     }
 }

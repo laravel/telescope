@@ -155,9 +155,10 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h5>{{this.title}}</h5>
+
             <input type="text" class="form-control w-25"
                    v-if="tag || entries.length > 0"
-                   placeholder="Search Tags" v-model="tag" @input.stop="search">
+                   placeholder="Search Tag" v-model="tag" @input.stop="search">
         </div>
 
 
