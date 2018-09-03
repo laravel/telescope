@@ -34,6 +34,8 @@ class QueueWatcher extends AbstractWatcher
     {
         list($payload, $tags) = $this->extractPayloadAndTags($event->job);
 
+        $tags[] = ['processed'];
+
         Telescope::record(4, [
             'id' => $event->job->getJobId(),
             'status' => 'processed',
@@ -55,6 +57,8 @@ class QueueWatcher extends AbstractWatcher
     public function recordFailedJob(JobFailed $event)
     {
         list($payload, $tags) = $this->extractPayloadAndTags($event->job);
+
+        $tags[] = ['failed'];
 
         Telescope::record(4, [
             'id' => $event->job->getJobId(),
@@ -98,12 +102,14 @@ class QueueWatcher extends AbstractWatcher
                     $tags[] = $model = get_class($value).':'.$value->getKey();
 
                     return [$property->getName() => $model];
-                }elseif(is_object($value)){
-                    return [$property->getName() => [
-                        'class' => get_class($value),
-                        'properties' => json_decode(json_encode($value), true)
-                    ]];
-                }else{
+                } elseif (is_object($value)) {
+                    return [
+                        $property->getName() => [
+                            'class' => get_class($value),
+                            'properties' => json_decode(json_encode($value), true)
+                        ]
+                    ];
+                } else {
                     return [$property->getName() => json_decode(json_encode($value), true)];
                 }
             })->toArray();
