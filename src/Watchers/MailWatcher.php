@@ -15,7 +15,7 @@ class MailWatcher extends AbstractWatcher
      */
     public function register($app)
     {
-        $app['events']->listen(MessageSent::class, [$this, 'recordANewMail']);
+        $app['events']->listen(MessageSent::class, [$this, 'recordMail']);
     }
 
     /**
@@ -24,7 +24,7 @@ class MailWatcher extends AbstractWatcher
      * @param \Illuminate\Mail\Events\MessageSent $event
      * @return void
      */
-    public function recordANewMail(MessageSent $event)
+    public function recordMail(MessageSent $event)
     {
         Telescope::record(1, [
             'from' => $event->message->getFrom(),

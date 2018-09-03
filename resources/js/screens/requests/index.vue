@@ -14,9 +14,9 @@
 
 
         <tr slot="row" slot-scope="slotProps">
-            <td>{{truncate(slotProps.entry.content.method, 20)}}</td>
+            <td class="table-fit">{{slotProps.entry.content.method}}</td>
             <td>{{truncate(slotProps.entry.content.uri, 90)}}</td>
-            <td>{{slotProps.entry.content.response_status}}</td>
+            <td class="table-fit">{{slotProps.entry.content.response_status}}</td>
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
             <td class="table-fit">
                 <router-link :to="{name:'request-preview', params:{id: slotProps.entry.id}}" class="control-action">

@@ -5,16 +5,16 @@
 <template>
     <index-screen title="Cache" resource="cache">
         <tr slot="table-header">
-            <th scope="col">Action</th>
             <th scope="col">Key</th>
+            <th scope="col">Action</th>
             <th scope="col">Since</th>
             <th scope="col"></th>
         </tr>
 
 
         <tr slot="row" slot-scope="slotProps">
-            <td>{{slotProps.entry.content.type}}</td>
             <td>{{truncate(slotProps.entry.content.key, 80)}}</td>
+            <td class="table-fit">{{slotProps.entry.content.type}}</td>
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
             <td class="table-fit">
                 <router-link :to="{name:'cache-preview', params:{id: slotProps.entry.id}}" class="control-action">

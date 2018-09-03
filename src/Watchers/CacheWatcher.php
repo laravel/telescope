@@ -18,10 +18,10 @@ class CacheWatcher extends AbstractWatcher
      */
     public function register($app)
     {
-        $app['events']->listen(CacheHit::class, [$this, 'recordAKeyWasFound']);
-        $app['events']->listen(CacheMissed::class, [$this, 'recordAMissingKey']);
-        $app['events']->listen(KeyWritten::class, [$this, 'recordAKeyWasUpdated']);
-        $app['events']->listen(KeyForgotten::class, [$this, 'recordAkeyWasRemoved']);
+        $app['events']->listen(CacheHit::class, [$this, 'recordFoundKey']);
+        $app['events']->listen(CacheMissed::class, [$this, 'recordMissingKey']);
+        $app['events']->listen(KeyWritten::class, [$this, 'recordUpdatedKey']);
+        $app['events']->listen(KeyForgotten::class, [$this, 'recordRemovedKey']);
     }
 
     /**
@@ -30,7 +30,7 @@ class CacheWatcher extends AbstractWatcher
      * @param \Illuminate\Cache\Events\CacheHit $event
      * @return void
      */
-    public function recordAKeyWasFound(CacheHit $event)
+    public function recordFoundKey(CacheHit $event)
     {
         Telescope::record(6, [
             'type' => 'hit',
@@ -45,7 +45,7 @@ class CacheWatcher extends AbstractWatcher
      * @param \Illuminate\Cache\Events\CacheMissed $event
      * @return void
      */
-    public function recordAMissingKey(CacheMissed $event)
+    public function recordMissingKey(CacheMissed $event)
     {
         Telescope::record(6, [
             'type' => 'missed',
@@ -59,7 +59,7 @@ class CacheWatcher extends AbstractWatcher
      * @param \Illuminate\Cache\Events\KeyWritten $event
      * @return void
      */
-    public function recordAKeyWasUpdated(KeyWritten $event)
+    public function recordUpdatedKey(KeyWritten $event)
     {
         Telescope::record(6, [
             'type' => 'put',
@@ -75,7 +75,7 @@ class CacheWatcher extends AbstractWatcher
      * @param \Illuminate\Cache\Events\KeyForgotten $event
      * @return void
      */
-    public function recordAkeyWasRemoved(KeyForgotten $event)
+    public function recordRemovedKey(KeyForgotten $event)
     {
         Telescope::record(6, [
             'type' => 'removed',

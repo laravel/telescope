@@ -15,7 +15,7 @@ class QueriesWatcher extends AbstractWatcher
      */
     public function register($app)
     {
-        $app['events']->listen(QueryExecuted::class, [$this, 'recordNewQuery']);
+        $app['events']->listen(QueryExecuted::class, [$this, 'recordQuery']);
     }
 
     /**
@@ -24,7 +24,7 @@ class QueriesWatcher extends AbstractWatcher
      * @param \Illuminate\Database\Events\QueryExecuted $event
      * @return void
      */
-    public function recordNewQuery(QueryExecuted $event)
+    public function recordQuery(QueryExecuted $event)
     {
         Telescope::record(7, [
             'connection' => $event->connectionName,

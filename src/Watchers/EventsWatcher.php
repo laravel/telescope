@@ -19,7 +19,7 @@ class EventsWatcher extends AbstractWatcher
      */
     public function register($app)
     {
-        $app['events']->listen('*', [$this, 'recordTheEvent']);
+        $app['events']->listen('*', [$this, 'recordEvent']);
     }
 
     /**
@@ -29,7 +29,7 @@ class EventsWatcher extends AbstractWatcher
      * @param  array $payload
      * @return void
      */
-    public function recordTheEvent($eventName, $payload)
+    public function recordEvent($eventName, $payload)
     {
         if (! $this->eventShouldBeRecorded($eventName)) {
             return;

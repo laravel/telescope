@@ -175,7 +175,7 @@
         </div>
 
 
-        <table v-if="ready && entries.length > 0" class="table table-hover mb-0 penultimate-column-right">
+        <table v-if="ready && entries.length > 0" class="table table-hover table-sm mb-0 penultimate-column-right">
             <thead>
             <slot name="table-header"></slot>
             </thead>
@@ -183,7 +183,7 @@
 
             <tbody>
             <tr v-if="hasNewEntries">
-                <td colspan="100" class="text-center bg-secondary py-2">
+                <td colspan="100" class="text-center bg-secondary">
                     <small><a href="#" v-on:click.prevent="loadNewEntries" v-if="!loadingNewEntries">Load New Entries</a></small>
 
                     <small v-if="loadingNewEntries">Loading...</small>
@@ -195,7 +195,7 @@
 
 
             <tr v-if="hasMoreEntries">
-                <td colspan="100" class="text-center bg-secondary py-2">
+                <td colspan="100" class="text-center bg-secondary">
                     <small><a href="#" v-on:click.prevent="loadOlderEntries" v-if="!loadingMoreEntries">Load Older Entries</a></small>
 
                     <small v-if="loadingMoreEntries">Loading...</small>

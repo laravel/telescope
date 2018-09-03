@@ -16,7 +16,7 @@ class RequestsWatcher extends AbstractWatcher
      */
     public function register($app)
     {
-        $app['events']->listen(RequestHandled::class, [$this, 'recordNewQuery']);
+        $app['events']->listen(RequestHandled::class, [$this, 'recordRequest']);
     }
 
     /**
@@ -25,7 +25,7 @@ class RequestsWatcher extends AbstractWatcher
      * @param \Illuminate\Foundation\Http\Events\RequestHandled $event
      * @return void
      */
-    public function recordNewQuery(RequestHandled $event)
+    public function recordRequest(RequestHandled $event)
     {
         Telescope::record(8, [
             'payload' => $event->request->all(),

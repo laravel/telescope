@@ -17,7 +17,7 @@ class LogWatcher extends AbstractWatcher
      */
     public function register($app)
     {
-        $app['events']->listen(MessageLogged::class, [$this, 'recordNewMessage']);
+        $app['events']->listen(MessageLogged::class, [$this, 'recordMessage']);
     }
 
     /**
@@ -26,7 +26,7 @@ class LogWatcher extends AbstractWatcher
      * @param \Illuminate\Log\Events\MessageLogged $event
      * @return void
      */
-    public function recordNewMessage(MessageLogged $event)
+    public function recordMessage(MessageLogged $event)
     {
         $output = [
             'level' => $event->level,

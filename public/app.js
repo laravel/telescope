@@ -50559,19 +50559,19 @@ var render = function() {
             return _c("tr", {}, [
               _c("td", [
                 _vm._v(
+                  _vm._s(_vm.truncate(slotProps.entry.content.notifiable, 50))
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  _vm._s(_vm.truncate(slotProps.entry.content.notification, 50))
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "table-fit" }, [
+                _vm._v(
                   _vm._s(_vm.truncate(slotProps.entry.content.channel, 20))
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  _vm._s(_vm.truncate(slotProps.entry.content.notifiable, 20))
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  _vm._s(_vm.truncate(slotProps.entry.content.notification, 20))
                 )
               ]),
               _vm._v(" "),
@@ -50624,11 +50624,11 @@ var render = function() {
     },
     [
       _c("tr", { attrs: { slot: "table-header" }, slot: "table-header" }, [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Channel")]),
-        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Notifiable")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Notification")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Channel")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Since")]),
         _vm._v(" "),
@@ -51035,11 +51035,11 @@ var render = function() {
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.name, 20)))
               ]),
               _vm._v(" "),
-              _c("td", [
+              _c("td", { staticClass: "table-fit" }, [
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.queue, 20)))
               ]),
               _vm._v(" "),
-              _c("td", [
+              _c("td", { staticClass: "table-fit" }, [
                 _vm._v(
                   _vm._s(_vm.truncate(slotProps.entry.content.connection, 20))
                 )
@@ -51400,7 +51400,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", [
+              _c("td", { staticClass: "table-fit" }, [
                 _vm._v(_vm._s(slotProps.entry.content.listeners.length))
               ]),
               _vm._v(" "),
@@ -51715,10 +51715,12 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return _c("tr", {}, [
-              _c("td", [_vm._v(_vm._s(slotProps.entry.content.type))]),
-              _vm._v(" "),
               _c("td", [
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.key, 80)))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "table-fit" }, [
+                _vm._v(_vm._s(slotProps.entry.content.type))
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
@@ -51770,9 +51772,9 @@ var render = function() {
     },
     [
       _c("tr", { attrs: { slot: "table-header" }, slot: "table-header" }, [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")]),
-        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Key")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Since")]),
         _vm._v(" "),
@@ -52019,10 +52021,10 @@ var render = function() {
           fn: function(slotProps) {
             return _c("tr", {}, [
               _c("td", [
-                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.sql, 90)))
+                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.sql, 100)))
               ]),
               _vm._v(" "),
-              _c("td", [
+              _c("td", { staticClass: "table-fit" }, [
                 _vm._v(
                   _vm._s(_vm.truncate(slotProps.entry.content.connection, 20))
                 )
@@ -52361,15 +52363,15 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return _c("tr", {}, [
-              _c("td", [
-                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.method, 20)))
+              _c("td", { staticClass: "table-fit" }, [
+                _vm._v(_vm._s(slotProps.entry.content.method))
               ]),
               _vm._v(" "),
               _c("td", [
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.uri, 90)))
               ]),
               _vm._v(" "),
-              _c("td", [
+              _c("td", { staticClass: "table-fit" }, [
                 _vm._v(_vm._s(slotProps.entry.content.response_status))
               ]),
               _vm._v(" "),
@@ -70704,7 +70706,10 @@ var render = function() {
     _vm.ready && _vm.entries.length > 0
       ? _c(
           "table",
-          { staticClass: "table table-hover mb-0 penultimate-column-right" },
+          {
+            staticClass:
+              "table table-hover table-sm mb-0 penultimate-column-right"
+          },
           [
             _c("thead", [_vm._t("table-header")], 2),
             _vm._v(" "),
@@ -70716,7 +70721,7 @@ var render = function() {
                       _c(
                         "td",
                         {
-                          staticClass: "text-center bg-secondary py-2",
+                          staticClass: "text-center bg-secondary",
                           attrs: { colspan: "100" }
                         },
                         [
@@ -70755,7 +70760,7 @@ var render = function() {
                       _c(
                         "td",
                         {
-                          staticClass: "text-center bg-secondary py-2",
+                          staticClass: "text-center bg-secondary",
                           attrs: { colspan: "100" }
                         },
                         [

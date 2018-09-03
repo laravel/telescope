@@ -5,18 +5,18 @@
 <template>
     <index-screen title="Notifications" resource="notifications">
         <tr slot="table-header">
-            <th scope="col">Channel</th>
             <th scope="col">Notifiable</th>
             <th scope="col">Notification</th>
+            <th scope="col">Channel</th>
             <th scope="col">Since</th>
             <th scope="col"></th>
         </tr>
 
 
         <tr slot="row" slot-scope="slotProps">
-            <td>{{truncate(slotProps.entry.content.channel, 20)}}</td>
-            <td>{{truncate(slotProps.entry.content.notifiable, 20)}}</td>
-            <td>{{truncate(slotProps.entry.content.notification, 20)}}</td>
+            <td>{{truncate(slotProps.entry.content.notifiable, 50)}}</td>
+            <td>{{truncate(slotProps.entry.content.notification, 50)}}</td>
+            <td class="table-fit">{{truncate(slotProps.entry.content.channel, 20)}}</td>
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
             <td class="table-fit">
                 <router-link :to="{name:'notification-preview', params:{id: slotProps.entry.id}}" class="control-action">

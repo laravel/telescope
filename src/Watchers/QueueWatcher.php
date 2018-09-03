@@ -20,8 +20,8 @@ class QueueWatcher extends AbstractWatcher
      */
     public function register($app)
     {
-        $app['events']->listen(JobProcessed::class, [$this, 'recordJobProcessed']);
-        $app['events']->listen(JobFailed::class, [$this, 'recordJobFailed']);
+        $app['events']->listen(JobProcessed::class, [$this, 'recordProcessedJob']);
+        $app['events']->listen(JobFailed::class, [$this, 'recordFailedJob']);
     }
 
     /**
@@ -30,7 +30,7 @@ class QueueWatcher extends AbstractWatcher
      * @param \Illuminate\Queue\Events\JobProcessed $event
      * @return void
      */
-    public function recordJobProcessed(JobProcessed $event)
+    public function recordProcessedJob(JobProcessed $event)
     {
         list($payload, $tags) = $this->extractPayloadAndTags($event->job);
 
@@ -52,7 +52,7 @@ class QueueWatcher extends AbstractWatcher
      * @param \Illuminate\Queue\Events\JobFailed $event
      * @return void
      */
-    public function recordJobFailed(JobFailed $event)
+    public function recordFailedJob(JobFailed $event)
     {
         list($payload, $tags) = $this->extractPayloadAndTags($event->job);
 

@@ -16,7 +16,7 @@ class NotificationsWatcher extends AbstractWatcher
      */
     public function register($app)
     {
-        $app['events']->listen(NotificationSent::class, [$this, 'recordANewNotification']);
+        $app['events']->listen(NotificationSent::class, [$this, 'recordNotification']);
     }
 
     /**
@@ -25,7 +25,7 @@ class NotificationsWatcher extends AbstractWatcher
      * @param \Illuminate\Notifications\Events\NotificationSent $event
      * @return void
      */
-    public function recordANewNotification(NotificationSent $event)
+    public function recordNotification(NotificationSent $event)
     {
         Telescope::record(3, [
             'channel' => $event->channel,
