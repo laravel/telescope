@@ -3,40 +3,12 @@
 namespace Laravel\Telescope\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Laravel\Telescope\EntryType;
 use Illuminate\Routing\Controller;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
-class MailController extends Controller
+class MailController extends EntryController
 {
-    /**
-     * List the entries of the given type.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Laravel\Telescope\Contracts\EntriesRepository $storage
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request, EntriesRepository $storage)
-    {
-        return response()->json([
-            'entries' => $storage->get(1, $request->all())
-        ]);
-    }
-
-    /**
-     * Get an entry with the given ID.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Laravel\Telescope\Contracts\EntriesRepository $storage
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request, EntriesRepository $storage, $id)
-    {
-        return response()->json([
-            'entry' => $storage->find($id)
-        ]);
-    }
-
     /**
      * Preview the HTML content of the email.
      *
@@ -45,7 +17,7 @@ class MailController extends Controller
      * @param  integer $id
      * @return mixed
      */
-    public function previewHTML(Request $request, EntriesRepository $storage, $id)
+    public function previewHtml(Request $request, EntriesRepository $storage, $id)
     {
         $mail = $storage->find($id);
 
@@ -60,7 +32,7 @@ class MailController extends Controller
      * @param  integer $id
      * @return mixed
      */
-    public function downloadEML(Request $request, EntriesRepository $storage, $id)
+    public function downloadEml(Request $request, EntriesRepository $storage, $id)
     {
         $mail = $storage->find($id);
 
@@ -68,5 +40,15 @@ class MailController extends Controller
             'Content-Type' => 'message/rfc822',
             'Content-Disposition' => 'attachment; filename="mail-'.$id.'.eml"',
         ]);
+    }
+
+    /**
+     * The entry type for the controller.
+     *
+     * @return int
+     */
+    protected function entryType()
+    {
+        return EntryType::MAIL;
     }
 }

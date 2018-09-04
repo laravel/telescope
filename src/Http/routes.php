@@ -3,8 +3,8 @@
 // Mail entries...
 Route::get('/telescope-api/mail', 'MailController@index');
 Route::get('/telescope-api/mail/{id}', 'MailController@show');
-Route::get('/telescope-api/mail/{id}/preview', 'MailController@previewHTML');
-Route::get('/telescope-api/mail/{id}/download', 'MailController@downloadEML');
+Route::get('/telescope-api/mail/{id}/preview', 'MailController@previewHtml');
+Route::get('/telescope-api/mail/{id}/download', 'MailController@downloadEml');
 
 // Log entries...
 Route::get('/telescope-api/log', 'LogController@index');
