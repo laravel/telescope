@@ -50823,7 +50823,7 @@ var render = function() {
               _c("td", [
                 _vm._v(
                   "\n            " +
-                    _vm._s(slotProps.entry.content.tries) +
+                    _vm._s(slotProps.entry.content.tries || "-") +
                     "\n        "
                 )
               ])
@@ -50837,7 +50837,7 @@ var render = function() {
               _c("td", [
                 _vm._v(
                   "\n            " +
-                    _vm._s(slotProps.entry.content.timeout) +
+                    _vm._s(slotProps.entry.content.timeout || "-") +
                     "\n        "
                 )
               ])
@@ -52021,7 +52021,7 @@ var render = function() {
           fn: function(slotProps) {
             return _c("tr", {}, [
               _c("td", [
-                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.sql, 100)))
+                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.sql, 90)))
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
@@ -52295,6 +52295,10 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(247)
+}
 var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(211)
@@ -52303,7 +52307,7 @@ var __vue_template__ = __webpack_require__(212)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -52344,7 +52348,15 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    methods: {
+        statusClass: function statusClass(status) {
+            if (status < 300) return 'success';
+            if (status < 500) return 'warning';
+            if (status >= 500) return 'danger';
+        }
+    }
+});
 
 /***/ }),
 /* 212 */
@@ -52363,8 +52375,22 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return _c("tr", {}, [
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(slotProps.entry.content.method))
+              _c("td", { staticClass: "table-fit pr-0" }, [
+                _c(
+                  "span",
+                  {
+                    staticClass: "badge font-weight-light",
+                    class: "badge-" + slotProps.entry.content.method,
+                    staticStyle: { "font-size": "0.5em" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(slotProps.entry.content.method) +
+                        "\n            "
+                    )
+                  ]
+                )
               ]),
               _vm._v(" "),
               _c("td", [
@@ -52372,7 +52398,21 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(slotProps.entry.content.response_status))
+                _c(
+                  "span",
+                  {
+                    class:
+                      "text-" +
+                      _vm.statusClass(slotProps.entry.content.response_status)
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(slotProps.entry.content.response_status) +
+                        "\n            "
+                    )
+                  ]
+                )
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
@@ -52424,7 +52464,7 @@ var render = function() {
     },
     [
       _c("tr", { attrs: { slot: "table-header" }, slot: "table-header" }, [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Method")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Verb")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Path")]),
         _vm._v(" "),
@@ -71021,6 +71061,49 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(248);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("b7975de0", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2a5930cd\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2a5930cd\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 248 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.badge-GET{\n    background-color: #cde0ff;\n}\n.badge-POST, .badge-PUT, .badge-PATCH{\n    background-color: #cde8cf;\n}\n.badge-DELETE{\n    background-color: #ffb7b7;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

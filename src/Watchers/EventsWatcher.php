@@ -37,7 +37,7 @@ class EventsWatcher extends AbstractWatcher
 
         list($payload, $tags) = $this->extractPayloadAndTags($eventName, $payload);
 
-        Telescope::record(5, [
+        Telescope::recordEvent([
             'event_name' => $eventName,
             'event_payload' => $payload,
             'listeners' => $this->formatListeners($eventName),

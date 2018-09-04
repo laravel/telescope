@@ -1,11 +1,19 @@
 <script type="text/ecmascript-6">
-    export default {}
+    export default {
+        methods: {
+            statusClass(status){
+                if (status < 300) return 'success';
+                if (status < 500) return 'warning';
+                if (status >= 500) return 'danger';
+            }
+        }
+    }
 </script>
 
 <template>
     <index-screen title="Requests" resource="requests">
         <tr slot="table-header">
-            <th scope="col">Method</th>
+            <th scope="col">Verb</th>
             <th scope="col">Path</th>
             <th scope="col">Status</th>
             <th scope="col">Since</th>
@@ -14,9 +22,17 @@
 
 
         <tr slot="row" slot-scope="slotProps">
-            <td class="table-fit">{{slotProps.entry.content.method}}</td>
+            <td class="table-fit pr-0">
+                <span class="badge font-weight-light" :class="'badge-'+slotProps.entry.content.method" style="font-size:0.5em">
+                    {{slotProps.entry.content.method}}
+                </span>
+            </td>
             <td>{{truncate(slotProps.entry.content.uri, 90)}}</td>
-            <td class="table-fit">{{slotProps.entry.content.response_status}}</td>
+            <td class="table-fit">
+                <span :class="'text-'+statusClass(slotProps.entry.content.response_status)">
+                    {{slotProps.entry.content.response_status}}
+                </span>
+            </td>
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
             <td class="table-fit">
                 <router-link :to="{name:'request-preview', params:{id: slotProps.entry.id}}" class="control-action">
@@ -29,3 +45,16 @@
     </index-screen>
 </template>
 
+<style>
+    .badge-GET{
+        background-color: #cde0ff;
+    }
+
+    .badge-POST, .badge-PUT, .badge-PATCH{
+        background-color: #cde8cf;
+    }
+
+    .badge-DELETE{
+        background-color: #ffb7b7;
+    }
+</style>

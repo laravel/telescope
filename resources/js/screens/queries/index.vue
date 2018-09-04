@@ -13,7 +13,7 @@
 
 
         <tr slot="row" slot-scope="slotProps">
-            <td>{{truncate(slotProps.entry.content.sql, 100)}}</td>
+            <td>{{truncate(slotProps.entry.content.sql, 90)}}</td>
             <td class="table-fit">{{truncate(slotProps.entry.content.connection, 20)}}</td>
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
             <td class="table-fit">

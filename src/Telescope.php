@@ -43,7 +43,7 @@ class Telescope
      * @param  array $tags
      * @return void
      */
-    public static function record($type, $entry, $tags = [])
+    protected static function record($type, $entry, $tags = [])
     {
         if (static::$filterUsing && ! call_user_func(static::$filterUsing, $type, $entry)) {
             return;
@@ -61,6 +61,102 @@ class Telescope
             'created_at' => now()->toDateTimeString(),
             'tags' => $tags
         ];
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  array $entry
+     * @param  array $tags
+     * @return void
+     */
+    public static function recordMail($entry, $tags = [])
+    {
+        return static::record(1, $entry, $tags);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  array $entry
+     * @param  array $tags
+     * @return void
+     */
+    public static function recordLogEntry($entry, $tags = [])
+    {
+        return static::record(2, $entry, $tags);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  array $entry
+     * @param  array $tags
+     * @return void
+     */
+    public static function recordNotification($entry, $tags = [])
+    {
+        return static::record(3, $entry, $tags);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  array $entry
+     * @param  array $tags
+     * @return void
+     */
+    public static function recordJob($entry, $tags = [])
+    {
+        return static::record(4, $entry, $tags);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  array $entry
+     * @param  array $tags
+     * @return void
+     */
+    public static function recordEvent($entry, $tags = [])
+    {
+        return static::record(5, $entry, $tags);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  array $entry
+     * @param  array $tags
+     * @return void
+     */
+    public static function recordCacheEntry($entry, $tags = [])
+    {
+        return static::record(6, $entry, $tags);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  array $entry
+     * @param  array $tags
+     * @return void
+     */
+    public static function recordQuery($entry, $tags = [])
+    {
+        return static::record(7, $entry, $tags);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  array $entry
+     * @param  array $tags
+     * @return void
+     */
+    public static function recordRequest($entry, $tags = [])
+    {
+        return static::record(8, $entry, $tags);
     }
 
     /**

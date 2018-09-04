@@ -27,7 +27,7 @@ class RequestsWatcher extends AbstractWatcher
      */
     public function recordRequest(RequestHandled $event)
     {
-        Telescope::record(8, [
+        Telescope::recordRequest([
             'payload' => $event->request->all(),
             'uri' => str_replace($event->request->root(), '', $event->request->path()),
             'method' => $event->request->method(),

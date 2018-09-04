@@ -34,14 +34,14 @@
         <tr>
             <td class="table-fit font-weight-bold">Tries</td>
             <td>
-                {{slotProps.entry.content.tries}}
+                {{slotProps.entry.content.tries || '-'}}
             </td>
         </tr>
 
         <tr>
             <td class="table-fit font-weight-bold">Timeout</td>
             <td>
-                {{slotProps.entry.content.timeout}}
+                {{slotProps.entry.content.timeout || '-'}}
             </td>
         </tr>
 

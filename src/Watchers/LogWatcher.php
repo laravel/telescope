@@ -39,7 +39,7 @@ class LogWatcher extends AbstractWatcher
             $output['context'] = $event->context;
         }
 
-        Telescope::record(2, $output);
+        Telescope::recordLogEntry($output);
     }
 
     /**

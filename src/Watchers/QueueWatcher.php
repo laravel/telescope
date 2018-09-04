@@ -36,7 +36,7 @@ class QueueWatcher extends AbstractWatcher
 
         $tags[] = ['processed'];
 
-        Telescope::record(4, [
+        Telescope::recordJob([
             'id' => $event->job->getJobId(),
             'status' => 'processed',
             'name' => $event->job->payload()['displayName'],
@@ -60,7 +60,7 @@ class QueueWatcher extends AbstractWatcher
 
         $tags[] = ['failed'];
 
-        Telescope::record(4, [
+        Telescope::recordJob([
             'id' => $event->job->getJobId(),
             'status' => 'failed',
             'exception' => [

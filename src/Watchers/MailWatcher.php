@@ -26,7 +26,7 @@ class MailWatcher extends AbstractWatcher
      */
     public function recordMail(MessageSent $event)
     {
-        Telescope::record(1, [
+        Telescope::recordMail([
             'from' => $event->message->getFrom(),
             'to' => $event->message->getTo(),
             'replyTo' => $event->message->getReplyTo(),

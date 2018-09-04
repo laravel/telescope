@@ -26,7 +26,7 @@ class QueriesWatcher extends AbstractWatcher
      */
     public function recordQuery(QueryExecuted $event)
     {
-        Telescope::record(7, [
+        Telescope::recordQuery([
             'connection' => $event->connectionName,
             'bindings' => $event->bindings,
             'sql' => $event->sql,

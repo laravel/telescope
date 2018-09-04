@@ -27,7 +27,7 @@ class NotificationsWatcher extends AbstractWatcher
      */
     public function recordNotification(NotificationSent $event)
     {
-        Telescope::record(3, [
+        Telescope::recordNotification([
             'channel' => $event->channel,
             'response' => $event->response,
             'notifiable' => $this->formatNotifiable($event->notifiable),

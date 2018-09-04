@@ -26,17 +26,21 @@ class CacheWatcher extends AbstractWatcher
 
     /**
      * Record a cache key was found.
-     * 
+     *
      * @param \Illuminate\Cache\Events\CacheHit $event
      * @return void
      */
     public function recordFoundKey(CacheHit $event)
     {
-        Telescope::record(6, [
+        if (! $this->shouldRecord($event)) {
+            return;
+        }
+
+        Telescope::recordCacheEntry([
             'type' => 'hit',
             'key' => $event->key,
             'value' => $event->value,
-        ]);
+        ], [$event->key]);
     }
 
     /**
@@ -47,10 +51,14 @@ class CacheWatcher extends AbstractWatcher
      */
     public function recordMissingKey(CacheMissed $event)
     {
-        Telescope::record(6, [
+        if (! $this->shouldRecord($event)) {
+            return;
+        }
+
+        Telescope::recordCacheEntry([
             'type' => 'missed',
             'key' => $event->key,
-        ]);
+        ], [$event->key]);
     }
 
     /**
@@ -61,12 +69,16 @@ class CacheWatcher extends AbstractWatcher
      */
     public function recordUpdatedKey(KeyWritten $event)
     {
-        Telescope::record(6, [
+        if (! $this->shouldRecord($event)) {
+            return;
+        }
+
+        Telescope::recordCacheEntry([
             'type' => 'put',
             'key' => $event->key,
             'value' => $event->value,
             'expiration' => $event->minutes,
-        ]);
+        ], [$event->key]);
     }
 
     /**
@@ -77,9 +89,24 @@ class CacheWatcher extends AbstractWatcher
      */
     public function recordRemovedKey(KeyForgotten $event)
     {
-        Telescope::record(6, [
+        if (! $this->shouldRecord($event)) {
+            return;
+        }
+
+        Telescope::recordCacheEntry([
             'type' => 'removed',
             'key' => $event->key,
-        ]);
+        ], [$event->key]);
+    }
+
+    /**
+     * Determine if the event should be recorded.
+     *
+     * @param  mixed $event
+     * @return bool
+     */
+    private function shouldRecord($event)
+    {
+        return $event->key != 'illuminate:queue:restart	';
     }
 }

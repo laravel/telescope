@@ -13,7 +13,7 @@
 </head>
 <body>
 <div id="telescope" v-cloak>
-    <div class="container">
+    <div class="container mb-5">
         <div class="d-flex align-items-center py-4 header">
             <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
                 <path fill="#4040C8" d="M0 40a39.87 39.87 0 0 1 11.72-28.28A40 40 0 1 1 0 40zm34 10a4 4 0 0 1-4-4v-2a2 2 0 1 0-4 0v2a4 4 0 0 1-4 4h-2a2 2 0 1 0 0 4h2a4 4 0 0 1 4 4v2a2 2 0 1 0 4 0v-2a4 4 0 0 1 4-4h2a2 2 0 1 0 0-4h-2zm24-24a6 6 0 0 1-6-6v-3a3 3 0 0 0-6 0v3a6 6 0 0 1-6 6h-3a3 3 0 0 0 0 6h3a6 6 0 0 1 6 6v3a3 3 0 0 0 6 0v-3a6 6 0 0 1 6-6h3a3 3 0 0 0 0-6h-3zm-4 36a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM21 28a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -31,6 +31,14 @@
                                 <path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-5.6-4.29a9.95 9.95 0 0 1 11.2 0 8 8 0 1 0-11.2 0zm6.12-7.64l3.02-3.02 1.41 1.41-3.02 3.02a2 2 0 1 1-1.41-1.41z"/>
                             </svg>
                             <span>Overview</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link active-class="active" to="/requests" class="nav-link d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M0 3c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm2 2v12h16V5H2zm8 3l4 5H6l4-5z"/>
+                            </svg>
+                            <span>Requests</span>
                         </router-link>
                     </li>
                     <li class="nav-item">
@@ -79,14 +87,6 @@
                                 <path d="M1 1h18v2H1V1zm0 8h18v2H1V9zm0 8h18v2H1v-2zM1 5h12v2H1V5zm0 8h12v2H1v-2z"/>
                             </svg>
                             <span>Queries</span>
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link active-class="active" to="/requests" class="nav-link d-flex align-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M0 3c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm2 2v12h16V5H2zm8 3l4 5H6l4-5z"/>
-                            </svg>
-                            <span>Requests</span>
                         </router-link>
                     </li>
                     <li class="nav-item">
