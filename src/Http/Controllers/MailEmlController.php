@@ -3,7 +3,6 @@
 namespace Laravel\Telescope\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Laravel\Telescope\EntryType;
 use Illuminate\Routing\Controller;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
