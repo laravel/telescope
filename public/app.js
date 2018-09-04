@@ -69584,7 +69584,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             lastEntryIndex: '',
             hasMoreEntries: true,
             hasNewEntries: false,
-            entriesPerRequest: 10,
+            entriesPerRequest: 50,
             newEntriesTimeout: null,
             loadingNewEntries: false,
             loadingMoreEntries: false,

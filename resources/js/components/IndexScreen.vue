@@ -19,7 +19,7 @@
                 lastEntryIndex: '',
                 hasMoreEntries: true,
                 hasNewEntries: false,
-                entriesPerRequest: 10,
+                entriesPerRequest: 50,
                 newEntriesTimeout: null,
                 loadingNewEntries: false,
                 loadingMoreEntries: false,
