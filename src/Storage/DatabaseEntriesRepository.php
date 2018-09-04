@@ -8,7 +8,7 @@ use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 class DatabaseEntriesRepository implements Contract
 {
     /**
-     * Return an entry with the given ID.
+     * Find the entry with the given ID.
      *
      * @param  mixed  $id
      * @return mixed
@@ -37,8 +37,6 @@ class DatabaseEntriesRepository implements Contract
     {
         return DB::table('telescope_entries')
             ->whereType($type)
-            ->orderByDesc('id')
-            ->take($options['take'] ?? 50)
             ->when($options['before'] ?? false, function ($q, $value) {
                 return $q->where('id', '<', $value);
             })
@@ -47,11 +45,11 @@ class DatabaseEntriesRepository implements Contract
 
                 return $q->whereIn('id', $records);
             })
+            ->take($options['take'] ?? 50)
+            ->orderByDesc('id')
             ->get()
-            ->map(function ($entry) {
+            ->each(function ($entry) {
                 $entry->content = json_decode($entry->content);
-
-                return $entry;
             });
     }
 
