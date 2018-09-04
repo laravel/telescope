@@ -30,7 +30,7 @@ class EventsWatcher extends Watcher
      */
     public function recordEvent($eventName, $payload)
     {
-        if (! $this->eventShouldBeRecorded($eventName)) {
+        if ($this->eventShouldBeIgnored($eventName)) {
             return;
         }
 
@@ -44,18 +44,15 @@ class EventsWatcher extends Watcher
     }
 
     /**
-     * Determine if the event should be recorded.
+     * Determine if the event should be ignored.
      *
      * @param  string $eventName
      * @return bool
      */
-    private function eventShouldBeRecorded($eventName)
+    private function eventShouldBeIgnored($eventName)
     {
-        if (Telescope::ignoresFrameworkEvents() && $this->eventIsFiredByTheFramework($eventName)) {
-            return false;
-        }
-
-        return true;
+        return Telescope::ignoresFrameworkEvents() &&
+               $this->eventIsFiredByTheFramework($eventName);
     }
 
     /**
