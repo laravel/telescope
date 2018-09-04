@@ -5,7 +5,7 @@ namespace Laravel\Telescope\Watchers;
 use Laravel\Telescope\Telescope;
 use Illuminate\Mail\Events\MessageSent;
 
-class MailWatcher extends AbstractWatcher
+class MailWatcher extends Watcher
 {
     /**
      * Register the watcher.

@@ -54,7 +54,7 @@ class DatabaseEntriesRepository implements Contract
     }
 
     /**
-     * Store the given entries.
+     * Store the given array of entries.
      *
      * @param  array  $data
      * @return mixed

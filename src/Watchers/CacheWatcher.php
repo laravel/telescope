@@ -8,7 +8,7 @@ use Illuminate\Cache\Events\KeyWritten;
 use Illuminate\Cache\Events\CacheMissed;
 use Illuminate\Cache\Events\KeyForgotten;
 
-class CacheWatcher extends AbstractWatcher
+class CacheWatcher extends Watcher
 {
     /**
      * Register the watcher.

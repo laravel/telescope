@@ -5,7 +5,7 @@ namespace Laravel\Telescope\Watchers;
 use Laravel\Telescope\Telescope;
 use Illuminate\Database\Events\QueryExecuted;
 
-class QueriesWatcher extends AbstractWatcher
+class QueriesWatcher extends Watcher
 {
     /**
      * Register the watcher.

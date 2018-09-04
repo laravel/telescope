@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Illuminate\Database\Eloquent\Model;
 
-class EventsWatcher extends AbstractWatcher
+class EventsWatcher extends Watcher
 {
     /**
      * Register the watcher.
