@@ -46,7 +46,7 @@ class EventsWatcher extends Watcher
     /**
      * Determine if the event should be ignored.
      *
-     * @param  string $eventName
+     * @param  string  $eventName
      * @return bool
      */
     private function eventShouldBeIgnored($eventName)
@@ -58,17 +58,15 @@ class EventsWatcher extends Watcher
     /**
      * Extract the payload and tags from the event.
      *
-     * @param  string $eventName
-     * @param  array $payload
+     * @param  string  $eventName
+     * @param  array  $payload
      * @return array
      */
     private function extractPayloadAndTags($eventName, $payload)
     {
-        if (! $this->eventIsAnObject($eventName)) {
-            return [$this->formatRawPayload($payload), []];
-        }
-
-        return $this->extractPayloadAndTagsFromEventObject($payload[0]);
+        return $this->eventIsAnObject($eventName)
+                ? $this->extractPayloadAndTagsFromEventObject($payload[0])
+                : [$this->formatRawPayload($payload), []];
     }
 
     /**
