@@ -20,7 +20,7 @@ class QueriesWatcher extends AbstractWatcher
 
     /**
      * Record a new query was executed.
-     * 
+     *
      * @param \Illuminate\Database\Events\QueryExecuted $event
      * @return void
      */

@@ -39,10 +39,10 @@ class DatabaseEntriesRepository implements Contract
             ->whereType($type)
             ->orderByDesc('id')
             ->take($options['take'] ?? 50)
-            ->when($options['before'] ?? false, function($q, $value){
+            ->when($options['before'] ?? false, function ($q, $value) {
                 return $q->where('id', '<', $value);
             })
-            ->when($options['tag'] ?? false, function($q, $value){
+            ->when($options['tag'] ?? false, function ($q, $value) {
                 $records = DB::table('telescope_entries_tags')->whereTag($value)->pluck('entry_id')->toArray();
 
                 return $q->whereIn('id', $records);
@@ -76,6 +76,5 @@ class DatabaseEntriesRepository implements Contract
                 return ['entry_id' => $id, 'tag' => $tag,];
             })->toArray());
         });
-
     }
 }

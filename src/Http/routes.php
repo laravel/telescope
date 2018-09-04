@@ -38,4 +38,3 @@ Route::get('/telescope-api/requests/{id}', 'RequestsController@show');
 Route::get('/{view?}', function () {
     return view('telescope::layout');
 })->where('view', '(.*)');
-

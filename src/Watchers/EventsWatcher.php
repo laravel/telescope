@@ -5,7 +5,6 @@ namespace Laravel\Telescope\Watchers;
 use Closure;
 use ReflectionClass;
 use Illuminate\Support\Str;
-use Illuminate\Queue\Jobs\Job;
 use Laravel\Telescope\Telescope;
 use Illuminate\Database\Eloquent\Model;
 
@@ -93,7 +92,7 @@ class EventsWatcher extends AbstractWatcher
                     $tags[] = $model = get_class($value).':'.$value->getKey();
 
                     return [$property->getName() => $model];
-                }else{
+                } else {
                     return [$property->getName() => json_decode(json_encode($value), true)];
                 }
             })->toArray();
