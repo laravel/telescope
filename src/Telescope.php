@@ -58,8 +58,8 @@ class Telescope
         static::$entriesQueue[] = [
             'type' => $type,
             'content' => $entry,
+            'tags' => $tags,
             'created_at' => now()->toDateTimeString(),
-            'tags' => $tags
         ];
     }
 

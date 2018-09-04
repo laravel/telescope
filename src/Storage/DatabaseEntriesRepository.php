@@ -45,8 +45,8 @@ class DatabaseEntriesRepository implements Contract
     public function find($id)
     {
         $entry = DB::table('telescope_entries')
-            ->whereId($id)
-            ->first();
+                    ->whereId($id)
+                    ->first();
 
         abort_unless($entry, 404);
 

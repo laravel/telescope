@@ -28,8 +28,8 @@ class MailWatcher extends AbstractWatcher
     {
         Telescope::recordMail([
             'from' => $event->message->getFrom(),
-            'to' => $event->message->getTo(),
             'replyTo' => $event->message->getReplyTo(),
+            'to' => $event->message->getTo(),
             'cc' => $event->message->getCc(),
             'bcc' => $event->message->getBcc(),
             'subject' => $event->message->getSubject(),
