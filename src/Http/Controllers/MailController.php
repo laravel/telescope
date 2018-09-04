@@ -17,21 +17,6 @@ class MailController extends EntryController
      * @param  integer $id
      * @return mixed
      */
-    public function previewHtml(Request $request, EntriesRepository $storage, $id)
-    {
-        $mail = $storage->find($id);
-
-        return $mail->content->html;
-    }
-
-    /**
-     * Preview the HTML content of the email.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Laravel\Telescope\Contracts\EntriesRepository $storage
-     * @param  integer $id
-     * @return mixed
-     */
     public function downloadEml(Request $request, EntriesRepository $storage, $id)
     {
         $mail = $storage->find($id);
