@@ -6,8 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
-class EntryController extends Controller
+abstract class EntryController extends Controller
 {
+    /**
+     * The entry type for the controller.
+     *
+     * @return int
+     */
+    abstract protected function entryType();
+
     /**
      * List the entries of the given type.
      *
