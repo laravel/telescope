@@ -70639,7 +70639,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control w-25",
-              attrs: { type: "text", placeholder: "Search Tags" },
+              attrs: { type: "text", placeholder: "Search Tag" },
               domProps: { value: _vm.tag },
               on: {
                 input: [

@@ -10484,8 +10484,18 @@ svg.icon {
   height: 1rem;
 }
 
+.header {
+  border-bottom: solid 1px #d5dfe9;
+}
+
+.header svg.logo {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
 .nav-item a {
   color: #2a5164;
+  padding: 0.5rem 0rem;
 }
 
 .nav-item a svg {
