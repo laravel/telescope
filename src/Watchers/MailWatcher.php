@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Laravel\Telescope\Entry;
 use Laravel\Telescope\Telescope;
 use Illuminate\Mail\Events\MessageSent;
 
@@ -26,7 +27,7 @@ class MailWatcher extends Watcher
      */
     public function recordMail(MessageSent $event)
     {
-        Telescope::recordMail([
+        Telescope::recordMail(Entry::make([
             'from' => $event->message->getFrom(),
             'replyTo' => $event->message->getReplyTo(),
             'to' => $event->message->getTo(),
@@ -35,7 +36,7 @@ class MailWatcher extends Watcher
             'subject' => $event->message->getSubject(),
             'html' => $event->message->getBody(),
             'raw' => $event->message->toString(),
-        ], $this->extractTagsFromMessage($event->message));
+        ])->withTags($this->extractTagsFromMessage($event->message)));
     }
 
     /**

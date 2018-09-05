@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Laravel\Telescope\Entry;
 use Laravel\Telescope\Telescope;
 use Illuminate\Cache\Events\CacheHit;
 use Illuminate\Cache\Events\KeyWritten;
@@ -36,11 +37,11 @@ class CacheWatcher extends Watcher
             return;
         }
 
-        Telescope::recordCacheEntry([
+        Telescope::recordCacheEntry(Entry::make([
             'type' => 'hit',
             'key' => $event->key,
             'value' => $event->value,
-        ], [$event->key]);
+        ])->withTags([$event->key]));
     }
 
     /**
@@ -55,10 +56,10 @@ class CacheWatcher extends Watcher
             return;
         }
 
-        Telescope::recordCacheEntry([
+        Telescope::recordCacheEntry(Entry::make([
             'type' => 'missed',
             'key' => $event->key,
-        ], [$event->key]);
+        ])->withTagss([$event->key]));
     }
 
     /**
@@ -73,12 +74,12 @@ class CacheWatcher extends Watcher
             return;
         }
 
-        Telescope::recordCacheEntry([
+        Telescope::recordCacheEntry(Entry::make([
             'type' => 'put',
             'key' => $event->key,
             'value' => $event->value,
             'expiration' => $event->minutes,
-        ], [$event->key]);
+        ])->withTags([$event->key]));
     }
 
     /**
@@ -93,10 +94,10 @@ class CacheWatcher extends Watcher
             return;
         }
 
-        Telescope::recordCacheEntry([
+        Telescope::recordCacheEntry(Entry::make([
             'type' => 'removed',
             'key' => $event->key,
-        ], [$event->key]);
+        ])->withTags([$event->key]));
     }
 
     /**

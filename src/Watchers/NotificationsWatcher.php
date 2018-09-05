@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Laravel\Telescope\Entry;
 use Laravel\Telescope\Telescope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Events\NotificationSent;
@@ -27,12 +28,12 @@ class NotificationsWatcher extends Watcher
      */
     public function recordNotification(NotificationSent $event)
     {
-        Telescope::recordNotification([
+        Telescope::recordNotification(Entry::make([
             'channel' => $event->channel,
             'response' => $event->response,
             'notifiable' => $this->formatNotifiable($event->notifiable),
             'notification' => $this->formatNotification($event->notification),
-        ], $this->extractTagsFromEvent($event));
+        ])->withTags($this->extractTagsFromEvent($event)));
     }
 
     /**

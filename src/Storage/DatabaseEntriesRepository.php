@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Storage;
 
+use Laravel\Telescope\Entry;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 
@@ -62,24 +63,32 @@ class DatabaseEntriesRepository implements Contract
      * Store the given array of entries.
      *
      * @param  string  $batchId
-     * @param  array  $data
+     * @param  array  $entries
      * @return mixed
      */
-    public function store($batchId, $data)
+    public function store($batchId, array $entries)
     {
-        collect($data)->each(function ($entry) use ($batchId) {
-            $entry['batch_id'] = $batchId;
-            $entry['content'] = json_encode($entry['content']);
-
-            $tags = $entry['tags'];
-
-            unset($entry['tags']);
-
-            $id = DB::table('telescope_entries')->insertGetId($entry);
-
-            DB::table('telescope_entries_tags')->insert(collect($tags)->map(function ($tag) use ($id) {
-                return ['entry_id' => $id, 'tag' => $tag,];
-            })->toArray());
+        collect($entries)->each(function (Entry $entry) use ($batchId) {
+            $this->storeTags(DB::table('telescope_entries')->insertGetId(
+                $entry->assignToBatch($batchId)->toArray()
+            ), $entry);
         });
+    }
+
+    /**
+     * Store the tags for the given entry.
+     *
+     * @param  int  $entryId
+     * @param  \Laravel\Telescope\Entry  $entry
+     * @return void
+     */
+    protected function storeTags($entryId, Entry $entry)
+    {
+        DB::table('telescope_entries_tags')->insert(collect($entry->tags)->map(function ($tag) use ($entryId) {
+            return [
+                'entry_id' => $entryId,
+                'tag' => $tag,
+            ];
+        })->toArray());
     }
 }
