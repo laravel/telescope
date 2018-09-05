@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
-class EntriesController extends Controller
+class BatchEntriesController extends Controller
 {
     /**
      * List the entries of the given type.
