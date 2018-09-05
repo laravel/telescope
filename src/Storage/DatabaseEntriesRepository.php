@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Storage;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
@@ -49,8 +50,14 @@ class DatabaseEntriesRepository implements Contract
         return $query
             ->take($options->limit)
             ->orderByDesc('id')
-            ->get()->each(function ($entry) {
-                $entry->content = json_decode($entry->content);
+            ->get()->map(function ($entry) {
+                return new EntryResult(
+                    $entry->id,
+                    $entry->batch_id,
+                    $entry->type,
+                    json_decode($entry->content, true),
+                    Carbon::parse($entry->created_at)
+                );
             });
     }
 
