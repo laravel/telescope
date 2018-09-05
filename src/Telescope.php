@@ -48,12 +48,12 @@ class Telescope
         $entry->type($type);
 
         if (static::$filterUsing &&
-            ! call_user_func(static::$filterUsing, $type, $entry)) {
+            ! call_user_func(static::$filterUsing, $entry)) {
             return;
         }
 
         if (static::$tagUsing) {
-            call_user_func(static::$tagUsing, $type, $entry);
+            call_user_func(static::$tagUsing, $entry);
         }
 
         static::$entriesQueue[] = $entry;
