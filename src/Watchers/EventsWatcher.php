@@ -41,7 +41,7 @@ class EventsWatcher extends Watcher
             'event_name' => $eventName,
             'event_payload' => $payload,
             'listeners' => $this->formatListeners($eventName),
-        ])->withTags($tags));
+        ])->tags($tags));
     }
 
     /**

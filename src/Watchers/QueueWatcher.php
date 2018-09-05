@@ -46,7 +46,7 @@ class QueueWatcher extends Watcher
             'queue' => $event->job->getQueue(),
             'connection' => $event->job->getConnectionName(),
             'data' => $payload,
-        ])->withTags($tags));
+        ])->tags($tags));
     }
 
     /**
@@ -76,7 +76,7 @@ class QueueWatcher extends Watcher
             'queue' => $event->job->getQueue(),
             'connection' => $event->job->getConnectionName(),
             'data' => $payload,
-        ])->withTags($tags));
+        ])->tags($tags));
     }
 
     /**

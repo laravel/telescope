@@ -54,7 +54,7 @@ class Telescope
             call_user_func(static::$tagUsing, $type, $entry);
         }
 
-        static::$entriesQueue[] = $entry->asType($type);
+        static::$entriesQueue[] = $entry->type($type);
     }
 
     /**
@@ -182,7 +182,7 @@ class Telescope
         $batchId = Str::uuid();
 
         $storage->store(collect(static::$entriesQueue)->each(function ($entry) use ($batchId) {
-            $entry->assignToBatch($batchId);
+            $entry->batchId($batchId);
         }));
 
         static::$entriesQueue = [];

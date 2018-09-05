@@ -33,7 +33,7 @@ class NotificationsWatcher extends Watcher
             'response' => $event->response,
             'notifiable' => $this->formatNotifiable($event->notifiable),
             'notification' => $this->formatNotification($event->notification),
-        ])->withTags($this->extractTagsFromEvent($event)));
+        ])->tags($this->extractTagsFromEvent($event)));
     }
 
     /**
