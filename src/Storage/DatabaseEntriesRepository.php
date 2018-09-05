@@ -47,8 +47,8 @@ class DatabaseEntriesRepository implements Contract
 
                 return $q->whereIn('id', $records);
             })
-            ->when($options['batch'] ?? false, function ($q, $value) {
-                return $q->where('batch', $value);
+            ->when($options['batch_id'] ?? false, function ($q, $value) {
+                return $q->where('batch_id', $value);
             })
             ->take($options['take'] ?? 50)
             ->orderByDesc('id')
@@ -61,14 +61,14 @@ class DatabaseEntriesRepository implements Contract
     /**
      * Store the given array of entries.
      *
+     * @param  string  $batchId
      * @param  array  $data
-     * @param  string  $batch
      * @return mixed
      */
-    public function store($data, $batch)
+    public function store($batchId, $data)
     {
-        collect($data)->each(function ($entry) use ($batch) {
-            $entry['batch'] = $batch;
+        collect($data)->each(function ($entry) use ($batchId) {
+            $entry['batch_id'] = $batchId;
             $entry['content'] = json_encode($entry['content']);
 
             $tags = $entry['tags'];

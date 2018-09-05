@@ -24,9 +24,9 @@ interface EntriesRepository
     /**
      * Store the given entries.
      *
+     * @param  string  $batchId
      * @param  array  $data
-     * @param  string  $batch
      * @return mixed
      */
-    public function store($data, $batch);
+    public function store($batchId, $data);
 }

@@ -15,11 +15,12 @@ class CreateTelescopeEntriesTable extends Migration
     {
         Schema::create('telescope_entries', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('batch_id');
             $table->tinyInteger('type');
-            $table->uuid('batch');
             $table->json('content');
             $table->timestamp('created_at');
 
+            $table->index('batch_id');
             $table->index('type');
         });
 

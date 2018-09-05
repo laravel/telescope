@@ -194,7 +194,7 @@ class Telescope
      */
     public static function store(EntriesRepository $storage)
     {
-        $storage->store(static::$entriesQueue, Str::uuid());
+        $storage->store(Str::uuid(), static::$entriesQueue);
 
         static::$entriesQueue = [];
     }
