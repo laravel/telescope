@@ -39,7 +39,7 @@ class LogWatcher extends Watcher
             $output['context'] = $event->context;
         }
 
-        Telescope::recordLogEntry($output);
+        Telescope::recordLogEntry($output, $this->extractTagsFromEvent($event));
     }
 
     /**
@@ -70,5 +70,17 @@ class LogWatcher extends Watcher
         return (new Inspector($exception))
             ->getFrames()[0]
             ->getFileLines($exception->getLine() - 10, 20);
+    }
+
+
+    /**
+     * Extract tags from the given event.
+     *
+     * @param  \Illuminate\Log\Events\MessageLogged $event
+     * @return array
+     */
+    private function extractTagsFromEvent($event)
+    {
+        return $event->context['telescope_tags'] ?? [];
     }
 }

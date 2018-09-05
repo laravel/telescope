@@ -64,7 +64,7 @@ class NotificationsWatcher extends Watcher
     /**
      * Extract tags from the given event.
      *
-     * @param  NotificationSent $event
+     * @param  \Illuminate\Notifications\Events\NotificationSent $event
      * @return array
      */
     private function extractTagsFromEvent($event)
