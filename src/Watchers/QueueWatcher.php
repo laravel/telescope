@@ -34,7 +34,7 @@ class QueueWatcher extends Watcher
     {
         list($payload, $tags) = $this->extractPayloadAndTags($event->job);
 
-        $tags[] = ['processed'];
+        $tags[] = 'processed';
 
         Telescope::recordJob([
             'id' => $event->job->getJobId(),
@@ -58,7 +58,7 @@ class QueueWatcher extends Watcher
     {
         list($payload, $tags) = $this->extractPayloadAndTags($event->job);
 
-        $tags[] = ['failed'];
+        $tags[] = 'failed';
 
         Telescope::recordJob([
             'id' => $event->job->getJobId(),

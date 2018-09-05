@@ -28,6 +28,8 @@
             this.loadEntry((response) => {
                 this.entry = response.data.entry;
 
+                this.$parent.batch = this.entry.batch;
+
                 this.ready = true;
             });
         },

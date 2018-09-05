@@ -36,7 +36,9 @@ class DatabaseEntriesRepository implements Contract
     public function get($type, $options = [])
     {
         return DB::table('telescope_entries')
-            ->whereType($type)
+            ->when($type, function ($q, $value) {
+                return $q->where('type', $value);
+            })
             ->when($options['before'] ?? false, function ($q, $value) {
                 return $q->where('id', '<', $value);
             })
@@ -44,6 +46,9 @@ class DatabaseEntriesRepository implements Contract
                 $records = DB::table('telescope_entries_tags')->whereTag($value)->pluck('entry_id')->toArray();
 
                 return $q->whereIn('id', $records);
+            })
+            ->when($options['batch'] ?? false, function ($q, $value) {
+                return $q->where('batch', $value);
             })
             ->take($options['take'] ?? 50)
             ->orderByDesc('id')
@@ -57,11 +62,13 @@ class DatabaseEntriesRepository implements Contract
      * Store the given array of entries.
      *
      * @param  array  $data
+     * @param  string  $batch
      * @return mixed
      */
-    public function store($data)
+    public function store($data, $batch)
     {
-        collect($data)->each(function ($entry) {
+        collect($data)->each(function ($entry) use ($batch) {
+            $entry['batch'] = $batch;
             $entry['content'] = json_encode($entry['content']);
 
             $tags = $entry['tags'];
