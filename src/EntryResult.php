@@ -7,10 +7,39 @@ use DateTimeInterface;
 
 class EntryResult implements JsonSerializable
 {
+    /**
+     * The entry's primary key.
+     *
+     * @var mixed
+     */
     public $id;
+
+    /**
+     * The entry's batch ID.
+     *
+     * @var string
+     */
     public $batchId;
+
+    /**
+     * The entry's type.
+     *
+     * @var int
+     */
     public $type;
+
+    /**
+     * The entry's content.
+     *
+     * @var array
+     */
     public $content = [];
+
+    /**
+     * The datetime that the entry was recorded.
+     *
+     * @var \DateTimeInterface
+     */
     public $createdAt;
 
     /**
