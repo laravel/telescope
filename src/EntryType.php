@@ -12,4 +12,5 @@ class EntryType
     public const CACHE = 6;
     public const QUERY = 7;
     public const REQUEST = 8;
+    public const COMMAND = 9;
 }

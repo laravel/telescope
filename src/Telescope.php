@@ -155,9 +155,9 @@ class Telescope
      * @param  array $tags
      * @return void
      */
-    public static function recordRequest($entry, $tags = [])
+    public static function recordCommand($entry, $tags = [])
     {
-        return static::record(EntryType::REQUEST, $entry, $tags);
+        return static::record(EntryType::COMMAND, $entry, $tags);
     }
 
     /**
