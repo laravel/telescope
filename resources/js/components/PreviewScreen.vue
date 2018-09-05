@@ -71,7 +71,7 @@
             </div>
 
 
-            <table v-if="ready && entry" class="table mb-0 bg-secondary table-borderless table-sm">
+            <table v-if="ready && entry" class="table mb-0 bg-secondary table-borderless">
                 <slot name="table-parameters" :entry="entry"></slot>
             </table>
 
