@@ -13,7 +13,7 @@
         </tr>
 
 
-        <tr slot="row" slot-scope="slotProps" :class="{newItem: slotProps.isNew}">
+        <template slot="row" slot-scope="slotProps">
             <td>{{truncate(slotProps.entry.content.notifiable, 50)}}</td>
             <td>{{truncate(slotProps.entry.content.notification, 50)}}</td>
             <td class="table-fit">{{truncate(slotProps.entry.content.channel, 20)}}</td>
@@ -25,6 +25,6 @@
                     </svg>
                 </router-link>
             </td>
-        </tr>
+        </template>
     </index-screen>
 </template>

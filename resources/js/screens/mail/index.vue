@@ -13,7 +13,7 @@
         </tr>
 
 
-        <tr slot="row" slot-scope="slotProps" :class="{newItem: slotProps.isNew}">
+        <template slot="row" slot-scope="slotProps">
             <td>{{Object.keys(slotProps.entry.content.from)[0]}}</td>
             <td>{{Object.keys(slotProps.entry.content.to)[0]}}</td>
             <td>{{truncate(slotProps.entry.content.subject, 20)}}</td>
@@ -25,6 +25,6 @@
                     </svg>
                 </router-link>
             </td>
-        </tr>
+        </template>
     </index-screen>
 </template>

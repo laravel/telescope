@@ -1,4 +1,5 @@
 <script type="text/ecmascript-6">
+    import $ from 'jquery';
     import _ from 'lodash';
     import axios from 'axios';
 
@@ -136,6 +137,10 @@
                 this.lastEntryIndex = '';
                 this.loadingNewEntries = true;
 
+                setTimeout(() => {
+                    $('.newItem').removeClass('newItem');
+                }, 2000);
+
                 clearTimeout(this.newEntriesTimeout);
 
                 this.loadEntries((response) => {
@@ -185,40 +190,39 @@
             </thead>
 
 
-            <tbody>
-            <tr v-if="hasNewEntries">
-                <td colspan="100" class="text-center bg-secondary">
-                    <small><a href="#" v-on:click.prevent="loadNewEntries" v-if="!loadingNewEntries">Load New Entries</a></small>
+            <transition-group tag="tbody" name="list">
+                <tr v-if="hasNewEntries" key="newEntries">
+                    <td colspan="100" class="text-center bg-secondary">
+                        <small><a href="#" v-on:click.prevent="loadNewEntries" v-if="!loadingNewEntries">Load New Entries</a></small>
 
-                    <small v-if="loadingNewEntries">Loading...</small>
-                </td>
-            </tr>
-
-
-            <slot name="row" v-for="entry in entries" :entry="entry" :isNew="newestEntries.includes(entry.id)"></slot>
+                        <small v-if="loadingNewEntries">Loading...</small>
+                    </td>
+                </tr>
 
 
-            <tr v-if="hasMoreEntries">
-                <td colspan="100" class="text-center bg-secondary">
-                    <small><a href="#" v-on:click.prevent="loadOlderEntries" v-if="!loadingMoreEntries">Load Older Entries</a></small>
+                <tr v-for="entry in entries" :key="entry.id">
+                    <slot name="row" :entry="entry"></slot>
+                </tr>
 
-                    <small v-if="loadingMoreEntries">Loading...</small>
-                </td>
-            </tr>
-            </tbody>
+
+                <tr v-if="hasMoreEntries" key="olderEntries">
+                    <td colspan="100" class="text-center bg-secondary">
+                        <small><a href="#" v-on:click.prevent="loadOlderEntries" v-if="!loadingMoreEntries">Load Older Entries</a></small>
+
+                        <small v-if="loadingMoreEntries">Loading...</small>
+                    </td>
+                </tr>
+            </transition-group>
         </table>
     </div>
 </template>
 
 <style scoped>
-    .newItem td{
-        background: #fffee9;
-        animation: background-fade 2s forwards;
+    .list-enter-active, .list-leave-active {
+        transition: background 1s linear;
     }
 
-    @keyframes background-fade {
-        100% {
-            background: none;
-        }
+    .list-enter, .list-leave-to{
+        background: red;
     }
 </style>

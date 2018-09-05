@@ -21,7 +21,7 @@
         </tr>
 
 
-        <tr slot="row" slot-scope="slotProps" :class="{newItem: slotProps.isNew}">
+        <template slot="row" slot-scope="slotProps">
             <td class="table-fit pr-0">
                 <span class="badge font-weight-light" :class="'badge-'+slotProps.entry.content.method" style="font-size:0.5em">
                     {{slotProps.entry.content.method}}
@@ -41,20 +41,20 @@
                     </svg>
                 </router-link>
             </td>
-        </tr>
+        </template>
     </index-screen>
 </template>
 
 <style>
-    .badge-GET{
+    .badge-GET {
         background-color: #cde0ff;
     }
 
-    .badge-POST, .badge-PUT, .badge-PATCH{
+    .badge-POST, .badge-PUT, .badge-PATCH {
         background-color: #cde8cf;
     }
 
-    .badge-DELETE{
+    .badge-DELETE {
         background-color: #ffb7b7;
     }
 </style>

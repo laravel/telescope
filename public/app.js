@@ -49592,7 +49592,7 @@ var render = function() {
         {
           key: "row",
           fn: function(slotProps) {
-            return _c("tr", { class: { newItem: slotProps.isNew } }, [
+            return [
               _c("td", [
                 _vm._v(_vm._s(Object.keys(slotProps.entry.content.from)[0]))
               ]),
@@ -49649,7 +49649,7 @@ var render = function() {
                 ],
                 1
               )
-            ])
+            ]
           }
         }
       ])
@@ -50219,7 +50219,7 @@ var render = function() {
         {
           key: "row",
           fn: function(slotProps) {
-            return _c("tr", { class: { newItem: slotProps.isNew } }, [
+            return [
               _c("td", [
                 _vm._v(
                   _vm._s(_vm.truncate(slotProps.entry.content.message, 80))
@@ -50308,7 +50308,7 @@ var render = function() {
                 ],
                 1
               )
-            ])
+            ]
           }
         }
       ])
@@ -50556,7 +50556,7 @@ var render = function() {
         {
           key: "row",
           fn: function(slotProps) {
-            return _c("tr", { class: { newItem: slotProps.isNew } }, [
+            return [
               _c("td", [
                 _vm._v(
                   _vm._s(_vm.truncate(slotProps.entry.content.notifiable, 50))
@@ -50617,7 +50617,7 @@ var render = function() {
                 ],
                 1
               )
-            ])
+            ]
           }
         }
       ])
@@ -51030,7 +51030,7 @@ var render = function() {
         {
           key: "row",
           fn: function(slotProps) {
-            return _c("tr", { class: { newItem: slotProps.isNew } }, [
+            return [
               _c("td", [
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.name, 20)))
               ]),
@@ -51127,7 +51127,7 @@ var render = function() {
                 ],
                 1
               )
-            ])
+            ]
           }
         }
       ])
@@ -51393,7 +51393,7 @@ var render = function() {
         {
           key: "row",
           fn: function(slotProps) {
-            return _c("tr", { class: { newItem: slotProps.isNew } }, [
+            return [
               _c("td", [
                 _vm._v(
                   _vm._s(_vm.truncate(slotProps.entry.content.event_name, 80))
@@ -51446,7 +51446,7 @@ var render = function() {
                 ],
                 1
               )
-            ])
+            ]
           }
         }
       ])
@@ -51714,7 +51714,7 @@ var render = function() {
         {
           key: "row",
           fn: function(slotProps) {
-            return _c("tr", { class: { newItem: slotProps.isNew } }, [
+            return [
               _c("td", [
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.key, 80)))
               ]),
@@ -51765,7 +51765,7 @@ var render = function() {
                 ],
                 1
               )
-            ])
+            ]
           }
         }
       ])
@@ -52019,7 +52019,7 @@ var render = function() {
         {
           key: "row",
           fn: function(slotProps) {
-            return _c("tr", { class: { newItem: slotProps.isNew } }, [
+            return [
               _c("td", [
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.sql, 90)))
               ]),
@@ -52072,7 +52072,7 @@ var render = function() {
                 ],
                 1
               )
-            ])
+            ]
           }
         }
       ])
@@ -52376,7 +52376,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.badge-GET{\n    background-color: #cde0ff;\n}\n.badge-POST, .badge-PUT, .badge-PATCH{\n    background-color: #cde8cf;\n}\n.badge-DELETE{\n    background-color: #ffb7b7;\n}\n", ""]);
+exports.push([module.i, "\n.badge-GET {\n    background-color: #cde0ff;\n}\n.badge-POST, .badge-PUT, .badge-PATCH {\n    background-color: #cde8cf;\n}\n.badge-DELETE {\n    background-color: #ffb7b7;\n}\n", ""]);
 
 // exports
 
@@ -52414,7 +52414,7 @@ var render = function() {
         {
           key: "row",
           fn: function(slotProps) {
-            return _c("tr", { class: { newItem: slotProps.isNew } }, [
+            return [
               _c("td", { staticClass: "table-fit pr-0" }, [
                 _c(
                   "span",
@@ -52497,7 +52497,7 @@ var render = function() {
                 ],
                 1
               )
-            ])
+            ]
           }
         }
       ])
@@ -69674,7 +69674,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.newItem td[data-v-30504bc3]{\n    background: #fffee9;\n    -webkit-animation: background-fade-data-v-30504bc3 2s forwards;\n            animation: background-fade-data-v-30504bc3 2s forwards;\n}\n@-webkit-keyframes background-fade-data-v-30504bc3 {\n100% {\n        background: none;\n}\n}\n@keyframes background-fade-data-v-30504bc3 {\n100% {\n        background: none;\n}\n}\n", ""]);
+exports.push([module.i, "\n.list-enter-active[data-v-30504bc3], .list-leave-active[data-v-30504bc3] {\n    -webkit-transition: background 1s linear;\n    transition: background 1s linear;\n}\n.list-enter[data-v-30504bc3], .list-leave-to[data-v-30504bc3]{\n    background: red;\n}\n", ""]);
 
 // exports
 
@@ -69685,11 +69685,14 @@ exports.push([module.i, "\n.newItem td[data-v-30504bc3]{\n    background: #fffee
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 
 
 
@@ -69750,9 +69753,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         loadEntries: function loadEntries(after) {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest).then(function (response) {
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest).then(function (response) {
                 if (response.data.entries.length) {
-                    _this2.lastEntryIndex = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.last(response.data.entries).id;
+                    _this2.lastEntryIndex = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.last(response.data.entries).id;
                 }
 
                 if (response.data.entries.length < _this2.entriesPerRequest) {
@@ -69761,7 +69764,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     _this2.hasMoreEntries = true;
                 }
 
-                if (__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.isFunction(after)) {
+                if (__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.isFunction(after)) {
                     after(response);
                 }
             });
@@ -69774,8 +69777,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         checkForNewEntries: function checkForNewEntries() {
             var _this3 = this;
 
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1').then(function (response) {
-                if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.first(_this3.entries).id) {
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1').then(function (response) {
+                if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this3.entries).id) {
                     _this3.hasNewEntries = true;
                 } else {
                     _this3.newEntriesTimeout = setTimeout(function () {
@@ -69838,10 +69841,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             this.lastEntryIndex = '';
             this.loadingNewEntries = true;
 
+            setTimeout(function () {
+                __WEBPACK_IMPORTED_MODULE_0_jquery___default()('.newItem').removeClass('newItem');
+            }, 2000);
+
             clearTimeout(this.newEntriesTimeout);
 
             this.loadEntries(function (response) {
-                _this6.newestEntries = __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.map(__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.differenceBy(response.data.entries, _this6.entries, 'id'), 'id');
+                _this6.newestEntries = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.map(__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.differenceBy(response.data.entries, _this6.entries, 'id'), 'id');
 
                 _this6.entries = response.data.entries;
 
@@ -70841,10 +70848,11 @@ var render = function() {
             _c("thead", [_vm._t("table-header")], 2),
             _vm._v(" "),
             _c(
-              "tbody",
+              "transition-group",
+              { attrs: { tag: "tbody", name: "list" } },
               [
                 _vm.hasNewEntries
-                  ? _c("tr", [
+                  ? _c("tr", { key: "newEntries" }, [
                       _c(
                         "td",
                         {
@@ -70879,14 +70887,16 @@ var render = function() {
                   : _vm._e(),
                 _vm._v(" "),
                 _vm._l(_vm.entries, function(entry) {
-                  return _vm._t("row", null, {
-                    entry: entry,
-                    isNew: _vm.newestEntries.includes(entry.id)
-                  })
+                  return _c(
+                    "tr",
+                    { key: entry.id },
+                    [_vm._t("row", null, { entry: entry })],
+                    2
+                  )
                 }),
                 _vm._v(" "),
                 _vm.hasMoreEntries
-                  ? _c("tr", [
+                  ? _c("tr", { key: "olderEntries" }, [
                       _c(
                         "td",
                         {
@@ -70922,7 +70932,8 @@ var render = function() {
               ],
               2
             )
-          ]
+          ],
+          1
         )
       : _vm._e()
   ])

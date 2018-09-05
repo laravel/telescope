@@ -12,7 +12,7 @@
         </tr>
 
 
-        <tr slot="row" slot-scope="slotProps" :class="{newItem: slotProps.isNew}">
+        <template slot="row" slot-scope="slotProps">
             <td>{{truncate(slotProps.entry.content.sql, 90)}}</td>
             <td class="table-fit">{{truncate(slotProps.entry.content.connection, 20)}}</td>
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
@@ -23,6 +23,6 @@
                     </svg>
                 </router-link>
             </td>
-        </tr>
+        </template>
     </index-screen>
 </template>
