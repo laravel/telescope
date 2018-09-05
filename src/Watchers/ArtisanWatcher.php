@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Illuminate\Console\Events\CommandFinished;
 
@@ -26,11 +27,11 @@ class ArtisanWatcher extends Watcher
      */
     public function recordCommand(CommandFinished $event)
     {
-        Telescope::recordCommand([
+        Telescope::recordCommand(IncomingEntry::make([
             'command' => $event->command,
             'exit_code' => $event->exitCode,
             'arguments' => $event->input->getArguments(),
             'options' => $event->input->getOptions(),
-        ]);
+        ]));
     }
 }

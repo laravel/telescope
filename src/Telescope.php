@@ -39,125 +39,123 @@ class Telescope
     /**
      * Record the given entry.
      *
-     * @param  int $type
-     * @param  array $entry
-     * @param  array $tags
+     * @param  int  $type
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    protected static function record($type, $entry, $tags = [])
+    protected static function record($type, IncomingEntry $entry)
     {
-        if (static::$filterUsing && ! call_user_func(static::$filterUsing, $type, $entry)) {
+        if (static::$filterUsing &&
+            ! call_user_func(static::$filterUsing, $type, $entry)) {
             return;
         }
 
         if (static::$tagUsing) {
-            $tags = array_unique(
-                array_merge($tags, call_user_func(static::$tagUsing, $type, $entry))
-            );
+            call_user_func(static::$tagUsing, $type, $entry);
         }
 
-        static::$entriesQueue[] = [
-            'type' => $type,
-            'content' => $entry,
-            'tags' => $tags,
-            'created_at' => now()->toDateTimeString(),
-        ];
+        static::$entriesQueue[] = $entry->asType($type);
     }
 
     /**
      * Record the given entry.
      *
-     * @param  array  $entry
-     * @param  array  $tags
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordMail($entry, $tags = [])
+    public static function recordMail(IncomingEntry $entry)
     {
-        return static::record(EntryType::MAIL, $entry, $tags);
+        return static::record(EntryType::MAIL, $entry);
     }
 
     /**
      * Record the given entry.
      *
-     * @param  array  $entry
-     * @param  array  $tags
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordLogEntry($entry, $tags = [])
+    public static function recordLogEntry(IncomingEntry $entry)
     {
-        return static::record(EntryType::LOG, $entry, $tags);
+        return static::record(EntryType::LOG, $entry);
     }
 
     /**
      * Record the given entry.
      *
-     * @param  array $entry
-     * @param  array $tags
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordNotification($entry, $tags = [])
+    public static function recordNotification($entry)
     {
-        return static::record(EntryType::NOTIFICATION, $entry, $tags);
+        return static::record(EntryType::NOTIFICATION, $entry);
     }
 
     /**
      * Record the given entry.
      *
-     * @param  array $entry
-     * @param  array $tags
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordJob($entry, $tags = [])
+    public static function recordJob($entry)
     {
-        return static::record(EntryType::JOB, $entry, $tags);
+        return static::record(EntryType::JOB, $entry);
     }
 
     /**
      * Record the given entry.
      *
-     * @param  array $entry
-     * @param  array $tags
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordEvent($entry, $tags = [])
+    public static function recordEvent(IncomingEntry $entry)
     {
-        return static::record(EntryType::EVENT, $entry, $tags);
+        return static::record(EntryType::EVENT, $entry);
     }
 
     /**
      * Record the given entry.
      *
-     * @param  array $entry
-     * @param  array $tags
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordCacheEntry($entry, $tags = [])
+    public static function recordCacheEntry(IncomingEntry $entry)
     {
-        return static::record(EntryType::CACHE, $entry, $tags);
+        return static::record(EntryType::CACHE, $entry);
     }
 
     /**
      * Record the given entry.
      *
-     * @param  array $entry
-     * @param  array $tags
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordQuery($entry, $tags = [])
+    public static function recordQuery(IncomingEntry $entry)
     {
-        return static::record(EntryType::QUERY, $entry, $tags);
+        return static::record(EntryType::QUERY, $entry);
     }
 
     /**
      * Record the given entry.
      *
-     * @param  array $entry
-     * @param  array $tags
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordCommand($entry, $tags = [])
+
+    public static function recordRequest(IncomingEntry $entry)
     {
-        return static::record(EntryType::COMMAND, $entry, $tags);
+        return static::record(EntryType::REQUEST, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
+
+    public static function recordCommand(IncomingEntry $entry)
+    {
+        return static::record(EntryType::COMMAND, $entry);
     }
 
     /**
@@ -189,12 +187,16 @@ class Telescope
     /**
      * Store the queued entries and flush the queue.
      *
-     * @param  Contracts\EntriesRepository $storage
-     * @param  array $entry
+     * @param  \Laravel\Telescope\Contracts\EntriesRepository $storage
+     * @return void
      */
     public static function store(EntriesRepository $storage)
     {
-        $storage->store(Str::uuid(), static::$entriesQueue);
+        $batchId = Str::uuid();
+
+        $storage->store(collect(static::$entriesQueue)->each(function ($entry) use ($batchId) {
+            $entry->assignToBatch($batchId);
+        }));
 
         static::$entriesQueue = [];
     }

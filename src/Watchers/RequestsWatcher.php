@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Watchers;
 
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\IncomingEntry;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 
@@ -27,14 +28,14 @@ class RequestsWatcher extends Watcher
      */
     public function recordRequest(RequestHandled $event)
     {
-        Telescope::recordRequest([
+        Telescope::recordRequest(IncomingEntry::make([
             'payload' => $event->request->all(),
             'uri' => str_replace($event->request->root(), '', $event->request->path()),
             'method' => $event->request->method(),
             'headers' => $this->formatHeaders($event->request->headers->all()),
             'response' => $this->formatResponse($event->response),
             'response_status' => $event->response->getStatusCode(),
-        ]);
+        ]));
     }
 
     /**

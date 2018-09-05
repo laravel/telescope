@@ -2,12 +2,13 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Illuminate\Database\Eloquent\Model;
-use ReflectionClass;
 use Throwable;
+use ReflectionClass;
 use Whoops\Exception\Inspector;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\IncomingEntry;
 use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Queue\Events\JobProcessed;
 
 class QueueWatcher extends Watcher
@@ -36,7 +37,7 @@ class QueueWatcher extends Watcher
 
         $tags[] = 'processed';
 
-        Telescope::recordJob([
+        Telescope::recordJob(IncomingEntry::make([
             'id' => $event->job->getJobId(),
             'status' => 'processed',
             'name' => $event->job->payload()['displayName'],
@@ -45,7 +46,7 @@ class QueueWatcher extends Watcher
             'queue' => $event->job->getQueue(),
             'connection' => $event->job->getConnectionName(),
             'data' => $payload,
-        ], $tags);
+        ])->withTags($tags));
     }
 
     /**
@@ -60,7 +61,7 @@ class QueueWatcher extends Watcher
 
         $tags[] = 'failed';
 
-        Telescope::recordJob([
+        Telescope::recordJob(IncomingEntry::make([
             'id' => $event->job->getJobId(),
             'status' => 'failed',
             'exception' => [
@@ -75,7 +76,7 @@ class QueueWatcher extends Watcher
             'queue' => $event->job->getQueue(),
             'connection' => $event->job->getConnectionName(),
             'data' => $payload,
-        ], $tags);
+        ])->withTags($tags));
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Laravel\Telescope\Storage\EntryQueryOptions;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
 abstract class EntryController extends Controller
@@ -25,7 +26,10 @@ abstract class EntryController extends Controller
     public function index(Request $request, EntriesRepository $storage)
     {
         return response()->json([
-            'entries' => $storage->get($this->entryType(), $request->all())
+            'entries' => $storage->get(
+                $this->entryType(),
+                EntryQueryOptions::fromRequest($request)
+            )
         ]);
     }
 
@@ -43,7 +47,7 @@ abstract class EntryController extends Controller
 
         return response()->json([
             'entry' => $entry,
-            'batch' => $entry ? $storage->get(null, ['batch_id' => $entry->batch_id]) : null,
+            'batch' => $entry ? $storage->get(null, EntryQueryOptions::forBatchId($entry['batch_id'])) : null,
         ]);
     }
 }
