@@ -45,6 +45,8 @@ class Telescope
      */
     protected static function record($type, IncomingEntry $entry)
     {
+        $entry->type($type);
+
         if (static::$filterUsing &&
             ! call_user_func(static::$filterUsing, $type, $entry)) {
             return;
@@ -54,7 +56,7 @@ class Telescope
             call_user_func(static::$tagUsing, $type, $entry);
         }
 
-        static::$entriesQueue[] = $entry->type($type);
+        static::$entriesQueue[] = $entry;
     }
 
     /**
