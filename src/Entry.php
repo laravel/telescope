@@ -19,11 +19,11 @@ class Entry
     public $type;
 
     /**
-     * The entry's data.
+     * The entry's content.
      *
      * @var array
      */
-    public $data = [];
+    public $content = [];
 
     /**
      * The entry's tags.
@@ -42,24 +42,24 @@ class Entry
     /**
      * Create a new entry instance.
      *
-     * @param  array  $data
+     * @param  array  $content
      * @return void
      */
-    public function __construct(array $data)
+    public function __construct(array $content)
     {
-        $this->data = $data;
+        $this->content = $content;
         $this->recordedAt = now();
     }
 
     /**
      * Create a new entry instance.
      *
-     * @param  array  $data
+     * @param  array  $content
      * @return void
      */
-    public static function make(array $data)
+    public static function make(array $content)
     {
-        return new static($data);
+        return new static($content);
     }
 
     /**
@@ -102,18 +102,17 @@ class Entry
     }
 
     /**
-     * Get an array representation of the entry.
+     * Get an array representation of the entry for storage.
      *
      * @return array
      */
-    public function toArray()
+    public function toStorageArray()
     {
         return [
             'batch_id' => $this->batchId,
             'type' => $this->type,
-            'content' => json_encode($this->data),
+            'content' => json_encode($this->content),
             'created_at' => $this->recordedAt->toDateTimeString(),
         ];
-
     }
 }

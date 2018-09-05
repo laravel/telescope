@@ -28,7 +28,7 @@ interface EntriesRepository
      * Store the given entries.
      *
      * @param  \Illuminate\Support\Collection  $entries
-     * @return mixed
+     * @return void
      */
     public function store(Collection $entries);
 }

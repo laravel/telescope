@@ -124,13 +124,13 @@ class DatabaseEntriesRepository implements Contract
      * Store the given array of entries.
      *
      * @param  \Illuminate\Support\Collection  $entries
-     * @return mixed
+     * @return void
      */
     public function store(Collection $entries)
     {
         $entries->each(function (Entry $entry) {
             $this->storeTags(DB::table('telescope_entries')->insertGetId(
-                $entry->toArray()
+                $entry->toStorageArray()
             ), $entry);
         });
     }
