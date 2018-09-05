@@ -70958,7 +70958,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.list-enter-active[data-v-30504bc3], .list-leave-active[data-v-30504bc3] {\n    -webkit-transition: background 1s linear;\n    transition: background 1s linear;\n}\n.list-enter[data-v-30504bc3], .list-leave-to[data-v-30504bc3]{\n    background: red;\n}\n", ""]);
+exports.push([module.i, "\n.list-enter-active[data-v-30504bc3]:not(.dontanimate), .list-leave-active[data-v-30504bc3]:not(.dontanimate) {\n    -webkit-transition: background 1s linear;\n    transition: background 1s linear;\n}\n.list-enter[data-v-30504bc3]:not(.dontanimate), .list-leave-to[data-v-30504bc3]:not(.dontanimate){\n    background: #fffee9;\n}\n", ""]);
 
 // exports
 
@@ -71251,38 +71251,42 @@ var render = function() {
               { attrs: { tag: "tbody", name: "list" } },
               [
                 _vm.hasNewEntries
-                  ? _c("tr", { key: "newEntries" }, [
-                      _c(
-                        "td",
-                        {
-                          staticClass: "text-center bg-secondary",
-                          attrs: { colspan: "100" }
-                        },
-                        [
-                          _c("small", [
-                            !_vm.loadingNewEntries
-                              ? _c(
-                                  "a",
-                                  {
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.loadNewEntries($event)
+                  ? _c(
+                      "tr",
+                      { key: "newEntries", staticClass: "dontanimate" },
+                      [
+                        _c(
+                          "td",
+                          {
+                            staticClass: "text-center bg-secondary py-1",
+                            attrs: { colspan: "100" }
+                          },
+                          [
+                            _c("small", [
+                              !_vm.loadingNewEntries
+                                ? _c(
+                                    "a",
+                                    {
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.loadNewEntries($event)
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v("Load New Entries")]
-                                )
+                                    },
+                                    [_vm._v("Load New Entries")]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _vm.loadingNewEntries
+                              ? _c("small", [_vm._v("Loading...")])
                               : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _vm.loadingNewEntries
-                            ? _c("small", [_vm._v("Loading...")])
-                            : _vm._e()
-                        ]
-                      )
-                    ])
+                          ]
+                        )
+                      ]
+                    )
                   : _vm._e(),
                 _vm._v(" "),
                 _vm._l(_vm.entries, function(entry) {
@@ -71295,38 +71299,42 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _vm.hasMoreEntries
-                  ? _c("tr", { key: "olderEntries" }, [
-                      _c(
-                        "td",
-                        {
-                          staticClass: "text-center bg-secondary",
-                          attrs: { colspan: "100" }
-                        },
-                        [
-                          _c("small", [
-                            !_vm.loadingMoreEntries
-                              ? _c(
-                                  "a",
-                                  {
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.loadOlderEntries($event)
+                  ? _c(
+                      "tr",
+                      { key: "olderEntries", staticClass: "dontanimate" },
+                      [
+                        _c(
+                          "td",
+                          {
+                            staticClass: "text-center bg-secondary py-1",
+                            attrs: { colspan: "100" }
+                          },
+                          [
+                            _c("small", [
+                              !_vm.loadingMoreEntries
+                                ? _c(
+                                    "a",
+                                    {
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.loadOlderEntries($event)
+                                        }
                                       }
-                                    }
-                                  },
-                                  [_vm._v("Load Older Entries")]
-                                )
+                                    },
+                                    [_vm._v("Load Older Entries")]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _vm.loadingMoreEntries
+                              ? _c("small", [_vm._v("Loading...")])
                               : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _vm.loadingMoreEntries
-                            ? _c("small", [_vm._v("Loading...")])
-                            : _vm._e()
-                        ]
-                      )
-                    ])
+                          ]
+                        )
+                      ]
+                    )
                   : _vm._e()
               ],
               2

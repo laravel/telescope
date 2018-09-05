@@ -188,8 +188,8 @@
 
 
             <transition-group tag="tbody" name="list">
-                <tr v-if="hasNewEntries" key="newEntries">
-                    <td colspan="100" class="text-center bg-secondary">
+                <tr v-if="hasNewEntries" key="newEntries" class="dontanimate">
+                    <td colspan="100" class="text-center bg-secondary py-1">
                         <small><a href="#" v-on:click.prevent="loadNewEntries" v-if="!loadingNewEntries">Load New Entries</a></small>
 
                         <small v-if="loadingNewEntries">Loading...</small>
@@ -202,8 +202,8 @@
                 </tr>
 
 
-                <tr v-if="hasMoreEntries" key="olderEntries">
-                    <td colspan="100" class="text-center bg-secondary">
+                <tr v-if="hasMoreEntries" key="olderEntries" class="dontanimate">
+                    <td colspan="100" class="text-center bg-secondary py-1">
                         <small><a href="#" v-on:click.prevent="loadOlderEntries" v-if="!loadingMoreEntries">Load Older Entries</a></small>
 
                         <small v-if="loadingMoreEntries">Loading...</small>
@@ -215,11 +215,11 @@
 </template>
 
 <style scoped>
-    .list-enter-active, .list-leave-active {
+    .list-enter-active:not(.dontanimate), .list-leave-active:not(.dontanimate) {
         transition: background 1s linear;
     }
 
-    .list-enter, .list-leave-to{
-        background: red;
+    .list-enter:not(.dontanimate), .list-leave-to:not(.dontanimate){
+        background: #fffee9;
     }
 </style>
