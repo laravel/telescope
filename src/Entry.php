@@ -106,12 +106,12 @@ class Entry
      *
      * @return array
      */
-    public function toStorageArray()
+    public function toArray()
     {
         return [
             'batch_id' => $this->batchId,
             'type' => $this->type,
-            'content' => json_encode($this->content),
+            'content' => $this->content,
             'created_at' => $this->recordedAt->toDateTimeString(),
         ];
     }

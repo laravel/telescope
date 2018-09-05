@@ -14,19 +14,11 @@ class DatabaseEntriesRepository implements Contract
      * Find the entry with the given ID.
      *
      * @param  mixed  $id
-     * @return mixed
+     * @return array
      */
     public function find($id)
     {
-        $entry = DB::table('telescope_entries')
-                    ->whereId($id)
-                    ->first();
-
-        abort_unless($entry, 404);
-
-        return tap($entry, function ($entry) {
-            $entry->content = json_decode($entry->content);
-        });
+        return EntryModel::findOrFail($id)->toArray();
     }
 
     /**
@@ -129,9 +121,10 @@ class DatabaseEntriesRepository implements Contract
     public function store(Collection $entries)
     {
         $entries->each(function (Entry $entry) {
-            $this->storeTags(DB::table('telescope_entries')->insertGetId(
-                $entry->toStorageArray()
-            ), $entry);
+            $this->storeTags(
+                EntryModel::forceCreate($entry->toArray())->id,
+                $entry
+            );
         });
     }
 
