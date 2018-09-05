@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Storage;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Storage\EntryQueryOptions;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
@@ -14,11 +15,19 @@ class DatabaseEntriesRepository implements Contract
      * Find the entry with the given ID.
      *
      * @param  mixed  $id
-     * @return array
+     * @return \Laravel\Telescope\EntryResult
      */
-    public function find($id)
+    public function find($id) : EntryResult
     {
-        return EntryModel::findOrFail($id)->toArray();
+        $entry = EntryModel::findOrFail($id);
+
+        return new EntryResult(
+            $entry->id,
+            $entry->batch_id,
+            $entry->type,
+            $entry->content,
+            $entry->created_at
+        );
     }
 
     /**
@@ -26,7 +35,7 @@ class DatabaseEntriesRepository implements Contract
      *
      * @param  int  $type
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection[\Laravel\Telescope\EntryResult]
      */
     public function get($type, EntryQueryOptions $options = null)
     {
@@ -115,7 +124,7 @@ class DatabaseEntriesRepository implements Contract
     /**
      * Store the given array of entries.
      *
-     * @param  \Illuminate\Support\Collection  $entries
+     * @param  \Illuminate\Support\Collection[\Laravel\Telescope\IncomingEntry]  $entries
      * @return void
      */
     public function store(Collection $entries)
