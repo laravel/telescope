@@ -175,7 +175,7 @@ class Telescope
      * Store the queued entries and flush the queue.
      *
      * @param  Contracts\EntriesRepository $storage
-     * @param  array $entry
+     * @return void
      */
     public static function store(EntriesRepository $storage)
     {
