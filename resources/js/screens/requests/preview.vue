@@ -11,7 +11,7 @@
 
         watch: {
             batch(val){
-                axios.get('/telescope/telescope-api/entries?take=1000&batch=' + val).then(response => {
+                axios.get('/telescope/telescope-api/entries?take=1000&batch_id=' + val).then(response => {
                     this.batchEntries = response.data.entries;
                 });
             }
