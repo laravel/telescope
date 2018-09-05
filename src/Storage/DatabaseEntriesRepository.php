@@ -2,7 +2,6 @@
 
 namespace Laravel\Telescope\Storage;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
