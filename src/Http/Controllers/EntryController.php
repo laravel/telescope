@@ -42,7 +42,7 @@ abstract class EntryController extends Controller
         $entry = $storage->find($id);
 
         return response()->json([
-            'entry' => $storage->find($id),
+            'entry' => $entry,
             'batch' => $entry ? $storage->get(null, ['batch_id' => $entry->batch_id]) : null,
         ]);
     }
