@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\IncomingEntry;
+use Laravel\Telescope\EntryQueryOptions;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 
 class DatabaseEntriesRepository implements Contract
@@ -34,7 +35,7 @@ class DatabaseEntriesRepository implements Contract
      * Return all the entries of a given type.
      *
      * @param  int  $type
-     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @param  \Laravel\Telescope\EntryQueryOptions  $options
      * @return \Illuminate\Support\Collection[\Laravel\Telescope\EntryResult]
      */
     public function get($type, EntryQueryOptions $options = null)
@@ -80,7 +81,7 @@ class DatabaseEntriesRepository implements Contract
      * Scope the query for the given batch ID.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @param  \Laravel\Telescope\EntryQueryOptions  $options
      * @return $this
      */
     protected function scopeForBatch($query, EntryQueryOptions $options)
@@ -96,7 +97,7 @@ class DatabaseEntriesRepository implements Contract
      * Scope the query for the given type.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @param  \Laravel\Telescope\EntryQueryOptions  $options
      * @return $this
      */
     protected function scopeForTag($query, EntryQueryOptions $options)
@@ -115,7 +116,7 @@ class DatabaseEntriesRepository implements Contract
      * Scope the query for the given pagination options.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @param  \Laravel\Telescope\EntryQueryOptions  $options
      * @return $this
      */
     protected function scopeForPagination($query, EntryQueryOptions $options)

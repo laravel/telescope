@@ -4,7 +4,7 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Laravel\Telescope\Storage\EntryQueryOptions;
+use Laravel\Telescope\EntryQueryOptions;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
 abstract class EntryController extends Controller
