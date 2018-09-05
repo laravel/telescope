@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Laravel\Telescope\Entry;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\IncomingEntry;
 use Illuminate\Mail\Events\MessageSent;
 
 class MailWatcher extends Watcher
@@ -27,7 +27,7 @@ class MailWatcher extends Watcher
      */
     public function recordMail(MessageSent $event)
     {
-        Telescope::recordMail(Entry::make([
+        Telescope::recordMail(IncomingEntry::make([
             'from' => $event->message->getFrom(),
             'replyTo' => $event->message->getReplyTo(),
             'to' => $event->message->getTo(),

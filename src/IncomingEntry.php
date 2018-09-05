@@ -2,7 +2,7 @@
 
 namespace Laravel\Telescope;
 
-class Entry
+class IncomingEntry
 {
     /**
      * The entry's batch ID.

@@ -2,9 +2,9 @@
 
 namespace Laravel\Telescope\Storage;
 
-use Laravel\Telescope\Entry;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Storage\EntryQueryOptions;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 
@@ -120,7 +120,7 @@ class DatabaseEntriesRepository implements Contract
      */
     public function store(Collection $entries)
     {
-        $entries->each(function (Entry $entry) {
+        $entries->each(function (IncomingEntry $entry) {
             $this->storeTags(
                 EntryModel::forceCreate($entry->toArray())->id,
                 $entry
@@ -132,10 +132,10 @@ class DatabaseEntriesRepository implements Contract
      * Store the tags for the given entry.
      *
      * @param  int  $entryId
-     * @param  \Laravel\Telescope\Entry  $entry
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    protected function storeTags($entryId, Entry $entry)
+    protected function storeTags($entryId, IncomingEntry $entry)
     {
         DB::table('telescope_entries_tags')->insert(collect($entry->tags)->map(function ($tag) use ($entryId) {
             return [

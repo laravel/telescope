@@ -40,10 +40,10 @@ class Telescope
      * Record the given entry.
      *
      * @param  int  $type
-     * @param  \Laravel\Telescope\Entry  $entry
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    protected static function record($type, Entry $entry)
+    protected static function record($type, IncomingEntry $entry)
     {
         if (static::$filterUsing &&
             ! call_user_func(static::$filterUsing, $type, $entry)) {
@@ -60,10 +60,10 @@ class Telescope
     /**
      * Record the given entry.
      *
-     * @param  \Laravel\Telescope\Entry  $entry
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordMail(Entry $entry)
+    public static function recordMail(IncomingEntry $entry)
     {
         return static::record(EntryType::MAIL, $entry);
     }
@@ -71,10 +71,10 @@ class Telescope
     /**
      * Record the given entry.
      *
-     * @param  \Laravel\Telescope\Entry  $entry
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordLogEntry(Entry $entry)
+    public static function recordLogEntry(IncomingEntry $entry)
     {
         return static::record(EntryType::LOG, $entry);
     }
@@ -82,7 +82,7 @@ class Telescope
     /**
      * Record the given entry.
      *
-     * @param  \Laravel\Telescope\Entry  $entry
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
     public static function recordNotification($entry)
@@ -93,7 +93,7 @@ class Telescope
     /**
      * Record the given entry.
      *
-     * @param  \Laravel\Telescope\Entry  $entry
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
     public static function recordJob($entry)
@@ -104,10 +104,10 @@ class Telescope
     /**
      * Record the given entry.
      *
-     * @param  \Laravel\Telescope\Entry  $entry
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordEvent(Entry $entry)
+    public static function recordEvent(IncomingEntry $entry)
     {
         return static::record(EntryType::EVENT, $entry);
     }
@@ -115,10 +115,10 @@ class Telescope
     /**
      * Record the given entry.
      *
-     * @param  \Laravel\Telescope\Entry  $entry
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordCacheEntry(Entry $entry)
+    public static function recordCacheEntry(IncomingEntry $entry)
     {
         return static::record(EntryType::CACHE, $entry);
     }
@@ -126,10 +126,10 @@ class Telescope
     /**
      * Record the given entry.
      *
-     * @param  \Laravel\Telescope\Entry  $entry
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordQuery(Entry $entry)
+    public static function recordQuery(IncomingEntry $entry)
     {
         return static::record(EntryType::QUERY, $entry);
     }
@@ -137,10 +137,10 @@ class Telescope
     /**
      * Record the given entry.
      *
-     * @param  \Laravel\Telescope\Entry  $entry
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordRequest(Entry $entry)
+    public static function recordRequest(IncomingEntry $entry)
     {
         return static::record(EntryType::REQUEST, $entry);
     }

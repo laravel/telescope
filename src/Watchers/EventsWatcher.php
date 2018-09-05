@@ -5,8 +5,8 @@ namespace Laravel\Telescope\Watchers;
 use Closure;
 use ReflectionClass;
 use Illuminate\Support\Str;
-use Laravel\Telescope\Entry;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
 
 class EventsWatcher extends Watcher
@@ -37,7 +37,7 @@ class EventsWatcher extends Watcher
 
         list($payload, $tags) = $this->extractPayloadAndTags($eventName, $payload);
 
-        Telescope::recordEvent(Entry::make([
+        Telescope::recordEvent(IncomingEntry::make([
             'event_name' => $eventName,
             'event_payload' => $payload,
             'listeners' => $this->formatListeners($eventName),

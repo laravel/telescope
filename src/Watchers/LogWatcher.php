@@ -3,9 +3,9 @@
 namespace Laravel\Telescope\Watchers;
 
 use Throwable;
-use Laravel\Telescope\Entry;
 use Whoops\Exception\Inspector;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\IncomingEntry;
 use Illuminate\Log\Events\MessageLogged;
 
 class LogWatcher extends Watcher
@@ -41,7 +41,7 @@ class LogWatcher extends Watcher
         }
 
         Telescope::recordLogEntry(
-            Entry::make($output)->withTags($this->extractTagsFromEvent($event))
+            IncomingEntry::make($output)->withTags($this->extractTagsFromEvent($event))
         );
     }
 

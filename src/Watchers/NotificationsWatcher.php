@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Laravel\Telescope\Entry;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Events\NotificationSent;
 
@@ -28,7 +28,7 @@ class NotificationsWatcher extends Watcher
      */
     public function recordNotification(NotificationSent $event)
     {
-        Telescope::recordNotification(Entry::make([
+        Telescope::recordNotification(IncomingEntry::make([
             'channel' => $event->channel,
             'response' => $event->response,
             'notifiable' => $this->formatNotifiable($event->notifiable),

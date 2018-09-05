@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Laravel\Telescope\Entry;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Events\QueryExecuted;
 
 class QueriesWatcher extends Watcher
@@ -27,7 +27,7 @@ class QueriesWatcher extends Watcher
      */
     public function recordQuery(QueryExecuted $event)
     {
-        Telescope::recordQuery(Entry::make([
+        Telescope::recordQuery(IncomingEntry::make([
             'connection' => $event->connectionName,
             'bindings' => $event->bindings,
             'sql' => $event->sql,
