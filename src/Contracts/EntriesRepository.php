@@ -2,6 +2,8 @@
 
 namespace Laravel\Telescope\Contracts;
 
+use Illuminate\Support\Collection;
+
 interface EntriesRepository
 {
     /**
@@ -24,9 +26,8 @@ interface EntriesRepository
     /**
      * Store the given entries.
      *
-     * @param  string  $batchId
-     * @param  array  $entries
+     * @param  \Illuminate\Support\Collection  $entries
      * @return mixed
      */
-    public function store($batchId, array $entries);
+    public function store(Collection $entries);
 }

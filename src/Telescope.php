@@ -179,7 +179,11 @@ class Telescope
      */
     public static function store(EntriesRepository $storage)
     {
-        $storage->store(Str::uuid(), static::$entriesQueue);
+        $batchId = Str::uuid();
+
+        $storage->store(collect(static::$entriesQueue)->each(function ($entry) use ($batchId) {
+            $entry->assignToBatch($batchId);
+        }));
 
         static::$entriesQueue = [];
     }

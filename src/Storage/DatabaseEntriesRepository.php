@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Storage;
 
 use Laravel\Telescope\Entry;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 
 class DatabaseEntriesRepository implements Contract
@@ -62,15 +63,14 @@ class DatabaseEntriesRepository implements Contract
     /**
      * Store the given array of entries.
      *
-     * @param  string  $batchId
-     * @param  array  $entries
+     * @param  \Illuminate\Support\Collection  $entries
      * @return mixed
      */
-    public function store($batchId, array $entries)
+    public function store(Collection $entries)
     {
-        collect($entries)->each(function (Entry $entry) use ($batchId) {
+        $entries->each(function (Entry $entry) {
             $this->storeTags(DB::table('telescope_entries')->insertGetId(
-                $entry->assignToBatch($batchId)->toArray()
+                $entry->toArray()
             ), $entry);
         });
     }
