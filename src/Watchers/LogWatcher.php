@@ -41,7 +41,7 @@ class LogWatcher extends Watcher
         }
 
         Telescope::recordLogEntry(
-            IncomingEntry::make($output)->withTags($this->extractTagsFromEvent($event))
+            IncomingEntry::make($output)->tags($this->extractTagsFromEvent($event))
         );
     }
 

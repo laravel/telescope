@@ -36,7 +36,7 @@ class MailWatcher extends Watcher
             'subject' => $event->message->getSubject(),
             'html' => $event->message->getBody(),
             'raw' => $event->message->toString(),
-        ])->withTags($this->extractTagsFromMessage($event->message)));
+        ])->tags($this->extractTagsFromMessage($event->message)));
     }
 
     /**

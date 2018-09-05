@@ -68,7 +68,7 @@ class IncomingEntry
      * @param  string  $batchId
      * @return $this
      */
-    public function assignToBatch(string $batchId)
+    public function batchId(string $batchId)
     {
         $this->batchId = $batchId;
 
@@ -81,7 +81,7 @@ class IncomingEntry
      * @param  int  $type
      * @return $this
      */
-    public function asType(int $type)
+    public function type(int $type)
     {
         $this->type = $type;
 
@@ -94,7 +94,7 @@ class IncomingEntry
      * @param  array  $tags
      * @return $this
      */
-    public function withTags(array $tags)
+    public function tags(array $tags)
     {
         $this->tags = array_unique(array_merge($this->tags, $tags));
 

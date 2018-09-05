@@ -18,7 +18,7 @@ class MailEmlController extends Controller
      */
     public function show(Request $request, EntriesRepository $storage, $id)
     {
-        return response($storage->find($id)->content->raw, 200, [
+        return response($storage->find($id)->content['raw'], 200, [
             'Content-Type' => 'message/rfc822',
             'Content-Disposition' => 'attachment; filename="mail-'.$id.'.eml"',
         ]);
