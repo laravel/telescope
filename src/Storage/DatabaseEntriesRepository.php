@@ -40,7 +40,7 @@ class DatabaseEntriesRepository implements Contract
      */
     public function get($type, EntryQueryOptions $options)
     {
-        return EntryModel::telescopeOptions($type, $options)
+        return EntryModel::withTelescopeOptions($type, $options)
             ->take($options->limit)
             ->orderByDesc('id')
             ->get()->map(function ($entry) {

@@ -38,7 +38,7 @@ class EntryModel extends Model
      * @param  \Laravel\Telescope\EntryQueryOptions  $options
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeTelescopeOptions($query, $type, EntryQueryOptions $options)
+    public function scopeWithTelescopeOptions($query, $type, EntryQueryOptions $options)
     {
         $this->whereType($query, $type)
                 ->whereBatchId($query, $options)
