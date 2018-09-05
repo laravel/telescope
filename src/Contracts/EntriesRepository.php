@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Contracts;
 
 use Illuminate\Support\Collection;
+use Laravel\Telescope\Storage\EntryQueryOptions;
 
 interface EntriesRepository
 {
@@ -18,10 +19,10 @@ interface EntriesRepository
      * Return all the entries of a given type.
      *
      * @param  int  $type
-     * @param  array  $options
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return \Illuminate\Support\Collection
      */
-    public function get($type, $options = []);
+    public function get($type, EntryQueryOptions $options = null);
 
     /**
      * Store the given entries.
