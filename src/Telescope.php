@@ -3,6 +3,7 @@
 namespace Laravel\Telescope;
 
 use Closure;
+use Illuminate\Support\Str;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
 class Telescope
@@ -193,7 +194,7 @@ class Telescope
      */
     public static function store(EntriesRepository $storage)
     {
-        $storage->store(static::$entriesQueue);
+        $storage->store(static::$entriesQueue, Str::uuid());
 
         static::$entriesQueue = [];
     }

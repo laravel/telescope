@@ -1,5 +1,8 @@
 <?php
 
+// All entries...
+Route::get('/telescope-api/entries', 'EntriesController@index');
+
 // Mail entries...
 Route::get('/telescope-api/mail', 'MailController@index');
 Route::get('/telescope-api/mail/{id}', 'MailController@show');
