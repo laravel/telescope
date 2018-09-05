@@ -59,7 +59,9 @@ class IncomingEntry
      */
     public static function make(array $content)
     {
-        return new static($content);
+        $user = app()->runningInConsole() ? null : request()->user();
+
+        return (new static($content))->user($user);
     }
 
     /**
@@ -97,6 +99,19 @@ class IncomingEntry
     public function tags(array $tags)
     {
         $this->tags = array_unique(array_merge($this->tags, $tags));
+
+        return $this;
+    }
+
+    /**
+     * Set the currently authenticated user.
+     *
+     * @param  mixed  $user
+     * @return $this
+     */
+    public function user($user)
+    {
+        $this->user = $user;
 
         return $this;
     }
