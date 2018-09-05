@@ -44,5 +44,9 @@ return [
         'requests' => [
             'enabled' => true,
         ],
+
+        'artisan' => [
+            'enabled' => true,
+        ],
     ],
 ];

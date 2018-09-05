@@ -45,6 +45,8 @@ class Telescope
      */
     protected static function record($type, IncomingEntry $entry)
     {
+        $entry->type($type);
+
         if (static::$filterUsing &&
             ! call_user_func(static::$filterUsing, $type, $entry)) {
             return;
@@ -54,7 +56,7 @@ class Telescope
             call_user_func(static::$tagUsing, $type, $entry);
         }
 
-        static::$entriesQueue[] = $entry->type($type);
+        static::$entriesQueue[] = $entry;
     }
 
     /**
@@ -140,9 +142,22 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
+
     public static function recordRequest(IncomingEntry $entry)
     {
         return static::record(EntryType::REQUEST, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
+
+    public static function recordCommand(IncomingEntry $entry)
+    {
+        return static::record(EntryType::COMMAND, $entry);
     }
 
     /**
