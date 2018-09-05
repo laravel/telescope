@@ -23,7 +23,7 @@ interface EntriesRepository
      * @param  \Laravel\Telescope\EntryQueryOptions  $options
      * @return \Illuminate\Support\Collection[\Laravel\Telescope\EntryResult]
      */
-    public function get($type, EntryQueryOptions $options = null);
+    public function get($type, EntryQueryOptions $options);
 
     /**
      * Store the given entries.

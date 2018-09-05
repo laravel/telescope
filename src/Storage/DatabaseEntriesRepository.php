@@ -38,10 +38,8 @@ class DatabaseEntriesRepository implements Contract
      * @param  \Laravel\Telescope\EntryQueryOptions  $options
      * @return \Illuminate\Support\Collection[\Laravel\Telescope\EntryResult]
      */
-    public function get($type, EntryQueryOptions $options = null)
+    public function get($type, EntryQueryOptions $options)
     {
-        $options = $options ?: new EntryQueryOptions;
-
         $this->scopeForType($query = DB::table('telescope_entries'), $type)
                 ->scopeForBatch($query, $options)
                 ->scopeForTag($query, $options)
