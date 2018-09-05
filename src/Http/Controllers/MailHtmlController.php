@@ -18,6 +18,6 @@ class MailHtmlController extends Controller
      */
     public function show(Request $request, EntriesRepository $storage, $id)
     {
-        return $storage->find($id)->content->html;
+        return $storage->find($id)->content['html'];
     }
 }
