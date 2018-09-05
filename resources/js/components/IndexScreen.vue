@@ -24,7 +24,6 @@
                 newEntriesTimeout: null,
                 loadingNewEntries: false,
                 loadingMoreEntries: false,
-                newestEntries: [],
                 newEntriesTimeoutInSeconds: 5000,
             };
         },
@@ -144,8 +143,6 @@
                 clearTimeout(this.newEntriesTimeout);
 
                 this.loadEntries((response) => {
-                    this.newestEntries = _.map(_.differenceBy(response.data.entries, this.entries, 'id'), 'id');
-
                     this.entries = response.data.entries;
 
                     this.loadingNewEntries = false;

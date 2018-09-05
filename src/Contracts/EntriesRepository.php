@@ -7,7 +7,7 @@ interface EntriesRepository
     /**
      * Return an entry with the given ID.
      *
-     * @param  integer $id
+     * @param  integer  $id
      * @return mixed
      */
     public function find($id);
@@ -24,8 +24,9 @@ interface EntriesRepository
     /**
      * Store the given entries.
      *
-     * @param  array $data
+     * @param  string  $batchId
+     * @param  array  $data
      * @return mixed
      */
-    public function store($data);
+    public function store($batchId, $data);
 }
