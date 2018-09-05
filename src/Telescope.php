@@ -174,7 +174,7 @@ class Telescope
     /**
      * Store the queued entries and flush the queue.
      *
-     * @param  Contracts\EntriesRepository $storage
+     * @param  \Laravel\Telescope\Contracts\EntriesRepository $storage
      * @return void
      */
     public static function store(EntriesRepository $storage)
