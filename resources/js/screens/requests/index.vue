@@ -21,7 +21,7 @@
         </tr>
 
 
-        <tr slot="row" slot-scope="slotProps">
+        <tr slot="row" slot-scope="slotProps" :class="{newItem: slotProps.isNew}">
             <td class="table-fit pr-0">
                 <span class="badge font-weight-light" :class="'badge-'+slotProps.entry.content.method" style="font-size:0.5em">
                     {{slotProps.entry.content.method}}

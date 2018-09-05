@@ -23,6 +23,7 @@
                 newEntriesTimeout: null,
                 loadingNewEntries: false,
                 loadingMoreEntries: false,
+                newestEntries: [],
                 newEntriesTimeoutInSeconds: 5000,
             };
         },
@@ -138,6 +139,8 @@
                 clearTimeout(this.newEntriesTimeout);
 
                 this.loadEntries((response) => {
+                    this.newestEntries = _.map(_.differenceBy(response.data.entries, this.entries, 'id'), 'id');
+
                     this.entries = response.data.entries;
 
                     this.loadingNewEntries = false;
@@ -192,7 +195,7 @@
             </tr>
 
 
-            <slot name="row" v-for="entry in entries" :entry="entry"></slot>
+            <slot name="row" v-for="entry in entries" :entry="entry" :isNew="newestEntries.includes(entry.id)"></slot>
 
 
             <tr v-if="hasMoreEntries">
@@ -206,3 +209,16 @@
         </table>
     </div>
 </template>
+
+<style scoped>
+    .newItem td{
+        background: #fffee9;
+        animation: background-fade 2s forwards;
+    }
+
+    @keyframes background-fade {
+        100% {
+            background: none;
+        }
+    }
+</style>

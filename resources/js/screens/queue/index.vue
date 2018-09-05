@@ -14,7 +14,7 @@
         </tr>
 
 
-        <tr slot="row" slot-scope="slotProps">
+        <tr slot="row" slot-scope="slotProps" :class="{newItem: slotProps.isNew}">
             <td>{{truncate(slotProps.entry.content.name, 20)}}</td>
             <td class="table-fit">{{truncate(slotProps.entry.content.queue, 20)}}</td>
             <td class="table-fit">{{truncate(slotProps.entry.content.connection, 20)}}</td>

@@ -12,7 +12,7 @@
         </tr>
 
 
-        <tr slot="row" slot-scope="slotProps">
+        <tr slot="row" slot-scope="slotProps" :class="{newItem: slotProps.isNew}">
             <td>{{truncate(slotProps.entry.content.message, 80)}}</td>
             <td class="table-fit">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon fill-danger" v-if="slotProps.entry.content.level == 'error'">

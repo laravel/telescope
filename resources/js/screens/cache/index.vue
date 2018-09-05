@@ -12,7 +12,7 @@
         </tr>
 
 
-        <tr slot="row" slot-scope="slotProps">
+        <tr slot="row" slot-scope="slotProps" :class="{newItem: slotProps.isNew}">
             <td>{{truncate(slotProps.entry.content.key, 80)}}</td>
             <td class="table-fit">{{slotProps.entry.content.type}}</td>
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
