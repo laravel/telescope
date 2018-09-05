@@ -39,8 +39,11 @@ abstract class EntryController extends Controller
      */
     public function show(Request $request, EntriesRepository $storage, $id)
     {
+        $entry = $storage->find($id);
+
         return response()->json([
-            'entry' => $storage->find($id)
+            'entry' => $storage->find($id),
+            'batch' => $entry ? $storage->get(null, ['batch_id' => $entry->batch_id]) : null,
         ]);
     }
 }

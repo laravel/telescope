@@ -1,5 +1,22 @@
 <script type="text/ecmascript-6">
-    export default {}
+    export default {
+        data(){
+            return {
+                entry: null,
+                batch: [],
+            };
+        },
+
+        computed: {
+            job(){
+                return _.find(this.batch, {type: 4})
+            },
+
+            request(){
+                return _.find(this.batch, {type: 8})
+            }
+        }
+    }
 </script>
 
 <template>
@@ -30,6 +47,24 @@
             <td class="table-fit font-weight-bold">Expiration</td>
             <td>
                 {{slotProps.entry.content.expiration}}
+            </td>
+        </tr>
+
+        <tr v-if="job">
+            <td class="table-fit font-weight-bold">Job</td>
+            <td>
+                <router-link :to="{name:'queue-preview', params:{id: job.id}}" class="control-action">
+                    Preview Job
+                </router-link>
+            </td>
+        </tr>
+
+        <tr v-if="request">
+            <td class="table-fit font-weight-bold">Request</td>
+            <td>
+                <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action">
+                    Preview Request
+                </router-link>
             </td>
         </tr>
         </tbody>

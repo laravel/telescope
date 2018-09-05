@@ -59704,6 +59704,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return (name ? "<" + name + "> " : '') + email;
             }).join(', ').value();
         }
+    },
+
+    data: function data() {
+        return {
+            entry: null,
+            batch: []
+        };
+    },
+
+
+    computed: {
+        job: function job() {
+            return _.find(this.batch, { type: 4 });
+        },
+        request: function request() {
+            return _.find(this.batch, { type: 8 });
+        }
     }
 });
 
@@ -59857,7 +59874,67 @@ var render = function() {
                   [_vm._v("Download .eml file")]
                 )
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.job
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Job")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "queue-preview",
+                              params: { id: _vm.job.id }
+                            }
+                          }
+                        },
+                        [_vm._v("\n                Preview Job\n            ")]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.request
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Request")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "request-preview",
+                              params: { id: _vm.request.id }
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                Preview Request\n            "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e()
           ])
         }
       },
@@ -60136,7 +60213,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60152,6 +60229,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         'code-preview': __webpack_require__(134),
         'stack-trace': __webpack_require__(135)
+    },
+
+    data: function data() {
+        return {
+            entry: null,
+            batch: []
+        };
+    },
+
+
+    computed: {
+        job: function job() {
+            return _.find(this.batch, { type: 4 });
+        },
+        request: function request() {
+            return _.find(this.batch, { type: 8 });
+        }
     }
 });
 
@@ -60450,6 +60544,66 @@ var render = function() {
                         "\n        "
                     )
                   ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.job
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Job")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "queue-preview",
+                              params: { id: _vm.job.id }
+                            }
+                          }
+                        },
+                        [_vm._v("\n                Preview Job\n            ")]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.request
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Request")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "request-preview",
+                              params: { id: _vm.request.id }
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                Preview Request\n            "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
                 ])
               : _vm._e()
           ])
@@ -60761,7 +60915,24 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            entry: null,
+            batch: []
+        };
+    },
+
+
+    computed: {
+        job: function job() {
+            return _.find(this.batch, { type: 4 });
+        },
+        request: function request() {
+            return _.find(this.batch, { type: 8 });
+        }
+    }
+});
 
 /***/ }),
 /* 178 */
@@ -60838,7 +61009,67 @@ var render = function() {
                     "\n        "
                 )
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.job
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Job")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "queue-preview",
+                              params: { id: _vm.job.id }
+                            }
+                          }
+                        },
+                        [_vm._v("\n                Preview Job\n            ")]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.request
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Request")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "request-preview",
+                              params: { id: _vm.request.id }
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                Preview Request\n            "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e()
           ])
         }
       }
@@ -61104,7 +61335,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -61128,25 +61359,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
-            batch: null,
-            batchEntries: []
+            entry: null,
+            batch: []
         };
     },
 
 
-    watch: {
-        batch: function batch(val) {
-            var _this = this;
-
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/telescope/telescope-api/entries?take=1000&batch_id=' + val).then(function (response) {
-                _this.batchEntries = response.data.entries;
-            });
-        }
-    },
-
     methods: {
         batchEntriesOfType: function batchEntriesOfType(type) {
-            return _.filter(this.batchEntries, { type: type });
+            return _.filter(this.batch, { type: type });
         }
     }
 });
@@ -62868,7 +63089,24 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            entry: null,
+            batch: []
+        };
+    },
+
+
+    computed: {
+        job: function job() {
+            return _.find(this.batch, { type: 4 });
+        },
+        request: function request() {
+            return _.find(this.batch, { type: 8 });
+        }
+    }
+});
 
 /***/ }),
 /* 210 */
@@ -62917,7 +63155,67 @@ var render = function() {
                     "\n        "
                 )
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.job
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Job")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "queue-preview",
+                              params: { id: _vm.job.id }
+                            }
+                          }
+                        },
+                        [_vm._v("\n                Preview Job\n            ")]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.request
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Request")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "request-preview",
+                              params: { id: _vm.request.id }
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                Preview Request\n            "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e()
           ])
         }
       },
@@ -63183,7 +63481,24 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            entry: null,
+            batch: []
+        };
+    },
+
+
+    computed: {
+        job: function job() {
+            return _.find(this.batch, { type: 4 });
+        },
+        request: function request() {
+            return _.find(this.batch, { type: 8 });
+        }
+    }
+});
 
 /***/ }),
 /* 216 */
@@ -63261,6 +63576,66 @@ var render = function() {
                         "\n        "
                     )
                   ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.job
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Job")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "queue-preview",
+                              params: { id: _vm.job.id }
+                            }
+                          }
+                        },
+                        [_vm._v("\n                Preview Job\n            ")]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.request
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Request")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "request-preview",
+                              params: { id: _vm.request.id }
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                Preview Request\n            "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
                 ])
               : _vm._e()
           ])
@@ -63502,7 +63877,24 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            entry: null,
+            batch: []
+        };
+    },
+
+
+    computed: {
+        job: function job() {
+            return _.find(this.batch, { type: 4 });
+        },
+        request: function request() {
+            return _.find(this.batch, { type: 8 });
+        }
+    }
+});
 
 /***/ }),
 /* 222 */
@@ -63565,7 +63957,67 @@ var render = function() {
                     "\n        "
                 )
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.job
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Job")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "queue-preview",
+                              params: { id: _vm.job.id }
+                            }
+                          }
+                        },
+                        [_vm._v("\n                Preview Job\n            ")]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.request
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Request")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "request-preview",
+                              params: { id: _vm.request.id }
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                Preview Request\n            "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e()
           ])
         }
       },
@@ -63816,25 +64268,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            batch: null,
-            batchEntries: []
+            entry: null,
+            batch: []
         };
     },
 
 
-    watch: {
-        batch: function batch(val) {
-            var _this = this;
-
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/telescope/telescope-api/entries?take=1000&batch_id=' + val).then(function (response) {
-                _this.batchEntries = response.data.entries;
-            });
-        }
-    },
-
     methods: {
         batchEntriesOfType: function batchEntriesOfType(type) {
-            return _.filter(this.batchEntries, { type: type });
+            return _.filter(this.batch, { type: type });
         }
     }
 });
@@ -71843,7 +72285,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         this.loadEntry(function (response) {
             _this.entry = response.data.entry;
 
-            _this.$parent.batch = _this.entry.batch_id;
+            _this.$parent.entry = response.data.entry;
+            _this.$parent.batch = response.data.batch;
 
             _this.ready = true;
         });

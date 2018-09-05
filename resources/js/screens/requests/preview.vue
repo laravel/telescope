@@ -4,22 +4,14 @@
     export default {
         data(){
             return {
-                batch: null,
-                batchEntries: []
+                entry: null,
+                batch: [],
             };
-        },
-
-        watch: {
-            batch(val){
-                axios.get('/telescope/telescope-api/entries?take=1000&batch_id=' + val).then(response => {
-                    this.batchEntries = response.data.entries;
-                });
-            }
         },
 
         methods: {
             batchEntriesOfType(type){
-                return _.filter(this.batchEntries, {type: type})
+                return _.filter(this.batch, {type: type})
             }
         }
     }
