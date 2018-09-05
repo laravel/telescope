@@ -10,7 +10,7 @@ interface EntriesRepository
     /**
      * Return an entry with the given ID.
      *
-     * @param  integer  $id
+     * @param  mixed  $id
      * @return mixed
      */
     public function find($id);
