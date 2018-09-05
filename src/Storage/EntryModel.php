@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Storage;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Telescope\EntryQueryOptions;
 
