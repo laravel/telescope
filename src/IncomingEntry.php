@@ -55,6 +55,7 @@ class IncomingEntry
     public function __construct(array $content)
     {
         $this->recordedAt = now();
+
         $this->content = array_merge($content, ['hostname' => gethostname()]);
     }
 
