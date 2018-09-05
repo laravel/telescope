@@ -45,18 +45,7 @@ class Telescope
      */
     protected static function record($type, IncomingEntry $entry)
     {
-        $entry->type($type);
-
-        if (static::$filterUsing &&
-            ! call_user_func(static::$filterUsing, $entry)) {
-            return;
-        }
-
-        if (static::$tagUsing) {
-            call_user_func(static::$tagUsing, $entry);
-        }
-
-        static::$entriesQueue[] = $entry;
+        static::$entriesQueue[] = $entry->type($type);
     }
 
     /**
@@ -196,7 +185,17 @@ class Telescope
     {
         $batchId = Str::uuid();
 
-        $storage->store(collect(static::$entriesQueue)->each(function ($entry) use ($batchId) {
+        $entries = collect(static::$entriesQueue);
+
+        if (static::$filterUsing) {
+            $entries = $entriesQueue->filter(static::$filterUsing);
+        }
+
+        if (static::$tagUsing) {
+            $entries = $entries->each(static::$tagUsing);
+        }
+
+        $storage->store($entries->each(function ($entry) use ($batchId) {
             $entry->batchId($batchId);
         }));
 
