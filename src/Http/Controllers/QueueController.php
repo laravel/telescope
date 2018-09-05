@@ -2,38 +2,18 @@
 
 namespace Laravel\Telescope\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Laravel\Telescope\EntryType;
 use Illuminate\Routing\Controller;
-use Laravel\Telescope\Contracts\EntriesRepository;
 
-class QueueController extends Controller
+class QueueController extends EntryController
 {
     /**
-     * List the entries of the given type.
+     * The entry type for the controller.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Laravel\Telescope\Contracts\EntriesRepository $storage
-     * @return \Illuminate\Http\Response
+     * @return int
      */
-    public function index(Request $request, EntriesRepository $storage)
+    protected function entryType()
     {
-        return response()->json([
-            'entries' => $storage->get(4, $request->all())
-        ]);
-    }
-
-    /**
-     * Get an entry with the given ID.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Laravel\Telescope\Contracts\EntriesRepository $storage
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Request $request, EntriesRepository $storage, $id)
-    {
-        return response()->json([
-            'entry' => $storage->find($id)
-        ]);
+        return EntryType::JOB;
     }
 }

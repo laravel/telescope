@@ -39,7 +39,6 @@ class CreateTelescopeEntriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('telescope_entries');
-        Schema::dropIfExists('telescope_tags');
         Schema::dropIfExists('telescope_entries_tags');
     }
 }

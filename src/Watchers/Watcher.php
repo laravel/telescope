@@ -2,7 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
-abstract class AbstractWatcher
+abstract class Watcher
 {
     /**
      * Register the watcher.

@@ -5,11 +5,10 @@ namespace Laravel\Telescope\Watchers;
 use Closure;
 use ReflectionClass;
 use Illuminate\Support\Str;
-use Illuminate\Queue\Jobs\Job;
 use Laravel\Telescope\Telescope;
 use Illuminate\Database\Eloquent\Model;
 
-class EventsWatcher extends AbstractWatcher
+class EventsWatcher extends Watcher
 {
     /**
      * Register the watcher.
@@ -31,7 +30,7 @@ class EventsWatcher extends AbstractWatcher
      */
     public function recordEvent($eventName, $payload)
     {
-        if (! $this->eventShouldBeRecorded($eventName)) {
+        if ($this->eventShouldBeIgnored($eventName)) {
             return;
         }
 
@@ -45,34 +44,29 @@ class EventsWatcher extends AbstractWatcher
     }
 
     /**
-     * Determine if the event should be recorded.
+     * Determine if the event should be ignored.
      *
-     * @param  string $eventName
+     * @param  string  $eventName
      * @return bool
      */
-    private function eventShouldBeRecorded($eventName)
+    private function eventShouldBeIgnored($eventName)
     {
-        if (Telescope::ignoresFrameworkEvents() && $this->eventIsFiredByTheFramework($eventName)) {
-            return false;
-        }
-
-        return true;
+        return Telescope::ignoresFrameworkEvents() &&
+               $this->eventIsFiredByTheFramework($eventName);
     }
 
     /**
      * Extract the payload and tags from the event.
      *
-     * @param  string $eventName
-     * @param  array $payload
+     * @param  string  $eventName
+     * @param  array  $payload
      * @return array
      */
     private function extractPayloadAndTags($eventName, $payload)
     {
-        if (! $this->eventIsAnObject($eventName)) {
-            return [$this->formatRawPayload($payload), []];
-        }
-
-        return $this->extractPayloadAndTagsFromEventObject($payload[0]);
+        return $this->eventIsAnObject($eventName)
+                ? $this->extractPayloadAndTagsFromEventObject($payload[0])
+                : [$this->formatRawPayload($payload), []];
     }
 
     /**
@@ -93,7 +87,7 @@ class EventsWatcher extends AbstractWatcher
                     $tags[] = $model = get_class($value).':'.$value->getKey();
 
                     return [$property->getName() => $model];
-                }else{
+                } else {
                     return [$property->getName() => json_decode(json_encode($value), true)];
                 }
             })->toArray();

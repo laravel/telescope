@@ -10,7 +10,7 @@ use Laravel\Telescope\Telescope;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\JobProcessed;
 
-class QueueWatcher extends AbstractWatcher
+class QueueWatcher extends Watcher
 {
     /**
      * Register the watcher.

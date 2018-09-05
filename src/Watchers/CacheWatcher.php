@@ -8,7 +8,7 @@ use Illuminate\Cache\Events\KeyWritten;
 use Illuminate\Cache\Events\CacheMissed;
 use Illuminate\Cache\Events\KeyForgotten;
 
-class CacheWatcher extends AbstractWatcher
+class CacheWatcher extends Watcher
 {
     /**
      * Register the watcher.
@@ -18,10 +18,10 @@ class CacheWatcher extends AbstractWatcher
      */
     public function register($app)
     {
-        $app['events']->listen(CacheHit::class, [$this, 'recordFoundKey']);
-        $app['events']->listen(CacheMissed::class, [$this, 'recordMissingKey']);
-        $app['events']->listen(KeyWritten::class, [$this, 'recordUpdatedKey']);
-        $app['events']->listen(KeyForgotten::class, [$this, 'recordRemovedKey']);
+        $app['events']->listen(CacheHit::class, [$this, 'recordCacheHit']);
+        $app['events']->listen(CacheMissed::class, [$this, 'recordCacheMissed']);
+        $app['events']->listen(KeyWritten::class, [$this, 'recordKeyWritten']);
+        $app['events']->listen(KeyForgotten::class, [$this, 'recordKeyForgotten']);
     }
 
     /**
@@ -30,7 +30,7 @@ class CacheWatcher extends AbstractWatcher
      * @param \Illuminate\Cache\Events\CacheHit $event
      * @return void
      */
-    public function recordFoundKey(CacheHit $event)
+    public function recordCacheHit(CacheHit $event)
     {
         if (! $this->shouldRecord($event)) {
             return;
@@ -49,7 +49,7 @@ class CacheWatcher extends AbstractWatcher
      * @param \Illuminate\Cache\Events\CacheMissed $event
      * @return void
      */
-    public function recordMissingKey(CacheMissed $event)
+    public function recordCacheMissed(CacheMissed $event)
     {
         if (! $this->shouldRecord($event)) {
             return;
@@ -67,7 +67,7 @@ class CacheWatcher extends AbstractWatcher
      * @param \Illuminate\Cache\Events\KeyWritten $event
      * @return void
      */
-    public function recordUpdatedKey(KeyWritten $event)
+    public function recordKeyWritten(KeyWritten $event)
     {
         if (! $this->shouldRecord($event)) {
             return;
@@ -87,7 +87,7 @@ class CacheWatcher extends AbstractWatcher
      * @param \Illuminate\Cache\Events\KeyForgotten $event
      * @return void
      */
-    public function recordRemovedKey(KeyForgotten $event)
+    public function recordKeyForgotten(KeyForgotten $event)
     {
         if (! $this->shouldRecord($event)) {
             return;

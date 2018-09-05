@@ -3,8 +3,8 @@
 // Mail entries...
 Route::get('/telescope-api/mail', 'MailController@index');
 Route::get('/telescope-api/mail/{id}', 'MailController@show');
-Route::get('/telescope-api/mail/{id}/preview', 'MailController@previewHTML');
-Route::get('/telescope-api/mail/{id}/download', 'MailController@downloadEML');
+Route::get('/telescope-api/mail/{id}/preview', 'MailHtmlController@show');
+Route::get('/telescope-api/mail/{id}/download', 'MailEmlController@show');
 
 // Log entries...
 Route::get('/telescope-api/log', 'LogController@index');
@@ -38,4 +38,3 @@ Route::get('/telescope-api/requests/{id}', 'RequestsController@show');
 Route::get('/{view?}', function () {
     return view('telescope::layout');
 })->where('view', '(.*)');
-

@@ -71,7 +71,7 @@ section {
 
 body {
   margin: 0;
-  font-family: Lato;
+  font-family: Nunito;
   font-size: 0.95rem;
   font-weight: 400;
   line-height: 1.5;
@@ -6324,7 +6324,7 @@ button.close {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: Lato;
+  font-family: Nunito;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -6449,7 +6449,7 @@ button.close {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: Lato;
+  font-family: Nunito;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -10546,7 +10546,7 @@ svg.icon {
 
 .card .table.table-sm th,
 .card .table.table-sm td {
-  padding: 0.5rem 1.25rem;
+  padding: 1rem 1.25rem;
 }
 
 .card .table th {

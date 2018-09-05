@@ -7,7 +7,7 @@ use Whoops\Exception\Inspector;
 use Laravel\Telescope\Telescope;
 use Illuminate\Log\Events\MessageLogged;
 
-class LogWatcher extends AbstractWatcher
+class LogWatcher extends Watcher
 {
     /**
      * Register the watcher.

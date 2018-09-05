@@ -6,7 +6,7 @@ use Laravel\Telescope\Telescope;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 
-class RequestsWatcher extends AbstractWatcher
+class RequestsWatcher extends Watcher
 {
     /**
      * Register the watcher.

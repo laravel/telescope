@@ -8,45 +8,16 @@ use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 class DatabaseEntriesRepository implements Contract
 {
     /**
-     * Return all the entries of a given type.
+     * Find the entry with the given ID.
      *
-     * @param  int $type
-     * @param  array $params
-     * @return \Illuminate\Support\Collection
-     */
-    public function get($type, $params = [])
-    {
-        return DB::table('telescope_entries')
-            ->whereType($type)
-            ->orderByDesc('id')
-            ->take($params['take'] ?? 50)
-            ->when($params['before'] ?? false, function($q, $value){
-                return $q->where('id', '<', $value);
-            })
-            ->when($params['tag'] ?? false, function($q, $value){
-                $records = DB::table('telescope_entries_tags')->whereTag($value)->pluck('entry_id')->toArray();
-
-                return $q->whereIn('id', $records);
-            })
-            ->get()
-            ->map(function ($entry) {
-                $entry->content = json_decode($entry->content);
-
-                return $entry;
-            });
-    }
-
-    /**
-     * Return an entry with the given ID.
-     *
-     * @param  mixed $id
+     * @param  mixed  $id
      * @return mixed
      */
     public function find($id)
     {
         $entry = DB::table('telescope_entries')
-            ->whereId($id)
-            ->first();
+                    ->whereId($id)
+                    ->first();
 
         abort_unless($entry, 404);
 
@@ -56,9 +27,36 @@ class DatabaseEntriesRepository implements Contract
     }
 
     /**
-     * Store the given entries.
+     * Return all the entries of a given type.
      *
-     * @param  array $data
+     * @param  int  $type
+     * @param  array  $options
+     * @return \Illuminate\Support\Collection
+     */
+    public function get($type, $options = [])
+    {
+        return DB::table('telescope_entries')
+            ->whereType($type)
+            ->when($options['before'] ?? false, function ($q, $value) {
+                return $q->where('id', '<', $value);
+            })
+            ->when($options['tag'] ?? false, function ($q, $value) {
+                $records = DB::table('telescope_entries_tags')->whereTag($value)->pluck('entry_id')->toArray();
+
+                return $q->whereIn('id', $records);
+            })
+            ->take($options['take'] ?? 50)
+            ->orderByDesc('id')
+            ->get()
+            ->each(function ($entry) {
+                $entry->content = json_decode($entry->content);
+            });
+    }
+
+    /**
+     * Store the given array of entries.
+     *
+     * @param  array  $data
      * @return mixed
      */
     public function store($data)
@@ -76,6 +74,5 @@ class DatabaseEntriesRepository implements Contract
                 return ['entry_id' => $id, 'tag' => $tag,];
             })->toArray());
         });
-
     }
 }

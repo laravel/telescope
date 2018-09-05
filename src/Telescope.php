@@ -58,33 +58,33 @@ class Telescope
         static::$entriesQueue[] = [
             'type' => $type,
             'content' => $entry,
+            'tags' => $tags,
             'created_at' => now()->toDateTimeString(),
-            'tags' => $tags
         ];
     }
 
     /**
      * Record the given entry.
      *
-     * @param  array $entry
-     * @param  array $tags
+     * @param  array  $entry
+     * @param  array  $tags
      * @return void
      */
     public static function recordMail($entry, $tags = [])
     {
-        return static::record(1, $entry, $tags);
+        return static::record(EntryType::MAIL, $entry, $tags);
     }
 
     /**
      * Record the given entry.
      *
-     * @param  array $entry
-     * @param  array $tags
+     * @param  array  $entry
+     * @param  array  $tags
      * @return void
      */
     public static function recordLogEntry($entry, $tags = [])
     {
-        return static::record(2, $entry, $tags);
+        return static::record(EntryType::LOG, $entry, $tags);
     }
 
     /**
@@ -96,7 +96,7 @@ class Telescope
      */
     public static function recordNotification($entry, $tags = [])
     {
-        return static::record(3, $entry, $tags);
+        return static::record(EntryType::NOTIFICATION, $entry, $tags);
     }
 
     /**
@@ -108,7 +108,7 @@ class Telescope
      */
     public static function recordJob($entry, $tags = [])
     {
-        return static::record(4, $entry, $tags);
+        return static::record(EntryType::JOB, $entry, $tags);
     }
 
     /**
@@ -120,7 +120,7 @@ class Telescope
      */
     public static function recordEvent($entry, $tags = [])
     {
-        return static::record(5, $entry, $tags);
+        return static::record(EntryType::EVENT, $entry, $tags);
     }
 
     /**
@@ -132,7 +132,7 @@ class Telescope
      */
     public static function recordCacheEntry($entry, $tags = [])
     {
-        return static::record(6, $entry, $tags);
+        return static::record(EntryType::CACHE, $entry, $tags);
     }
 
     /**
@@ -144,7 +144,7 @@ class Telescope
      */
     public static function recordQuery($entry, $tags = [])
     {
-        return static::record(7, $entry, $tags);
+        return static::record(EntryType::QUERY, $entry, $tags);
     }
 
     /**
@@ -156,7 +156,7 @@ class Telescope
      */
     public static function recordRequest($entry, $tags = [])
     {
-        return static::record(8, $entry, $tags);
+        return static::record(EntryType::REQUEST, $entry, $tags);
     }
 
     /**

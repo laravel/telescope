@@ -6,7 +6,7 @@ use Laravel\Telescope\Telescope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Events\NotificationSent;
 
-class NotificationsWatcher extends AbstractWatcher
+class NotificationsWatcher extends Watcher
 {
     /**
      * Register the watcher.
