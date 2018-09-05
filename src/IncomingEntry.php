@@ -19,6 +19,13 @@ class IncomingEntry
     public $type;
 
     /**
+     * The currently authenticated user, if applicable.
+     *
+     * @var mixed
+     */
+    public $user;
+
+    /**
      * The entry's content.
      *
      * @var array
@@ -91,19 +98,6 @@ class IncomingEntry
     }
 
     /**
-     * Merge tags into the entry's existing tags.
-     *
-     * @param  array  $tags
-     * @return $this
-     */
-    public function tags(array $tags)
-    {
-        $this->tags = array_unique(array_merge($this->tags, $tags));
-
-        return $this;
-    }
-
-    /**
      * Set the currently authenticated user.
      *
      * @param  mixed  $user
@@ -112,6 +106,19 @@ class IncomingEntry
     public function user($user)
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Merge tags into the entry's existing tags.
+     *
+     * @param  array  $tags
+     * @return $this
+     */
+    public function tags(array $tags)
+    {
+        $this->tags = array_unique(array_merge($this->tags, $tags));
 
         return $this;
     }
