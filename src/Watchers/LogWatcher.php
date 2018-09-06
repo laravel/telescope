@@ -29,37 +29,45 @@ class LogWatcher extends Watcher
      */
     public function recordMessage(MessageLogged $event)
     {
+        if (isset($event->context['exception'])) {
+            return $this->recordException($event);
+        }
+
         $output = [
             'level' => $event->level,
             'message' => $event->message,
-            'exception' => isset($event->context['exception'])
-                ? $this->formatException($event->context['exception']) : null,
+            'context' => $event->context,
         ];
 
-        if (! isset($event->context['exception'])) {
-            $output['context'] = $event->context;
-        }
-
         Telescope::recordLogEntry(
-            IncomingEntry::make($output)->tags($this->extractTagsFromEvent($event))
+            IncomingEntry::make([
+                'level' => $event->level,
+                'message' => $event->message,
+                'context' => $event->context,
+            ])->tags($this->extractTagsFromEvent($event))
         );
     }
 
     /**
-     * Format the given exception.
+     * Record a new exception.
      *
-     * @param  Throwable $exception
-     * @return array
+     * @param \Illuminate\Log\Events\MessageLogged $event
+     * @return void
      */
-    private function formatException(Throwable $exception)
+    protected function recordException(MessageLogged $event)
     {
-        return [
-            'class' => get_class($exception),
-            'file' => $exception->getFile(),
-            'line' => $exception->getLine() - 1,
-            'trace' => $exception->getTrace(),
-            'line_preview' => $this->formatLinePreview($exception),
-        ];
+        $exception = $event->context['exception'];
+
+        Telescope::recordException(
+            IncomingEntry::make([
+                'class' => get_class($exception),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine() - 1,
+                'message' => $exception->getMessage(),
+                'trace' => $exception->getTrace(),
+                'line_preview' => $this->formatLinePreview($exception),
+            ])->tags($this->extractTagsFromEvent($event))
+        );
     }
 
     /**
@@ -71,8 +79,8 @@ class LogWatcher extends Watcher
     private function formatLinePreview(Throwable $exception)
     {
         return (new Inspector($exception))
-            ->getFrames()[0]
-            ->getFileLines($exception->getLine() - 10, 20);
+                ->getFrames()[0]
+                ->getFileLines($exception->getLine() - 10, 20);
     }
 
 
