@@ -20,7 +20,7 @@
 </script>
 
 <template>
-    <preview-screen title="Event Preview" resource="events" :id="$route.params.id">
+    <preview-screen title="Event Details" resource="events" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit font-weight-bold">Event</td>
@@ -33,7 +33,7 @@
                 <td class="table-fit font-weight-bold">Job</td>
                 <td>
                     <router-link :to="{name:'queue-preview', params:{id: job.id}}" class="control-action">
-                        Preview Job
+                        View Job
                     </router-link>
                 </td>
             </tr>
