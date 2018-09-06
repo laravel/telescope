@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Foundation\Console\Kernel;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Illuminate\Console\Events\CommandFinished;
@@ -32,6 +33,7 @@ class ArtisanWatcher extends Watcher
             'exit_code' => $event->exitCode,
             'arguments' => $event->input->getArguments(),
             'options' => $event->input->getOptions(),
+            'output' => app(Kernel::class)->output(),
         ]));
     }
 }

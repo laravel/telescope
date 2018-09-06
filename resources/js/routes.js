@@ -102,4 +102,16 @@ export default [
         name: 'requests',
         component: require('./screens/requests/index')
     },
+
+    {
+        path: '/artisan/:id',
+        name: 'artisan-preview',
+        component: require('./screens/artisan/preview')
+    },
+
+    {
+        path: '/artisan',
+        name: 'artisan',
+        component: require('./screens/artisan/index')
+    },
 ];
