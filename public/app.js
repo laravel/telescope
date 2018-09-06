@@ -60116,7 +60116,7 @@ var render = function() {
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("To")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("subject")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Subject")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Since")]),
         _vm._v(" "),

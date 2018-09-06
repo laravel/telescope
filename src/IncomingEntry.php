@@ -19,6 +19,13 @@ class IncomingEntry
     public $type;
 
     /**
+     * The currently authenticated user, if applicable.
+     *
+     * @var mixed
+     */
+    public $user;
+
+    /**
      * The entry's content.
      *
      * @var array
@@ -47,8 +54,9 @@ class IncomingEntry
      */
     public function __construct(array $content)
     {
-        $this->content = $content;
         $this->recordedAt = now();
+
+        $this->content = array_merge($content, ['hostname' => gethostname()]);
     }
 
     /**
@@ -59,7 +67,9 @@ class IncomingEntry
      */
     public static function make(array $content)
     {
-        return new static($content);
+        $user = app()->runningInConsole() ? null : request()->user();
+
+        return (new static($content))->user($user);
     }
 
     /**
@@ -84,6 +94,19 @@ class IncomingEntry
     public function type(int $type)
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Set the currently authenticated user.
+     *
+     * @param  mixed  $user
+     * @return $this
+     */
+    public function user($user)
+    {
+        $this->user = $user;
 
         return $this;
     }

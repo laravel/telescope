@@ -2,7 +2,6 @@
 
 namespace Laravel\Telescope\Storage;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
@@ -40,12 +39,7 @@ class DatabaseEntriesRepository implements Contract
      */
     public function get($type, EntryQueryOptions $options)
     {
-        $this->scopeForType($query = DB::table('telescope_entries'), $type)
-                ->scopeForBatch($query, $options)
-                ->scopeForTag($query, $options)
-                ->scopeForPagination($query, $options);
-
-        return $query
+        return EntryModel::withTelescopeOptions($type, $options)
             ->take($options->limit)
             ->orderByDesc('id')
             ->get()->map(function ($entry) {
@@ -53,77 +47,10 @@ class DatabaseEntriesRepository implements Contract
                     $entry->id,
                     $entry->batch_id,
                     $entry->type,
-                    json_decode($entry->content, true),
-                    Carbon::parse($entry->created_at)
+                    $entry->content,
+                    $entry->created_at
                 );
             });
-    }
-
-    /**
-     * Scope the query for the given type.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  int  $type
-     * @return $this
-     */
-    protected function scopeForType($query, $type)
-    {
-        $query->when($type, function ($query, $type) {
-            return $query->where('type', $type);
-        });
-
-        return $this;
-    }
-
-    /**
-     * Scope the query for the given batch ID.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  \Laravel\Telescope\EntryQueryOptions  $options
-     * @return $this
-     */
-    protected function scopeForBatch($query, EntryQueryOptions $options)
-    {
-        $query->when($options->batchId, function ($query, $batchId) {
-            return $query->where('batch_id', $batchId);
-        });
-
-        return $this;
-    }
-
-    /**
-     * Scope the query for the given type.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  \Laravel\Telescope\EntryQueryOptions  $options
-     * @return $this
-     */
-    protected function scopeForTag($query, EntryQueryOptions $options)
-    {
-        $query->when($options->tag, function ($query, $tag) {
-            return $query->whereIn('id', DB::table('telescope_entries_tags')
-                        ->whereTag($tag)
-                        ->pluck('entry_id')
-                        ->toArray());
-        });
-
-        return $this;
-    }
-
-    /**
-     * Scope the query for the given pagination options.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @param  \Laravel\Telescope\EntryQueryOptions  $options
-     * @return $this
-     */
-    protected function scopeForPagination($query, EntryQueryOptions $options)
-    {
-        $query->when($options->beforeId, function ($query, $beforeId) {
-            return $query->where('id', '<', $beforeId);
-        });
-
-        return $this;
     }
 
     /**

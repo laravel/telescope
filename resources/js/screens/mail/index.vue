@@ -7,7 +7,7 @@
         <tr slot="table-header">
             <th scope="col">From</th>
             <th scope="col">To</th>
-            <th scope="col">subject</th>
+            <th scope="col">Subject</th>
             <th scope="col">Since</th>
             <th scope="col"></th>
         </tr>
