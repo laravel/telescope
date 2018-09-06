@@ -21,6 +21,10 @@ return [
             'enabled' => true,
         ],
 
+        'exceptions' => [
+            'enabled' => true,
+        ],
+
         'log' => [
             'enabled' => true,
         ],
