@@ -107,9 +107,11 @@ class IncomingEntry
         $this->user = $user;
 
         $this->content = array_merge($this->content, [
-            'user' => $user->id,
-            'user.name' => $user->name ?? null,
-            'user.email' => $user->email ?? null,
+            'user' => [
+                'id' => $user->getKey(),
+                'name' => $user->name ?? null,
+                'email' => $user->email ?? null,
+            ],
         ]);
 
         $this->tags(['user:'.$user->id]);

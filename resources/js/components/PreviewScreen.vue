@@ -88,19 +88,45 @@
                     </td>
                 </tr>
 
-                <tr v-if="entry.content.user">
-                    <td class="table-fit font-weight-bold">User</td>
-                    <td>
-                        {{entry.content.user}}
-                    </td>
-                </tr>
-
                 <slot name="table-parameters" :entry="entry"></slot>
                 </tbody>
             </table>
 
 
             <slot v-if="ready && entry" name="below-table" :entry="entry"></slot>
+        </div>
+
+        <!-- User Information -->
+        <div class="card mt-5" v-if="ready && entry && entry.content.user.id">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5>User</h5>
+            </div>
+
+            <table class="table mb-0 bg-secondary table-borderless">
+                <tr>
+                    <td class="table-fit font-weight-bold">ID</td>
+
+                    <td>
+                        {{entry.content.user.id}}
+                    </td>
+                </tr>
+
+                <tr v-if="entry.content.user.name">
+                    <td class="table-fit font-weight-bold">Name</td>
+
+                    <td>
+                        {{entry.content.user.name}}
+                    </td>
+                </tr>
+
+                <tr v-if="entry.content.user.email">
+                    <td class="table-fit font-weight-bold">Email Address</td>
+
+                    <td>
+                        {{entry.content.user.email}}
+                    </td>
+                </tr>
+            </table>
         </div>
 
         <slot v-if="ready && entry" name="after-attributes-card" :entry="entry"></slot>

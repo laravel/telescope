@@ -73016,24 +73016,6 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm.entry.content.user
-                        ? _c("tr", [
-                            _c(
-                              "td",
-                              { staticClass: "table-fit font-weight-bold" },
-                              [_vm._v("User")]
-                            ),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(
-                                "\n                    " +
-                                  _vm._s(_vm.entry.content.user) +
-                                  "\n                "
-                              )
-                            ])
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
                       _vm._t("table-parameters", null, { entry: _vm.entry })
                     ],
                     2
@@ -73049,6 +73031,64 @@ var render = function() {
         2
       ),
       _vm._v(" "),
+      _vm.ready && _vm.entry && _vm.entry.content.user.id
+        ? _c("div", { staticClass: "card mt-5" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "table",
+              { staticClass: "table mb-0 bg-secondary table-borderless" },
+              [
+                _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("ID")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.entry.content.user.id) +
+                        "\n                "
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm.entry.content.user.name
+                  ? _c("tr", [
+                      _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                        _vm._v("Name")
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(_vm.entry.content.user.name) +
+                            "\n                "
+                        )
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.entry.content.user.email
+                  ? _c("tr", [
+                      _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                        _vm._v("Email Address")
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(_vm.entry.content.user.email) +
+                            "\n                "
+                        )
+                      ])
+                    ])
+                  : _vm._e()
+              ]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _vm.ready && _vm.entry
         ? _vm._t("after-attributes-card", null, { entry: _vm.entry })
         : _vm._e()
@@ -73056,7 +73096,21 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "card-header d-flex align-items-center justify-content-between"
+      },
+      [_c("h5", [_vm._v("User")])]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
