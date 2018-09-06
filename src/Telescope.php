@@ -65,6 +65,17 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
+    public static function recordException(IncomingEntry $entry)
+    {
+        return static::record(EntryType::EXCEPTION, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
     public static function recordLogEntry(IncomingEntry $entry)
     {
         return static::record(EntryType::LOG, $entry);

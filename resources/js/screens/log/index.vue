@@ -7,7 +7,7 @@
         <tr slot="table-header">
             <th scope="col">Message</th>
             <th scope="col">Type</th>
-            <th scope="col">Since</th>
+            <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
 
@@ -23,7 +23,7 @@
                     <path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zM9 11v4h2V9H9v2zm0-6v2h2V5H9z"/>
                 </svg>
             </td>
-            <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
+            <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}} ago</td>
             <td class="table-fit">
                 <router-link :to="{name:'log-preview', params:{id: slotProps.entry.id}}" class="control-action">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">

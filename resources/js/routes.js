@@ -20,6 +20,18 @@ export default [
     },
 
     {
+        path: '/exceptions/:id',
+        name: 'exception-preview',
+        component: require('./screens/exceptions/preview')
+    },
+
+    {
+        path: '/exceptions',
+        name: 'exceptions',
+        component: require('./screens/exceptions/index')
+    },
+
+    {
         path: '/log/:id',
         name: 'log-preview',
         component: require('./screens/log/preview')

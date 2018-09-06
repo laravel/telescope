@@ -6,6 +6,10 @@ Route::get('/telescope-api/mail/{id}', 'MailController@show');
 Route::get('/telescope-api/mail/{id}/preview', 'MailHtmlController@show');
 Route::get('/telescope-api/mail/{id}/download', 'MailEmlController@show');
 
+// Exception entries...
+Route::get('/telescope-api/exceptions', 'ExceptionController@index');
+Route::get('/telescope-api/exceptions/{id}', 'ExceptionController@show');
+
 // Log entries...
 Route::get('/telescope-api/log', 'LogController@index');
 Route::get('/telescope-api/log/{id}', 'LogController@show');
