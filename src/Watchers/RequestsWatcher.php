@@ -29,7 +29,7 @@ class RequestsWatcher extends Watcher
     public function recordRequest(RequestHandled $event)
     {
         Telescope::recordRequest(IncomingEntry::make([
-            'payload' => $event->request->all(),
+            'payload' => $this->formatPayload($event->request->all()),
             'uri' => str_replace($event->request->root(), '', $event->request->path()),
             'method' => $event->request->method(),
             'headers' => $this->formatHeaders($event->request->headers->all()),
@@ -67,5 +67,17 @@ class RequestsWatcher extends Watcher
         return collect($headers)->map(function ($header) {
             return $header[0];
         })->toArray();
+    }
+
+
+    /**
+     * Format the given payload.
+     *
+     * @param  array $headers
+     * @return array
+     */
+    private function formatPayload($all)
+    {
+        return $all;
     }
 }
