@@ -25,7 +25,7 @@
 </script>
 
 <template>
-    <preview-screen title="Exception Details" resource="log" :id="$route.params.id">
+    <preview-screen title="Exception Details" resource="exceptions" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit font-weight-bold">Type</td>

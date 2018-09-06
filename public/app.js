@@ -60483,7 +60483,7 @@ var render = function() {
   return _c("preview-screen", {
     attrs: {
       title: "Exception Details",
-      resource: "log",
+      resource: "exceptions",
       id: _vm.$route.params.id
     },
     scopedSlots: _vm._u([
