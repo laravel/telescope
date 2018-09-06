@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Support\Arr;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,11 +74,11 @@ class RequestsWatcher extends Watcher
     /**
      * Format the given payload.
      *
-     * @param  array $headers
+     * @param  array $payload
      * @return array
      */
-    private function formatPayload($all)
+    private function formatPayload($payload)
     {
-        return $all;
+        return Arr::set($payload, 'password', '***');
     }
 }

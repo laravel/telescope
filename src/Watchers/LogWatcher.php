@@ -33,12 +33,6 @@ class LogWatcher extends Watcher
             return $this->recordException($event);
         }
 
-        $output = [
-            'level' => $event->level,
-            'message' => $event->message,
-            'context' => $event->context,
-        ];
-
         Telescope::recordLogEntry(
             IncomingEntry::make([
                 'level' => $event->level,
