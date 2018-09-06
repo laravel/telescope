@@ -34,7 +34,7 @@ class Telescope
      *
      * @var array
      */
-    public static $protectedRequestParameters = ['password'];
+    public static $protectedRequestParameters = ['password', 'password_confirmation'];
 
     /**
      * Indicates if Telescope should ignore events fired by Laravel.
