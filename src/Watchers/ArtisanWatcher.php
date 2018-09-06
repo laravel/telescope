@@ -31,7 +31,7 @@ class ArtisanWatcher extends Watcher
         if ($this->shouldIgnore($event)) {
             return;
         }
-        
+
         Telescope::recordCommand(IncomingEntry::make([
             'command' => $event->command,
             'exit_code' => $event->exitCode,
@@ -50,7 +50,11 @@ class ArtisanWatcher extends Watcher
     private function shouldIgnore($event)
     {
         return in_array($event->command, [
-            'queue:work', 'queue:listen'
+            'queue:listen',
+            'queue:work',
+            'horizon',
+            'horizon:work',
+            'horizon:supervisor',
         ]);
     }
 }
