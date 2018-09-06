@@ -67,9 +67,7 @@ class IncomingEntry
      */
     public static function make(array $content)
     {
-        $user = app()->runningInConsole() ? null : request()->user();
-
-        return (new static($content))->user($user);
+        return (new static($content));
     }
 
     /**
@@ -107,6 +105,10 @@ class IncomingEntry
     public function user($user)
     {
         $this->user = $user;
+
+        $this->content = array_merge($this->content, ['user' => $user]);
+
+        $this->tags(['user:'.$user]);
 
         return $this;
     }

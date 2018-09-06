@@ -59,7 +59,7 @@ class CacheWatcher extends Watcher
         Telescope::recordCacheEntry(IncomingEntry::make([
             'type' => 'missed',
             'key' => $event->key,
-        ])->tagss([$event->key]));
+        ])->tags([$event->key]));
     }
 
     /**
