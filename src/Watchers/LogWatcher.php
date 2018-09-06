@@ -62,7 +62,7 @@ class LogWatcher extends Watcher
             IncomingEntry::make([
                 'class' => get_class($exception),
                 'file' => $exception->getFile(),
-                'line' => $exception->getLine(),
+                'line' => $exception->getLine() - 1,
                 'message' => $exception->getMessage(),
                 'trace' => $exception->getTrace(),
                 'line_preview' => $this->formatLinePreview($exception),
