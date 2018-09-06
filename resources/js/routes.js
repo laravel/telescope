@@ -32,15 +32,15 @@ export default [
     },
 
     {
-        path: '/log/:id',
+        path: '/logs/:id',
         name: 'log-preview',
-        component: require('./screens/log/preview')
+        component: require('./screens/logs/preview')
     },
 
     {
-        path: '/log',
-        name: 'log',
-        component: require('./screens/log/index')
+        path: '/logs',
+        name: 'logs',
+        component: require('./screens/logs/index')
     },
 
     {

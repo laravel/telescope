@@ -59514,12 +59514,12 @@ webpackContext.id = 149;
     name: 'exceptions',
     component: __webpack_require__(173)
 }, {
-    path: '/log/:id',
+    path: '/logs/:id',
     name: 'log-preview',
     component: __webpack_require__(176)
 }, {
-    path: '/log',
-    name: 'log',
+    path: '/logs',
+    name: 'logs',
     component: __webpack_require__(181)
 }, {
     path: '/notifications/:id',
@@ -60815,7 +60815,7 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-fe081832"
+var __vue_scopeId__ = "data-v-69d0386e"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -60826,7 +60826,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/screens/log/preview.vue"
+Component.options.__file = "resources/js/screens/logs/preview.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -60835,9 +60835,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-fe081832", Component.options)
+    hotAPI.createRecord("data-v-69d0386e", Component.options)
   } else {
-    hotAPI.reload("data-v-fe081832", Component.options)
+    hotAPI.reload("data-v-69d0386e", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -60858,13 +60858,13 @@ var content = __webpack_require__(178);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("07c8600f", content, false, {});
+var update = __webpack_require__(4)("7cea2148", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fe081832\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./preview.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fe081832\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./preview.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-69d0386e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./preview.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-69d0386e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./preview.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -60927,7 +60927,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("preview-screen", {
-    attrs: { title: "Log Details", resource: "log", id: _vm.$route.params.id },
+    attrs: { title: "Log Details", resource: "logs", id: _vm.$route.params.id },
     scopedSlots: _vm._u([
       {
         key: "table-parameters",
@@ -61038,7 +61038,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-fe081832", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-69d0386e", module.exports)
   }
 }
 
@@ -61068,7 +61068,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/screens/log/index.vue"
+Component.options.__file = "resources/js/screens/logs/index.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -61077,9 +61077,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-5a0159b1", Component.options)
+    hotAPI.createRecord("data-v-1b49d810", Component.options)
   } else {
-    hotAPI.reload("data-v-5a0159b1", Component.options)
+    hotAPI.reload("data-v-1b49d810", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -61109,7 +61109,7 @@ var render = function() {
   return _c(
     "index-screen",
     {
-      attrs: { title: "Log Entries", resource: "log" },
+      attrs: { title: "Log Entries", resource: "logs" },
       scopedSlots: _vm._u([
         {
           key: "row",
@@ -61227,7 +61227,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5a0159b1", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-1b49d810", module.exports)
   }
 }
 

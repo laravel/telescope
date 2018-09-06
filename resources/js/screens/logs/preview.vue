@@ -25,7 +25,7 @@
 </script>
 
 <template>
-    <preview-screen title="Log Details" resource="log" :id="$route.params.id">
+    <preview-screen title="Log Details" resource="logs" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit font-weight-bold">Level</td>

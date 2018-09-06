@@ -25,7 +25,7 @@ return [
             'enabled' => true,
         ],
 
-        'log' => [
+        'logs' => [
             'enabled' => true,
         ],
 

@@ -11,8 +11,8 @@ Route::get('/telescope-api/exceptions', 'ExceptionController@index');
 Route::get('/telescope-api/exceptions/{id}', 'ExceptionController@show');
 
 // Log entries...
-Route::get('/telescope-api/log', 'LogController@index');
-Route::get('/telescope-api/log/{id}', 'LogController@show');
+Route::get('/telescope-api/logs', 'LogController@index');
+Route::get('/telescope-api/logs/{id}', 'LogController@show');
 
 // Notifications entries...
 Route::get('/telescope-api/notifications', 'NotificationsController@index');
