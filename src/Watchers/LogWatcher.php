@@ -18,7 +18,7 @@ class LogWatcher extends Watcher
      */
     public function register($app)
     {
-        $app['events']->listen(MessageLogged::class, [$this, 'recordMessage']);
+        $app['events']->listen(MessageLogged::class, [$this, 'recordLog']);
     }
 
     /**
@@ -27,10 +27,10 @@ class LogWatcher extends Watcher
      * @param \Illuminate\Log\Events\MessageLogged $event
      * @return void
      */
-    public function recordMessage(MessageLogged $event)
+    public function recordLog(MessageLogged $event)
     {
         if (isset($event->context['exception'])) {
-            return $this->recordException($event);
+            return;
         }
 
         $output = [
@@ -46,45 +46,6 @@ class LogWatcher extends Watcher
                 'context' => $event->context,
             ])->tags($this->extractTagsFromEvent($event))
         );
-    }
-
-    /**
-     * Record a new exception.
-     *
-     * @param \Illuminate\Log\Events\MessageLogged $event
-     * @return void
-     */
-    protected function recordException(MessageLogged $event)
-    {
-        $exception = $event->context['exception'];
-
-        Telescope::recordException(
-            IncomingEntry::make([
-                'class' => get_class($exception),
-                'file' => $exception->getFile(),
-                'line' => $exception->getLine(),
-                'message' => $exception->getMessage(),
-                'trace' => $exception->getTrace(),
-                'line_preview' => $this->formatLinePreview($exception),
-            ])->tags($this->extractTagsFromEvent($event))
-        );
-    }
-
-    /**
-     * Format the exception line preview.
-     *
-     * @param  Throwable $exception
-     * @return mixed
-     */
-    private function formatLinePreview(Throwable $exception)
-    {
-        $result = (new Inspector($exception))
-                ->getFrames()[0]
-                ->getFileLines($exception->getLine() - 10, 20);
-
-        return collect($result)->mapWithKeys(function ($value, $key) {
-            return [$key + 1 => $value];
-        })->all();
     }
 
 

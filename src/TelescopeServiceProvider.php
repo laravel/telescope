@@ -154,6 +154,7 @@ class TelescopeServiceProvider extends ServiceProvider
     private function registerWatchers()
     {
         $watchers = [
+            Watchers\ExceptionWatcher::class => config('telescope.watchers.exceptions.enabled'),
             Watchers\LogWatcher::class => config('telescope.watchers.log.enabled'),
             Watchers\MailWatcher::class => config('telescope.watchers.mail.enabled'),
             Watchers\QueueWatcher::class => config('telescope.watchers.queue.enabled'),
