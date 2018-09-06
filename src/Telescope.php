@@ -196,6 +196,10 @@ class Telescope
         }
 
         $storage->store($entries->each(function ($entry) use ($batchId) {
+            if (auth()->user()) {
+                $entry->user(auth()->user()->id);
+            }
+
             $entry->batchId($batchId);
         }));
 
