@@ -19,14 +19,7 @@
 
 <template>
     <preview-screen title="Request Preview" resource="requests" :id="$route.params.id">
-        <tbody slot="table-parameters" slot-scope="slotProps">
-        <tr>
-            <td class="table-fit font-weight-bold">Time</td>
-            <td>
-                {{localTime(slotProps.entry.created_at)}} ({{timeAgo(slotProps.entry.created_at, false)}})
-            </td>
-        </tr>
-
+        <template slot="table-parameters" slot-scope="slotProps">
         <tr>
             <td class="table-fit font-weight-bold">Path</td>
             <td>
@@ -47,7 +40,7 @@
                 {{slotProps.entry.content.response_status}}
             </td>
         </tr>
-        </tbody>
+        </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5" v-if="slotProps.entry.content.payload">

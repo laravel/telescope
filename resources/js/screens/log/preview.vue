@@ -26,53 +26,46 @@
 
 <template>
     <preview-screen title="Log Preview" resource="log" :id="$route.params.id">
-        <tbody slot="table-parameters" slot-scope="slotProps">
-        <tr>
-            <td class="table-fit font-weight-bold">Time</td>
-            <td>
-                {{localTime(slotProps.entry.created_at)}} ({{timeAgo(slotProps.entry.created_at, false)}})
-            </td>
-        </tr>
+        <template slot="table-parameters" slot-scope="slotProps">
+            <tr>
+                <td class="table-fit font-weight-bold">Level</td>
+                <td>
+                    {{slotProps.entry.content.level}}
+                </td>
+            </tr>
 
-        <tr>
-            <td class="table-fit font-weight-bold">Level</td>
-            <td>
-                {{slotProps.entry.content.level}}
-            </td>
-        </tr>
+            <tr v-if="slotProps.entry.content.exception">
+                <td class="table-fit font-weight-bold">Location</td>
+                <td>
+                    {{slotProps.entry.content.exception.file}}:{{slotProps.entry.content.exception.line}}
+                </td>
+            </tr>
 
-        <tr v-if="slotProps.entry.content.exception">
-            <td class="table-fit font-weight-bold">Location</td>
-            <td>
-                {{slotProps.entry.content.exception.file}}:{{slotProps.entry.content.exception.line}}
-            </td>
-        </tr>
+            <tr v-if="slotProps.entry.content.exception">
+                <td class="table-fit font-weight-bold">Message</td>
+                <td>
+                    {{slotProps.entry.content.message}}
+                </td>
+            </tr>
 
-        <tr v-if="slotProps.entry.content.exception">
-            <td class="table-fit font-weight-bold">Message</td>
-            <td>
-                {{slotProps.entry.content.message}}
-            </td>
-        </tr>
+            <tr v-if="job">
+                <td class="table-fit font-weight-bold">Job</td>
+                <td>
+                    <router-link :to="{name:'queue-preview', params:{id: job.id}}" class="control-action">
+                        Preview Job
+                    </router-link>
+                </td>
+            </tr>
 
-        <tr v-if="job">
-            <td class="table-fit font-weight-bold">Job</td>
-            <td>
-                <router-link :to="{name:'queue-preview', params:{id: job.id}}" class="control-action">
-                    Preview Job
-                </router-link>
-            </td>
-        </tr>
-
-        <tr v-if="request">
-            <td class="table-fit font-weight-bold">Request</td>
-            <td>
-                <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action">
-                    Preview Request
-                </router-link>
-            </td>
-        </tr>
-        </tbody>
+            <tr v-if="request">
+                <td class="table-fit font-weight-bold">Request</td>
+                <td>
+                    <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action">
+                        Preview Request
+                    </router-link>
+                </td>
+            </tr>
+        </template>
 
         <div slot="below-table" slot-scope="slotProps">
             <code-preview

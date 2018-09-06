@@ -73,7 +73,30 @@
 
 
             <table v-if="ready && entry" class="table mb-0 bg-secondary table-borderless">
+                <tbody>
+                <tr>
+                    <td class="table-fit font-weight-bold">Time</td>
+                    <td>
+                        {{localTime(entry.created_at)}} ({{timeAgo(entry.created_at, false)}})
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-fit font-weight-bold">Hostname</td>
+                    <td>
+                        {{entry.content.hostname}}
+                    </td>
+                </tr>
+
+                <tr v-if="entry.content.user">
+                    <td class="table-fit font-weight-bold">User</td>
+                    <td>
+                        {{entry.content.user}}
+                    </td>
+                </tr>
+
                 <slot name="table-parameters" :entry="entry"></slot>
+                </tbody>
             </table>
 
 

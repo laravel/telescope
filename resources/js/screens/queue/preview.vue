@@ -24,64 +24,57 @@
 
 <template>
     <preview-screen title="Job Preview" resource="queue" :id="$route.params.id">
-        <tbody slot="table-parameters" slot-scope="slotProps">
-        <tr>
-            <td class="table-fit font-weight-bold">Time</td>
-            <td>
-                {{localTime(slotProps.entry.created_at)}} ({{timeAgo(slotProps.entry.created_at, false)}})
-            </td>
-        </tr>
+        <template slot="table-parameters" slot-scope="slotProps">
+            <tr>
+                <td class="table-fit font-weight-bold">Status</td>
+                <td>
+                    {{slotProps.entry.content.status}}
+                </td>
+            </tr>
 
-        <tr>
-            <td class="table-fit font-weight-bold">Status</td>
-            <td>
-                {{slotProps.entry.content.status}}
-            </td>
-        </tr>
+            <tr>
+                <td class="table-fit font-weight-bold">Job</td>
+                <td>
+                    {{slotProps.entry.content.name}}
+                </td>
+            </tr>
 
-        <tr>
-            <td class="table-fit font-weight-bold">Job</td>
-            <td>
-                {{slotProps.entry.content.name}}
-            </td>
-        </tr>
+            <tr>
+                <td class="table-fit font-weight-bold">Tries</td>
+                <td>
+                    {{slotProps.entry.content.tries || '-'}}
+                </td>
+            </tr>
 
-        <tr>
-            <td class="table-fit font-weight-bold">Tries</td>
-            <td>
-                {{slotProps.entry.content.tries || '-'}}
-            </td>
-        </tr>
+            <tr>
+                <td class="table-fit font-weight-bold">Timeout</td>
+                <td>
+                    {{slotProps.entry.content.timeout || '-'}}
+                </td>
+            </tr>
 
-        <tr>
-            <td class="table-fit font-weight-bold">Timeout</td>
-            <td>
-                {{slotProps.entry.content.timeout || '-'}}
-            </td>
-        </tr>
+            <tr>
+                <td class="table-fit font-weight-bold">Queue</td>
+                <td>
+                    {{slotProps.entry.content.queue}}
+                </td>
+            </tr>
 
-        <tr>
-            <td class="table-fit font-weight-bold">Queue</td>
-            <td>
-                {{slotProps.entry.content.queue}}
-            </td>
-        </tr>
+            <tr>
+                <td class="table-fit font-weight-bold">Connection</td>
+                <td>
+                    {{slotProps.entry.content.connection}}
+                </td>
+            </tr>
 
-        <tr>
-            <td class="table-fit font-weight-bold">Connection</td>
-            <td>
-                {{slotProps.entry.content.connection}}
-            </td>
-        </tr>
+            <tr v-if="slotProps.entry.content.status == 'failed'">
+                <td class="table-fit font-weight-bold">Exception</td>
+                <td>
+                    {{slotProps.entry.content.exception.message}}
+                </td>
+            </tr>
 
-        <tr v-if="slotProps.entry.content.status == 'failed'">
-            <td class="table-fit font-weight-bold">Exception</td>
-            <td>
-                {{slotProps.entry.content.exception.message}}
-            </td>
-        </tr>
-
-        </tbody>
+        </template>
 
         <div slot="below-table" slot-scope="slotProps">
             <code-preview

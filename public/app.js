@@ -59750,23 +59750,7 @@ var render = function() {
       {
         key: "table-parameters",
         fn: function(slotProps) {
-          return _c("tbody", {}, [
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Time")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.localTime(slotProps.entry.created_at)) +
-                    " (" +
-                    _vm._s(_vm.timeAgo(slotProps.entry.created_at, false)) +
-                    ")\n        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
+          return [
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
                 _vm._v("From")
@@ -59774,9 +59758,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(_vm.formatAddresses(slotProps.entry.content.from)) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -59788,9 +59772,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(_vm.formatAddresses(slotProps.entry.content.to)) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -59803,11 +59787,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      "\n            " +
+                      "\n                " +
                         _vm._s(
                           _vm.formatAddresses(slotProps.entry.content.replyTo)
                         ) +
-                        "\n        "
+                        "\n            "
                     )
                   ])
                 ])
@@ -59821,11 +59805,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      "\n            " +
+                      "\n                " +
                         _vm._s(
                           _vm.formatAddresses(slotProps.entry.content.cc)
                         ) +
-                        "\n        "
+                        "\n            "
                     )
                   ])
                 ])
@@ -59839,11 +59823,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      "\n            " +
+                      "\n                " +
                         _vm._s(
                           _vm.formatAddresses(slotProps.entry.content.bcc)
                         ) +
-                        "\n        "
+                        "\n            "
                     )
                   ])
                 ])
@@ -59856,9 +59840,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.subject) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -59904,7 +59888,11 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("\n                Preview Job\n            ")]
+                        [
+                          _vm._v(
+                            "\n                    Preview Job\n                "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -59934,7 +59922,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                Preview Request\n            "
+                            "\n                    Preview Request\n                "
                           )
                         ]
                       )
@@ -59943,7 +59931,7 @@ var render = function() {
                   )
                 ])
               : _vm._e()
-          ])
+          ]
         }
       },
       {
@@ -60221,7 +60209,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60490,23 +60478,7 @@ var render = function() {
       {
         key: "table-parameters",
         fn: function(slotProps) {
-          return _c("tbody", {}, [
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Time")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.localTime(slotProps.entry.created_at)) +
-                    " (" +
-                    _vm._s(_vm.timeAgo(slotProps.entry.created_at, false)) +
-                    ")\n        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
+          return [
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
                 _vm._v("Level")
@@ -60514,9 +60486,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.level) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -60529,11 +60501,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      "\n            " +
+                      "\n                " +
                         _vm._s(slotProps.entry.content.exception.file) +
                         ":" +
                         _vm._s(slotProps.entry.content.exception.line) +
-                        "\n        "
+                        "\n            "
                     )
                   ])
                 ])
@@ -60547,9 +60519,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      "\n            " +
+                      "\n                " +
                         _vm._s(slotProps.entry.content.message) +
-                        "\n        "
+                        "\n            "
                     )
                   ])
                 ])
@@ -60575,7 +60547,11 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("\n                Preview Job\n            ")]
+                        [
+                          _vm._v(
+                            "\n                    Preview Job\n                "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -60605,7 +60581,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                Preview Request\n            "
+                            "\n                    Preview Request\n                "
                           )
                         ]
                       )
@@ -60614,7 +60590,7 @@ var render = function() {
                   )
                 ])
               : _vm._e()
-          ])
+          ]
         }
       },
       {
@@ -60960,23 +60936,7 @@ var render = function() {
       {
         key: "table-parameters",
         fn: function(slotProps) {
-          return _c("tbody", {}, [
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Time")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.localTime(slotProps.entry.created_at)) +
-                    " (" +
-                    _vm._s(_vm.timeAgo(slotProps.entry.created_at, false)) +
-                    ")\n        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
+          return [
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
                 _vm._v("Channel")
@@ -60984,9 +60944,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.channel) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -60998,9 +60958,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.notification) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -61012,9 +60972,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.notifiable) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -61039,7 +60999,11 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("\n                Preview Job\n            ")]
+                        [
+                          _vm._v(
+                            "\n                    Preview Job\n                "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -61069,7 +61033,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                Preview Request\n            "
+                            "\n                    Preview Request\n                "
                           )
                         ]
                       )
@@ -61078,7 +61042,7 @@ var render = function() {
                   )
                 ])
               : _vm._e()
-          ])
+          ]
         }
       }
     ])
@@ -61343,7 +61307,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -62280,23 +62244,7 @@ var render = function() {
       {
         key: "table-parameters",
         fn: function(slotProps) {
-          return _c("tbody", {}, [
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Time")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.localTime(slotProps.entry.created_at)) +
-                    " (" +
-                    _vm._s(_vm.timeAgo(slotProps.entry.created_at, false)) +
-                    ")\n        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
+          return [
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
                 _vm._v("Status")
@@ -62304,9 +62252,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.status) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -62318,9 +62266,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.name) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -62332,9 +62280,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.tries || "-") +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -62346,9 +62294,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.timeout || "-") +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -62360,9 +62308,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.queue) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -62374,9 +62322,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.connection) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -62389,14 +62337,14 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      "\n            " +
+                      "\n                " +
                         _vm._s(slotProps.entry.content.exception.message) +
-                        "\n        "
+                        "\n            "
                     )
                   ])
                 ])
               : _vm._e()
-          ])
+          ]
         }
       },
       {
@@ -63134,23 +63082,7 @@ var render = function() {
       {
         key: "table-parameters",
         fn: function(slotProps) {
-          return _c("tbody", {}, [
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Time")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.localTime(slotProps.entry.created_at)) +
-                    " (" +
-                    _vm._s(_vm.timeAgo(slotProps.entry.created_at, false)) +
-                    ")\n        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
+          return [
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
                 _vm._v("Event")
@@ -63158,9 +63090,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.event_name) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -63185,7 +63117,11 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("\n                Preview Job\n            ")]
+                        [
+                          _vm._v(
+                            "\n                    Preview Job\n                "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -63215,7 +63151,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                Preview Request\n            "
+                            "\n                    Preview Request\n                "
                           )
                         ]
                       )
@@ -63224,7 +63160,7 @@ var render = function() {
                   )
                 ])
               : _vm._e()
-          ])
+          ]
         }
       },
       {
@@ -63526,23 +63462,7 @@ var render = function() {
       {
         key: "table-parameters",
         fn: function(slotProps) {
-          return _c("tbody", {}, [
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Time")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.localTime(slotProps.entry.created_at)) +
-                    " (" +
-                    _vm._s(_vm.timeAgo(slotProps.entry.created_at, false)) +
-                    ")\n        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
+          return [
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
                 _vm._v("Action")
@@ -63550,9 +63470,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.type) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -63564,9 +63484,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.key) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -63579,9 +63499,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      "\n            " +
+                      "\n                " +
                         _vm._s(slotProps.entry.content.expiration) +
-                        "\n        "
+                        "\n            "
                     )
                   ])
                 ])
@@ -63607,7 +63527,11 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("\n                Preview Job\n            ")]
+                        [
+                          _vm._v(
+                            "\n                    Preview Job\n                "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -63637,7 +63561,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                Preview Request\n            "
+                            "\n                    Preview Request\n                "
                           )
                         ]
                       )
@@ -63646,7 +63570,7 @@ var render = function() {
                   )
                 ])
               : _vm._e()
-          ])
+          ]
         }
       },
       {
@@ -63922,23 +63846,7 @@ var render = function() {
       {
         key: "table-parameters",
         fn: function(slotProps) {
-          return _c("tbody", {}, [
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Time")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.localTime(slotProps.entry.created_at)) +
-                    " (" +
-                    _vm._s(_vm.timeAgo(slotProps.entry.created_at, false)) +
-                    ")\n        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
+          return [
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
                 _vm._v("Connection")
@@ -63946,9 +63854,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.connection) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -63960,9 +63868,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.time) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -63987,7 +63895,11 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("\n                Preview Job\n            ")]
+                        [
+                          _vm._v(
+                            "\n                    Preview Job\n                "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -64017,7 +63929,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                Preview Request\n            "
+                            "\n                    Preview Request\n                "
                           )
                         ]
                       )
@@ -64026,7 +63938,7 @@ var render = function() {
                   )
                 ])
               : _vm._e()
-          ])
+          ]
         }
       },
       {
@@ -64307,23 +64219,7 @@ var render = function() {
       {
         key: "table-parameters",
         fn: function(slotProps) {
-          return _c("tbody", {}, [
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Time")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.localTime(slotProps.entry.created_at)) +
-                    " (" +
-                    _vm._s(_vm.timeAgo(slotProps.entry.created_at, false)) +
-                    ")\n        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
+          return [
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
                 _vm._v("Path")
@@ -64365,7 +64261,7 @@ var render = function() {
                 )
               ])
             ])
-          ])
+          ]
         }
       },
       {
@@ -65126,23 +65022,7 @@ var render = function() {
       {
         key: "table-parameters",
         fn: function(slotProps) {
-          return _c("tbody", {}, [
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Time")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.localTime(slotProps.entry.created_at)) +
-                    " (" +
-                    _vm._s(_vm.timeAgo(slotProps.entry.created_at, false)) +
-                    ")\n        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
+          return [
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
                 _vm._v("Command")
@@ -65150,9 +65030,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.command) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ]),
@@ -65164,13 +65044,13 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n            " +
+                  "\n                " +
                     _vm._s(slotProps.entry.content.exit_code) +
-                    "\n        "
+                    "\n            "
                 )
               ])
             ])
-          ])
+          ]
         }
       },
       {
@@ -73096,8 +72976,67 @@ var render = function() {
             ? _c(
                 "table",
                 { staticClass: "table mb-0 bg-secondary table-borderless" },
-                [_vm._t("table-parameters", null, { entry: _vm.entry })],
-                2
+                [
+                  _c(
+                    "tbody",
+                    [
+                      _c("tr", [
+                        _c(
+                          "td",
+                          { staticClass: "table-fit font-weight-bold" },
+                          [_vm._v("Time")]
+                        ),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.localTime(_vm.entry.created_at)) +
+                              " (" +
+                              _vm._s(_vm.timeAgo(_vm.entry.created_at, false)) +
+                              ")\n                "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c(
+                          "td",
+                          { staticClass: "table-fit font-weight-bold" },
+                          [_vm._v("Hostname")]
+                        ),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.entry.content.hostname) +
+                              "\n                "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm.entry.content.user
+                        ? _c("tr", [
+                            _c(
+                              "td",
+                              { staticClass: "table-fit font-weight-bold" },
+                              [_vm._v("User")]
+                            ),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(_vm.entry.content.user) +
+                                  "\n                "
+                              )
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm._t("table-parameters", null, { entry: _vm.entry })
+                    ],
+                    2
+                  )
+                ]
               )
             : _vm._e(),
           _vm._v(" "),

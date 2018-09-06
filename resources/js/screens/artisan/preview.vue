@@ -19,28 +19,21 @@
 
 <template>
     <preview-screen title="Request Preview" resource="requests" :id="$route.params.id">
-        <tbody slot="table-parameters" slot-scope="slotProps">
-        <tr>
-            <td class="table-fit font-weight-bold">Time</td>
-            <td>
-                {{localTime(slotProps.entry.created_at)}} ({{timeAgo(slotProps.entry.created_at, false)}})
-            </td>
-        </tr>
+        <template slot="table-parameters" slot-scope="slotProps">
+            <tr>
+                <td class="table-fit font-weight-bold">Command</td>
+                <td>
+                    {{slotProps.entry.content.command}}
+                </td>
+            </tr>
 
-        <tr>
-            <td class="table-fit font-weight-bold">Command</td>
-            <td>
-                {{slotProps.entry.content.command}}
-            </td>
-        </tr>
-
-        <tr>
-            <td class="table-fit font-weight-bold">Exit Code</td>
-            <td>
-                {{slotProps.entry.content.exit_code}}
-            </td>
-        </tr>
-        </tbody>
+            <tr>
+                <td class="table-fit font-weight-bold">Exit Code</td>
+                <td>
+                    {{slotProps.entry.content.exit_code}}
+                </td>
+            </tr>
+        </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5" v-if="slotProps.entry.content.arguments">

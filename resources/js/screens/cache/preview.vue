@@ -21,53 +21,46 @@
 
 <template>
     <preview-screen title="Cache Preview" resource="cache" :id="$route.params.id">
-        <tbody slot="table-parameters" slot-scope="slotProps">
-        <tr>
-            <td class="table-fit font-weight-bold">Time</td>
-            <td>
-                {{localTime(slotProps.entry.created_at)}} ({{timeAgo(slotProps.entry.created_at, false)}})
-            </td>
-        </tr>
+        <template slot="table-parameters" slot-scope="slotProps">
+            <tr>
+                <td class="table-fit font-weight-bold">Action</td>
+                <td>
+                    {{slotProps.entry.content.type}}
+                </td>
+            </tr>
 
-        <tr>
-            <td class="table-fit font-weight-bold">Action</td>
-            <td>
-                {{slotProps.entry.content.type}}
-            </td>
-        </tr>
+            <tr>
+                <td class="table-fit font-weight-bold">Key</td>
+                <td>
+                    {{slotProps.entry.content.key}}
+                </td>
+            </tr>
 
-        <tr>
-            <td class="table-fit font-weight-bold">Key</td>
-            <td>
-                {{slotProps.entry.content.key}}
-            </td>
-        </tr>
+            <tr v-if="slotProps.entry.content.expiration">
+                <td class="table-fit font-weight-bold">Expiration</td>
+                <td>
+                    {{slotProps.entry.content.expiration}}
+                </td>
+            </tr>
 
-        <tr v-if="slotProps.entry.content.expiration">
-            <td class="table-fit font-weight-bold">Expiration</td>
-            <td>
-                {{slotProps.entry.content.expiration}}
-            </td>
-        </tr>
+            <tr v-if="job">
+                <td class="table-fit font-weight-bold">Job</td>
+                <td>
+                    <router-link :to="{name:'queue-preview', params:{id: job.id}}" class="control-action">
+                        Preview Job
+                    </router-link>
+                </td>
+            </tr>
 
-        <tr v-if="job">
-            <td class="table-fit font-weight-bold">Job</td>
-            <td>
-                <router-link :to="{name:'queue-preview', params:{id: job.id}}" class="control-action">
-                    Preview Job
-                </router-link>
-            </td>
-        </tr>
-
-        <tr v-if="request">
-            <td class="table-fit font-weight-bold">Request</td>
-            <td>
-                <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action">
-                    Preview Request
-                </router-link>
-            </td>
-        </tr>
-        </tbody>
+            <tr v-if="request">
+                <td class="table-fit font-weight-bold">Request</td>
+                <td>
+                    <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action">
+                        Preview Request
+                    </router-link>
+                </td>
+            </tr>
+        </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5" v-if="slotProps.entry.content.value">
