@@ -72453,14 +72453,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
         document.title = this.title + " - Telescope";
 
+        this.newEntriesTimeout = setTimeout(function () {
+            _this.checkForNewEntries();
+        }, this.newEntriesTimeoutInSeconds);
+
         this.loadEntries(function (response) {
             _this.entries = response.data.entries;
 
             _this.ready = true;
-
-            _this.newEntriesTimeout = setTimeout(function () {
-                _this.checkForNewEntries();
-            }, _this.newEntriesTimeoutInSeconds);
         });
     },
 

@@ -35,14 +35,14 @@
         mounted() {
             document.title = this.title + " - Telescope";
 
+            this.newEntriesTimeout = setTimeout(() => {
+                this.checkForNewEntries();
+            }, this.newEntriesTimeoutInSeconds);
+
             this.loadEntries((response) => {
                 this.entries = response.data.entries;
 
                 this.ready = true;
-
-                this.newEntriesTimeout = setTimeout(() => {
-                    this.checkForNewEntries();
-                }, this.newEntriesTimeoutInSeconds);
             });
         },
 
