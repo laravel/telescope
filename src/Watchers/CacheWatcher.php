@@ -33,7 +33,7 @@ class CacheWatcher extends Watcher
      */
     public function recordCacheHit(CacheHit $event)
     {
-        if (! $this->shouldRecord($event)) {
+        if ($this->shouldIgnore($event)) {
             return;
         }
 
@@ -85,7 +85,7 @@ class CacheWatcher extends Watcher
     /**
      * Record a cache key was removed.
      *
-     * @param \Illuminate\Cache\Events\KeyForgotten $event
+     * @param \Illuminate\Cache\Events\KeyForgotten  $event
      * @return void
      */
     public function recordKeyForgotten(KeyForgotten $event)
@@ -101,13 +101,13 @@ class CacheWatcher extends Watcher
     }
 
     /**
-     * Determine if the event should be recorded.
+     * Determine if the event should be ignored.
      *
-     * @param  mixed $event
+     * @param  mixed  $event
      * @return bool
      */
-    private function shouldRecord($event)
+    private function shouldIgnore($event)
     {
-        return $event->key != 'illuminate:queue:restart	';
+        return $event->key == 'illuminate:queue:restart';
     }
 }

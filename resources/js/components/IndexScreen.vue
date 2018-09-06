@@ -35,12 +35,12 @@
         mounted() {
             document.title = this.title + " - Telescope";
 
-            this.newEntriesTimeout = setTimeout(() => {
-                this.checkForNewEntries();
-            }, this.newEntriesTimeoutInSeconds);
-
             this.loadEntries((response) => {
                 this.entries = response.data.entries;
+
+                this.newEntriesTimeout = setTimeout(() => {
+                    this.checkForNewEntries();
+                }, this.newEntriesTimeoutInSeconds);
 
                 this.ready = true;
             });
@@ -81,7 +81,9 @@
             checkForNewEntries(){
                 axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1')
                         .then(response => {
-                            if (response.data.entries.length && _.first(response.data.entries).id != _.first(this.entries).id) {
+                            if (response.data.entries.length && !this.entries.length) {
+                                this.loadNewEntries();
+                            } else if (response.data.entries.length && _.first(response.data.entries).id != _.first(this.entries).id) {
                                 this.hasNewEntries = true;
                             } else {
                                 this.newEntriesTimeout = setTimeout(() => {
@@ -219,7 +221,7 @@
         transition: background 1s linear;
     }
 
-    .list-enter:not(.dontanimate), .list-leave-to:not(.dontanimate){
+    .list-enter:not(.dontanimate), .list-leave-to:not(.dontanimate) {
         background: #fffee9;
     }
 </style>

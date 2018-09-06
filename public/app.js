@@ -72399,7 +72399,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.list-enter-active[data-v-30504bc3]:not(.dontanimate), .list-leave-active[data-v-30504bc3]:not(.dontanimate) {\n    -webkit-transition: background 1s linear;\n    transition: background 1s linear;\n}\n.list-enter[data-v-30504bc3]:not(.dontanimate), .list-leave-to[data-v-30504bc3]:not(.dontanimate){\n    background: #fffee9;\n}\n", ""]);
+exports.push([module.i, "\n.list-enter-active[data-v-30504bc3]:not(.dontanimate), .list-leave-active[data-v-30504bc3]:not(.dontanimate) {\n    -webkit-transition: background 1s linear;\n    transition: background 1s linear;\n}\n.list-enter[data-v-30504bc3]:not(.dontanimate), .list-leave-to[data-v-30504bc3]:not(.dontanimate) {\n    background: #fffee9;\n}\n", ""]);
 
 // exports
 
@@ -72453,12 +72453,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
         document.title = this.title + " - Telescope";
 
-        this.newEntriesTimeout = setTimeout(function () {
-            _this.checkForNewEntries();
-        }, this.newEntriesTimeoutInSeconds);
-
         this.loadEntries(function (response) {
             _this.entries = response.data.entries;
+
+            _this.newEntriesTimeout = setTimeout(function () {
+                _this.checkForNewEntries();
+            }, _this.newEntriesTimeoutInSeconds);
 
             _this.ready = true;
         });
@@ -72502,7 +72502,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             var _this3 = this;
 
             __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1').then(function (response) {
-                if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this3.entries).id) {
+                if (response.data.entries.length && !_this3.entries.length) {
+                    _this3.loadNewEntries();
+                } else if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this3.entries).id) {
                     _this3.hasNewEntries = true;
                 } else {
                     _this3.newEntriesTimeout = setTimeout(function () {
