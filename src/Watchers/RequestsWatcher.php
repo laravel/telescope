@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Support\Arr;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,7 @@ class RequestsWatcher extends Watcher
     public function recordRequest(RequestHandled $event)
     {
         Telescope::recordRequest(IncomingEntry::make([
-            'payload' => $event->request->all(),
+            'payload' => $this->formatPayload($event->request->all()),
             'uri' => str_replace($event->request->root(), '', $event->request->path()),
             'method' => $event->request->method(),
             'headers' => $this->formatHeaders($event->request->headers->all()),
@@ -67,5 +68,23 @@ class RequestsWatcher extends Watcher
         return collect($headers)->map(function ($header) {
             return $header[0];
         })->toArray();
+    }
+
+
+    /**
+     * Format the given payload.
+     *
+     * @param  array $payload
+     * @return array
+     */
+    private function formatPayload($payload)
+    {
+        foreach (Telescope::$protectedRequestParameters as $parameter) {
+            if (Arr::get($payload, $parameter)) {
+                Arr::set($payload, $parameter, '*****');
+            }
+        }
+
+        return $payload;
     }
 }

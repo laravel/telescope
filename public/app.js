@@ -61122,43 +61122,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
-                slotProps.entry.content.level == "error"
-                  ? _c(
-                      "svg",
-                      {
-                        staticClass: "icon fill-danger",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          viewBox: "0 0 20 20"
-                        }
-                      },
-                      [
-                        _c("path", {
-                          attrs: {
-                            d:
-                              "M15.3 14.89l2.77 2.77a1 1 0 0 1 0 1.41 1 1 0 0 1-1.41 0l-2.59-2.58A5.99 5.99 0 0 1 11 18V9.04a1 1 0 0 0-2 0V18a5.98 5.98 0 0 1-3.07-1.51l-2.59 2.58a1 1 0 0 1-1.41 0 1 1 0 0 1 0-1.41l2.77-2.77A5.95 5.95 0 0 1 4.07 13H1a1 1 0 1 1 0-2h3V8.41L.93 5.34a1 1 0 0 1 0-1.41 1 1 0 0 1 1.41 0l2.1 2.1h11.12l2.1-2.1a1 1 0 0 1 1.41 0 1 1 0 0 1 0 1.41L16 8.41V11h3a1 1 0 1 1 0 2h-3.07c-.1.67-.32 1.31-.63 1.89zM15 5H5a5 5 0 1 1 10 0z"
-                          }
-                        })
-                      ]
-                    )
-                  : _c(
-                      "svg",
-                      {
-                        staticClass: "icon fill-info",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          viewBox: "0 0 20 20"
-                        }
-                      },
-                      [
-                        _c("path", {
-                          attrs: {
-                            d:
-                              "M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zM9 11v4h2V9H9v2zm0-6v2h2V5H9z"
-                          }
-                        })
-                      ]
-                    )
+                _vm._v(_vm._s(slotProps.entry.content.level))
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
@@ -61212,7 +61176,7 @@ var render = function() {
       _c("tr", { attrs: { slot: "table-header" }, slot: "table-header" }, [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Message")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Level")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Happened")]),
         _vm._v(" "),
@@ -64785,16 +64749,11 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "table",
-                    {
-                      staticClass:
-                        "table table-hover table-sm mb-0 penultimate-column-right"
-                    },
+                    { staticClass: "table table-hover table-sm mb-0" },
                     [
                       _c("thead", [
                         _c("tr", [
                           _c("th", [_vm._v("Message")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Level")]),
                           _vm._v(" "),
                           _c("th")
                         ])
@@ -64810,44 +64769,78 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _c("td", { staticClass: "table-fit" }, [
-                              entry.content.level == "error"
-                                ? _c(
-                                    "svg",
-                                    {
-                                      staticClass: "icon fill-danger",
-                                      attrs: {
-                                        xmlns: "http://www.w3.org/2000/svg",
-                                        viewBox: "0 0 20 20"
+                            _c(
+                              "td",
+                              { staticClass: "table-fit" },
+                              [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticClass: "control-action",
+                                    attrs: {
+                                      to: {
+                                        name: "log-preview",
+                                        params: { id: entry.id }
                                       }
-                                    },
-                                    [
-                                      _c("path", {
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "svg",
+                                      {
                                         attrs: {
-                                          d:
-                                            "M15.3 14.89l2.77 2.77a1 1 0 0 1 0 1.41 1 1 0 0 1-1.41 0l-2.59-2.58A5.99 5.99 0 0 1 11 18V9.04a1 1 0 0 0-2 0V18a5.98 5.98 0 0 1-3.07-1.51l-2.59 2.58a1 1 0 0 1-1.41 0 1 1 0 0 1 0-1.41l2.77-2.77A5.95 5.95 0 0 1 4.07 13H1a1 1 0 1 1 0-2h3V8.41L.93 5.34a1 1 0 0 1 0-1.41 1 1 0 0 1 1.41 0l2.1 2.1h11.12l2.1-2.1a1 1 0 0 1 1.41 0 1 1 0 0 1 0 1.41L16 8.41V11h3a1 1 0 1 1 0 2h-3.07c-.1.67-.32 1.31-.63 1.89zM15 5H5a5 5 0 1 1 10 0z"
+                                          xmlns: "http://www.w3.org/2000/svg",
+                                          viewBox: "0 0 22 16"
                                         }
-                                      })
-                                    ]
-                                  )
-                                : _c(
-                                    "svg",
-                                    {
-                                      staticClass: "icon fill-info",
-                                      attrs: {
-                                        xmlns: "http://www.w3.org/2000/svg",
-                                        viewBox: "0 0 20 20"
-                                      }
-                                    },
-                                    [
-                                      _c("path", {
-                                        attrs: {
-                                          d:
-                                            "M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zM9 11v4h2V9H9v2zm0-6v2h2V5H9z"
-                                        }
-                                      })
-                                    ]
-                                  )
+                                      },
+                                      [
+                                        _c("path", {
+                                          attrs: {
+                                            d:
+                                              "M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        })
+                      )
+                    ]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.batchEntriesOfType(10).length
+              ? _c("div", { staticClass: "card mt-5" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h5", [_vm._v("Exceptions")])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "table",
+                    { staticClass: "table table-hover table-sm mb-0" },
+                    [
+                      _c("thead", [
+                        _c("tr", [
+                          _c("th", [_vm._v("Message")]),
+                          _vm._v(" "),
+                          _c("th")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.batchEntriesOfType(10), function(entry) {
+                          return _c("tr", [
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(_vm.truncate(entry.content.message, 80))
+                              )
                             ]),
                             _vm._v(" "),
                             _c(
@@ -64860,7 +64853,7 @@ var render = function() {
                                     staticClass: "control-action",
                                     attrs: {
                                       to: {
-                                        name: "log-preview",
+                                        name: "exception-preview",
                                         params: { id: entry.id }
                                       }
                                     }

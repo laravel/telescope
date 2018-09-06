@@ -63,7 +63,7 @@ class IncomingEntry
      * Create a new entry instance.
      *
      * @param  array  $content
-     * @return void
+     * @return static
      */
     public static function make(array $content)
     {
