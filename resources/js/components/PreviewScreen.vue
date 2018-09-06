@@ -97,7 +97,7 @@
         </div>
 
         <!-- User Information -->
-        <div class="card mt-5" v-if="ready && entry && entry.content.user.id">
+        <div class="card mt-5" v-if="ready && entry && entry.content.user && entry.content.user.id">
             <div class="card-header d-flex align-items-center justify-content-between">
                 <h5>User</h5>
             </div>
