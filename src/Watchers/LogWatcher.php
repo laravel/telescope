@@ -56,7 +56,7 @@ class LogWatcher extends Watcher
         return [
             'class' => get_class($exception),
             'file' => $exception->getFile(),
-            'line' => $exception->getLine(),
+            'line' => $exception->getLine() - 1,
             'trace' => $exception->getTrace(),
             'line_preview' => $this->formatLinePreview($exception),
         ];
