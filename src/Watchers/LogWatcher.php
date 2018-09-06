@@ -62,7 +62,7 @@ class LogWatcher extends Watcher
             IncomingEntry::make([
                 'class' => get_class($exception),
                 'file' => $exception->getFile(),
-                'line' => $exception->getLine() - 1,
+                'line' => $exception->getLine(),
                 'message' => $exception->getMessage(),
                 'trace' => $exception->getTrace(),
                 'line_preview' => $this->formatLinePreview($exception),
@@ -78,9 +78,13 @@ class LogWatcher extends Watcher
      */
     private function formatLinePreview(Throwable $exception)
     {
-        return (new Inspector($exception))
+        $result = (new Inspector($exception))
                 ->getFrames()[0]
                 ->getFileLines($exception->getLine() - 10, 20);
+
+        return collect($result)->mapWithKeys(function ($value, $key) {
+            return [$key + 1 => $value];
+        })->all();
     }
 
 
