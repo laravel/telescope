@@ -79,6 +79,12 @@ class RequestsWatcher extends Watcher
      */
     private function formatPayload($payload)
     {
-        return Arr::set($payload, 'password', '***');
+        foreach (Telescope::$protectedRequestParameters as $parameter) {
+            if (Arr::get($payload, $parameter)) {
+                Arr::set($payload, $parameter, '*****');
+            }
+        }
+
+        return $payload;
     }
 }

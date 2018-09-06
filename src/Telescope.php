@@ -30,6 +30,13 @@ class Telescope
     public static $entriesQueue;
 
     /**
+     * The list of protected request parameters.
+     *
+     * @var array
+     */
+    public static $protectedRequestParameters = ['password'];
+
+    /**
      * Indicates if Telescope should ignore events fired by Laravel.
      *
      * @var bool
@@ -237,6 +244,21 @@ class Telescope
     public static function ignoreFrameworkEvents()
     {
         static::$ignoreFrameworkEvents = true;
+
+        return new static;
+    }
+
+    /**
+     * Protect the given request parameters;
+     *
+     * @param  $attributes  array
+     * @return static
+     */
+    public static function protectRequestParameters($attributes)
+    {
+        static::$protectedRequestParameters = array_merge(
+            static::$protectedRequestParameters, $attributes
+        );
 
         return new static;
     }
