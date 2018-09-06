@@ -188,7 +188,7 @@ class Telescope
         $entries = collect(static::$entriesQueue);
 
         if (static::$filterUsing) {
-            $entries = $entriesQueue->filter(static::$filterUsing);
+            $entries = $entries->filter(static::$filterUsing);
         }
 
         if (static::$tagUsing) {
