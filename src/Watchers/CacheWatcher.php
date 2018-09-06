@@ -52,7 +52,7 @@ class CacheWatcher extends Watcher
      */
     public function recordCacheMissed(CacheMissed $event)
     {
-        if (! $this->shouldRecord($event)) {
+        if ($this->shouldIgnore($event)) {
             return;
         }
 
@@ -70,7 +70,7 @@ class CacheWatcher extends Watcher
      */
     public function recordKeyWritten(KeyWritten $event)
     {
-        if (! $this->shouldRecord($event)) {
+        if ($this->shouldIgnore($event)) {
             return;
         }
 
@@ -90,7 +90,7 @@ class CacheWatcher extends Watcher
      */
     public function recordKeyForgotten(KeyForgotten $event)
     {
-        if (! $this->shouldRecord($event)) {
+        if ($this->shouldIgnore($event)) {
             return;
         }
 
