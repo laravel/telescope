@@ -114,7 +114,7 @@ class IncomingEntry
             ],
         ]);
 
-        $this->tags(['user:'.$user->id]);
+        $this->tags(['user:'.$user->getKey()]);
 
         return $this;
     }
