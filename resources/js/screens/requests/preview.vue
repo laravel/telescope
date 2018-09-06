@@ -18,7 +18,7 @@
 </script>
 
 <template>
-    <preview-screen title="Request Preview" resource="requests" :id="$route.params.id">
+    <preview-screen title="Request Details" resource="requests" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
         <tr>
             <td class="table-fit font-weight-bold">Path</td>

@@ -25,7 +25,7 @@
 </script>
 
 <template>
-    <preview-screen title="Log Preview" resource="log" :id="$route.params.id">
+    <preview-screen title="Log Details" resource="log" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit font-weight-bold">Level</td>
@@ -67,20 +67,24 @@
             </tr>
         </template>
 
-        <div slot="below-table" slot-scope="slotProps">
-            <code-preview
-                    v-if="slotProps.entry.content.exception"
-                    :lines="slotProps.entry.content.exception.line_preview"
-                    :highlighted-line="slotProps.entry.content.exception.line">
-            </code-preview>
-
-            <pre class="bg-dark p-4 mb-0 text-white" v-if="!slotProps.entry.content.exception">{{slotProps.entry.content.message}}</pre>
-        </div>
-
         <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
-            <div class="card" v-if="slotProps.entry.content.exception && slotProps.entry.content.exception.trace.length">
-                <div class="card-header"><h5>Stacktrace</h5></div>
+            <div class="card">
+                <div class="card-header">
+                    <h5 v-if="slotProps.entry.content.exception">Location</h5>
+                    <h5 v-else>Log Message</h5>
+                </div>
 
+                <code-preview
+                        v-if="slotProps.entry.content.exception"
+                        :lines="slotProps.entry.content.exception.line_preview"
+                        :highlighted-line="slotProps.entry.content.exception.line">
+                </code-preview>
+
+                <pre class="bg-dark p-4 mb-0 text-white" v-if="!slotProps.entry.content.exception">{{slotProps.entry.content.message}}</pre>
+            </div>
+
+            <div class="card mt-5" v-if="slotProps.entry.content.exception && slotProps.entry.content.exception.trace.length">
+                <div class="card-header"><h5>Stacktrace</h5></div>
                 <stack-trace :trace="slotProps.entry.content.exception.trace"></stack-trace>
             </div>
         </div>

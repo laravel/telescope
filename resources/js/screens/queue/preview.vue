@@ -23,7 +23,7 @@
 </script>
 
 <template>
-    <preview-screen title="Job Preview" resource="queue" :id="$route.params.id">
+    <preview-screen title="Job Details" resource="queue" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit font-weight-bold">Status</td>

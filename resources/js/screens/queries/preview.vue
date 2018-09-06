@@ -20,7 +20,7 @@
 </script>
 
 <template>
-    <preview-screen title="Query Preview" resource="queries" :id="$route.params.id">
+    <preview-screen title="Query Details" resource="queries" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit font-weight-bold">Connection</td>
@@ -40,7 +40,7 @@
                 <td class="table-fit font-weight-bold">Job</td>
                 <td>
                     <router-link :to="{name:'queue-preview', params:{id: job.id}}" class="control-action">
-                        Preview Job
+                        View Job
                     </router-link>
                 </td>
             </tr>
@@ -49,7 +49,7 @@
                 <td class="table-fit font-weight-bold">Request</td>
                 <td>
                     <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action">
-                        Preview Request
+                        View Request
                     </router-link>
                 </td>
             </tr>
