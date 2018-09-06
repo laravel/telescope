@@ -60217,7 +60217,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60498,9 +60498,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n                " +
+                  "\n                    " +
                     _vm._s(slotProps.entry.content.class) +
-                    "\n            "
+                    "\n                "
                 )
               ])
             ]),
@@ -60512,25 +60512,11 @@ var render = function() {
               _vm._v(" "),
               _c("td", [
                 _vm._v(
-                  "\n                " +
+                  "\n                    " +
                     _vm._s(slotProps.entry.content.file) +
                     ":" +
                     _vm._s(slotProps.entry.content.line) +
-                    "\n            "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Message")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(slotProps.entry.content.message) +
-                    "\n            "
+                    "\n                "
                 )
               ])
             ]),
@@ -60557,7 +60543,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                    View Job\n                "
+                            "\n                        View Job\n                    "
                           )
                         ]
                       )
@@ -60589,7 +60575,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                    View Request\n                "
+                            "\n                        View Request\n                    "
                           )
                         ]
                       )
@@ -60605,9 +60591,19 @@ var render = function() {
         key: "after-attributes-card",
         fn: function(slotProps) {
           return _c("div", { staticClass: "mt-5" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h5", [_vm._v("Exception Message")])
+              ]),
+              _vm._v(" "),
+              _c("pre", { staticClass: "bg-dark p-4 mb-0 text-white" }, [
+                _vm._v(_vm._s(slotProps.entry.content.message))
+              ])
+            ]),
+            _vm._v(" "),
             _c(
               "div",
-              { staticClass: "card" },
+              { staticClass: "card mt-5" },
               [
                 _c("div", { staticClass: "card-header" }, [
                   _c("h5", [_vm._v("Location")])

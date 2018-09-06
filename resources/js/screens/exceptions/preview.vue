@@ -42,12 +42,12 @@
                 </td>
             </tr>
 
-            <tr>
+<!--             <tr>
                 <td class="table-fit font-weight-bold">Message</td>
                 <td>
                     {{slotProps.entry.content.message}}
                 </td>
-            </tr>
+            </tr> -->
 
             <tr v-if="job">
                 <td class="table-fit font-weight-bold">Job</td>
@@ -70,6 +70,14 @@
 
         <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
             <div class="card">
+                <div class="card-header">
+                    <h5>Exception Message</h5>
+                </div>
+
+                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.message}}</pre>
+            </div>
+
+            <div class="card mt-5">
                 <div class="card-header">
                     <h5>Location</h5>
                 </div>
