@@ -23,7 +23,7 @@
 </script>
 
 <template>
-    <preview-screen title="Job Details" resource="queue" :id="$route.params.id">
+    <preview-screen title="Job Details" resource="jobs" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit font-weight-bold">Status</td>
@@ -40,16 +40,9 @@
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Tries</td>
+                <td class="table-fit font-weight-bold">Connection</td>
                 <td>
-                    {{slotProps.entry.content.tries || '-'}}
-                </td>
-            </tr>
-
-            <tr>
-                <td class="table-fit font-weight-bold">Timeout</td>
-                <td>
-                    {{slotProps.entry.content.timeout || '-'}}
+                    {{slotProps.entry.content.connection}}
                 </td>
             </tr>
 
@@ -61,9 +54,16 @@
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Connection</td>
+                <td class="table-fit font-weight-bold">Tries</td>
                 <td>
-                    {{slotProps.entry.content.connection}}
+                    {{slotProps.entry.content.tries || '-'}}
+                </td>
+            </tr>
+
+            <tr>
+                <td class="table-fit font-weight-bold">Timeout</td>
+                <td>
+                    {{slotProps.entry.content.timeout || '-'}}
                 </td>
             </tr>
 

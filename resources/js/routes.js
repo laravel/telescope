@@ -56,15 +56,15 @@ export default [
     },
 
     {
-        path: '/queue/:id',
-        name: 'queue-preview',
-        component: require('./screens/queue/preview')
+        path: '/jobs/:id',
+        name: 'job-preview',
+        component: require('./screens/jobs/preview')
     },
 
     {
-        path: '/queue',
-        name: 'queue',
-        component: require('./screens/queue/index')
+        path: '/jobs',
+        name: 'jobs',
+        component: require('./screens/jobs/index')
     },
 
     {

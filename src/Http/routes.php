@@ -19,8 +19,8 @@ Route::get('/telescope-api/notifications', 'NotificationsController@index');
 Route::get('/telescope-api/notifications/{id}', 'NotificationsController@show');
 
 // Queue entries...
-Route::get('/telescope-api/queue', 'QueueController@index');
-Route::get('/telescope-api/queue/{id}', 'QueueController@show');
+Route::get('/telescope-api/jobs', 'QueueController@index');
+Route::get('/telescope-api/jobs/{id}', 'QueueController@show');
 
 // Events entries...
 Route::get('/telescope-api/events', 'EventsController@index');
