@@ -42,7 +42,7 @@ class RequestsWatcher extends Watcher
     /**
      * Format the given headers.
      *
-     * @param  array $headers
+     * @param  array  $headers
      * @return array
      */
     protected function formatHeaders($headers)
@@ -55,7 +55,7 @@ class RequestsWatcher extends Watcher
     /**
      * Format the given payload.
      *
-     * @param  array $payload
+     * @param  array  $payload
      * @return array
      */
     protected function formatPayload($payload)
