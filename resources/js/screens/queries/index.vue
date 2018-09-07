@@ -16,6 +16,7 @@
             <td>{{truncate(slotProps.entry.content.sql, 90)}}</td>
             <td class="table-fit">{{truncate(slotProps.entry.content.connection, 20)}}</td>
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
+
             <td class="table-fit">
                 <router-link :to="{name:'query-preview', params:{id: slotProps.entry.id}}" class="control-action">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
