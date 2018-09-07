@@ -73,6 +73,6 @@ class ExceptionWatcher extends Watcher
      */
     private function extractTagsFromEvent($event)
     {
-        return $event->context['telescope_tags'] ?? [];
+        return $event->context['telescope'] ?? [];
     }
 }
