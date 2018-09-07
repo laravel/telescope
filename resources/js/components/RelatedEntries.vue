@@ -23,6 +23,7 @@
                     <th></th>
                 </tr>
             </thead>
+
             <tbody>
                 <tr v-for="entry in batchEntriesOfType(7)">
                     <td>{{truncate(entry.content.sql, 110)}}</td>
