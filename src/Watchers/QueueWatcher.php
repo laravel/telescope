@@ -67,7 +67,7 @@ class QueueWatcher extends Watcher
             'exception' => [
                 'message' => $event->exception->getMessage(),
                 'trace' => $event->exception->getTrace(),
-                'line' => $event->exception->getLine() - 1,
+                'line' => $event->exception->getLine(),
                 'line_preview' => $this->formatExceptionLinePreview($event->exception),
             ],
             'name' => $event->job->payload()['displayName'],
