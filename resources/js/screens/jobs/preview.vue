@@ -88,7 +88,9 @@
             <div class="card mt-5" v-if="slotProps.entry.content.data">
                 <div class="card-header"><h5>Job Data</h5></div>
 
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.data}}</pre>
+                <div class="bg-dark p-4 mb-0 text-white">
+                    <tree-view :data="slotProps.entry.content.data" :options="{maxDepth: 3}"></tree-view>
+                </div>
             </div>
 
             <!-- Additional Information -->

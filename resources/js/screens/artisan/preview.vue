@@ -33,13 +33,17 @@
             <div class="card mt-5" v-if="slotProps.entry.content.arguments">
                 <div class="card-header"><h5>Arguments</h5></div>
 
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.arguments}}</pre>
+                <div class="bg-dark p-4 mb-0 text-white">
+                    <tree-view :data="slotProps.entry.content.arguments" :options="{maxDepth: 3}"></tree-view>
+                </div>
             </div>
 
             <div class="card mt-5" v-if="slotProps.entry.content.options">
                 <div class="card-header"><h5>Options</h5></div>
 
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.options}}</pre>
+                <div class="bg-dark p-4 mb-0 text-white">
+                    <tree-view :data="slotProps.entry.content.options" :options="{maxDepth: 3}"></tree-view>
+                </div>
             </div>
 
             <!-- Additional Information -->

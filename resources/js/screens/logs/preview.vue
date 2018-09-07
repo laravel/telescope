@@ -62,12 +62,14 @@
                 <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.message}}</pre>
             </div>
 
-            <div class="card mt-5">
+            <div class="card mt-5" v-if="slotProps.entry.content.context">
                 <div class="card-header">
                     <h5>Context</h5>
                 </div>
 
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.context}}</pre>
+                <div class="bg-dark p-4 mb-0 text-white">
+                    <tree-view :data="slotProps.entry.content.context" :options="{maxDepth: 3}"></tree-view>
+                </div>
             </div>
         </div>
     </preview-screen>
