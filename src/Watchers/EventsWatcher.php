@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Watchers;
 
 use Closure;
 use ReflectionClass;
+use ReflectionFunction;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
@@ -31,15 +32,15 @@ class EventsWatcher extends Watcher
      */
     public function recordEvent($eventName, $payload)
     {
-        if ($this->eventShouldBeIgnored($eventName)) {
+        if ($this->shouldIgnore($eventName)) {
             return;
         }
 
-        list($payload, $tags) = $this->extractPayloadAndTags($eventName, $payload);
+        [$payload, $tags] = $this->extractPayloadAndTags($eventName, $payload);
 
         Telescope::recordEvent(IncomingEntry::make([
-            'event_name' => $eventName,
-            'event_payload' => $payload,
+            'name' => $eventName,
+            'payload' => $payload,
             'listeners' => $this->formatListeners($eventName),
         ])->tags($tags));
     }
@@ -50,10 +51,24 @@ class EventsWatcher extends Watcher
      * @param  string  $eventName
      * @return bool
      */
-    private function eventShouldBeIgnored($eventName)
+    private function shouldIgnore($eventName)
     {
         return Telescope::ignoresFrameworkEvents() &&
                $this->eventIsFiredByTheFramework($eventName);
+    }
+
+    /**
+     * Determine if the event was fired internally by Laravel.
+     *
+     * @param  string  $eventName
+     * @return bool
+     */
+    private function eventIsFiredByTheFramework($eventName)
+    {
+        return Str::is(
+            ['Illuminate\*', 'eloquent*', 'bootstrapped*', 'bootstrapping*', 'creating*', 'composing*'],
+            $eventName
+        );
     }
 
     /**
@@ -65,7 +80,7 @@ class EventsWatcher extends Watcher
      */
     private function extractPayloadAndTags($eventName, $payload)
     {
-        return $this->eventIsAnObject($eventName)
+        return class_exists($eventName)
                 ? $this->extractPayloadAndTagsFromEventObject($payload[0])
                 : [$this->formatRawPayload($payload), []];
     }
@@ -85,9 +100,9 @@ class EventsWatcher extends Watcher
                 $property->setAccessible(true);
 
                 if (($value = $property->getValue($event)) instanceof Model) {
-                    $tags[] = $model = get_class($value).':'.$value->getKey();
+                    $tags[] = $tag = get_class($value).':'.$value->getKey();
 
-                    return [$property->getName() => $model];
+                    return [$property->getName() => $tag];
                 } else {
                     return [$property->getName() => json_decode(json_encode($value), true)];
                 }
@@ -113,31 +128,6 @@ class EventsWatcher extends Watcher
     }
 
     /**
-     * Determine if the event was fired internally by Laravel.
-     *
-     * @param  string $eventName
-     * @return bool
-     */
-    private function eventIsFiredByTheFramework($eventName)
-    {
-        return Str::is(
-            ['Illuminate\*', 'eloquent*', 'bootstrapped*', 'bootstrapping*', 'creating*', 'composing*'],
-            $eventName
-        );
-    }
-
-    /**
-     * Determine if the event is an object.
-     *
-     * @param  string $eventName
-     * @return bool
-     */
-    public function eventIsAnObject($eventName)
-    {
-        return Str::is(['App\*', 'Illuminate\*'], $eventName);
-    }
-
-    /**
      * Format list of event listeners.
      *
      * @param  string $eventName
@@ -147,7 +137,7 @@ class EventsWatcher extends Watcher
     {
         return collect(app('events')->getListeners($eventName))
             ->map(function ($listener) {
-                $listener = (new \ReflectionFunction($listener))->getStaticVariables()['listener'];
+                $listener = (new ReflectionFunction($listener))->getStaticVariables()['listener'];
 
                 if (is_string($listener)) {
                     return (str_contains($listener, '@') ? $listener : $listener.'@handle');
@@ -158,7 +148,7 @@ class EventsWatcher extends Watcher
                 }
             })
             ->reject(function ($listener) {
-                return str_contains($listener, 'Laravel\\Telescope');
+                return Str::contains($listener, 'Laravel\\Telescope');
             })
             ->values()
             ->toArray();
@@ -172,7 +162,7 @@ class EventsWatcher extends Watcher
      */
     private function formatClosureListener(Closure $listener)
     {
-        $listener = (new \ReflectionFunction($listener));
+        $listener = new ReflectionFunction($listener);
 
         return sprintf('Closure at %s[%s:%s]',
             $listener->getFileName(), $listener->getStartLine(), $listener->getEndLine()

@@ -64216,7 +64216,7 @@ var render = function() {
               _c("td", [
                 _vm._v(
                   "\n                " +
-                    _vm._s(slotProps.entry.content.event_name) +
+                    _vm._s(slotProps.entry.content.name) +
                     "\n            "
                 )
               ])
@@ -64292,14 +64292,14 @@ var render = function() {
         key: "after-attributes-card",
         fn: function(slotProps) {
           return _c("div", {}, [
-            slotProps.entry.content.event_payload.length
+            slotProps.entry.content.payload.length
               ? _c("div", { staticClass: "card mt-5" }, [
                   _c("div", { staticClass: "card-header" }, [
                     _c("h5", [_vm._v("Event Data")])
                   ]),
                   _vm._v(" "),
                   _c("pre", { staticClass: "bg-dark p-4 mb-0 text-white" }, [
-                    _vm._v(_vm._s(slotProps.entry.content.event_payload))
+                    _vm._v(_vm._s(slotProps.entry.content.payload))
                   ])
                 ])
               : _vm._e(),
@@ -64417,9 +64417,7 @@ var render = function() {
           fn: function(slotProps) {
             return [
               _c("td", [
-                _vm._v(
-                  _vm._s(_vm.truncate(slotProps.entry.content.event_name, 80))
-                )
+                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.name, 80)))
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
@@ -76570,7 +76568,7 @@ var render = function() {
                 _vm._l(_vm.batchEntriesOfType(5), function(entry) {
                   return _c("tr", [
                     _c("td", [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.event_name, 80)))
+                      _vm._v(_vm._s(_vm.truncate(entry.content.name, 80)))
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "table-fit" }, [

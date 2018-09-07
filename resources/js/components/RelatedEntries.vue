@@ -113,7 +113,7 @@
 
             <tbody>
                 <tr v-for="entry in batchEntriesOfType(5)">
-                    <td>{{truncate(entry.content.event_name, 80)}}</td>
+                    <td>{{truncate(entry.content.name, 80)}}</td>
                     <td class="table-fit">{{entry.content.listeners.length}}</td>
 
                     <td class="table-fit">

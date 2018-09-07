@@ -51,7 +51,7 @@ class Telescope
      *
      * @var bool
      */
-    public static $ignoreFrameworkEvents = false;
+    public static $ignoreFrameworkEvents = true;
 
     /**
      * Record the given entry.

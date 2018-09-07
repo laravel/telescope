@@ -25,7 +25,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Event</td>
                 <td>
-                    {{slotProps.entry.content.event_name}}
+                    {{slotProps.entry.content.name}}
                 </td>
             </tr>
 
@@ -49,10 +49,10 @@
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">
-            <div class="card mt-5" v-if="slotProps.entry.content.event_payload.length">
+            <div class="card mt-5" v-if="slotProps.entry.content.payload.length">
                 <div class="card-header"><h5>Event Data</h5></div>
 
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.event_payload}}</pre>
+                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.payload}}</pre>
             </div>
 
             <div class="card mt-5" v-if="slotProps.entry.content.listeners && slotProps.entry.content.listeners.length">
