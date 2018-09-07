@@ -85,7 +85,7 @@ class CacheWatcher extends Watcher
     }
 
     /**
-     * Record a cache key was removed.
+     * Record a cache key was forgotten / removed.
      *
      * @param \Illuminate\Cache\Events\KeyForgotten  $event
      * @return void
