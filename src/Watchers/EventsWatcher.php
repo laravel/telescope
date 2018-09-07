@@ -24,7 +24,7 @@ class EventsWatcher extends Watcher
     }
 
     /**
-     * Record the given event.
+     * Record an event was fired.
      *
      * @param  string $eventName
      * @param  array $payload

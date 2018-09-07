@@ -26,7 +26,7 @@ class QueueWatcher extends Watcher
     }
 
     /**
-     * Record a queue job was processed.
+     * Record a queued job was processed.
      *
      * @param \Illuminate\Queue\Events\JobProcessed $event
      * @return void

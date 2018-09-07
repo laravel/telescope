@@ -21,7 +21,7 @@ class ScheduleWatcher extends Watcher
     }
 
     /**
-     * Record a scheduled command execution.
+     * Record a scheduled command was executed.
      *
      * @param \Illuminate\Console\Events\CommandFinished $event
      * @return void

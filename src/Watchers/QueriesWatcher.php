@@ -20,7 +20,7 @@ class QueriesWatcher extends Watcher
     }
 
     /**
-     * Record a new query was executed.
+     * Record a query was executed.
      *
      * @param \Illuminate\Database\Events\QueryExecuted $event
      * @return void

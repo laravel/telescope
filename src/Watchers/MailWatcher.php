@@ -20,7 +20,7 @@ class MailWatcher extends Watcher
     }
 
     /**
-     * Record a new mail message was sent.
+     * Record a mail message was sent.
      *
      * @param \Illuminate\Mail\Events\MessageSent $event
      * @return void

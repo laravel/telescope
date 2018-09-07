@@ -20,7 +20,7 @@ class LogWatcher extends Watcher
     }
 
     /**
-     * Record a new log message.
+     * Record a message was logged.
      *
      * @param \Illuminate\Log\Events\MessageLogged $event
      * @return void

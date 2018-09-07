@@ -22,7 +22,7 @@ class ExceptionWatcher extends Watcher
     }
 
     /**
-     * Record a new exception.
+     * Record an exception was logged.
      *
      * @param \Illuminate\Log\Events\MessageLogged $event
      * @return void
