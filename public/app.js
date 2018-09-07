@@ -68214,7 +68214,7 @@ var render = function() {
                 _vm._v(
                   "\n                " +
                     _vm._s(slotProps.entry.content.time) +
-                    "\n            "
+                    "ms\n            "
                 )
               ])
             ]),
