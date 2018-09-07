@@ -62256,7 +62256,7 @@ var render = function() {
             return [
               _c("td", [
                 _vm._v(
-                  _vm._s(_vm.truncate(slotProps.entry.content.message, 80))
+                  _vm._s(_vm.truncate(slotProps.entry.content.message, 100))
                 )
               ]),
               _vm._v(" "),
