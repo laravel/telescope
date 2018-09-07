@@ -14,7 +14,7 @@
         <template slot="row" slot-scope="slotProps">
             <td>{{truncate(slotProps.entry.content.class, 80)}}</td>
 
-            <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}} ago</td>
+            <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
 
             <td class="table-fit">
                 <router-link :to="{name:'exception-preview', params:{id: slotProps.entry.id}}" class="control-action">

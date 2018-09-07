@@ -7,7 +7,7 @@
         <tr slot="table-header">
             <th scope="col">Query</th>
             <th scope="col">Connection</th>
-            <th scope="col">Since</th>
+            <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
 

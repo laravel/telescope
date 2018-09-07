@@ -77,7 +77,7 @@
                 <tr>
                     <td class="table-fit font-weight-bold">Time</td>
                     <td>
-                        {{localTime(entry.created_at)}} ({{timeAgo(entry.created_at, false)}})
+                        {{localTime(entry.created_at)}} ({{timeAgo(entry.created_at)}})
                     </td>
                 </tr>
 

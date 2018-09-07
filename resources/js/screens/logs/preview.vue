@@ -61,6 +61,14 @@
 
                 <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.message}}</pre>
             </div>
+
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h5>Context</h5>
+                </div>
+
+                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.context}}</pre>
+            </div>
         </div>
     </preview-screen>
 </template>

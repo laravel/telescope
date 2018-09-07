@@ -12,12 +12,6 @@
                 entry: null,
                 batch: [],
             };
-        },
-
-        methods: {
-            batchEntriesOfType(type){
-                return _.filter(this.batch, {type: type})
-            }
         }
     }
 </script>

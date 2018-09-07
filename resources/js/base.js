@@ -6,7 +6,7 @@ export default {
         /**
          * Show the time ago format for the given time.
          */
-        timeAgo(time, withoutSuffex = true){
+        timeAgo(time, withoutSuffex = false){
             return moment(time + ' Z').utc().local().fromNow(withoutSuffex);
         },
 

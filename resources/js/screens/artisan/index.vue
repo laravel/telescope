@@ -7,7 +7,7 @@
         <tr slot="table-header">
             <th scope="col">Command</th>
             <th scope="col">Status</th>
-            <th scope="col">Since</th>
+            <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
 

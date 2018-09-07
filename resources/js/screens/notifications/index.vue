@@ -8,7 +8,7 @@
             <th scope="col">Notifiable</th>
             <th scope="col">Notification</th>
             <th scope="col">Channel</th>
-            <th scope="col">Since</th>
+            <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
 

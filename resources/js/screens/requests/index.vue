@@ -2,7 +2,7 @@
     export default {
         methods: {
             statusClass(status){
-                if (status < 300) return 'success';
+                if (status < 400) return 'success';
                 if (status < 500) return 'warning';
                 if (status >= 500) return 'danger';
             }
@@ -16,7 +16,7 @@
             <th scope="col">Verb</th>
             <th scope="col">Path</th>
             <th scope="col">Status</th>
-            <th scope="col">Since</th>
+            <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
 
