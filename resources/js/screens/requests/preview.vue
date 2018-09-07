@@ -39,20 +39,25 @@
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5" v-if="slotProps.entry.content.payload">
                 <div class="card-header"><h5>Payload</h5></div>
-
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.payload}}</pre>
+                <div class="bg-dark p-4 mb-0 text-white">
+                    <tree-view :data="slotProps.entry.content.payload" :options="{maxDepth: 3}"></tree-view>
+                </div>
             </div>
 
             <div class="card mt-5" v-if="slotProps.entry.content.headers">
                 <div class="card-header"><h5>Headers</h5></div>
 
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.headers}}</pre>
+                <div class="bg-dark p-4 mb-0 text-white">
+                    <tree-view :data="slotProps.entry.content.headers" :options="{maxDepth: 3}"></tree-view>
+                </div>
             </div>
 
             <div class="card mt-5" v-if="slotProps.entry.content.response">
                 <div class="card-header"><h5>Response</h5></div>
 
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.response}}</pre>
+                <div class="bg-dark p-4 mb-0 text-white">
+                    <tree-view :data="slotProps.entry.content.response" :options="{maxDepth: 3}"></tree-view>
+                </div>
             </div>
 
             <!-- Additional Information -->

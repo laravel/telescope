@@ -2,10 +2,12 @@ import Vue from 'vue'
 import Base from './base'
 import Routes from './routes'
 import VueRouter from 'vue-router'
+import TreeView from "vue-json-tree-view"
 
 require('bootstrap');
 
 Vue.use(VueRouter);
+Vue.use(TreeView);
 
 window.Popper = require('popper.js').default;
 

@@ -1,0 +1,46 @@
+.tree-view-wrapper {
+  .tree-view-item{
+    margin-left: 30px;
+  }
+
+  .tree-view-item-key {
+    color: #8bd72f;
+  }
+
+  .tree-view-item-key-with-chevron[data-v-efc5bae2]::before {
+    color: #fff !important;
+  }
+
+  .tree-view-item-value-string {
+    color: #DACB4D !important;
+  }
+
+  .tree-view-item-value-null {
+    color: #A291F5 !important;
+  }
+
+  .tree-view-item-value-boolean {
+    color: #A291F5 !important;
+  }
+
+  .tree-view-item-value-number{
+    color: #A291F5 !important;
+  }
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-addition {
+  color: #8bd72f;
+}
+
+.hljs-string,
+.hljs-meta .hljs-meta-string,
+.hljs-doctag,
+.hljs-regexp {
+  color: #DACB4D;
+}
+
+.hljs-number, .hljs-literal{
+  color: #A291F5 !important;
+}

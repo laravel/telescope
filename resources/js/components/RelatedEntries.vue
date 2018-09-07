@@ -25,7 +25,7 @@
             </thead>
             <tbody>
                 <tr v-for="entry in batchEntriesOfType(7)">
-                    <td>{{truncate(entry.content.sql, 90)}}</td>
+                    <td>{{truncate(entry.content.sql, 110)}}</td>
                     <td class="table-fit">{{truncate(entry.content.connection, 20)}}</td>
 
                     <td class="table-fit">
@@ -53,7 +53,7 @@
 
             <tbody>
                 <tr v-for="entry in batchEntriesOfType(2)">
-                    <td>{{truncate(entry.content.message, 80)}}</td>
+                    <td>{{truncate(entry.content.message, 120)}}</td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'log-preview', params:{id: entry.id}}" class="control-action">
@@ -80,7 +80,7 @@
 
             <tbody>
                 <tr v-for="entry in batchEntriesOfType(10)">
-                    <td>{{truncate(entry.content.message, 80)}}</td>
+                    <td>{{truncate(entry.content.message, 120)}}</td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'exception-preview', params:{id: entry.id}}" class="control-action">
@@ -108,7 +108,7 @@
 
             <tbody>
                 <tr v-for="entry in batchEntriesOfType(6)">
-                    <td>{{truncate(entry.content.key, 80)}}</td>
+                    <td>{{truncate(entry.content.key, 100)}}</td>
                     <td class="table-fit">{{entry.content.type}}</td>
 
                     <td class="table-fit">

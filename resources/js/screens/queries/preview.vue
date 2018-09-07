@@ -1,10 +1,31 @@
 <script type="text/ecmascript-6">
+    import _ from 'lodash';
+    import sqlFormatter from "sql-formatter";
+    import hljs from 'highlight.js/lib/highlight';
+    import sql from 'highlight.js/lib/languages/sql';
+
     export default {
         data(){
             return {
                 entry: null,
                 batch: [],
             };
+        },
+
+        mounted(){
+           setTimeout(() => {
+               hljs.registerLanguage('sql', sql);
+
+               hljs.highlightBlock(this.$refs.sqlcode);
+           }, 500);
+        },
+
+        methods:{
+            formatSQL(sql, params){
+                return sqlFormatter.format(sql,{
+                    params: _.map(params, param => _.isString(param) ? '"'+param+'"' : param)
+                });
+            }
         },
 
         computed: {
@@ -59,8 +80,7 @@
             <div class="card mt-5">
                 <div class="card-header"><h5>Query & Bindings</h5></div>
 
-                <code class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.sql}}</code>
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.bindings}}</pre>
+                <pre class="bg-dark p-4 mb-0 text-white" ref="sqlcode">{{formatSQL(slotProps.entry.content.sql, slotProps.entry.content.bindings)}}</pre>
             </div>
         </div>
     </preview-screen>
