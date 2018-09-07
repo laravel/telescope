@@ -79,8 +79,7 @@ class RequestsWatcher extends Watcher
     {
         if (is_string($response->getContent()) &&
             is_array(json_decode($response->getContent(), true)) &&
-            json_last_error() == JSON_ERROR_NONE
-        ) {
+            json_last_error() == JSON_ERROR_NONE) {
             return json_decode($response->getContent(), true);
         }
 
