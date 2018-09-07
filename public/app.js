@@ -61008,7 +61008,7 @@ var render = function() {
                           staticClass: "control-action",
                           attrs: {
                             to: {
-                              name: "queue-preview",
+                              name: "job-preview",
                               params: { id: _vm.job.id }
                             }
                           }
@@ -61653,7 +61653,7 @@ var render = function() {
                           staticClass: "control-action",
                           attrs: {
                             to: {
-                              name: "queue-preview",
+                              name: "job-preview",
                               params: { id: _vm.job.id }
                             }
                           }
@@ -62079,7 +62079,7 @@ var render = function() {
                           staticClass: "control-action",
                           attrs: {
                             to: {
-                              name: "queue-preview",
+                              name: "job-preview",
                               params: { id: _vm.job.id }
                             }
                           }
@@ -62483,7 +62483,7 @@ var render = function() {
                           staticClass: "control-action",
                           attrs: {
                             to: {
-                              name: "queue-preview",
+                              name: "job-preview",
                               params: { id: _vm.job.id }
                             }
                           }
@@ -64237,7 +64237,7 @@ var render = function() {
                           staticClass: "control-action",
                           attrs: {
                             to: {
-                              name: "queue-preview",
+                              name: "job-preview",
                               params: { id: _vm.job.id }
                             }
                           }
@@ -64647,7 +64647,7 @@ var render = function() {
                           staticClass: "control-action",
                           attrs: {
                             to: {
-                              name: "queue-preview",
+                              name: "job-preview",
                               params: { id: _vm.job.id }
                             }
                           }
@@ -68236,7 +68236,7 @@ var render = function() {
                           staticClass: "control-action",
                           attrs: {
                             to: {
-                              name: "queue-preview",
+                              name: "job-preview",
                               params: { id: _vm.job.id }
                             }
                           }
