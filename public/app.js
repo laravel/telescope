@@ -69261,7 +69261,7 @@ var render = function() {
       _c("tr", { attrs: { slot: "table-header" }, slot: "table-header" }, [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Command")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Exit Code")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Happened")]),
         _vm._v(" "),

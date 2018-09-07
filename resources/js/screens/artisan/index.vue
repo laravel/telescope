@@ -6,7 +6,7 @@
     <index-screen title="Console Commands" resource="artisan">
         <tr slot="table-header">
             <th scope="col">Command</th>
-            <th scope="col">Status</th>
+            <th scope="col">Exit Code</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
@@ -16,6 +16,7 @@
             <td>{{truncate(slotProps.entry.content.command, 90)}}</td>
             <td class="table-fit">{{slotProps.entry.content.exit_code}}</td>
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
+
             <td class="table-fit">
                 <router-link :to="{name:'artisan-preview', params:{id: slotProps.entry.id}}" class="control-action">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
