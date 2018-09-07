@@ -31,7 +31,7 @@ class QueriesWatcher extends Watcher
             'connection' => $event->connectionName,
             'bindings' => $event->bindings,
             'sql' => $event->sql,
-            'time' => $event->time,
+            'time' => number_format($event->time, 2),
         ]));
     }
 }
