@@ -2,8 +2,6 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Throwable;
-use Whoops\Exception\Inspector;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Log\Events\MessageLogged;

@@ -5,7 +5,6 @@ namespace Laravel\Telescope\Watchers;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
-use Illuminate\Foundation\Console\Kernel;
 use Illuminate\Console\Events\CommandStarting;
 
 class ScheduleWatcher extends Watcher
@@ -34,7 +33,7 @@ class ScheduleWatcher extends Watcher
         }
 
         collect(app(Schedule::class)->events())->each(function ($event) {
-            $event->then(function() use($event){
+            $event->then(function () use ($event) {
                 Telescope::recordScheduledCommand(IncomingEntry::make([
                     'command' => $event->command,
                     'expression' => $event->expression,
