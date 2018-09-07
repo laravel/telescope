@@ -126,9 +126,13 @@ class QueueWatcher extends Watcher
      */
     private function formatExceptionLinePreview(Throwable $exception)
     {
-        return (new Inspector($exception))
+        $result = (new Inspector($exception))
             ->getFrames()[0]
             ->getFileLines($exception->getLine() - 10, 20);
+
+        return collect($result)->mapWithKeys(function ($value, $key) {
+            return [$key + 1 => $value];
+        })->all();
     }
 
     /**
