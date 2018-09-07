@@ -76361,74 +76361,63 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.batchEntriesOfType(7).length
+    _vm.batchEntriesOfType(10).length
       ? _c("div", { staticClass: "card mt-5" }, [
           _vm._m(0),
           _vm._v(" "),
-          _c(
-            "table",
-            {
-              staticClass:
-                "table table-hover table-sm mb-0 penultimate-column-right"
-            },
-            [
-              _vm._m(1),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.batchEntriesOfType(7), function(entry) {
-                  return _c("tr", [
-                    _c("td", [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.sql, 110)))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-fit" }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.connection, 20)))
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      { staticClass: "table-fit" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "control-action",
-                            attrs: {
-                              to: {
-                                name: "query-preview",
-                                params: { id: entry.id }
-                              }
+          _c("table", { staticClass: "table table-hover table-sm mb-0" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.batchEntriesOfType(10), function(entry) {
+                return _c("tr", [
+                  _c("td", [
+                    _vm._v(_vm._s(_vm.truncate(entry.content.message, 120)))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    { staticClass: "table-fit" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "exception-preview",
+                              params: { id: entry.id }
                             }
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
+                          }
+                        },
+                        [
+                          _c(
+                            "svg",
+                            {
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                viewBox: "0 0 22 16"
+                              }
+                            },
+                            [
+                              _c("path", {
                                 attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  viewBox: "0 0 22 16"
+                                  d:
+                                    "M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
                                 }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    d:
-                                      "M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  ])
-                })
-              )
-            ]
-          )
+                              })
+                            ]
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              })
+            )
+          ])
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -76492,69 +76481,9 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.batchEntriesOfType(10).length
+    _vm.batchEntriesOfType(7).length
       ? _c("div", { staticClass: "card mt-5" }, [
           _vm._m(4),
-          _vm._v(" "),
-          _c("table", { staticClass: "table table-hover table-sm mb-0" }, [
-            _vm._m(5),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.batchEntriesOfType(10), function(entry) {
-                return _c("tr", [
-                  _c("td", [
-                    _vm._v(_vm._s(_vm.truncate(entry.content.message, 120)))
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { staticClass: "table-fit" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "control-action",
-                          attrs: {
-                            to: {
-                              name: "exception-preview",
-                              params: { id: entry.id }
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "svg",
-                            {
-                              attrs: {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                viewBox: "0 0 22 16"
-                              }
-                            },
-                            [
-                              _c("path", {
-                                attrs: {
-                                  d:
-                                    "M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
-                                }
-                              })
-                            ]
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                ])
-              })
-            )
-          ])
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.batchEntriesOfType(6).length
-      ? _c("div", { staticClass: "card mt-5" }, [
-          _vm._m(6),
           _vm._v(" "),
           _c(
             "table",
@@ -76563,18 +76492,18 @@ var render = function() {
                 "table table-hover table-sm mb-0 penultimate-column-right"
             },
             [
-              _vm._m(7),
+              _vm._m(5),
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.batchEntriesOfType(6), function(entry) {
+                _vm._l(_vm.batchEntriesOfType(7), function(entry) {
                   return _c("tr", [
                     _c("td", [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.key, 100)))
+                      _vm._v(_vm._s(_vm.truncate(entry.content.sql, 110)))
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "table-fit" }, [
-                      _vm._v(_vm._s(entry.content.type))
+                      _vm._v(_vm._s(_vm.truncate(entry.content.connection, 20)))
                     ]),
                     _vm._v(" "),
                     _c(
@@ -76587,7 +76516,7 @@ var render = function() {
                             staticClass: "control-action",
                             attrs: {
                               to: {
-                                name: "cache-preview",
+                                name: "query-preview",
                                 params: { id: entry.id }
                               }
                             }
@@ -76625,7 +76554,7 @@ var render = function() {
     _vm._v(" "),
     _vm.batchEntriesOfType(5).length
       ? _c("div", { staticClass: "card mt-5" }, [
-          _vm._m(8),
+          _vm._m(6),
           _vm._v(" "),
           _c(
             "table",
@@ -76634,7 +76563,7 @@ var render = function() {
                 "table table-hover table-sm mb-0 penultimate-column-right"
             },
             [
-              _vm._m(9),
+              _vm._m(7),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -76692,10 +76621,113 @@ var render = function() {
             ]
           )
         ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.batchEntriesOfType(6).length
+      ? _c("div", { staticClass: "card mt-5" }, [
+          _vm._m(8),
+          _vm._v(" "),
+          _c(
+            "table",
+            {
+              staticClass:
+                "table table-hover table-sm mb-0 penultimate-column-right"
+            },
+            [
+              _vm._m(9),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.batchEntriesOfType(6), function(entry) {
+                  return _c("tr", [
+                    _c("td", [
+                      _vm._v(_vm._s(_vm.truncate(entry.content.key, 100)))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-fit" }, [
+                      _vm._v(_vm._s(entry.content.type))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "table-fit" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "control-action",
+                            attrs: {
+                              to: {
+                                name: "cache-preview",
+                                params: { id: entry.id }
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  viewBox: "0 0 22 16"
+                                }
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    d:
+                                      "M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                })
+              )
+            ]
+          )
+        ])
       : _vm._e()
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h5", [_vm._v("Exceptions")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [_c("th", [_vm._v("Message")]), _vm._v(" "), _c("th")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h5", [_vm._v("Log Entries")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [_c("th", [_vm._v("Message")]), _vm._v(" "), _c("th")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -76723,7 +76755,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h5", [_vm._v("Log Entries")])
+      _c("h5", [_vm._v("Events")])
     ])
   },
   function() {
@@ -76731,23 +76763,13 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("tr", [_c("th", [_vm._v("Message")]), _vm._v(" "), _c("th")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h5", [_vm._v("Exceptions")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [_c("th", [_vm._v("Message")]), _vm._v(" "), _c("th")])
+      _c("tr", [
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Listeners")]),
+        _vm._v(" "),
+        _c("th")
+      ])
     ])
   },
   function() {
@@ -76767,28 +76789,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Key")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")]),
-        _vm._v(" "),
-        _c("th")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h5", [_vm._v("Events")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Listeners")]),
         _vm._v(" "),
         _c("th")
       ])

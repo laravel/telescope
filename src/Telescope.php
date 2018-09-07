@@ -34,7 +34,17 @@ class Telescope
      *
      * @var array
      */
-    public static $protectedRequestParameters = ['password', 'password_confirmation'];
+    public static $protectedRequestParameters = [
+        'password',
+        'password_confirmation',
+    ];
+
+    /**
+     * The list of protected request parameters.
+     *
+     * @var array
+     */
+    public static $ignoreCommands = [];
 
     /**
      * Indicates if Telescope should ignore events fired by Laravel.
@@ -176,7 +186,7 @@ class Telescope
 
     public static function recordScheduledCommand(IncomingEntry $entry)
     {
-        return static::record(EntryType::SCHEDULEDCOMMAND, $entry);
+        return static::record(EntryType::SCHEDULED_COMMAND, $entry);
     }
 
     /**
@@ -239,6 +249,34 @@ class Telescope
     }
 
     /**
+     * Protect the given request parameters;
+     *
+     * @param  $attributes  array
+     * @return static
+     */
+    public static function protectRequestParameters($attributes)
+    {
+        static::$protectedRequestParameters = array_merge(
+            static::$protectedRequestParameters, $attributes
+        );
+
+        return new static;
+    }
+
+    /**
+     * Ignore the given commands and do not gather information about them.
+     *
+     * @param  array  $commands
+     * @return static
+     */
+    public static function ignoreCommands(array $commands)
+    {
+        static::$ignoreCommands = $commands;
+
+        return new static;
+    }
+
+    /**
      * Determines if Telescope is ignoring events fired by Laravel.
      *
      * @return bool
@@ -256,21 +294,6 @@ class Telescope
     public static function ignoreFrameworkEvents()
     {
         static::$ignoreFrameworkEvents = true;
-
-        return new static;
-    }
-
-    /**
-     * Protect the given request parameters;
-     *
-     * @param  $attributes  array
-     * @return static
-     */
-    public static function protectRequestParameters($attributes)
-    {
-        static::$protectedRequestParameters = array_merge(
-            static::$protectedRequestParameters, $attributes
-        );
 
         return new static;
     }

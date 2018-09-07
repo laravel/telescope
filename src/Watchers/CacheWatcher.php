@@ -22,6 +22,7 @@ class CacheWatcher extends Watcher
     {
         $app['events']->listen(CacheHit::class, [$this, 'recordCacheHit']);
         $app['events']->listen(CacheMissed::class, [$this, 'recordCacheMissed']);
+
         $app['events']->listen(KeyWritten::class, [$this, 'recordKeyWritten']);
         $app['events']->listen(KeyForgotten::class, [$this, 'recordKeyForgotten']);
     }
@@ -76,7 +77,7 @@ class CacheWatcher extends Watcher
         }
 
         Telescope::recordCacheEntry(IncomingEntry::make([
-            'type' => 'put',
+            'type' => 'set',
             'key' => $event->key,
             'value' => $event->value,
             'expiration' => $event->minutes,
@@ -96,7 +97,7 @@ class CacheWatcher extends Watcher
         }
 
         Telescope::recordCacheEntry(IncomingEntry::make([
-            'type' => 'removed',
+            'type' => 'forget',
             'key' => $event->key,
         ])->tags([$event->key]));
     }
@@ -109,6 +110,7 @@ class CacheWatcher extends Watcher
      */
     private function shouldIgnore($event)
     {
-        return $event->key == 'illuminate:queue:restart' || Str::is('framework/schedule*', $event->key);
+        return $event->key == 'illuminate:queue:restart' ||
+               Str::is('framework/schedule*', $event->key);
     }
 }

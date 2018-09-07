@@ -21,7 +21,7 @@ class ArtisanWatcher extends Watcher
     }
 
     /**
-     * Record a new query was executed.
+     * Record an Artisan command was executed.
      *
      * @param \Illuminate\Console\Events\CommandFinished  $event
      * @return void
@@ -49,7 +49,7 @@ class ArtisanWatcher extends Watcher
      */
     private function shouldIgnore($event)
     {
-        return in_array($event->command, [
+        return in_array($event->command, array_merge(Telescope::$ignoreCommands, [
             'queue:listen',
             'queue:work',
             'horizon',
@@ -57,6 +57,6 @@ class ArtisanWatcher extends Watcher
             'horizon:supervisor',
             'schedule:run',
             'schedule:finish'
-        ]);
+        ]));
     }
 }
