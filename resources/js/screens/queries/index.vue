@@ -6,7 +6,7 @@
     <index-screen title="Queries" resource="queries">
         <tr slot="table-header">
             <th scope="col">Query</th>
-            <th scope="col">Connection</th>
+            <th scope="col">Duration</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
@@ -14,7 +14,7 @@
 
         <template slot="row" slot-scope="slotProps">
             <td>{{truncate(slotProps.entry.content.sql, 90)}}</td>
-            <td class="table-fit">{{truncate(slotProps.entry.content.connection, 20)}}</td>
+            <td class="table-fit">{{slotProps.entry.content.time}}ms</td>
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
 
             <td class="table-fit">

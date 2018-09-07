@@ -68403,9 +68403,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
-                _vm._v(
-                  _vm._s(_vm.truncate(slotProps.entry.content.connection, 20))
-                )
+                _vm._v(_vm._s(slotProps.entry.content.time) + "ms")
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
@@ -68459,7 +68457,7 @@ var render = function() {
       _c("tr", { attrs: { slot: "table-header" }, slot: "table-header" }, [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Query")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Connection")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Duration")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Happened")]),
         _vm._v(" "),
