@@ -40,21 +40,20 @@ class RequestsWatcher extends Watcher
     }
 
     /**
-     * Format the given response object.
+     * Format the given payload.
      *
-     * @param  \Symfony\Component\HttpFoundation\Response $response
+     * @param  array $payload
      * @return array
      */
-    private function formatResponse(Response $response)
+    private function formatPayload($payload)
     {
-        if (is_string($response->getContent()) &&
-            is_array(json_decode($response->getContent(), true)) &&
-            json_last_error() == JSON_ERROR_NONE
-        ) {
-            return json_decode($response->getContent(), true);
+        foreach (Telescope::$protectedRequestParameters as $parameter) {
+            if (Arr::get($payload, $parameter)) {
+                Arr::set($payload, $parameter, '*****');
+            }
         }
 
-        return "HTML Response";
+        return $payload;
     }
 
     /**
@@ -70,21 +69,21 @@ class RequestsWatcher extends Watcher
         })->toArray();
     }
 
-
     /**
-     * Format the given payload.
+     * Format the given response object.
      *
-     * @param  array $payload
+     * @param  \Symfony\Component\HttpFoundation\Response $response
      * @return array
      */
-    private function formatPayload($payload)
+    private function formatResponse(Response $response)
     {
-        foreach (Telescope::$protectedRequestParameters as $parameter) {
-            if (Arr::get($payload, $parameter)) {
-                Arr::set($payload, $parameter, '*****');
-            }
+        if (is_string($response->getContent()) &&
+            is_array(json_decode($response->getContent(), true)) &&
+            json_last_error() == JSON_ERROR_NONE
+        ) {
+            return json_decode($response->getContent(), true);
         }
 
-        return $payload;
+        return "HTML Response";
     }
 }
