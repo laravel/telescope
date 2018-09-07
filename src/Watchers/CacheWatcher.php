@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Cache\Events\CacheHit;
@@ -108,6 +109,6 @@ class CacheWatcher extends Watcher
      */
     private function shouldIgnore($event)
     {
-        return $event->key == 'illuminate:queue:restart';
+        return $event->key == 'illuminate:queue:restart' || Str::is('framework/schedule', $event->key);
     }
 }
