@@ -109,6 +109,6 @@ class CacheWatcher extends Watcher
      */
     private function shouldIgnore($event)
     {
-        return $event->key == 'illuminate:queue:restart' || Str::is('framework/schedule', $event->key);
+        return $event->key == 'illuminate:queue:restart' || Str::is('framework/schedule*', $event->key);
     }
 }
