@@ -32,7 +32,7 @@
             <tr v-if="job">
                 <td class="table-fit font-weight-bold">Job</td>
                 <td>
-                    <router-link :to="{name:'queue-preview', params:{id: job.id}}" class="control-action">
+                    <router-link :to="{name:'job-preview', params:{id: job.id}}" class="control-action">
                         View Job
                     </router-link>
                 </td>
