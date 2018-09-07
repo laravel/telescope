@@ -119,23 +119,6 @@ class QueueWatcher extends Watcher
     }
 
     /**
-     * Format the exception line preview.
-     *
-     * @param  Throwable $exception
-     * @return mixed
-     */
-    private function formatExceptionLinePreview(Throwable $exception)
-    {
-        $result = (new Inspector($exception))
-            ->getFrames()[0]
-            ->getFileLines($exception->getLine() - 10, 20);
-
-        return collect($result)->mapWithKeys(function ($value, $key) {
-            return [$key + 1 => $value];
-        })->all();
-    }
-
-    /**
      * Extract tags from the given job.
      *
      * @param  \Illuminate\Contracts\Queue\Job $job
@@ -164,5 +147,22 @@ class QueueWatcher extends Watcher
         }
 
         return $tags;
+    }
+
+    /**
+     * Format the exception line preview.
+     *
+     * @param  Throwable $exception
+     * @return mixed
+     */
+    private function formatExceptionLinePreview(Throwable $exception)
+    {
+        $result = (new Inspector($exception))
+            ->getFrames()[0]
+            ->getFileLines($exception->getLine() - 10, 20);
+
+        return collect($result)->mapWithKeys(function ($value, $key) {
+            return [$key + 1 => $value];
+        })->all();
     }
 }
