@@ -22,7 +22,7 @@ class ScheduleWatcher extends Watcher
     }
 
     /**
-     * Record a new query was executed.
+     * Record a scheduled command execution.
      *
      * @param \Illuminate\Console\Events\CommandFinished $event
      * @return void
@@ -36,9 +36,9 @@ class ScheduleWatcher extends Watcher
         collect(app(Schedule::class)->events())->each(function ($event) {
             $event->then(function() use($event){
                 Telescope::recordScheduledCommand(IncomingEntry::make([
-                    'description' => $event->getSummaryForDisplay(),
                     'command' => $event->command,
                     'expression' => $event->expression,
+                    'description' => $event->getSummaryForDisplay(),
                     'timezone' => $event->timezone,
                     'user' => $event->user,
                 ]));
