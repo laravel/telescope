@@ -168,6 +168,18 @@ class Telescope
     }
 
     /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
+
+    public static function recordScheduledCommand(IncomingEntry $entry)
+    {
+        return static::record(EntryType::SCHEDULEDCOMMAND, $entry);
+    }
+
+    /**
      * Set the callback that filters the entries that should be recorded.
      *
      * @param  \Closure $callback

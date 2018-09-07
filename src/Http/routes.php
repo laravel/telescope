@@ -42,6 +42,10 @@ Route::get('/telescope-api/requests/{id}', 'RequestsController@show');
 Route::get('/telescope-api/artisan', 'ArtisanController@index');
 Route::get('/telescope-api/artisan/{id}', 'ArtisanController@show');
 
+// Scheduled Commands entries...
+Route::get('/telescope-api/schedule', 'ScheduleController@index');
+Route::get('/telescope-api/schedule/{id}', 'ScheduleController@show');
+
 Route::get('/{view?}', function () {
     return view('telescope::layout');
 })->where('view', '(.*)');

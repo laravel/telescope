@@ -14,4 +14,5 @@ class EntryType
     public const REQUEST = 8;
     public const COMMAND = 9;
     public const EXCEPTION = 10;
+    public const SCHEDULEDCOMMAND = 11;
 }

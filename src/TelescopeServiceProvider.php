@@ -164,6 +164,7 @@ class TelescopeServiceProvider extends ServiceProvider
             Watchers\QueriesWatcher::class => config('telescope.watchers.queries.enabled'),
             Watchers\RequestsWatcher::class => config('telescope.watchers.requests.enabled'),
             Watchers\ArtisanWatcher::class => config('telescope.watchers.artisan.enabled'),
+            Watchers\ScheduleWatcher::class => config('telescope.watchers.schedule.enabled'),
         ];
 
         foreach (array_keys(array_filter($watchers)) as $watcher) {

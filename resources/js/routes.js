@@ -126,4 +126,16 @@ export default [
         name: 'artisan',
         component: require('./screens/artisan/index')
     },
+
+    {
+        path: '/schedule/:id',
+        name: 'schedule-preview',
+        component: require('./screens/schedule/preview')
+    },
+
+    {
+        path: '/schedule',
+        name: 'schedule',
+        component: require('./screens/schedule/index')
+    },
 ];

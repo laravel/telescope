@@ -52,5 +52,9 @@ return [
         'artisan' => [
             'enabled' => true,
         ],
+
+        'schedule' => [
+            'enabled' => true,
+        ],
     ],
 ];

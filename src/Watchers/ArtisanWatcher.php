@@ -55,6 +55,8 @@ class ArtisanWatcher extends Watcher
             'horizon',
             'horizon:work',
             'horizon:supervisor',
+            'schedule:run',
+            'schedule:finish'
         ]);
     }
 }
