@@ -22,7 +22,7 @@ class RequestsWatcher extends Watcher
     }
 
     /**
-     * Record a new query was executed.
+     * Record an incoming HTTP request.
      *
      * @param \Illuminate\Foundation\Http\Events\RequestHandled $event
      * @return void
