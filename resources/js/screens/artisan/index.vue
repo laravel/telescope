@@ -6,7 +6,7 @@
     <index-screen title="Console Commands" resource="artisan">
         <tr slot="table-header">
             <th scope="col">Command</th>
-            <th scope="col">Exit Code</th>
+            <th scope="col" class="table-fit">Exit Code</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
