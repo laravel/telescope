@@ -15,4 +15,5 @@ class EntryType
     public const QUERY = 'query';
     public const REQUEST = 'request';
     public const SCHEDULED_COMMAND = 'schedule';
+    public const REDIS = 'redis';
 }

@@ -56,5 +56,9 @@ return [
         'schedule' => [
             'enabled' => true,
         ],
+
+        'redis' => [
+            'enabled' => true,
+        ],
     ],
 ];

@@ -138,4 +138,16 @@ export default [
         name: 'schedule',
         component: require('./screens/schedule/index')
     },
+
+    {
+        path: '/redis/:id',
+        name: 'redis-preview',
+        component: require('./screens/redis/preview')
+    },
+
+    {
+        path: '/redis',
+        name: 'redis',
+        component: require('./screens/redis/index')
+    },
 ];

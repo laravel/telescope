@@ -4,7 +4,7 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Laravel\Telescope\EntryType;
 
-class NotificationsController extends EntryController
+class RedisController extends EntryController
 {
     /**
      * The entry type for the controller.
@@ -13,6 +13,6 @@ class NotificationsController extends EntryController
      */
     protected function entryType()
     {
-        return EntryType::NOTIFICATION;
+        return EntryType::REDIS;
     }
 }
