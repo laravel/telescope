@@ -68399,7 +68399,7 @@ var render = function() {
           fn: function(slotProps) {
             return [
               _c("td", [
-                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.sql, 90)))
+                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.sql, 80)))
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
