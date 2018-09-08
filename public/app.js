@@ -76347,6 +76347,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         batchEntriesOfType: function batchEntriesOfType(type) {
             return _.filter(this.batch, { type: type });
         }
+    },
+
+    computed: {
+        queryEntries: function queryEntries() {
+            return this.batchEntriesOfType('query');
+        }
     }
 });
 
@@ -76479,15 +76485,11 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.batchEntriesOfType("query").length
+    _vm.queryEntries.length
       ? _c("div", { staticClass: "card mt-5" }, [
           _c("div", { staticClass: "card-header" }, [
             _c("h5", [
-              _vm._v(
-                "Queries (" +
-                  _vm._s(_vm.batchEntriesOfType("query").length) +
-                  ")"
-              )
+              _vm._v("Queries (" + _vm._s(_vm.queryEntries.length) + ")")
             ])
           ]),
           _vm._v(" "),
@@ -76502,7 +76504,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.batchEntriesOfType("query"), function(entry) {
+                _vm._l(_vm.queryEntries, function(entry) {
                   return _c("tr", [
                     _c("td", [
                       _vm._v(_vm._s(_vm.truncate(entry.content.sql, 110)))

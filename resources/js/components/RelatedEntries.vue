@@ -6,6 +6,12 @@
             batchEntriesOfType(type) {
                 return _.filter(this.batch, { type: type })
             }
+        },
+
+        computed: {
+            queryEntries() {
+                return this.batchEntriesOfType('query')
+            }
         }
     }
 </script>
@@ -69,8 +75,8 @@
     </div>
 
     <!-- Queries -->
-    <div class="card mt-5" v-if="batchEntriesOfType('query').length">
-        <div class="card-header"><h5>Queries ({{ batchEntriesOfType('query').length }})</h5></div>
+    <div class="card mt-5" v-if="queryEntries.length">
+        <div class="card-header"><h5>Queries ({{ queryEntries.length }})</h5></div>
 
         <table class="table table-hover table-sm mb-0 penultimate-column-right">
             <thead>
@@ -82,7 +88,7 @@
             </thead>
 
             <tbody>
-                <tr v-for="entry in batchEntriesOfType('query')">
+                <tr v-for="entry in queryEntries">
                     <td>{{truncate(entry.content.sql, 110)}}</td>
                     <td class="table-fit">{{entry.content.time}}ms</td>
 
