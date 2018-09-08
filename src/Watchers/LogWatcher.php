@@ -31,7 +31,7 @@ class LogWatcher extends Watcher
             return;
         }
 
-        Telescope::recordLogEntry(
+        Telescope::recordLog(
             IncomingEntry::make([
                 'level' => $event->level,
                 'message' => $event->message,

@@ -39,7 +39,7 @@ class CacheWatcher extends Watcher
             return;
         }
 
-        Telescope::recordCacheEntry(IncomingEntry::make([
+        Telescope::recordCache(IncomingEntry::make([
             'type' => 'hit',
             'key' => $event->key,
             'value' => $event->value,
@@ -58,7 +58,7 @@ class CacheWatcher extends Watcher
             return;
         }
 
-        Telescope::recordCacheEntry(IncomingEntry::make([
+        Telescope::recordCache(IncomingEntry::make([
             'type' => 'missed',
             'key' => $event->key,
         ])->tags([$event->key]));
@@ -76,7 +76,7 @@ class CacheWatcher extends Watcher
             return;
         }
 
-        Telescope::recordCacheEntry(IncomingEntry::make([
+        Telescope::recordCache(IncomingEntry::make([
             'type' => 'set',
             'key' => $event->key,
             'value' => $event->value,
@@ -96,7 +96,7 @@ class CacheWatcher extends Watcher
             return;
         }
 
-        Telescope::recordCacheEntry(IncomingEntry::make([
+        Telescope::recordCache(IncomingEntry::make([
             'type' => 'forget',
             'key' => $event->key,
         ])->tags([$event->key]));

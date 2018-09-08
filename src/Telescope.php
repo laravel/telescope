@@ -71,9 +71,9 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordMail(IncomingEntry $entry)
+    public static function recordCache(IncomingEntry $entry)
     {
-        return static::record(EntryType::MAIL, $entry);
+        return static::record(EntryType::CACHE, $entry);
     }
 
     /**
@@ -82,42 +82,10 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordException(IncomingEntry $entry)
-    {
-        return static::record(EntryType::EXCEPTION, $entry);
-    }
 
-    /**
-     * Record the given entry.
-     *
-     * @param  \Laravel\Telescope\IncomingEntry  $entry
-     * @return void
-     */
-    public static function recordLogEntry(IncomingEntry $entry)
+    public static function recordCommand(IncomingEntry $entry)
     {
-        return static::record(EntryType::LOG, $entry);
-    }
-
-    /**
-     * Record the given entry.
-     *
-     * @param  \Laravel\Telescope\IncomingEntry  $entry
-     * @return void
-     */
-    public static function recordNotification($entry)
-    {
-        return static::record(EntryType::NOTIFICATION, $entry);
-    }
-
-    /**
-     * Record the given entry.
-     *
-     * @param  \Laravel\Telescope\IncomingEntry  $entry
-     * @return void
-     */
-    public static function recordJob($entry)
-    {
-        return static::record(EntryType::JOB, $entry);
+        return static::record(EntryType::COMMAND, $entry);
     }
 
     /**
@@ -137,9 +105,53 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordCacheEntry(IncomingEntry $entry)
+    public static function recordException(IncomingEntry $entry)
     {
-        return static::record(EntryType::CACHE, $entry);
+        return static::record(EntryType::EXCEPTION, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
+    public static function recordJob($entry)
+    {
+        return static::record(EntryType::JOB, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
+    public static function recordLog(IncomingEntry $entry)
+    {
+        return static::record(EntryType::LOG, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
+    public static function recordMail(IncomingEntry $entry)
+    {
+        return static::record(EntryType::MAIL, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
+    public static function recordNotification($entry)
+    {
+        return static::record(EntryType::NOTIFICATION, $entry);
     }
 
     /**
@@ -163,18 +175,6 @@ class Telescope
     public static function recordRequest(IncomingEntry $entry)
     {
         return static::record(EntryType::REQUEST, $entry);
-    }
-
-    /**
-     * Record the given entry.
-     *
-     * @param  \Laravel\Telescope\IncomingEntry  $entry
-     * @return void
-     */
-
-    public static function recordCommand(IncomingEntry $entry)
-    {
-        return static::record(EntryType::COMMAND, $entry);
     }
 
     /**
