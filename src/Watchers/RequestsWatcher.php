@@ -13,7 +13,7 @@ class RequestsWatcher extends Watcher
     /**
      * Register the watcher.
      *
-     * @param  $app \Illuminate\Contracts\Foundation\Application
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function register($app)
@@ -24,7 +24,7 @@ class RequestsWatcher extends Watcher
     /**
      * Record an incoming HTTP request.
      *
-     * @param \Illuminate\Foundation\Http\Events\RequestHandled $event
+     * @param  \Illuminate\Foundation\Http\Events\RequestHandled  $event
      * @return void
      */
     public function recordRequest(RequestHandled $event)
@@ -72,7 +72,7 @@ class RequestsWatcher extends Watcher
     /**
      * Format the given response object.
      *
-     * @param  \Symfony\Component\HttpFoundation\Response $response
+     * @param  \Symfony\Component\HttpFoundation\Response  $response
      * @return array
      */
     protected function formatResponse(Response $response)

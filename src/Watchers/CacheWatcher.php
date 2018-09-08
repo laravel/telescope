@@ -15,7 +15,7 @@ class CacheWatcher extends Watcher
     /**
      * Register the watcher.
      *
-     * @param  $app \Illuminate\Contracts\Foundation\Application
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function register($app)
@@ -30,7 +30,7 @@ class CacheWatcher extends Watcher
     /**
      * Record a cache key was found.
      *
-     * @param \Illuminate\Cache\Events\CacheHit $event
+     * @param  \Illuminate\Cache\Events\CacheHit  $event
      * @return void
      */
     public function recordCacheHit(CacheHit $event)
@@ -49,7 +49,7 @@ class CacheWatcher extends Watcher
     /**
      * Record a missing cache key.
      *
-     * @param \Illuminate\Cache\Events\CacheMissed $event
+     * @param  \Illuminate\Cache\Events\CacheMissed  $event
      * @return void
      */
     public function recordCacheMissed(CacheMissed $event)
@@ -67,7 +67,7 @@ class CacheWatcher extends Watcher
     /**
      * Record a cache key was updated.
      *
-     * @param \Illuminate\Cache\Events\KeyWritten $event
+     * @param  \Illuminate\Cache\Events\KeyWritten  $event
      * @return void
      */
     public function recordKeyWritten(KeyWritten $event)
@@ -87,7 +87,7 @@ class CacheWatcher extends Watcher
     /**
      * Record a cache key was forgotten / removed.
      *
-     * @param \Illuminate\Cache\Events\KeyForgotten  $event
+     * @param  \Illuminate\Cache\Events\KeyForgotten  $event
      * @return void
      */
     public function recordKeyForgotten(KeyForgotten $event)

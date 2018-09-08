@@ -16,7 +16,7 @@ class QueueWatcher extends Watcher
     /**
      * Register the watcher.
      *
-     * @param  $app \Illuminate\Contracts\Foundation\Application
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function register($app)
@@ -28,7 +28,7 @@ class QueueWatcher extends Watcher
     /**
      * Record a queued job was processed.
      *
-     * @param \Illuminate\Queue\Events\JobProcessed $event
+     * @param  \Illuminate\Queue\Events\JobProcessed  $event
      * @return void
      */
     public function recordProcessedJob(JobProcessed $event)
@@ -52,7 +52,7 @@ class QueueWatcher extends Watcher
     /**
      * Record a queue job has failed.
      *
-     * @param \Illuminate\Queue\Events\JobFailed $event
+     * @param  \Illuminate\Queue\Events\JobFailed  $event
      * @return void
      */
     public function recordFailedJob(JobFailed $event)
@@ -82,7 +82,7 @@ class QueueWatcher extends Watcher
     /**
      * Extract the payload and tags from the job.
      *
-     * @param  \Illuminate\Contracts\Queue\Job $job
+     * @param  \Illuminate\Contracts\Queue\Job  $job
      * @return array
      */
     private function extractPayloadAndTags($job)
@@ -121,8 +121,8 @@ class QueueWatcher extends Watcher
     /**
      * Extract tags from the given job.
      *
-     * @param  \Illuminate\Contracts\Queue\Job $job
-     * @param  bool $processed
+     * @param  \Illuminate\Contracts\Queue\Job  $job
+     * @param  bool  $processed
      * @return array
      */
     private function extractTagsFromJob($job, $processed = true)
@@ -152,7 +152,7 @@ class QueueWatcher extends Watcher
     /**
      * Format the exception line preview.
      *
-     * @param  Throwable $exception
+     * @param  Throwable  $exception
      * @return mixed
      */
     private function formatExceptionLinePreview(Throwable $exception)

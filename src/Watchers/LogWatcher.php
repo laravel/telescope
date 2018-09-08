@@ -11,7 +11,7 @@ class LogWatcher extends Watcher
     /**
      * Register the watcher.
      *
-     * @param  $app \Illuminate\Contracts\Foundation\Application
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function register($app)
@@ -22,7 +22,7 @@ class LogWatcher extends Watcher
     /**
      * Record a message was logged.
      *
-     * @param \Illuminate\Log\Events\MessageLogged $event
+     * @param  \Illuminate\Log\Events\MessageLogged  $event
      * @return void
      */
     public function recordLog(MessageLogged $event)
@@ -44,7 +44,7 @@ class LogWatcher extends Watcher
     /**
      * Extract tags from the given event.
      *
-     * @param  \Illuminate\Log\Events\MessageLogged $event
+     * @param  \Illuminate\Log\Events\MessageLogged  $event
      * @return array
      */
     private function extractTagsFromEvent($event)

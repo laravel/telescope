@@ -13,7 +13,7 @@ class ExceptionWatcher extends Watcher
     /**
      * Register the watcher.
      *
-     * @param  $app \Illuminate\Contracts\Foundation\Application
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function register($app)
@@ -24,7 +24,7 @@ class ExceptionWatcher extends Watcher
     /**
      * Record an exception was logged.
      *
-     * @param \Illuminate\Log\Events\MessageLogged $event
+     * @param \Illuminate\Log\Events\MessageLogged  $event
      * @return void
      */
     public function recordException(MessageLogged $event)
@@ -50,7 +50,7 @@ class ExceptionWatcher extends Watcher
     /**
      * Format the exception line preview.
      *
-     * @param  Throwable $exception
+     * @param  Throwable  $exception
      * @return mixed
      */
     private function formatLinePreview(Throwable $exception)
@@ -68,7 +68,7 @@ class ExceptionWatcher extends Watcher
     /**
      * Extract tags from the given event.
      *
-     * @param  \Illuminate\Log\Events\MessageLogged $event
+     * @param  \Illuminate\Log\Events\MessageLogged  $event
      * @return array
      */
     private function extractTagsFromEvent($event)

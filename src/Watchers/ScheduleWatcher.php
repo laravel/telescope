@@ -12,7 +12,7 @@ class ScheduleWatcher extends Watcher
     /**
      * Register the watcher.
      *
-     * @param  $app  \Illuminate\Contracts\Foundation\Application
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function register($app)
@@ -23,7 +23,7 @@ class ScheduleWatcher extends Watcher
     /**
      * Record a scheduled command was executed.
      *
-     * @param \Illuminate\Console\Events\CommandFinished $event
+     * @param  \Illuminate\Console\Events\CommandFinished  $event
      * @return void
      */
     public function recordCommand(CommandStarting $event)

@@ -11,7 +11,7 @@ class MailWatcher extends Watcher
     /**
      * Register the watcher.
      *
-     * @param  $app \Illuminate\Contracts\Foundation\Application
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function register($app)
@@ -22,7 +22,7 @@ class MailWatcher extends Watcher
     /**
      * Record a mail message was sent.
      *
-     * @param \Illuminate\Mail\Events\MessageSent $event
+     * @param  \Illuminate\Mail\Events\MessageSent  $event
      * @return void
      */
     public function recordMail(MessageSent $event)
@@ -42,8 +42,8 @@ class MailWatcher extends Watcher
     /**
      * Extract tags from the given message.
      *
-     * @param  \Swift_Message $message
-     * return array
+     * @param  \Swift_Message  $message
+     * @return array
      */
     private function extractTagsFromMessage($message)
     {

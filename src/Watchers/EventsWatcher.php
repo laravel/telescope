@@ -15,7 +15,7 @@ class EventsWatcher extends Watcher
     /**
      * Register the watcher.
      *
-     * @param  $app \Illuminate\Contracts\Foundation\Application
+     * @param  $app  \Illuminate\Contracts\Foundation\Application
      * @return void
      */
     public function register($app)
@@ -26,8 +26,8 @@ class EventsWatcher extends Watcher
     /**
      * Record an event was fired.
      *
-     * @param  string $eventName
-     * @param  array $payload
+     * @param  string  $eventName
+     * @param  array  $payload
      * @return void
      */
     public function recordEvent($eventName, $payload)
@@ -88,7 +88,7 @@ class EventsWatcher extends Watcher
     /**
      * Extract the payload and tags from the event object.
      *
-     * @param  object $payload
+     * @param  object  $payload
      * @return array
      */
     private function extractPayloadAndTagsFromEventObject($event)
@@ -114,7 +114,7 @@ class EventsWatcher extends Watcher
     /**
      * Format raw event payload.
      *
-     * @param  array $payload
+     * @param  array  $payload
      * @return array
      */
     private function formatRawPayload($payload)
@@ -130,7 +130,7 @@ class EventsWatcher extends Watcher
     /**
      * Format list of event listeners.
      *
-     * @param  string $eventName
+     * @param  string  $eventName
      * @return array
      */
     private function formatListeners($eventName)
@@ -157,7 +157,7 @@ class EventsWatcher extends Watcher
     /**
      * Format a closure-based listener.
      *
-     * @param Closure $listener
+     * @param Closure  $listener
      * @return string
      */
     private function formatClosureListener(Closure $listener)

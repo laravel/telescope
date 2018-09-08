@@ -11,7 +11,7 @@ class QueriesWatcher extends Watcher
     /**
      * Register the watcher.
      *
-     * @param  $app \Illuminate\Contracts\Foundation\Application
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function register($app)
@@ -22,7 +22,7 @@ class QueriesWatcher extends Watcher
     /**
      * Record a query was executed.
      *
-     * @param \Illuminate\Database\Events\QueryExecuted $event
+     * @param \Illuminate\Database\Events\QueryExecuted  $event
      * @return void
      */
     public function recordQuery(QueryExecuted $event)

@@ -92,7 +92,7 @@ class TelescopeServiceProvider extends ServiceProvider
     /**
      * Determine if the request is coming from Telescope itself.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
     private function requestIsFromTelescope(Request $request)

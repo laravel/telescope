@@ -12,7 +12,7 @@ class NotificationsWatcher extends Watcher
     /**
      * Register the watcher.
      *
-     * @param  $app \Illuminate\Contracts\Foundation\Application
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function register($app)
@@ -23,7 +23,7 @@ class NotificationsWatcher extends Watcher
     /**
      * Record a new notification message was sent.
      *
-     * @param \Illuminate\Notifications\Events\NotificationSent $event
+     * @param  \Illuminate\Notifications\Events\NotificationSent  $event
      * @return void
      */
     public function recordNotification(NotificationSent $event)
@@ -39,7 +39,7 @@ class NotificationsWatcher extends Watcher
     /**
      * Extract tags from the given event.
      *
-     * @param  \Illuminate\Notifications\Events\NotificationSent $event
+     * @param  \Illuminate\Notifications\Events\NotificationSent  $event
      * @return array
      */
     private function extractTagsFromEvent($event)
