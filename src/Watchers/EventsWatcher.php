@@ -15,7 +15,7 @@ class EventsWatcher extends Watcher
     /**
      * Register the watcher.
      *
-     * @param  $app  \Illuminate\Contracts\Foundation\Application
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function register($app)
