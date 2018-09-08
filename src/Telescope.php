@@ -30,11 +30,11 @@ class Telescope
     public static $entriesQueue;
 
     /**
-     * The list of protected request parameters.
+     * The list of hidden request parameters.
      *
      * @var array
      */
-    public static $protectedRequestParameters = [
+    public static $hiddenRequestParameters = [
         'password',
         'password_confirmation',
     ];
@@ -249,15 +249,15 @@ class Telescope
     }
 
     /**
-     * Protect the given request parameters;
+     * Hide the given request parameters;
      *
      * @param  $attributes  array
      * @return static
      */
-    public static function protectRequestParameters($attributes)
+    public static function hideRequestParameters(array $attributes)
     {
-        static::$protectedRequestParameters = array_merge(
-            static::$protectedRequestParameters, $attributes
+        static::$hiddenRequestParameters = array_merge(
+            static::$hiddenRequestParameters, $attributes
         );
 
         return new static;

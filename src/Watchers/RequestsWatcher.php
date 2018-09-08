@@ -60,7 +60,7 @@ class RequestsWatcher extends Watcher
      */
     protected function formatPayload($payload)
     {
-        foreach (Telescope::$protectedRequestParameters as $parameter) {
+        foreach (Telescope::$hiddenRequestParameters as $parameter) {
             if (Arr::get($payload, $parameter)) {
                 Arr::set($payload, $parameter, '*****');
             }
