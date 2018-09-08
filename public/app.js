@@ -76481,7 +76481,15 @@ var render = function() {
     _vm._v(" "),
     _vm.batchEntriesOfType("query").length
       ? _c("div", { staticClass: "card mt-5" }, [
-          _vm._m(4),
+          _c("div", { staticClass: "card-header" }, [
+            _c("h5", [
+              _vm._v(
+                "Queries (" +
+                  _vm._s(_vm.batchEntriesOfType("query").length) +
+                  ")"
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "table",
@@ -76490,7 +76498,7 @@ var render = function() {
                 "table table-hover table-sm mb-0 penultimate-column-right"
             },
             [
-              _vm._m(5),
+              _vm._m(4),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -76552,7 +76560,7 @@ var render = function() {
     _vm._v(" "),
     _vm.batchEntriesOfType("event").length
       ? _c("div", { staticClass: "card mt-5" }, [
-          _vm._m(6),
+          _vm._m(5),
           _vm._v(" "),
           _c(
             "table",
@@ -76561,7 +76569,7 @@ var render = function() {
                 "table table-hover table-sm mb-0 penultimate-column-right"
             },
             [
-              _vm._m(7),
+              _vm._m(6),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -76623,7 +76631,7 @@ var render = function() {
     _vm._v(" "),
     _vm.batchEntriesOfType("cache").length
       ? _c("div", { staticClass: "card mt-5" }, [
-          _vm._m(8),
+          _vm._m(7),
           _vm._v(" "),
           _c(
             "table",
@@ -76632,7 +76640,7 @@ var render = function() {
                 "table table-hover table-sm mb-0 penultimate-column-right"
             },
             [
-              _vm._m(9),
+              _vm._m(8),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -76724,14 +76732,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [_c("th", [_vm._v("Message")]), _vm._v(" "), _c("th")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h5", [_vm._v("Queries")])
     ])
   },
   function() {
