@@ -76359,7 +76359,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.batchEntriesOfType(10).length
+    _vm.batchEntriesOfType("exception").length
       ? _c("div", { staticClass: "card mt-5" }, [
           _vm._m(0),
           _vm._v(" "),
@@ -76368,7 +76368,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "tbody",
-              _vm._l(_vm.batchEntriesOfType(10), function(entry) {
+              _vm._l(_vm.batchEntriesOfType("exception"), function(entry) {
                 return _c("tr", [
                   _c("td", [
                     _vm._v(_vm._s(_vm.truncate(entry.content.message, 120)))
@@ -76419,7 +76419,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.batchEntriesOfType(2).length
+    _vm.batchEntriesOfType("log").length
       ? _c("div", { staticClass: "card mt-5" }, [
           _vm._m(2),
           _vm._v(" "),
@@ -76428,7 +76428,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "tbody",
-              _vm._l(_vm.batchEntriesOfType(2), function(entry) {
+              _vm._l(_vm.batchEntriesOfType("log"), function(entry) {
                 return _c("tr", [
                   _c("td", [
                     _vm._v(_vm._s(_vm.truncate(entry.content.message, 120)))
@@ -76479,7 +76479,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.batchEntriesOfType(7).length
+    _vm.batchEntriesOfType("query").length
       ? _c("div", { staticClass: "card mt-5" }, [
           _vm._m(4),
           _vm._v(" "),
@@ -76494,7 +76494,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.batchEntriesOfType(7), function(entry) {
+                _vm._l(_vm.batchEntriesOfType("query"), function(entry) {
                   return _c("tr", [
                     _c("td", [
                       _vm._v(_vm._s(_vm.truncate(entry.content.sql, 110)))
@@ -76550,7 +76550,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.batchEntriesOfType(5).length
+    _vm.batchEntriesOfType("event").length
       ? _c("div", { staticClass: "card mt-5" }, [
           _vm._m(6),
           _vm._v(" "),
@@ -76565,7 +76565,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.batchEntriesOfType(5), function(entry) {
+                _vm._l(_vm.batchEntriesOfType("event"), function(entry) {
                   return _c("tr", [
                     _c("td", [
                       _vm._v(_vm._s(_vm.truncate(entry.content.name, 80)))
@@ -76621,7 +76621,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.batchEntriesOfType(6).length
+    _vm.batchEntriesOfType("cache").length
       ? _c("div", { staticClass: "card mt-5" }, [
           _vm._m(8),
           _vm._v(" "),
@@ -76636,7 +76636,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.batchEntriesOfType(6), function(entry) {
+                _vm._l(_vm.batchEntriesOfType("cache"), function(entry) {
                   return _c("tr", [
                     _c("td", [
                       _vm._v(_vm._s(_vm.truncate(entry.content.key, 100)))
