@@ -76501,7 +76501,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "table-fit" }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.connection, 20)))
+                      _vm._v(_vm._s(entry.content.time) + "ms")
                     ]),
                     _vm._v(" "),
                     _c(
@@ -76742,7 +76742,7 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Query")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Connection")]),
+        _c("th", [_vm._v("Duration")]),
         _vm._v(" "),
         _c("th")
       ])

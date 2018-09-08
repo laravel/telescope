@@ -76,7 +76,7 @@
             <thead>
                 <tr>
                     <th>Query</th>
-                    <th>Connection</th>
+                    <th>Duration</th>
                     <th></th>
                 </tr>
             </thead>
@@ -84,7 +84,7 @@
             <tbody>
                 <tr v-for="entry in batchEntriesOfType('query')">
                     <td>{{truncate(entry.content.sql, 110)}}</td>
-                    <td class="table-fit">{{truncate(entry.content.connection, 20)}}</td>
+                    <td class="table-fit">{{entry.content.time}}ms</td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'query-preview', params:{id: entry.id}}" class="control-action">
