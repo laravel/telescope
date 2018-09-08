@@ -62,7 +62,7 @@ class RequestsWatcher extends Watcher
     {
         foreach (Telescope::$hiddenRequestParameters as $parameter) {
             if (Arr::get($payload, $parameter)) {
-                Arr::set($payload, $parameter, '*****');
+                Arr::set($payload, $parameter, '********');
             }
         }
 
