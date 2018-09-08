@@ -12,7 +12,7 @@ abstract class EntryController extends Controller
     /**
      * The entry type for the controller.
      *
-     * @return int
+     * @return string
      */
     abstract protected function entryType();
 

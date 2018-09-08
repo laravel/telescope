@@ -35,7 +35,7 @@ class EntryModel extends Model
      * Scope the query for the given qeury options.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  int  $type
+     * @param  string  $type
      * @param  \Laravel\Telescope\EntryQueryOptions  $options
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -53,7 +53,7 @@ class EntryModel extends Model
      * Scope the query for the given type.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  int  $type
+     * @param  string  $type
      * @return $this
      */
     protected function whereType($query, $type)

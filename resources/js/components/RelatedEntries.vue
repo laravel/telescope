@@ -4,7 +4,7 @@
 
         methods: {
             batchEntriesOfType(type) {
-                return _.filter(this.batch, {type: type})
+                return _.filter(this.batch, { type: type })
             }
         }
     }
@@ -13,7 +13,7 @@
 <template>
 <div>
     <!-- Exceptions -->
-    <div class="card mt-5" v-if="batchEntriesOfType(10).length">
+    <div class="card mt-5" v-if="batchEntriesOfType('exception').length">
         <div class="card-header"><h5>Exceptions</h5></div>
 
         <table class="table table-hover table-sm mb-0">
@@ -25,7 +25,7 @@
             </thead>
 
             <tbody>
-                <tr v-for="entry in batchEntriesOfType(10)">
+                <tr v-for="entry in batchEntriesOfType('exception')">
                     <td>{{truncate(entry.content.message, 120)}}</td>
 
                     <td class="table-fit">
@@ -41,7 +41,7 @@
     </div>
 
     <!-- Logs -->
-    <div class="card mt-5" v-if="batchEntriesOfType(2).length">
+    <div class="card mt-5" v-if="batchEntriesOfType('log').length">
         <div class="card-header"><h5>Log Entries</h5></div>
 
         <table class="table table-hover table-sm mb-0">
@@ -53,7 +53,7 @@
             </thead>
 
             <tbody>
-                <tr v-for="entry in batchEntriesOfType(2)">
+                <tr v-for="entry in batchEntriesOfType('log')">
                     <td>{{truncate(entry.content.message, 120)}}</td>
 
                     <td class="table-fit">
@@ -69,7 +69,7 @@
     </div>
 
     <!-- Queries -->
-    <div class="card mt-5" v-if="batchEntriesOfType(7).length">
+    <div class="card mt-5" v-if="batchEntriesOfType('query').length">
         <div class="card-header"><h5>Queries</h5></div>
 
         <table class="table table-hover table-sm mb-0 penultimate-column-right">
@@ -82,7 +82,7 @@
             </thead>
 
             <tbody>
-                <tr v-for="entry in batchEntriesOfType(7)">
+                <tr v-for="entry in batchEntriesOfType('query')">
                     <td>{{truncate(entry.content.sql, 110)}}</td>
                     <td class="table-fit">{{truncate(entry.content.connection, 20)}}</td>
 
@@ -99,7 +99,7 @@
     </div>
 
     <!-- Events -->
-    <div class="card mt-5" v-if="batchEntriesOfType(5).length">
+    <div class="card mt-5" v-if="batchEntriesOfType('event').length">
         <div class="card-header"><h5>Events</h5></div>
 
         <table class="table table-hover table-sm mb-0 penultimate-column-right">
@@ -112,7 +112,7 @@
             </thead>
 
             <tbody>
-                <tr v-for="entry in batchEntriesOfType(5)">
+                <tr v-for="entry in batchEntriesOfType('event')">
                     <td>{{truncate(entry.content.name, 80)}}</td>
                     <td class="table-fit">{{entry.content.listeners.length}}</td>
 
@@ -129,7 +129,7 @@
     </div>
 
     <!-- Cache -->
-    <div class="card mt-5" v-if="batchEntriesOfType(6).length">
+    <div class="card mt-5" v-if="batchEntriesOfType('cache').length">
         <div class="card-header"><h5>Cache</h5></div>
 
         <table class="table table-hover table-sm mb-0 penultimate-column-right">
@@ -142,7 +142,7 @@
             </thead>
 
             <tbody>
-                <tr v-for="entry in batchEntriesOfType(6)">
+                <tr v-for="entry in batchEntriesOfType('cache')">
                     <td>{{truncate(entry.content.key, 100)}}</td>
                     <td class="table-fit">{{entry.content.type}}</td>
 

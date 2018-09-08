@@ -24,7 +24,7 @@ class EntryResult implements JsonSerializable
     /**
      * The entry's type.
      *
-     * @var int
+     * @var string
      */
     public $type;
 
@@ -47,11 +47,11 @@ class EntryResult implements JsonSerializable
      *
      * @param  mixed  $id
      * @param  string  $batchId
-     * @param  int  $type
+     * @param  string  $type
      * @param  array  $content
      * @param  \DateTimeInterface  $createdAt
      */
-    public function __construct($id, string $batchId, int $type, array $content, DateTimeInterface $createdAt)
+    public function __construct($id, string $batchId, string $type, array $content, DateTimeInterface $createdAt)
     {
         $this->id = $id;
         $this->type = $type;

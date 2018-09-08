@@ -4,15 +4,15 @@ namespace Laravel\Telescope;
 
 class EntryType
 {
-    public const MAIL = 1;
-    public const LOG = 2;
-    public const NOTIFICATION = 3;
-    public const JOB = 4;
-    public const EVENT = 5;
-    public const CACHE = 6;
-    public const QUERY = 7;
-    public const REQUEST = 8;
-    public const COMMAND = 9;
-    public const EXCEPTION = 10;
-    public const SCHEDULED_COMMAND = 11;
+    public const CACHE = 'cache';
+    public const COMMAND = 'command';
+    public const EVENT = 'event';
+    public const EXCEPTION = 'exception';
+    public const JOB = 'job';
+    public const LOG = 'log';
+    public const MAIL = 'mail';
+    public const NOTIFICATION = 'notification';
+    public const QUERY = 'query';
+    public const REQUEST = 'request';
+    public const SCHEDULED_COMMAND = 'schedule';
 }

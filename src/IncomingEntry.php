@@ -14,7 +14,7 @@ class IncomingEntry
     /**
      * The entry's type.
      *
-     * @var int
+     * @var string
      */
     public $type;
 
@@ -86,10 +86,10 @@ class IncomingEntry
     /**
      * Assign the entry a given type.
      *
-     * @param  int  $type
+     * @param  string  $type
      * @return $this
      */
-    public function type(int $type)
+    public function type(string $type)
     {
         $this->type = $type;
 

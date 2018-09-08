@@ -56,11 +56,11 @@ class Telescope
     /**
      * Record the given entry.
      *
-     * @param  int  $type
+     * @param  string  $type
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    protected static function record($type, IncomingEntry $entry)
+    protected static function record(string $type, IncomingEntry $entry)
     {
         static::$entriesQueue[] = $entry->type($type);
     }

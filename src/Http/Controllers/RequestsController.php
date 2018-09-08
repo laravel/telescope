@@ -11,7 +11,7 @@ class RequestsController extends EntryController
     /**
      * The entry type for the controller.
      *
-     * @return int
+     * @return string
      */
     protected function entryType()
     {
