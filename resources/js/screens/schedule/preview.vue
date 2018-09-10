@@ -49,5 +49,13 @@
                 </td>
             </tr>
         </template>
+
+        <div slot="after-attributes-card" slot-scope="slotProps" v-if="slotProps.entry.content.output">
+            <div class="card mt-5">
+                <div class="card-header"><h5>Output</h5></div>
+
+                <pre class="bg-dark p-4 mb-0 text-white">{{ slotProps.entry.content.output }}</pre>
+            </div>
+        </div>
     </preview-screen>
 </template>

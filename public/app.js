@@ -68980,6 +68980,24 @@ var render = function() {
             ])
           ]
         }
+      },
+      {
+        key: "after-attributes-card",
+        fn: function(slotProps) {
+          return slotProps.entry.content.output
+            ? _c("div", {}, [
+                _c("div", { staticClass: "card mt-5" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h5", [_vm._v("Output")])
+                  ]),
+                  _vm._v(" "),
+                  _c("pre", { staticClass: "bg-dark p-4 mb-0 text-white" }, [
+                    _vm._v(_vm._s(slotProps.entry.content.output))
+                  ])
+                ])
+              ])
+            : _vm._e()
+        }
       }
     ])
   })
