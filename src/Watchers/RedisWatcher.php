@@ -29,9 +29,20 @@ class RedisWatcher extends Watcher
     {
         Telescope::recordRedis(IncomingEntry::make([
             'connection' => $event->connectionName,
-            'parameters' => $event->parameters,
-            'command' => $event->command,
+            'command' => $this->formatCommand($event->command, $event->parameters),
             'time' => number_format($event->time, 2),
         ]));
+    }
+
+    /**
+     * Format the given Redis command.
+     *
+     * @param  string  $command
+     * @param  string  $parameters
+     * @return string
+     */
+    private function formatCommand($command, $parameters)
+    {
+        return $command.' '.implode(' ', $parameters);
     }
 }

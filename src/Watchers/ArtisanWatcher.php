@@ -2,8 +2,6 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Illuminate\Foundation\Console\Kernel;
-use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Illuminate\Console\Events\CommandFinished;
 

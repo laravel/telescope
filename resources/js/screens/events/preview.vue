@@ -5,16 +5,6 @@
                 entry: null,
                 batch: [],
             };
-        },
-
-        computed: {
-            job(){
-                return _.find(this.batch, {type: 4})
-            },
-
-            request(){
-                return _.find(this.batch, {type: 8})
-            }
         }
     }
 </script>
@@ -26,24 +16,6 @@
                 <td class="table-fit font-weight-bold">Event</td>
                 <td>
                     {{slotProps.entry.content.name}}
-                </td>
-            </tr>
-
-            <tr v-if="job">
-                <td class="table-fit font-weight-bold">Job</td>
-                <td>
-                    <router-link :to="{name:'job-preview', params:{id: job.id}}" class="control-action">
-                        View Job
-                    </router-link>
-                </td>
-            </tr>
-
-            <tr v-if="request">
-                <td class="table-fit font-weight-bold">Request</td>
-                <td>
-                    <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action">
-                        Preview Request
-                    </router-link>
                 </td>
             </tr>
         </template>

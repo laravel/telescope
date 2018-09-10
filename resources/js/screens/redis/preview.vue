@@ -1,8 +1,5 @@
 <script type="text/ecmascript-6">
     import _ from 'lodash';
-    import sqlFormatter from "sql-formatter";
-    import hljs from 'highlight.js/lib/highlight';
-    import sql from 'highlight.js/lib/languages/sql';
 
     export default {
         data(){
@@ -11,16 +8,6 @@
                 batch: [],
             };
         },
-
-        computed: {
-            job(){
-                return _.find(this.batch, {type: 4})
-            },
-
-            request(){
-                return _.find(this.batch, {type: 8})
-            }
-        }
     }
 </script>
 
@@ -40,38 +27,13 @@
                     {{slotProps.entry.content.time}}ms
                 </td>
             </tr>
-
-            <tr>
-                <td class="table-fit font-weight-bold">Command</td>
-                <td>
-                    {{slotProps.entry.content.command}}
-                </td>
-            </tr>
-
-            <tr v-if="job">
-                <td class="table-fit font-weight-bold">Job</td>
-                <td>
-                    <router-link :to="{name:'job-preview', params:{id: job.id}}" class="control-action">
-                        View Job
-                    </router-link>
-                </td>
-            </tr>
-
-            <tr v-if="request">
-                <td class="table-fit font-weight-bold">Request</td>
-                <td>
-                    <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action">
-                        View Request
-                    </router-link>
-                </td>
-            </tr>
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5">
-                <div class="card-header"><h5>Parameters</h5></div>
+                <div class="card-header"><h5>Command</h5></div>
 
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.parameters}}</pre>
+                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.command}}</pre>
             </div>
         </div>
     </preview-screen>
