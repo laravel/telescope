@@ -60679,12 +60679,12 @@ webpackContext.id = 169;
     name: 'requests',
     component: __webpack_require__(314)
 }, {
-    path: '/artisan/:id',
-    name: 'artisan-preview',
+    path: '/commands/:id',
+    name: 'command-preview',
     component: __webpack_require__(319)
 }, {
-    path: '/artisan',
-    name: 'artisan',
+    path: '/commands',
+    name: 'commands',
     component: __webpack_require__(322)
 }, {
     path: '/schedule/:id',
@@ -68505,7 +68505,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/screens/artisan/preview.vue"
+Component.options.__file = "resources/js/screens/commands/preview.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -68514,9 +68514,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6c561e5d", Component.options)
+    hotAPI.createRecord("data-v-13e318c7", Component.options)
   } else {
-    hotAPI.reload("data-v-6c561e5d", Component.options)
+    hotAPI.reload("data-v-13e318c7", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -68557,7 +68557,7 @@ var render = function() {
   return _c("preview-screen", {
     attrs: {
       title: "Command Details",
-      resource: "requests",
+      resource: "commands",
       id: _vm.$route.params.id,
       "entry-point": "true"
     },
@@ -68664,7 +68664,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6c561e5d", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-13e318c7", module.exports)
   }
 }
 
@@ -68694,7 +68694,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/screens/artisan/index.vue"
+Component.options.__file = "resources/js/screens/commands/index.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -68703,9 +68703,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-10a0acb2", Component.options)
+    hotAPI.createRecord("data-v-67a792de", Component.options)
   } else {
-    hotAPI.reload("data-v-10a0acb2", Component.options)
+    hotAPI.reload("data-v-67a792de", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -68735,7 +68735,7 @@ var render = function() {
   return _c(
     "index-screen",
     {
-      attrs: { title: "Console Commands", resource: "artisan" },
+      attrs: { title: "Console Commands", resource: "commands" },
       scopedSlots: _vm._u([
         {
           key: "row",
@@ -68765,7 +68765,7 @@ var render = function() {
                       staticClass: "control-action",
                       attrs: {
                         to: {
-                          name: "artisan-preview",
+                          name: "command-preview",
                           params: { id: slotProps.entry.id }
                         }
                       }
@@ -68819,7 +68819,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-10a0acb2", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-67a792de", module.exports)
   }
 }
 
