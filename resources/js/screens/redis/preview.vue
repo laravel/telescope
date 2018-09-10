@@ -31,7 +31,7 @@
 
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5">
-                <div class="card-header"><h5>Parameters</h5></div>
+                <div class="card-header"><h5>Command</h5></div>
 
                 <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.command}}</pre>
             </div>

@@ -50,7 +50,7 @@
 
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5">
-                <div class="card-header"><h5>Query & Bindings</h5></div>
+                <div class="card-header"><h5>Query</h5></div>
 
                 <pre class="bg-dark p-4 mb-0 text-white" ref="sqlcode">{{formatSQL(slotProps.entry.content.sql, slotProps.entry.content.bindings)}}</pre>
             </div>
