@@ -39,8 +39,8 @@ Route::get('/telescope-api/requests', 'RequestsController@index');
 Route::get('/telescope-api/requests/{id}', 'RequestsController@show');
 
 // Artisan Commands entries...
-Route::get('/telescope-api/artisan', 'ArtisanController@index');
-Route::get('/telescope-api/artisan/{id}', 'ArtisanController@show');
+Route::get('/telescope-api/commands', 'CommandsController@index');
+Route::get('/telescope-api/commands/{id}', 'CommandsController@show');
 
 // Scheduled Commands entries...
 Route::get('/telescope-api/schedule', 'ScheduleController@index');

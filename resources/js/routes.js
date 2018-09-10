@@ -116,15 +116,15 @@ export default [
     },
 
     {
-        path: '/artisan/:id',
-        name: 'artisan-preview',
-        component: require('./screens/artisan/preview')
+        path: '/commands/:id',
+        name: 'command-preview',
+        component: require('./screens/commands/preview')
     },
 
     {
-        path: '/artisan',
-        name: 'artisan',
-        component: require('./screens/artisan/index')
+        path: '/commands',
+        name: 'commands',
+        component: require('./screens/commands/index')
     },
 
     {

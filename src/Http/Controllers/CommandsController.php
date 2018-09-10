@@ -4,7 +4,7 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Laravel\Telescope\EntryType;
 
-class ArtisanController extends EntryController
+class CommandsController extends EntryController
 {
     /**
      * The entry type for the controller.
