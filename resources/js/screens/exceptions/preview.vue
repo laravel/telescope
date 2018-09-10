@@ -11,16 +11,6 @@
                 batch: [],
             };
         },
-
-        computed: {
-            job(){
-                return _.find(this.batch, {type: 4})
-            },
-
-            request(){
-                return _.find(this.batch, {type: 8})
-            }
-        }
     }
 </script>
 
@@ -36,34 +26,8 @@
 
             <tr>
                 <td class="table-fit font-weight-bold">Location</td>
-
                 <td>
                     {{slotProps.entry.content.file}}:{{slotProps.entry.content.line}}
-                </td>
-            </tr>
-
-<!--             <tr>
-                <td class="table-fit font-weight-bold">Message</td>
-                <td>
-                    {{slotProps.entry.content.message}}
-                </td>
-            </tr> -->
-
-            <tr v-if="job">
-                <td class="table-fit font-weight-bold">Job</td>
-                <td>
-                    <router-link :to="{name:'job-preview', params:{id: job.id}}" class="control-action">
-                        View Job
-                    </router-link>
-                </td>
-            </tr>
-
-            <tr v-if="request">
-                <td class="table-fit font-weight-bold">Request</td>
-                <td>
-                    <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action">
-                        View Request
-                    </router-link>
                 </td>
             </tr>
         </template>

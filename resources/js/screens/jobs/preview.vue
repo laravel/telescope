@@ -17,7 +17,7 @@
 </script>
 
 <template>
-    <preview-screen title="Job Details" resource="jobs" :id="$route.params.id">
+    <preview-screen title="Job Details" resource="jobs" :id="$route.params.id" entry-point="true">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit font-weight-bold">Status</td>
