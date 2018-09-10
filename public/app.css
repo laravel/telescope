@@ -10539,23 +10539,23 @@ svg.icon {
   height: 1.7rem;
 }
 
-.nav-item a {
+.sidebar .nav-item a {
   color: #2a5164;
   padding: 0.5rem 0rem;
 }
 
-.nav-item a svg {
+.sidebar .nav-item a svg {
   width: 1rem;
   height: 1rem;
   margin-right: 15px;
   fill: #c3cbd3;
 }
 
-.nav-item a.active {
+.sidebar .nav-item a.active {
   color: #4246C7;
 }
 
-.nav-item a.active svg {
+.sidebar .nav-item a.active svg {
   fill: #4246C7;
 }
 
@@ -10683,5 +10683,17 @@ svg.icon {
 .spin {
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
+}
+
+.card .nav-pills .nav-link.active {
+  background: none;
+  color: #212529;
+  border-bottom: solid 2px #4246C7;
+}
+
+.card .nav-pills .nav-link {
+  font-size: 1rem;
+  border-radius: 0;
+  padding: 0.75rem 1.25rem;
 }
 

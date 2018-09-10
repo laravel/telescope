@@ -23,7 +23,7 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-2">
+            <div class="col-2 sidebar">
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <router-link active-class="active" to="/overview" class="nav-link d-flex align-items-center">

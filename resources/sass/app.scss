@@ -24,7 +24,7 @@ svg.icon {
   }
 }
 
-.nav-item {
+.sidebar .nav-item {
   a {
     color: #2a5164;;
     padding: 0.5rem 0rem;
@@ -192,4 +192,18 @@ svg.icon {
   -ms-animation: spin 2s linear infinite;
   -o-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
+}
+
+.card{
+  .nav-pills .nav-link.active{
+    background: none;
+    color: $gray-900;
+    border-bottom: solid 2px $primary;
+  }
+
+  .nav-pills .nav-link{
+    font-size: 1rem;
+    border-radius: 0;
+    padding: 0.75rem 1.25rem;
+  }
 }

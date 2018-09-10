@@ -67787,7 +67787,7 @@ var render = function() {
           return _c("div", {}, [
             _c("div", { staticClass: "card mt-5" }, [
               _c("div", { staticClass: "card-header" }, [
-                _c("h5", [_vm._v("Query & Bindings")])
+                _c("h5", [_vm._v("Query")])
               ]),
               _vm._v(" "),
               _c(
@@ -68034,7 +68034,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             entry: null,
-            batch: []
+            batch: [],
+            currentTab: 'payload'
         };
     }
 });
@@ -68110,71 +68111,115 @@ var render = function() {
             "div",
             {},
             [
-              slotProps.entry.content.payload
-                ? _c("div", { staticClass: "card mt-5" }, [
-                    _c("div", { staticClass: "card-header" }, [
-                      _c("h5", [_vm._v("Payload")])
-                    ]),
-                    _vm._v(" "),
+              _c("div", { staticClass: "card mt-5" }, [
+                _c("ul", { staticClass: "nav nav-pills" }, [
+                  _c("li", { staticClass: "nav-item" }, [
                     _c(
-                      "div",
-                      { staticClass: "bg-dark p-4 mb-0 text-white" },
-                      [
-                        _c("tree-view", {
-                          attrs: {
-                            data: slotProps.entry.content.payload,
-                            options: { maxDepth: 3 }
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        class: { active: _vm.currentTab == "payload" },
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.currentTab = "payload"
                           }
-                        })
-                      ],
-                      1
+                        }
+                      },
+                      [_vm._v("Payload")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        class: { active: _vm.currentTab == "headers" },
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.currentTab = "headers"
+                          }
+                        }
+                      },
+                      [_vm._v("Headers")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        class: { active: _vm.currentTab == "response" },
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.currentTab = "response"
+                          }
+                        }
+                      },
+                      [_vm._v("Response")]
                     )
                   ])
-                : _vm._e(),
-              _vm._v(" "),
-              slotProps.entry.content.headers
-                ? _c("div", { staticClass: "card mt-5" }, [
-                    _c("div", { staticClass: "card-header" }, [
-                      _c("h5", [_vm._v("Headers")])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "bg-dark p-4 mb-0 text-white" },
-                      [
-                        _c("tree-view", {
-                          attrs: {
-                            data: slotProps.entry.content.headers,
-                            options: { maxDepth: 3 }
-                          }
-                        })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "bg-dark p-4 mb-0 text-white" },
+                  [
+                    _c("tree-view", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.currentTab == "payload",
+                          expression: "currentTab=='payload'"
+                        }
                       ],
-                      1
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              slotProps.entry.content.response
-                ? _c("div", { staticClass: "card mt-5" }, [
-                    _c("div", { staticClass: "card-header" }, [
-                      _c("h5", [_vm._v("Response")])
-                    ]),
+                      attrs: {
+                        data: slotProps.entry.content.payload,
+                        options: { maxDepth: 3 }
+                      }
+                    }),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "bg-dark p-4 mb-0 text-white" },
-                      [
-                        _c("tree-view", {
-                          attrs: {
-                            data: slotProps.entry.content.response,
-                            options: { maxDepth: 3 }
-                          }
-                        })
+                    _c("tree-view", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.currentTab == "headers",
+                          expression: "currentTab=='headers'"
+                        }
                       ],
-                      1
-                    )
-                  ])
-                : _vm._e(),
+                      attrs: {
+                        data: slotProps.entry.content.headers,
+                        options: { maxDepth: 3 }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("tree-view", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.currentTab == "response",
+                          expression: "currentTab=='response'"
+                        }
+                      ],
+                      attrs: {
+                        data: slotProps.entry.content.response,
+                        options: { maxDepth: 3 }
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
               _vm._v(" "),
               _c("related-entries", {
                 attrs: { entry: _vm.entry, batch: _vm.batch }
@@ -69210,7 +69255,7 @@ var render = function() {
           return _c("div", {}, [
             _c("div", { staticClass: "card mt-5" }, [
               _c("div", { staticClass: "card-header" }, [
-                _c("h5", [_vm._v("Parameters")])
+                _c("h5", [_vm._v("Command")])
               ]),
               _vm._v(" "),
               _c("pre", { staticClass: "bg-dark p-4 mb-0 text-white" }, [

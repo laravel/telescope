@@ -6,6 +6,7 @@
             return {
                 entry: null,
                 batch: [],
+                currentTab: 'payload'
             };
         }
     }
@@ -37,26 +38,22 @@
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">
-            <div class="card mt-5" v-if="slotProps.entry.content.payload">
-                <div class="card-header"><h5>Payload</h5></div>
+            <div class="card mt-5">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='payload'}" href="#" v-on:click.prevent="currentTab='payload'">Payload</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='headers'}" href="#" v-on:click.prevent="currentTab='headers'">Headers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='response'}" href="#" v-on:click.prevent="currentTab='response'">Response</a>
+                    </li>
+                </ul>
                 <div class="bg-dark p-4 mb-0 text-white">
-                    <tree-view :data="slotProps.entry.content.payload" :options="{maxDepth: 3}"></tree-view>
-                </div>
-            </div>
-
-            <div class="card mt-5" v-if="slotProps.entry.content.headers">
-                <div class="card-header"><h5>Headers</h5></div>
-
-                <div class="bg-dark p-4 mb-0 text-white">
-                    <tree-view :data="slotProps.entry.content.headers" :options="{maxDepth: 3}"></tree-view>
-                </div>
-            </div>
-
-            <div class="card mt-5" v-if="slotProps.entry.content.response">
-                <div class="card-header"><h5>Response</h5></div>
-
-                <div class="bg-dark p-4 mb-0 text-white">
-                    <tree-view :data="slotProps.entry.content.response" :options="{maxDepth: 3}"></tree-view>
+                    <tree-view :data="slotProps.entry.content.payload" :options="{maxDepth: 3}" v-show="currentTab=='payload'"></tree-view>
+                    <tree-view :data="slotProps.entry.content.headers" :options="{maxDepth: 3}" v-show="currentTab=='headers'"></tree-view>
+                    <tree-view :data="slotProps.entry.content.response" :options="{maxDepth: 3}" v-show="currentTab=='response'"></tree-view>
                 </div>
             </div>
 
