@@ -49,7 +49,7 @@ return [
             'enabled' => true,
         ],
 
-        'artisan' => [
+        'commands' => [
             'enabled' => true,
         ],
 

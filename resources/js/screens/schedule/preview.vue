@@ -15,9 +15,16 @@
     <preview-screen title="Scheduled Command Details" resource="requests" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">Command</td>
+                <td class="table-fit font-weight-bold">Description</td>
                 <td>
                     {{slotProps.entry.content.description || '-'}}
+                </td>
+            </tr>
+
+            <tr>
+                <td class="table-fit font-weight-bold">Command</td>
+                <td>
+                    {{slotProps.entry.content.command || '-'}}
                 </td>
             </tr>
 

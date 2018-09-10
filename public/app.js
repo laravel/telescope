@@ -68911,13 +68911,27 @@ var render = function() {
           return [
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Command")
+                _vm._v("Description")
               ]),
               _vm._v(" "),
               _c("td", [
                 _vm._v(
                   "\n                " +
                     _vm._s(slotProps.entry.content.description || "-") +
+                    "\n            "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                _vm._v("Command")
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(slotProps.entry.content.command || "-") +
                     "\n            "
                 )
               ])
@@ -69055,7 +69069,10 @@ var render = function() {
             return [
               _c("td", [
                 _vm._v(
-                  _vm._s(_vm.truncate(slotProps.entry.content.description, 90))
+                  _vm._s(
+                    _vm.truncate(slotProps.entry.content.description, 90) ||
+                      _vm.truncate(slotProps.entry.content.command, 90)
+                  )
                 )
               ]),
               _vm._v(" "),

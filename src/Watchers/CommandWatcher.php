@@ -3,9 +3,11 @@
 namespace Laravel\Telescope\Watchers;
 
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\IncomingEntry;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Console\Events\CommandFinished;
 
-class ArtisanWatcher extends Watcher
+class CommandWatcher extends Watcher
 {
     /**
      * Register the watcher.

@@ -163,7 +163,7 @@ class TelescopeServiceProvider extends ServiceProvider
             Watchers\NotificationsWatcher::class => config('telescope.watchers.notifications.enabled'),
             Watchers\QueriesWatcher::class => config('telescope.watchers.queries.enabled'),
             Watchers\RequestsWatcher::class => config('telescope.watchers.requests.enabled'),
-            Watchers\ArtisanWatcher::class => config('telescope.watchers.artisan.enabled'),
+            Watchers\CommandWatcher::class => config('telescope.watchers.commands.enabled'),
             Watchers\ScheduleWatcher::class => config('telescope.watchers.schedule.enabled'),
             Watchers\RedisWatcher::class => config('telescope.watchers.redis.enabled'),
         ];

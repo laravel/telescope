@@ -6,6 +6,7 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Console\Events\CommandStarting;
+use Illuminate\Console\Scheduling\CallbackEvent;
 
 class ScheduleWatcher extends Watcher
 {
@@ -28,16 +29,17 @@ class ScheduleWatcher extends Watcher
      */
     public function recordCommand(CommandStarting $event)
     {
-        if ($event->command != 'schedule:run') {
+        if ($event->command != 'schedule:run' &&
+            $event->command != 'schedule:finish') {
             return;
         }
 
         collect(app(Schedule::class)->events())->each(function ($event) {
             $event->then(function () use ($event) {
                 Telescope::recordScheduledCommand(IncomingEntry::make([
-                    'command' => $event->command,
+                    'command' => $event instanceof CallbackEvent ? 'Closure' : $event->command,
+                    'description' => $event->description,
                     'expression' => $event->expression,
-                    'description' => $event->getSummaryForDisplay(),
                     'timezone' => $event->timezone,
                     'user' => $event->user,
                 ]));
