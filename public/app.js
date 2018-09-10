@@ -69653,15 +69653,6 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sql_formatter__ = __webpack_require__(152);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_sql_formatter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_sql_formatter__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_highlight_js_lib_highlight__ = __webpack_require__(162);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_highlight_js_lib_highlight___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_highlight_js_lib_highlight__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_highlight_js_lib_languages_sql__ = __webpack_require__(163);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_highlight_js_lib_languages_sql___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_highlight_js_lib_languages_sql__);
-
-
-
 
 
 
@@ -69727,20 +69718,6 @@ var render = function() {
                   "\n                " +
                     _vm._s(slotProps.entry.content.time) +
                     "ms\n            "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Command")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(slotProps.entry.content.command) +
-                    "\n            "
                 )
               ])
             ]),
@@ -69821,7 +69798,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("pre", { staticClass: "bg-dark p-4 mb-0 text-white" }, [
-                _vm._v(_vm._s(slotProps.entry.content.parameters))
+                _vm._v(_vm._s(slotProps.entry.content.command))
               ])
             ])
           ])
