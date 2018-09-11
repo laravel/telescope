@@ -238,14 +238,14 @@ class Telescope
 
         $entries = collect(static::$entriesQueue);
 
-        if (static::$filterUsing) {
-            $entries = $entries->filter(static::$filterUsing);
-        }
-
         if ($tagger = static::$tagUsing) {
             $entries = $entries->each(function ($entry) use ($tagger) {
                 return $entry->tags($tagger($entry));
             });
+        }
+
+        if (static::$filterUsing) {
+            $entries = $entries->filter(static::$filterUsing);
         }
 
         $storage->store($entries->each(function ($entry) use ($batchId) {
