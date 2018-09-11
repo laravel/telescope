@@ -69088,8 +69088,8 @@ var render = function() {
               _c("td", [
                 _vm._v(
                   _vm._s(
-                    _vm.truncate(slotProps.entry.content.description, 90) ||
-                      _vm.truncate(slotProps.entry.content.command, 90)
+                    _vm.truncate(slotProps.entry.content.description, 85) ||
+                      _vm.truncate(slotProps.entry.content.command, 85)
                   )
                 )
               ]),
