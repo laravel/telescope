@@ -40,7 +40,7 @@ class EventsWatcher extends Watcher
 
         Telescope::recordEvent(IncomingEntry::make([
             'name' => $eventName,
-            'payload' => $payload,
+            'payload' => empty($payload) ? null : $payload,
             'listeners' => $this->formatListeners($eventName),
         ])->tags($tags));
     }

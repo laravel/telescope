@@ -63935,15 +63935,25 @@ var render = function() {
         key: "after-attributes-card",
         fn: function(slotProps) {
           return _c("div", {}, [
-            slotProps.entry.content.payload.length
+            slotProps.entry.content.payload
               ? _c("div", { staticClass: "card mt-5" }, [
                   _c("div", { staticClass: "card-header" }, [
                     _c("h5", [_vm._v("Event Data")])
                   ]),
                   _vm._v(" "),
-                  _c("pre", { staticClass: "bg-dark p-4 mb-0 text-white" }, [
-                    _vm._v(_vm._s(slotProps.entry.content.payload))
-                  ])
+                  _c(
+                    "pre",
+                    { staticClass: "bg-dark p-4 mb-0 text-white" },
+                    [
+                      _c("tree-view", {
+                        attrs: {
+                          data: slotProps.entry.content.payload,
+                          options: { maxDepth: 3 }
+                        }
+                      })
+                    ],
+                    1
+                  )
                 ])
               : _vm._e(),
             _vm._v(" "),
