@@ -146,12 +146,9 @@ class EventsWatcher extends Watcher
                 } else {
                     return $this->formatClosureListener($listener);
                 }
-            })
-            ->reject(function ($listener) {
+            })->reject(function ($listener) {
                 return Str::contains($listener, 'Laravel\\Telescope');
-            })
-            ->values()
-            ->toArray();
+            })->values()->toArray();
     }
 
     /**
