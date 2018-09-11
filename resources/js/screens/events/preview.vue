@@ -34,9 +34,9 @@
 
                 <table class="table mb-0">
                     <tbody>
-                    <tr v-for="listener in slotProps.entry.content.listeners">
-                        <td class="bg-secondary">{{listener}}</td>
-                    </tr>
+                        <tr v-for="listener in slotProps.entry.content.listeners">
+                            <td class="bg-secondary">{{listener}}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
