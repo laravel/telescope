@@ -122,32 +122,4 @@ class JobWatcher extends Watcher
 
         return [$payload, $tags];
     }
-
-    /**
-     * Extract tags from the given job.
-     *
-     * @param  \Illuminate\Contracts\Queue\Job  $job
-     * @param  bool  $processed
-     * @return array
-     */
-    private function extractTagsFromJob($job, $processed = true)
-    {
-        $tags = [
-            $job->payload()['displayName'],
-        ];
-
-        if (isset($job->payload()['data']['command'])) {
-            $command = unserialize($job->payload()['data']['command']);
-
-            foreach ((new ReflectionClass($command))->getProperties() as $property) {
-                $property->setAccessible(true);
-
-                if (($value = $property->getValue($command)) instanceof Model) {
-                    $tags[] = get_class($value).':'.$value->getKey();
-                }
-            }
-        }
-
-        return $tags;
-    }
 }
