@@ -37,7 +37,7 @@ return [
             'enabled' => true,
         ],
 
-        'queue' => [
+        'jobs' => [
             'enabled' => true,
         ],
 

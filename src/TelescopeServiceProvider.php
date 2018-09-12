@@ -157,7 +157,7 @@ class TelescopeServiceProvider extends ServiceProvider
             Watchers\ExceptionWatcher::class => config('telescope.watchers.exceptions.enabled'),
             Watchers\LogWatcher::class => config('telescope.watchers.logs.enabled'),
             Watchers\MailWatcher::class => config('telescope.watchers.mail.enabled'),
-            Watchers\QueueWatcher::class => config('telescope.watchers.queue.enabled'),
+            Watchers\JobWatcher::class => config('telescope.watchers.jobs.enabled'),
             Watchers\CacheWatcher::class => config('telescope.watchers.cache.enabled'),
             Watchers\EventsWatcher::class => config('telescope.watchers.events.enabled'),
             Watchers\NotificationsWatcher::class => config('telescope.watchers.notifications.enabled'),

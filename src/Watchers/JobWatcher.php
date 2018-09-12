@@ -11,7 +11,7 @@ use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Queue\Events\JobProcessed;
 
-class QueueWatcher extends Watcher
+class JobWatcher extends Watcher
 {
     /**
      * Register the watcher.
@@ -128,10 +128,7 @@ class QueueWatcher extends Watcher
     private function extractTagsFromJob($job, $processed = true)
     {
         $tags = [
-            ($processed ? 'processed' : 'failed'),
             $job->payload()['displayName'],
-            'queue:'.$job->getQueue(),
-            'connection:'.$job->getConnectionName(),
         ];
 
         if (isset($job->payload()['data']['command'])) {
