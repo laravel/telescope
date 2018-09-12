@@ -55,7 +55,7 @@ class ModelsWatcher extends Watcher
     }
 
     /**
-     * Determine if the action should be ignored.
+     * Determine if the Eloquent event should be ignored.
      *
      * @param  string  $eventName
      * @return bool
