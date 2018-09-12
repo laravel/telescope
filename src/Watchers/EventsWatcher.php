@@ -36,13 +36,13 @@ class EventsWatcher extends Watcher
             return;
         }
 
-        [$payload, $tags] = $this->extractPayloadAndTags($eventName, $payload);
+        $formattedPayload = $this->extractPayload($eventName, $payload);
 
         Telescope::recordEvent(IncomingEntry::make([
             'name' => $eventName,
-            'payload' => empty($payload) ? null : $payload,
+            'payload' => empty($formattedPayload) ? null : $formattedPayload,
             'listeners' => $this->formatListeners($eventName),
-        ])->tags($tags));
+        ])->tags($this->extractTags($eventName, $payload)));
     }
 
     /**
@@ -78,31 +78,27 @@ class EventsWatcher extends Watcher
      * @param  array  $payload
      * @return array
      */
-    private function extractPayloadAndTags($eventName, $payload)
+    private function extractPayload($eventName, $payload)
     {
         return class_exists($eventName)
-                ? $this->extractPayloadAndTagsFromEventObject($payload[0])
-                : [$this->formatRawPayload($payload), []];
+                ? $this->extractPayloadFromEventObject($payload[0])
+                : $this->formatRawPayload($payload);
     }
 
     /**
      * Extract the payload and tags from the event object.
      *
-     * @param  object  $payload
+     * @param  object  $event
      * @return array
      */
-    private function extractPayloadAndTagsFromEventObject($event)
+    private function extractPayloadFromEventObject($event)
     {
-        $tags = [];
-
-        $payload = collect((new ReflectionClass($event))->getProperties())
-            ->mapWithKeys(function ($property) use ($event, &$tags) {
+        return collect((new ReflectionClass($event))->getProperties())
+            ->mapWithKeys(function ($property) use ($event) {
                 $property->setAccessible(true);
 
                 if (($value = $property->getValue($event)) instanceof Model) {
-                    $tags[] = $model = get_class($value).':'.$value->getKey();
-
-                    return [$property->getName() => $model];
+                    return [$property->getName() => get_class($value).':'.$value->getKey()];
                 } elseif (is_object($value)) {
                     return [
                         $property->getName() => [
@@ -114,8 +110,6 @@ class EventsWatcher extends Watcher
                     return [$property->getName() => json_decode(json_encode($value), true)];
                 }
             })->toArray();
-
-        return [$payload, $tags];
     }
 
     /**
@@ -132,6 +126,39 @@ class EventsWatcher extends Watcher
                 'properties' => json_decode(json_encode($value), true),
             ];
         })->toArray();
+    }
+
+    /**
+     * Extract the tags from the event.
+     *
+     * @param  string  $eventName
+     * @param  array  $payload
+     * @return array
+     */
+    private function extractTags($eventName, $payload)
+    {
+        return class_exists($eventName)
+                ? $this->extractTagsFromEventObject($payload[0])
+                : [];
+    }
+
+    /**
+     * Extract the tags from the event object.
+     *
+     * @param  object  $event
+     * @return array
+     */
+    private function extractTagsFromEventObject($event)
+    {
+        $properties = collect((new ReflectionClass($event))->getProperties());
+
+        return $properties->map(function ($property) use ($event) {
+            $property->setAccessible(true);
+
+            if (($value = $property->getValue($event)) instanceof Model) {
+                return get_class($value).':'.$value->getKey();
+            }
+        })->filter()->unique()->toArray();
     }
 
     /**
