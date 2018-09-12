@@ -49,11 +49,13 @@
 
                 <div>
                     <pre class="bg-dark p-4 mb-0 text-white" v-show="currentTab=='message'">{{slotProps.entry.content.message}}</pre>
+
                     <code-preview
                             v-show="currentTab=='location'"
                             :lines="slotProps.entry.content.line_preview"
                             :highlighted-line="slotProps.entry.content.line">
                     </code-preview>
+
                     <stack-trace :trace="slotProps.entry.content.trace" v-show="currentTab=='trace'"></stack-trace>
                 </div>
             </div>
