@@ -63672,7 +63672,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Trace")]
+                          [_vm._v("Stacktrace")]
                         )
                       : _vm._e()
                   ])
