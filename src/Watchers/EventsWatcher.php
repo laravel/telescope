@@ -8,6 +8,7 @@ use ReflectionFunction;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Tags;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\Properties;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
 
@@ -56,7 +57,7 @@ class EventsWatcher extends Watcher
     protected function extractPayload($eventName, $payload)
     {
         if (class_exists($eventName)) {
-            return $this->extractPayloadFromEventObject($payload[0]);
+            return Properties::for($payload[0]);
         }
 
         return collect($payload)->map(function ($value) {
@@ -65,33 +66,6 @@ class EventsWatcher extends Watcher
                 'properties' => json_decode(json_encode($value), true),
             ] : $value;
         })->toArray();
-    }
-
-    /**
-     * Extract the payload and tags from the event object.
-     *
-     * @param  object  $event
-     * @return array
-     */
-    protected function extractPayloadFromEventObject($event)
-    {
-        return collect((new ReflectionClass($event))->getProperties())
-            ->mapWithKeys(function ($property) use ($event) {
-                $property->setAccessible(true);
-
-                if (($value = $property->getValue($event)) instanceof Model) {
-                    return [$property->getName() => get_class($value).':'.$value->getKey()];
-                } elseif (is_object($value)) {
-                    return [
-                        $property->getName() => [
-                            'class' => get_class($value),
-                            'properties' => json_decode(json_encode($value), true)
-                        ]
-                    ];
-                } else {
-                    return [$property->getName() => json_decode(json_encode($value), true)];
-                }
-            })->toArray();
     }
 
     /**
