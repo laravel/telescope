@@ -60670,6 +60670,14 @@ webpackContext.id = 169;
     name: 'queries',
     component: __webpack_require__(308)
 }, {
+    path: '/models/:id',
+    name: 'model-preview',
+    component: __webpack_require__(364)
+}, {
+    path: '/models',
+    name: 'models',
+    component: __webpack_require__(367)
+}, {
     path: '/requests/:id',
     name: 'request-preview',
     component: __webpack_require__(311)
@@ -78074,6 +78082,344 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(365)
+/* template */
+var __vue_template__ = __webpack_require__(366)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/screens/models/preview.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-adb48dae", Component.options)
+  } else {
+    hotAPI.reload("data-v-adb48dae", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 365 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            entry: null,
+            batch: []
+        };
+    }
+});
+
+/***/ }),
+/* 366 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("preview-screen", {
+    attrs: {
+      title: "Model Action",
+      resource: "models",
+      id: _vm.$route.params.id
+    },
+    scopedSlots: _vm._u([
+      {
+        key: "table-parameters",
+        fn: function(slotProps) {
+          return [
+            _c("tr", [
+              _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                _vm._v("Model")
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(slotProps.entry.content.model) +
+                    "\n            "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                _vm._v("Action")
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(slotProps.entry.content.action) +
+                    "\n            "
+                )
+              ])
+            ])
+          ]
+        }
+      },
+      {
+        key: "after-attributes-card",
+        fn: function(slotProps) {
+          return _c("div", {}, [
+            slotProps.entry.content.changes
+              ? _c("div", { staticClass: "card mt-5" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h5", [_vm._v("Changes")])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "bg-dark p-4 mb-0 text-white" },
+                    [
+                      _c("tree-view", {
+                        attrs: {
+                          data: slotProps.entry.content.changes,
+                          options: { maxDepth: 3 }
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e()
+          ])
+        }
+      }
+    ])
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-adb48dae", module.exports)
+  }
+}
+
+/***/ }),
+/* 367 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(368)
+/* template */
+var __vue_template__ = __webpack_require__(369)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/screens/models/index.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-48ff8773", Component.options)
+  } else {
+    hotAPI.reload("data-v-48ff8773", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 368 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    methods: {
+        actionClass: function actionClass(action) {
+            if (action == 'created') return 'success';
+            if (action == 'updated') return 'warning';
+            if (action == 'deleted' || action == 'forceDeleted') return 'danger';
+        }
+    }
+});
+
+/***/ }),
+/* 369 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "index-screen",
+    {
+      attrs: { title: "Models", resource: "models" },
+      scopedSlots: _vm._u([
+        {
+          key: "row",
+          fn: function(slotProps) {
+            return [
+              _c("td", { attrs: { title: slotProps.entry.content.model } }, [
+                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.model, 80)))
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "table-fit" }, [
+                _c(
+                  "span",
+                  {
+                    class:
+                      "text-" + _vm.actionClass(slotProps.entry.content.action)
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(slotProps.entry.content.action) +
+                        "\n            "
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "table-fit" }, [
+                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
+              ]),
+              _vm._v(" "),
+              _c(
+                "td",
+                { staticClass: "table-fit" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "control-action",
+                      attrs: {
+                        to: {
+                          name: "model-preview",
+                          params: { id: slotProps.entry.id }
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            viewBox: "0 0 22 16"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            attrs: {
+                              d:
+                                "M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
+                            }
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ]
+          }
+        }
+      ])
+    },
+    [
+      _c("tr", { attrs: { slot: "table-header" }, slot: "table-header" }, [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Model")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Action")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Happened")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } })
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-48ff8773", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

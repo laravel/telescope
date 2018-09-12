@@ -45,6 +45,10 @@ return [
             'enabled' => true,
         ],
 
+        'models' => [
+            'enabled' => true,
+        ],
+
         'requests' => [
             'enabled' => true,
         ],

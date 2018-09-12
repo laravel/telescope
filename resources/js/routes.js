@@ -104,6 +104,18 @@ export default [
     },
 
     {
+        path: '/models/:id',
+        name: 'model-preview',
+        component: require('./screens/models/preview')
+    },
+
+    {
+        path: '/models',
+        name: 'models',
+        component: require('./screens/models/index')
+    },
+
+    {
         path: '/requests/:id',
         name: 'request-preview',
         component: require('./screens/requests/preview')

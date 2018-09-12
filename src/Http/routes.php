@@ -34,6 +34,10 @@ Route::get('/telescope-api/cache/{id}', 'CacheController@show');
 Route::get('/telescope-api/queries', 'QueriesController@index');
 Route::get('/telescope-api/queries/{id}', 'QueriesController@show');
 
+// Eloquent entries...
+Route::get('/telescope-api/models', 'ModelsController@index');
+Route::get('/telescope-api/models/{id}', 'ModelsController@show');
+
 // Requests entries...
 Route::get('/telescope-api/requests', 'RequestsController@index');
 Route::get('/telescope-api/requests/{id}', 'RequestsController@show');

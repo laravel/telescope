@@ -171,6 +171,17 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
+    public static function recordModelEvent(IncomingEntry $entry)
+    {
+        return static::record(EntryType::MODEL, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
     public static function recordRedis(IncomingEntry $entry)
     {
         return static::record(EntryType::REDIS, $entry);
