@@ -67,6 +67,14 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
+                        <router-link active-class="active" to="/logs" class="nav-link d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M0 2C0 .9.9 0 2 0h16a2 2 0 0 1 2 2v2H0V2zm1 3h18v13a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5zm6 2v2h6V7H7z"/>
+                            </svg>
+                            <span>Logs</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
                         <router-link active-class="active" to="/exceptions" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path d="M15.3 14.89l2.77 2.77a1 1 0 0 1 0 1.41 1 1 0 0 1-1.41 0l-2.59-2.58A5.99 5.99 0 0 1 11 18V9.04a1 1 0 0 0-2 0V18a5.98 5.98 0 0 1-3.07-1.51l-2.59 2.58a1 1 0 0 1-1.41 0 1 1 0 0 1 0-1.41l2.77-2.77A5.95 5.95 0 0 1 4.07 13H1a1 1 0 1 1 0-2h3V8.41L.93 5.34a1 1 0 0 1 0-1.41 1 1 0 0 1 1.41 0l2.1 2.1h11.12l2.1-2.1a1 1 0 0 1 1.41 0 1 1 0 0 1 0 1.41L16 8.41V11h3a1 1 0 1 1 0 2h-3.07c-.1.67-.32 1.31-.63 1.89zM15 5H5a5 5 0 1 1 10 0z"/>
@@ -83,11 +91,19 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link active-class="active" to="/logs" class="nav-link d-flex align-items-center">
+                        <router-link active-class="active" to="/queries" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M0 2C0 .9.9 0 2 0h16a2 2 0 0 1 2 2v2H0V2zm1 3h18v13a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5zm6 2v2h6V7H7z"/>
+                                <path d="M1 1h18v2H1V1zm0 8h18v2H1V9zm0 8h18v2H1v-2zM1 5h12v2H1V5zm0 8h12v2H1v-2z"/>
                             </svg>
-                            <span>Logs</span>
+                            <span>Queries</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link active-class="active" to="/models" class="nav-link d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M10 1l10 6-10 6L0 7l10-6zm6.67 10L20 13l-10 6-10-6 3.33-2L10 15l6.67-4z"/>
+                            </svg>
+                            <span>Models</span>
                         </router-link>
                     </li>
                     <li class="nav-item">
@@ -104,22 +120,6 @@
                                 <path d="M3 6c0-1.1.9-2 2-2h8l4-4h2v16h-2l-4-4H5a2 2 0 0 1-2-2H1V6h2zm8 9v5H8l-1.67-5H5v-2h8v2h-2z"/>
                             </svg>
                             <span>Notifications</span>
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link active-class="active" to="/queries" class="nav-link d-flex align-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M1 1h18v2H1V1zm0 8h18v2H1V9zm0 8h18v2H1v-2zM1 5h12v2H1V5zm0 8h12v2H1v-2z"/>
-                            </svg>
-                            <span>Queries</span>
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link active-class="active" to="/models" class="nav-link d-flex align-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M10 1l10 6-10 6L0 7l10-6zm6.67 10L20 13l-10 6-10-6 3.33-2L10 15l6.67-4z"/>
-                            </svg>
-                            <span>Models</span>
                         </router-link>
                     </li>
                     <li class="nav-item">
