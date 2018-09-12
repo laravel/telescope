@@ -2,12 +2,10 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use ReflectionClass;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Queue\Events\JobFailed;
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Telescope\ExceptionContext;
 use Laravel\Telescope\ExtractProperties;
 use Illuminate\Queue\Events\JobProcessed;
