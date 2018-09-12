@@ -63,6 +63,13 @@ class JobWatcher extends Watcher
         ], $this->defaultJobData($event, $payload)))->tags($tags));
     }
 
+    /**
+     * Get the default entry data for the given job.
+     *
+     * @param  mixed  $event
+     * @param  array  $payload
+     * @return array
+     */
     protected function defaultJobData($event, $payload)
     {
         return [
