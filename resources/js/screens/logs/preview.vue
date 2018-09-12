@@ -9,6 +9,7 @@
             return {
                 entry: null,
                 batch: [],
+                currentTab: 'message'
             };
         },
     }
@@ -26,21 +27,23 @@
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Log Message</h5>
-                </div>
+            <div class="card mt-5">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Log Message</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='context'}" href="#" v-on:click.prevent="currentTab='context'">Context</a>
+                    </li>
+                </ul>
+                <div>
+                    <!-- Log Message -->
+                    <pre class="bg-dark p-4 mb-0 text-white" v-show="currentTab=='message'">{{slotProps.entry.content.message}}</pre>
 
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.message}}</pre>
-            </div>
-
-            <div class="card mt-5" v-if="slotProps.entry.content.context">
-                <div class="card-header">
-                    <h5>Context</h5>
-                </div>
-
-                <div class="bg-dark p-4 mb-0 text-white">
-                    <tree-view :data="slotProps.entry.content.context" :options="{maxDepth: 3}"></tree-view>
+                    <!-- Context -->
+                    <div class="bg-dark p-4 mb-0 text-white" v-show="currentTab=='context'">
+                        <tree-view :data="slotProps.entry.content.context" :options="{maxDepth: 3}"></tree-view>
+                    </div>
                 </div>
             </div>
         </div>

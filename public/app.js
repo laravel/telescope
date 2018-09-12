@@ -61922,7 +61922,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -61943,7 +61943,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             entry: null,
-            batch: []
+            batch: [],
+            currentTab: 'message'
         };
     }
 });
@@ -61983,37 +61984,87 @@ var render = function() {
         key: "after-attributes-card",
         fn: function(slotProps) {
           return _c("div", { staticClass: "mt-5" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h5", [_vm._v("Log Message")])
-              ]),
-              _vm._v(" "),
-              _c("pre", { staticClass: "bg-dark p-4 mb-0 text-white" }, [
-                _vm._v(_vm._s(slotProps.entry.content.message))
-              ])
-            ]),
-            _vm._v(" "),
-            slotProps.entry.content.context
-              ? _c("div", { staticClass: "card mt-5" }, [
-                  _c("div", { staticClass: "card-header" }, [
-                    _c("h5", [_vm._v("Context")])
-                  ]),
-                  _vm._v(" "),
+            _c("div", { staticClass: "card mt-5" }, [
+              _c("ul", { staticClass: "nav nav-pills" }, [
+                _c("li", { staticClass: "nav-item" }, [
                   _c(
-                    "div",
-                    { staticClass: "bg-dark p-4 mb-0 text-white" },
-                    [
-                      _c("tree-view", {
-                        attrs: {
-                          data: slotProps.entry.content.context,
-                          options: { maxDepth: 3 }
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      class: { active: _vm.currentTab == "message" },
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.currentTab = "message"
                         }
-                      })
-                    ],
-                    1
+                      }
+                    },
+                    [_vm._v("Log Message")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      class: { active: _vm.currentTab == "context" },
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.currentTab = "context"
+                        }
+                      }
+                    },
+                    [_vm._v("Context")]
                   )
                 ])
-              : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _c(
+                  "pre",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.currentTab == "message",
+                        expression: "currentTab=='message'"
+                      }
+                    ],
+                    staticClass: "bg-dark p-4 mb-0 text-white"
+                  },
+                  [_vm._v(_vm._s(slotProps.entry.content.message))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.currentTab == "context",
+                        expression: "currentTab=='context'"
+                      }
+                    ],
+                    staticClass: "bg-dark p-4 mb-0 text-white"
+                  },
+                  [
+                    _c("tree-view", {
+                      attrs: {
+                        data: slotProps.entry.content.context,
+                        options: { maxDepth: 3 }
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ])
           ])
         }
       }
