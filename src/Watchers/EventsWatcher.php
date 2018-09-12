@@ -80,9 +80,16 @@ class EventsWatcher extends Watcher
      */
     private function extractPayload($eventName, $payload)
     {
-        return class_exists($eventName)
-                ? $this->extractPayloadFromEventObject($payload[0])
-                : $this->formatRawPayload($payload);
+        if (class_exists($eventName)) {
+            return $this->extractPayloadFromEventObject($payload[0]);
+        }
+
+        return collect($payload)->map(function ($value) {
+            return is_object($value) ? [
+                'class' => get_class($value),
+                'properties' => json_decode(json_encode($value), true),
+            ] : $value;
+        })->toArray();
     }
 
     /**
@@ -110,22 +117,6 @@ class EventsWatcher extends Watcher
                     return [$property->getName() => json_decode(json_encode($value), true)];
                 }
             })->toArray();
-    }
-
-    /**
-     * Format raw event payload.
-     *
-     * @param  array  $payload
-     * @return array
-     */
-    private function formatRawPayload($payload)
-    {
-        return collect($payload)->map(function ($value) {
-            return ! is_object($value) ? $value : [
-                'class' => get_class($value),
-                'properties' => json_decode(json_encode($value), true),
-            ];
-        })->toArray();
     }
 
     /**
