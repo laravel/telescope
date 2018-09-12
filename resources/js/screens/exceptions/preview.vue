@@ -46,6 +46,7 @@
                         <a class="nav-link" :class="{active: currentTab=='trace'}" href="#" v-on:click.prevent="currentTab='trace'">Stacktrace</a>
                     </li>
                 </ul>
+
                 <div>
                     <pre class="bg-dark p-4 mb-0 text-white" v-show="currentTab=='message'">{{slotProps.entry.content.message}}</pre>
                     <code-preview
