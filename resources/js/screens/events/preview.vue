@@ -4,6 +4,7 @@
             return {
                 entry: null,
                 batch: [],
+                currentTab: 'data'
             };
         }
     }
@@ -21,24 +22,30 @@
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">
-            <!-- Event Payload -->
-            <div class="card mt-5" v-if="slotProps.entry.content.payload">
-                <div class="card-header"><h5>Event Data</h5></div>
+            <div class="card mt-5">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Event Data</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='listeners'}" href="#" v-on:click.prevent="currentTab='listeners'">Listeners</a>
+                    </li>
+                </ul>
+                <div>
+                    <!-- Event Payload -->
+                    <div class="bg-dark p-4 mb-0 text-white" v-show="currentTab=='data'">
+                        <tree-view :data="slotProps.entry.content.payload" :options="{maxDepth: 3}"></tree-view>
+                    </div>
 
-                <pre class="bg-dark p-4 mb-0 text-white"><tree-view :data="slotProps.entry.content.payload" :options="{maxDepth: 3}"></tree-view></pre>
-            </div>
-
-            <!-- Event Listeners -->
-            <div class="card mt-5" v-if="slotProps.entry.content.listeners && slotProps.entry.content.listeners.length">
-                <div class="card-header"><h5>Registered Listeners</h5></div>
-
-                <table class="table mb-0">
-                    <tbody>
+                    <!-- Event Listeners -->
+                    <table class="table mb-0" v-show="currentTab=='listeners'">
+                        <tbody>
                         <tr v-for="listener in slotProps.entry.content.listeners">
                             <td class="bg-secondary">{{listener}}</td>
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </preview-screen>

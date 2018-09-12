@@ -64046,7 +64046,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             entry: null,
-            batch: []
+            batch: [],
+            currentTab: 'data'
         };
     }
 });
@@ -64090,36 +64091,84 @@ var render = function() {
         key: "after-attributes-card",
         fn: function(slotProps) {
           return _c("div", {}, [
-            slotProps.entry.content.payload
-              ? _c("div", { staticClass: "card mt-5" }, [
-                  _c("div", { staticClass: "card-header" }, [
-                    _c("h5", [_vm._v("Event Data")])
-                  ]),
-                  _vm._v(" "),
+            _c("div", { staticClass: "card mt-5" }, [
+              _c("ul", { staticClass: "nav nav-pills" }, [
+                _c("li", { staticClass: "nav-item" }, [
                   _c(
-                    "pre",
-                    { staticClass: "bg-dark p-4 mb-0 text-white" },
-                    [
-                      _c("tree-view", {
-                        attrs: {
-                          data: slotProps.entry.content.payload,
-                          options: { maxDepth: 3 }
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      class: { active: _vm.currentTab == "data" },
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.currentTab = "data"
                         }
-                      })
-                    ],
-                    1
+                      }
+                    },
+                    [_vm._v("Event Data")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      class: { active: _vm.currentTab == "listeners" },
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.currentTab = "listeners"
+                        }
+                      }
+                    },
+                    [_vm._v("Listeners")]
                   )
                 ])
-              : _vm._e(),
-            _vm._v(" "),
-            slotProps.entry.content.listeners &&
-            slotProps.entry.content.listeners.length
-              ? _c("div", { staticClass: "card mt-5" }, [
-                  _c("div", { staticClass: "card-header" }, [
-                    _c("h5", [_vm._v("Registered Listeners")])
-                  ]),
-                  _vm._v(" "),
-                  _c("table", { staticClass: "table mb-0" }, [
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.currentTab == "data",
+                        expression: "currentTab=='data'"
+                      }
+                    ],
+                    staticClass: "bg-dark p-4 mb-0 text-white"
+                  },
+                  [
+                    _c("tree-view", {
+                      attrs: {
+                        data: slotProps.entry.content.payload,
+                        options: { maxDepth: 3 }
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "table",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.currentTab == "listeners",
+                        expression: "currentTab=='listeners'"
+                      }
+                    ],
+                    staticClass: "table mb-0"
+                  },
+                  [
                     _c(
                       "tbody",
                       _vm._l(slotProps.entry.content.listeners, function(
@@ -64132,9 +64181,10 @@ var render = function() {
                         ])
                       })
                     )
-                  ])
-                ])
-              : _vm._e()
+                  ]
+                )
+              ])
+            ])
           ])
         }
       }
