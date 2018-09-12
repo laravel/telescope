@@ -100,9 +100,16 @@ class EventsWatcher extends Watcher
                 $property->setAccessible(true);
 
                 if (($value = $property->getValue($event)) instanceof Model) {
-                    $tags[] = $tag = get_class($value).':'.$value->getKey();
+                    $tags[] = $model = get_class($value).':'.$value->getKey();
 
-                    return [$property->getName() => $tag];
+                    return [$property->getName() => $model];
+                } elseif (is_object($value)) {
+                    return [
+                        $property->getName() => [
+                            'class' => get_class($value),
+                            'properties' => json_decode(json_encode($value), true)
+                        ]
+                    ];
                 } else {
                     return [$property->getName() => json_decode(json_encode($value), true)];
                 }

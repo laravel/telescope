@@ -33,11 +33,13 @@ class ModelsWatcher extends Watcher
             return;
         }
 
+        $model = get_class($data[0]).':'.$data[0]->getKey();
+
         Telescope::recordModelEvent(IncomingEntry::make([
             'action' => $this->extractAction($event),
-            'model' => get_class($data[0]).':'.$data[0]->getKey(),
+            'model' => $model,
             'changes' => $data[0]->getChanges(),
-        ]));
+        ])->tags([$model]));
     }
 
     /**
