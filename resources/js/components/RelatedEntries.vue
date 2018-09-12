@@ -108,7 +108,7 @@
 
                 <tbody>
                 <tr v-for="entry in exceptions">
-                    <td>{{truncate(entry.content.message, 120)}}</td>
+                    <td>{{truncate(entry.content.message, 100)}}</td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'exception-preview', params:{id: entry.id}}" class="control-action">
@@ -133,7 +133,7 @@
 
                 <tbody>
                 <tr v-for="entry in logs">
-                    <td>{{truncate(entry.content.message, 120)}}</td>
+                    <td>{{truncate(entry.content.message, 100)}}</td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'log-preview', params:{id: entry.id}}" class="control-action">

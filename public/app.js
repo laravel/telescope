@@ -76749,7 +76749,7 @@ var render = function() {
                 _vm._l(_vm.exceptions, function(entry) {
                   return _c("tr", [
                     _c("td", [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.message, 120)))
+                      _vm._v(_vm._s(_vm.truncate(entry.content.message, 100)))
                     ]),
                     _vm._v(" "),
                     _c(
@@ -76817,7 +76817,7 @@ var render = function() {
                 _vm._l(_vm.logs, function(entry) {
                   return _c("tr", [
                     _c("td", [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.message, 120)))
+                      _vm._v(_vm._s(_vm.truncate(entry.content.message, 100)))
                     ]),
                     _vm._v(" "),
                     _c(
