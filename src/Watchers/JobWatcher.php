@@ -2,9 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Throwable;
 use ReflectionClass;
-use Whoops\Exception\Inspector;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Queue\Events\JobFailed;
