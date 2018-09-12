@@ -68643,7 +68643,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             entry: null,
-            batch: []
+            batch: [],
+            currentTab: 'arguments'
         };
     }
 });
@@ -68705,49 +68706,95 @@ var render = function() {
             "div",
             {},
             [
-              slotProps.entry.content.arguments
-                ? _c("div", { staticClass: "card mt-5" }, [
-                    _c("div", { staticClass: "card-header" }, [
-                      _c("h5", [_vm._v("Arguments")])
-                    ]),
-                    _vm._v(" "),
+              _c("div", { staticClass: "card mt-5" }, [
+                _c("ul", { staticClass: "nav nav-pills" }, [
+                  _c("li", { staticClass: "nav-item" }, [
                     _c(
-                      "div",
-                      { staticClass: "bg-dark p-4 mb-0 text-white" },
-                      [
-                        _c("tree-view", {
-                          attrs: {
-                            data: slotProps.entry.content.arguments,
-                            options: { maxDepth: 3 }
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        class: { active: _vm.currentTab == "arguments" },
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.currentTab = "arguments"
                           }
-                        })
-                      ],
-                      1
+                        }
+                      },
+                      [_vm._v("Arguments")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        class: { active: _vm.currentTab == "options" },
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.currentTab = "options"
+                          }
+                        }
+                      },
+                      [_vm._v("Options")]
                     )
                   ])
-                : _vm._e(),
-              _vm._v(" "),
-              slotProps.entry.content.options
-                ? _c("div", { staticClass: "card mt-5" }, [
-                    _c("div", { staticClass: "card-header" }, [
-                      _c("h5", [_vm._v("Options")])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "bg-dark p-4 mb-0 text-white" },
-                      [
-                        _c("tree-view", {
-                          attrs: {
-                            data: slotProps.entry.content.options,
-                            options: { maxDepth: 3 }
-                          }
-                        })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.currentTab == "arguments",
+                          expression: "currentTab=='arguments'"
+                        }
                       ],
-                      1
-                    )
-                  ])
-                : _vm._e(),
+                      staticClass: "bg-dark p-4 mb-0 text-white"
+                    },
+                    [
+                      _c("tree-view", {
+                        attrs: {
+                          data: slotProps.entry.content.arguments,
+                          options: { maxDepth: 3 }
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.currentTab == "options",
+                          expression: "currentTab=='options'"
+                        }
+                      ],
+                      staticClass: "bg-dark p-4 mb-0 text-white"
+                    },
+                    [
+                      _c("tree-view", {
+                        attrs: {
+                          data: slotProps.entry.content.options,
+                          options: { maxDepth: 3 }
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              ]),
               _vm._v(" "),
               _c("related-entries", {
                 attrs: { entry: _vm.entry, batch: _vm.batch }

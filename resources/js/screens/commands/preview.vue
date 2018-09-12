@@ -6,6 +6,7 @@
             return {
                 entry: null,
                 batch: [],
+                    currentTab: 'arguments'
             };
         }
     }
@@ -30,19 +31,22 @@
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">
-            <div class="card mt-5" v-if="slotProps.entry.content.arguments">
-                <div class="card-header"><h5>Arguments</h5></div>
-
-                <div class="bg-dark p-4 mb-0 text-white">
-                    <tree-view :data="slotProps.entry.content.arguments" :options="{maxDepth: 3}"></tree-view>
-                </div>
-            </div>
-
-            <div class="card mt-5" v-if="slotProps.entry.content.options">
-                <div class="card-header"><h5>Options</h5></div>
-
-                <div class="bg-dark p-4 mb-0 text-white">
-                    <tree-view :data="slotProps.entry.content.options" :options="{maxDepth: 3}"></tree-view>
+            <div class="card mt-5">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='arguments'}" href="#" v-on:click.prevent="currentTab='arguments'">Arguments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='options'}" href="#" v-on:click.prevent="currentTab='options'">Options</a>
+                    </li>
+                </ul>
+                <div>
+                    <div class="bg-dark p-4 mb-0 text-white" v-show="currentTab=='arguments'">
+                        <tree-view :data="slotProps.entry.content.arguments" :options="{maxDepth: 3}"></tree-view>
+                    </div>
+                    <div class="bg-dark p-4 mb-0 text-white" v-show="currentTab=='options'">
+                        <tree-view :data="slotProps.entry.content.options" :options="{maxDepth: 3}"></tree-view>
+                    </div>
                 </div>
             </div>
 
