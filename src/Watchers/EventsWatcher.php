@@ -53,7 +53,7 @@ class EventsWatcher extends Watcher
      * @param  array  $payload
      * @return array
      */
-    private function extractPayload($eventName, $payload)
+    protected function extractPayload($eventName, $payload)
     {
         if (class_exists($eventName)) {
             return $this->extractPayloadFromEventObject($payload[0]);
@@ -73,7 +73,7 @@ class EventsWatcher extends Watcher
      * @param  object  $event
      * @return array
      */
-    private function extractPayloadFromEventObject($event)
+    protected function extractPayloadFromEventObject($event)
     {
         return collect((new ReflectionClass($event))->getProperties())
             ->mapWithKeys(function ($property) use ($event) {
@@ -100,7 +100,7 @@ class EventsWatcher extends Watcher
      * @param  string  $eventName
      * @return array
      */
-    private function formatListeners($eventName)
+    protected function formatListeners($eventName)
     {
         return collect(app('events')->getListeners($eventName))
             ->map(function ($listener) {
@@ -124,7 +124,7 @@ class EventsWatcher extends Watcher
      * @param Closure  $listener
      * @return string
      */
-    private function formatClosureListener(Closure $listener)
+    protected function formatClosureListener(Closure $listener)
     {
         $listener = new ReflectionFunction($listener);
 
@@ -139,7 +139,7 @@ class EventsWatcher extends Watcher
      * @param  string  $eventName
      * @return bool
      */
-    private function shouldIgnore($eventName)
+    protected function shouldIgnore($eventName)
     {
         return Telescope::ignoresFrameworkEvents() &&
                $this->eventIsFiredByTheFramework($eventName);
@@ -151,7 +151,7 @@ class EventsWatcher extends Watcher
      * @param  string  $eventName
      * @return bool
      */
-    private function eventIsFiredByTheFramework($eventName)
+    protected function eventIsFiredByTheFramework($eventName)
     {
         return Str::is(
             ['Illuminate\*', 'eloquent*', 'bootstrapped*', 'bootstrapping*', 'creating*', 'composing*'],
