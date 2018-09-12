@@ -47,32 +47,6 @@ class EventsWatcher extends Watcher
     }
 
     /**
-     * Determine if the event should be ignored.
-     *
-     * @param  string  $eventName
-     * @return bool
-     */
-    private function shouldIgnore($eventName)
-    {
-        return Telescope::ignoresFrameworkEvents() &&
-               $this->eventIsFiredByTheFramework($eventName);
-    }
-
-    /**
-     * Determine if the event was fired internally by Laravel.
-     *
-     * @param  string  $eventName
-     * @return bool
-     */
-    private function eventIsFiredByTheFramework($eventName)
-    {
-        return Str::is(
-            ['Illuminate\*', 'eloquent*', 'bootstrapped*', 'bootstrapping*', 'creating*', 'composing*'],
-            $eventName
-        );
-    }
-
-    /**
      * Extract the payload and tags from the event.
      *
      * @param  string  $eventName
@@ -156,6 +130,32 @@ class EventsWatcher extends Watcher
 
         return sprintf('Closure at %s[%s:%s]',
             $listener->getFileName(), $listener->getStartLine(), $listener->getEndLine()
+        );
+    }
+
+    /**
+     * Determine if the event should be ignored.
+     *
+     * @param  string  $eventName
+     * @return bool
+     */
+    private function shouldIgnore($eventName)
+    {
+        return Telescope::ignoresFrameworkEvents() &&
+               $this->eventIsFiredByTheFramework($eventName);
+    }
+
+    /**
+     * Determine if the event was fired internally by Laravel.
+     *
+     * @param  string  $eventName
+     * @return bool
+     */
+    private function eventIsFiredByTheFramework($eventName)
+    {
+        return Str::is(
+            ['Illuminate\*', 'eloquent*', 'bootstrapped*', 'bootstrapping*', 'creating*', 'composing*'],
+            $eventName
         );
     }
 }
