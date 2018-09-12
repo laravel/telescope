@@ -60682,9 +60682,7 @@ webpackContext.id = 169;
     name: 'command-preview',
     component: __webpack_require__(319)
 }, {
-    path: '/commands',
-    name: 'commands',
-    component: __webpack_require__(322)
+    path: '/commands', name: 'commands', component: __webpack_require__(322)
 }, {
     path: '/schedule/:id',
     name: 'schedule-preview',

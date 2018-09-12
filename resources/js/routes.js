@@ -122,9 +122,7 @@ export default [
     },
 
     {
-        path: '/commands',
-        name: 'commands',
-        component: require('./screens/commands/index')
+        path: '/commands', name: 'commands', component: require('./screens/commands/index')
     },
 
     {
