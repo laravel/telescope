@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <index-screen title="Redis Commands" resource="redis">
+    <index-screen title="Redis" resource="redis">
         <tr slot="table-header">
             <th scope="col">Command</th>
             <th scope="col">Duration</th>
