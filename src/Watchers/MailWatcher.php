@@ -48,8 +48,10 @@ class MailWatcher extends Watcher
     private function extractTagsFromMessage($message)
     {
         return array_merge(
-            array_keys($message->getTo() ?: []), array_keys($message->getCc() ?: []),
-            array_keys($message->getBcc() ?: []), array_keys($message->getFrom() ?: [])
+            array_keys($message->getFrom() ?: []).
+            array_keys($message->getTo() ?: []),
+            array_keys($message->getCc() ?: []),
+            array_keys($message->getBcc() ?: [])
         );
     }
 }
