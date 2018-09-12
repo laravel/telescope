@@ -74,7 +74,7 @@
                         <a class="nav-link" :class="{active: currentTab=='exception'}" href="#" v-on:click.prevent="currentTab='exception'" v-if="slotProps.entry.content.exception">Exception Message</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='preview'}" href="#" v-on:click.prevent="currentTab='preview'" v-if="slotProps.entry.content.exception">Exception Preview</a>
+                        <a class="nav-link" :class="{active: currentTab=='preview'}" href="#" v-on:click.prevent="currentTab='preview'" v-if="slotProps.entry.content.exception">Exception Location</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" :class="{active: currentTab=='trace'}" href="#" v-on:click.prevent="currentTab='trace'" v-if="slotProps.entry.content.exception">Trace</a>
