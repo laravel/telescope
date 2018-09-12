@@ -61473,7 +61473,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("table", { staticClass: "table mb-0" }, [
+  return _c("table", { staticClass: "table table-responsive mb-0" }, [
     _c(
       "tbody",
       [

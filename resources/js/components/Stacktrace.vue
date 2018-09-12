@@ -23,7 +23,7 @@
 </script>
 
 <template>
-    <table class="table mb-0">
+    <table class="table table-responsive mb-0">
         <tbody>
         <tr v-for="line in lines">
             <td class="bg-secondary">{{line.file}}:{{line.line}}</td>
