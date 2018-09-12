@@ -4,10 +4,12 @@ namespace Laravel\Telescope\Watchers;
 
 use ReflectionClass;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Telescope\ExceptionContext;
+use Laravel\Telescope\ExtractProperties;
 use Illuminate\Queue\Events\JobProcessed;
 
 class JobWatcher extends Watcher
@@ -32,13 +34,13 @@ class JobWatcher extends Watcher
      */
     public function recordProcessedJob(JobProcessed $event)
     {
-        list($payload, $tags) = $this->extractPayloadAndTags($event->job);
-
-        $tags[] = 'processed';
+        $payload = $this->payload($event->job);
 
         Telescope::recordJob(IncomingEntry::make(array_merge([
             'status' => 'processed',
-        ], $this->defaultJobData($event, $payload)))->tags($tags));
+        ], $this->defaultJobData($event, $payload)))->tags(
+            $this->tags($event->job)
+        ));
     }
 
     /**
@@ -83,41 +85,36 @@ class JobWatcher extends Watcher
     }
 
     /**
-     * Extract the payload and tags from the job.
+     * Extract the payload from the job.
      *
      * @param  \Illuminate\Contracts\Queue\Job  $job
      * @return array
      */
-    private function extractPayloadAndTags($job)
+    protected function payload($job)
     {
         if (! isset($job->payload()['data']['command'])) {
-            return [$job->payload()['data'], []];
+            return $job->payload()['data'];
         }
 
-        $tags = [];
+        return ExtractProperties::from(
+            unserialize($job->payload()['data']['command'])
+        );
+    }
 
-        $command = unserialize($job->payload()['data']['command']);
+    /**
+     * Extract the tags from the job.
+     *
+     * @param  \Illuminate\Contracts\Queue\Job  $job
+     * @return array
+     */
+    protected function tags($job)
+    {
+        if (! isset($job->payload()['data']['command'])) {
+            return [];
+        }
 
-        $payload = collect((new ReflectionClass($command))->getProperties())
-            ->mapWithKeys(function ($property) use ($command, &$tags) {
-                $property->setAccessible(true);
-
-                if (($value = $property->getValue($command)) instanceof Model) {
-                    $tags[] = $model = get_class($value).':'.$value->getKey();
-
-                    return [$property->getName() => $model];
-                } elseif (is_object($value)) {
-                    return [
-                        $property->getName() => [
-                            'class' => get_class($value),
-                            'properties' => json_decode(json_encode($value), true)
-                        ]
-                    ];
-                } else {
-                    return [$property->getName() => json_decode(json_encode($value), true)];
-                }
-            })->toArray();
-
-        return [$payload, $tags];
+        return ExtractTags::from(
+            unserialize($job->payload()['data']['command'])
+        );
     }
 }
