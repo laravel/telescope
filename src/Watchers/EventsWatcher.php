@@ -76,7 +76,8 @@ class EventsWatcher extends Watcher
     {
         return collect(app('events')->getListeners($eventName))
             ->map(function ($listener) {
-                $listener = (new ReflectionFunction($listener))->getStaticVariables()['listener'];
+                $listener = (new ReflectionFunction($listener))
+                        ->getStaticVariables()['listener'];
 
                 if (is_string($listener)) {
                     return Str::contains($listener, '@') ? $listener : $listener.'@handle';
@@ -101,7 +102,9 @@ class EventsWatcher extends Watcher
         $listener = new ReflectionFunction($listener);
 
         return sprintf('Closure at %s[%s:%s]',
-            $listener->getFileName(), $listener->getStartLine(), $listener->getEndLine()
+            $listener->getFileName(),
+            $listener->getStartLine(),
+            $listener->getEndLine()
         );
     }
 
