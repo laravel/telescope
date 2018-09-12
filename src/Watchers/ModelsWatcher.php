@@ -42,7 +42,7 @@ class ModelsWatcher extends Watcher
     }
 
     /**
-     * Extract action from the given event.
+     * Extract the Eloquent action from the given event.
      *
      * @param  string  $event
      * @return mixed
