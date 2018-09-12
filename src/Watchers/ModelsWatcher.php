@@ -5,7 +5,6 @@ namespace Laravel\Telescope\Watchers;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
-use Illuminate\Database\Events\QueryExecuted;
 
 class ModelsWatcher extends Watcher
 {

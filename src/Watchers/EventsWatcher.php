@@ -3,13 +3,11 @@
 namespace Laravel\Telescope\Watchers;
 
 use Closure;
-use ReflectionClass;
 use ReflectionFunction;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Telescope\ExtractProperties;
 
 class EventsWatcher extends Watcher
