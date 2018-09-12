@@ -40,7 +40,7 @@ class MailWatcher extends Watcher
     }
 
     /**
-     * Extract the tags for the given message.
+     * Extract the tags from the message.
      *
      * @param  \Swift_Message  $message
      * @return array
