@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <index-screen title="Console Commands" resource="commands">
+    <index-screen title="Commands" resource="commands">
         <tr slot="table-header">
             <th scope="col">Command</th>
             <th scope="col" class="table-fit">Exit Code</th>

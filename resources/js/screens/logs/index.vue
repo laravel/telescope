@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <index-screen title="Log Entries" resource="logs">
+    <index-screen title="Logs" resource="logs">
         <tr slot="table-header">
             <th scope="col">Message</th>
             <th scope="col">Level</th>
