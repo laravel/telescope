@@ -62,4 +62,15 @@ class NotificationsWatcher extends Watcher
                 ? get_class($notifiable).':'.$notifiable->getKey()
                 : $notifiable;
     }
+
+    /**
+     * Format the given notification.
+     *
+     * @param  \Illuminate\Notifications\Notification $notification
+     * @return string
+     */
+    private function formatNotification($notification)
+    {
+        return get_class($notification);
+    }
 }
