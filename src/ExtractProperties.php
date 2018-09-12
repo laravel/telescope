@@ -5,7 +5,7 @@ namespace Laravel\Telescope;
 use ReflectionClass;
 use Illuminate\Database\Eloquent\Model;
 
-class Properties
+class ExtractProperties
 {
     /**
      * Extract the properties for the given object in array form.
@@ -15,7 +15,7 @@ class Properties
      * @param  mixed  $target
      * @return array
      */
-    public static function for($target)
+    public static function from($target)
     {
         return collect((new ReflectionClass($target))->getProperties())
             ->mapWithKeys(function ($property) use ($target) {

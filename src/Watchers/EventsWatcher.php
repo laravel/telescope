@@ -8,9 +8,9 @@ use ReflectionFunction;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Tags;
 use Laravel\Telescope\Telescope;
-use Laravel\Telescope\Properties;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Telescope\ExtractProperties;
 
 class EventsWatcher extends Watcher
 {
@@ -57,7 +57,7 @@ class EventsWatcher extends Watcher
     protected function extractPayload($eventName, $payload)
     {
         if (class_exists($eventName)) {
-            return Properties::for($payload[0]);
+            return ExtractProperties::from($payload[0]);
         }
 
         return collect($payload)->map(function ($value) {
