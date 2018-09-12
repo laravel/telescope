@@ -32,10 +32,10 @@ class RequestsWatcher extends Watcher
         Telescope::recordRequest(IncomingEntry::make([
             'uri' => str_replace($event->request->root(), '', $event->request->path()),
             'method' => $event->request->method(),
-            'headers' => $this->formatHeaders($event->request->headers->all()),
-            'payload' => $this->formatPayload($event->request->all()),
+            'headers' => $this->headers($event->request->headers->all()),
+            'payload' => $this->payload($event->request->all()),
             'response_status' => $event->response->getStatusCode(),
-            'response' => $this->formatResponse($event->response),
+            'response' => $this->response($event->response),
         ]));
     }
 
@@ -45,7 +45,7 @@ class RequestsWatcher extends Watcher
      * @param  array  $headers
      * @return array
      */
-    protected function formatHeaders($headers)
+    protected function headers($headers)
     {
         return collect($headers)->map(function ($header) {
             return $header[0];
@@ -58,7 +58,7 @@ class RequestsWatcher extends Watcher
      * @param  array  $payload
      * @return array
      */
-    protected function formatPayload($payload)
+    protected function payload($payload)
     {
         foreach (Telescope::$hiddenRequestParameters as $parameter) {
             if (Arr::get($payload, $parameter)) {
@@ -75,7 +75,7 @@ class RequestsWatcher extends Watcher
      * @param  \Symfony\Component\HttpFoundation\Response  $response
      * @return array
      */
-    protected function formatResponse(Response $response)
+    protected function response(Response $response)
     {
         if (is_string($response->getContent()) &&
             is_array(json_decode($response->getContent(), true)) &&
