@@ -9,6 +9,7 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Telescope\ExceptionContext;
 use Illuminate\Queue\Events\JobProcessed;
 
 class JobWatcher extends Watcher
@@ -58,7 +59,7 @@ class JobWatcher extends Watcher
                 'message' => $event->exception->getMessage(),
                 'trace' => $event->exception->getTrace(),
                 'line' => $event->exception->getLine(),
-                'line_preview' => $this->formatExceptionLinePreview($event->exception),
+                'line_preview' => ExceptionContext::get($event->exception),
             ],
         ], $this->defaultJobData($event, $payload)))->tags($tags));
     }
@@ -148,22 +149,5 @@ class JobWatcher extends Watcher
         }
 
         return $tags;
-    }
-
-    /**
-     * Format the exception line preview.
-     *
-     * @param  Throwable  $exception
-     * @return mixed
-     */
-    private function formatExceptionLinePreview(Throwable $exception)
-    {
-        $result = (new Inspector($exception))
-            ->getFrames()[0]
-            ->getFileLines($exception->getLine() - 10, 20);
-
-        return collect($result)->mapWithKeys(function ($value, $key) {
-            return [$key + 1 => $value];
-        })->all();
     }
 }

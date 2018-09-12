@@ -6,6 +6,7 @@ use Throwable;
 use Whoops\Exception\Inspector;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
+use Laravel\Telescope\ExceptionContext;
 use Illuminate\Log\Events\MessageLogged;
 
 class ExceptionWatcher extends Watcher
@@ -42,26 +43,9 @@ class ExceptionWatcher extends Watcher
                 'line' => $exception->getLine(),
                 'message' => $exception->getMessage(),
                 'trace' => $exception->getTrace(),
-                'line_preview' => $this->formatLinePreview($exception),
+                'line_preview' => ExceptionContext::get($exception),
             ])->tags($this->tags($event))
         );
-    }
-
-    /**
-     * Format the exception line preview.
-     *
-     * @param  Throwable  $exception
-     * @return mixed
-     */
-    private function formatLinePreview(Throwable $exception)
-    {
-        $result = (new Inspector($exception))
-                ->getFrames()[0]
-                ->getFileLines($exception->getLine() - 10, 20);
-
-        return collect($result)->mapWithKeys(function ($value, $key) {
-            return [$key + 1 => $value];
-        })->all();
     }
 
 
