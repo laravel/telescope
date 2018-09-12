@@ -76466,6 +76466,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.currentTab = 'cache';
         } else if (this.redis.length) {
             this.currentTab = 'redis';
+        } else if (this.models.length) {
+            this.currentTab = 'models';
         }
     },
 
@@ -76499,6 +76501,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         redis: function redis() {
             return this.batchEntriesOfType('redis');
+        },
+        models: function models() {
+            return this.batchEntriesOfType('model');
         }
     }
 });
@@ -76630,6 +76635,26 @@ var render = function() {
                     }
                   },
                   [_vm._v("Redis (" + _vm._s(_vm.redis.length) + ")")]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "nav-item" }, [
+            _vm.models.length
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    class: { active: _vm.currentTab == "models" },
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.currentTab = "models"
+                      }
+                    }
+                  },
+                  [_vm._v("Models (" + _vm._s(_vm.models.length) + ")")]
                 )
               : _vm._e()
           ])
@@ -77058,6 +77083,78 @@ var render = function() {
                 })
               )
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "table",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.currentTab == "models",
+                  expression: "currentTab=='models'"
+                }
+              ],
+              staticClass: "table table-hover table-sm mb-0"
+            },
+            [
+              _vm._m(6),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.models, function(entry) {
+                  return _c("tr", [
+                    _c("td", [
+                      _vm._v(_vm._s(_vm.truncate(entry.content.model, 100)))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-fit" }, [
+                      _vm._v(_vm._s(entry.content.action))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "table-fit" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "control-action",
+                            attrs: {
+                              to: {
+                                name: "model-preview",
+                                params: { id: entry.id }
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  viewBox: "0 0 22 16"
+                                }
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    d:
+                                      "M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                })
+              )
+            ]
           )
         ])
       ])
@@ -77131,6 +77228,20 @@ var staticRenderFns = [
         _c("th", [_vm._v("Command")]),
         _vm._v(" "),
         _c("th", [_vm._v("Duration")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Model")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")]),
         _vm._v(" "),
         _c("th")
       ])
