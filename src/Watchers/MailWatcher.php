@@ -36,16 +36,16 @@ class MailWatcher extends Watcher
             'subject' => $event->message->getSubject(),
             'html' => $event->message->getBody(),
             'raw' => $event->message->toString(),
-        ])->tags($this->extractTagsFromMessage($event->message)));
+        ])->tags($this->tags($event->message)));
     }
 
     /**
-     * Extract tags from the given message.
+     * Extract the tags for the given message.
      *
      * @param  \Swift_Message  $message
      * @return array
      */
-    private function extractTagsFromMessage($message)
+    private function tags($message)
     {
         return array_merge(
             array_keys($message->getFrom() ?: []).

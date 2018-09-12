@@ -33,7 +33,7 @@ class NotificationsWatcher extends Watcher
             'response' => $event->response,
             'notifiable' => $this->formatNotifiable($event->notifiable),
             'notification' => $this->formatNotification($event->notification),
-        ])->tags($this->extractTagsFromEvent($event)));
+        ])->tags($this->tags($event)));
     }
 
     /**
@@ -42,7 +42,7 @@ class NotificationsWatcher extends Watcher
      * @param  \Illuminate\Notifications\Events\NotificationSent  $event
      * @return array
      */
-    private function extractTagsFromEvent($event)
+    private function tags($event)
     {
         return [
             get_class($event->notification),

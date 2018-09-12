@@ -36,7 +36,7 @@ class LogWatcher extends Watcher
                 'level' => $event->level,
                 'message' => $event->message,
                 'context' => $event->context,
-            ])->tags($this->extractTagsFromEvent($event))
+            ])->tags($this->tags($event))
         );
     }
 
@@ -47,7 +47,7 @@ class LogWatcher extends Watcher
      * @param  \Illuminate\Log\Events\MessageLogged  $event
      * @return array
      */
-    private function extractTagsFromEvent($event)
+    private function tags($event)
     {
         return $event->context['telescope'] ?? [];
     }

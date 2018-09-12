@@ -43,7 +43,7 @@ class ExceptionWatcher extends Watcher
                 'message' => $exception->getMessage(),
                 'trace' => $exception->getTrace(),
                 'line_preview' => $this->formatLinePreview($exception),
-            ])->tags($this->extractTagsFromEvent($event))
+            ])->tags($this->tags($event))
         );
     }
 
@@ -71,7 +71,7 @@ class ExceptionWatcher extends Watcher
      * @param  \Illuminate\Log\Events\MessageLogged  $event
      * @return array
      */
-    private function extractTagsFromEvent($event)
+    private function tags($event)
     {
         return $event->context['telescope'] ?? [];
     }
