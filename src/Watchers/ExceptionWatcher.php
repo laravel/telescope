@@ -66,7 +66,7 @@ class ExceptionWatcher extends Watcher
 
 
     /**
-     * Extract tags from the given event.
+     * Extract the tags for the given event.
      *
      * @param  \Illuminate\Log\Events\MessageLogged  $event
      * @return array

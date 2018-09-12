@@ -29,15 +29,15 @@ class NotificationsWatcher extends Watcher
     public function recordNotification(NotificationSent $event)
     {
         Telescope::recordNotification(IncomingEntry::make([
+            'notification' => get_class($event->notification),
+            'notifiable' => $this->formatNotifiable($event->notifiable),
             'channel' => $event->channel,
             'response' => $event->response,
-            'notifiable' => $this->formatNotifiable($event->notifiable),
-            'notification' => $this->formatNotification($event->notification),
         ])->tags($this->tags($event)));
     }
 
     /**
-     * Extract tags from the given event.
+     * Extract the tags for the given event.
      *
      * @param  \Illuminate\Notifications\Events\NotificationSent  $event
      * @return array
@@ -51,7 +51,7 @@ class NotificationsWatcher extends Watcher
     }
 
     /**
-     * Format the given notifiable.
+     * Format the given notifiable into a tag.
      *
      * @param  mixed  $notifiable
      * @return string
@@ -61,16 +61,5 @@ class NotificationsWatcher extends Watcher
         return $notifiable instanceof Model
                 ? get_class($notifiable).':'.$notifiable->getKey()
                 : $notifiable;
-    }
-
-    /**
-     * Format the given notification.
-     *
-     * @param  \Illuminate\Notifications\Notification $notification
-     * @return string
-     */
-    private function formatNotification($notification)
-    {
-        return get_class($notification);
     }
 }
