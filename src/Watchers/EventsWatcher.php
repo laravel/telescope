@@ -79,12 +79,12 @@ class EventsWatcher extends Watcher
                 $listener = (new ReflectionFunction($listener))->getStaticVariables()['listener'];
 
                 if (is_string($listener)) {
-                    return (str_contains($listener, '@') ? $listener : $listener.'@handle');
+                    return Str::contains($listener, '@') ? $listener : $listener.'@handle';
                 } elseif (is_array($listener)) {
                     return get_class($listener[0]).'@'.$listener[1];
-                } else {
-                    return $this->formatClosureListener($listener);
                 }
+
+                return $this->formatClosureListener($listener);
             })->reject(function ($listener) {
                 return Str::contains($listener, 'Laravel\\Telescope');
             })->values()->toArray();
