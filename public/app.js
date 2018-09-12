@@ -62508,7 +62508,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -62533,7 +62533,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             entry: null,
-            batch: []
+            batch: [],
+            currentTab: 'data'
         };
     }
 });
@@ -63522,44 +63523,8 @@ var render = function() {
                     "\n            "
                 )
               ])
-            ]),
-            _vm._v(" "),
-            slotProps.entry.content.status == "failed"
-              ? _c("tr", [
-                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                    _vm._v("Exception")
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(slotProps.entry.content.exception.message) +
-                        "\n            "
-                    )
-                  ])
-                ])
-              : _vm._e()
+            ])
           ]
-        }
-      },
-      {
-        key: "below-table",
-        fn: function(slotProps) {
-          return _c(
-            "div",
-            {},
-            [
-              slotProps.entry.content.exception
-                ? _c("code-preview", {
-                    attrs: {
-                      lines: slotProps.entry.content.exception.line_preview,
-                      "highlighted-line": slotProps.entry.content.exception.line
-                    }
-                  })
-                : _vm._e()
-            ],
-            1
-          )
         }
       },
       {
@@ -63569,35 +63534,103 @@ var render = function() {
             "div",
             {},
             [
-              slotProps.entry.content.exception &&
-              slotProps.entry.content.exception.trace.length
-                ? _c(
-                    "div",
-                    { staticClass: "card mt-5" },
-                    [
-                      _c("div", { staticClass: "card-header" }, [
-                        _c("h5", [_vm._v("Stacktrace")])
-                      ]),
-                      _vm._v(" "),
-                      _c("stack-trace", {
-                        attrs: {
-                          trace: slotProps.entry.content.exception.trace
+              _c("div", { staticClass: "card mt-5" }, [
+                _c("ul", { staticClass: "nav nav-pills" }, [
+                  _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        class: { active: _vm.currentTab == "data" },
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.currentTab = "data"
+                          }
                         }
-                      })
-                    ],
-                    1
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              slotProps.entry.content.data
-                ? _c("div", { staticClass: "card mt-5" }, [
-                    _c("div", { staticClass: "card-header" }, [
-                      _c("h5", [_vm._v("Job Data")])
-                    ]),
-                    _vm._v(" "),
+                      },
+                      [_vm._v("Data")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "nav-item" }, [
+                    slotProps.entry.content.exception
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "nav-link",
+                            class: { active: _vm.currentTab == "exception" },
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.currentTab = "exception"
+                              }
+                            }
+                          },
+                          [_vm._v("Exception Message")]
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "nav-item" }, [
+                    slotProps.entry.content.exception
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "nav-link",
+                            class: { active: _vm.currentTab == "preview" },
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.currentTab = "preview"
+                              }
+                            }
+                          },
+                          [_vm._v("Exception Preview")]
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "nav-item" }, [
+                    slotProps.entry.content.exception
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "nav-link",
+                            class: { active: _vm.currentTab == "trace" },
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.currentTab = "trace"
+                              }
+                            }
+                          },
+                          [_vm._v("Trace")]
+                        )
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  [
                     _c(
                       "div",
-                      { staticClass: "bg-dark p-4 mb-0 text-white" },
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.currentTab == "data",
+                            expression: "currentTab=='data'"
+                          }
+                        ],
+                        staticClass: "bg-dark p-4 mb-0 text-white"
+                      },
                       [
                         _c("tree-view", {
                           attrs: {
@@ -63607,9 +63640,68 @@ var render = function() {
                         })
                       ],
                       1
-                    )
-                  ])
-                : _vm._e(),
+                    ),
+                    _vm._v(" "),
+                    slotProps.entry.content.exception
+                      ? _c(
+                          "pre",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.currentTab == "exception",
+                                expression: "currentTab=='exception'"
+                              }
+                            ],
+                            staticClass: "bg-dark p-4 mb-0 text-white"
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(slotProps.entry.content.exception.message)
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    slotProps.entry.content.exception
+                      ? _c("stack-trace", {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.currentTab == "trace",
+                              expression: "currentTab=='trace'"
+                            }
+                          ],
+                          attrs: {
+                            trace: slotProps.entry.content.exception.trace
+                          }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    slotProps.entry.content.exception
+                      ? _c("code-preview", {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.currentTab == "preview",
+                              expression: "currentTab=='preview'"
+                            }
+                          ],
+                          attrs: {
+                            lines:
+                              slotProps.entry.content.exception.line_preview,
+                            "highlighted-line":
+                              slotProps.entry.content.exception.line
+                          }
+                        })
+                      : _vm._e()
+                  ],
+                  1
+                )
+              ]),
               _vm._v(" "),
               _c("related-entries", {
                 attrs: { entry: _vm.entry, batch: _vm.batch }

@@ -11,6 +11,7 @@
             return {
                 entry: null,
                 batch: [],
+                currentTab: 'data'
             };
         }
     }
@@ -61,37 +62,39 @@
                 </td>
             </tr>
 
-            <tr v-if="slotProps.entry.content.status == 'failed'">
-                <td class="table-fit font-weight-bold">Exception</td>
-                <td>
-                    {{slotProps.entry.content.exception.message}}
-                </td>
-            </tr>
-
         </template>
 
-        <div slot="below-table" slot-scope="slotProps">
-            <code-preview
-                    v-if="slotProps.entry.content.exception"
-                    :lines="slotProps.entry.content.exception.line_preview"
-                    :highlighted-line="slotProps.entry.content.exception.line">
-            </code-preview>
-        </div>
-
         <div slot="after-attributes-card" slot-scope="slotProps">
-            <div class="card mt-5" v-if="slotProps.entry.content.exception && slotProps.entry.content.exception.trace.length">
-                <div class="card-header"><h5>Stacktrace</h5></div>
-
-                <stack-trace :trace="slotProps.entry.content.exception.trace"></stack-trace>
-            </div>
-
-            <div class="card mt-5" v-if="slotProps.entry.content.data">
-                <div class="card-header"><h5>Job Data</h5></div>
-
-                <div class="bg-dark p-4 mb-0 text-white">
-                    <tree-view :data="slotProps.entry.content.data" :options="{maxDepth: 3}"></tree-view>
+            <div class="card mt-5">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Data</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='exception'}" href="#" v-on:click.prevent="currentTab='exception'" v-if="slotProps.entry.content.exception">Exception Message</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='preview'}" href="#" v-on:click.prevent="currentTab='preview'" v-if="slotProps.entry.content.exception">Exception Preview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='trace'}" href="#" v-on:click.prevent="currentTab='trace'" v-if="slotProps.entry.content.exception">Trace</a>
+                    </li>
+                </ul>
+                <div>
+                    <div class="bg-dark p-4 mb-0 text-white" v-show="currentTab=='data'">
+                        <tree-view :data="slotProps.entry.content.data" :options="{maxDepth: 3}"></tree-view>
+                    </div>
+                    <pre class="bg-dark p-4 mb-0 text-white" v-if="slotProps.entry.content.exception" v-show="currentTab=='exception'">{{slotProps.entry.content.exception.message}}</pre>
+                    <stack-trace :trace="slotProps.entry.content.exception.trace" v-if="slotProps.entry.content.exception" v-show="currentTab=='trace'"></stack-trace>
+                    <code-preview
+                            v-if="slotProps.entry.content.exception"
+                            v-show="currentTab=='preview'"
+                            :lines="slotProps.entry.content.exception.line_preview"
+                            :highlighted-line="slotProps.entry.content.exception.line">
+                    </code-preview>
                 </div>
             </div>
+
 
             <!-- Additional Information -->
             <related-entries :entry="entry" :batch="batch">
