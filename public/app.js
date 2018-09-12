@@ -61289,7 +61289,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             entry: null,
-            batch: []
+            batch: [],
+            currentTab: 'message'
         };
     }
 });
@@ -61568,50 +61569,112 @@ var render = function() {
         key: "after-attributes-card",
         fn: function(slotProps) {
           return _c("div", { staticClass: "mt-5" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h5", [_vm._v("Exception Message")])
-              ]),
-              _vm._v(" "),
-              _c("pre", { staticClass: "bg-dark p-4 mb-0 text-white" }, [
-                _vm._v(_vm._s(slotProps.entry.content.message))
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card mt-5" },
-              [
-                _c("div", { staticClass: "card-header" }, [
-                  _c("h5", [_vm._v("Location")])
+            _c("div", { staticClass: "card mt-5" }, [
+              _c("ul", { staticClass: "nav nav-pills" }, [
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      class: { active: _vm.currentTab == "message" },
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.currentTab = "message"
+                        }
+                      }
+                    },
+                    [_vm._v("Message")]
+                  )
                 ]),
                 _vm._v(" "),
-                _c("code-preview", {
-                  attrs: {
-                    lines: slotProps.entry.content.line_preview,
-                    "highlighted-line": slotProps.entry.content.line
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            slotProps.entry.content.trace.length
-              ? _c(
-                  "div",
-                  { staticClass: "card mt-5" },
-                  [
-                    _c("div", { staticClass: "card-header" }, [
-                      _c("h5", [_vm._v("Stacktrace")])
-                    ]),
-                    _vm._v(" "),
-                    _c("stack-trace", {
-                      attrs: { trace: slotProps.entry.content.trace }
-                    })
-                  ],
-                  1
-                )
-              : _vm._e()
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      class: { active: _vm.currentTab == "location" },
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.currentTab = "location"
+                        }
+                      }
+                    },
+                    [_vm._v("Location")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "nav-item" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      class: { active: _vm.currentTab == "trace" },
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.currentTab = "trace"
+                        }
+                      }
+                    },
+                    [_vm._v("Stacktrace")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                [
+                  _c(
+                    "pre",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.currentTab == "message",
+                          expression: "currentTab=='message'"
+                        }
+                      ],
+                      staticClass: "bg-dark p-4 mb-0 text-white"
+                    },
+                    [_vm._v(_vm._s(slotProps.entry.content.message))]
+                  ),
+                  _vm._v(" "),
+                  _c("code-preview", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.currentTab == "location",
+                        expression: "currentTab=='location'"
+                      }
+                    ],
+                    attrs: {
+                      lines: slotProps.entry.content.line_preview,
+                      "highlighted-line": slotProps.entry.content.line
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("stack-trace", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.currentTab == "trace",
+                        expression: "currentTab=='trace'"
+                      }
+                    ],
+                    attrs: { trace: slotProps.entry.content.trace }
+                  })
+                ],
+                1
+              )
+            ])
           ])
         }
       }
