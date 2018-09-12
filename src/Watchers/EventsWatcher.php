@@ -6,6 +6,7 @@ use Closure;
 use ReflectionClass;
 use ReflectionFunction;
 use Illuminate\Support\Str;
+use Laravel\Telescope\Tags;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
@@ -141,15 +142,7 @@ class EventsWatcher extends Watcher
      */
     private function extractTagsFromEventObject($event)
     {
-        $properties = collect((new ReflectionClass($event))->getProperties());
-
-        return $properties->map(function ($property) use ($event) {
-            $property->setAccessible(true);
-
-            if (($value = $property->getValue($event)) instanceof Model) {
-                return get_class($value).':'.$value->getKey();
-            }
-        })->filter()->unique()->toArray();
+        return Tags::for($event);
     }
 
     /**
