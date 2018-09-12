@@ -21,7 +21,7 @@
 
 
         <template slot="row" slot-scope="slotProps">
-            <td :title="slotProps.entry.content.model">{{truncate(slotProps.entry.content.model, 80)}}</td>
+            <td>{{truncate(slotProps.entry.content.model, 80)}}</td>
 
             <td class="table-fit">
                 <span :class="'text-'+actionClass(slotProps.entry.content.action)">

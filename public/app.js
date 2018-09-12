@@ -78330,7 +78330,7 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return [
-              _c("td", { attrs: { title: slotProps.entry.content.model } }, [
+              _c("td", [
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.model, 80)))
               ]),
               _vm._v(" "),
