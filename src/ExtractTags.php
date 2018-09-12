@@ -11,7 +11,7 @@ use Illuminate\Broadcasting\BroadcastEvent;
 use Illuminate\Notifications\SendQueuedNotifications;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
-class Tags
+class ExtractTags
 {
     /**
      * Get the tags for the given object.
@@ -19,7 +19,7 @@ class Tags
      * @param  mixed  $target
      * @return array
      */
-    public static function for($target)
+    public static function from($target)
     {
         if ($tags = static::explicitTags([$target])) {
             return $tags;
