@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Properties
 {
     /**
-     * Extract the properties for the given object, in array form.
+     * Extract the properties for the given object in array form.
      *
      * The given array is ready for storage.
      *
