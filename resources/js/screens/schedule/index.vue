@@ -13,7 +13,9 @@
 
         <template slot="row" slot-scope="slotProps">
             <td>{{ truncate(slotProps.entry.content.description, 85) || truncate(slotProps.entry.content.command, 85) }}</td>
+
             <td class="table-fit">{{slotProps.entry.content.expression}}</td>
+
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
 
             <td class="table-fit">

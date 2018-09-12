@@ -14,8 +14,11 @@
 
         <template slot="row" slot-scope="slotProps">
             <td>{{truncate(slotProps.entry.content.key, 80)}}</td>
+
             <td class="table-fit">{{slotProps.entry.content.type}}</td>
+
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
+
             <td class="table-fit">
                 <router-link :to="{name:'cache-preview', params:{id: slotProps.entry.id}}" class="control-action">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">

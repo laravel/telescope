@@ -61764,7 +61764,7 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return [
-              _c("td", [
+              _c("td", { attrs: { title: slotProps.entry.content.class } }, [
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.class, 80)))
               ]),
               _vm._v(" "),
@@ -62446,17 +62446,27 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return [
-              _c("td", [
-                _vm._v(
-                  _vm._s(_vm.truncate(slotProps.entry.content.notifiable, 50))
-                )
-              ]),
+              _c(
+                "td",
+                { attrs: { title: slotProps.entry.content.notifiable } },
+                [
+                  _vm._v(
+                    _vm._s(_vm.truncate(slotProps.entry.content.notifiable, 50))
+                  )
+                ]
+              ),
               _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  _vm._s(_vm.truncate(slotProps.entry.content.notification, 50))
-                )
-              ]),
+              _c(
+                "td",
+                { attrs: { title: slotProps.entry.content.notification } },
+                [
+                  _vm._v(
+                    _vm._s(
+                      _vm.truncate(slotProps.entry.content.notification, 50)
+                    )
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
                 _vm._v(
@@ -63911,7 +63921,7 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return [
-              _c("td", [
+              _c("td", { attrs: { title: slotProps.entry.content.name } }, [
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.name, 60)))
               ]),
               _vm._v(" "),
@@ -64325,7 +64335,7 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return [
-              _c("td", [
+              _c("td", { attrs: { title: slotProps.entry.content.name } }, [
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.name, 80)))
               ]),
               _vm._v(" "),
@@ -68651,7 +68661,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", [
+              _c("td", { attrs: { title: slotProps.entry.content.uri } }, [
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.uri, 90)))
               ]),
               _vm._v(" "),
@@ -69054,7 +69064,7 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return [
-              _c("td", [
+              _c("td", { attrs: { title: slotProps.entry.content.command } }, [
                 _vm._v(
                   _vm._s(_vm.truncate(slotProps.entry.content.command, 90))
                 )

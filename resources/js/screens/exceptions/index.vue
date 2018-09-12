@@ -12,7 +12,7 @@
 
 
         <template slot="row" slot-scope="slotProps">
-            <td>{{truncate(slotProps.entry.content.class, 80)}}</td>
+            <td :title="slotProps.entry.content.class">{{truncate(slotProps.entry.content.class, 80)}}</td>
 
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
 

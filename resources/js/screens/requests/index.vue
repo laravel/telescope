@@ -27,13 +27,17 @@
                     {{slotProps.entry.content.method}}
                 </span>
             </td>
-            <td>{{truncate(slotProps.entry.content.uri, 90)}}</td>
+
+            <td :title="slotProps.entry.content.uri">{{truncate(slotProps.entry.content.uri, 90)}}</td>
+
             <td class="table-fit">
                 <span :class="'text-'+statusClass(slotProps.entry.content.response_status)">
                     {{slotProps.entry.content.response_status}}
                 </span>
             </td>
+
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
+
             <td class="table-fit">
                 <router-link :to="{name:'request-preview', params:{id: slotProps.entry.id}}" class="control-action">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">

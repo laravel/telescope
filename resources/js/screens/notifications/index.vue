@@ -14,10 +14,14 @@
 
 
         <template slot="row" slot-scope="slotProps">
-            <td>{{truncate(slotProps.entry.content.notifiable, 50)}}</td>
-            <td>{{truncate(slotProps.entry.content.notification, 50)}}</td>
+            <td :title="slotProps.entry.content.notifiable">{{truncate(slotProps.entry.content.notifiable, 50)}}</td>
+
+            <td :title="slotProps.entry.content.notification">{{truncate(slotProps.entry.content.notification, 50)}}</td>
+
             <td class="table-fit">{{truncate(slotProps.entry.content.channel, 20)}}</td>
+
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
+
             <td class="table-fit">
                 <router-link :to="{name:'notification-preview', params:{id: slotProps.entry.id}}" class="control-action">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">

@@ -15,9 +15,13 @@
 
         <template slot="row" slot-scope="slotProps">
             <td>{{Object.keys(slotProps.entry.content.from)[0]}}</td>
+
             <td>{{Object.keys(slotProps.entry.content.to)[0]}}</td>
+
             <td>{{truncate(slotProps.entry.content.subject, 20)}}</td>
+
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
+
             <td class="table-fit">
                 <router-link :to="{name:'mail-preview', params:{id: slotProps.entry.id}}" class="control-action">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">

@@ -14,7 +14,9 @@
 
         <template slot="row" slot-scope="slotProps">
             <td>{{truncate(slotProps.entry.content.sql, 80)}}</td>
+
             <td class="table-fit">{{slotProps.entry.content.time}}ms</td>
+
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
 
             <td class="table-fit">
