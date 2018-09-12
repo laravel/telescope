@@ -17,7 +17,6 @@ const router = new VueRouter({
     base: '/telescope/',
 });
 
-Vue.component('loader', require('./components/loader.vue'));
 Vue.component('related-entries', require('./components/RelatedEntries.vue'));
 Vue.component('index-screen', require('./components/IndexScreen.vue'));
 Vue.component('preview-screen', require('./components/PreviewScreen.vue'));
