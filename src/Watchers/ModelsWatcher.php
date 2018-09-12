@@ -35,10 +35,23 @@ class ModelsWatcher extends Watcher
         $model = get_class($data[0]).':'.$data[0]->getKey();
 
         Telescope::recordModelEvent(IncomingEntry::make([
-            'action' => $this->extractAction($event),
+            'action' => $this->action($event),
             'model' => $model,
             'changes' => $data[0]->getChanges(),
         ])->tags([$model]));
+    }
+
+    /**
+     * Extract action from the given event.
+     *
+     * @param  string  $event
+     * @return mixed
+     */
+    private function action($event)
+    {
+        preg_match('/\.(.*):/', $event, $matches);
+
+        return $matches[1];
     }
 
     /**
@@ -53,18 +66,5 @@ class ModelsWatcher extends Watcher
             '*booting*', '*booted*', '*creating*', '*retrieved*', '*updating*',
             '*saving*', '*saved*', '*restoring*', '*deleting*'
         ], $eventName);
-    }
-
-    /**
-     * Extract action from the given event.
-     *
-     * @param  string  $event
-     * @return mixed
-     */
-    private function extractAction($event)
-    {
-        preg_match('/\.(.*):/', $event, $matches);
-
-        return $matches[1];
     }
 }
