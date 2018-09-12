@@ -37,16 +37,9 @@ class JobWatcher extends Watcher
 
         $tags[] = 'processed';
 
-        Telescope::recordJob(IncomingEntry::make([
-            'id' => $event->job->getJobId(),
+        Telescope::recordJob(IncomingEntry::make(array_merge([
             'status' => 'processed',
-            'name' => $event->job->payload()['displayName'],
-            'tries' => $event->job->payload()['maxTries'],
-            'timeout' => $event->job->payload()['timeout'],
-            'queue' => $event->job->getQueue(),
-            'connection' => $event->job->getConnectionName(),
-            'data' => $payload,
-        ])->tags($tags));
+        ], $this->defaultJobData($event, $payload)))->tags($tags));
     }
 
     /**
@@ -59,10 +52,7 @@ class JobWatcher extends Watcher
     {
         list($payload, $tags) = $this->extractPayloadAndTags($event->job);
 
-        $tags[] = 'failed';
-
-        Telescope::recordJob(IncomingEntry::make([
-            'id' => $event->job->getJobId(),
+        Telescope::recordJob(array_merge(IncomingEntry::make([
             'status' => 'failed',
             'exception' => [
                 'message' => $event->exception->getMessage(),
@@ -70,13 +60,20 @@ class JobWatcher extends Watcher
                 'line' => $event->exception->getLine(),
                 'line_preview' => $this->formatExceptionLinePreview($event->exception),
             ],
+        ], $this->defaultJobData($event, $payload)))->tags($tags));
+    }
+
+    protected function defaultJobData($event, $payload)
+    {
+        return [
+            'id' => $event->job->getJobId(),
             'name' => $event->job->payload()['displayName'],
             'tries' => $event->job->payload()['maxTries'],
             'timeout' => $event->job->payload()['timeout'],
             'queue' => $event->job->getQueue(),
             'connection' => $event->job->getConnectionName(),
             'data' => $payload,
-        ])->tags($tags));
+        ];
     }
 
     /**
