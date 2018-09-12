@@ -43,7 +43,7 @@ class EventsWatcher extends Watcher
             'name' => $eventName,
             'payload' => empty($formattedPayload) ? null : $formattedPayload,
             'listeners' => $this->formatListeners($eventName),
-        ])->tags($this->extractTags($eventName, $payload)));
+        ])->tags(class_exists($eventName) ? Tags::for($payload[0]) : []));
     }
 
     /**
@@ -118,18 +118,6 @@ class EventsWatcher extends Watcher
                     return [$property->getName() => json_decode(json_encode($value), true)];
                 }
             })->toArray();
-    }
-
-    /**
-     * Extract the tags from the event.
-     *
-     * @param  string  $eventName
-     * @param  array  $payload
-     * @return array
-     */
-    private function extractTags($eventName, $payload)
-    {
-        return class_exists($eventName) ? Tags::for($payload[0]) : [];
     }
 
     /**
