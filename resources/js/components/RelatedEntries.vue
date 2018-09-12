@@ -2,36 +2,103 @@
     export default {
         props: ['entry', 'batch'],
 
-        methods: {
-            batchEntriesOfType(type) {
-                return _.filter(this.batch, { type: type })
+
+        /**
+         * The component's data.
+         */
+        data(){
+            return {
+                currentTab: 'exceptions'
+            };
+        },
+
+
+        /**
+         * Prepare the component.
+         */
+        mounted(){
+            if (this.exceptions.length) {
+                this.currentTab = 'exceptions'
+            } else if (this.logs.length) {
+                this.currentTab = 'logs'
+            } else if (this.queries.length) {
+                this.currentTab = 'queries'
+            } else if (this.events.length) {
+                this.currentTab = 'events'
+            } else if (this.cache.length) {
+                this.currentTab = 'cache'
             }
         },
 
+
+        methods: {
+            batchEntriesOfType(type) {
+                return _.filter(this.batch, {type: type})
+            },
+        },
+
+
         computed: {
-            queryEntries() {
+            hasRelatedEntries(){
+                return !!_.reject(this.batch, entry => {
+                    return _.includes(['request', 'command', 'job'], entry.type);
+                }).length;
+            },
+
+            exceptions() {
+                return this.batchEntriesOfType('exception')
+            },
+
+            logs() {
+                return this.batchEntriesOfType('log')
+            },
+
+            queries() {
                 return this.batchEntriesOfType('query')
+            },
+
+            events() {
+                return this.batchEntriesOfType('event')
+            },
+
+            cache() {
+                return this.batchEntriesOfType('cache')
             }
         }
     }
 </script>
 
 <template>
-<div>
-    <!-- Exceptions -->
-    <div class="card mt-5" v-if="batchEntriesOfType('exception').length">
-        <div class="card-header"><h5>Exceptions</h5></div>
-
-        <table class="table table-hover table-sm mb-0">
-            <thead>
+    <div class="card mt-5" v-if="hasRelatedEntries">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" :class="{active: currentTab=='exceptions'}" href="#" v-on:click.prevent="currentTab='exceptions'" v-if="exceptions.length">Exceptions ({{exceptions.length}})</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" :class="{active: currentTab=='logs'}" href="#" v-on:click.prevent="currentTab='logs'" v-if="logs.length">Logs ({{logs.length}})</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" :class="{active: currentTab=='queries'}" href="#" v-on:click.prevent="currentTab='queries'" v-if="queries.length">Queries ({{queries.length}})</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" :class="{active: currentTab=='events'}" href="#" v-on:click.prevent="currentTab='events'" v-if="events.length">Events ({{events.length}})</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" :class="{active: currentTab=='cache'}" href="#" v-on:click.prevent="currentTab='cache'" v-if="cache.length">Cache ({{cache.length}})</a>
+            </li>
+        </ul>
+        <div>
+            <!-- Related Exceptions -->
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='exceptions'">
+                <thead>
                 <tr>
                     <th>Message</th>
                     <th></th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
-                <tr v-for="entry in batchEntriesOfType('exception')">
+                <tbody>
+                <tr v-for="entry in exceptions">
                     <td>{{truncate(entry.content.message, 120)}}</td>
 
                     <td class="table-fit">
@@ -42,24 +109,21 @@
                         </router-link>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
 
-    <!-- Logs -->
-    <div class="card mt-5" v-if="batchEntriesOfType('log').length">
-        <div class="card-header"><h5>Log Entries</h5></div>
 
-        <table class="table table-hover table-sm mb-0">
-            <thead>
+            <!-- Related Logs -->
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='logs'">
+                <thead>
                 <tr>
                     <th>Message</th>
                     <th></th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
-                <tr v-for="entry in batchEntriesOfType('log')">
+                <tbody>
+                <tr v-for="entry in logs">
                     <td>{{truncate(entry.content.message, 120)}}</td>
 
                     <td class="table-fit">
@@ -70,25 +134,22 @@
                         </router-link>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
 
-    <!-- Queries -->
-    <div class="card mt-5" v-if="queryEntries.length">
-        <div class="card-header"><h5>Queries ({{ queryEntries.length }})</h5></div>
 
-        <table class="table table-hover table-sm mb-0 penultimate-column-right">
-            <thead>
+            <!-- Related Queries -->
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='queries'">
+                <thead>
                 <tr>
                     <th>Query</th>
                     <th>Duration</th>
                     <th></th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
-                <tr v-for="entry in queryEntries">
+                <tbody>
+                <tr v-for="entry in queries">
                     <td>{{truncate(entry.content.sql, 110)}}</td>
                     <td class="table-fit">{{entry.content.time}}ms</td>
 
@@ -100,25 +161,22 @@
                         </router-link>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
 
-    <!-- Events -->
-    <div class="card mt-5" v-if="batchEntriesOfType('event').length">
-        <div class="card-header"><h5>Events</h5></div>
 
-        <table class="table table-hover table-sm mb-0 penultimate-column-right">
-            <thead>
+            <!-- Related Events -->
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='events'">
+                <thead>
                 <tr>
                     <th>Name</th>
                     <th>Listeners</th>
                     <th></th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
-                <tr v-for="entry in batchEntriesOfType('event')">
+                <tbody>
+                <tr v-for="entry in events">
                     <td>{{truncate(entry.content.name, 80)}}</td>
                     <td class="table-fit">{{entry.content.listeners.length}}</td>
 
@@ -130,25 +188,22 @@
                         </router-link>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
 
-    <!-- Cache -->
-    <div class="card mt-5" v-if="batchEntriesOfType('cache').length">
-        <div class="card-header"><h5>Cache</h5></div>
 
-        <table class="table table-hover table-sm mb-0 penultimate-column-right">
-            <thead>
+            <!-- Related Cache -->
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='cache'">
+                <thead>
                 <tr>
                     <th>Key</th>
                     <th>Action</th>
                     <th></th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
-                <tr v-for="entry in batchEntriesOfType('cache')">
+                <tbody>
+                <tr v-for="entry in cache">
                     <td>{{truncate(entry.content.key, 100)}}</td>
                     <td class="table-fit">{{entry.content.type}}</td>
 
@@ -160,8 +215,8 @@
                         </router-link>
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 </template>
