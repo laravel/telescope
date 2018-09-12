@@ -129,20 +129,7 @@ class EventsWatcher extends Watcher
      */
     private function extractTags($eventName, $payload)
     {
-        return class_exists($eventName)
-                ? $this->extractTagsFromEventObject($payload[0])
-                : [];
-    }
-
-    /**
-     * Extract the tags from the event object.
-     *
-     * @param  object  $event
-     * @return array
-     */
-    private function extractTagsFromEventObject($event)
-    {
-        return Tags::for($event);
+        return class_exists($eventName) ? Tags::for($payload[0]) : [];
     }
 
     /**
