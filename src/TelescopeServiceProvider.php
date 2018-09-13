@@ -205,12 +205,33 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     private function startRecording()
     {
-        if ($this->app->runningInConsole() && isset($_SERVER['argv'][1]) && ! in_array($_SERVER['argv'][1], ['queue:work', 'queue:listen', 'horizon:work'])) {
-            Telescope::startRecording();
+        if (! $this->appIsRunningArtisanCommand() && ! $this->appIsHandlingNonTelescopeRequest()) {
+            return;
         }
 
-        if (! $this->app->runningInConsole() && ! $this->requestIsFromTelescope($this->app['request'])) {
-            Telescope::startRecording();
-        }
+        Telescope::startRecording();
+    }
+
+    /**
+     * Determine if the app is running an Artisan command.
+     *
+     * @return bool
+     */
+    private function appIsRunningArtisanCommand()
+    {
+        return
+            $this->app->runningInConsole() &&
+            isset($_SERVER['argv'][1]) &&
+            ! in_array($_SERVER['argv'][1], ['queue:work', 'queue:listen', 'horizon:work']);
+    }
+
+    /**
+     * Determine if the app is handling a request not originating from Telescope.
+     *
+     * @return bool
+     */
+    private function appIsHandlingNonTelescopeRequest()
+    {
+        return ! $this->app->runningInConsole() && ! $this->requestIsFromTelescope($this->app['request']);
     }
 }
