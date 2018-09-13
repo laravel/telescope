@@ -54,6 +54,13 @@ class Telescope
     public static $ignoreFrameworkEvents = true;
 
     /**
+     * Indicates if Telescope should record entries.
+     *
+     * @var bool
+     */
+    public static $canRecord = false;
+
+    /**
      * Record the given entry.
      *
      * @param  string  $type
@@ -62,6 +69,10 @@ class Telescope
      */
     protected static function record(string $type, IncomingEntry $entry)
     {
+        if (! static::$canRecord) {
+            return;
+        }
+
         static::$entriesQueue[] = $entry->type($type);
     }
 
@@ -318,5 +329,25 @@ class Telescope
         static::$ignoreFrameworkEvents = true;
 
         return new static;
+    }
+
+    /**
+     * Start recording entries.
+     * 
+     * @return void
+     */
+    public static function startRecording()
+    {
+        static::$canRecord = true;
+    }
+
+    /**
+     * Stop recording entries.
+     *
+     * @return void
+     */
+    public static function stopRecording()
+    {
+        static::$canRecord = false;
     }
 }

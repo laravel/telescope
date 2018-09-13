@@ -7,11 +7,19 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Queue\Events\JobProcessed;
+use Illuminate\Queue\Events\JobProcessing;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 
 class TelescopeServiceProvider extends ServiceProvider
 {
+    /**
+     * The stack of nested jobs.
+     *
+     * @var array
+     */
+    private $jobStack = [];
+
     /**
      * Bootstrap any package services.
      *
@@ -44,6 +52,8 @@ class TelescopeServiceProvider extends ServiceProvider
         );
 
         $this->registerWatchers();
+
+        $this->startRecording();
 
         $this->app->singleton(EntriesRepository::class, DatabaseEntriesRepository::class);
     }
@@ -81,10 +91,6 @@ class TelescopeServiceProvider extends ServiceProvider
     private function storeEntriesBeforeTermination()
     {
         $this->app->terminating(function () {
-            if (isset($this->app['request']) && $this->requestIsFromTelescope($this->app['request'])) {
-                return;
-            }
-
             Telescope::store($this->app[EntriesRepository::class]);
         });
     }
@@ -107,12 +113,30 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     private function storeEntriesAfterWorkerLoop()
     {
+        $this->app['events']->listen(JobProcessing::class, function ($event) {
+            Telescope::startRecording();
+
+            $this->jobStack[] = true;
+        });
+
         $this->app['events']->listen(JobProcessed::class, function ($event) {
-            Telescope::store($this->app[EntriesRepository::class]);
+            array_pop($this->jobStack);
+
+            if (! $this->jobStack) {
+                Telescope::store($this->app[EntriesRepository::class]);
+
+                Telescope::stopRecording();
+            }
         });
 
         $this->app['events']->listen(JobFailed::class, function ($event) {
-            Telescope::store($this->app[EntriesRepository::class]);
+            array_pop($this->jobStack);
+
+            if (! $this->jobStack) {
+                Telescope::store($this->app[EntriesRepository::class]);
+
+                Telescope::stopRecording();
+            }
         });
     }
 
@@ -172,5 +196,42 @@ class TelescopeServiceProvider extends ServiceProvider
         foreach (array_keys(array_filter($watchers)) as $watcher) {
             (new $watcher)->register($this->app);
         }
+    }
+
+    /**
+     * Start recording entries.
+     *
+     * @return void
+     */
+    private function startRecording()
+    {
+        if (! $this->appIsRunningArtisanCommand() && ! $this->appIsHandlingNonTelescopeRequest()) {
+            return;
+        }
+
+        Telescope::startRecording();
+    }
+
+    /**
+     * Determine if the app is running an Artisan command.
+     *
+     * @return bool
+     */
+    private function appIsRunningArtisanCommand()
+    {
+        return
+            $this->app->runningInConsole() &&
+            isset($_SERVER['argv'][1]) &&
+            ! in_array($_SERVER['argv'][1], ['queue:work', 'queue:listen', 'horizon:work']);
+    }
+
+    /**
+     * Determine if the app is handling a request not originating from Telescope.
+     *
+     * @return bool
+     */
+    private function appIsHandlingNonTelescopeRequest()
+    {
+        return ! $this->app->runningInConsole() && ! $this->requestIsFromTelescope($this->app['request']);
     }
 }
