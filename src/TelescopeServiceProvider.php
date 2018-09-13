@@ -14,6 +14,13 @@ use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 class TelescopeServiceProvider extends ServiceProvider
 {
     /**
+     * The stack of nested jobs.
+     *
+     * @var array
+     */
+    private $jobStack = [];
+
+    /**
      * Bootstrap any package services.
      *
      * @return void
@@ -107,21 +114,29 @@ class TelescopeServiceProvider extends ServiceProvider
     private function storeEntriesAfterWorkerLoop()
     {
         $this->app['events']->listen(JobProcessing::class, function ($event) {
-            Telescope::$entriesQueue = [];
-
             Telescope::startRecording();
+
+            $this->jobStack[] = true;
         });
 
         $this->app['events']->listen(JobProcessed::class, function ($event) {
-            Telescope::store($this->app[EntriesRepository::class]);
+            array_pop($this->jobStack);
 
-            Telescope::pauseRecording();
+            if (! $this->jobStack) {
+                Telescope::store($this->app[EntriesRepository::class]);
+
+                Telescope::pauseRecording();
+            }
         });
 
         $this->app['events']->listen(JobFailed::class, function ($event) {
-            Telescope::store($this->app[EntriesRepository::class]);
+            array_pop($this->jobStack);
 
-            Telescope::pauseRecording();
+            if (! $this->jobStack) {
+                Telescope::store($this->app[EntriesRepository::class]);
+
+                Telescope::pauseRecording();
+            }
         });
     }
 
@@ -190,7 +205,7 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     private function startRecording()
     {
-        if ($this->app->runningInConsole() && ! in_array($_SERVER['argv'][1], ['queue:work', 'queue:listen'])) {
+        if ($this->app->runningInConsole() && ! in_array($_SERVER['argv'][1], ['queue:work', 'queue:listen', 'horizon:work'])) {
             Telescope::startRecording();
         }
 
