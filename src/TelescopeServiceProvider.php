@@ -28,9 +28,7 @@ class TelescopeServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerRoutes();
-
         $this->registerMigrations();
-
         $this->registerPublishing();
 
         $this->storeEntriesBeforeTermination();
@@ -51,11 +49,12 @@ class TelescopeServiceProvider extends ServiceProvider
             __DIR__.'/../config/telescope.php', 'telescope'
         );
 
-        $this->registerWatchers();
+        Telescope::start($this->app);
 
-        $this->startRecording();
-
-        $this->app->singleton(EntriesRepository::class, DatabaseEntriesRepository::class);
+        $this->app->singleton(
+            EntriesRepository::class,
+            DatabaseEntriesRepository::class
+        );
     }
 
     /**
@@ -84,6 +83,36 @@ class TelescopeServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the package's migrations.
+     *
+     * @return void
+     */
+    private function registerMigrations()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->loadMigrationsFrom(__DIR__.'/Storage/migrations');
+        }
+    }
+
+    /**
+     * Register the package's publishable resources.
+     *
+     * @return void
+     */
+    private function registerPublishing()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/telescope.php' => config_path('telescope.php'),
+            ], 'telescope-config');
+
+            $this->publishes([
+                __DIR__.'/../public' => public_path('vendors/telescope'),
+            ], 'telescope-assets');
+        }
+    }
+
+    /**
      * Store the entries in queue before the application termination.
      *
      * @return void
@@ -93,17 +122,6 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->app->terminating(function () {
             Telescope::store($this->app[EntriesRepository::class]);
         });
-    }
-
-    /**
-     * Determine if the request is coming from Telescope itself.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
-     */
-    private function requestIsFromTelescope(Request $request)
-    {
-        return $request->is('vendors/telescope*', 'telescope*', 'telescope-api*');
     }
 
     /**
@@ -138,100 +156,5 @@ class TelescopeServiceProvider extends ServiceProvider
                 Telescope::stopRecording();
             }
         });
-    }
-
-    /**
-     * Register the package's publishable resources.
-     *
-     * @return void
-     */
-    private function registerPublishing()
-    {
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../config/telescope.php' => config_path('telescope.php'),
-            ], 'telescope-config');
-
-            $this->publishes([
-                __DIR__.'/../public' => public_path('vendors/telescope'),
-            ], 'telescope-assets');
-        }
-    }
-
-    /**
-     * Register the package's migrations.
-     *
-     * @return void
-     */
-    private function registerMigrations()
-    {
-        if ($this->app->runningInConsole()) {
-            $this->loadMigrationsFrom(__DIR__.'/Storage/migrations');
-        }
-    }
-
-    /**
-     * Register Telescope watchers.
-     *
-     * @return void
-     */
-    private function registerWatchers()
-    {
-        $watchers = [
-            Watchers\CacheWatcher::class => config('telescope.watchers.cache.enabled'),
-            Watchers\CommandWatcher::class => config('telescope.watchers.commands.enabled'),
-            Watchers\EventWatcher::class => config('telescope.watchers.events.enabled'),
-            Watchers\ExceptionWatcher::class => config('telescope.watchers.exceptions.enabled'),
-            Watchers\JobWatcher::class => config('telescope.watchers.jobs.enabled'),
-            Watchers\LogWatcher::class => config('telescope.watchers.logs.enabled'),
-            Watchers\MailWatcher::class => config('telescope.watchers.mail.enabled'),
-            Watchers\ModelWatcher::class => config('telescope.watchers.models.enabled'),
-            Watchers\NotificationWatcher::class => config('telescope.watchers.notifications.enabled'),
-            Watchers\QueryWatcher::class => config('telescope.watchers.queries.enabled'),
-            Watchers\RedisWatcher::class => config('telescope.watchers.redis.enabled'),
-            Watchers\RequestWatcher::class => config('telescope.watchers.requests.enabled'),
-            Watchers\ScheduleWatcher::class => config('telescope.watchers.schedule.enabled'),
-        ];
-
-        foreach (array_keys(array_filter($watchers)) as $watcher) {
-            (new $watcher)->register($this->app);
-        }
-    }
-
-    /**
-     * Start recording entries.
-     *
-     * @return void
-     */
-    private function startRecording()
-    {
-        if (! $this->appIsRunningArtisanCommand() && ! $this->appIsHandlingNonTelescopeRequest()) {
-            return;
-        }
-
-        Telescope::startRecording();
-    }
-
-    /**
-     * Determine if the app is running an Artisan command.
-     *
-     * @return bool
-     */
-    private function appIsRunningArtisanCommand()
-    {
-        return
-            $this->app->runningInConsole() &&
-            isset($_SERVER['argv'][1]) &&
-            ! in_array($_SERVER['argv'][1], ['queue:work', 'queue:listen', 'horizon:work']);
-    }
-
-    /**
-     * Determine if the app is handling a request not originating from Telescope.
-     *
-     * @return bool
-     */
-    private function appIsHandlingNonTelescopeRequest()
-    {
-        return ! $this->app->runningInConsole() && ! $this->requestIsFromTelescope($this->app['request']);
     }
 }

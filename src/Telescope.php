@@ -8,6 +8,8 @@ use Laravel\Telescope\Contracts\EntriesRepository;
 
 class Telescope
 {
+    use RegistersWatchers;
+
     /**
      * The callback that filters the entries that should be recorded.
      *
@@ -59,6 +61,50 @@ class Telescope
      * @var bool
      */
     public static $shouldRecord = false;
+
+    /**
+     * Register the Telescope watchers and start recording if necessary.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return void
+     */
+    public static function start($app)
+    {
+        static::registerWatchers($app);
+
+        if (static::runningArtisanCommand($app) ||
+            static::handlingNonTelescopeRequest($app)) {
+            static::startRecording();
+        }
+    }
+
+    /**
+     * Determine if the application is running an Artisan command.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return bool
+     */
+    protected static function runningArtisanCommand($app)
+    {
+        return $app->runningInConsole() && ! in_array(
+            $_SERVER['argv'][1] ?? null, static::commandsToIgnore()
+        );
+    }
+
+    /**
+     * Determine if the application is handling a request not originating from Telescope.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return bool
+     */
+    protected static function handlingNonTelescopeRequest($app)
+    {
+        return ! $app->runningInConsole() && ! $app['request']->is(
+            'telescope*',
+            'telescope-api*',
+            'vendors/telescope*'
+        );
+    }
 
     /**
      * Start recording entries.
@@ -325,6 +371,24 @@ class Telescope
         static::$ignoreCommands = $commands;
 
         return new static;
+    }
+
+    /**
+     * Get the list of commands to ignore.
+     *
+     * @return array
+     */
+    public static function commandsToIgnore()
+    {
+        return array_merge(static::$ignoreCommands, [
+            'queue:listen',
+            'queue:work',
+            'horizon',
+            'horizon:work',
+            'horizon:supervisor',
+            'schedule:run',
+            'schedule:finish'
+        ]);
     }
 
     /**
