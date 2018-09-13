@@ -57,23 +57,29 @@ trait ListensForStorageOpportunities
         });
 
         $app['events']->listen(JobProcessed::class, function ($event) use ($app) {
-            array_pop(static::$processingJobs);
-
-            if (empty(static::$processingJobs)) {
-                static::store($app[EntriesRepository::class]);
-
-                static::stopRecording();
-            }
+            static::storeIfDoneProcessingJob($app, $event);
         });
 
         $app['events']->listen(JobFailed::class, function ($event) use ($app) {
-            array_pop(static::$processingJobs);
-
-            if (empty(static::$processingJobs)) {
-                static::store($app[EntriesRepository::class]);
-
-                static::stopRecording();
-            }
+            static::storeIfDoneProcessingJob($app, $event);
         });
+    }
+
+    /**
+     * Store the recorded entries if totally done processing the current job.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @param  mixed  $event
+     * @return void
+     */
+    protected static function storeIfDoneProcessingJob($app, $event)
+    {
+        array_pop(static::$processingJobs);
+
+        if (empty(static::$processingJobs)) {
+            static::store($app[EntriesRepository::class]);
+
+            static::stopRecording();
+        }
     }
 }
