@@ -32,13 +32,12 @@ class JobWatcher extends Watcher
      */
     public function recordProcessedJob(JobProcessed $event)
     {
-        $payload = $this->payload($event->job);
+        $content = array_merge(['status' => 'processed'],
+            $this->defaultJobData($event, $this->payload($event->job))
+        );
 
-        Telescope::recordJob(IncomingEntry::make(array_merge([
-            'status' => 'processed',
-        ], $this->defaultJobData($event, $payload)))->tags(
-            $this->tags($event->job)
-        ));
+        Telescope::recordJob(IncomingEntry::make($content)
+            ->tags($this->tags($event->job)));
     }
 
     /**
@@ -49,19 +48,20 @@ class JobWatcher extends Watcher
      */
     public function recordFailedJob(JobFailed $event)
     {
-        $payload = $this->payload($event->job);
-
-        Telescope::recordJob(array_merge(IncomingEntry::make([
+        $content = array_merge([
             'status' => 'failed',
             'exception' => [
                 'message' => $event->exception->getMessage(),
                 'trace' => $event->exception->getTrace(),
                 'line' => $event->exception->getLine(),
                 'line_preview' => ExceptionContext::get($event->exception),
-            ],
-        ], $this->defaultJobData($event, $payload)))->tags(
-            $this->tags($event->job)
-        ));
+            ]
+        ],
+            $this->defaultJobData($event, $this->payload($event->job))
+        );
+
+        Telescope::recordJob(IncomingEntry::make($content)
+            ->tags($this->tags($event->job)));
     }
 
     /**

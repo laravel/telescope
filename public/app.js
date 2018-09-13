@@ -61428,7 +61428,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -61473,40 +61473,42 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("table", { staticClass: "table table-responsive mb-0" }, [
-    _c(
-      "tbody",
-      [
-        _vm._l(_vm.lines, function(line) {
-          return _c("tr", [
-            _c("td", { staticClass: "bg-secondary" }, [
-              _vm._v(_vm._s(line.file) + ":" + _vm._s(line.line))
-            ])
-          ])
-        }),
-        _vm._v(" "),
-        !_vm.showAll
-          ? _c("tr", [
+  return _c("div", { staticClass: "table-responsive" }, [
+    _c("table", { staticClass: "table mb-0" }, [
+      _c(
+        "tbody",
+        [
+          _vm._l(_vm.lines, function(line) {
+            return _c("tr", [
               _c("td", { staticClass: "bg-secondary" }, [
-                _c(
-                  "a",
-                  {
-                    attrs: { href: "*" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.showAll = true
-                      }
-                    }
-                  },
-                  [_vm._v("Show All")]
-                )
+                _vm._v(_vm._s(line.file) + ":" + _vm._s(line.line))
               ])
             ])
-          : _vm._e()
-      ],
-      2
-    )
+          }),
+          _vm._v(" "),
+          !_vm.showAll
+            ? _c("tr", [
+                _c("td", { staticClass: "bg-secondary" }, [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "*" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.showAll = true
+                        }
+                      }
+                    },
+                    [_vm._v("Show All")]
+                  )
+                ])
+              ])
+            : _vm._e()
+        ],
+        2
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -63927,18 +63929,34 @@ var render = function() {
           fn: function(slotProps) {
             return [
               _c("td", { attrs: { title: slotProps.entry.content.name } }, [
-                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.name, 60)))
+                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.name, 40)))
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.queue, 20)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { title: slotProps.entry.content.queue }
+                },
+                [
+                  _vm._v(
+                    _vm._s(_vm.truncate(slotProps.entry.content.queue, 10))
+                  )
+                ]
+              ),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(
-                  _vm._s(_vm.truncate(slotProps.entry.content.connection, 20))
-                )
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { title: slotProps.entry.content.connection }
+                },
+                [
+                  _vm._v(
+                    _vm._s(_vm.truncate(slotProps.entry.content.connection, 10))
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
                 slotProps.entry.content.status == "failed"
