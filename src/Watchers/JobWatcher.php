@@ -115,7 +115,7 @@ class JobWatcher extends Watcher
             return [];
         }
 
-        return ExtractTags::from(
+        return ExtractTags::fromJob(
             unserialize($job->payload()['data']['command'])
         );
     }

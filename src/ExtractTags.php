@@ -36,7 +36,7 @@ class ExtractTags
      * @param  mixed  $job
      * @return array
      */
-    public static function forJob($job)
+    public static function fromJob($job)
     {
         if ($tags = static::extractExplicitTags($job)) {
             return $tags;
