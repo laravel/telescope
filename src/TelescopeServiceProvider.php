@@ -205,7 +205,7 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     private function startRecording()
     {
-        if ($this->app->runningInConsole() && ! in_array($_SERVER['argv'][1], ['queue:work', 'queue:listen', 'horizon:work'])) {
+        if ($this->app->runningInConsole() && isset($_SERVER['argv'][1]) && ! in_array($_SERVER['argv'][1], ['queue:work', 'queue:listen', 'horizon:work'])) {
             Telescope::startRecording();
         }
 
