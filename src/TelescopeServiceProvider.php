@@ -38,12 +38,12 @@ class TelescopeServiceProvider extends ServiceProvider
             __DIR__.'/../config/telescope.php', 'telescope'
         );
 
-        Telescope::start($this->app);
-
         $this->app->singleton(
             EntriesRepository::class,
             DatabaseEntriesRepository::class
         );
+
+        Telescope::start($this->app);
     }
 
     /**
