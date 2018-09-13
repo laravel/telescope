@@ -28,6 +28,7 @@ trait ListensForStorageOpportunities
 
         static::storeEntriesAfterWorkerLoop($app);
     }
+
     /**
      * Store the entries in queue before the application termination.
      *
