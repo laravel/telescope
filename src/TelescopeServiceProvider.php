@@ -125,7 +125,7 @@ class TelescopeServiceProvider extends ServiceProvider
             if (! $this->jobStack) {
                 Telescope::store($this->app[EntriesRepository::class]);
 
-                Telescope::pauseRecording();
+                Telescope::stopRecording();
             }
         });
 
@@ -135,7 +135,7 @@ class TelescopeServiceProvider extends ServiceProvider
             if (! $this->jobStack) {
                 Telescope::store($this->app[EntriesRepository::class]);
 
-                Telescope::pauseRecording();
+                Telescope::stopRecording();
             }
         });
     }

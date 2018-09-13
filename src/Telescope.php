@@ -342,11 +342,11 @@ class Telescope
     }
 
     /**
-     * Pause recording entries.
+     * Stop recording entries.
      *
      * @return void
      */
-    public static function pauseRecording()
+    public static function stopRecording()
     {
         static::$canRecord = false;
     }
