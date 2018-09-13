@@ -8,7 +8,7 @@ use Laravel\Telescope\IncomingEntry;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 
-class RequestsWatcher extends Watcher
+class RequestWatcher extends Watcher
 {
     /**
      * Register the watcher.

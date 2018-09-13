@@ -10,7 +10,7 @@ use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\ExtractProperties;
 
-class EventsWatcher extends Watcher
+class EventWatcher extends Watcher
 {
     /**
      * Register the watcher.

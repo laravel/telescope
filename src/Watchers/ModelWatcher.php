@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 
-class ModelsWatcher extends Watcher
+class ModelWatcher extends Watcher
 {
     /**
      * Register the watcher.

@@ -6,7 +6,7 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Events\QueryExecuted;
 
-class QueriesWatcher extends Watcher
+class QueryWatcher extends Watcher
 {
     /**
      * Register the watcher.

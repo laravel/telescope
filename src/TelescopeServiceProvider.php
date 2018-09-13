@@ -159,14 +159,14 @@ class TelescopeServiceProvider extends ServiceProvider
             Watchers\MailWatcher::class => config('telescope.watchers.mail.enabled'),
             Watchers\JobWatcher::class => config('telescope.watchers.jobs.enabled'),
             Watchers\CacheWatcher::class => config('telescope.watchers.cache.enabled'),
-            Watchers\EventsWatcher::class => config('telescope.watchers.events.enabled'),
-            Watchers\NotificationsWatcher::class => config('telescope.watchers.notifications.enabled'),
-            Watchers\QueriesWatcher::class => config('telescope.watchers.queries.enabled'),
-            Watchers\RequestsWatcher::class => config('telescope.watchers.requests.enabled'),
+            Watchers\EventWatcher::class => config('telescope.watchers.events.enabled'),
+            Watchers\NotificationWatcher::class => config('telescope.watchers.notifications.enabled'),
+            Watchers\QueryWatcher::class => config('telescope.watchers.queries.enabled'),
+            Watchers\RequestWatcher::class => config('telescope.watchers.requests.enabled'),
             Watchers\CommandWatcher::class => config('telescope.watchers.commands.enabled'),
             Watchers\ScheduleWatcher::class => config('telescope.watchers.schedule.enabled'),
             Watchers\RedisWatcher::class => config('telescope.watchers.redis.enabled'),
-            Watchers\ModelsWatcher::class => config('telescope.watchers.models.enabled'),
+            Watchers\ModelWatcher::class => config('telescope.watchers.models.enabled'),
         ];
 
         foreach (array_keys(array_filter($watchers)) as $watcher) {

@@ -7,7 +7,7 @@ use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Events\NotificationSent;
 
-class NotificationsWatcher extends Watcher
+class NotificationWatcher extends Watcher
 {
     /**
      * Register the watcher.
