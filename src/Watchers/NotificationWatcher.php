@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Watchers;
 
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Events\NotificationSent;
