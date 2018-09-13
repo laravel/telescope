@@ -36,8 +36,6 @@ class JobWatcher extends Watcher
             $this->defaultJobData($event, $this->payload($event->job))
         );
 
-        dd($this->tags($event->job));
-
         Telescope::recordJob(
             IncomingEntry::make($content)->tags($this->tags($event->job))
         );
