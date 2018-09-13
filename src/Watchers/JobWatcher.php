@@ -49,7 +49,7 @@ class JobWatcher extends Watcher
      */
     public function recordFailedJob(JobFailed $event)
     {
-        list($payload, $tags) = $this->extractPayloadAndTags($event->job);
+        $payload = $this->payload($event->job);
 
         Telescope::recordJob(array_merge(IncomingEntry::make([
             'status' => 'failed',
@@ -59,7 +59,9 @@ class JobWatcher extends Watcher
                 'line' => $event->exception->getLine(),
                 'line_preview' => ExceptionContext::get($event->exception),
             ],
-        ], $this->defaultJobData($event, $payload)))->tags($tags));
+        ], $this->defaultJobData($event, $payload)))->tags(
+            $this->tags($event->job)
+        ));
     }
 
     /**
