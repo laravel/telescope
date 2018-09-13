@@ -8,7 +8,7 @@ use Laravel\Telescope\Contracts\EntriesRepository;
 
 class Telescope
 {
-    use RegistersWatchers;
+    use ListensForStorageOpportunities, RegistersWatchers;
 
     /**
      * The callback that filters the entries that should be recorded.

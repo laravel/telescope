@@ -2,24 +2,13 @@
 
 namespace Laravel\Telescope;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Queue\Events\JobProcessed;
-use Illuminate\Queue\Events\JobProcessing;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 
 class TelescopeServiceProvider extends ServiceProvider
 {
-    /**
-     * The stack of nested jobs.
-     *
-     * @var array
-     */
-    private $jobStack = [];
-
     /**
      * Bootstrap any package services.
      *
@@ -31,11 +20,11 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->registerMigrations();
         $this->registerPublishing();
 
-        $this->storeEntriesBeforeTermination();
+        Telescope::listenForStorageOpportunities($this->app);
 
-        $this->storeEntriesAfterWorkerLoop();
-
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'telescope');
+        $this->loadViewsFrom(
+            __DIR__.'/../resources/views', 'telescope'
+        );
     }
 
     /**
@@ -110,51 +99,5 @@ class TelescopeServiceProvider extends ServiceProvider
                 __DIR__.'/../public' => public_path('vendors/telescope'),
             ], 'telescope-assets');
         }
-    }
-
-    /**
-     * Store the entries in queue before the application termination.
-     *
-     * @return void
-     */
-    private function storeEntriesBeforeTermination()
-    {
-        $this->app->terminating(function () {
-            Telescope::store($this->app[EntriesRepository::class]);
-        });
-    }
-
-    /**
-     * Store entries after the queue worker loops.
-     *
-     * @return void
-     */
-    private function storeEntriesAfterWorkerLoop()
-    {
-        $this->app['events']->listen(JobProcessing::class, function ($event) {
-            Telescope::startRecording();
-
-            $this->jobStack[] = true;
-        });
-
-        $this->app['events']->listen(JobProcessed::class, function ($event) {
-            array_pop($this->jobStack);
-
-            if (! $this->jobStack) {
-                Telescope::store($this->app[EntriesRepository::class]);
-
-                Telescope::stopRecording();
-            }
-        });
-
-        $this->app['events']->listen(JobFailed::class, function ($event) {
-            array_pop($this->jobStack);
-
-            if (! $this->jobStack) {
-                Telescope::store($this->app[EntriesRepository::class]);
-
-                Telescope::stopRecording();
-            }
-        });
     }
 }
