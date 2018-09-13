@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Queue\Events\JobProcessed;
+use Illuminate\Queue\Events\JobProcessing;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 
@@ -45,6 +46,8 @@ class TelescopeServiceProvider extends ServiceProvider
 
         $this->registerWatchers();
 
+        $this->startRecording();
+
         $this->app->singleton(EntriesRepository::class, DatabaseEntriesRepository::class);
     }
 
@@ -81,10 +84,6 @@ class TelescopeServiceProvider extends ServiceProvider
     private function storeEntriesBeforeTermination()
     {
         $this->app->terminating(function () {
-            if (isset($this->app['request']) && $this->requestIsFromTelescope($this->app['request'])) {
-                return;
-            }
-
             Telescope::store($this->app[EntriesRepository::class]);
         });
     }
@@ -107,12 +106,22 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     private function storeEntriesAfterWorkerLoop()
     {
+        $this->app['events']->listen(JobProcessing::class, function ($event) {
+            Telescope::$entriesQueue = [];
+
+            Telescope::startRecording();
+        });
+
         $this->app['events']->listen(JobProcessed::class, function ($event) {
             Telescope::store($this->app[EntriesRepository::class]);
+
+            Telescope::pauseRecording();
         });
 
         $this->app['events']->listen(JobFailed::class, function ($event) {
             Telescope::store($this->app[EntriesRepository::class]);
+
+            Telescope::pauseRecording();
         });
     }
 
@@ -171,6 +180,22 @@ class TelescopeServiceProvider extends ServiceProvider
 
         foreach (array_keys(array_filter($watchers)) as $watcher) {
             (new $watcher)->register($this->app);
+        }
+    }
+
+    /**
+     * Start recording entries.
+     *
+     * @return void
+     */
+    private function startRecording()
+    {
+        if ($this->app->runningInConsole() && ! in_array($_SERVER['argv'][1], ['queue:work', 'queue:listen'])) {
+            Telescope::startRecording();
+        }
+
+        if (! $this->app->runningInConsole() && ! $this->requestIsFromTelescope($this->app['request'])) {
+            Telescope::startRecording();
         }
     }
 }
