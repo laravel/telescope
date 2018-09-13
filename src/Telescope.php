@@ -388,7 +388,7 @@ class Telescope
             'horizon:supervisor',
             'schedule:run',
             'schedule:finish'
-        ], config('telescope.ignoreCommands'));
+        ], config('telescope.ignoreCommands', []));
     }
 
     /**
