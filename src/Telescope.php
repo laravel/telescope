@@ -73,7 +73,7 @@ class Telescope
     {
         static::registerWatchers($app);
 
-        if (static::runningNonQueueArtisanCommand($app) ||
+        if (static::runningApprovedArtisanCommand($app) ||
             static::handlingNonTelescopeRequest($app)) {
             static::startRecording();
         }
@@ -85,11 +85,16 @@ class Telescope
      * @param  \Illuminate\Foundation\Application  $app
      * @return bool
      */
-    protected static function runningNonQueueArtisanCommand($app)
+    protected static function runningApprovedArtisanCommand($app)
     {
         return $app->runningInConsole() && ! in_array(
             $_SERVER['argv'][1] ?? null,
             [
+                'migrate',
+                'migrate:rollback',
+                'migrate:fresh',
+                'migrate:reset',
+                'migrate:install',
                 'queue:listen',
                 'queue:work',
                 'horizon',
