@@ -92,7 +92,8 @@ class Telescope
             [
                 // 'migrate',
                 'migrate:rollback',
-                'migrate:fresh',
+                // 'migrate:fresh',
+                // 'migrate:refresh',
                 'migrate:reset',
                 'migrate:install',
                 'queue:listen',
