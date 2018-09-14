@@ -80,7 +80,7 @@ class Telescope
     }
 
     /**
-     * Determine if the application is running a non-queue command.
+     * Determine if the application is running an approved command.
      *
      * @param  \Illuminate\Foundation\Application  $app
      * @return bool
