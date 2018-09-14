@@ -4,6 +4,7 @@ namespace Laravel\Telescope;
 
 use Closure;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
 class Telescope
@@ -11,11 +12,11 @@ class Telescope
     use ListensForStorageOpportunities, RegistersWatchers;
 
     /**
-     * The callback that filters the entries that should be recorded.
+     * The callbacks that filter the entries that should be recorded.
      *
-     * @var \Closure
+     * @var array
      */
-    public static $filterUsing;
+    public static $filterUsing = [];
 
     /**
      * The callback that adds tags to the record.
@@ -294,6 +295,21 @@ class Telescope
     }
 
     /**
+     * Apply the filter callbacks to the given collection.
+     *
+     * @param  \Illuminate\Support\Collection  $entries
+     * @return \Illuminate\Support\Collection
+     */
+    protected static function applyFilters(Collection $entries)
+    {
+        foreach (static::$filterUsing as $filter) {
+            $entries = $entries->filter($filter);
+        }
+
+        return $entries;
+    }
+
+    /**
      * Set the callback that filters the entries that should be recorded.
      *
      * @param  \Closure $callback
@@ -301,7 +317,7 @@ class Telescope
      */
     public static function filter(Closure $callback)
     {
-        static::$filterUsing = $callback;
+        static::$filterUsing[] = $callback;
 
         return new static;
     }
@@ -337,8 +353,8 @@ class Telescope
             });
         }
 
-        if (static::$filterUsing) {
-            $entries = $entries->filter(static::$filterUsing);
+        if (! empty(static::$filterUsing)) {
+            $entries = static::applyFilters($entries);
         }
 
         $storage->store($entries->each(function ($entry) use ($batchId) {
