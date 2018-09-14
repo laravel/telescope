@@ -94,7 +94,7 @@ class DatabaseEntriesRepository implements Contract
      */
     public function isMonitoring(array $tags)
     {
-        return false;
+        return count(array_intersect($tags, $this->monitoring())) > 0;
     }
 
     /**
@@ -104,7 +104,7 @@ class DatabaseEntriesRepository implements Contract
      */
     public function monitoring()
     {
-        return [];
+        return DB::table('telescope_monitoring')->pluck('tag')->all();
     }
 
     /**
@@ -115,7 +115,15 @@ class DatabaseEntriesRepository implements Contract
      */
     public function monitor(array $tags)
     {
-        //
+        $tags = array_diff($tags, $this->monitoring());
+
+        if (empty($tags)) {
+            return;
+        }
+
+        DB::table('telescope_monitoring')->insert(collect($tags)->mapWithKeys(function ($tag) {
+            return ['tag' => $tag];
+        })->all());
     }
 
     /**
@@ -126,6 +134,6 @@ class DatabaseEntriesRepository implements Contract
      */
     public function stopMonitoring(array $tags)
     {
-        //
+        DB::table('telescope_monitoring')->whereIn('tag', $tags)->delete();
     }
 }
