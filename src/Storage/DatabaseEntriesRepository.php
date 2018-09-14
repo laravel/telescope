@@ -159,7 +159,8 @@ class DatabaseEntriesRepository implements Contract
      */
     protected function table($table)
     {
-        return DB::connection(config('telescope.storage.database.connection'))
-                            ->table($table);
+        return DB::connection(
+            config('telescope.storage.database.connection')
+        )->table($table);
     }
 }
