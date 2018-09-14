@@ -121,9 +121,11 @@ class DatabaseEntriesRepository implements Contract
             return;
         }
 
-        $this->table('telescope_monitoring')->insert(collect($tags)->mapWithKeys(function ($tag) {
-            return ['tag' => $tag];
-        })->all());
+        $this->table('telescope_monitoring')
+                    ->insert(collect($tags)
+                    ->mapWithKeys(function ($tag) {
+                        return ['tag' => $tag];
+                    })->all());
     }
 
     /**
