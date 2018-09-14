@@ -72,22 +72,29 @@ class Telescope
     {
         static::registerWatchers($app);
 
-        if (static::runningApprovedArtisanCommand($app) ||
+        if (static::runningNonQueueArtisanCommand($app) ||
             static::handlingNonTelescopeRequest($app)) {
             static::startRecording();
         }
     }
 
     /**
-     * Determine if the application is running an Artisan command.
+     * Determine if the application is running a non-queue command.
      *
      * @param  \Illuminate\Foundation\Application  $app
      * @return bool
      */
-    protected static function runningApprovedArtisanCommand($app)
+    protected static function runningNonQueueArtisanCommand($app)
     {
         return $app->runningInConsole() && ! in_array(
-            $_SERVER['argv'][1] ?? null, static::commandsToIgnore()
+            $_SERVER['argv'][1] ?? null,
+            [
+                'queue:listen',
+                'queue:work',
+                'horizon',
+                'horizon:work',
+                'horizon:supervisor',
+            ]
         );
     }
 
