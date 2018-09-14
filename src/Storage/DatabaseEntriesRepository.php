@@ -2,14 +2,16 @@
 
 namespace Laravel\Telescope\Storage;
 
+use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Storage\EntryQueryOptions;
+use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 
-class DatabaseEntriesRepository implements Contract
+class DatabaseEntriesRepository implements Contract, PrunableRepository
 {
     /**
      * The database connection name that should be used.
@@ -173,6 +175,24 @@ class DatabaseEntriesRepository implements Contract
         // DB::table('telescope_entries_tags')
         //             ->whereIn('entry_id', $entryIds)
         //             ->delete();
+    }
+
+    /**
+     * Prune all of the entries older than the given date.
+     *
+     * @param  \DateTimeInterface  $before
+     * @return void
+     */
+    public function prune(DateTimeInterface $before)
+    {
+        $this->table('telescope_entries')
+                ->where('created_at', '<', $before)
+                ->delete();
+
+        $this->table('telescope_entries_tags')
+                ->whereNotIn('entry_id', function ($query) {
+                    $query->select('telescope_entries.entry_id');
+                })->delete();
     }
 
     /**
