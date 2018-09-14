@@ -12,16 +12,6 @@ return [
         ]
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Telescope Watchers
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure the configurations for each watcher that is
-    | used by Telescope.
-    |
-    */
-
     'watchers' => [
         Watchers\CacheWatcher::class,
         Watchers\CommandWatcher::class,
