@@ -57,6 +57,8 @@ class IncomingEntry
         $this->recordedAt = now();
 
         $this->content = array_merge($content, ['hostname' => gethostname()]);
+
+        $this->tags = ['hostname:'.gethostname()];
     }
 
     /**
@@ -114,7 +116,7 @@ class IncomingEntry
             ],
         ]);
 
-        $this->tags([get_class($user).':'.$user->getKey()]);
+        $this->tags(['currentUser:'.$user->getKey()]);
 
         return $this;
     }
