@@ -12,6 +12,24 @@ use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 class DatabaseEntriesRepository implements Contract
 {
     /**
+     * The database connection name that should be used.
+     *
+     * @var string
+     */
+    protected $connection;
+
+    /**
+     * Create a new database repository.
+     *
+     * @param  string  $connectionName
+     * @return void
+     */
+    public function __construct(string $connection)
+    {
+        $this->connection = $connection;
+    }
+
+    /**
      * Find the entry with the given ID.
      *
      * @param  mixed  $id
@@ -19,7 +37,7 @@ class DatabaseEntriesRepository implements Contract
      */
     public function find($id) : EntryResult
     {
-        $entry = EntryModel::findOrFail($id);
+        $entry = EntryModel::on($this->connection)->findOrFail($id);
 
         return new EntryResult(
             $entry->id,
@@ -39,7 +57,8 @@ class DatabaseEntriesRepository implements Contract
      */
     public function get($type, EntryQueryOptions $options)
     {
-        return EntryModel::withTelescopeOptions($type, $options)
+        return EntryModel::on($this->connection)
+            ->withTelescopeOptions($type, $options)
             ->take($options->limit)
             ->orderByDesc('id')
             ->get()->map(function ($entry) {
@@ -63,7 +82,8 @@ class DatabaseEntriesRepository implements Contract
     {
         $entries->each(function (IncomingEntry $entry) {
             $this->storeTags(
-                EntryModel::forceCreate($entry->toArray())->id,
+                EntryModel::on($this->connection)
+                    ->forceCreate($entry->toArray())->id,
                 $entry
             );
         });
@@ -163,8 +183,6 @@ class DatabaseEntriesRepository implements Contract
      */
     protected function table($table)
     {
-        return DB::connection(
-            config('telescope.storage.database.connection')
-        )->table($table);
+        return DB::connection($this->connection)->table($table);
     }
 }

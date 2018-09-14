@@ -43,6 +43,10 @@ class TelescopeServiceProvider extends ServiceProvider
             DatabaseEntriesRepository::class
         );
 
+        $this->app->when(DatabaseEntriesRepository::class)
+                ->needs('$connection')
+                ->give(config('telescope.storage.database.connection'));
+
         Telescope::start($this->app);
     }
 
