@@ -3,14 +3,13 @@
 use Laravel\Telescope\Watchers;
 
 return [
-
-    'ignoreCommands' => [],
-
     'storage' => [
         'database' => [
             'connection' => 'mysql',
         ]
     ],
+
+    'ignoreCommands' => [],
 
     'watchers' => [
         Watchers\CacheWatcher::class,
