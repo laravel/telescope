@@ -1,5 +1,7 @@
 <?php
 
+use Laravel\Telescope\Watchers;
+
 return [
 
     'ignoreCommands' => [],
@@ -21,56 +23,18 @@ return [
     */
 
     'watchers' => [
-        'cache' => [
-            'enabled' => true,
-        ],
-
-        'events' => [
-            'enabled' => true,
-        ],
-
-        'exceptions' => [
-            'enabled' => true,
-        ],
-
-        'logs' => [
-            'enabled' => true,
-        ],
-
-        'mail' => [
-            'enabled' => true,
-        ],
-
-        'notifications' => [
-            'enabled' => true,
-        ],
-
-        'jobs' => [
-            'enabled' => true,
-        ],
-
-        'queries' => [
-            'enabled' => true,
-        ],
-
-        'models' => [
-            'enabled' => true,
-        ],
-
-        'requests' => [
-            'enabled' => true,
-        ],
-
-        'commands' => [
-            'enabled' => true,
-        ],
-
-        'schedule' => [
-            'enabled' => true,
-        ],
-
-        'redis' => [
-            'enabled' => true,
-        ],
+        Watchers\CacheWatcher::class,
+        Watchers\CommandWatcher::class,
+        Watchers\EventWatcher::class,
+        Watchers\ExceptionWatcher::class,
+        Watchers\JobWatcher::class,
+        Watchers\LogWatcher::class,
+        Watchers\MailWatcher::class,
+        Watchers\ModelWatcher::class,
+        Watchers\NotificationWatcher::class,
+        Watchers\QueryWatcher::class,
+        Watchers\RedisWatcher::class,
+        Watchers\RequestWatcher::class,
+        Watchers\ScheduleWatcher::class,
     ],
 ];
