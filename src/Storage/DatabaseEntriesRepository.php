@@ -85,4 +85,47 @@ class DatabaseEntriesRepository implements Contract
             ];
         })->toArray());
     }
+
+    /**
+     * Determine if any of the given tags are currently being monitored.
+     *
+     * @param  array  $tags
+     * @return bool
+     */
+    public function isMonitoring(array $tags)
+    {
+        return false;
+    }
+
+    /**
+     * Get the list of tags currently being monitored.
+     *
+     * @return array
+     */
+    public function monitoring()
+    {
+        return [];
+    }
+
+    /**
+     * Begin monitoring the given list of tags.
+     *
+     * @param  array  $tags
+     * @return void
+     */
+    public function monitor(array $tags)
+    {
+        //
+    }
+
+    /**
+     * Stop monitoring the given list of tags.
+     *
+     * @param  array  $tags
+     * @return void
+     */
+    public function stopMonitoring(array $tags)
+    {
+        //
+    }
 }

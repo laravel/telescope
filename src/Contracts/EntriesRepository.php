@@ -32,4 +32,36 @@ interface EntriesRepository
      * @return void
      */
     public function store(Collection $entries);
+
+    /**
+     * Determine if any of the given tags are currently being monitored.
+     *
+     * @param  array  $tags
+     * @return bool
+     */
+    public function isMonitoring(array $tags);
+
+    /**
+     * Get the list of tags currently being monitored.
+     *
+     * @return array
+     */
+    public function monitoring();
+
+    /**
+     * Begin monitoring the given list of tags.
+     *
+     * @param  array  $tags
+     * @return void
+     */
+    public function monitor(array $tags);
+
+    /**
+     * Stop monitoring the given list of tags.
+     *
+     * @param  array  $tags
+     * @return void
+     */
+    public function stopMonitoring(array $tags);
+
 }
