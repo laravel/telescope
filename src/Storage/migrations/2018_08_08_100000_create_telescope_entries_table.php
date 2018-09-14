@@ -25,11 +25,16 @@ class CreateTelescopeEntriesTable extends Migration
         });
 
         Schema::create('telescope_entries_tags', function (Blueprint $table) {
-            $table->bigInteger('entry_id');
+            $table->unsignedBigInteger('entry_id');
             $table->string('tag');
 
             $table->index(['entry_id', 'tag']);
             $table->index('tag');
+
+            $table->foreign('entry_id')
+                  ->references('id')
+                  ->on('telescope_entries')
+                  ->onDelete('cascade');
         });
 
         Schema::create('telescope_monitoring', function (Blueprint $table) {

@@ -188,11 +188,6 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
         $this->table('telescope_entries')
                 ->where('created_at', '<', $before)
                 ->delete();
-
-        $this->table('telescope_entries_tags')
-                ->whereNotIn('entry_id', function ($query) {
-                    $query->select('telescope_entries.entry_id');
-                })->delete();
     }
 
     /**
