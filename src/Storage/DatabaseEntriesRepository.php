@@ -78,7 +78,7 @@ class DatabaseEntriesRepository implements Contract
      */
     protected function storeTags($entryId, IncomingEntry $entry)
     {
-        DB::table('telescope_entries_tags')->insert(collect($entry->tags)->map(function ($tag) use ($entryId) {
+        $this->table('telescope_entries_tags')->insert(collect($entry->tags)->map(function ($tag) use ($entryId) {
             return [
                 'entry_id' => $entryId,
                 'tag' => $tag,
@@ -104,7 +104,7 @@ class DatabaseEntriesRepository implements Contract
      */
     public function monitoring()
     {
-        return DB::table('telescope_monitoring')->pluck('tag')->all();
+        return $this->table('telescope_monitoring')->pluck('tag')->all();
     }
 
     /**
@@ -121,7 +121,7 @@ class DatabaseEntriesRepository implements Contract
             return;
         }
 
-        DB::table('telescope_monitoring')->insert(collect($tags)->mapWithKeys(function ($tag) {
+        $this->table('telescope_monitoring')->insert(collect($tags)->mapWithKeys(function ($tag) {
             return ['tag' => $tag];
         })->all());
     }
@@ -134,7 +134,7 @@ class DatabaseEntriesRepository implements Contract
      */
     public function stopMonitoring(array $tags)
     {
-        DB::table('telescope_monitoring')->whereIn('tag', $tags)->delete();
+        $this->table('telescope_monitoring')->whereIn('tag', $tags)->delete();
 
         // $entryIds = DB::table('telescope_entries_tags')
         //             ->whereIn('tag', $tags)
@@ -149,5 +149,17 @@ class DatabaseEntriesRepository implements Contract
         // DB::table('telescope_entries_tags')
         //             ->whereIn('entry_id', $entryIds)
         //             ->delete();
+    }
+
+    /**
+     * Get a query builder instance for the given table.
+     *
+     * @param  string  $table
+     * @return \Illuminate\Database\Query\Builder
+     */
+    protected function table($table)
+    {
+        return DB::connection(config('telescope.storage.database.connection'))
+                            ->table($table);
     }
 }

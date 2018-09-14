@@ -115,4 +115,14 @@ class EntryModel extends Model
 
         return $this;
     }
+
+    /**
+     * Get the current connection name for the model.
+     *
+     * @return string
+     */
+    public function getConnectionName()
+    {
+        return config('telescope.storage.database.connection');
+    }
 }
