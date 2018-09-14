@@ -78,12 +78,14 @@ class DatabaseEntriesRepository implements Contract
      */
     protected function storeTags($entryId, IncomingEntry $entry)
     {
-        $this->table('telescope_entries_tags')->insert(collect($entry->tags)->map(function ($tag) use ($entryId) {
-            return [
-                'entry_id' => $entryId,
-                'tag' => $tag,
-            ];
-        })->toArray());
+        $this->table('telescope_entries_tags')
+                    ->insert(collect($entry->tags)
+                    ->map(function ($tag) use ($entryId) {
+                        return [
+                            'entry_id' => $entryId,
+                            'tag' => $tag,
+                        ];
+                    })->toArray());
     }
 
     /**
