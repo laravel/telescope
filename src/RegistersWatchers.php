@@ -12,8 +12,6 @@ trait RegistersWatchers
      */
     protected static function registerWatchers($app)
     {
-        $watchers = config('telescope.watchers');
-
         foreach (config('telescope.watchers') as $key => $watcher) {
             if (is_string($key) && $watcher === false) {
                 continue;
