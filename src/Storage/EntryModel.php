@@ -4,7 +4,7 @@ namespace Laravel\Telescope\Storage;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Telescope\EntryQueryOptions;
+use Laravel\Telescope\Storage\EntryQueryOptions;
 
 class EntryModel extends Model
 {
@@ -36,7 +36,7 @@ class EntryModel extends Model
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $type
-     * @param  \Laravel\Telescope\EntryQueryOptions  $options
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithTelescopeOptions($query, $type, EntryQueryOptions $options)
@@ -69,7 +69,7 @@ class EntryModel extends Model
      * Scope the query for the given batch ID.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Laravel\Telescope\EntryQueryOptions  $options
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return $this
      */
     protected function whereBatchId($query, EntryQueryOptions $options)
@@ -85,7 +85,7 @@ class EntryModel extends Model
      * Scope the query for the given type.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Laravel\Telescope\EntryQueryOptions  $options
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return $this
      */
     protected function whereTag($query, EntryQueryOptions $options)
@@ -104,7 +104,7 @@ class EntryModel extends Model
      * Scope the query for the given pagination options.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Laravel\Telescope\EntryQueryOptions  $options
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return $this
      */
     protected function whereBeforeId($query, EntryQueryOptions $options)

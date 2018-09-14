@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Telescope;
+namespace Laravel\Telescope\Storage;
 
 use Illuminate\Http\Request;
 

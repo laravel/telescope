@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\IncomingEntry;
-use Laravel\Telescope\EntryQueryOptions;
+use Laravel\Telescope\Storage\EntryQueryOptions;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 
 class DatabaseEntriesRepository implements Contract
@@ -34,7 +34,7 @@ class DatabaseEntriesRepository implements Contract
      * Return all the entries of a given type.
      *
      * @param  string|null  $type
-     * @param  \Laravel\Telescope\EntryQueryOptions  $options
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return \Illuminate\Support\Collection[\Laravel\Telescope\EntryResult]
      */
     public function get($type, EntryQueryOptions $options)
