@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Watchers;
 
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\ExceptionContext;
 use Illuminate\Log\Events\MessageLogged;
@@ -53,8 +54,8 @@ class ExceptionWatcher extends Watcher
      * @param  \Illuminate\Log\Events\MessageLogged  $event
      * @return array
      */
-    private function tags($event)
+    protected function tags($event)
     {
-        return $event->context['telescope'] ?? [];
+        return ExtractTags::from($event->context['exception']);
     }
 }
