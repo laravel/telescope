@@ -90,7 +90,7 @@ class Telescope
         return $app->runningInConsole() && ! in_array(
             $_SERVER['argv'][1] ?? null,
             [
-                'migrate',
+                // 'migrate',
                 'migrate:rollback',
                 'migrate:fresh',
                 'migrate:reset',
