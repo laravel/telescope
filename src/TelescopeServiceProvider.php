@@ -63,7 +63,7 @@ class TelescopeServiceProvider extends ServiceProvider
     }
 
     /**
-     * Get the Nova route group configuration array.
+     * Get the Telescope route group configuration array.
      *
      * @return array
      */
