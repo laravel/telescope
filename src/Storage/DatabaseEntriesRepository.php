@@ -161,20 +161,6 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
     public function stopMonitoring(array $tags)
     {
         $this->table('telescope_monitoring')->whereIn('tag', $tags)->delete();
-
-        // $entryIds = DB::table('telescope_entries_tags')
-        //             ->whereIn('tag', $tags)
-        //             ->pluck('entry_id')
-        //             ->unique()
-        //             ->all();
-
-        // DB::table('telescope_entries')
-        //             ->whereIn('entry_id', $entryIds)
-        //             ->delete();
-
-        // DB::table('telescope_entries_tags')
-        //             ->whereIn('entry_id', $entryIds)
-        //             ->delete();
     }
 
     /**
