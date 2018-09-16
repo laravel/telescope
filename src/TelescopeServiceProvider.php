@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
+use Laravel\Telescope\Storage\RedisEntriesRepository;
 
 class TelescopeServiceProvider extends ServiceProvider
 {
@@ -38,14 +39,23 @@ class TelescopeServiceProvider extends ServiceProvider
             __DIR__.'/../config/telescope.php', 'telescope'
         );
 
+//        $this->app->singleton(
+//            EntriesRepository::class,
+//            DatabaseEntriesRepository::class
+//        );
+
         $this->app->singleton(
             EntriesRepository::class,
-            DatabaseEntriesRepository::class
+            RedisEntriesRepository::class
         );
 
         $this->app->when(DatabaseEntriesRepository::class)
                 ->needs('$connection')
                 ->give(config('telescope.storage.database.connection'));
+
+        $this->app->when(RedisEntriesRepository::class)
+                ->needs('$connection')
+                ->give(config('telescope.storage.redis.connection'));
 
         Telescope::start($this->app);
     }

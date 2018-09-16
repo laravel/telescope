@@ -2,8 +2,17 @@
 
 namespace Laravel\Telescope;
 
+use Illuminate\Support\Str;
+
 class IncomingEntry
 {
+    /**
+     * The entry's UUID.
+     *
+     * @var string
+     */
+    public $uuid;
+    
     /**
      * The entry's batch ID.
      *
@@ -54,6 +63,8 @@ class IncomingEntry
      */
     public function __construct(array $content)
     {
+        $this->uuid = Str::uuid();
+        
         $this->recordedAt = now();
 
         $this->content = array_merge($content, ['hostname' => gethostname()]);
@@ -142,6 +153,7 @@ class IncomingEntry
     public function toArray()
     {
         return [
+            'uuid' => $this->uuid,
             'batch_id' => $this->batchId,
             'type' => $this->type,
             'content' => $this->content,

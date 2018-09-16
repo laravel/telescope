@@ -6,6 +6,11 @@ return [
     'storage' => [
         'database' => [
             'connection' => 'mysql',
+        ],
+
+        'redis' => [
+            'connection' => 'default',
+            'lifetime' => 172800,
         ]
     ],
 
