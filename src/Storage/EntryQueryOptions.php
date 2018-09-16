@@ -25,7 +25,7 @@ class EntryQueryOptions
      *
      * @var mixed
      */
-    public $beforeId;
+    public $beforeSequence;
 
     /**
      * The number of entries to retrieve.
@@ -44,7 +44,7 @@ class EntryQueryOptions
     {
         return (new static)
                 ->batchId($request->batch_id)
-                ->beforeId($request->before)
+                ->beforeSequence($request->before)
                 ->tag($request->tag)
                 ->limit($request->take ?? 50);
     }
@@ -79,9 +79,9 @@ class EntryQueryOptions
      * @param  mixed  $id
      * @return $this
      */
-    public function beforeId($id)
+    public function beforeSequence($id)
     {
-        $this->beforeId = $id;
+        $this->beforeSequence = $id;
 
         return $this;
     }

@@ -15,6 +15,13 @@ class EntryResult implements JsonSerializable
     public $id;
 
     /**
+     * The entry's sequence.
+     *
+     * @var mixed
+     */
+    public $sequence;
+
+    /**
      * The entry's batch ID.
      *
      * @var string
@@ -51,9 +58,10 @@ class EntryResult implements JsonSerializable
      * @param  array  $content
      * @param  \DateTimeInterface  $createdAt
      */
-    public function __construct($id, string $batchId, string $type, array $content, DateTimeInterface $createdAt)
+    public function __construct($id, $sequence, string $batchId, string $type, array $content, DateTimeInterface $createdAt)
     {
         $this->id = $id;
+        $this->sequence = $sequence;
         $this->type = $type;
         $this->batchId = $batchId;
         $this->content = $content;
@@ -69,6 +77,7 @@ class EntryResult implements JsonSerializable
     {
         return [
             'id' => $this->id,
+            'sequence' => $this->sequence,
             'batch_id' => $this->batchId,
             'type' => $this->type,
             'content' => $this->content,

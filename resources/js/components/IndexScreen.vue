@@ -20,7 +20,7 @@
                 lastEntryIndex: '',
                 hasMoreEntries: true,
                 hasNewEntries: false,
-                entriesPerRequest: 50,
+                entriesPerRequest: 5,
                 newEntriesTimeout: null,
                 loadingNewEntries: false,
                 loadingMoreEntries: false,
@@ -59,7 +59,7 @@
             loadEntries(after){
                 axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest).then(response => {
                     if (response.data.entries.length) {
-                        this.lastEntryIndex = _.last(response.data.entries).id;
+                        this.lastEntryIndex = _.last(response.data.entries).sequence;
                     }
 
                     if (response.data.entries.length < this.entriesPerRequest) {

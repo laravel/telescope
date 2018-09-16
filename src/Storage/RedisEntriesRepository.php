@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Storage;
 
+use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +47,7 @@ class RedisEntriesRepository implements Contract, PrunableRepository
      */
     public function find($id) : EntryResult
     {
-        $entry = EntryModel::on($this->connection)->findOrFail($id);
+        $entry = $this->redis->get($id);
 
         return new EntryResult(
             $entry->id,
@@ -66,19 +67,52 @@ class RedisEntriesRepository implements Contract, PrunableRepository
      */
     public function get($type, EntryQueryOptions $options)
     {
-        return EntryModel::on($this->connection)
-            ->withTelescopeOptions($type, $options)
-            ->take($options->limit)
-            ->orderByDesc('id')
-            ->get()->map(function ($entry) {
-                return new EntryResult(
-                    $entry->id,
-                    $entry->batch_id,
-                    $entry->type,
-                    $entry->content,
-                    $entry->created_at
-                );
-            });
+        $ids = $this->getEntriesIds($type, $options);
+
+        return collect($this->redis->pipeline(function ($pipe) use ($ids) {
+            foreach ($ids as $id => $sequence) {
+                $pipe->hgetAll('telescope:'.$id);
+            }
+        }))->map(function ($entry) use ($ids) {
+            return new EntryResult(
+                $entry['uuid'],
+                $ids[$entry['uuid']],
+                $entry['batch_id'],
+                $entry['type'],
+                json_decode($entry['content'], true),
+                Carbon::createFromFormat('Y-m-d H:i:s', $entry['created_at'])
+            );
+        });
+    }
+
+    /**
+     * Return all the entries IDs of a given type.
+     *
+     * @param  string|null  $type
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return \Illuminate\Support\Collection[\Laravel\Telescope\EntryResult]
+     */
+    private function getEntriesIds($type, EntryQueryOptions $options)
+    {
+        $firstSequence = $options->beforeSequence ? $options->beforeSequence : '+inf';
+
+        $offset = $options->beforeSequence ? 1 : 0;
+
+        if (! $options->tag) {
+            return $this->redis->zrevrangebyscore('telescope:type:'.$type, $firstSequence, '-inf', [
+                'withscores' => true, 'limit' => [$offset, $options->limit]
+            ]);
+        }
+
+        $this->redis->zinterstore('telescope:_temp:'.$type.':'.$options->tag, 2,
+            'telescope:type:'.$type, 'telescope:tag:'.$options->tag, ['aggregate' => 'max']
+        );
+
+        $this->redis->expire('telescope:_temp:'.$type.':'.$options->tag, 60);
+
+        return $this->redis->zrevrangebyscore('telescope:_temp:'.$type.':'.$options->tag, $firstSequence, '-inf', [
+            'withscores' => true, 'limit' => [$offset, $options->limit]
+        ]);
     }
 
     /**
@@ -96,39 +130,22 @@ class RedisEntriesRepository implements Contract, PrunableRepository
 
             $score = str_replace(',', '.', microtime(true));
 
-            $pipe->hmset($entry->uuid, $entry->toArray());
-            $pipe->expire($entry->uuid, config('telescope.storage.redis.lifetime'));
+            $pipe->hmset('telescope:'.$entry->uuid, $entry->toArray() + ['tags' => json_encode($entry->tags)]);
+            $pipe->expire('telescope:'.$entry->uuid, config('telescope.storage.redis.lifetime'));
 
-            $pipe->zadd('type:'.$entry->type, $score, $entry->uuid);
-            
+            $pipe->zadd('telescope:type:'.$entry->type, $score, $entry->uuid);
+            $pipe->expire('telescope:type:'.$entry->type, config('telescope.storage.redis.lifetime'));
+
             foreach($entry->tags as $tag){
-                $pipe->zadd('tag:'.$tag, $score, $entry->uuid);
+                $pipe->zadd('telescope:tag:'.$tag, $score, $entry->uuid);
+                $pipe->expire('telescope:tag:'.$tag, config('telescope.storage.redis.lifetime'));
             }
-            
-            $pipe->sadd('batch:'.$entry->batchId, $score, $entry->uuid);
-            $pipe->expire('batch:'.$entry->batchId, config('telescope.storage.redis.lifetime'));
+
+            $pipe->sadd('telescope:batch:'.$entry->batchId, $entry->uuid);
+            $pipe->expire('telescope:batch:'.$entry->batchId, config('telescope.storage.redis.lifetime'));
         });
 
         $pipe->execute();
-    }
-
-    /**
-     * Store the tags for the given entry.
-     *
-     * @param  int  $entryId
-     * @param  \Laravel\Telescope\IncomingEntry  $entry
-     * @return void
-     */
-    protected function storeTags($entryId, IncomingEntry $entry)
-    {
-        $this->table('telescope_entries_tags')
-                    ->insert(collect($entry->tags)
-                    ->map(function ($tag) use ($entryId) {
-                        return [
-                            'entry_id' => $entryId,
-                            'tag' => $tag,
-                        ];
-                    })->toArray());
     }
 
     /**
