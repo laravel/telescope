@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\IncomingEntry;
-use Laravel\Telescope\Storage\EntryQueryOptions;
 use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 use Illuminate\Contracts\Redis\Factory as Redis;
@@ -47,14 +46,17 @@ class RedisEntriesRepository implements Contract, PrunableRepository
      */
     public function find($id) : EntryResult
     {
-        $entry = $this->redis->get($id);
+        $entry = $this->redis->hgetall('telescope:'.$id);
+
+        abort_if(empty($entry), 404);
 
         return new EntryResult(
-            $entry->id,
-            $entry->batch_id,
-            $entry->type,
-            $entry->content,
-            $entry->created_at
+            $entry['uuid'],
+            null,
+            $entry['batch_id'],
+            $entry['type'],
+            json_decode($entry['content'], true),
+            Carbon::createFromFormat('Y-m-d H:i:s', $entry['created_at'])
         );
     }
 
@@ -71,12 +73,12 @@ class RedisEntriesRepository implements Contract, PrunableRepository
 
         return collect($this->redis->pipeline(function ($pipe) use ($ids) {
             foreach ($ids as $id => $sequence) {
-                $pipe->hgetAll('telescope:'.$id);
+                $pipe->hgetAll('telescope:'.(is_numeric($id) ? $sequence : $id));
             }
         }))->map(function ($entry) use ($ids) {
             return new EntryResult(
                 $entry['uuid'],
-                $ids[$entry['uuid']],
+                $ids[$entry['uuid']] ?? null,
                 $entry['batch_id'],
                 $entry['type'],
                 json_decode($entry['content'], true),
@@ -94,25 +96,34 @@ class RedisEntriesRepository implements Contract, PrunableRepository
      */
     private function getEntriesIds($type, EntryQueryOptions $options)
     {
-        $firstSequence = $options->beforeSequence ? $options->beforeSequence : '+inf';
+        $beforeSequence = $options->beforeSequence ? $options->beforeSequence : '+inf';
 
         $offset = $options->beforeSequence ? 1 : 0;
 
+        if (! $type) {
+            return $this->redis->smembers('telescope:batch:'.$options->batchId);
+        }
+
         if (! $options->tag) {
-            return $this->redis->zrevrangebyscore('telescope:type:'.$type, $firstSequence, '-inf', [
+            return $this->redis->zrevrangebyscore('telescope:type:'.$type, $beforeSequence, '-inf', [
                 'withscores' => true, 'limit' => [$offset, $options->limit]
             ]);
         }
 
-        $this->redis->zinterstore('telescope:_temp:'.$type.':'.$options->tag, 2,
-            'telescope:type:'.$type, 'telescope:tag:'.$options->tag, ['aggregate' => 'max']
+        $pipe = $this->redis->pipeline();
+
+        $pipe->zinterstore('telescope:_temp:'.$type.':'.$options->tag, 2,
+            'telescope:type:'.$type, 'telescope:tag:'.$options->tag,
+            ['aggregate' => 'max']
         );
 
-        $this->redis->expire('telescope:_temp:'.$type.':'.$options->tag, 60);
+        $pipe->expire('telescope:_temp:'.$type.':'.$options->tag, 30);
 
-        return $this->redis->zrevrangebyscore('telescope:_temp:'.$type.':'.$options->tag, $firstSequence, '-inf', [
+        $pipe->zrevrangebyscore('telescope:_temp:'.$type.':'.$options->tag, $beforeSequence, '-inf', [
             'withscores' => true, 'limit' => [$offset, $options->limit]
         ]);
+
+        return $pipe->execute()[2];
     }
 
     /**
