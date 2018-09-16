@@ -32,6 +32,20 @@ class EntryModel extends Model
     ];
 
     /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'uuid';
+
+    /**
+     * The "type" of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * Scope the query for the given qeury options.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query

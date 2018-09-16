@@ -39,10 +39,10 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
      */
     public function find($id) : EntryResult
     {
-        $entry = EntryModel::on($this->connection)->findOrFail($id);
+        $entry = EntryModel::on($this->connection)->whereUuid($id)->first();
 
         return new EntryResult(
-            $entry->id,
+            $entry->uuid,
             null,
             $entry->batch_id,
             $entry->type,
@@ -63,11 +63,11 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
         return EntryModel::on($this->connection)
             ->withTelescopeOptions($type, $options)
             ->take($options->limit)
-            ->orderByDesc('id')
+            ->orderByDesc('sequence')
             ->get()->map(function ($entry) {
                 return new EntryResult(
-                    $entry->id,
-                    $entry->id,
+                    $entry->uuid,
+                    $entry->sequence,
                     $entry->batch_id,
                     $entry->type,
                     $entry->content,
@@ -84,32 +84,35 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
      */
     public function store(Collection $entries)
     {
-        $entries->each(function (IncomingEntry $entry) {
-            $this->storeTags(
-                EntryModel::on($this->connection)
-                    ->forceCreate($entry->toArray())->id,
-                $entry
-            );
-        });
+        $this->table('telescope_entries')->insert($entries->map(function($entry){
+            $entry->content = json_encode($entry->content);
+            
+            return $entry->toArray();
+        })->toArray());
+
+        $this->storeTags($entries->pluck('tags', 'uuid'));
     }
 
     /**
-     * Store the tags for the given entry.
+     * Store the tags for the given entries.
      *
-     * @param  int  $entryId
-     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @param  \Illuminate\Support\Collection  $results
      * @return void
      */
-    protected function storeTags($entryId, IncomingEntry $entry)
+    protected function storeTags($results)
     {
-        $this->table('telescope_entries_tags')
-                    ->insert(collect($entry->tags)
-                    ->map(function ($tag) use ($entryId) {
-                        return [
-                            'entry_id' => $entryId,
-                            'tag' => $tag,
-                        ];
-                    })->toArray());
+        $input = [];
+        
+        foreach($results as $uuid => $tags){
+            foreach($tags as $tag){
+                $input[] = [
+                    'entry_uuid' => $uuid,
+                    'tag' => $tag,
+                ];
+            }
+        }
+        
+        $this->table('telescope_entries_tags')->insert($input);
     }
 
     /**

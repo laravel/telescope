@@ -14,7 +14,8 @@ class CreateTelescopeEntriesTable extends Migration
     public function up()
     {
         Schema::create('telescope_entries', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('sequence');
+            $table->uuid('uuid')->index();
             $table->uuid('batch_id');
             $table->string('type', 20);
             $table->json('content');
@@ -25,14 +26,14 @@ class CreateTelescopeEntriesTable extends Migration
         });
 
         Schema::create('telescope_entries_tags', function (Blueprint $table) {
-            $table->unsignedBigInteger('entry_id');
+            $table->uuid('entry_uuid');
             $table->string('tag');
 
-            $table->index(['entry_id', 'tag']);
+            $table->index(['entry_uuid', 'tag']);
             $table->index('tag');
 
-            $table->foreign('entry_id')
-                  ->references('id')
+            $table->foreign('entry_uuid')
+                  ->references('uuid')
                   ->on('telescope_entries')
                   ->onDelete('cascade');
         });
