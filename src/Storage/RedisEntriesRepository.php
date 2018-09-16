@@ -177,7 +177,7 @@ class RedisEntriesRepository implements Contract, PrunableRepository
      */
     public function monitoring()
     {
-        return $this->table('telescope_monitoring')->pluck('tag')->all();
+        return $this->redis->smembers('telescope:monitoring');
     }
 
     /**
@@ -194,11 +194,7 @@ class RedisEntriesRepository implements Contract, PrunableRepository
             return;
         }
 
-        $this->table('telescope_monitoring')
-                    ->insert(collect($tags)
-                    ->mapWithKeys(function ($tag) {
-                        return ['tag' => $tag];
-                    })->all());
+        $this->redis->sadd('telescope:monitoring', $tags);
     }
 
     /**
@@ -209,7 +205,7 @@ class RedisEntriesRepository implements Contract, PrunableRepository
      */
     public function stopMonitoring(array $tags)
     {
-        $this->table('telescope_monitoring')->whereIn('tag', $tags)->delete();
+        $this->redis->srem('telescope:monitoring', $tags);
     }
 
     /**
@@ -223,16 +219,5 @@ class RedisEntriesRepository implements Contract, PrunableRepository
         $this->table('telescope_entries')
                 ->where('created_at', '<', $before)
                 ->delete();
-    }
-
-    /**
-     * Get a query builder instance for the given table.
-     *
-     * @param  string  $table
-     * @return \Illuminate\Database\Query\Builder
-     */
-    protected function table($table)
-    {
-        return DB::connection($this->connection)->table($table);
     }
 }

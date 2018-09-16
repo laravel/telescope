@@ -39,15 +39,15 @@ class TelescopeServiceProvider extends ServiceProvider
             __DIR__.'/../config/telescope.php', 'telescope'
         );
 
-        $this->app->singleton(
-            EntriesRepository::class,
-            DatabaseEntriesRepository::class
-        );
-
 //        $this->app->singleton(
 //            EntriesRepository::class,
-//            RedisEntriesRepository::class
+//            DatabaseEntriesRepository::class
 //        );
+
+        $this->app->singleton(
+            EntriesRepository::class,
+            RedisEntriesRepository::class
+        );
 
         $this->app->when(DatabaseEntriesRepository::class)
                 ->needs('$connection')
