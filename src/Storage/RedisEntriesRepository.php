@@ -145,10 +145,12 @@ class RedisEntriesRepository implements Contract, PrunableRepository
             $pipe->expire('telescope:'.$entry->uuid, config('telescope.storage.redis.lifetime'));
 
             $pipe->zadd('telescope:type:'.$entry->type, $score, $entry->uuid);
+            $pipe->sadd('telescope:prunable', 'telescope:type:'.$entry->type);
             $pipe->expire('telescope:type:'.$entry->type, config('telescope.storage.redis.lifetime'));
 
             foreach($entry->tags as $tag){
                 $pipe->zadd('telescope:tag:'.$tag, $score, $entry->uuid);
+                $pipe->sadd('telescope:prunable', 'telescope:tag:'.$tag);
                 $pipe->expire('telescope:tag:'.$tag, config('telescope.storage.redis.lifetime'));
             }
 
@@ -216,8 +218,14 @@ class RedisEntriesRepository implements Contract, PrunableRepository
      */
     public function prune(DateTimeInterface $before)
     {
-        $this->table('telescope_entries')
-                ->where('created_at', '<', $before)
-                ->delete();
+        $this->redis->pipeline(function ($pipe) use ($before) {
+            $lists = $this->redis->smembers('telescope:prunable');
+
+            $time = strtotime('midnight', $before->getTimestamp());
+
+            foreach($lists as $list){
+                $pipe->zremrangebyscore($list, '-inf', $time);
+            }
+        });
     }
 }
