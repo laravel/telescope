@@ -43,6 +43,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
 
         return new EntryResult(
             $entry->id,
+            null,
             $entry->batch_id,
             $entry->type,
             $entry->content,
@@ -65,6 +66,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
             ->orderByDesc('id')
             ->get()->map(function ($entry) {
                 return new EntryResult(
+                    $entry->id,
                     $entry->id,
                     $entry->batch_id,
                     $entry->type,
