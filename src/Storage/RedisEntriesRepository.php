@@ -110,16 +110,33 @@ class RedisEntriesRepository implements Contract, PrunableRepository
             ]);
         }
 
+        return $this->getEntriesIdsFromTags($type, $options, $beforeSequence, $offset);
+    }
+
+    /**
+     * Get entries IDs of the given type based on a tag.
+     *
+     * @param  string  $type
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions $options
+     * @param  mixed  $beforeSequence
+     * @param  int  $offset
+     * @return \Illuminate\Support\Collection[\Laravel\Telescope\EntryResult]
+     */
+    private function getEntriesIdsFromTags($type, EntryQueryOptions $options, $beforeSequence, $offset)
+    {
+        $key = 'telescope:_temp:'.$type.':'.$options->tag;
+
         $pipe = $this->redis->pipeline();
 
-        $pipe->zinterstore('telescope:_temp:'.$type.':'.$options->tag, 2,
-            'telescope:type:'.$type, 'telescope:tag:'.$options->tag,
+        $pipe->zinterstore($key, 2,
+            'telescope:type:'.$type,
+            'telescope:tag:'.$options->tag,
             ['aggregate' => 'max']
         );
 
-        $pipe->expire('telescope:_temp:'.$type.':'.$options->tag, 30);
+        $pipe->expire($key, 30);
 
-        $pipe->zrevrangebyscore('telescope:_temp:'.$type.':'.$options->tag, $beforeSequence, '-inf', [
+        $pipe->zrevrangebyscore($key, $beforeSequence, '-inf', [
             'withscores' => true, 'limit' => [$offset, $options->limit]
         ]);
 
