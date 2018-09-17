@@ -31,7 +31,7 @@
 
         methods: {
             removeTag(tag){
-                this.confirm('Are you sure you want to remove this tag?', ()=> {
+                this.alertConfirm('Are you sure you want to remove this tag?', ()=> {
                     this.tags = _.reject(this.tags, t => t == tag);
 
                     axios.post('/telescope/telescope-api/monitored-tags/delete', {tag: tag});

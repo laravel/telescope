@@ -39,7 +39,7 @@ export default {
         /**
          * Show an error message.
          */
-        error(message){
+        alertError(message){
             this.$root.alert.type = 'error';
             this.$root.alert.autoClose = false;
             this.$root.alert.message = message;
@@ -49,7 +49,7 @@ export default {
         /**
          * Show a success message.
          */
-        success(message, autoClose){
+        alertSuccess(message, autoClose){
             this.$root.alert.type = 'success';
             this.$root.alert.autoClose = autoClose;
             this.$root.alert.message = message;
@@ -59,7 +59,7 @@ export default {
         /**
          * Show confirmation message.
          */
-        confirm(message, success, failure){
+        alertConfirm(message, success, failure){
             this.$root.alert.type = 'confirmation';
             this.$root.alert.autoClose = false;
             this.$root.alert.message = message;

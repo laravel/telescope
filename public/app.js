@@ -60342,7 +60342,7 @@ exports.clearImmediate = clearImmediate;
         /**
          * Show an error message.
          */
-        error: function error(message) {
+        alertError: function alertError(message) {
             this.$root.alert.type = 'error';
             this.$root.alert.autoClose = false;
             this.$root.alert.message = message;
@@ -60352,7 +60352,7 @@ exports.clearImmediate = clearImmediate;
         /**
          * Show a success message.
          */
-        success: function success(message, autoClose) {
+        alertSuccess: function alertSuccess(message, autoClose) {
             this.$root.alert.type = 'success';
             this.$root.alert.autoClose = autoClose;
             this.$root.alert.message = message;
@@ -60362,7 +60362,7 @@ exports.clearImmediate = clearImmediate;
         /**
          * Show confirmation message.
          */
-        confirm: function confirm(message, success, failure) {
+        alertConfirm: function alertConfirm(message, success, failure) {
             this.$root.alert.type = 'confirmation';
             this.$root.alert.autoClose = false;
             this.$root.alert.message = message;
@@ -68848,50 +68848,32 @@ var render = function() {
                   "div",
                   { staticClass: "bg-dark p-4 mb-0 text-white" },
                   [
-                    _c("tree-view", {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.currentTab == "payload",
-                          expression: "currentTab=='payload'"
-                        }
-                      ],
-                      attrs: {
-                        data: slotProps.entry.content.payload,
-                        options: { maxDepth: 3 }
-                      }
-                    }),
+                    _vm.currentTab == "payload"
+                      ? _c("tree-view", {
+                          attrs: {
+                            data: slotProps.entry.content.payload,
+                            options: { maxDepth: 3 }
+                          }
+                        })
+                      : _vm._e(),
                     _vm._v(" "),
-                    _c("tree-view", {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.currentTab == "headers",
-                          expression: "currentTab=='headers'"
-                        }
-                      ],
-                      attrs: {
-                        data: slotProps.entry.content.headers,
-                        options: { maxDepth: 3 }
-                      }
-                    }),
+                    _vm.currentTab == "headers"
+                      ? _c("tree-view", {
+                          attrs: {
+                            data: slotProps.entry.content.headers,
+                            options: { maxDepth: 3 }
+                          }
+                        })
+                      : _vm._e(),
                     _vm._v(" "),
-                    _c("tree-view", {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.currentTab == "response",
-                          expression: "currentTab=='response'"
-                        }
-                      ],
-                      attrs: {
-                        data: slotProps.entry.content.response,
-                        options: { maxDepth: 3 }
-                      }
-                    })
+                    _vm.currentTab == "response"
+                      ? _c("tree-view", {
+                          attrs: {
+                            data: slotProps.entry.content.response,
+                            options: { maxDepth: 3 }
+                          }
+                        })
+                      : _vm._e()
                   ],
                   1
                 )
@@ -78683,7 +78665,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         removeTag: function removeTag(tag) {
             var _this2 = this;
 
-            this.confirm('Are you sure you want to remove this tag?', function () {
+            this.alertConfirm('Are you sure you want to remove this tag?', function () {
                 _this2.tags = _.reject(_this2.tags, function (t) {
                     return t == tag;
                 });

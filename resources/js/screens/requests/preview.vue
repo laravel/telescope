@@ -51,9 +51,9 @@
                     </li>
                 </ul>
                 <div class="bg-dark p-4 mb-0 text-white">
-                    <tree-view :data="slotProps.entry.content.payload" :options="{maxDepth: 3}" v-show="currentTab=='payload'"></tree-view>
-                    <tree-view :data="slotProps.entry.content.headers" :options="{maxDepth: 3}" v-show="currentTab=='headers'"></tree-view>
-                    <tree-view :data="slotProps.entry.content.response" :options="{maxDepth: 3}" v-show="currentTab=='response'"></tree-view>
+                    <tree-view :data="slotProps.entry.content.payload" :options="{maxDepth: 3}" v-if="currentTab=='payload'"></tree-view>
+                    <tree-view :data="slotProps.entry.content.headers" :options="{maxDepth: 3}" v-if="currentTab=='headers'"></tree-view>
+                    <tree-view :data="slotProps.entry.content.response" :options="{maxDepth: 3}" v-if="currentTab=='response'"></tree-view>
                 </div>
             </div>
 
