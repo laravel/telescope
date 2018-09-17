@@ -39,6 +39,10 @@ class TelescopeServiceProvider extends ServiceProvider
             __DIR__.'/../config/telescope.php', 'telescope'
         );
 
+        $this->commands([
+            Console\InstallCommand::class,
+        ]);
+
         $this->registerStorageDriver();
 
         Telescope::start($this->app);
@@ -137,12 +141,16 @@ class TelescopeServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
+                __DIR__.'/../public' => public_path('vendors/telescope'),
+            ], 'telescope-assets');
+
+            $this->publishes([
                 __DIR__.'/../config/telescope.php' => config_path('telescope.php'),
             ], 'telescope-config');
 
             $this->publishes([
-                __DIR__.'/../public' => public_path('vendors/telescope'),
-            ], 'telescope-assets');
+                __DIR__.'/../stubs/TelescopeServiceProvider.stub' => app_path('Providers/TelescopeServiceProvider.php'),
+            ], 'telescope-provider');
         }
     }
 }
