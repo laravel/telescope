@@ -10637,6 +10637,10 @@ svg.icon {
   fill: #4246C7;
 }
 
+button:hover .fill-primary {
+  fill: #fff;
+}
+
 .control-action svg {
   fill: #ccd2df;
   width: 1.2rem;

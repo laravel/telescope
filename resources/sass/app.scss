@@ -129,6 +129,12 @@ svg.icon {
   fill: $primary;
 }
 
+button:hover{
+  .fill-primary {
+    fill: #fff;
+  }
+}
+
 .control-action {
   svg {
     fill: #ccd2df;
