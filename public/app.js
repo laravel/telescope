@@ -49047,13 +49047,26 @@ var router = new __WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]({
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('related-entries', __webpack_require__(346));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('index-screen', __webpack_require__(349));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('preview-screen', __webpack_require__(354));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('alert', __webpack_require__(364));
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_1__base__["a" /* default */]);
 
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#telescope',
 
-    router: router
+    router: router,
+
+    data: function data() {
+        return {
+            alert: {
+                type: null,
+                autoClose: 0,
+                message: '',
+                confirmationProceed: null,
+                confirmationCancel: null
+            }
+        };
+    }
 });
 
 /***/ }),
@@ -60324,7 +60337,38 @@ exports.clearImmediate = clearImmediate;
          */
         debouncer: __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.debounce(function (callback) {
             return callback();
-        }, 500)
+        }, 500),
+
+        /**
+         * Show an error message.
+         */
+        error: function error(message) {
+            this.$root.alert.type = 'error';
+            this.$root.alert.autoClose = false;
+            this.$root.alert.message = message;
+        },
+
+
+        /**
+         * Show a success message.
+         */
+        success: function success(message, autoClose) {
+            this.$root.alert.type = 'success';
+            this.$root.alert.autoClose = autoClose;
+            this.$root.alert.message = message;
+        },
+
+
+        /**
+         * Show confirmation message.
+         */
+        confirm: function confirm(message, success, failure) {
+            this.$root.alert.type = 'confirmation';
+            this.$root.alert.autoClose = false;
+            this.$root.alert.message = message;
+            this.$root.alert.confirmationProceed = success;
+            this.$root.alert.confirmationCancel = failure;
+        }
     }
 });
 
@@ -60707,6 +60751,10 @@ webpackContext.id = 169;
     path: '/redis',
     name: 'redis',
     component: __webpack_require__(340)
+}, {
+    path: '/monitored-tags',
+    name: 'monitored-tags',
+    component: __webpack_require__(361)
 }]);
 
 /***/ }),
@@ -78537,6 +78585,715 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(362)
+/* template */
+var __vue_template__ = __webpack_require__(363)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/screens/monitoredTags/index.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-755a859f", Component.options)
+  } else {
+    hotAPI.reload("data-v-755a859f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 362 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    /**
+     * The component's data.
+     */
+    data: function data() {
+        return {
+            tags: [],
+            ready: false,
+            newTag: ''
+        };
+    },
+
+
+    /**
+     * Prepare the component.
+     */
+    mounted: function mounted() {
+        var _this = this;
+
+        document.title = "Monitoring - Telescope";
+
+        __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/monitored-tags').then(function (response) {
+            _this.tags = response.data.tags;
+
+            _this.ready = true;
+        });
+    },
+
+
+    methods: {
+        removeTag: function removeTag(tag) {
+            var _this2 = this;
+
+            this.confirm('Are you sure you want to remove this tag?', function () {
+                _this2.tags = _.reject(_this2.tags, function (t) {
+                    return t == tag;
+                });
+
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/telescope/telescope-api/monitored-tags/delete', { tag: tag });
+            });
+        },
+
+
+        /**
+         * Opens the modal for adding new monitored tag.
+         */
+        openNewTagModal: function openNewTagModal() {
+            __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#addTagModel').modal({
+                backdrop: 'static'
+            });
+
+            __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#newTagInput').focus();
+        },
+
+
+        /**
+         * Monitor the given tag.
+         */
+        monitorNewTag: function monitorNewTag() {
+            if (this.newTag.length) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/telescope/telescope-api/monitored-tags', { tag: this.newTag });
+
+                this.tags.push(this.newTag);
+            }
+
+            __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#addTagModel').modal('hide');
+
+            this.newTag = '';
+        },
+
+
+        /**
+         * Cancel adding a new tag.
+         */
+        cancelNewTag: function cancelNewTag() {
+            __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#addTagModel').modal('hide');
+
+            this.newTag = '';
+        }
+    }
+});
+
+/***/ }),
+/* 363 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "card-header d-flex align-items-center justify-content-between"
+      },
+      [
+        _c("h5", [_vm._v("Monitoring")]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary btn-sm",
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.openNewTagModal($event)
+              }
+            }
+          },
+          [_vm._v("Monitor")]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    !_vm.ready
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius"
+          },
+          [
+            _c(
+              "svg",
+              {
+                staticClass: "icon spin mr-2",
+                attrs: {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  viewBox: "0 0 20 20"
+                }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    d:
+                      "M12 10a2 2 0 0 1-3.41 1.41A2 2 0 0 1 10 8V0a9.97 9.97 0 0 1 10 10h-8zm7.9 1.41A10 10 0 1 1 8.59.1v2.03a8 8 0 1 0 9.29 9.29h2.02zm-4.07 0a6 6 0 1 1-7.25-7.25v2.1a3.99 3.99 0 0 0-1.4 6.57 4 4 0 0 0 6.56-1.42h2.1z"
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c("span", [_vm._v("Scanning...")])
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.ready && _vm.tags.length == 0
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius"
+          },
+          [_c("span", [_vm._v("No entries found.")])]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.ready && _vm.tags.length > 0
+      ? _c("table", { staticClass: "table table-hover table-sm mb-0" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.tags, function(tag) {
+              return _c("tr", { key: tag.tag }, [
+                _c("td", [_vm._v(_vm._s(_vm.truncate(tag, 140)))]),
+                _vm._v(" "),
+                _c("td", { staticClass: "table-fit" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "control-action",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.removeTag(tag)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            viewBox: "0 0 20 20"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            attrs: {
+                              d:
+                                "M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"
+                            }
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              ])
+            })
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal",
+        attrs: {
+          id: "addTagModel",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "alertModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _vm._v("Monitor new Tag")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.newTag,
+                      expression: "newTag"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    placeholder: "Project:6352",
+                    id: "newTagInput"
+                  },
+                  domProps: { value: _vm.newTag },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !("button" in $event) &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.monitorNewTag($event)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.newTag = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "modal-footer justify-content-center" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-success btn-sm",
+                      on: { click: _vm.monitorNewTag }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Monitor\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-info btn-sm",
+                      on: { click: _vm.cancelNewTag }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Cancel\n                    "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [_c("th", [_vm._v("Tag")]), _vm._v(" "), _c("th")])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-755a859f", module.exports)
+  }
+}
+
+/***/ }),
+/* 364 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(365)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(367)
+/* template */
+var __vue_template__ = __webpack_require__(368)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Alert.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7b2bf401", Component.options)
+  } else {
+    hotAPI.reload("data-v-7b2bf401", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 365 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(366);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("3ec29f50", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7b2bf401\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Alert.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7b2bf401\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Alert.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 366 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n#alertModal {\n    z-index: 99999;\n    background: rgba(0, 0, 0, 0.5);\n}\n#alertModal svg {\n    display: block;\n    margin: 0 auto;\n    width: 4rem;\n    height: 4rem;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 367 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['type', 'message', 'autoClose', 'confirmationProceed', 'confirmationCancel'],
+
+    data: function data() {
+        return {
+            timeout: null,
+            anotherModalOpened: __WEBPACK_IMPORTED_MODULE_0_jquery___default()('body').hasClass('modal-open')
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#alertModal').modal({
+            backdrop: 'static'
+        });
+
+        __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#alertModal').on('hidden.bs.modal', function (e) {
+            _this.$root.alert.type = null;
+            _this.$root.alert.autoClose = false;
+            _this.$root.alert.message = '';
+            _this.$root.alert.confirmationProceed = null;
+            _this.$root.alert.confirmationCancel = null;
+
+            if (_this.anotherModalOpened) {
+                __WEBPACK_IMPORTED_MODULE_0_jquery___default()('body').addClass('modal-open');
+            }
+        });
+
+        if (this.autoClose) {
+            this.timeout = setTimeout(function () {
+                _this.close();
+            }, this.autoClose);
+        }
+    },
+
+
+    methods: {
+        /**
+         * Close the modal.
+         */
+        close: function close() {
+            clearTimeout(this.timeout);
+
+            __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#alertModal').modal('hide');
+        },
+
+
+        /**
+         * Confirm and close the modal.
+         */
+        confirm: function confirm() {
+            this.confirmationProceed();
+
+            this.close();
+        },
+
+
+        /**
+         * Cancel and close the modal.
+         */
+        cancel: function cancel() {
+            if (this.confirmationCancel) {
+                this.confirmationCancel();
+            }
+
+            this.close();
+        }
+    }
+});
+
+/***/ }),
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal",
+      attrs: {
+        id: "alertModal",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-labelledby": "alertModalLabel",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-body text-center" }, [
+            _vm.type == "confirmation"
+              ? _c(
+                  "svg",
+                  {
+                    staticClass: "fill-warning",
+                    attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      viewBox: "0 0 20 20"
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm2-13c0 .28-.21.8-.42 1L10 9.58c-.57.58-1 1.6-1 2.42v1h2v-1c0-.29.21-.8.42-1L13 9.42c.57-.58 1-1.6 1-2.42a4 4 0 1 0-8 0h2a2 2 0 1 1 4 0zm-3 8v2h2v-2H9z"
+                      }
+                    })
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.type == "success"
+              ? _c(
+                  "svg",
+                  {
+                    staticClass: "fill-success",
+                    attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      viewBox: "0 0 20 20"
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM6.7 9.29L9 11.6l4.3-4.3 1.4 1.42L9 14.4l-3.7-3.7 1.4-1.42z"
+                      }
+                    })
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.type == "error"
+              ? _c(
+                  "svg",
+                  {
+                    staticClass: "fill-danger",
+                    attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      viewBox: "0 0 20 20"
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm1.41-1.41A8 8 0 1 0 15.66 4.34 8 8 0 0 0 4.34 15.66zm9.9-8.49L11.41 10l2.83 2.83-1.41 1.41L10 11.41l-2.83 2.83-1.41-1.41L8.59 10 5.76 7.17l1.41-1.41L10 8.59l2.83-2.83 1.41 1.41z"
+                      }
+                    })
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("p", { staticClass: "mt-3 mb-0" }, [_vm._v(_vm._s(_vm.message))])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer justify-content-center" }, [
+            _vm.type == "error"
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-danger btn-sm",
+                    on: { click: _vm.close }
+                  },
+                  [_vm._v("\n                    CLOSE\n                ")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.type == "success"
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-success btn-sm",
+                    on: { click: _vm.close }
+                  },
+                  [_vm._v("\n                    OK\n                ")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.type == "confirmation"
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-danger btn-sm",
+                    on: { click: _vm.confirm }
+                  },
+                  [_vm._v("\n                    YES\n                ")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.type == "confirmation"
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-outline-success btn-sm",
+                    on: { click: _vm.cancel }
+                  },
+                  [_vm._v("\n                    NO, CANCEL\n                ")]
+                )
+              : _vm._e()
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7b2bf401", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

@@ -34,5 +34,37 @@ export default {
          * Creates a debounced function that delays invoking a callback.
          */
         debouncer: _.debounce(callback => callback(), 500),
+
+
+        /**
+         * Show an error message.
+         */
+        error(message){
+            this.$root.alert.type = 'error';
+            this.$root.alert.autoClose = false;
+            this.$root.alert.message = message;
+        },
+
+
+        /**
+         * Show a success message.
+         */
+        success(message, autoClose){
+            this.$root.alert.type = 'success';
+            this.$root.alert.autoClose = autoClose;
+            this.$root.alert.message = message;
+        },
+
+
+        /**
+         * Show confirmation message.
+         */
+        confirm(message, success, failure){
+            this.$root.alert.type = 'confirmation';
+            this.$root.alert.autoClose = false;
+            this.$root.alert.message = message;
+            this.$root.alert.confirmationProceed = success;
+            this.$root.alert.confirmationCancel = failure;
+        },
     }
 };

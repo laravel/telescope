@@ -160,4 +160,10 @@ export default [
         name: 'redis',
         component: require('./screens/redis/index')
     },
+
+    {
+        path: '/monitored-tags',
+        name: 'monitored-tags',
+        component: require('./screens/monitoredTags/index')
+    },
 ];

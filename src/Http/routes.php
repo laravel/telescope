@@ -54,6 +54,11 @@ Route::get('/telescope-api/schedule/{id}', 'ScheduleController@show');
 Route::get('/telescope-api/redis', 'RedisController@index');
 Route::get('/telescope-api/redis/{id}', 'RedisController@show');
 
+// Monitored Tags...
+Route::get('/telescope-api/monitored-tags', 'MonitoredTagController@index');
+Route::post('/telescope-api/monitored-tags/', 'MonitoredTagController@store');
+Route::post('/telescope-api/monitored-tags/delete', 'MonitoredTagController@destroy');
+
 Route::get('/{view?}', function () {
     return view('telescope::layout');
 })->where('view', '(.*)');

@@ -20,6 +20,7 @@ const router = new VueRouter({
 Vue.component('related-entries', require('./components/RelatedEntries.vue'));
 Vue.component('index-screen', require('./components/IndexScreen.vue'));
 Vue.component('preview-screen', require('./components/PreviewScreen.vue'));
+Vue.component('alert', require('./components/Alert.vue'));
 
 Vue.mixin(Base);
 
@@ -27,4 +28,16 @@ new Vue({
     el: '#telescope',
 
     router,
+
+    data(){
+        return {
+            alert: {
+                type: null,
+                autoClose: 0,
+                message: '',
+                confirmationProceed: null,
+                confirmationCancel: null,
+            },
+        }
+    }
 });
