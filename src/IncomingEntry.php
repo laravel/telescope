@@ -12,7 +12,7 @@ class IncomingEntry
      * @var string
      */
     public $uuid;
-    
+
     /**
      * The entry's batch ID.
      *
@@ -63,8 +63,8 @@ class IncomingEntry
      */
     public function __construct(array $content)
     {
-        $this->uuid = Str::uuid();
-        
+        $this->uuid = Str::orderedUuid();
+
         $this->recordedAt = now();
 
         $this->content = array_merge($content, ['hostname' => gethostname()]);
