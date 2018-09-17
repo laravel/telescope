@@ -52,23 +52,43 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     private function registerStorageDriver()
     {
-        if (config('telescope.driver') == 'database') {
-            $this->app->singleton(
-                EntriesRepository::class, DatabaseEntriesRepository::class
-            );
+        $driver = config('telescope.driver');
 
-            $this->app->when(DatabaseEntriesRepository::class)
-                ->needs('$connection')
-                ->give(config('telescope.storage.database.connection'));
-        } elseif (config('telescope.driver') == 'redis') {
-            $this->app->singleton(
-                EntriesRepository::class, RedisEntriesRepository::class
-            );
-
-            $this->app->when(RedisEntriesRepository::class)
-                ->needs('$connection')
-                ->give(config('telescope.storage.redis.connection'));
+        if (method_exists($this, $method = 'register'.ucfirst($driver).'Driver')){
+            $this->$method();
         }
+    }
+
+    /**
+     * Register the package database storage driver.
+     *
+     * @return void
+     */
+    public function registerDatabaseDriver()
+    {
+        $this->app->singleton(
+            EntriesRepository::class, DatabaseEntriesRepository::class
+        );
+
+        $this->app->when(DatabaseEntriesRepository::class)
+            ->needs('$connection')
+            ->give(config('telescope.storage.database.connection'));
+    }
+
+    /**
+     * Register the package redis storage driver.
+     *
+     * @return void
+     */
+    public function registerRedisDriver()
+    {
+        $this->app->singleton(
+            EntriesRepository::class, RedisEntriesRepository::class
+        );
+
+        $this->app->when(RedisEntriesRepository::class)
+            ->needs('$connection')
+            ->give(config('telescope.storage.redis.connection'));
     }
 
     /**
