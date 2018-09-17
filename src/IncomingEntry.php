@@ -3,6 +3,7 @@
 namespace Laravel\Telescope;
 
 use Illuminate\Support\Str;
+use Laravel\Telescope\EntryType;
 
 class IncomingEntry
 {
@@ -143,6 +144,16 @@ class IncomingEntry
         $this->tags = array_unique(array_merge($this->tags, $tags));
 
         return $this;
+    }
+
+    /**
+     * Determine if the incoming entry is an exception.
+     *
+     * @return bool
+     */
+    public function isException()
+    {
+        return $this->type == EntryType::EXCEPTION;
     }
 
     /**
