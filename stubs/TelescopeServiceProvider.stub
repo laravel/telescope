@@ -32,8 +32,8 @@ class TelescopeServiceProvider extends ServiceProvider
                 return true;
             }
 
-            return resolve(EntriesRepository::class)->isMonitoring($entry->tags) ||
-                   $entry->isException();
+            return $entry->isException() ||
+                   $entry->hasMonitoredTag();
         });
     }
 }

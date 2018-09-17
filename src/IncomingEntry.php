@@ -4,6 +4,7 @@ namespace Laravel\Telescope;
 
 use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Contracts\EntriesRepository;
 
 class IncomingEntry
 {
@@ -144,6 +145,20 @@ class IncomingEntry
         $this->tags = array_unique(array_merge($this->tags, $tags));
 
         return $this;
+    }
+
+    /**
+     * Determine if the incoming entry has a monitored tag.
+     *
+     * @return bool
+     */
+    public function hasMonitoredTag()
+    {
+        if (! empty($this->tags)) {
+            return resolve(EntriesRepository::class)->isMonitoring($this->tags);
+        }
+
+        return false;
     }
 
     /**
