@@ -164,6 +164,6 @@ export default [
     {
         path: '/monitored-tags',
         name: 'monitored-tags',
-        component: require('./screens/monitoredTags/index')
+        component: require('./screens/monitoring/index')
     },
 ];

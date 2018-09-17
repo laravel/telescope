@@ -70197,7 +70197,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/screens/monitoredTags/index.vue"
+Component.options.__file = "resources/js/screens/monitoring/index.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -70206,9 +70206,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-755a859f", Component.options)
+    hotAPI.createRecord("data-v-f444c65e", Component.options)
   } else {
-    hotAPI.reload("data-v-755a859f", Component.options)
+    hotAPI.reload("data-v-f444c65e", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -70548,7 +70548,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-755a859f", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-f444c65e", module.exports)
   }
 }
 
