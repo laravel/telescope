@@ -84,7 +84,7 @@
         <div class="card-header d-flex align-items-center justify-content-between">
             <h5>Monitoring</h5>
 
-            <button class="btn btn-primary btn-sm" v-on:click.prevent="openNewTagModal">Monitor</button>
+            <button class="btn btn-primary" v-on:click.prevent="openNewTagModal">Monitor</button>
         </div>
 
 
@@ -123,11 +123,10 @@
             </tbody>
         </table>
 
-
         <div class="modal" id="addTagModel" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">Monitor new Tag</div>
+                    <div class="modal-header">Monitor New Tag</div>
 
                     <div class="modal-body">
                         <input type="text" class="form-control" placeholder="Project:6352"
@@ -138,10 +137,11 @@
 
 
                     <div class="modal-footer justify-content-center">
-                        <button class="btn btn-outline-success btn-sm" @click="monitorNewTag">
+                        <button class="btn btn-outline-success" @click="monitorNewTag">
                             Monitor
                         </button>
-                        <button class="btn btn-outline-info btn-sm" @click="cancelNewTag">
+
+                        <button class="btn" @click="cancelNewTag">
                             Cancel
                         </button>
                     </div>
