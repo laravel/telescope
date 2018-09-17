@@ -6,6 +6,7 @@ use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Telescope\Contracts\EntriesRepository;
 
 class TelescopeServiceProvider extends ServiceProvider
 {
@@ -31,7 +32,8 @@ class TelescopeServiceProvider extends ServiceProvider
                 return true;
             }
 
-            return false;
+            return resolve(EntriesRepository::class)
+                    ->isMonitoring($entry->tags);
         });
     }
 }
