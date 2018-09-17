@@ -3,6 +3,8 @@
 use Laravel\Telescope\Watchers;
 
 return [
+    'driver' => env('TELESCOPE_DRIVER', 'database'),
+
     'storage' => [
         'database' => [
             'connection' => 'mysql',
