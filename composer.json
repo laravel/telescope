@@ -13,7 +13,8 @@
         }
     ],
     "require": {
-        "php": ">=7.2"
+        "php": ">=7.2",
+        "moontoast/math": "^1.1"
     },
     "require-dev": {},
     "autoload": {
