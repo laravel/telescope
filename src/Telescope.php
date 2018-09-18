@@ -9,7 +9,9 @@ use Laravel\Telescope\Contracts\EntriesRepository;
 
 class Telescope
 {
-    use ListensForStorageOpportunities, RegistersWatchers;
+    use ExtractsMailabletags,
+        ListensForStorageOpportunities,
+        RegistersWatchers;
 
     /**
      * The callbacks that filter the entries that should be recorded.
@@ -72,6 +74,8 @@ class Telescope
     public static function start($app)
     {
         static::registerWatchers($app);
+
+        static::registerMailableTagExtractor();
 
         if (static::runningApprovedArtisanCommand($app) ||
             static::handlingNonTelescopeRequest($app)) {

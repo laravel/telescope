@@ -25,10 +25,6 @@ class TelescopeServiceProvider extends ServiceProvider
 
         Telescope::listenForStorageOpportunities($this->app);
 
-        Mailable::buildViewDataUsing(function ($mailable) {
-            return ['__telescope' => ExtractTags::from($mailable)];
-        });
-
         $this->loadViewsFrom(
             __DIR__.'/../resources/views', 'telescope'
         );
