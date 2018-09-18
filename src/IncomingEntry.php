@@ -70,7 +70,7 @@ class IncomingEntry
 
         $this->content = array_merge($content, ['hostname' => gethostname()]);
 
-        $this->tags = ['hostname:'.gethostname()];
+        // $this->tags = ['hostname:'.gethostname()];
     }
 
     /**
