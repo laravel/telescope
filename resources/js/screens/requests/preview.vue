@@ -16,16 +16,16 @@
     <preview-screen title="Request Details" resource="requests" :id="$route.params.id" entry-point="true">
         <template slot="table-parameters" slot-scope="slotProps">
         <tr>
-            <td class="table-fit font-weight-bold">Path</td>
+            <td class="table-fit font-weight-bold">Method</td>
             <td>
-                {{slotProps.entry.content.uri}}
+                {{slotProps.entry.content.method}}
             </td>
         </tr>
 
         <tr>
-            <td class="table-fit font-weight-bold">Method</td>
+            <td class="table-fit font-weight-bold">Path</td>
             <td>
-                {{slotProps.entry.content.method}}
+                {{slotProps.entry.content.uri}}
             </td>
         </tr>
 
