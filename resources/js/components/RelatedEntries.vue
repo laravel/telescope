@@ -117,7 +117,7 @@
 
                 <tbody>
                 <tr v-for="entry in exceptions">
-                    <td>{{truncate(entry.content.message, 100)}}</td>
+                    <td :title="entry.content.message">{{truncate(entry.content.message, 100)}}</td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'exception-preview', params:{id: entry.id}}" class="control-action">
@@ -142,7 +142,7 @@
 
                 <tbody>
                 <tr v-for="entry in logs">
-                    <td>{{truncate(entry.content.message, 100)}}</td>
+                    <td :title="entry.content.message">{{truncate(entry.content.message, 100)}}</td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'log-preview', params:{id: entry.id}}" class="control-action">
@@ -168,7 +168,7 @@
 
                 <tbody>
                 <tr v-for="entry in queries">
-                    <td>{{truncate(entry.content.sql, 110)}}</td>
+                    <td :title="entry.content.sql">{{truncate(entry.content.sql, 110)}}</td>
                     <td class="table-fit">{{entry.content.time}}ms</td>
 
                     <td class="table-fit">
@@ -195,7 +195,7 @@
 
                 <tbody>
                 <tr v-for="entry in events">
-                    <td>{{truncate(entry.content.name, 80)}}</td>
+                    <td :title="entry.content.name">{{truncate(entry.content.name, 80)}}</td>
                     <td class="table-fit">{{entry.content.listeners.length}}</td>
 
                     <td class="table-fit">
@@ -222,7 +222,7 @@
 
                 <tbody>
                 <tr v-for="entry in cache">
-                    <td>{{truncate(entry.content.key, 100)}}</td>
+                    <td :title="entry.content.key">{{truncate(entry.content.key, 100)}}</td>
                     <td class="table-fit">{{entry.content.type}}</td>
 
                     <td class="table-fit">
@@ -249,7 +249,7 @@
 
                 <tbody>
                 <tr v-for="entry in redis">
-                    <td>{{truncate(entry.content.command, 100)}}</td>
+                    <td :title="entry.content.command">{{truncate(entry.content.command, 100)}}</td>
                     <td class="table-fit">{{entry.content.time}}ms</td>
 
                     <td class="table-fit">
@@ -276,7 +276,7 @@
 
                 <tbody>
                 <tr v-for="entry in models">
-                    <td>{{truncate(entry.content.model, 100)}}</td>
+                    <td :title="entry.content.model">{{truncate(entry.content.model, 100)}}</td>
                     <td class="table-fit">{{entry.content.action}}</td>
 
                     <td class="table-fit">

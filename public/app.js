@@ -77446,7 +77446,7 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.exceptions, function(entry) {
                   return _c("tr", [
-                    _c("td", [
+                    _c("td", { attrs: { title: entry.content.message } }, [
                       _vm._v(_vm._s(_vm.truncate(entry.content.message, 100)))
                     ]),
                     _vm._v(" "),
@@ -77514,7 +77514,7 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.logs, function(entry) {
                   return _c("tr", [
-                    _c("td", [
+                    _c("td", { attrs: { title: entry.content.message } }, [
                       _vm._v(_vm._s(_vm.truncate(entry.content.message, 100)))
                     ]),
                     _vm._v(" "),
@@ -77582,7 +77582,7 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.queries, function(entry) {
                   return _c("tr", [
-                    _c("td", [
+                    _c("td", { attrs: { title: entry.content.sql } }, [
                       _vm._v(_vm._s(_vm.truncate(entry.content.sql, 110)))
                     ]),
                     _vm._v(" "),
@@ -77654,7 +77654,7 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.events, function(entry) {
                   return _c("tr", [
-                    _c("td", [
+                    _c("td", { attrs: { title: entry.content.name } }, [
                       _vm._v(_vm._s(_vm.truncate(entry.content.name, 80)))
                     ]),
                     _vm._v(" "),
@@ -77726,7 +77726,7 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.cache, function(entry) {
                   return _c("tr", [
-                    _c("td", [
+                    _c("td", { attrs: { title: entry.content.key } }, [
                       _vm._v(_vm._s(_vm.truncate(entry.content.key, 100)))
                     ]),
                     _vm._v(" "),
@@ -77798,7 +77798,7 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.redis, function(entry) {
                   return _c("tr", [
-                    _c("td", [
+                    _c("td", { attrs: { title: entry.content.command } }, [
                       _vm._v(_vm._s(_vm.truncate(entry.content.command, 100)))
                     ]),
                     _vm._v(" "),
@@ -77870,7 +77870,7 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.models, function(entry) {
                   return _c("tr", [
-                    _c("td", [
+                    _c("td", { attrs: { title: entry.content.model } }, [
                       _vm._v(_vm._s(_vm.truncate(entry.content.model, 100)))
                     ]),
                     _vm._v(" "),
