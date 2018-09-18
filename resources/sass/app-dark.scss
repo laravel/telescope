@@ -1,0 +1,35 @@
+$body-bg: #263238;
+$body-color: #E2EDF4;
+$pill-link-active: $body-color;
+$font-family-base: Nunito;
+$font-size-base: 0.95rem;
+$primary: #adadff;
+$secondary: #364c58;
+$table-headers-color: #F3F4F6;
+$table-border-color: #EFEFEF;
+$table-hover-bg: #f1f7fa;
+$border-color: #EFEFEF;
+$card-cap-bg: #202c32;
+$table-headers-color: #293941;
+$modal-content-bg: $table-headers-color;
+$table-border-color: #293941;
+$card-bg: #202c32;
+$table-hover-bg: #294451;
+$input-bg: #263238;
+$input-border-color: #3e4f57;
+$gray-800: $secondary;
+$modal-footer-border-color: $input-border-color;
+$modal-header-border-color: $input-border-color;
+$new-entries-bg: #505e4a;
+
+$header-border-color: #53656e;
+$sidebar-nav-color: #626797;
+$sidebar-icon-color: #5a618d;
+$card-shadow-color: #1c2c37;
+$control-action-icon-color: #ccd2df;
+$paginator-button-color: #9ea7ac;
+
+
+@import "syntaxhighlight";
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "base";
