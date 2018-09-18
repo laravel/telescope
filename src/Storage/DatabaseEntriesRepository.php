@@ -101,18 +101,14 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
      */
     protected function storeTags($results)
     {
-        $records = [];
-
-        foreach ($results as $uuid => $tags) {
-            foreach ($tags as $tag) {
-                $records[] = [
+        $this->table('telescope_entries_tags')->insert($results->flatMap(function ($tags, $uuid) {
+            return collect($tags)->map(function ($tag) use ($uuid) {
+                return [
                     'entry_uuid' => $uuid,
                     'tag' => $tag,
                 ];
-            }
-        }
-
-        $this->table('telescope_entries_tags')->insert($records);
+            });
+        })->all());
     }
 
     /**
