@@ -43,7 +43,7 @@ class CacheWatcher extends Watcher
             'type' => 'hit',
             'key' => $event->key,
             'value' => $event->value,
-        ])->tags([$event->key]));
+        ]));
     }
 
     /**
@@ -61,7 +61,7 @@ class CacheWatcher extends Watcher
         Telescope::recordCache(IncomingEntry::make([
             'type' => 'missed',
             'key' => $event->key,
-        ])->tags([$event->key]));
+        ]));
     }
 
     /**
@@ -81,7 +81,7 @@ class CacheWatcher extends Watcher
             'key' => $event->key,
             'value' => $event->value,
             'expiration' => $event->minutes,
-        ])->tags([$event->key]));
+        ]));
     }
 
     /**
@@ -99,7 +99,7 @@ class CacheWatcher extends Watcher
         Telescope::recordCache(IncomingEntry::make([
             'type' => 'forget',
             'key' => $event->key,
-        ])->tags([$event->key]));
+        ]));
     }
 
     /**

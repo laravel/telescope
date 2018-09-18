@@ -46,7 +46,6 @@ class NotificationWatcher extends Watcher
     private function tags($event)
     {
         return array_merge([
-            get_class($event->notification),
             $this->formatNotifiable($event->notifiable),
         ], ExtractTags::from($event->notification));
     }
