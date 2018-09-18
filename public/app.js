@@ -78816,7 +78816,7 @@ var render = function() {
                           _vm._l(_vm.entry.tags, function(tag) {
                             return _c(
                               "span",
-                              { staticClass: "badge badge-info" },
+                              { staticClass: "badge badge-info mr-1" },
                               [_vm._v(_vm._s(tag))]
                             )
                           })
