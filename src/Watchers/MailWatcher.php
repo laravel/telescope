@@ -53,7 +53,7 @@ class MailWatcher extends Watcher
             array_keys($message->getTo() ?: []),
             array_keys($message->getCc() ?: []),
             array_keys($message->getBcc() ?: []),
-            $data['__telescope']
+            $data['__telescope'] ?? []
         );
     }
 }

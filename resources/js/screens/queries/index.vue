@@ -13,7 +13,7 @@
 
 
         <template slot="row" slot-scope="slotProps">
-            <td>{{truncate(slotProps.entry.content.sql, 80)}}</td>
+            <td :title="slotProps.entry.content.sql">{{truncate(slotProps.entry.content.sql, 80)}}</td>
 
             <td class="table-fit">{{slotProps.entry.content.time}}ms</td>
 

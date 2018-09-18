@@ -68251,7 +68251,7 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return [
-              _c("td", [
+              _c("td", { attrs: { title: slotProps.entry.content.sql } }, [
                 _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.sql, 80)))
               ]),
               _vm._v(" "),
