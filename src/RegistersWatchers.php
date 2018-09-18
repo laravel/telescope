@@ -17,9 +17,15 @@ trait RegistersWatchers
                 continue;
             }
 
-            $watcher = is_string($key) ? $key : $watcher;
+            if (is_array($watcher) && ! ($watcher['enabled'] ?? true)) {
+                continue;
+            }
 
-            (new $watcher)->register($app);
+            $app->makeWith(
+                is_string($key) ? $key : $watcher, [
+                    'options' => is_array($watcher) ? $watcher : []
+                ]
+            )->register($app);
         }
     }
 }
