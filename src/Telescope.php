@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Laravel\Telescope\Contracts\EntriesRepository;
+use Laravel\Telescope\Contracts\TerminableRepository;
 
 class Telescope
 {
@@ -367,6 +368,10 @@ class Telescope
 
             $entry->batchId($batchId);
         }));
+
+        if ($entries instanceof TerminableRepository) {
+            $entries->terminate();
+        }
 
         static::$entriesQueue = [];
     }

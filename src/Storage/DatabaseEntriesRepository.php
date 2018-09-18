@@ -7,9 +7,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\Contracts\PrunableRepository;
+use Laravel\Telescope\Contracts\TerminableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 
-class DatabaseEntriesRepository implements Contract, PrunableRepository
+class DatabaseEntriesRepository implements Contract, PrunableRepository, TerminableRepository
 {
     /**
      * The database connection name that should be used.
@@ -17,6 +18,13 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
      * @var string
      */
     protected $connection;
+
+    /**
+     * The tags currently being monitored.
+     *
+     * @var array|null
+     */
+    protected $monitoredTags;
 
     /**
      * Create a new database repository.
@@ -121,7 +129,11 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
      */
     public function isMonitoring(array $tags)
     {
-        return count(array_intersect($tags, $this->monitoring())) > 0;
+        if (is_null($this->monitoredTags)) {
+            $this->monitoredTags = $this->monitoring();
+        }
+
+        return count(array_intersect($tags, $this->monitoredTags)) > 0;
     }
 
     /**
@@ -177,6 +189,16 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
         $this->table('telescope_entries')
                 ->where('created_at', '<', $before)
                 ->delete();
+    }
+
+    /**
+     * Perform any clean-up tasks needed after storing Telescope entries.
+     *
+     * @return void
+     */
+    public function terminate()
+    {
+        $this->monitoredTags = null;
     }
 
     /**
