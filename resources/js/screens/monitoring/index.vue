@@ -98,7 +98,7 @@
 
 
         <div v-if="ready && tags.length == 0" class="d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius">
-            <span>No tags found.</span>
+            <span>No tags are currently being monitored.</span>
         </div>
 
 
