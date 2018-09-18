@@ -43,7 +43,9 @@ class EventWatcher extends Watcher
             'name' => $eventName,
             'payload' => empty($formattedPayload) ? null : $formattedPayload,
             'listeners' => $this->formatListeners($eventName),
-            'broadcast' => class_exists($eventName) ? class_implements($eventName, ShouldBroadcast::class) : false,
+            'broadcast' => class_exists($eventName)
+                        ? class_implements($eventName, ShouldBroadcast::class)
+                        : false,
         ])->tags(class_exists($eventName) ? ExtractTags::from($payload[0]) : []));
     }
 
