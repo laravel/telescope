@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Providers;
+
+use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Telescope;
+use Laravel\Telescope\IncomingEntry;
+use Illuminate\Support\ServiceProvider;
+use Laravel\Telescope\Contracts\EntriesRepository;
+
+class TelescopeServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        Telescope::filter(function (IncomingEntry $entry) {
+            if ($this->app->environment('local')) {
+                return true;
+            }
+
+            return $entry->isException() ||
+                   $entry->hasMonitoredTag();
+        });
+    }
+}

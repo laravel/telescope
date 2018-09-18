@@ -86,7 +86,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
     {
         $this->table('telescope_entries')->insert($entries->map(function($entry){
             $entry->content = json_encode($entry->content);
-            
+
             return $entry->toArray();
         })->toArray());
 
@@ -101,18 +101,14 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
      */
     protected function storeTags($results)
     {
-        $input = [];
-        
-        foreach($results as $uuid => $tags){
-            foreach($tags as $tag){
-                $input[] = [
+        $this->table('telescope_entries_tags')->insert($results->flatMap(function ($tags, $uuid) {
+            return collect($tags)->map(function ($tag) use ($uuid) {
+                return [
                     'entry_uuid' => $uuid,
                     'tag' => $tag,
                 ];
-            }
-        }
-        
-        $this->table('telescope_entries_tags')->insert($input);
+            });
+        })->all());
     }
 
     /**

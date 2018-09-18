@@ -4997,6 +4997,21 @@ module.exports = {
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+exports.default = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 /*
@@ -5078,7 +5093,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -5304,21 +5319,6 @@ function applyToTag (styleElement, obj) {
   }
 }
 
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-exports.default = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
 
 /***/ }),
 /* 6 */
@@ -22575,7 +22575,7 @@ module.exports = function(module) {
 
 exports.__esModule = true;
 
-var _classCallCheck2 = __webpack_require__(5);
+var _classCallCheck2 = __webpack_require__(3);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -22863,7 +22863,7 @@ module.exports = isObject;
 
 exports.__esModule = true;
 
-var _classCallCheck2 = __webpack_require__(5);
+var _classCallCheck2 = __webpack_require__(3);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -49009,8 +49009,8 @@ Popper.Defaults = Defaults;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(164);
-__webpack_require__(365);
-module.exports = __webpack_require__(366);
+__webpack_require__(363);
+module.exports = __webpack_require__(364);
 
 
 /***/ }),
@@ -49047,8 +49047,8 @@ var router = new __WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]({
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('related-entries', __webpack_require__(349));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('index-screen', __webpack_require__(352));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('preview-screen', __webpack_require__(357));
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('alert', __webpack_require__(360));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('preview-screen', __webpack_require__(355));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('alert', __webpack_require__(358));
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_1__base__["a" /* default */]);
 
@@ -60820,7 +60820,7 @@ var content = __webpack_require__(173);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("674ebee7", content, false, {});
+var update = __webpack_require__(5)("674ebee7", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -60839,7 +60839,7 @@ if(false) {
 /* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
@@ -61298,7 +61298,7 @@ var content = __webpack_require__(182);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("5ebfcb70", content, false, {});
+var update = __webpack_require__(5)("5ebfcb70", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -61317,7 +61317,7 @@ if(false) {
 /* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
@@ -61360,7 +61360,7 @@ var content = __webpack_require__(185);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("e9908f4e", content, false, {});
+var update = __webpack_require__(5)("e9908f4e", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -61379,7 +61379,7 @@ if(false) {
 /* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
@@ -61453,7 +61453,7 @@ var content = __webpack_require__(189);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("70811265", content, false, {});
+var update = __webpack_require__(5)("70811265", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -61472,7 +61472,7 @@ if(false) {
 /* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
@@ -61954,7 +61954,7 @@ var content = __webpack_require__(198);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("7cea2148", content, false, {});
+var update = __webpack_require__(5)("7cea2148", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -61973,7 +61973,7 @@ if(false) {
 /* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
@@ -62664,7 +62664,7 @@ var content = __webpack_require__(212);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("10b6775a", content, false, {});
+var update = __webpack_require__(5)("10b6775a", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -62683,7 +62683,7 @@ if(false) {
 /* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
@@ -64958,7 +64958,7 @@ module.exports = exports["default"];
 
 exports.__esModule = true;
 
-var _classCallCheck2 = __webpack_require__(5);
+var _classCallCheck2 = __webpack_require__(3);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -65496,7 +65496,7 @@ module.exports = unicodeToArray;
 
 exports.__esModule = true;
 
-var _classCallCheck2 = __webpack_require__(5);
+var _classCallCheck2 = __webpack_require__(3);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -65986,7 +65986,7 @@ module.exports = last;
 
 exports.__esModule = true;
 
-var _classCallCheck2 = __webpack_require__(5);
+var _classCallCheck2 = __webpack_require__(3);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -66110,7 +66110,7 @@ module.exports = exports["default"];
 
 exports.__esModule = true;
 
-var _classCallCheck2 = __webpack_require__(5);
+var _classCallCheck2 = __webpack_require__(3);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -66887,7 +66887,7 @@ module.exports = escapeRegExp;
 
 exports.__esModule = true;
 
-var _classCallCheck2 = __webpack_require__(5);
+var _classCallCheck2 = __webpack_require__(3);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -66958,7 +66958,7 @@ module.exports = exports["default"];
 
 exports.__esModule = true;
 
-var _classCallCheck2 = __webpack_require__(5);
+var _classCallCheck2 = __webpack_require__(3);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -67031,7 +67031,7 @@ module.exports = exports["default"];
 
 exports.__esModule = true;
 
-var _classCallCheck2 = __webpack_require__(5);
+var _classCallCheck2 = __webpack_require__(3);
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
@@ -68963,7 +68963,7 @@ var content = __webpack_require__(322);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("b7975de0", content, false, {});
+var update = __webpack_require__(5)("b7975de0", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -68982,7 +68982,7 @@ if(false) {
 /* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
@@ -70198,7 +70198,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/screens/monitoredTags/index.vue"
+Component.options.__file = "resources/js/screens/monitoring/index.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -70207,9 +70207,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-755a859f", Component.options)
+    hotAPI.createRecord("data-v-f444c65e", Component.options)
   } else {
-    hotAPI.reload("data-v-755a859f", Component.options)
+    hotAPI.reload("data-v-f444c65e", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -70336,7 +70336,7 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "btn btn-primary btn-sm",
+            staticClass: "btn btn-primary",
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -70388,7 +70388,7 @@ var render = function() {
             staticClass:
               "d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius"
           },
-          [_c("span", [_vm._v("No entries found.")])]
+          [_c("span", [_vm._v("No tags found.")])]
         )
       : _vm._e(),
     _vm._v(" "),
@@ -70461,7 +70461,7 @@ var render = function() {
           [
             _c("div", { staticClass: "modal-content" }, [
               _c("div", { staticClass: "modal-header" }, [
-                _vm._v("Monitor new Tag")
+                _vm._v("Monitor New Tag")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
@@ -70508,7 +70508,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-outline-success btn-sm",
+                      staticClass: "btn btn-outline-success",
                       on: { click: _vm.monitorNewTag }
                     },
                     [
@@ -70520,10 +70520,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "button",
-                    {
-                      staticClass: "btn btn-outline-info btn-sm",
-                      on: { click: _vm.cancelNewTag }
-                    },
+                    { staticClass: "btn", on: { click: _vm.cancelNewTag } },
                     [
                       _vm._v(
                         "\n                        Cancel\n                    "
@@ -70552,7 +70549,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-755a859f", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-f444c65e", module.exports)
   }
 }
 
@@ -78023,9 +78020,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(355)
+var __vue_script__ = __webpack_require__(353)
 /* template */
-var __vue_template__ = __webpack_require__(371)
+var __vue_template__ = __webpack_require__(354)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -78064,9 +78061,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 353 */,
-/* 354 */,
-/* 355 */
+/* 353 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78248,16 +78243,227 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 });
 
 /***/ }),
-/* 356 */,
-/* 357 */
+/* 354 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "card-header d-flex align-items-center justify-content-between"
+      },
+      [
+        _c("h5", [_vm._v(_vm._s(this.title))]),
+        _vm._v(" "),
+        _vm.tag || _vm.entries.length > 0
+          ? _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.tag,
+                  expression: "tag"
+                }
+              ],
+              staticClass: "form-control w-25",
+              attrs: { type: "text", placeholder: "Search Tag" },
+              domProps: { value: _vm.tag },
+              on: {
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.tag = $event.target.value
+                  },
+                  function($event) {
+                    $event.stopPropagation()
+                    return _vm.search($event)
+                  }
+                ]
+              }
+            })
+          : _vm._e()
+      ]
+    ),
+    _vm._v(" "),
+    !_vm.ready
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius"
+          },
+          [
+            _c(
+              "svg",
+              {
+                staticClass: "icon spin mr-2 fill-text-color",
+                attrs: {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  viewBox: "0 0 20 20"
+                }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    d:
+                      "M12 10a2 2 0 0 1-3.41 1.41A2 2 0 0 1 10 8V0a9.97 9.97 0 0 1 10 10h-8zm7.9 1.41A10 10 0 1 1 8.59.1v2.03a8 8 0 1 0 9.29 9.29h2.02zm-4.07 0a6 6 0 1 1-7.25-7.25v2.1a3.99 3.99 0 0 0-1.4 6.57 4 4 0 0 0 6.56-1.42h2.1z"
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c("span", [_vm._v("Scanning...")])
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.ready && _vm.entries.length == 0
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius"
+          },
+          [_c("span", [_vm._v("No entries found.")])]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.ready && _vm.entries.length > 0
+      ? _c(
+          "table",
+          {
+            staticClass:
+              "table table-hover table-sm mb-0 penultimate-column-right"
+          },
+          [
+            _c("thead", [_vm._t("table-header")], 2),
+            _vm._v(" "),
+            _c(
+              "transition-group",
+              { attrs: { tag: "tbody", name: "list" } },
+              [
+                _vm.hasNewEntries
+                  ? _c(
+                      "tr",
+                      { key: "newEntries", staticClass: "dontanimate" },
+                      [
+                        _c(
+                          "td",
+                          {
+                            staticClass: "text-center bg-secondary py-1",
+                            attrs: { colspan: "100" }
+                          },
+                          [
+                            _c("small", [
+                              !_vm.loadingNewEntries
+                                ? _c(
+                                    "a",
+                                    {
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.loadNewEntries($event)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Load New Entries")]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _vm.loadingNewEntries
+                              ? _c("small", [_vm._v("Loading...")])
+                              : _vm._e()
+                          ]
+                        )
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.entries, function(entry) {
+                  return _c(
+                    "tr",
+                    { key: entry.id },
+                    [_vm._t("row", null, { entry: entry })],
+                    2
+                  )
+                }),
+                _vm._v(" "),
+                _vm.hasMoreEntries
+                  ? _c(
+                      "tr",
+                      { key: "olderEntries", staticClass: "dontanimate" },
+                      [
+                        _c(
+                          "td",
+                          {
+                            staticClass: "text-center bg-secondary py-1",
+                            attrs: { colspan: "100" }
+                          },
+                          [
+                            _c("small", [
+                              !_vm.loadingMoreEntries
+                                ? _c(
+                                    "a",
+                                    {
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.loadOlderEntries($event)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Load Older Entries")]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _vm.loadingMoreEntries
+                              ? _c("small", [_vm._v("Loading...")])
+                              : _vm._e()
+                          ]
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ],
+              2
+            )
+          ],
+          1
+        )
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-30504bc3", module.exports)
+  }
+}
+
+/***/ }),
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(358)
+var __vue_script__ = __webpack_require__(356)
 /* template */
-var __vue_template__ = __webpack_require__(359)
+var __vue_template__ = __webpack_require__(357)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -78296,7 +78502,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 358 */
+/* 356 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78377,7 +78583,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 359 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -78695,19 +78901,19 @@ if (false) {
 }
 
 /***/ }),
-/* 360 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(361)
+  __webpack_require__(359)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(363)
+var __vue_script__ = __webpack_require__(361)
 /* template */
-var __vue_template__ = __webpack_require__(364)
+var __vue_template__ = __webpack_require__(362)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -78746,17 +78952,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 361 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(362);
+var content = __webpack_require__(360);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("3ec29f50", content, false, {});
+var update = __webpack_require__(5)("3ec29f50", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -78772,10 +78978,10 @@ if(false) {
 }
 
 /***/ }),
-/* 362 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
@@ -78786,7 +78992,7 @@ exports.push([module.i, "\n#alertModal {\n    z-index: 99999;\n    background: r
 
 
 /***/ }),
-/* 363 */
+/* 361 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78867,7 +79073,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 364 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -79017,232 +79223,16 @@ if (false) {
 }
 
 /***/ }),
-/* 365 */
+/* 363 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 366 */
+/* 364 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 367 */,
-/* 368 */,
-/* 369 */,
-/* 370 */,
-/* 371 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c(
-      "div",
-      {
-        staticClass:
-          "card-header d-flex align-items-center justify-content-between"
-      },
-      [
-        _c("h5", [_vm._v(_vm._s(this.title))]),
-        _vm._v(" "),
-        _vm.tag || _vm.entries.length > 0
-          ? _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.tag,
-                  expression: "tag"
-                }
-              ],
-              staticClass: "form-control w-25",
-              attrs: { type: "text", placeholder: "Search Tag" },
-              domProps: { value: _vm.tag },
-              on: {
-                input: [
-                  function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.tag = $event.target.value
-                  },
-                  function($event) {
-                    $event.stopPropagation()
-                    return _vm.search($event)
-                  }
-                ]
-              }
-            })
-          : _vm._e()
-      ]
-    ),
-    _vm._v(" "),
-    !_vm.ready
-      ? _c(
-          "div",
-          {
-            staticClass:
-              "d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius"
-          },
-          [
-            _c(
-              "svg",
-              {
-                staticClass: "icon spin mr-2 fill-text-color",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  viewBox: "0 0 20 20"
-                }
-              },
-              [
-                _c("path", {
-                  attrs: {
-                    d:
-                      "M12 10a2 2 0 0 1-3.41 1.41A2 2 0 0 1 10 8V0a9.97 9.97 0 0 1 10 10h-8zm7.9 1.41A10 10 0 1 1 8.59.1v2.03a8 8 0 1 0 9.29 9.29h2.02zm-4.07 0a6 6 0 1 1-7.25-7.25v2.1a3.99 3.99 0 0 0-1.4 6.57 4 4 0 0 0 6.56-1.42h2.1z"
-                  }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c("span", [_vm._v("Scanning...")])
-          ]
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.ready && _vm.entries.length == 0
-      ? _c(
-          "div",
-          {
-            staticClass:
-              "d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius"
-          },
-          [_c("span", [_vm._v("No entries found.")])]
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.ready && _vm.entries.length > 0
-      ? _c(
-          "table",
-          {
-            staticClass:
-              "table table-hover table-sm mb-0 penultimate-column-right"
-          },
-          [
-            _c("thead", [_vm._t("table-header")], 2),
-            _vm._v(" "),
-            _c(
-              "transition-group",
-              { attrs: { tag: "tbody", name: "list" } },
-              [
-                _vm.hasNewEntries
-                  ? _c(
-                      "tr",
-                      { key: "newEntries", staticClass: "dontanimate" },
-                      [
-                        _c(
-                          "td",
-                          {
-                            staticClass: "text-center bg-secondary py-1",
-                            attrs: { colspan: "100" }
-                          },
-                          [
-                            _c("small", [
-                              !_vm.loadingNewEntries
-                                ? _c(
-                                    "a",
-                                    {
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.loadNewEntries($event)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Load New Entries")]
-                                  )
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _vm.loadingNewEntries
-                              ? _c("small", [_vm._v("Loading...")])
-                              : _vm._e()
-                          ]
-                        )
-                      ]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm._l(_vm.entries, function(entry) {
-                  return _c(
-                    "tr",
-                    { key: entry.id },
-                    [_vm._t("row", null, { entry: entry })],
-                    2
-                  )
-                }),
-                _vm._v(" "),
-                _vm.hasMoreEntries
-                  ? _c(
-                      "tr",
-                      { key: "olderEntries", staticClass: "dontanimate" },
-                      [
-                        _c(
-                          "td",
-                          {
-                            staticClass: "text-center bg-secondary py-1",
-                            attrs: { colspan: "100" }
-                          },
-                          [
-                            _c("small", [
-                              !_vm.loadingMoreEntries
-                                ? _c(
-                                    "a",
-                                    {
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function($event) {
-                                          $event.preventDefault()
-                                          return _vm.loadOlderEntries($event)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Load Older Entries")]
-                                  )
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _vm.loadingMoreEntries
-                              ? _c("small", [_vm._v("Loading...")])
-                              : _vm._e()
-                          ]
-                        )
-                      ]
-                    )
-                  : _vm._e()
-              ],
-              2
-            )
-          ],
-          1
-        )
-      : _vm._e()
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-30504bc3", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

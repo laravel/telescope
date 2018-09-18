@@ -3,6 +3,8 @@
 namespace Laravel\Telescope;
 
 use Illuminate\Support\Str;
+use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Contracts\EntriesRepository;
 
 class IncomingEntry
 {
@@ -12,7 +14,7 @@ class IncomingEntry
      * @var string
      */
     public $uuid;
-    
+
     /**
      * The entry's batch ID.
      *
@@ -63,8 +65,8 @@ class IncomingEntry
      */
     public function __construct(array $content)
     {
-        $this->uuid = Str::uuid();
-        
+        $this->uuid = Str::orderedUuid();
+
         $this->recordedAt = now();
 
         $this->content = array_merge($content, ['hostname' => gethostname()]);
@@ -143,6 +145,30 @@ class IncomingEntry
         $this->tags = array_unique(array_merge($this->tags, $tags));
 
         return $this;
+    }
+
+    /**
+     * Determine if the incoming entry has a monitored tag.
+     *
+     * @return bool
+     */
+    public function hasMonitoredTag()
+    {
+        if (! empty($this->tags)) {
+            return resolve(EntriesRepository::class)->isMonitoring($this->tags);
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if the incoming entry is an exception.
+     *
+     * @return bool
+     */
+    public function isException()
+    {
+        return $this->type == EntryType::EXCEPTION;
     }
 
     /**

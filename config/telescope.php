@@ -3,7 +3,7 @@
 use Laravel\Telescope\Watchers;
 
 return [
-    'driver' => env('TELESCOPE_DRIVER', 'redis'),
+    'driver' => env('TELESCOPE_DRIVER', 'database'),
 
     'storage' => [
         'database' => [

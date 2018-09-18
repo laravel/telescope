@@ -15,7 +15,7 @@ class CreateTelescopeEntriesTable extends Migration
     {
         Schema::create('telescope_entries', function (Blueprint $table) {
             $table->bigIncrements('sequence');
-            $table->uuid('uuid')->index();
+            $table->uuid('uuid')->unique();
             $table->uuid('batch_id');
             $table->string('type', 20);
             $table->json('content');

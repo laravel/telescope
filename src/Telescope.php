@@ -349,7 +349,7 @@ class Telescope
      */
     public static function store(EntriesRepository $storage)
     {
-        $batchId = Str::uuid();
+        $batchId = Str::orderedUuid();
 
         $entries = collect(static::$entriesQueue);
 
