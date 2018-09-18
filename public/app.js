@@ -68748,20 +68748,6 @@ var render = function() {
           return [
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Path")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(slotProps.entry.content.uri) +
-                    "\n        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
                 _vm._v("Method")
               ]),
               _vm._v(" "),
@@ -68769,6 +68755,20 @@ var render = function() {
                 _vm._v(
                   "\n            " +
                     _vm._s(slotProps.entry.content.method) +
+                    "\n        "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                _vm._v("Path")
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(slotProps.entry.content.uri) +
                     "\n        "
                 )
               ])
