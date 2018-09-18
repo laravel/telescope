@@ -89,7 +89,7 @@ class Telescope
             array_merge([
                 // 'migrate',
                 'migrate:rollback',
-                 'migrate:fresh',
+                'migrate:fresh',
                 // 'migrate:refresh',
                 'migrate:reset',
                 'migrate:install',
@@ -384,19 +384,6 @@ class Telescope
         );
 
         return new static;
-    }
-
-    /**
-     * Get the list of commands to ignore.
-     *
-     * @return array
-     */
-    public static function commandsToIgnore()
-    {
-        return array_merge([
-            'schedule:run',
-            'schedule:finish'
-        ], config('telescope.ignoreCommands', []));
     }
 
     /**

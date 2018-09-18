@@ -49,6 +49,9 @@ class CommandWatcher extends Watcher
      */
     private function shouldIgnore($event)
     {
-        return in_array($event->command, Telescope::commandsToIgnore());
+        return in_array($event->command, array_merge($this->options['ignore'] ?? [], [
+            'schedule:run',
+            'schedule:finish',
+        ]));
     }
 }

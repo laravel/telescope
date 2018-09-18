@@ -16,8 +16,6 @@ return [
         ]
     ],
 
-    'ignoreCommands' => [],
-
     'watchers' => [
         Watchers\CacheWatcher::class,
         Watchers\CommandWatcher::class,
