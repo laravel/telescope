@@ -55,7 +55,8 @@ class RedisEntriesRepository implements Contract, PrunableRepository
             $entry['batch_id'],
             $entry['type'],
             json_decode($entry['content'], true),
-            Carbon::createFromFormat('Y-m-d H:i:s', $entry['created_at'])
+            Carbon::createFromFormat('Y-m-d H:i:s', $entry['created_at']),
+            json_decode($entry['tags'])
         );
     }
 
@@ -81,7 +82,8 @@ class RedisEntriesRepository implements Contract, PrunableRepository
                 $entry['batch_id'],
                 $entry['type'],
                 json_decode($entry['content'], true),
-                Carbon::createFromFormat('Y-m-d H:i:s', $entry['created_at'])
+                Carbon::createFromFormat('Y-m-d H:i:s', $entry['created_at']),
+                json_decode($entry['tags'])
             );
         });
     }

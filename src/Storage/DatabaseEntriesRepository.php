@@ -39,13 +39,16 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
     {
         $entry = EntryModel::on($this->connection)->whereUuid($id)->first();
 
+        $tags = $this->table('telescope_entries_tags')->where('entry_uuid', $id)->pluck('tag')->all();
+
         return new EntryResult(
             $entry->uuid,
             null,
             $entry->batch_id,
             $entry->type,
             $entry->content,
-            $entry->created_at
+            $entry->created_at,
+            $tags
         );
     }
 
@@ -69,7 +72,8 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
                     $entry->batch_id,
                     $entry->type,
                     $entry->content,
-                    $entry->created_at
+                    $entry->created_at,
+                    []
                 );
             });
     }

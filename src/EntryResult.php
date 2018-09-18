@@ -50,6 +50,13 @@ class EntryResult implements JsonSerializable
     public $createdAt;
 
     /**
+     * The tags assigned to the entry.
+     *
+     * @var array
+     */
+    private $tags;
+
+    /**
      * Create a new entry result instance.
      *
      * @param  mixed  $id
@@ -57,8 +64,9 @@ class EntryResult implements JsonSerializable
      * @param  string  $type
      * @param  array  $content
      * @param  \DateTimeInterface  $createdAt
+     * @param  array  $tags
      */
-    public function __construct($id, $sequence, string $batchId, string $type, array $content, DateTimeInterface $createdAt)
+    public function __construct($id, $sequence, string $batchId, string $type, array $content, DateTimeInterface $createdAt, $tags)
     {
         $this->id = $id;
         $this->sequence = $sequence;
@@ -66,6 +74,7 @@ class EntryResult implements JsonSerializable
         $this->batchId = $batchId;
         $this->content = $content;
         $this->createdAt = $createdAt;
+        $this->tags = $tags;
     }
 
     /**
@@ -81,6 +90,7 @@ class EntryResult implements JsonSerializable
             'batch_id' => $this->batchId,
             'type' => $this->type,
             'content' => $this->content,
+            'tags' => $this->tags,
             'created_at' => $this->createdAt->toDateTimeString(),
         ];
     }

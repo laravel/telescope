@@ -136,6 +136,13 @@
                         </router-link>
                     </td>
                 </tr>
+
+                <tr>
+                    <td class="table-fit font-weight-bold">Tags</td>
+                    <td>
+                        <span class="badge badge-info" v-for="tag in entry.tags">{{tag}}</span>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 

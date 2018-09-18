@@ -64411,11 +64411,11 @@ var render = function() {
                 _vm._v(
                   "\n            " +
                     _vm._s(_vm.truncate(slotProps.entry.content.name, 80)) +
-                    "\n            "
+                    "\n\n            "
                 ),
                 slotProps.entry.content.broadcast
                   ? _c("span", { staticClass: "badge badge-primary ml-2" }, [
-                      _vm._v("Broadcast")
+                      _vm._v("\n                Broadcast\n            ")
                     ])
                   : _vm._e()
               ]),
@@ -78802,7 +78802,26 @@ var render = function() {
                               1
                             )
                           ])
-                        : _vm._e()
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c(
+                          "td",
+                          { staticClass: "table-fit font-weight-bold" },
+                          [_vm._v("Tags")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          _vm._l(_vm.entry.tags, function(tag) {
+                            return _c(
+                              "span",
+                              { staticClass: "badge badge-info" },
+                              [_vm._v(_vm._s(tag))]
+                            )
+                          })
+                        )
+                      ])
                     ],
                     2
                   )
