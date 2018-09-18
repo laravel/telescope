@@ -78804,24 +78804,26 @@ var render = function() {
                           ])
                         : _vm._e(),
                       _vm._v(" "),
-                      _c("tr", [
-                        _c(
-                          "td",
-                          { staticClass: "table-fit font-weight-bold" },
-                          [_vm._v("Tags")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          _vm._l(_vm.entry.tags, function(tag) {
-                            return _c(
-                              "span",
-                              { staticClass: "badge badge-info mr-1" },
-                              [_vm._v(_vm._s(tag))]
+                      _vm.entry.tags.length
+                        ? _c("tr", [
+                            _c(
+                              "td",
+                              { staticClass: "table-fit font-weight-bold" },
+                              [_vm._v("Tags")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              _vm._l(_vm.entry.tags, function(tag) {
+                                return _c(
+                                  "span",
+                                  { staticClass: "badge badge-info mr-1" },
+                                  [_vm._v(_vm._s(tag))]
+                                )
+                              })
                             )
-                          })
-                        )
-                      ])
+                          ])
+                        : _vm._e()
                     ],
                     2
                   )

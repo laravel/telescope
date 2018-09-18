@@ -137,7 +137,7 @@
                     </td>
                 </tr>
 
-                <tr>
+                <tr v-if="entry.tags.length">
                     <td class="table-fit font-weight-bold">Tags</td>
                     <td>
                         <span class="badge badge-info mr-1" v-for="tag in entry.tags">{{tag}}</span>
