@@ -48,6 +48,27 @@ class ExtractTags
     }
 
     /**
+     * Determine the tags for the given array.
+     *
+     * @param  array  $data
+     * @return array
+     */
+    public static function fromArray(array $data)
+    {
+        $models = collect($data)->map(function ($value) {
+            if ($value instanceof Model) {
+                return [$value];
+            } elseif ($value instanceof EloquentCollection) {
+                return $value->all();
+            }
+        })->collapse()->filter();
+
+        return $models->map(function ($model) {
+            return get_class($model).':'.$model->getKey();
+        })->all();
+    }
+
+    /**
      * Extract tags from job object.
      *
      * @param  mixed  $job

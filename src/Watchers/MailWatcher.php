@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Watchers;
 
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Mail\Events\MessageSent;
 
@@ -36,22 +37,24 @@ class MailWatcher extends Watcher
             'subject' => $event->message->getSubject(),
             'html' => $event->message->getBody(),
             'raw' => $event->message->toString(),
-        ])->tags($this->tags($event->message)));
+        ])->tags($this->tags($event->message, $event->data)));
     }
 
     /**
      * Extract the tags from the message.
      *
      * @param  \Swift_Message  $message
+     * @param  array  $data
      * @return array
      */
-    private function tags($message)
+    private function tags($message, $data)
     {
         return array_merge(
             array_keys($message->getFrom() ?: []),
             array_keys($message->getTo() ?: []),
             array_keys($message->getCc() ?: []),
-            array_keys($message->getBcc() ?: [])
+            array_keys($message->getBcc() ?: []),
+            $data['__telescope']
         );
     }
 }

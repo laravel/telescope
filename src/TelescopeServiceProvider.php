@@ -2,11 +2,13 @@
 
 namespace Laravel\Telescope;
 
+use Illuminate\Mail\Mailable;
+use Laravel\Telescope\ExtractTags;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Telescope\Contracts\EntriesRepository;
-use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 use Laravel\Telescope\Storage\RedisEntriesRepository;
+use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 
 class TelescopeServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,10 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->registerPublishing();
 
         Telescope::listenForStorageOpportunities($this->app);
+
+        Mailable::buildViewDataUsing(function ($mailable) {
+            return ['__telescope' => ExtractTags::from($mailable)];
+        });
 
         $this->loadViewsFrom(
             __DIR__.'/../resources/views', 'telescope'
