@@ -3,7 +3,6 @@
 namespace Laravel\Telescope\Watchers;
 
 use Laravel\Telescope\Telescope;
-use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Mail\Events\MessageSent;
 

@@ -63,5 +63,4 @@ interface EntriesRepository
      * @return void
      */
     public function stopMonitoring(array $tags);
-
 }

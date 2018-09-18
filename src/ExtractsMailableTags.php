@@ -3,7 +3,6 @@
 namespace Laravel\Telescope;
 
 use Illuminate\Mail\Mailable;
-use Laravel\Telescope\ExtractTags;
 
 trait ExtractsMailableTags
 {

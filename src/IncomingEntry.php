@@ -3,7 +3,6 @@
 namespace Laravel\Telescope;
 
 use Illuminate\Support\Str;
-use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
 class IncomingEntry

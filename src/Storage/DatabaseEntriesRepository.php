@@ -6,8 +6,6 @@ use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
-use Laravel\Telescope\IncomingEntry;
-use Laravel\Telescope\Storage\EntryQueryOptions;
 use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 
@@ -84,7 +82,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository
      */
     public function store(Collection $entries)
     {
-        $this->table('telescope_entries')->insert($entries->map(function($entry){
+        $this->table('telescope_entries')->insert($entries->map(function ($entry) {
             $entry->content = json_encode($entry->content);
 
             return $entry->toArray();

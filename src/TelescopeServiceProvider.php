@@ -2,8 +2,6 @@
 
 namespace Laravel\Telescope;
 
-use Illuminate\Mail\Mailable;
-use Laravel\Telescope\ExtractTags;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Telescope\Contracts\EntriesRepository;
@@ -60,7 +58,7 @@ class TelescopeServiceProvider extends ServiceProvider
     {
         $driver = config('telescope.driver');
 
-        if (method_exists($this, $method = 'register'.ucfirst($driver).'Driver')){
+        if (method_exists($this, $method = 'register'.ucfirst($driver).'Driver')) {
             $this->$method();
         }
     }

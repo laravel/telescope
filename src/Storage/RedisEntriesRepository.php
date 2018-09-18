@@ -5,7 +5,6 @@ namespace Laravel\Telescope\Storage;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Contracts\Redis\Factory as Redis;
@@ -165,7 +164,7 @@ class RedisEntriesRepository implements Contract, PrunableRepository
             $pipe->sadd('telescope:prunable', 'telescope:type:'.$entry->type);
             $pipe->expire('telescope:type:'.$entry->type, config('telescope.storage.redis.lifetime'));
 
-            foreach($entry->tags as $tag){
+            foreach ($entry->tags as $tag) {
                 $pipe->zadd('telescope:tag:'.$tag, $score, $entry->uuid);
                 $pipe->sadd('telescope:prunable', 'telescope:tag:'.$tag);
                 $pipe->expire('telescope:tag:'.$tag, config('telescope.storage.redis.lifetime'));
@@ -240,7 +239,7 @@ class RedisEntriesRepository implements Contract, PrunableRepository
 
             $time = strtotime('midnight', $before->getTimestamp());
 
-            foreach($lists as $list){
+            foreach ($lists as $list) {
                 $pipe->zremrangebyscore($list, '-inf', $time);
             }
         });
