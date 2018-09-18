@@ -70387,7 +70387,7 @@ var render = function() {
             staticClass:
               "d-flex align-items-center justify-content-center bg-secondary p-5 bottom-radius"
           },
-          [_c("span", [_vm._v("No entries found.")])]
+          [_c("span", [_vm._v("No tags found.")])]
         )
       : _vm._e(),
     _vm._v(" "),
