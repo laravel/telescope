@@ -29,73 +29,6 @@ class TelescopeServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register any package services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->mergeConfigFrom(
-            __DIR__.'/../config/telescope.php', 'telescope'
-        );
-
-        $this->commands([
-            Console\InstallCommand::class,
-        ]);
-
-        $this->registerStorageDriver();
-
-        Telescope::start($this->app);
-    }
-
-
-    /**
-     * Register the package storage driver.
-     *
-     * @return void
-     */
-    private function registerStorageDriver()
-    {
-        $driver = config('telescope.driver');
-
-        if (method_exists($this, $method = 'register'.ucfirst($driver).'Driver')) {
-            $this->$method();
-        }
-    }
-
-    /**
-     * Register the package database storage driver.
-     *
-     * @return void
-     */
-    public function registerDatabaseDriver()
-    {
-        $this->app->singleton(
-            EntriesRepository::class, DatabaseEntriesRepository::class
-        );
-
-        $this->app->when(DatabaseEntriesRepository::class)
-            ->needs('$connection')
-            ->give(config('telescope.storage.database.connection'));
-    }
-
-    /**
-     * Register the package redis storage driver.
-     *
-     * @return void
-     */
-    public function registerRedisDriver()
-    {
-        $this->app->singleton(
-            EntriesRepository::class, RedisEntriesRepository::class
-        );
-
-        $this->app->when(RedisEntriesRepository::class)
-            ->needs('$connection')
-            ->give(config('telescope.storage.redis.connection'));
-    }
-
-    /**
      * Register the package routes.
      *
      * @return void
@@ -152,5 +85,71 @@ class TelescopeServiceProvider extends ServiceProvider
                 __DIR__.'/../stubs/TelescopeServiceProvider.stub' => app_path('Providers/TelescopeServiceProvider.php'),
             ], 'telescope-provider');
         }
+    }
+
+    /**
+     * Register any package services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/telescope.php', 'telescope'
+        );
+
+        $this->commands([
+            Console\InstallCommand::class,
+        ]);
+
+        $this->registerStorageDriver();
+
+        Telescope::start($this->app);
+    }
+
+    /**
+     * Register the package storage driver.
+     *
+     * @return void
+     */
+    private function registerStorageDriver()
+    {
+        $driver = config('telescope.driver');
+
+        if (method_exists($this, $method = 'register'.ucfirst($driver).'Driver')) {
+            $this->$method();
+        }
+    }
+
+    /**
+     * Register the package database storage driver.
+     *
+     * @return void
+     */
+    public function registerDatabaseDriver()
+    {
+        $this->app->singleton(
+            EntriesRepository::class, DatabaseEntriesRepository::class
+        );
+
+        $this->app->when(DatabaseEntriesRepository::class)
+            ->needs('$connection')
+            ->give(config('telescope.storage.database.connection'));
+    }
+
+    /**
+     * Register the package redis storage driver.
+     *
+     * @return void
+     */
+    public function registerRedisDriver()
+    {
+        $this->app->singleton(
+            EntriesRepository::class, RedisEntriesRepository::class
+        );
+
+        $this->app->when(RedisEntriesRepository::class)
+            ->needs('$connection')
+            ->give(config('telescope.storage.redis.connection'));
     }
 }
