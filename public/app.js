@@ -64408,7 +64408,16 @@ var render = function() {
           fn: function(slotProps) {
             return [
               _c("td", { attrs: { title: slotProps.entry.content.name } }, [
-                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.name, 80)))
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.truncate(slotProps.entry.content.name, 80)) +
+                    "\n            "
+                ),
+                slotProps.entry.content.broadcast
+                  ? _c("span", { staticClass: "badge badge-primary ml-2" }, [
+                      _vm._v("Broadcast")
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
