@@ -15,7 +15,10 @@
         <template slot="row" slot-scope="slotProps">
             <td :title="slotProps.entry.content.name">
                 {{truncate(slotProps.entry.content.name, 80)}}
-                <span class="badge badge-primary ml-2" v-if="slotProps.entry.content.broadcast">Broadcast</span>
+
+                <span class="badge badge-primary ml-2" v-if="slotProps.entry.content.broadcast">
+                    Broadcast
+                </span>
             </td>
 
             <td class="table-fit">{{slotProps.entry.content.listeners.length}}</td>
