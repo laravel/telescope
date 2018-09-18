@@ -8,9 +8,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\IncomingEntry;
+use Illuminate\Contracts\Redis\Factory as Redis;
 use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
-use Illuminate\Contracts\Redis\Factory as Redis;
 
 class RedisEntriesRepository implements Contract, PrunableRepository
 {
