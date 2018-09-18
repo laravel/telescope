@@ -9,7 +9,7 @@ use Laravel\Telescope\Contracts\EntriesRepository;
 
 class Telescope
 {
-    use ExtractsMailabletags,
+    use ExtractsMailableTags,
         ListensForStorageOpportunities,
         RegistersWatchers;
 
