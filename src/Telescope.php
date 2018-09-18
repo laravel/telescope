@@ -45,13 +45,6 @@ class Telescope
     ];
 
     /**
-     * The list of protected request parameters.
-     *
-     * @var array
-     */
-    public static $ignoreCommands = [];
-
-    /**
      * Indicates if Telescope should ignore events fired by Laravel.
      *
      * @var bool
@@ -93,7 +86,7 @@ class Telescope
     {
         return $app->runningInConsole() && ! in_array(
             $_SERVER['argv'][1] ?? null,
-            [
+            array_merge([
                 // 'migrate',
                 'migrate:rollback',
                  'migrate:fresh',
@@ -105,7 +98,7 @@ class Telescope
                 'horizon',
                 'horizon:work',
                 'horizon:supervisor',
-            ]
+            ], config('telescope.ignoreCommands', []))
         );
     }
 
@@ -394,31 +387,13 @@ class Telescope
     }
 
     /**
-     * Ignore the given commands and do not gather information about them.
-     *
-     * @param  array  $commands
-     * @return static
-     */
-    public static function ignoreCommands(array $commands)
-    {
-        static::$ignoreCommands = $commands;
-
-        return new static;
-    }
-
-    /**
      * Get the list of commands to ignore.
      *
      * @return array
      */
     public static function commandsToIgnore()
     {
-        return array_merge(static::$ignoreCommands, [
-            'queue:listen',
-            'queue:work',
-            'horizon',
-            'horizon:work',
-            'horizon:supervisor',
+        return array_merge([
             'schedule:run',
             'schedule:finish'
         ], config('telescope.ignoreCommands', []));
