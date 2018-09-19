@@ -122,8 +122,8 @@ class EntryModel extends Model
      */
     protected function whereBeforeId($query, EntryQueryOptions $options)
     {
-        $query->when($options->beforeSequence, function ($query, $beforeId) {
-            return $query->where('id', '<', $beforeId);
+        $query->when($options->beforeSequence, function ($query, $beforeSequence) {
+            return $query->where('sequence', '<', $beforeSequence);
         });
 
         return $this;
