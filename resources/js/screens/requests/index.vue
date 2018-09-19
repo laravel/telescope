@@ -5,6 +5,16 @@
                 if (status < 400) return 'success';
                 if (status < 500) return 'warning';
                 if (status >= 500) return 'danger';
+            },
+
+
+            methodClass(method){
+                console.log(method);
+                if (method == 'GET') return 'light';
+                if (method == 'POST') return 'info';
+                if (method == 'PATCH') return 'info';
+                if (method == 'PUT') return 'info';
+                if (method == 'DELETE') return 'danger';
             }
         }
     }
@@ -23,7 +33,7 @@
 
         <template slot="row" slot-scope="slotProps">
             <td class="table-fit pr-0">
-                <span class="badge font-weight-light" :class="'badge-'+slotProps.entry.content.method" style="font-size:0.5em">
+                <span class="badge font-weight-light" :class="'badge-'+methodClass(slotProps.entry.content.method)" style="font-size:0.5em">
                     {{slotProps.entry.content.method}}
                 </span>
             </td>
@@ -48,17 +58,3 @@
         </template>
     </index-screen>
 </template>
-
-<style>
-    .badge-GET {
-        background-color: #cde0ff;
-    }
-
-    .badge-POST, .badge-PUT, .badge-PATCH {
-        background-color: #cde8cf;
-    }
-
-    .badge-DELETE {
-        background-color: #ffb7b7;
-    }
-</style>

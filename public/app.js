@@ -68915,10 +68915,6 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(321)
-}
 var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(323)
@@ -68927,7 +68923,7 @@ var __vue_template__ = __webpack_require__(324)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -68962,46 +68958,8 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 321 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(322);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(5)("b7975de0", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2a5930cd\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2a5930cd\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./index.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 322 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(4)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.badge-GET {\n    background-color: #cde0ff;\n}\n.badge-POST, .badge-PUT, .badge-PATCH {\n    background-color: #cde8cf;\n}\n.badge-DELETE {\n    background-color: #ffb7b7;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 321 */,
+/* 322 */,
 /* 323 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -69014,6 +68972,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (status < 400) return 'success';
             if (status < 500) return 'warning';
             if (status >= 500) return 'danger';
+        },
+        methodClass: function methodClass(method) {
+            console.log(method);
+            if (method == 'GET') return 'light';
+            if (method == 'POST') return 'info';
+            if (method == 'PATCH') return 'info';
+            if (method == 'PUT') return 'info';
+            if (method == 'DELETE') return 'danger';
         }
     }
 });
@@ -69040,7 +69006,9 @@ var render = function() {
                   "span",
                   {
                     staticClass: "badge font-weight-light",
-                    class: "badge-" + slotProps.entry.content.method,
+                    class:
+                      "badge-" +
+                      _vm.methodClass(slotProps.entry.content.method),
                     staticStyle: { "font-size": "0.5em" }
                   },
                   [
