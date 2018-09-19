@@ -21204,14 +21204,15 @@ button:hover .fill-primary {
 
 .card .nav-pills .nav-link.active {
   background: none;
-  color: #E2EDF4;
+  color: #adadff;
   border-bottom: solid 2px #adadff;
 }
 
 .card .nav-pills .nav-link {
-  font-size: 1rem;
+  font-size: 0.9rem;
   border-radius: 0;
   padding: 0.75rem 1.25rem;
+  color: #E2EDF4;
 }
 
 .list-enter-active:not(.dontanimate),

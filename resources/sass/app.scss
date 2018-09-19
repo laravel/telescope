@@ -10,7 +10,7 @@ $border-color: #EFEFEF;
 $card-cap-bg: #fff;
 $new-entries-bg: #fffee9;
 $btn-focus-width: 0;
-
+$pill-link-active: $primary;
 $header-border-color: #d5dfe9;
 $sidebar-nav-color: #2a5164;
 $sidebar-icon-color: #c3cbd3;
@@ -21,7 +21,4 @@ $paginator-button-color: #9ea7ac;
 
 @import "syntaxhighlight";
 @import "node_modules/bootstrap/scss/bootstrap";
-
-$pill-link-active: $gray-900;
-
 @import "base";
