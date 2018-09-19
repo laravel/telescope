@@ -57,7 +57,7 @@ class EntryModel extends Model
         $this->whereType($query, $type)
                 ->whereBatchId($query, $options)
                 ->whereTag($query, $options)
-                ->whereBeforeId($query, $options);
+                ->whereBeforeSequence($query, $options);
 
         return $query;
     }
@@ -120,7 +120,7 @@ class EntryModel extends Model
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return $this
      */
-    protected function whereBeforeId($query, EntryQueryOptions $options)
+    protected function whereBeforeSequence($query, EntryQueryOptions $options)
     {
         $query->when($options->beforeSequence, function ($query, $beforeSequence) {
             return $query->where('sequence', '<', $beforeSequence);
