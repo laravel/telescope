@@ -30,6 +30,9 @@ class InstallCommand extends Command
         $this->comment('Publishing Telescope Service Provider...');
         $this->callSilent('vendor:publish', ['--tag' => 'telescope-provider']);
 
+        $this->comment('Publishing Telescope Assets...');
+        $this->callSilent('vendor:publish', ['--tag' => 'telescope-assets']);
+
         $this->registerNovaServiceProvider();
 
         $this->info('Telescope scaffolding installed successfully.');
