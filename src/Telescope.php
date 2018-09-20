@@ -369,8 +369,8 @@ class Telescope
             $entry->batchId($batchId);
         }));
 
-        if ($entries instanceof TerminableRepository) {
-            $entries->terminate();
+        if ($storage instanceof TerminableRepository) {
+            $storage->terminate();
         }
 
         static::$entriesQueue = [];
