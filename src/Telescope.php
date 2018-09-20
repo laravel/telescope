@@ -347,9 +347,13 @@ class Telescope
      */
     public static function store(EntriesRepository $storage)
     {
-        $batchId = Str::orderedUuid();
-
         $entries = collect(static::$entriesQueue);
+
+        if ($entries->isEmpty()) {
+            return;
+        }
+
+        $batchId = Str::orderedUuid();
 
         if ($tagger = static::$tagUsing) {
             $entries = $entries->each(function ($entry) use ($tagger) {
