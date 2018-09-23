@@ -9,7 +9,6 @@
 
 
             methodClass(method){
-                console.log(method);
                 if (method == 'GET') return 'light';
                 if (method == 'POST') return 'info';
                 if (method == 'PATCH') return 'info';

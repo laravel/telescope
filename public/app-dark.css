@@ -2270,7 +2270,7 @@ pre code {
   padding: 0.375rem 0.75rem;
   font-size: 0.95rem;
   line-height: 1.5;
-  color: #495057;
+  color: #E2EDF4;
   background-color: #242424;
   background-clip: padding-box;
   border: 1px solid #343434;
@@ -2294,7 +2294,7 @@ pre code {
 }
 
 .form-control:focus {
-  color: #495057;
+  color: #E2EDF4;
   background-color: #242424;
   border-color: white;
   outline: 0;
@@ -2329,7 +2329,7 @@ pre code {
 }
 
 select.form-control:focus::-ms-value {
-  color: #495057;
+  color: #E2EDF4;
   background-color: #242424;
 }
 
@@ -4085,7 +4085,7 @@ input[type="button"].btn-block {
   font-size: 0.95rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
+  color: #E2EDF4;
   text-align: center;
   white-space: nowrap;
   background-color: #e9ecef;
@@ -4269,7 +4269,7 @@ input[type="button"].btn-block {
   height: calc(2.175rem + 2px);
   padding: 0.375rem 1.75rem 0.375rem 0.75rem;
   line-height: 1.5;
-  color: #495057;
+  color: #E2EDF4;
   vertical-align: middle;
   background: #242424 url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23262525' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
   background-size: 8px 10px;
@@ -4288,7 +4288,7 @@ input[type="button"].btn-block {
 }
 
 .custom-select:focus::-ms-value {
-  color: #495057;
+  color: #E2EDF4;
   background-color: #242424;
 }
 
@@ -4366,7 +4366,7 @@ input[type="button"].btn-block {
   height: calc(2.175rem + 2px);
   padding: 0.375rem 0.75rem;
   line-height: 1.5;
-  color: #495057;
+  color: #E2EDF4;
   background-color: #242424;
   border: 1px solid #343434;
   border-radius: 0.25rem;
@@ -4382,7 +4382,7 @@ input[type="button"].btn-block {
   height: 2.175rem;
   padding: 0.375rem 0.75rem;
   line-height: 1.5;
-  color: #495057;
+  color: #E2EDF4;
   content: "Browse";
   background-color: #e9ecef;
   border-left: 1px solid #343434;
@@ -6265,7 +6265,7 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #000;
+  background-color: #7e7e7e;
 }
 
 .modal-backdrop.fade {
@@ -12789,7 +12789,7 @@ pre code {
   padding: 0.375rem 0.75rem;
   font-size: 0.95rem;
   line-height: 1.5;
-  color: #495057;
+  color: #E2EDF4;
   background-color: #242424;
   background-clip: padding-box;
   border: 1px solid #343434;
@@ -12813,7 +12813,7 @@ pre code {
 }
 
 .form-control:focus {
-  color: #495057;
+  color: #E2EDF4;
   background-color: #242424;
   border-color: white;
   outline: 0;
@@ -12848,7 +12848,7 @@ pre code {
 }
 
 select.form-control:focus::-ms-value {
-  color: #495057;
+  color: #E2EDF4;
   background-color: #242424;
 }
 
@@ -14604,7 +14604,7 @@ input[type="button"].btn-block {
   font-size: 0.95rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
+  color: #E2EDF4;
   text-align: center;
   white-space: nowrap;
   background-color: #e9ecef;
@@ -14788,7 +14788,7 @@ input[type="button"].btn-block {
   height: calc(2.175rem + 2px);
   padding: 0.375rem 1.75rem 0.375rem 0.75rem;
   line-height: 1.5;
-  color: #495057;
+  color: #E2EDF4;
   vertical-align: middle;
   background: #242424 url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23262525' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
   background-size: 8px 10px;
@@ -14807,7 +14807,7 @@ input[type="button"].btn-block {
 }
 
 .custom-select:focus::-ms-value {
-  color: #495057;
+  color: #E2EDF4;
   background-color: #242424;
 }
 
@@ -14885,7 +14885,7 @@ input[type="button"].btn-block {
   height: calc(2.175rem + 2px);
   padding: 0.375rem 0.75rem;
   line-height: 1.5;
-  color: #495057;
+  color: #E2EDF4;
   background-color: #242424;
   border: 1px solid #343434;
   border-radius: 0.25rem;
@@ -14901,7 +14901,7 @@ input[type="button"].btn-block {
   height: 2.175rem;
   padding: 0.375rem 0.75rem;
   line-height: 1.5;
-  color: #495057;
+  color: #E2EDF4;
   content: "Browse";
   background-color: #e9ecef;
   border-left: 1px solid #343434;
@@ -16774,7 +16774,7 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #000;
+  background-color: #7e7e7e;
 }
 
 .modal-backdrop.fade {

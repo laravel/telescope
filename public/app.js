@@ -68972,7 +68972,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (status >= 500) return 'danger';
         },
         methodClass: function methodClass(method) {
-            console.log(method);
             if (method == 'GET') return 'light';
             if (method == 'POST') return 'info';
             if (method == 'PATCH') return 'info';

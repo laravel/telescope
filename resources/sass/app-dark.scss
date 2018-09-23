@@ -1,5 +1,6 @@
 $body-bg: #1C1C1C;
 $body-color: #E2EDF4;
+$input-color: #E2EDF4;
 $pill-link-active: $body-color;
 $font-family-base: Nunito;
 $font-size-base: 0.95rem;
@@ -27,7 +28,7 @@ $sidebar-icon-color: #9f9898;
 $card-shadow-color: $body-bg;
 $control-action-icon-color: #ccd2df;
 $paginator-button-color: #9ea7ac;
-
+$modal-backdrop-bg: #7e7e7e;
 
 @import "syntaxhighlight";
 @import "node_modules/bootstrap/scss/bootstrap";
