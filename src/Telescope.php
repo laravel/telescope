@@ -299,21 +299,6 @@ class Telescope
     }
 
     /**
-     * Apply the filter callbacks to the given collection.
-     *
-     * @param  \Illuminate\Support\Collection  $entries
-     * @return \Illuminate\Support\Collection
-     */
-    protected static function applyFilters(Collection $entries)
-    {
-        foreach (static::$filterUsing as $filter) {
-            $entries = $entries->filter($filter);
-        }
-
-        return $entries;
-    }
-
-    /**
      * Set the callback that filters the entries that should be recorded.
      *
      * @param  \Closure $callback
@@ -347,37 +332,56 @@ class Telescope
      */
     public static function store(EntriesRepository $storage)
     {
-        $entries = collect(static::$entriesQueue);
-
-        if ($entries->isEmpty()) {
+        if (empty(static::$entriesQueue)) {
             return;
         }
 
-        $batchId = Str::orderedUuid();
-
-        if ($tagger = static::$tagUsing) {
-            $entries = $entries->each(function ($entry) use ($tagger) {
-                return $entry->tags($tagger($entry));
-            });
-        }
-
-        if (! empty(static::$filterUsing)) {
-            $entries = static::applyFilters($entries);
-        }
-
-        $storage->store($entries->each(function ($entry) use ($batchId) {
-            if (auth()->user()) {
-                $entry->user(auth()->user());
-            }
-
-            $entry->batchId($batchId);
-        }));
+        $storage->store(static::collectEntries(Str::orderedUuid()));
 
         if ($storage instanceof TerminableRepository) {
             $storage->terminate();
         }
 
         static::$entriesQueue = [];
+    }
+
+    /**
+     * Collection the entries for storage.
+     *
+     * @param  string  $batchId
+     * @return \Illuminate\Support\Collection
+     */
+    protected static function collectEntries($batchId)
+    {
+        return collect(static::$entriesQueue)
+            ->each(function ($entry) use ($batchId) {
+                if (auth()->user()) {
+                    $entry->user(auth()->user());
+                }
+
+                if ($tagger = static::$tagUsing) {
+                    $entry->tags($tagger($entry));
+                }
+
+                return $entry->batchId($batchId);
+            })->when(! empty(static::$filterUsing), function ($entries) {
+                return static::applyFilters($entries);
+            });
+    }
+
+    /**
+     * Apply the filter callbacks to the given collection.
+     *
+     * @param  \Illuminate\Support\Collection  $entries
+     * @return \Illuminate\Support\Collection
+     */
+    protected static function applyFilters(Collection $entries)
+    {
+        foreach (static::$filterUsing as $filter) {
+            $entries = $entries->filter($filter);
+        }
+
+        return $entries;
     }
 
     /**
