@@ -53,6 +53,13 @@ class Telescope
     public static $ignoreFrameworkEvents = true;
 
     /**
+     * Indicates if Telescope should use the dark theme.
+     *
+     * @var bool
+     */
+    public static $useDarkTheme = false;
+
+    /**
      * Indicates if Telescope should record entries.
      *
      * @var bool
@@ -417,6 +424,18 @@ class Telescope
     public static function ignoreFrameworkEvents()
     {
         static::$ignoreFrameworkEvents = true;
+
+        return new static;
+    }
+
+    /**
+     * Specifies that Telescope should use the dark theme.
+     *
+     * @return static
+     */
+    public static function useDarkTheme()
+    {
+        static::$useDarkTheme = true;
 
         return new static;
     }
