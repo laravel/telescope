@@ -47,7 +47,10 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     {
         $entry = EntryModel::on($this->connection)->whereUuid($id)->first();
 
-        $tags = $this->table('telescope_entries_tags')->where('entry_uuid', $id)->pluck('tag')->all();
+        $tags = $this->table('telescope_entries_tags')
+                        ->where('entry_uuid', $id)
+                        ->pluck('tag')
+                        ->all();
 
         return new EntryResult(
             $entry->uuid,
