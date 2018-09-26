@@ -107,7 +107,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
         $this->table('telescope_entries')->insert($entries->map(function ($entry) use ($createdAt) {
             $entry->content = json_encode($entry->content);
 
-            return array_merge($entry->toArray(), ['created_at' => $createdAt]);
+            return $entry->toArray();
         })->toArray());
 
         $this->storeTags($entries->pluck('tags', 'uuid'));
