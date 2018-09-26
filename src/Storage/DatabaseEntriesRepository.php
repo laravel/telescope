@@ -57,7 +57,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
             null,
             $entry->batch_id,
             $entry->type,
-            $entry->content,
+            json_decode($entry->content, true),
             $entry->created_at,
             $tags,
             1,
@@ -79,13 +79,13 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
             ->groupOccurrences($type, $options)
             ->take($options->limit)
             ->orderByDesc('sequence')
-            ->get()->map(function ($entry) {
+            ->get()->map(function ($entry) use ($type) {
                 return new EntryResult(
                     $entry->uuid,
                     $entry->sequence,
                     $entry->batch_id,
-                    $entry->type,
-                    $entry->content,
+                    $entry->type ?: $type,
+                    json_decode($entry->content, true) ?: ['class' => explode('|', $entry->content)[0]],
                     $entry->created_at,
                     [],
                     $entry->occurrences

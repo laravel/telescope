@@ -44,7 +44,7 @@ class ExceptionWatcher extends Watcher
                 'trace' => $exception->getTrace(),
                 'line_preview' => ExceptionContext::get($exception),
             ])->tags($this->tags($event))
-              ->group(get_class($exception).$exception->getLine().now()->format('Ymd'))
+              ->group(get_class($exception).'|'.$exception->getLine().'|'.now()->format('Ymd'))
         );
     }
 
