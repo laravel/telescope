@@ -26,6 +26,15 @@ interface EntriesRepository
     public function get($type, EntryQueryOptions $options);
 
     /**
+     * Return all the entries of a given type and group.
+     *
+     * @param  string  $type
+     * @param  string  $group
+     * @return int
+     */
+    public function countOccurrences($type, $group);
+
+    /**
      * Store the given entries.
      *
      * @param  \Illuminate\Support\Collection[\Laravel\Telescope\IncomingEntry]  $entries

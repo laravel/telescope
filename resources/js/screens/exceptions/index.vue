@@ -5,15 +5,18 @@
 <template>
     <index-screen title="Exceptions" resource="exceptions">
         <tr slot="table-header">
-            <th scope="col">Type</th>
+            <th scope="col" v-if="!$route.query.group">Type</th>
+            <th scope="col" v-if="$route.query.group">Message</th>
+            <th scope="col" v-if="!$route.query.group">Occurences</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
 
 
         <template slot="row" slot-scope="slotProps">
-            <td :title="slotProps.entry.content.class">{{truncate(slotProps.entry.content.class, 80)}}</td>
+            <td :title="slotProps.entry.content.class">{{truncate($route.query.group ? slotProps.entry.content.message : slotProps.entry.content.class, 80)}}</td>
 
+            <td class="table-fit" v-if="!$route.query.group">{{slotProps.entry.occurrences}}</td>
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
 
             <td class="table-fit">
