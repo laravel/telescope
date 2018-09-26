@@ -156,7 +156,7 @@ class EntryModel extends Model
     protected function filter($query, EntryQueryOptions $options)
     {
         if ($options->familyHash || $options->tag || $options->batchId) {
-            return;
+            return $this;
         }
 
         $query->where('should_display_on_index', true);
