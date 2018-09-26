@@ -8,10 +8,18 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
+use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 
 class DatabaseEntriesRepository implements Contract, PrunableRepository, TerminableRepository
 {
+    /**
+     * The cache factory implementation.
+     *
+     * @var \Illuminate\Contracts\Cache\Factory
+     */
+    protected $cache;
+
     /**
      * The database connection name that should be used.
      *
@@ -29,11 +37,13 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     /**
      * Create a new database repository.
      *
+     * @param  \Illuminate\Contracts\Cache\Factory  $cache
      * @param  string  $connectionName
      * @return void
      */
-    public function __construct(string $connection)
+    public function __construct(CacheFactory $cache, string $connection)
     {
+        $this->cache = $cache;
         $this->connection = $connection;
     }
 
@@ -97,6 +107,10 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
      */
     public function store(Collection $entries)
     {
+        [$exceptions, $entries] = $entries->partition->isException();
+
+        $this->storeExceptions($exceptions);
+
         $this->table('telescope_entries')->insert($entries->map(function ($entry) {
             $entry->content = json_encode($entry->content);
 
@@ -104,6 +118,34 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
         })->toArray());
 
         $this->storeTags($entries->pluck('tags', 'uuid'));
+    }
+
+    /**
+     * Store the given array of exception entries.
+     *
+     * @param  \Illuminate\Support\Collection[\Laravel\Telescope\IncomingEntry]  $entries
+     * @return void
+     */
+    protected function storeExceptions(Collection $exceptions)
+    {
+        $this->table('telescope_entries')->insert($exceptions->map(function ($exception) {
+            $occurences = $this->table('telescope_entries')
+                    ->where('family_hash', $exception->familyHash())
+                    ->count();
+
+            $this->table('telescope_entries')
+                    ->where('family_hash', $exception->familyHash())
+                    ->update(['should_display_on_index' => false]);
+
+            return array_merge($exception->toArray(), [
+                'family_hash' => $exception->familyHash(),
+                'content' => json_encode(array_merge(
+                    $exception->content, ['occurences' => $occurences]
+                )),
+            ]);
+        })->toArray());
+
+        $this->storeTags($exceptions->pluck('tags', 'uuid'));
     }
 
     /**

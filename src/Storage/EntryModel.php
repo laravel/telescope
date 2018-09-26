@@ -103,6 +103,10 @@ class EntryModel extends Model
      */
     protected function whereTag($query, EntryQueryOptions $options)
     {
+        $query->when(empty($options->tag), function ($query) {
+            return $query->where('should_display_on_index', true);
+        });
+
         $query->when($options->tag, function ($query, $tag) {
             return $query->whereIn('uuid', DB::table('telescope_entries_tags')
                         ->whereTag($tag)
