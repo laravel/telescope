@@ -46,6 +46,27 @@
             });
         },
 
+        watch: {
+            '$route.query.group': function(){
+                clearTimeout(this.newEntriesTimeout);
+
+                this.hasNewEntries = false;
+                this.lastEntryIndex = '';
+
+                this.ready = false;
+
+                this.loadEntries((response) => {
+                    this.entries = response.data.entries;
+
+                    this.newEntriesTimeout = setTimeout(() => {
+                        this.checkForNewEntries();
+                    }, this.newEntriesTimeoutInSeconds);
+
+                    this.ready = true;
+                });
+            }
+        },
+
 
         /**
          * Clean after the component is destroyed.
@@ -57,7 +78,9 @@
 
         methods: {
             loadEntries(after){
-                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest).then(response => {
+                let group = this.$route.query.group || '';
+                
+                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&group=' + group).then(response => {
                     if (response.data.entries.length) {
                         this.lastEntryIndex = _.last(response.data.entries).sequence;
                     }
@@ -79,7 +102,9 @@
              * Keep checking if there are new entries.
              */
             checkForNewEntries(){
-                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1')
+                let group = this.$route.query.group || '';
+
+                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1' + '&group=' + group)
                         .then(response => {
                             if (response.data.entries.length && !this.entries.length) {
                                 this.loadNewEntries();

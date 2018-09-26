@@ -31,6 +31,7 @@
 
             this.loadEntry((response) => {
                 this.entry = response.data.entry;
+                this.entry.occurrences = response.data.occurrences;
                 this.batch = response.data.batch;
 
                 this.$parent.entry = response.data.entry;

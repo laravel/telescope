@@ -47,6 +47,7 @@ abstract class EntryController extends Controller
 
         return response()->json([
             'entry' => $entry,
+            'occurrences' => $entry && $entry->group ? $storage->countOccurrences('exception', $entry->group) : 0,
             'batch' => $entry ? $storage->get(null, EntryQueryOptions::forBatchId($entry->batchId)) : null,
         ]);
     }

@@ -61322,7 +61322,7 @@ exports = module.exports = __webpack_require__(6)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -61617,7 +61617,41 @@ var render = function() {
                     "\n            "
                 )
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            slotProps.entry.occurrences
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Occurrences")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "control-action",
+                          attrs: {
+                            to: {
+                              name: "exceptions",
+                              query: { group: slotProps.entry.group }
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(slotProps.entry.occurrences) +
+                              " Occurrences\n                "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              : _vm._e()
           ]
         }
       },
@@ -61821,8 +61855,23 @@ var render = function() {
           fn: function(slotProps) {
             return [
               _c("td", { attrs: { title: slotProps.entry.content.class } }, [
-                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.class, 80)))
+                _vm._v(
+                  _vm._s(
+                    _vm.truncate(
+                      _vm.$route.query.group
+                        ? slotProps.entry.content.message
+                        : slotProps.entry.content.class,
+                      80
+                    )
+                  )
+                )
               ]),
+              _vm._v(" "),
+              !_vm.$route.query.group
+                ? _c("td", { staticClass: "table-fit" }, [
+                    _vm._v(_vm._s(slotProps.entry.occurrences))
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
                 _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
@@ -61873,7 +61922,17 @@ var render = function() {
     },
     [
       _c("tr", { attrs: { slot: "table-header" }, slot: "table-header" }, [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")]),
+        !_vm.$route.query.group
+          ? _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.$route.query.group
+          ? _c("th", { attrs: { scope: "col" } }, [_vm._v("Message")])
+          : _vm._e(),
+        _vm._v(" "),
+        !_vm.$route.query.group
+          ? _c("th", { attrs: { scope: "col" } }, [_vm._v("Occurences")])
+          : _vm._e(),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Happened")]),
         _vm._v(" "),
@@ -78095,6 +78154,29 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     },
 
 
+    watch: {
+        '$route.query.group': function $routeQueryGroup() {
+            var _this2 = this;
+
+            clearTimeout(this.newEntriesTimeout);
+
+            this.hasNewEntries = false;
+            this.lastEntryIndex = '';
+
+            this.ready = false;
+
+            this.loadEntries(function (response) {
+                _this2.entries = response.data.entries;
+
+                _this2.newEntriesTimeout = setTimeout(function () {
+                    _this2.checkForNewEntries();
+                }, _this2.newEntriesTimeoutInSeconds);
+
+                _this2.ready = true;
+            });
+        }
+    },
+
     /**
      * Clean after the component is destroyed.
      */
@@ -78105,17 +78187,19 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
     methods: {
         loadEntries: function loadEntries(after) {
-            var _this2 = this;
+            var _this3 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest).then(function (response) {
+            var group = this.$route.query.group || '';
+
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&group=' + group).then(function (response) {
                 if (response.data.entries.length) {
-                    _this2.lastEntryIndex = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.last(response.data.entries).sequence;
+                    _this3.lastEntryIndex = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.last(response.data.entries).sequence;
                 }
 
-                if (response.data.entries.length < _this2.entriesPerRequest) {
-                    _this2.hasMoreEntries = false;
+                if (response.data.entries.length < _this3.entriesPerRequest) {
+                    _this3.hasMoreEntries = false;
                 } else {
-                    _this2.hasMoreEntries = true;
+                    _this3.hasMoreEntries = true;
                 }
 
                 if (__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.isFunction(after)) {
@@ -78129,17 +78213,19 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
          * Keep checking if there are new entries.
          */
         checkForNewEntries: function checkForNewEntries() {
-            var _this3 = this;
+            var _this4 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1').then(function (response) {
-                if (response.data.entries.length && !_this3.entries.length) {
-                    _this3.loadNewEntries();
-                } else if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this3.entries).id) {
-                    _this3.hasNewEntries = true;
+            var group = this.$route.query.group || '';
+
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1' + '&group=' + group).then(function (response) {
+                if (response.data.entries.length && !_this4.entries.length) {
+                    _this4.loadNewEntries();
+                } else if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this4.entries).id) {
+                    _this4.hasNewEntries = true;
                 } else {
-                    _this3.newEntriesTimeout = setTimeout(function () {
-                        _this3.checkForNewEntries();
-                    }, _this3.newEntriesTimeoutInSeconds);
+                    _this4.newEntriesTimeout = setTimeout(function () {
+                        _this4.checkForNewEntries();
+                    }, _this4.newEntriesTimeoutInSeconds);
                 }
             });
         },
@@ -78149,20 +78235,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
          * Search the entries of this type.
          */
         search: function search() {
-            var _this4 = this;
+            var _this5 = this;
 
             this.debouncer(function () {
-                _this4.hasNewEntries = false;
-                _this4.lastEntryIndex = '';
+                _this5.hasNewEntries = false;
+                _this5.lastEntryIndex = '';
 
-                clearTimeout(_this4.newEntriesTimeout);
+                clearTimeout(_this5.newEntriesTimeout);
 
-                _this4.loadEntries(function (response) {
-                    _this4.entries = response.data.entries;
+                _this5.loadEntries(function (response) {
+                    _this5.entries = response.data.entries;
 
-                    _this4.newEntriesTimeout = setTimeout(function () {
-                        _this4.checkForNewEntries();
-                    }, _this4.newEntriesTimeoutInSeconds);
+                    _this5.newEntriesTimeout = setTimeout(function () {
+                        _this5.checkForNewEntries();
+                    }, _this5.newEntriesTimeoutInSeconds);
                 });
             });
         },
@@ -78172,16 +78258,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
          * Load more entries.
          */
         loadOlderEntries: function loadOlderEntries() {
-            var _this5 = this;
+            var _this6 = this;
 
             this.loadingMoreEntries = true;
 
             this.loadEntries(function (response) {
                 var _entries;
 
-                (_entries = _this5.entries).push.apply(_entries, _toConsumableArray(response.data.entries));
+                (_entries = _this6.entries).push.apply(_entries, _toConsumableArray(response.data.entries));
 
-                _this5.loadingMoreEntries = false;
+                _this6.loadingMoreEntries = false;
             });
         },
 
@@ -78190,7 +78276,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
          * Load new entries.
          */
         loadNewEntries: function loadNewEntries() {
-            var _this6 = this;
+            var _this7 = this;
 
             this.hasMoreEntries = true;
             this.hasNewEntries = false;
@@ -78204,13 +78290,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             clearTimeout(this.newEntriesTimeout);
 
             this.loadEntries(function (response) {
-                _this6.entries = response.data.entries;
+                _this7.entries = response.data.entries;
 
-                _this6.loadingNewEntries = false;
+                _this7.loadingNewEntries = false;
 
-                _this6.newEntriesTimeout = setTimeout(function () {
-                    _this6.checkForNewEntries();
-                }, _this6.newEntriesTimeoutInSeconds);
+                _this7.newEntriesTimeout = setTimeout(function () {
+                    _this7.checkForNewEntries();
+                }, _this7.newEntriesTimeoutInSeconds);
             });
         }
     }
@@ -78519,6 +78605,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.loadEntry(function (response) {
             _this.entry = response.data.entry;
+            _this.entry.occurrences = response.data.occurrences;
             _this.batch = response.data.batch;
 
             _this.$parent.entry = response.data.entry;

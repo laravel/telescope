@@ -29,6 +29,13 @@ class IncomingEntry
     public $type;
 
     /**
+     * The entry's group.
+     *
+     * @var string
+     */
+    public $group;
+
+    /**
      * The currently authenticated user, if applicable.
      *
      * @var mixed
@@ -111,6 +118,19 @@ class IncomingEntry
     }
 
     /**
+     * Assign the entry a given group.
+     *
+     * @param  string  $type
+     * @return $this
+     */
+    public function group(string $group)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
      * Set the currently authenticated user.
      *
      * @param  mixed  $user
@@ -181,6 +201,7 @@ class IncomingEntry
             'uuid' => $this->uuid,
             'batch_id' => $this->batchId,
             'type' => $this->type,
+            'group' => $this->group,
             'content' => $this->content,
             'created_at' => $this->recordedAt->toDateTimeString(),
         ];

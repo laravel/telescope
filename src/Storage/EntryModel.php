@@ -22,15 +22,6 @@ class EntryModel extends Model
     const UPDATED_AT = null;
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'content' => 'json',
-    ];
-
-    /**
      * The primary key for the model.
      *
      * @var string
@@ -45,7 +36,7 @@ class EntryModel extends Model
     protected $keyType = 'string';
 
     /**
-     * Scope the query for the given qeury options.
+     * Scope the query for the given query options.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $type
@@ -57,6 +48,7 @@ class EntryModel extends Model
         $this->whereType($query, $type)
                 ->whereBatchId($query, $options)
                 ->whereTag($query, $options)
+                ->whereGroup($query, $options)
                 ->whereBeforeSequence($query, $options);
 
         return $query;
@@ -114,6 +106,22 @@ class EntryModel extends Model
     }
 
     /**
+     * Scope the query for the given type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return $this
+     */
+    protected function whereGroup($query, EntryQueryOptions $options)
+    {
+        $query->when($options->group, function ($query, $group) {
+            return $query->where('group', $group);
+        });
+
+        return $this;
+    }
+
+    /**
      * Scope the query for the given pagination options.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -127,6 +135,31 @@ class EntryModel extends Model
         });
 
         return $this;
+    }
+
+    /**
+     * Scope the query for grouping.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $type
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeGroupOccurrences($query, $type, EntryQueryOptions $options)
+    {
+        if ($options->group || $type != 'exception') {
+            return;
+        }
+
+        return $query->groupBy(DB::raw('`group`'))
+            ->select(
+                DB::raw('MAX(uuid) as uuid'),
+                DB::raw('MAX(batch_id) as batch_id'),
+                DB::raw('`group` as content'),
+                DB::raw('MAX(created_at) as created_at'),
+                DB::raw('MAX(sequence) as sequence'),
+                DB::raw('COUNT(sequence) as occurrences')
+            );
     }
 
     /**

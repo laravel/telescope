@@ -57,9 +57,11 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
             null,
             $entry->batch_id,
             $entry->type,
-            $entry->content,
+            json_decode($entry->content, true),
             $entry->created_at,
-            $tags
+            $tags,
+            1,
+            $entry->group
         );
     }
 
@@ -74,19 +76,36 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     {
         return EntryModel::on($this->connection)
             ->withTelescopeOptions($type, $options)
+            ->groupOccurrences($type, $options)
             ->take($options->limit)
             ->orderByDesc('sequence')
-            ->get()->map(function ($entry) {
+            ->get()->map(function ($entry) use ($type) {
                 return new EntryResult(
                     $entry->uuid,
                     $entry->sequence,
                     $entry->batch_id,
-                    $entry->type,
-                    $entry->content,
+                    $entry->type ?: $type,
+                    json_decode($entry->content, true) ?: ['class' => explode('|', $entry->content)[0]],
                     $entry->created_at,
-                    []
+                    [],
+                    $entry->occurrences
                 );
             });
+    }
+
+    /**
+     * Return all the entries of a given type and group.
+     *
+     * @param  string  $type
+     * @param  string  $group
+     * @return int
+     */
+    public function countOccurrences($type, $group)
+    {
+        return EntryModel::on($this->connection)
+            ->where('type', $type)
+            ->where('group', $group)
+            ->count('sequence');
     }
 
     /**

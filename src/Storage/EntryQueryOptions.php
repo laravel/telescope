@@ -21,6 +21,13 @@ class EntryQueryOptions
     public $tag;
 
     /**
+     * The group that must belong to retrieved entries.
+     *
+     * @var string
+     */
+    public $group;
+
+    /**
      * The ID that all retrieved entries should be less than.
      *
      * @var mixed
@@ -46,6 +53,7 @@ class EntryQueryOptions
                 ->batchId($request->batch_id)
                 ->beforeSequence($request->before)
                 ->tag($request->tag)
+                ->group($request->group)
                 ->limit($request->take ?? 50);
     }
 
@@ -95,6 +103,19 @@ class EntryQueryOptions
     public function tag(?string $tag)
     {
         $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Set the tag that must belong to retrieved entries.
+     *
+     * @param  string  $group
+     * @return $this
+     */
+    public function group(?string $group)
+    {
+        $this->group = $group;
 
         return $this;
     }
