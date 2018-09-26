@@ -9,18 +9,10 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
-use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 
 class DatabaseEntriesRepository implements Contract, PrunableRepository, TerminableRepository
 {
-    /**
-     * The cache factory implementation.
-     *
-     * @var \Illuminate\Contracts\Cache\Factory
-     */
-    protected $cache;
-
     /**
      * The database connection name that should be used.
      *
@@ -38,13 +30,11 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     /**
      * Create a new database repository.
      *
-     * @param  \Illuminate\Contracts\Cache\Factory  $cache
      * @param  string  $connectionName
      * @return void
      */
-    public function __construct(CacheFactory $cache, string $connection)
+    public function __construct(string $connection)
     {
-        $this->cache = $cache;
         $this->connection = $connection;
     }
 
