@@ -57,7 +57,9 @@ class EntryModel extends Model
         $this->whereType($query, $type)
                 ->whereBatchId($query, $options)
                 ->whereTag($query, $options)
-                ->whereBeforeSequence($query, $options);
+                ->whereFamilyHash($query, $options)
+                ->whereBeforeSequence($query, $options)
+                ->filter($query, $options);
 
         return $query;
     }
@@ -103,15 +105,27 @@ class EntryModel extends Model
      */
     protected function whereTag($query, EntryQueryOptions $options)
     {
-        $query->when(empty($options->tag), function ($query) {
-            return $query->where('should_display_on_index', true);
-        });
-
         $query->when($options->tag, function ($query, $tag) {
             return $query->whereIn('uuid', DB::table('telescope_entries_tags')
                         ->whereTag($tag)
                         ->pluck('entry_uuid')
                         ->toArray());
+        });
+
+        return $this;
+    }
+
+    /**
+     * Scope the query for the given type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return $this
+     */
+    protected function whereFamilyHash($query, EntryQueryOptions $options)
+    {
+        $query->when($options->familyHash, function ($query, $hash) {
+            return $query->where('family_hash', $hash);
         });
 
         return $this;
@@ -129,6 +143,24 @@ class EntryModel extends Model
         $query->when($options->beforeSequence, function ($query, $beforeSequence) {
             return $query->where('sequence', '<', $beforeSequence);
         });
+
+        return $this;
+    }
+
+    /**
+     * Scope the query for the given pagination options.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return $this
+     */
+    protected function filter($query, EntryQueryOptions $options)
+    {
+        if ($options->familyHash || $options->tag) {
+            return;
+        }
+
+        $query->where('should_display_on_index', true);
 
         return $this;
     }

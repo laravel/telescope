@@ -55,9 +55,34 @@
         },
 
 
+        watch: {
+            '$route.query.family_hash': function () {
+                clearTimeout(this.newEntriesTimeout);
+
+                this.hasNewEntries = false;
+
+                this.lastEntryIndex = '';
+
+                this.ready = false;
+
+                this.loadEntries((response) => {
+                    this.entries = response.data.entries;
+
+                    this.newEntriesTimeout = setTimeout(() => {
+                        this.checkForNewEntries();
+                    }, this.newEntriesTimeoutInSeconds);
+
+                    this.ready = true;
+                });
+            }
+        },
+
+
         methods: {
             loadEntries(after){
-                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest).then(response => {
+                let family_hash = this.$route.query.family_hash || '';
+
+                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&family_hash=' + family_hash).then(response => {
                     if (response.data.entries.length) {
                         this.lastEntryIndex = _.last(response.data.entries).sequence;
                     }
@@ -79,7 +104,9 @@
              * Keep checking if there are new entries.
              */
             checkForNewEntries(){
-                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1')
+                let family_hash = this.$route.query.family_hash || '';
+
+                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1' + '&family_hash=' + family_hash)
                         .then(response => {
                             if (response.data.entries.length && !this.entries.length) {
                                 this.loadNewEntries();

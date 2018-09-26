@@ -60,7 +60,8 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
             $entry->type,
             $entry->content,
             $entry->created_at,
-            $tags
+            $tags,
+            $entry->family_hash
         );
     }
 
@@ -122,7 +123,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     protected function storeExceptions(Collection $exceptions)
     {
         $this->table('telescope_entries')->insert($exceptions->map(function ($exception) {
-            $occurences = $this->table('telescope_entries')
+            $occurrences = $this->table('telescope_entries')
                     ->where('type', EntryType::EXCEPTION)
                     ->where('family_hash', $exception->familyHash())
                     ->count();
@@ -135,7 +136,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
             return array_merge($exception->toArray(), [
                 'family_hash' => $exception->familyHash(),
                 'content' => json_encode(array_merge(
-                    $exception->content, ['occurences' => $occurences]
+                    $exception->content, ['occurrences' => $occurrences + 1]
                 )),
             ]);
         })->toArray());

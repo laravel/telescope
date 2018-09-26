@@ -36,6 +36,13 @@ class EntryResult implements JsonSerializable
     public $type;
 
     /**
+     * The entry's Family.
+     *
+     * @var string
+     */
+    public $familyHash;
+
+    /**
      * The entry's content.
      *
      * @var array
@@ -64,9 +71,9 @@ class EntryResult implements JsonSerializable
      * @param  string  $type
      * @param  array  $content
      * @param  \DateTimeInterface  $createdAt
-     * @param  array  $tags
+     * @param  string  $familyHash
      */
-    public function __construct($id, $sequence, string $batchId, string $type, array $content, DateTimeInterface $createdAt, $tags)
+    public function __construct($id, $sequence, string $batchId, string $type, array $content, DateTimeInterface $createdAt, $tags = [], $familyHash = null)
     {
         $this->id = $id;
         $this->sequence = $sequence;
@@ -75,6 +82,7 @@ class EntryResult implements JsonSerializable
         $this->content = $content;
         $this->createdAt = $createdAt;
         $this->tags = $tags;
+        $this->familyHash = $familyHash;
     }
 
     /**
@@ -91,6 +99,7 @@ class EntryResult implements JsonSerializable
             'type' => $this->type,
             'content' => $this->content,
             'tags' => $this->tags,
+            'family_hash' => $this->familyHash,
             'created_at' => $this->createdAt->toDateTimeString(),
         ];
     }
