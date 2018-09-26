@@ -147,7 +147,7 @@ class EntryModel extends Model
     }
 
     /**
-     * Scope the query for the given pagination options.
+     * Scope the query for the given display options.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
@@ -155,7 +155,7 @@ class EntryModel extends Model
      */
     protected function filter($query, EntryQueryOptions $options)
     {
-        if ($options->familyHash || $options->tag) {
+        if ($options->familyHash || $options->tag || $options->batchId) {
             return;
         }
 
