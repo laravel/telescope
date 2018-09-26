@@ -56,7 +56,6 @@ class ExceptionWatcher extends Watcher
      */
     protected function tags($event)
     {
-        return ['some-tag'];
         return ExtractTags::from($event->context['exception']);
     }
 }
