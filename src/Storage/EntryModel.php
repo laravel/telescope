@@ -161,7 +161,11 @@ class EntryModel extends Model
         }
 
         return $query->groupBy(DB::raw('IFNULL(`group`, `sequence`)'))
-            ->select('*',
+            ->select(
+                DB::raw('MAX(uuid) as uuid'),
+                DB::raw('MAX(batch_id) as batch_id'),
+                DB::raw('ANY_VALUE(type) as type'),
+                DB::raw('ANY_VALUE(content) as content'),
                 DB::raw('MAX(created_at) as created_at'),
                 DB::raw('MAX(sequence) as sequence'),
                 DB::raw('COUNT(sequence) as occurrences')
