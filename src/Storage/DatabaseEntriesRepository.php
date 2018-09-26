@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Storage;
 
 use DateTimeInterface;
+use Laravel\Telescope\EntryType;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
@@ -111,10 +112,12 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
 
         $this->storeExceptions($exceptions);
 
-        $this->table('telescope_entries')->insert($entries->map(function ($entry) {
+        $createdAt = now();
+
+        $this->table('telescope_entries')->insert($entries->map(function ($entry) use ($createdAt) {
             $entry->content = json_encode($entry->content);
 
-            return $entry->toArray();
+            return array_merge($entry->toArray(), ['created_at' => $createdAt]);
         })->toArray());
 
         $this->storeTags($entries->pluck('tags', 'uuid'));
@@ -130,10 +133,12 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     {
         $this->table('telescope_entries')->insert($exceptions->map(function ($exception) {
             $occurences = $this->table('telescope_entries')
+                    ->where('type', EntryType::EXCEPTION)
                     ->where('family_hash', $exception->familyHash())
                     ->count();
 
             $this->table('telescope_entries')
+                    ->where('type', EntryType::EXCEPTION)
                     ->where('family_hash', $exception->familyHash())
                     ->update(['should_display_on_index' => false]);
 

@@ -24,7 +24,7 @@ class CreateTelescopeEntriesTable extends Migration
             $table->timestamp('created_at')->nullable();
 
             $table->index('batch_id');
-            $table->index('type');
+            $table->index(['type', 'should_display_on_index']);
         });
 
         Schema::create('telescope_entries_tags', function (Blueprint $table) {
