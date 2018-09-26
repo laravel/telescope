@@ -50,6 +50,9 @@
             '$route.query.group': function(){
                 clearTimeout(this.newEntriesTimeout);
 
+                this.hasNewEntries = false;
+                this.lastEntryIndex = '';
+
                 this.ready = false;
 
                 this.loadEntries((response) => {

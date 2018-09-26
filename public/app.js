@@ -78160,6 +78160,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
             clearTimeout(this.newEntriesTimeout);
 
+            this.hasNewEntries = false;
+            this.lastEntryIndex = '';
+
             this.ready = false;
 
             this.loadEntries(function (response) {
