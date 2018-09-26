@@ -12,7 +12,6 @@
             <th scope="col"></th>
         </tr>
 
-
         <template slot="row" slot-scope="slotProps">
             <td :title="slotProps.entry.content.class" v-if="!$route.query.family_hash">{{truncate(slotProps.entry.content.class, 80)}}</td>
 
