@@ -78129,6 +78129,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     data: function data() {
         return {
             tag: '',
+            familyHash: '',
             entries: [],
             ready: false,
             lastEntryIndex: '',
@@ -78150,6 +78151,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         var _this = this;
 
         document.title = this.title + " - Telescope";
+
+        this.familyHash = this.$route.query.family_hash || '';;
+        this.tag = this.$route.query.tag || '';;
 
         this.loadEntries(function (response) {
             _this.entries = response.data.entries;
@@ -78181,6 +78185,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
             this.lastEntryIndex = '';
 
+            this.familyHash = '';
+
+            this.tag = '';
+
             this.ready = false;
 
             this.loadEntries(function (response) {
@@ -78199,9 +78207,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         loadEntries: function loadEntries(after) {
             var _this3 = this;
 
-            var family_hash = this.$route.query.family_hash || '';
-
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&family_hash=' + family_hash).then(function (response) {
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&family_hash=' + this.familyHash).then(function (response) {
                 if (response.data.entries.length) {
                     _this3.lastEntryIndex = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.last(response.data.entries).sequence;
                 }
@@ -78225,9 +78231,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         checkForNewEntries: function checkForNewEntries() {
             var _this4 = this;
 
-            var family_hash = this.$route.query.family_hash || '';
-
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1' + '&family_hash=' + family_hash).then(function (response) {
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1' + '&family_hash=' + this.familyHash).then(function (response) {
                 if (response.data.entries.length && !_this4.entries.length) {
                     _this4.loadNewEntries();
                 } else if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this4.entries).id) {

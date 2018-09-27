@@ -15,6 +15,7 @@
         data() {
             return {
                 tag: '',
+                familyHash: '',
                 entries: [],
                 ready: false,
                 lastEntryIndex: '',
@@ -34,6 +35,9 @@
          */
         mounted() {
             document.title = this.title + " - Telescope";
+
+            this.familyHash = this.$route.query.family_hash || '';;
+            this.tag = this.$route.query.tag || '';;
 
             this.loadEntries((response) => {
                 this.entries = response.data.entries;
@@ -63,6 +67,10 @@
 
                 this.lastEntryIndex = '';
 
+                this.familyHash = '';
+
+                this.tag = '';
+
                 this.ready = false;
 
                 this.loadEntries((response) => {
@@ -80,9 +88,7 @@
 
         methods: {
             loadEntries(after){
-                let family_hash = this.$route.query.family_hash || '';
-
-                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&family_hash=' + family_hash).then(response => {
+                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&family_hash=' + this.familyHash).then(response => {
                     if (response.data.entries.length) {
                         this.lastEntryIndex = _.last(response.data.entries).sequence;
                     }
@@ -104,9 +110,7 @@
              * Keep checking if there are new entries.
              */
             checkForNewEntries(){
-                let family_hash = this.$route.query.family_hash || '';
-
-                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1' + '&family_hash=' + family_hash)
+                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1' + '&family_hash=' + this.familyHash)
                         .then(response => {
                             if (response.data.entries.length && !this.entries.length) {
                                 this.loadNewEntries();
