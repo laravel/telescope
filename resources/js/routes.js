@@ -1,11 +1,5 @@
 export default [
-    {path: '/', redirect: '/overview'},
-
-    {
-        path: '/overview',
-        name: 'overview',
-        component: {template: '<div>Here we show a few metrics like in Horizon.</div>'}
-    },
+    {path: '/', redirect: '/requests'},
 
     {
         path: '/mail/:id',

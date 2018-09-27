@@ -60646,11 +60646,7 @@ webpackContext.id = 169;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony default export */ __webpack_exports__["a"] = ([{ path: '/', redirect: '/overview' }, {
-    path: '/overview',
-    name: 'overview',
-    component: { template: '<div>Here we show a few metrics like in Horizon.</div>' }
-}, {
+/* harmony default export */ __webpack_exports__["a"] = ([{ path: '/', redirect: '/requests' }, {
     path: '/mail/:id',
     name: 'mail-preview',
     component: __webpack_require__(171)
