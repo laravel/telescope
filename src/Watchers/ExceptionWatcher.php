@@ -7,6 +7,7 @@ use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\ExceptionContext;
 use Illuminate\Log\Events\MessageLogged;
+use Laravel\Telescope\IncomingExceptionEntry;
 
 class ExceptionWatcher extends Watcher
 {
@@ -36,7 +37,7 @@ class ExceptionWatcher extends Watcher
         $exception = $event->context['exception'];
 
         Telescope::recordException(
-            IncomingEntry::make([
+            IncomingExceptionEntry::make($exception, [
                 'class' => get_class($exception),
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
@@ -46,7 +47,6 @@ class ExceptionWatcher extends Watcher
             ])->tags($this->tags($event))
         );
     }
-
 
     /**
      * Extract the tags for the given event.

@@ -57,7 +57,7 @@ class IncomingEntry
     public $recordedAt;
 
     /**
-     * Create a new entry instance.
+     * Create a new incoming entry instance.
      *
      * @param  array  $content
      * @return void
@@ -76,12 +76,12 @@ class IncomingEntry
     /**
      * Create a new entry instance.
      *
-     * @param  array  $content
+     * @param  mixed  ...$arguments
      * @return static
      */
-    public static function make(array $content)
+    public static function make(...$arguments)
     {
-        return (new static($content));
+        return (new static(...$arguments));
     }
 
     /**
@@ -157,6 +157,16 @@ class IncomingEntry
             return resolve(EntriesRepository::class)->isMonitoring($this->tags);
         }
 
+        return false;
+    }
+
+    /**
+     * Determine if the incoming entry is a reportable exception.
+     *
+     * @return bool
+     */
+    public function isReportableException()
+    {
         return false;
     }
 

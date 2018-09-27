@@ -32,7 +32,7 @@ class TelescopeServiceProvider extends ServiceProvider
                 return true;
             }
 
-            return $entry->isException() ||
+            return $entry->isReportableException() ||
                    $entry->hasMonitoredTag();
         });
     }
