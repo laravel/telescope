@@ -36,8 +36,10 @@
         mounted() {
             document.title = this.title + " - Telescope";
 
-            this.familyHash = this.$route.query.family_hash || '';;
-            this.tag = this.$route.query.tag || '';;
+            this.familyHash = this.$route.query.family_hash || '';
+            ;
+            this.tag = this.$route.query.tag || '';
+            ;
 
             this.loadEntries((response) => {
                 this.entries = response.data.entries;
@@ -67,9 +69,13 @@
 
                 this.lastEntryIndex = '';
 
-                this.familyHash = '';
+                if (!this.$route.query.family_hash) {
+                    this.familyHash = '';
+                }
 
-                this.tag = '';
+                if (!this.$route.query.tag) {
+                    this.tag = '';
+                }
 
                 this.ready = false;
 

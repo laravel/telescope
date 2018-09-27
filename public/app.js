@@ -61852,15 +61852,29 @@ var render = function() {
                     { attrs: { title: slotProps.entry.content.class } },
                     [
                       _vm._v(
-                        _vm._s(_vm.truncate(slotProps.entry.content.class, 80))
-                      )
+                        "\n            " +
+                          _vm._s(
+                            _vm.truncate(slotProps.entry.content.class, 80)
+                          )
+                      ),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("small", { staticClass: "text-muted" }, [
+                        _vm._v(
+                          _vm._s(
+                            _vm.truncate(slotProps.entry.content.message, 100)
+                          )
+                        )
+                      ])
                     ]
                   )
                 : _vm._e(),
               _vm._v(" "),
               !_vm.$route.query.family_hash && !_vm.$route.query.tag
-                ? _c("td", { staticClass: "table-fit" }, [
-                    _vm._v(_vm._s(slotProps.entry.content.occurrences))
+                ? _c("td", { staticClass: "table-fit align-middle" }, [
+                    _c("span", [
+                      _vm._v(_vm._s(slotProps.entry.content.occurrences))
+                    ])
                   ])
                 : _vm._e(),
               _vm._v(" "),
@@ -61878,13 +61892,13 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
+              _c("td", { staticClass: "table-fit align-middle" }, [
                 _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
               ]),
               _vm._v(" "),
               _c(
                 "td",
-                { staticClass: "table-fit" },
+                { staticClass: "table-fit align-middle" },
                 [
                   _c(
                     "router-link",
@@ -78148,8 +78162,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
         document.title = this.title + " - Telescope";
 
-        this.familyHash = this.$route.query.family_hash || '';;
-        this.tag = this.$route.query.tag || '';;
+        this.familyHash = this.$route.query.family_hash || '';
+        ;
+        this.tag = this.$route.query.tag || '';
+        ;
 
         this.loadEntries(function (response) {
             _this.entries = response.data.entries;
@@ -78181,9 +78197,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
             this.lastEntryIndex = '';
 
-            this.familyHash = '';
+            if (!this.$route.query.family_hash) {
+                this.familyHash = '';
+            }
 
-            this.tag = '';
+            if (!this.$route.query.tag) {
+                this.tag = '';
+            }
 
             this.ready = false;
 
