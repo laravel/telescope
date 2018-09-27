@@ -78172,7 +78172,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 
     watch: {
-        '$route.query.family_hash': function $routeQueryFamily_hash() {
+        '$route.query': function $routeQuery() {
             var _this2 = this;
 
             clearTimeout(this.newEntriesTimeout);

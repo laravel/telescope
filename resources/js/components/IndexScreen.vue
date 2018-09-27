@@ -60,7 +60,7 @@
 
 
         watch: {
-            '$route.query.family_hash': function () {
+            '$route.query': function () {
                 clearTimeout(this.newEntriesTimeout);
 
                 this.hasNewEntries = false;
