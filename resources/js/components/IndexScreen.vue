@@ -15,6 +15,7 @@
         data() {
             return {
                 tag: '',
+                familyHash: '',
                 entries: [],
                 ready: false,
                 lastEntryIndex: '',
@@ -34,6 +35,9 @@
          */
         mounted() {
             document.title = this.title + " - Telescope";
+
+            this.familyHash = this.$route.query.family_hash || '';;
+            this.tag = this.$route.query.tag || '';;
 
             this.loadEntries((response) => {
                 this.entries = response.data.entries;
@@ -55,9 +59,36 @@
         },
 
 
+        watch: {
+            '$route.query.family_hash': function () {
+                clearTimeout(this.newEntriesTimeout);
+
+                this.hasNewEntries = false;
+
+                this.lastEntryIndex = '';
+
+                this.familyHash = '';
+
+                this.tag = '';
+
+                this.ready = false;
+
+                this.loadEntries((response) => {
+                    this.entries = response.data.entries;
+
+                    this.newEntriesTimeout = setTimeout(() => {
+                        this.checkForNewEntries();
+                    }, this.newEntriesTimeoutInSeconds);
+
+                    this.ready = true;
+                });
+            },
+        },
+
+
         methods: {
             loadEntries(after){
-                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest).then(response => {
+                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&family_hash=' + this.familyHash).then(response => {
                     if (response.data.entries.length) {
                         this.lastEntryIndex = _.last(response.data.entries).sequence;
                     }
@@ -79,7 +110,7 @@
              * Keep checking if there are new entries.
              */
             checkForNewEntries(){
-                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1')
+                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1' + '&family_hash=' + this.familyHash)
                         .then(response => {
                             if (response.data.entries.length && !this.entries.length) {
                                 this.loadNewEntries();
@@ -103,6 +134,8 @@
                     this.lastEntryIndex = '';
 
                     clearTimeout(this.newEntriesTimeout);
+
+                    this.$router.push({query: _.assign({}, this.$route.query, {tag: this.tag})});
 
                     this.loadEntries((response) => {
                         this.entries = response.data.entries;

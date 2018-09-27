@@ -218,7 +218,7 @@ button:hover{
   }
 }
 
-.list-enter-active:not(.dontanimate), .list-leave-active:not(.dontanimate) {
+.list-enter-active:not(.dontanimate) {
   transition: background 1s linear;
 }
 

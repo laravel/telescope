@@ -17,12 +17,14 @@ class CreateTelescopeEntriesTable extends Migration
             $table->bigIncrements('sequence');
             $table->uuid('uuid')->unique();
             $table->uuid('batch_id');
+            $table->string('family_hash')->nullable()->index();
+            $table->boolean('should_display_on_index')->default(true);
             $table->string('type', 20);
             $table->json('content');
-            $table->timestamp('created_at');
+            $table->dateTime('created_at')->nullable();
 
             $table->index('batch_id');
-            $table->index('type');
+            $table->index(['type', 'should_display_on_index']);
         });
 
         Schema::create('telescope_entries_tags', function (Blueprint $table) {

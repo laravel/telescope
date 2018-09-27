@@ -21215,8 +21215,7 @@ button:hover .fill-primary {
   color: #212529;
 }
 
-.list-enter-active:not(.dontanimate),
-.list-leave-active:not(.dontanimate) {
+.list-enter-active:not(.dontanimate) {
   -webkit-transition: background 1s linear;
   transition: background 1s linear;
 }

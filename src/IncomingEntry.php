@@ -171,6 +171,18 @@ class IncomingEntry
     }
 
     /**
+     * Calculate the family look-up hash for the incoming entry.
+     *
+     * @return string
+     */
+    public function familyHash()
+    {
+        if ($this->isException()) {
+            return md5($this->content['file'].$this->content['line']);
+        }
+    }
+
+    /**
      * Get an array representation of the entry for storage.
      *
      * @return array

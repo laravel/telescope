@@ -5,14 +5,19 @@
 <template>
     <index-screen title="Exceptions" resource="exceptions">
         <tr slot="table-header">
-            <th scope="col">Type</th>
+            <th scope="col" v-if="!$route.query.family_hash">Type</th>
+            <th scope="col" v-if="!$route.query.family_hash && !$route.query.tag">Occurrences</th>
+            <th scope="col" v-if="$route.query.family_hash">Message</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
 
-
         <template slot="row" slot-scope="slotProps">
-            <td :title="slotProps.entry.content.class">{{truncate(slotProps.entry.content.class, 80)}}</td>
+            <td :title="slotProps.entry.content.class" v-if="!$route.query.family_hash">{{truncate(slotProps.entry.content.class, 80)}}</td>
+
+            <td class="table-fit" v-if="!$route.query.family_hash && !$route.query.tag">{{slotProps.entry.content.occurrences}}</td>
+
+            <td :title="slotProps.entry.content.message" v-if="$route.query.family_hash">{{truncate(slotProps.entry.content.message, 80)}}</td>
 
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
 

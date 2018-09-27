@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Storage;
 
 use DateTimeInterface;
+use Laravel\Telescope\EntryType;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
@@ -59,7 +60,8 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
             $entry->type,
             $entry->content,
             $entry->created_at,
-            $tags
+            $tags,
+            $entry->family_hash
         );
     }
 
@@ -97,13 +99,49 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
      */
     public function store(Collection $entries)
     {
-        $this->table('telescope_entries')->insert($entries->map(function ($entry) {
+        [$exceptions, $entries] = $entries->partition->isException();
+
+        $this->storeExceptions($exceptions);
+
+        $createdAt = now();
+
+        $this->table('telescope_entries')->insert($entries->map(function ($entry) use ($createdAt) {
             $entry->content = json_encode($entry->content);
 
             return $entry->toArray();
         })->toArray());
 
         $this->storeTags($entries->pluck('tags', 'uuid'));
+    }
+
+    /**
+     * Store the given array of exception entries.
+     *
+     * @param  \Illuminate\Support\Collection[\Laravel\Telescope\IncomingEntry]  $entries
+     * @return void
+     */
+    protected function storeExceptions(Collection $exceptions)
+    {
+        $this->table('telescope_entries')->insert($exceptions->map(function ($exception) {
+            $occurrences = $this->table('telescope_entries')
+                    ->where('type', EntryType::EXCEPTION)
+                    ->where('family_hash', $exception->familyHash())
+                    ->count();
+
+            $this->table('telescope_entries')
+                    ->where('type', EntryType::EXCEPTION)
+                    ->where('family_hash', $exception->familyHash())
+                    ->update(['should_display_on_index' => false]);
+
+            return array_merge($exception->toArray(), [
+                'family_hash' => $exception->familyHash(),
+                'content' => json_encode(array_merge(
+                    $exception->content, ['occurrences' => $occurrences + 1]
+                )),
+            ]);
+        })->toArray());
+
+        $this->storeTags($exceptions->pluck('tags', 'uuid'));
     }
 
     /**

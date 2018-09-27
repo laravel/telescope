@@ -21,6 +21,13 @@ class EntryQueryOptions
     public $tag;
 
     /**
+     * The family hash that must belong to retrieved entries.
+     *
+     * @var string
+     */
+    public $familyHash;
+
+    /**
      * The ID that all retrieved entries should be less than.
      *
      * @var mixed
@@ -46,6 +53,7 @@ class EntryQueryOptions
                 ->batchId($request->batch_id)
                 ->beforeSequence($request->before)
                 ->tag($request->tag)
+                ->familyHash($request->family_hash)
                 ->limit($request->take ?? 50);
     }
 
@@ -95,6 +103,19 @@ class EntryQueryOptions
     public function tag(?string $tag)
     {
         $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Set the family hash that must belong to retrieved entries.
+     *
+     * @param  string  $familyHash
+     * @return $this
+     */
+    public function familyHash(?string $familyHash)
+    {
+        $this->familyHash = $familyHash;
 
         return $this;
     }

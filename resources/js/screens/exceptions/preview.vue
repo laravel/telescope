@@ -31,6 +31,15 @@
                     {{slotProps.entry.content.file}}:{{slotProps.entry.content.line}}
                 </td>
             </tr>
+
+            <tr>
+                <td class="table-fit font-weight-bold">Occurrences</td>
+                <td>
+                    <router-link :to="{name:'exceptions', query: {family_hash: slotProps.entry.family_hash}}" class="control-action">
+                        View Other Occurrences
+                    </router-link>
+                </td>
+            </tr>
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
