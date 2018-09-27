@@ -21,7 +21,7 @@ class CreateTelescopeEntriesTable extends Migration
             $table->boolean('should_display_on_index')->default(true);
             $table->string('type', 20);
             $table->json('content');
-            $table->timestamp('created_at')->nullable();
+            $table->dateTime('created_at')->nullable();
 
             $table->index('batch_id');
             $table->index(['type', 'should_display_on_index']);
