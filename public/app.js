@@ -61862,7 +61862,7 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              !_vm.$route.query.family_hash
+              !_vm.$route.query.family_hash && !_vm.$route.query.tag
                 ? _c("td", { staticClass: "table-fit" }, [
                     _vm._v(_vm._s(slotProps.entry.content.occurrences))
                   ])
@@ -61935,7 +61935,7 @@ var render = function() {
           ? _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")])
           : _vm._e(),
         _vm._v(" "),
-        !_vm.$route.query.family_hash
+        !_vm.$route.query.family_hash && !_vm.$route.query.tag
           ? _c("th", { attrs: { scope: "col" } }, [_vm._v("Occurrences")])
           : _vm._e(),
         _vm._v(" "),
@@ -78252,6 +78252,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 _this5.lastEntryIndex = '';
 
                 clearTimeout(_this5.newEntriesTimeout);
+
+                _this5.$router.push({ query: __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.assign({}, _this5.$route.query, { tag: _this5.tag }) });
 
                 _this5.loadEntries(function (response) {
                     _this5.entries = response.data.entries;

@@ -74,7 +74,7 @@
 
                     this.ready = true;
                 });
-            }
+            },
         },
 
 
@@ -130,6 +130,8 @@
                     this.lastEntryIndex = '';
 
                     clearTimeout(this.newEntriesTimeout);
+
+                    this.$router.push({query: _.assign({}, this.$route.query, {tag: this.tag})});
 
                     this.loadEntries((response) => {
                         this.entries = response.data.entries;
