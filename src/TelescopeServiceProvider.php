@@ -136,20 +136,4 @@ class TelescopeServiceProvider extends ServiceProvider
             ->needs('$connection')
             ->give(config('telescope.storage.database.connection'));
     }
-
-    /**
-     * Register the package redis storage driver.
-     *
-     * @return void
-     */
-    public function registerRedisDriver()
-    {
-        $this->app->singleton(
-            EntriesRepository::class, RedisEntriesRepository::class
-        );
-
-        $this->app->when(RedisEntriesRepository::class)
-            ->needs('$connection')
-            ->give(config('telescope.storage.redis.connection'));
-    }
 }
