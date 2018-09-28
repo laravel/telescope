@@ -5,6 +5,7 @@ namespace Laravel\Telescope;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
+use Illuminate\Queue\Events\JobExceptionOccurred;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
 trait ListensForStorageOpportunities
@@ -64,6 +65,10 @@ trait ListensForStorageOpportunities
 
         $app['events']->listen(JobFailed::class, function ($event) use ($app) {
             static::storeIfDoneProcessingJob($app, $event);
+        });
+
+        $app['events']->listen(JobExceptionOccurred::class, function ($event) use ($app) {
+            array_pop(static::$processingJobs);
         });
     }
 
