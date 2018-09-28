@@ -140,7 +140,7 @@
                 <tr v-if="entry.tags.length">
                     <td class="table-fit font-weight-bold">Tags</td>
                     <td>
-                        <span class="badge badge-info mr-1" v-for="tag in entry.tags">{{tag}}</span>
+                        <span class="badge badge-info mr-1 font-weight-light" v-for="tag in entry.tags">{{tag}}</span>
                     </td>
                 </tr>
                 </tbody>
