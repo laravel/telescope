@@ -58,10 +58,10 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
             null,
             $entry->batch_id,
             $entry->type,
+            $entry->family_hash,
             $entry->content,
             $entry->created_at,
-            $tags,
-            $entry->family_hash
+            $tags
         );
     }
 
@@ -84,10 +84,13 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
                     $entry->sequence,
                     $entry->batch_id,
                     $entry->type,
+                    $entry->family_hash,
                     $entry->content,
                     $entry->created_at,
                     []
                 );
+            })->when($type == EntryType::EXCEPTION, function ($entries) {
+                return $entries->unique->familyHash;
             });
     }
 

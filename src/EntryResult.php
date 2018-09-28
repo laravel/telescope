@@ -69,19 +69,19 @@ class EntryResult implements JsonSerializable
      * @param  mixed  $id
      * @param  string  $batchId
      * @param  string  $type
+     * @param  string|null  $familyHash
      * @param  array  $content
      * @param  \DateTimeInterface  $createdAt
-     * @param  string  $familyHash
      */
-    public function __construct($id, $sequence, string $batchId, string $type, array $content, DateTimeInterface $createdAt, $tags = [], $familyHash = null)
+    public function __construct($id, $sequence, string $batchId, string $type, ?string $familyHash, array $content, DateTimeInterface $createdAt, $tags = [])
     {
         $this->id = $id;
-        $this->sequence = $sequence;
         $this->type = $type;
+        $this->tags = $tags;
         $this->batchId = $batchId;
         $this->content = $content;
+        $this->sequence = $sequence;
         $this->createdAt = $createdAt;
-        $this->tags = $tags;
         $this->familyHash = $familyHash;
     }
 
