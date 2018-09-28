@@ -4,6 +4,7 @@ namespace Laravel\Telescope;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\VarDumper\VarDumper;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\RedisEntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
@@ -103,6 +104,7 @@ class TelescopeServiceProvider extends ServiceProvider
         ]);
 
         $this->registerStorageDriver();
+        $this->registerDumpHandler();
 
         Telescope::start($this->app);
     }
@@ -112,7 +114,7 @@ class TelescopeServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    private function registerStorageDriver()
+    protected function registerStorageDriver()
     {
         $driver = config('telescope.driver');
 
@@ -126,7 +128,7 @@ class TelescopeServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerDatabaseDriver()
+    protected function registerDatabaseDriver()
     {
         $this->app->singleton(
             EntriesRepository::class, DatabaseEntriesRepository::class
@@ -135,5 +137,19 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->app->when(DatabaseEntriesRepository::class)
             ->needs('$connection')
             ->give(config('telescope.storage.database.connection'));
+    }
+
+    /**
+     * Register the custom VarDumper handler.
+     *
+     * @return void
+     */
+    protected function registerDumpHandler()
+    {
+        return;
+
+        // VarDumper::setHandler(function ($var) {
+        //     //
+        // });
     }
 }

@@ -6,8 +6,8 @@
     <index-screen title="Jobs" resource="jobs">
         <tr slot="table-header">
             <th scope="col">Job</th>
-            <th scope="col">Queue</th>
             <th scope="col">Connection</th>
+            <th scope="col">Queue</th>
             <th scope="col">Status</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -17,9 +17,9 @@
         <template slot="row" slot-scope="slotProps">
             <td :title="slotProps.entry.content.name">{{truncate(slotProps.entry.content.name, 40)}}</td>
 
-            <td :title="slotProps.entry.content.queue" class="table-fit">{{truncate(slotProps.entry.content.queue, 10)}}</td>
-
             <td :title="slotProps.entry.content.connection" class="table-fit">{{truncate(slotProps.entry.content.connection, 10)}}</td>
+
+            <td :title="slotProps.entry.content.queue" class="table-fit">{{truncate(slotProps.entry.content.queue, 10)}}</td>
 
             <td class="table-fit">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon fill-danger" v-if="slotProps.entry.content.status == 'failed'">
