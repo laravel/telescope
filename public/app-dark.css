@@ -21225,3 +21225,7 @@ button:hover .fill-primary {
   background: #505e4a;
 }
 
+#indexScreen td {
+  vertical-align: middle !important;
+}
+

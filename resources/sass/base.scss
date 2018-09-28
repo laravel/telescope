@@ -225,3 +225,9 @@ button:hover{
 .list-enter:not(.dontanimate), .list-leave-to:not(.dontanimate) {
   background: $new-entries-bg;
 }
+
+#indexScreen{
+  td{
+    vertical-align: middle !important;
+  }
+}

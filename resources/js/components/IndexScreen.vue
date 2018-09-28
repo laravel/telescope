@@ -222,7 +222,7 @@
         </div>
 
 
-        <table v-if="ready && entries.length > 0" class="table table-hover table-sm mb-0 penultimate-column-right">
+        <table v-if="ready && entries.length > 0" id="indexScreen" class="table table-hover table-sm mb-0 penultimate-column-right">
             <thead>
             <slot name="table-header"></slot>
             </thead>

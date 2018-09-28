@@ -35,7 +35,7 @@ class LogWatcher extends Watcher
             IncomingEntry::make([
                 'level' => $event->level,
                 'message' => $event->message,
-                'context' => $event->context,
+                'context' => array_except($event->context, ['telescope']),
             ])->tags($this->tags($event))
         );
     }
