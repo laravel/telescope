@@ -62288,7 +62288,7 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return [
-              _c("td", [
+              _c("td", { attrs: { title: slotProps.entry.content.message } }, [
                 _vm._v(
                   _vm._s(_vm.truncate(slotProps.entry.content.message, 75))
                 )

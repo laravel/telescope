@@ -92,7 +92,7 @@ class ExtractTags
         return collect(
             [static::extractListener($job), static::extractEvent($job),
         ])->map(function ($job) {
-            return static::for($job);
+            return static::from($job);
         })->collapse()->unique()->toArray();
     }
 
