@@ -5,6 +5,23 @@ namespace Laravel\Telescope;
 trait RegistersWatchers
 {
     /**
+     * The class names of the registered watchers.
+     *
+     * @var array
+     */
+    protected static $watchers = [];
+
+    /**
+     * Determine if a given watcher has been registered.
+     *
+     * @return bool
+     */
+    public static function hasWatcher($class)
+    {
+        return in_array($class, static::$watchers);
+    }
+
+    /**
      * Register the configured Telescope watchers.
      *
      * @param  \Illuminate\Foundation\Application  $app
@@ -21,11 +38,13 @@ trait RegistersWatchers
                 continue;
             }
 
-            $app->makeWith(
-                is_string($key) ? $key : $watcher, [
-                    'options' => is_array($watcher) ? $watcher : []
-                ]
-            )->register($app);
+            $watcher = $app->makeWith(is_string($key) ? $key : $watcher, [
+                'options' => is_array($watcher) ? $watcher : []
+            ]);
+
+            static::$watchers[] = get_class($watcher);
+
+            $watcher->register($app);
         }
     }
 }
