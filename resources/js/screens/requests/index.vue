@@ -32,9 +32,11 @@
 
         <template slot="row" slot-scope="slotProps">
             <td class="table-fit pr-0">
-                <span class="badge font-weight-light" :class="'badge-'+methodClass(slotProps.entry.content.method)" style="font-size:0.5em">
+                <span class="badge font-weight-light" :class="'badge-'+methodClass(slotProps.entry.content.method)">
                     {{slotProps.entry.content.method}}
                 </span>
+
+                <!-- <code>{{slotProps.entry.content.method}}</code> -->
             </td>
 
             <td :title="slotProps.entry.content.uri">{{truncate(slotProps.entry.content.uri, 90)}}</td>

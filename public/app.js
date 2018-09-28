@@ -69082,9 +69082,7 @@ var render = function() {
                   {
                     staticClass: "badge font-weight-light",
                     class:
-                      "badge-" +
-                      _vm.methodClass(slotProps.entry.content.method),
-                    staticStyle: { "font-size": "0.5em" }
+                      "badge-" + _vm.methodClass(slotProps.entry.content.method)
                   },
                   [
                     _vm._v(
