@@ -69050,7 +69050,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (status >= 500) return 'danger';
         },
         methodClass: function methodClass(method) {
-            if (method == 'GET') return 'light';
+            if (method == 'GET') return 'secondary';
             if (method == 'POST') return 'info';
             if (method == 'PATCH') return 'info';
             if (method == 'PUT') return 'info';

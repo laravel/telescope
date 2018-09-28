@@ -9,7 +9,7 @@
 
 
             methodClass(method){
-                if (method == 'GET') return 'light';
+                if (method == 'GET') return 'secondary';
                 if (method == 'POST') return 'info';
                 if (method == 'PATCH') return 'info';
                 if (method == 'PUT') return 'info';
@@ -35,8 +35,6 @@
                 <span class="badge font-weight-light" :class="'badge-'+methodClass(slotProps.entry.content.method)">
                     {{slotProps.entry.content.method}}
                 </span>
-
-                <!-- <code>{{slotProps.entry.content.method}}</code> -->
             </td>
 
             <td :title="slotProps.entry.content.uri">{{truncate(slotProps.entry.content.uri, 90)}}</td>
