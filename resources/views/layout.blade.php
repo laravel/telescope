@@ -69,7 +69,6 @@
                         </router-link>
                     </li>
 
-
                     <li class="nav-item mt-3">
                         <router-link active-class="active" to="/exceptions" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
