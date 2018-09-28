@@ -433,7 +433,7 @@ class Telescope
      *
      * @return static
      */
-    public static function useDarkTheme()
+    public static function night()
     {
         static::$useDarkTheme = true;
 
