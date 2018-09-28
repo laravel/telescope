@@ -4,9 +4,11 @@ namespace Laravel\Telescope\Storage;
 
 use DateTimeInterface;
 use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Telescope;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
+use Laravel\Telescope\Watchers\DumpWatcher;
 use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
@@ -243,6 +245,30 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     public function terminate()
     {
         $this->monitoredTags = null;
+
+        $this->pruneDumps();
+    }
+
+    /**
+     * Prune the dump entries so the table doesn't get too big.
+     *
+     * @return void
+     */
+    protected function pruneDumps()
+    {
+        if (! Telescope::hasWatcher(DumpWatcher::class)) {
+            return;
+        }
+
+        EntryModel::where('type', EntryType::DUMP)
+            ->whereNotIn('sequence', function ($query) {
+                $query->select('sequence')->fromSub(
+                    EntryModel::select('sequence')->orderBy('sequence', 'desc')
+                            ->where('type', EntryType::DUMP)
+                            ->limit(50)->toBase(),
+                    'dumps_temp'
+                );
+            })->delete();
     }
 
     /**
