@@ -57,9 +57,7 @@ class JobWatcher extends Watcher
                 'line' => $event->exception->getLine(),
                 'line_preview' => ExceptionContext::get($event->exception),
             ]
-        ],
-            $this->defaultJobData($event, $this->payload($event->job))
-        );
+        ], $this->defaultJobData($event, $this->payload($event->job)));
 
         Telescope::recordJob(
             IncomingEntry::make($content)->tags($this->tags($event->job))
@@ -77,11 +75,11 @@ class JobWatcher extends Watcher
     {
         return [
             'id' => $event->job->getJobId(),
+            'connection' => $event->job->getConnectionName(),
+            'queue' => $event->job->getQueue(),
             'name' => $event->job->payload()['displayName'],
             'tries' => $event->job->payload()['maxTries'],
             'timeout' => $event->job->payload()['timeout'],
-            'queue' => $event->job->getQueue(),
-            'connection' => $event->job->getConnectionName(),
             'data' => $payload,
         ];
     }

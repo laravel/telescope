@@ -32,6 +32,8 @@ trait ListensForStorageOpportunities
     /**
      * Store the entries in queue before the application termination.
      *
+     * This handles storing entries for HTTP requests and Artisan commands.
+     *
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
