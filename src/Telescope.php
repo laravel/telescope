@@ -362,6 +362,8 @@ class Telescope
     {
         return collect(static::$entriesQueue)
             ->each(function ($entry) use ($batchId) {
+                $entry->batchId($batchId);
+
                 if (auth()->user()) {
                     $entry->user(auth()->user());
                 }
@@ -369,8 +371,6 @@ class Telescope
                 if ($tagger = static::$tagUsing) {
                     $entry->tags($tagger($entry));
                 }
-
-                return $entry->batchId($batchId);
             })->when(! empty(static::$filterUsing), function ($entries) {
                 return static::applyFilters($entries);
             });
