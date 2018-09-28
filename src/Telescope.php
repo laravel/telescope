@@ -381,6 +381,10 @@ class Telescope
                 if ($tagger = static::$tagUsing) {
                     $entry->tags($tagger($entry));
                 }
+
+                if ($entry->isDump()) {
+                    $entry->assignEntryPointFromBatch(static::$entriesQueue);
+                }
             })->when(! empty(static::$filterUsing), function ($entries) {
                 return static::applyFilters($entries);
             });

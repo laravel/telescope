@@ -3,7 +3,7 @@
 namespace Laravel\Telescope\Watchers;
 
 use Laravel\Telescope\Telescope;
-use Laravel\Telescope\IncomingEntry;
+use Laravel\Telescope\IncomingDumpEntry;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
@@ -34,7 +34,7 @@ class DumpWatcher extends Watcher
     public function recordDump($dump)
     {
         Telescope::recordDump(
-            IncomingEntry::make(['dump' => $dump])
+            IncomingDumpEntry::make(['dump' => $dump])
         );
     }
 }

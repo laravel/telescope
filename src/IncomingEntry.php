@@ -181,6 +181,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a dump.
+     *
+     * @return bool
+     */
+    public function isDump()
+    {
+        return false;
+    }
+
+    /**
      * Calculate the family look-up hash for the incoming entry.
      *
      * @return string

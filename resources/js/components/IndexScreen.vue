@@ -37,9 +37,8 @@
             document.title = this.title + " - Telescope";
 
             this.familyHash = this.$route.query.family_hash || '';
-            ;
+
             this.tag = this.$route.query.tag || '';
-            ;
 
             this.loadEntries((response) => {
                 this.entries = response.data.entries;

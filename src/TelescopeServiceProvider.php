@@ -4,7 +4,6 @@ namespace Laravel\Telescope;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Symfony\Component\VarDumper\VarDumper;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\RedisEntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
