@@ -26,6 +26,12 @@ export default [
     },
 
     {
+        path: '/dumps',
+        name: 'dumps',
+        component: require('./screens/dumps/index')
+    },
+
+    {
         path: '/logs/:id',
         name: 'log-preview',
         component: require('./screens/logs/preview')

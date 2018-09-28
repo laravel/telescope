@@ -6,6 +6,7 @@ class EntryType
 {
     public const CACHE = 'cache';
     public const COMMAND = 'command';
+    public const DUMP = 'dump';
     public const EVENT = 'event';
     public const EXCEPTION = 'exception';
     public const JOB = 'job';

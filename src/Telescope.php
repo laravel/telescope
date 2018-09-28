@@ -176,10 +176,20 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-
     public static function recordCommand(IncomingEntry $entry)
     {
         return static::record(EntryType::COMMAND, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
+    public static function recordDump(IncomingEntry $entry)
+    {
+        return static::record(EntryType::DUMP, $entry);
     }
 
     /**

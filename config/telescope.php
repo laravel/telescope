@@ -14,6 +14,7 @@ return [
     'watchers' => [
         Watchers\CacheWatcher::class,
         Watchers\CommandWatcher::class,
+        Watchers\DumpWatcher::class,
         Watchers\EventWatcher::class,
         Watchers\ExceptionWatcher::class,
         Watchers\JobWatcher::class,

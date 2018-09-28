@@ -104,7 +104,6 @@ class TelescopeServiceProvider extends ServiceProvider
         ]);
 
         $this->registerStorageDriver();
-        $this->registerDumpHandler();
 
         Telescope::start($this->app);
     }
@@ -137,19 +136,5 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->app->when(DatabaseEntriesRepository::class)
             ->needs('$connection')
             ->give(config('telescope.storage.database.connection'));
-    }
-
-    /**
-     * Register the custom VarDumper handler.
-     *
-     * @return void
-     */
-    protected function registerDumpHandler()
-    {
-        return;
-
-        // VarDumper::setHandler(function ($var) {
-        //     //
-        // });
     }
 }
