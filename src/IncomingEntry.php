@@ -177,7 +177,7 @@ class IncomingEntry
      */
     public function isException()
     {
-        return $this->type == EntryType::EXCEPTION;
+        return false;
     }
 
     /**
@@ -187,9 +187,7 @@ class IncomingEntry
      */
     public function familyHash()
     {
-        if ($this->isException()) {
-            return md5($this->content['file'].$this->content['line']);
-        }
+        return;
     }
 
     /**

@@ -61871,7 +61871,7 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               !_vm.$route.query.family_hash && !_vm.$route.query.tag
-                ? _c("td", { staticClass: "table-fit align-middle" }, [
+                ? _c("td", { staticClass: "table-fit" }, [
                     _c("span", [
                       _vm._v(_vm._s(slotProps.entry.content.occurrences))
                     ])
@@ -61892,13 +61892,13 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit align-middle" }, [
+              _c("td", { staticClass: "table-fit" }, [
                 _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
               ]),
               _vm._v(" "),
               _c(
                 "td",
-                { staticClass: "table-fit align-middle" },
+                { staticClass: "table-fit" },
                 [
                   _c(
                     "router-link",
@@ -62288,7 +62288,7 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return [
-              _c("td", [
+              _c("td", { attrs: { title: slotProps.entry.content.message } }, [
                 _vm._v(
                   _vm._s(_vm.truncate(slotProps.entry.content.message, 75))
                 )
@@ -78432,7 +78432,8 @@ var render = function() {
           "table",
           {
             staticClass:
-              "table table-hover table-sm mb-0 penultimate-column-right"
+              "table table-hover table-sm mb-0 penultimate-column-right",
+            attrs: { id: "indexScreen" }
           },
           [
             _c("thead", [_vm._t("table-header")], 2),

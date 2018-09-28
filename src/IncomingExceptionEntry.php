@@ -37,4 +37,24 @@ class IncomingExceptionEntry extends IncomingEntry
         return resolve(ExceptionHandler::class)
                         ->shouldReport($this->exception);
     }
+
+    /**
+     * Determine if the incoming entry is an exception.
+     *
+     * @return bool
+     */
+    public function isException()
+    {
+        return true;
+    }
+
+    /**
+     * Calculate the family look-up hash for the incoming entry.
+     *
+     * @return string
+     */
+    public function familyHash()
+    {
+        return md5($this->content['file'].$this->content['line']);
+    }
 }
