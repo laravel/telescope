@@ -86,7 +86,6 @@
                         <span class="text-white text-monospace" style="font-size: 12px;">{{timeAgo(entry.created_at)}}</span>
                     </div>
 
-
                     <div v-html="entry.content.dump"></div>
                 </div>
             </transition-group>
