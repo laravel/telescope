@@ -63150,9 +63150,14 @@ var render = function() {
                           )
                         : _vm._e(),
                       _vm._v(" "),
-                      _c("span", { staticClass: "text-info" }, [
-                        _vm._v(_vm._s(_vm.timeAgo(entry.created_at)))
-                      ])
+                      _c(
+                        "span",
+                        {
+                          staticClass: "text-white text-monospace",
+                          staticStyle: { "font-size": "12px" }
+                        },
+                        [_vm._v(_vm._s(_vm.timeAgo(entry.created_at)))]
+                      )
                     ],
                     1
                   ),
