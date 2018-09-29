@@ -1,35 +1,44 @@
-$body-bg: #1C1C1C;
-$body-color: #E2EDF4;
-$input-color: #E2EDF4;
-$pill-link-active: $body-color;
 $font-family-base: Nunito;
 $font-size-base: 0.95rem;
 $badge-font-size: 0.95rem;
+
 $primary: #adadff;
 $secondary: #262525;
-$table-headers-color: #181818;
-$table-border-color: #EFEFEF;
-$table-hover-bg: #f1f7fa;
-$border-color: #EFEFEF;
-$card-cap-bg: #120F12;
-$modal-content-bg: $table-headers-color;
-$table-border-color: #343434;
-$card-bg: $card-cap-bg;
-$table-hover-bg: #343434;
-$input-bg: #242424;
-$input-border-color: $table-border-color;
 $gray-800: $secondary;
-$modal-footer-border-color: $input-border-color;
-$modal-header-border-color: $input-border-color;
-$new-entries-bg: #505e4a;
-$pill-link-active: $primary;
-$header-border-color: $table-border-color;
+
+$body-bg: #1C1C1C;
+$body-color: #E2EDF4;
+
 $sidebar-nav-color: #6e6b6b;
 $sidebar-icon-color: #9f9898;
+
+$pill-link-active: $primary;
+
+$border-color: #EFEFEF;
+$table-border-color: #343434;
+$table-headers-color: #181818;
+$table-hover-bg: #343434;
+
+$header-border-color: $table-border-color;
+
+$input-bg: #242424;
+$input-color: #E2EDF4;
+$input-border-color: $table-border-color;
+
+$card-cap-bg: #120F12;
+$card-bg: $card-cap-bg;
 $card-shadow-color: $body-bg;
-$control-action-icon-color: #ccd2df;
+
 $paginator-button-color: #9ea7ac;
+
+$modal-content-bg: $table-headers-color;
 $modal-backdrop-bg: #7e7e7e;
+$modal-footer-border-color: $input-border-color;
+$modal-header-border-color: $input-border-color;
+
+$new-entries-bg: #505e4a;
+
+$control-action-icon-color: #ccd2df;
 
 @import "syntaxhighlight";
 @import "node_modules/bootstrap/scss/bootstrap";

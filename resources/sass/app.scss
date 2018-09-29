@@ -1,24 +1,34 @@
-$body-bg: #EDF1F3;
 $font-family-base: Nunito;
 $font-size-base: 0.95rem;
 $badge-font-size: 0.95rem;
+
 $primary: #4040C8;
 $secondary: #f1f7fa;
+
+$body-bg: #EDF1F3;
+
+$btn-focus-width: 0;
+
+$sidebar-nav-color: #2a5164;
+$sidebar-icon-color: #c3cbd3;
+
+$pill-link-active: $primary;
+
+$border-color: #EFEFEF;
 $table-headers-color: #F3F4F6;
 $table-border-color: #EFEFEF;
 $table-hover-bg: #f1f7fa;
-$border-color: #EFEFEF;
-$card-cap-bg: #fff;
-$new-entries-bg: #fffee9;
-$btn-focus-width: 0;
-$pill-link-active: $primary;
+
 $header-border-color: #d5dfe9;
-$sidebar-nav-color: #2a5164;
-$sidebar-icon-color: #c3cbd3;
+
+$card-cap-bg: #fff;
 $card-shadow-color: #cdd8df;
-$control-action-icon-color: #ccd2df;
+
 $paginator-button-color: #9ea7ac;
 
+$new-entries-bg: #fffee9;
+
+$control-action-icon-color: #ccd2df;
 
 @import "syntaxhighlight";
 @import "node_modules/bootstrap/scss/bootstrap";
