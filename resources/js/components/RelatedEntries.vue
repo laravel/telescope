@@ -107,7 +107,7 @@
         </ul>
         <div>
             <!-- Related Exceptions -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='exceptions'">
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='exceptions' && exceptions.length">
                 <thead>
                 <tr>
                     <th>Message</th>
@@ -132,7 +132,7 @@
 
 
             <!-- Related Logs -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='logs'">
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='logs' && logs.length">
                 <thead>
                 <tr>
                     <th>Message</th>
@@ -157,7 +157,7 @@
 
 
             <!-- Related Queries -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='queries'">
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='queries' && queries.length">
                 <thead>
                 <tr>
                     <th>Query</th>
@@ -184,7 +184,7 @@
 
 
             <!-- Related Events -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='events'">
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='events' && events.length">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -211,7 +211,7 @@
 
 
             <!-- Related Cache -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='cache'">
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='cache' && cache.length">
                 <thead>
                 <tr>
                     <th>Key</th>
@@ -238,7 +238,7 @@
 
 
             <!-- Related Redis Commands -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='redis'">
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='redis' && redis.length">
                 <thead>
                 <tr>
                     <th>Command</th>
@@ -265,7 +265,7 @@
 
 
             <!-- Related Model Actions -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='models'">
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='models' && models.length">
                 <thead>
                 <tr>
                     <th>Model</th>

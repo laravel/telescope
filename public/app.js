@@ -77820,8 +77820,9 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.currentTab == "exceptions",
-                  expression: "currentTab=='exceptions'"
+                  value:
+                    _vm.currentTab == "exceptions" && _vm.exceptions.length,
+                  expression: "currentTab=='exceptions' && exceptions.length"
                 }
               ],
               staticClass: "table table-hover table-sm mb-0"
@@ -77888,8 +77889,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.currentTab == "logs",
-                  expression: "currentTab=='logs'"
+                  value: _vm.currentTab == "logs" && _vm.logs.length,
+                  expression: "currentTab=='logs' && logs.length"
                 }
               ],
               staticClass: "table table-hover table-sm mb-0"
@@ -77956,8 +77957,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.currentTab == "queries",
-                  expression: "currentTab=='queries'"
+                  value: _vm.currentTab == "queries" && _vm.queries.length,
+                  expression: "currentTab=='queries' && queries.length"
                 }
               ],
               staticClass: "table table-hover table-sm mb-0"
@@ -78028,8 +78029,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.currentTab == "events",
-                  expression: "currentTab=='events'"
+                  value: _vm.currentTab == "events" && _vm.events.length,
+                  expression: "currentTab=='events' && events.length"
                 }
               ],
               staticClass: "table table-hover table-sm mb-0"
@@ -78100,8 +78101,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.currentTab == "cache",
-                  expression: "currentTab=='cache'"
+                  value: _vm.currentTab == "cache" && _vm.cache.length,
+                  expression: "currentTab=='cache' && cache.length"
                 }
               ],
               staticClass: "table table-hover table-sm mb-0"
@@ -78172,8 +78173,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.currentTab == "redis",
-                  expression: "currentTab=='redis'"
+                  value: _vm.currentTab == "redis" && _vm.redis.length,
+                  expression: "currentTab=='redis' && redis.length"
                 }
               ],
               staticClass: "table table-hover table-sm mb-0"
@@ -78244,8 +78245,8 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm.currentTab == "models",
-                  expression: "currentTab=='models'"
+                  value: _vm.currentTab == "models" && _vm.models.length,
+                  expression: "currentTab=='models' && models.length"
                 }
               ],
               staticClass: "table table-hover table-sm mb-0"
