@@ -71,20 +71,18 @@
 
         <div v-if="ready && entries.length > 0" class="bg-dark px-3 pt-3">
             <div v-for="entry in entries" :key="entry.id" class="mb-4">
-                <div class="entryPointDescription" v-if="entry.content.entry_point_type == 'request'">
-                    <router-link :to="{name:'request-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action">
+                <div class="entryPointDescription d-flex justify-content-between align-items-center">
+                    <router-link :to="{name:'request-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'request'">
                         Request: {{entry.content.entry_point_description}}
                     </router-link>
-                </div>
-                <div class="entryPointDescription" v-if="entry.content.entry_point_type == 'job'">
-                    <router-link :to="{name:'job-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action">
+                    <router-link :to="{name:'job-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'job'">
                         Job: {{entry.content.entry_point_description}}
                     </router-link>
-                </div>
-                <div class="entryPointDescription" v-if="entry.content.entry_point_type == 'command'">
-                    <router-link :to="{name:'command-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action">
+                    <router-link :to="{name:'command-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'command'">
                         Command: {{entry.content.entry_point_description}}
                     </router-link>
+
+                    <span class="text-info">{{timeAgo(entry.created_at)}}</span>
                 </div>
 
 
@@ -106,6 +104,7 @@
     .entryPointDescription{
         background: black;
         padding-left: 5px;
+        padding-right: 5px;
     }
 
     .entryPointDescription a{
