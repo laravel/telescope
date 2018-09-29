@@ -10,7 +10,7 @@
                 entries: [],
                 ready: false,
                 newEntriesTimeout: null,
-                newEntriesTimeoutInSeconds: 5000,
+                newEntriesTimeoutInSeconds: 2000,
             };
         },
 

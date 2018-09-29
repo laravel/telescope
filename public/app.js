@@ -62085,7 +62085,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             entries: [],
             ready: false,
             newEntriesTimeout: null,
-            newEntriesTimeoutInSeconds: 5000
+            newEntriesTimeoutInSeconds: 2000
         };
     },
 
