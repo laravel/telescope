@@ -62060,7 +62060,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\npre.sf-dump, pre.sf-dump .sf-dump-default {\n    background: none !important;\n}\npre.sf-dump{\n    padding-left: 0 !important;\n}\n.entryPointDescription{\n    background: black;\n    padding-left: 5px;\n    padding-right: 5px;\n}\n.entryPointDescription a{\n    font: 12px Menlo, Monaco, Consolas, monospace;\n    color: white;\n    text-decoration: underline;\n}\n", ""]);
+exports.push([module.i, "\npre.sf-dump, pre.sf-dump .sf-dump-default {\n    background: none !important;\n}\npre.sf-dump {\n    padding-left: 0 !important;\n}\n.entryPointDescription {\n    background: black;\n    padding-left: 5px;\n    padding-right: 5px;\n}\n.entryPointDescription a {\n    font: 12px Menlo, Monaco, Consolas, monospace;\n    color: white;\n    text-decoration: underline;\n}\n", ""]);
 
 // exports
 
@@ -63065,91 +63065,106 @@ var render = function() {
       ? _c(
           "div",
           { staticClass: "bg-dark px-3 pt-3" },
-          _vm._l(_vm.entries, function(entry) {
-            return _c("div", { key: entry.id, staticClass: "mb-4" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "entryPointDescription d-flex justify-content-between align-items-center"
-                },
-                [
-                  entry.content.entry_point_type == "request"
-                    ? _c(
-                        "router-link",
-                        {
-                          staticClass: "control-action",
-                          attrs: {
-                            to: {
-                              name: "request-preview",
-                              params: { id: entry.content.entry_point_uuid }
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    Request: " +
-                              _vm._s(entry.content.entry_point_description) +
-                              "\n                "
+          [
+            _c(
+              "transition-group",
+              { attrs: { tag: "div", name: "list" } },
+              _vm._l(_vm.entries, function(entry) {
+                return _c("div", { key: entry.id, staticClass: "mb-4" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "entryPointDescription d-flex justify-content-between align-items-center"
+                    },
+                    [
+                      entry.content.entry_point_type == "request"
+                        ? _c(
+                            "router-link",
+                            {
+                              staticClass: "control-action",
+                              attrs: {
+                                to: {
+                                  name: "request-preview",
+                                  params: { id: entry.content.entry_point_uuid }
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        Request: " +
+                                  _vm._s(
+                                    entry.content.entry_point_description
+                                  ) +
+                                  "\n                    "
+                              )
+                            ]
                           )
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  entry.content.entry_point_type == "job"
-                    ? _c(
-                        "router-link",
-                        {
-                          staticClass: "control-action",
-                          attrs: {
-                            to: {
-                              name: "job-preview",
-                              params: { id: entry.content.entry_point_uuid }
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    Job: " +
-                              _vm._s(entry.content.entry_point_description) +
-                              "\n                "
+                        : _vm._e(),
+                      _vm._v(" "),
+                      entry.content.entry_point_type == "job"
+                        ? _c(
+                            "router-link",
+                            {
+                              staticClass: "control-action",
+                              attrs: {
+                                to: {
+                                  name: "job-preview",
+                                  params: { id: entry.content.entry_point_uuid }
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        Job: " +
+                                  _vm._s(
+                                    entry.content.entry_point_description
+                                  ) +
+                                  "\n                    "
+                              )
+                            ]
                           )
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  entry.content.entry_point_type == "command"
-                    ? _c(
-                        "router-link",
-                        {
-                          staticClass: "control-action",
-                          attrs: {
-                            to: {
-                              name: "command-preview",
-                              params: { id: entry.content.entry_point_uuid }
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                    Command: " +
-                              _vm._s(entry.content.entry_point_description) +
-                              "\n                "
+                        : _vm._e(),
+                      _vm._v(" "),
+                      entry.content.entry_point_type == "command"
+                        ? _c(
+                            "router-link",
+                            {
+                              staticClass: "control-action",
+                              attrs: {
+                                to: {
+                                  name: "command-preview",
+                                  params: { id: entry.content.entry_point_uuid }
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        Command: " +
+                                  _vm._s(
+                                    entry.content.entry_point_description
+                                  ) +
+                                  "\n                    "
+                              )
+                            ]
                           )
-                        ]
-                      )
-                    : _vm._e(),
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text-info" }, [
+                        _vm._v(_vm._s(_vm.timeAgo(entry.created_at)))
+                      ])
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _c("span", { staticClass: "text-info" }, [
-                    _vm._v(_vm._s(_vm.timeAgo(entry.created_at)))
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("div", { domProps: { innerHTML: _vm._s(entry.content.dump) } })
-            ])
-          })
+                  _c("div", {
+                    domProps: { innerHTML: _vm._s(entry.content.dump) }
+                  })
+                ])
+              })
+            )
+          ],
+          1
         )
       : _vm._e()
   ])

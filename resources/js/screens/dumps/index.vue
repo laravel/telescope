@@ -70,24 +70,26 @@
         </div>
 
         <div v-if="ready && entries.length > 0" class="bg-dark px-3 pt-3">
-            <div v-for="entry in entries" :key="entry.id" class="mb-4">
-                <div class="entryPointDescription d-flex justify-content-between align-items-center">
-                    <router-link :to="{name:'request-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'request'">
-                        Request: {{entry.content.entry_point_description}}
-                    </router-link>
-                    <router-link :to="{name:'job-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'job'">
-                        Job: {{entry.content.entry_point_description}}
-                    </router-link>
-                    <router-link :to="{name:'command-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'command'">
-                        Command: {{entry.content.entry_point_description}}
-                    </router-link>
+            <transition-group tag="div" name="list">
+                <div v-for="entry in entries" :key="entry.id" class="mb-4">
+                    <div class="entryPointDescription d-flex justify-content-between align-items-center">
+                        <router-link :to="{name:'request-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'request'">
+                            Request: {{entry.content.entry_point_description}}
+                        </router-link>
+                        <router-link :to="{name:'job-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'job'">
+                            Job: {{entry.content.entry_point_description}}
+                        </router-link>
+                        <router-link :to="{name:'command-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'command'">
+                            Command: {{entry.content.entry_point_description}}
+                        </router-link>
 
-                    <span class="text-info">{{timeAgo(entry.created_at)}}</span>
+                        <span class="text-info">{{timeAgo(entry.created_at)}}</span>
+                    </div>
+
+
+                    <div v-html="entry.content.dump"></div>
                 </div>
-
-
-                <div v-html="entry.content.dump"></div>
-            </div>
+            </transition-group>
         </div>
     </div>
 </template>
@@ -97,17 +99,17 @@
         background: none !important;
     }
 
-    pre.sf-dump{
+    pre.sf-dump {
         padding-left: 0 !important;
     }
 
-    .entryPointDescription{
+    .entryPointDescription {
         background: black;
         padding-left: 5px;
         padding-right: 5px;
     }
 
-    .entryPointDescription a{
+    .entryPointDescription a {
         font: 12px Menlo, Monaco, Consolas, monospace;
         color: white;
         text-decoration: underline;
