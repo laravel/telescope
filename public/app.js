@@ -78511,8 +78511,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
         this.tag = this.$route.query.tag || '';
 
-        this.loadEntries(function (response) {
-            _this.entries = response.data.entries;
+        this.loadEntries(function (entries) {
+            _this.entries = entries;
 
             _this.newEntriesTimeout = setTimeout(function () {
                 _this.checkForNewEntries();
@@ -78551,8 +78551,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
             this.ready = false;
 
-            this.loadEntries(function (response) {
-                _this2.entries = response.data.entries;
+            this.loadEntries(function (entries) {
+                _this2.entries = entries;
 
                 _this2.newEntriesTimeout = setTimeout(function () {
                     _this2.checkForNewEntries();
@@ -78579,7 +78579,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 }
 
                 if (__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.isFunction(after)) {
-                    after(response);
+                    after(__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.uniqBy(response.data.entries, 'family_hash'));
                 }
             });
         },
@@ -78619,8 +78619,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
                 _this5.$router.push({ query: __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.assign({}, _this5.$route.query, { tag: _this5.tag }) });
 
-                _this5.loadEntries(function (response) {
-                    _this5.entries = response.data.entries;
+                _this5.loadEntries(function (entries) {
+                    _this5.entries = entries;
 
                     _this5.newEntriesTimeout = setTimeout(function () {
                         _this5.checkForNewEntries();
@@ -78638,10 +78638,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
             this.loadingMoreEntries = true;
 
-            this.loadEntries(function (response) {
+            this.loadEntries(function (entries) {
                 var _entries;
 
-                (_entries = _this6.entries).push.apply(_entries, _toConsumableArray(response.data.entries));
+                (_entries = _this6.entries).push.apply(_entries, _toConsumableArray(entries));
 
                 _this6.loadingMoreEntries = false;
             });
@@ -78665,8 +78665,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
             clearTimeout(this.newEntriesTimeout);
 
-            this.loadEntries(function (response) {
-                _this7.entries = response.data.entries;
+            this.loadEntries(function (entries) {
+                _this7.entries = entries;
 
                 _this7.loadingNewEntries = false;
 
