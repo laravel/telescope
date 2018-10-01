@@ -28,13 +28,24 @@ class QueryWatcher extends Watcher
     public function recordQuery(QueryExecuted $event)
     {
         $time = $event->time;
-
+        
         Telescope::recordQuery(IncomingEntry::make([
             'connection' => $event->connectionName,
             'bindings' => $event->bindings,
             'sql' => $event->sql,
             'time' => number_format($time, 2),
             'slow' => isset($this->options['slow']) && $time >= $this->options['slow'],
-        ]));
+        ])->tags($this->tags($event)));
+    }
+
+    /**
+     * Extract tags from the given event.
+     *
+     * @param  \Illuminate\Log\Events\MessageLogged  $event
+     * @return array
+     */
+    private function tags($event)
+    {
+        return isset($this->options['slow']) && $event->time >= $this->options['slow'] ? ['slow'] : [];
     }
 }
