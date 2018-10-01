@@ -29,6 +29,13 @@ class IncomingEntry
     public $type;
 
     /**
+     * The entry's family hash.
+     *
+     * @var string|null
+     */
+    public $familyHash;
+
+    /**
      * The currently authenticated user, if applicable.
      *
      * @var mixed
@@ -202,13 +209,26 @@ class IncomingEntry
     }
 
     /**
-     * Calculate the family look-up hash for the incoming entry.
+     * Get the family look-up hash for the incoming entry.
      *
-     * @return string
+     * @return string|null
      */
     public function familyHash()
     {
-        return;
+        return $this->familyHash;
+    }
+
+    /**
+     * Set the family hash for the incoming entry.
+     *
+     * @param  string  $familyHash
+     * @return $this
+     */
+    public function withFamilyHash($familyHash)
+    {
+        $this->familyHash = $familyHash;
+
+        return $this;
     }
 
     /**

@@ -2,7 +2,11 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Queue\Queue;
+use Illuminate\Support\Str;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\EntryUpdate;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Queue\Events\JobFailed;
@@ -20,8 +24,34 @@ class JobWatcher extends Watcher
      */
     public function register($app)
     {
+        Queue::createPayloadUsing(function ($connection, $queue, $payload) {
+            return ['telescope_uuid' => $this->recordJob($connection, $queue, $payload)->uuid];
+        });
+
         $app['events']->listen(JobProcessed::class, [$this, 'recordProcessedJob']);
         $app['events']->listen(JobFailed::class, [$this, 'recordFailedJob']);
+    }
+
+    /**
+     * Record a job being created.
+     *
+     * @param  string  $connection
+     * @param  string $queue
+     * @param  array  $payload
+     * @return \Laravel\Telescope\IncomingEntry
+     */
+    public function recordJob($connection, $queue, array $payload)
+    {
+        $content = array_merge([
+            'status' => 'pending'
+        ], $this->defaultJobData($connection, $queue, $payload, $this->data($payload)));
+
+        Telescope::recordJob(
+            $entry = IncomingEntry::make($content)
+                        ->tags($this->tags($payload))
+        );
+
+        return $entry;
     }
 
     /**
@@ -32,13 +62,15 @@ class JobWatcher extends Watcher
      */
     public function recordProcessedJob(JobProcessed $event)
     {
-        $content = array_merge(['status' => 'processed'],
-            $this->defaultJobData($event, $this->payload($event->job))
-        );
+        $uuid = $event->job->payload()['telescope_uuid'] ?? null;
 
-        Telescope::recordJob(
-            IncomingEntry::make($content)->tags($this->tags($event->job))
-        );
+        if (! $uuid) {
+            return;
+        }
+
+        Telescope::recordUpdate(EntryUpdate::make(
+            $uuid, EntryType::JOB, ['status' => 'processed']
+        ));
     }
 
     /**
@@ -49,72 +81,77 @@ class JobWatcher extends Watcher
      */
     public function recordFailedJob(JobFailed $event)
     {
-        $content = array_merge([
-            'status' => 'failed',
-            'exception' => [
-                'message' => $event->exception->getMessage(),
-                'trace' => $event->exception->getTrace(),
-                'line' => $event->exception->getLine(),
-                'line_preview' => ExceptionContext::get($event->exception),
-            ]
-        ], $this->defaultJobData($event, $this->payload($event->job)));
+        $uuid = $event->job->payload()['telescope_uuid'] ?? null;
 
-        Telescope::recordJob(
-            IncomingEntry::make($content)->tags(array_merge($this->tags($event->job), ['failed']))
-        );
+        if (! $uuid) {
+            return;
+        }
+
+        Telescope::recordUpdate(EntryUpdate::make(
+            $uuid, EntryType::JOB, [
+                'status' => 'failed',
+                'exception' => [
+                    'message' => $event->exception->getMessage(),
+                    'trace' => $event->exception->getTrace(),
+                    'line' => $event->exception->getLine(),
+                    'line_preview' => ExceptionContext::get($event->exception),
+                ],
+            ]
+        ));
     }
 
     /**
      * Get the default entry data for the given job.
      *
-     * @param  mixed  $event
+     * @param  string  $connection
+     * @param  string  $queue
      * @param  array  $payload
+     * @param  array  $data
      * @return array
      */
-    protected function defaultJobData($event, $payload)
+    protected function defaultJobData($connection, $queue, array $payload, array $data)
     {
         return [
-            'id' => $event->job->getJobId(),
-            'connection' => $event->job->getConnectionName(),
-            'queue' => $event->job->getQueue(),
-            'name' => $event->job->payload()['displayName'],
-            'tries' => $event->job->payload()['maxTries'],
-            'timeout' => $event->job->payload()['timeout'],
-            'data' => $payload,
+            'connection' => $connection,
+            'queue' => $queue,
+            'name' => $payload['displayName'],
+            'tries' => $payload['maxTries'],
+            'timeout' => $payload['timeout'],
+            'data' => $data,
         ];
     }
 
     /**
-     * Extract the payload from the job.
+     * Extract the job "data" from the job payload.
      *
-     * @param  \Illuminate\Contracts\Queue\Job  $job
+     * @param  array  $payload
      * @return array
      */
-    protected function payload($job)
+    protected function data(array $payload)
     {
-        if (! isset($job->payload()['data']['command'])) {
-            return $job->payload()['data'];
+        if (! isset($payload['data']['command'])) {
+            return $payload['data'];
         }
 
         return ExtractProperties::from(
-            unserialize($job->payload()['data']['command'])
+            $payload['data']['command']
         );
     }
 
     /**
-     * Extract the tags from the job.
+     * Extract the tags from the job payload.
      *
-     * @param  \Illuminate\Contracts\Queue\Job  $job
+     * @param  array  $payload
      * @return array
      */
-    protected function tags($job)
+    protected function tags(array $payload)
     {
-        if (! isset($job->payload()['data']['command'])) {
+        if (! isset($payload['data']['command'])) {
             return [];
         }
 
         return ExtractTags::fromJob(
-            unserialize($job->payload()['data']['command'])
+            $payload['data']['command']
         );
     }
 }

@@ -166,6 +166,29 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     }
 
     /**
+     * Store the given entry updates.
+     *
+     * @param  \Illuminate\Support\Collection[\Laravel\Telescope\EntryUpdate]  $updates
+     * @return void
+     */
+    public function update(Collection $updates)
+    {
+        foreach ($updates as $update) {
+            $entry = EntryModel::where('uuid', $update->uuid)
+                            ->where('type', $update->type)
+                            ->first();
+
+            if (! $entry) {
+                continue;
+            }
+
+            $entry->forceFill([
+                'content' => array_merge($entry->content, $update->changes)
+            ])->save();
+        }
+    }
+
+    /**
      * Determine if any of the given tags are currently being monitored.
      *
      * @param  array  $tags

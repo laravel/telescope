@@ -15,7 +15,7 @@ class CreateTelescopeEntriesTable extends Migration
     {
         Schema::create('telescope_entries', function (Blueprint $table) {
             $table->bigIncrements('sequence');
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid');
             $table->uuid('batch_id');
             $table->string('family_hash')->nullable()->index();
             $table->boolean('should_display_on_index')->default(true);
@@ -23,6 +23,7 @@ class CreateTelescopeEntriesTable extends Migration
             $table->json('content');
             $table->dateTime('created_at')->nullable();
 
+            $table->unique(['uuid', 'type']);
             $table->index('batch_id');
             $table->index(['type', 'should_display_on_index']);
         });

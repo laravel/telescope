@@ -35,7 +35,14 @@ class Telescope
      *
      * @var array
      */
-    public static $entriesQueue;
+    public static $entriesQueue = [];
+
+    /**
+     * The list of queued entry updates.
+     *
+     * @var array
+     */
+    public static $updatesQueue = [];
 
     /**
      * The list of hidden request parameters.
@@ -158,6 +165,19 @@ class Telescope
     {
         if (static::$shouldRecord) {
             static::$entriesQueue[] = $entry->type($type);
+        }
+    }
+
+    /**
+     * Record the given entry update.
+     *
+     * @param  \Laravel\Telescope\EntryUpdate  $update
+     * @return void
+     */
+    public static function recordUpdate(EntryUpdate $update)
+    {
+        if (static::$shouldRecord) {
+            static::$updatesQueue[] = $update;
         }
     }
 
@@ -357,6 +377,7 @@ class Telescope
 
         try {
             $storage->store(static::collectEntries(Str::orderedUuid()));
+            $storage->update(collect(static::$updatesQueue));
 
             if ($storage instanceof TerminableRepository) {
                 $storage->terminate();
@@ -366,6 +387,7 @@ class Telescope
         }
 
         static::$entriesQueue = [];
+        static::$updatesQueue = [];
     }
 
     /**

@@ -36,9 +36,9 @@ class EntryResult implements JsonSerializable
     public $type;
 
     /**
-     * The entry's Family.
+     * The entry's family hash.
      *
-     * @var string
+     * @var string|null
      */
     public $familyHash;
 
