@@ -68737,7 +68737,25 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(slotProps.entry.content.time) + "ms")
+                slotProps.entry.content.slow
+                  ? _c(
+                      "span",
+                      { staticClass: "badge badge-danger font-weight-light" },
+                      [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(slotProps.entry.content.time) +
+                            "ms\n            "
+                        )
+                      ]
+                    )
+                  : _c("span", [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(slotProps.entry.content.time) +
+                          "ms\n            "
+                      )
+                    ])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [

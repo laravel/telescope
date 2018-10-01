@@ -27,11 +27,14 @@ class QueryWatcher extends Watcher
      */
     public function recordQuery(QueryExecuted $event)
     {
+        $time = $event->time;
+
         Telescope::recordQuery(IncomingEntry::make([
             'connection' => $event->connectionName,
             'bindings' => $event->bindings,
             'sql' => $event->sql,
-            'time' => number_format($event->time, 2),
+            'time' => number_format($time, 2),
+            'slow' => isset($this->options['slow']) && $time >= $this->options['slow'],
         ]));
     }
 }

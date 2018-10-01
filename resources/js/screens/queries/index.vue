@@ -15,7 +15,15 @@
         <template slot="row" slot-scope="slotProps">
             <td :title="slotProps.entry.content.sql">{{truncate(slotProps.entry.content.sql, 80)}}</td>
 
-            <td class="table-fit">{{slotProps.entry.content.time}}ms</td>
+            <td class="table-fit">
+                <span class="badge badge-danger font-weight-light" v-if="slotProps.entry.content.slow">
+                    {{slotProps.entry.content.time}}ms
+                </span>
+
+                <span v-else>
+                    {{slotProps.entry.content.time}}ms
+                </span>
+            </td>
 
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
 

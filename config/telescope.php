@@ -22,7 +22,10 @@ return [
         Watchers\MailWatcher::class,
         Watchers\ModelWatcher::class,
         Watchers\NotificationWatcher::class,
-        Watchers\QueryWatcher::class,
+        Watchers\QueryWatcher::class => [
+            'enabled' => true,
+            'slow' => 1,
+        ],
         Watchers\RedisWatcher::class,
         Watchers\RequestWatcher::class,
         Watchers\ScheduleWatcher::class,
