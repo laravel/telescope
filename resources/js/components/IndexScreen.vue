@@ -40,8 +40,8 @@
 
             this.tag = this.$route.query.tag || '';
 
-            this.loadEntries((response) => {
-                this.entries = response.data.entries;
+            this.loadEntries((entries) => {
+                this.entries = entries;
 
                 this.newEntriesTimeout = setTimeout(() => {
                     this.checkForNewEntries();
@@ -78,8 +78,8 @@
 
                 this.ready = false;
 
-                this.loadEntries((response) => {
-                    this.entries = response.data.entries;
+                this.loadEntries((entries) => {
+                    this.entries = entries;
 
                     this.newEntriesTimeout = setTimeout(() => {
                         this.checkForNewEntries();
@@ -105,7 +105,7 @@
                     }
 
                     if (_.isFunction(after)) {
-                        after(response);
+                        after(_.uniqBy(response.data.entries, 'family_hash'));
                     }
                 })
             },
@@ -142,8 +142,8 @@
 
                     this.$router.push({query: _.assign({}, this.$route.query, {tag: this.tag})});
 
-                    this.loadEntries((response) => {
-                        this.entries = response.data.entries;
+                    this.loadEntries((entries) => {
+                        this.entries = entries;
 
                         this.newEntriesTimeout = setTimeout(() => {
                             this.checkForNewEntries();
@@ -159,8 +159,8 @@
             loadOlderEntries(){
                 this.loadingMoreEntries = true;
 
-                this.loadEntries((response) => {
-                    this.entries.push(...response.data.entries);
+                this.loadEntries((entries) => {
+                    this.entries.push(...entries);
 
                     this.loadingMoreEntries = false;
                 });
@@ -182,8 +182,8 @@
 
                 clearTimeout(this.newEntriesTimeout);
 
-                this.loadEntries((response) => {
-                    this.entries = response.data.entries;
+                this.loadEntries((entries) => {
+                    this.entries = entries;
 
                     this.loadingNewEntries = false;
 
