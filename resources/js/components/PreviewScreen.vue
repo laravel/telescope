@@ -92,59 +92,61 @@
             </div>
 
 
-            <table v-if="ready && entry" class="table mb-0 bg-secondary table-borderless">
-                <tbody>
-                <tr>
-                    <td class="table-fit font-weight-bold">Time</td>
-                    <td>
-                        {{localTime(entry.created_at)}} ({{timeAgo(entry.created_at)}})
-                    </td>
-                </tr>
+            <div class="table-responsive">
+                <table v-if="ready && entry" class="table mb-0 bg-secondary table-borderless">
+                    <tbody>
+                    <tr>
+                        <td class="table-fit font-weight-bold">Time</td>
+                        <td>
+                            {{localTime(entry.created_at)}} ({{timeAgo(entry.created_at)}})
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td class="table-fit font-weight-bold">Hostname</td>
-                    <td>
-                        {{entry.content.hostname}}
-                    </td>
-                </tr>
+                    <tr>
+                        <td class="table-fit font-weight-bold">Hostname</td>
+                        <td>
+                            {{entry.content.hostname}}
+                        </td>
+                    </tr>
 
-                <slot name="table-parameters" :entry="entry"></slot>
+                    <slot name="table-parameters" :entry="entry"></slot>
 
-                <tr v-if="!entryPoint && job">
-                    <td class="table-fit font-weight-bold">Job</td>
-                    <td>
-                        <router-link :to="{name:'job-preview', params:{id: job.id}}" class="control-action">
-                            View Job
-                        </router-link>
-                    </td>
-                </tr>
+                    <tr v-if="!entryPoint && job">
+                        <td class="table-fit font-weight-bold">Job</td>
+                        <td>
+                            <router-link :to="{name:'job-preview', params:{id: job.id}}" class="control-action">
+                                View Job
+                            </router-link>
+                        </td>
+                    </tr>
 
-                <tr v-if="!entryPoint && request">
-                    <td class="table-fit font-weight-bold">Request</td>
-                    <td>
-                        <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action">
-                            View Request
-                        </router-link>
-                    </td>
-                </tr>
+                    <tr v-if="!entryPoint && request">
+                        <td class="table-fit font-weight-bold">Request</td>
+                        <td>
+                            <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action">
+                                View Request
+                            </router-link>
+                        </td>
+                    </tr>
 
-                <tr v-if="!entryPoint && command">
-                    <td class="table-fit font-weight-bold">Command</td>
-                    <td>
-                        <router-link :to="{name:'command-preview', params:{id: command.id}}" class="control-action">
-                            View Command
-                        </router-link>
-                    </td>
-                </tr>
+                    <tr v-if="!entryPoint && command">
+                        <td class="table-fit font-weight-bold">Command</td>
+                        <td>
+                            <router-link :to="{name:'command-preview', params:{id: command.id}}" class="control-action">
+                                View Command
+                            </router-link>
+                        </td>
+                    </tr>
 
-                <tr v-if="entry.tags.length">
-                    <td class="table-fit font-weight-bold">Tags</td>
-                    <td>
-                        <span class="badge badge-info mr-1 font-weight-light" v-for="tag in entry.tags">{{tag}}</span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    <tr v-if="entry.tags.length">
+                        <td class="table-fit font-weight-bold">Tags</td>
+                        <td>
+                            <span class="badge badge-info mr-1 font-weight-light" v-for="tag in entry.tags">{{tag}}</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
 
             <slot v-if="ready && entry" name="below-table" :entry="entry"></slot>

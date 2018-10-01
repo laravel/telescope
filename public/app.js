@@ -79164,181 +79164,183 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _vm.ready && _vm.entry
-            ? _c(
-                "table",
-                { staticClass: "table mb-0 bg-secondary table-borderless" },
-                [
-                  _c(
-                    "tbody",
-                    [
-                      _c("tr", [
-                        _c(
-                          "td",
-                          { staticClass: "table-fit font-weight-bold" },
-                          [_vm._v("Time")]
-                        ),
+          _c("div", { staticClass: "table-responsive" }, [
+            _vm.ready && _vm.entry
+              ? _c(
+                  "table",
+                  { staticClass: "table mb-0 bg-secondary table-borderless" },
+                  [
+                    _c(
+                      "tbody",
+                      [
+                        _c("tr", [
+                          _c(
+                            "td",
+                            { staticClass: "table-fit font-weight-bold" },
+                            [_vm._v("Time")]
+                          ),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(_vm.localTime(_vm.entry.created_at)) +
+                                " (" +
+                                _vm._s(_vm.timeAgo(_vm.entry.created_at)) +
+                                ")\n                    "
+                            )
+                          ])
+                        ]),
                         _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(_vm.localTime(_vm.entry.created_at)) +
-                              " (" +
-                              _vm._s(_vm.timeAgo(_vm.entry.created_at)) +
-                              ")\n                "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c(
-                          "td",
-                          { staticClass: "table-fit font-weight-bold" },
-                          [_vm._v("Hostname")]
-                        ),
+                        _c("tr", [
+                          _c(
+                            "td",
+                            { staticClass: "table-fit font-weight-bold" },
+                            [_vm._v("Hostname")]
+                          ),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(_vm.entry.content.hostname) +
+                                "\n                    "
+                            )
+                          ])
+                        ]),
                         _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(_vm.entry.content.hostname) +
-                              "\n                "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _vm._t("table-parameters", null, { entry: _vm.entry }),
-                      _vm._v(" "),
-                      !_vm.entryPoint && _vm.job
-                        ? _c("tr", [
-                            _c(
-                              "td",
-                              { staticClass: "table-fit font-weight-bold" },
-                              [_vm._v("Job")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              [
-                                _c(
-                                  "router-link",
-                                  {
-                                    staticClass: "control-action",
-                                    attrs: {
-                                      to: {
-                                        name: "job-preview",
-                                        params: { id: _vm.job.id }
+                        _vm._t("table-parameters", null, { entry: _vm.entry }),
+                        _vm._v(" "),
+                        !_vm.entryPoint && _vm.job
+                          ? _c("tr", [
+                              _c(
+                                "td",
+                                { staticClass: "table-fit font-weight-bold" },
+                                [_vm._v("Job")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass: "control-action",
+                                      attrs: {
+                                        to: {
+                                          name: "job-preview",
+                                          params: { id: _vm.job.id }
+                                        }
                                       }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                        View Job\n                    "
-                                    )
-                                  ]
-                                )
-                              ],
-                              1
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      !_vm.entryPoint && _vm.request
-                        ? _c("tr", [
-                            _c(
-                              "td",
-                              { staticClass: "table-fit font-weight-bold" },
-                              [_vm._v("Request")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              [
-                                _c(
-                                  "router-link",
-                                  {
-                                    staticClass: "control-action",
-                                    attrs: {
-                                      to: {
-                                        name: "request-preview",
-                                        params: { id: _vm.request.id }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                            View Job\n                        "
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.entryPoint && _vm.request
+                          ? _c("tr", [
+                              _c(
+                                "td",
+                                { staticClass: "table-fit font-weight-bold" },
+                                [_vm._v("Request")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass: "control-action",
+                                      attrs: {
+                                        to: {
+                                          name: "request-preview",
+                                          params: { id: _vm.request.id }
+                                        }
                                       }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                        View Request\n                    "
-                                    )
-                                  ]
-                                )
-                              ],
-                              1
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      !_vm.entryPoint && _vm.command
-                        ? _c("tr", [
-                            _c(
-                              "td",
-                              { staticClass: "table-fit font-weight-bold" },
-                              [_vm._v("Command")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              [
-                                _c(
-                                  "router-link",
-                                  {
-                                    staticClass: "control-action",
-                                    attrs: {
-                                      to: {
-                                        name: "command-preview",
-                                        params: { id: _vm.command.id }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                            View Request\n                        "
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.entryPoint && _vm.command
+                          ? _c("tr", [
+                              _c(
+                                "td",
+                                { staticClass: "table-fit font-weight-bold" },
+                                [_vm._v("Command")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass: "control-action",
+                                      attrs: {
+                                        to: {
+                                          name: "command-preview",
+                                          params: { id: _vm.command.id }
+                                        }
                                       }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                        View Command\n                    "
-                                    )
-                                  ]
-                                )
-                              ],
-                              1
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.entry.tags.length
-                        ? _c("tr", [
-                            _c(
-                              "td",
-                              { staticClass: "table-fit font-weight-bold" },
-                              [_vm._v("Tags")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              _vm._l(_vm.entry.tags, function(tag) {
-                                return _c(
-                                  "span",
-                                  {
-                                    staticClass:
-                                      "badge badge-info mr-1 font-weight-light"
-                                  },
-                                  [_vm._v(_vm._s(tag))]
-                                )
-                              })
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    2
-                  )
-                ]
-              )
-            : _vm._e(),
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                            View Command\n                        "
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.entry.tags.length
+                          ? _c("tr", [
+                              _c(
+                                "td",
+                                { staticClass: "table-fit font-weight-bold" },
+                                [_vm._v("Tags")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                _vm._l(_vm.entry.tags, function(tag) {
+                                  return _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "badge badge-info mr-1 font-weight-light"
+                                    },
+                                    [_vm._v(_vm._s(tag))]
+                                  )
+                                })
+                              )
+                            ])
+                          : _vm._e()
+                      ],
+                      2
+                    )
+                  ]
+                )
+              : _vm._e()
+          ]),
           _vm._v(" "),
           _vm.ready && _vm.entry
             ? _vm._t("below-table", null, { entry: _vm.entry })
