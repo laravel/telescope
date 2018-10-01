@@ -39,9 +39,9 @@ class QueryWatcher extends Watcher
     }
 
     /**
-     * Extract tags from the given event.
+     * Get the tags for the query.
      *
-     * @param  \Illuminate\Log\Events\MessageLogged  $event
+     * @param \Illuminate\Database\Events\QueryExecuted  $event
      * @return array
      */
     private function tags($event)
