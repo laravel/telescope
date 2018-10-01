@@ -28,7 +28,7 @@ class QueryWatcher extends Watcher
     public function recordQuery(QueryExecuted $event)
     {
         $time = $event->time;
-        
+
         Telescope::recordQuery(IncomingEntry::make([
             'connection' => $event->connectionName,
             'bindings' => $event->bindings,
