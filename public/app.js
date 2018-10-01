@@ -78579,7 +78579,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 }
 
                 if (__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.isFunction(after)) {
-                    after(__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.uniqBy(response.data.entries, 'family_hash'));
+                    after(__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.uniqBy(response.data.entries, function (entry) {
+                        return entry.family_hash || __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.uniqueId();
+                    }));
                 }
             });
         },

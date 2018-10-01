@@ -105,7 +105,9 @@
                     }
 
                     if (_.isFunction(after)) {
-                        after(_.uniqBy(response.data.entries, 'family_hash'));
+                        after(_.uniqBy(response.data.entries, entry => {
+                            return entry.family_hash || _.uniqueId();
+                        }));
                     }
                 })
             },
