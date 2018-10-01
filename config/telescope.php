@@ -24,7 +24,7 @@ return [
         Watchers\NotificationWatcher::class,
         Watchers\QueryWatcher::class => [
             'enabled' => true,
-            'slow' => 1,
+            'slow' => 100,
         ],
         Watchers\RedisWatcher::class,
         Watchers\RequestWatcher::class,

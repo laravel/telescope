@@ -64667,11 +64667,17 @@ var render = function() {
                     "\n\n                "
                 ),
                 slotProps.entry.content.broadcast
-                  ? _c("span", { staticClass: "badge badge-primary ml-2" }, [
-                      _vm._v(
-                        "\n                    Broadcast\n                "
-                      )
-                    ])
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "badge badge-info font-weight-light ml-2"
+                      },
+                      [
+                        _vm._v(
+                          "\n                    Broadcast\n                "
+                        )
+                      ]
+                    )
                   : _vm._e()
               ])
             ])
@@ -64872,9 +64878,13 @@ var render = function() {
                     "\n\n            "
                 ),
                 slotProps.entry.content.broadcast
-                  ? _c("span", { staticClass: "badge badge-primary ml-2" }, [
-                      _vm._v("\n                Broadcast\n            ")
-                    ])
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "badge badge-info font-weight-light ml-2"
+                      },
+                      [_vm._v("\n                Broadcast\n            ")]
+                    )
                   : _vm._e()
               ]),
               _vm._v(" "),
@@ -69043,7 +69053,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         actionClass: function actionClass(action) {
             if (action == 'created') return 'success';
-            if (action == 'updated') return 'warning';
+            if (action == 'updated') return 'info';
             if (action == 'deleted' || action == 'forceDeleted') return 'danger';
         }
     }
@@ -69074,8 +69084,9 @@ var render = function() {
                 _c(
                   "span",
                   {
+                    staticClass: "badge font-weight-light",
                     class:
-                      "text-" + _vm.actionClass(slotProps.entry.content.action)
+                      "badge-" + _vm.actionClass(slotProps.entry.content.action)
                   },
                   [
                     _vm._v(

@@ -18,7 +18,7 @@
                 <td>
                     {{slotProps.entry.content.name}}
 
-                    <span class="badge badge-primary ml-2" v-if="slotProps.entry.content.broadcast">
+                    <span class="badge badge-info font-weight-light ml-2" v-if="slotProps.entry.content.broadcast">
                         Broadcast
                     </span>
                 </td>
