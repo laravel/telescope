@@ -195,7 +195,14 @@
 
                 <tbody>
                 <tr v-for="entry in events">
-                    <td :title="entry.content.name">{{truncate(entry.content.name, 80)}}</td>
+                    <td :title="entry.content.name">
+                        {{truncate(entry.content.name, 80)}}
+
+                        <span class="badge badge-info font-weight-light ml-2" v-if="entry.content.broadcast">
+                            Broadcast
+                        </span>
+                    </td>
+
                     <td class="table-fit">{{entry.content.listeners.length}}</td>
 
                     <td class="table-fit">
