@@ -147,21 +147,6 @@ class Telescope
     }
 
     /**
-     * Run the given callback while recording is disabled.
-     *
-     * @param  callable  $callback
-     * @return void
-     */
-    public static function withoutRecording(callable $callback)
-    {
-        $shouldRecord = static::$shouldRecord;
-
-        call_user_func($callback);
-
-        static::$shouldRecord = $shouldRecord;
-    }
-
-    /**
      * Record the given entry.
      *
      * @param  string  $type
@@ -370,15 +355,15 @@ class Telescope
         }
 
         try {
+            throw new \Exception('nostore');
+
             $storage->store(static::collectEntries(Str::orderedUuid()));
 
             if ($storage instanceof TerminableRepository) {
                 $storage->terminate();
             }
-        } catch (Exception $e) {
-            static::withoutRecording(function () use ($e) {
-                resolve(ExceptionHandler::class)->report($e);
-            });
+        } catch (\Exception $e) {
+            resolve(ExceptionHandler::class)->report($e);
         }
 
         static::$entriesQueue = [];
