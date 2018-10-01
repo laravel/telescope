@@ -44,7 +44,7 @@ class QueryWatcher extends Watcher
      * @param \Illuminate\Database\Events\QueryExecuted  $event
      * @return array
      */
-    private function tags($event)
+    protected function tags($event)
     {
         return isset($this->options['slow']) && $event->time >= $this->options['slow'] ? ['slow'] : [];
     }
