@@ -64637,8 +64637,15 @@ var render = function() {
                 _vm._v(
                   "\n                " +
                     _vm._s(slotProps.entry.content.name) +
-                    "\n            "
-                )
+                    "\n\n                "
+                ),
+                slotProps.entry.content.broadcast
+                  ? _c("span", { staticClass: "badge badge-primary ml-2" }, [
+                      _vm._v(
+                        "\n                    Broadcast\n                "
+                      )
+                    ])
+                  : _vm._e()
               ])
             ])
           ]

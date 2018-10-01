@@ -17,6 +17,10 @@
                 <td class="table-fit font-weight-bold">Event</td>
                 <td>
                     {{slotProps.entry.content.name}}
+
+                    <span class="badge badge-primary ml-2" v-if="slotProps.entry.content.broadcast">
+                        Broadcast
+                    </span>
                 </td>
             </tr>
         </template>
