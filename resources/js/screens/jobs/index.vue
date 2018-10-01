@@ -8,7 +8,7 @@
             <th scope="col">Job</th>
             <th scope="col">Connection</th>
             <th scope="col">Queue</th>
-            <th scope="col">Status</th>
+            <th scope="col">Processed</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>

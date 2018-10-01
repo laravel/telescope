@@ -64553,7 +64553,7 @@ var render = function() {
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Queue")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Processed")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Happened")]),
         _vm._v(" "),
