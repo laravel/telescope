@@ -14,7 +14,7 @@
 
         <template slot="row" slot-scope="slotProps">
             <td :title="slotProps.entry.content.class" v-if="!$route.query.family_hash">
-                {{truncate(slotProps.entry.content.class, 80)}}<br>
+                {{truncate(slotProps.entry.content.class, 70)}}<br>
                 <small class="text-muted">{{truncate(slotProps.entry.content.message, 100)}}</small>
             </td>
 

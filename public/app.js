@@ -61858,7 +61858,7 @@ var render = function() {
                       _vm._v(
                         "\n            " +
                           _vm._s(
-                            _vm.truncate(slotProps.entry.content.class, 80)
+                            _vm.truncate(slotProps.entry.content.class, 70)
                           )
                       ),
                       _c("br"),
