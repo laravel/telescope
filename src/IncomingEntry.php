@@ -219,19 +219,6 @@ class IncomingEntry
     }
 
     /**
-     * Set the family hash for the incoming entry.
-     *
-     * @param  string  $familyHash
-     * @return $this
-     */
-    public function withFamilyHash($familyHash)
-    {
-        $this->familyHash = $familyHash;
-
-        return $this;
-    }
-
-    /**
      * Get an array representation of the entry for storage.
      *
      * @return array
