@@ -76,13 +76,6 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
      */
     public function get($type, EntryQueryOptions $options)
     {
-        info(
-            EntryModel::on($this->connection)
-                ->withTelescopeOptions($type, $options)
-                ->take($options->limit)
-                ->orderByDesc('sequence')->toSql()
-        );
-        
         return EntryModel::on($this->connection)
             ->withTelescopeOptions($type, $options)
             ->take($options->limit)

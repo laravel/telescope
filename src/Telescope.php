@@ -5,6 +5,7 @@ namespace Laravel\Telescope;
 use Closure;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
 
@@ -143,6 +144,21 @@ class Telescope
     public static function stopRecording()
     {
         static::$shouldRecord = false;
+    }
+
+    /**
+     * Run the given callback while recording is disabled.
+     *
+     * @param  callable  $callback
+     * @return void
+     */
+    public static function withoutRecording(callable $callback)
+    {
+        $shouldRecord = static::$shouldRecord;
+
+        call_user_func($callback);
+
+        static::$shouldRecord = $shouldRecord;
     }
 
     /**
@@ -353,10 +369,16 @@ class Telescope
             return;
         }
 
-        $storage->store(static::collectEntries(Str::orderedUuid()));
+        try {
+            $storage->store(static::collectEntries(Str::orderedUuid()));
 
-        if ($storage instanceof TerminableRepository) {
-            $storage->terminate();
+            if ($storage instanceof TerminableRepository) {
+                $storage->terminate();
+            }
+        } catch (Exception $e) {
+            static::withoutRecording(function () use ($e) {
+                resolve(ExceptionHandler::class)->report($e);
+            });
         }
 
         static::$entriesQueue = [];
