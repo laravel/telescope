@@ -174,7 +174,8 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     public function update(Collection $updates)
     {
         foreach ($updates as $update) {
-            $entry = EntryModel::where('uuid', $update->uuid)
+            $entry = $this->table('telescope_entries')
+                            ->where('uuid', $update->uuid)
                             ->where('type', $update->type)
                             ->first();
 
@@ -182,9 +183,14 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
                 continue;
             }
 
-            $entry->forceFill([
-                'content' => array_merge($entry->content, $update->changes)
-            ])->save();
+            $content = json_encode(array_merge(
+                json_decode($entry->content, true), $update->changes
+            ));
+
+            $this->table('telescope_entries')
+                            ->where('uuid', $update->uuid)
+                            ->where('type', $update->type)
+                            ->update(['content' => $content]);
         }
     }
 
