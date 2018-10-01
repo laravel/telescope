@@ -30,7 +30,7 @@ class TelescopeServiceProvider extends ServiceProvider
         // Telescope::night();
 
         Telescope::filter(function (IncomingEntry $entry) {
-            if ($this->app->environment('local')) {
+            if ($this->app->environment() == 'local') {
                 return true;
             }
 
