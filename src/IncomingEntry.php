@@ -161,6 +161,17 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a failed job.
+     *
+     * @return bool
+     */
+    public function isFailedJob()
+    {
+        return $this->type == EntryType::JOB &&
+               ($this->content['status'] ?? null) === 'failed';
+    }
+
+    /**
      * Determine if the incoming entry is a reportable exception.
      *
      * @return bool
