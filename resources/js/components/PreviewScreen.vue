@@ -153,7 +153,7 @@
         <!-- User Information -->
         <div class="card mt-5" v-if="ready && entry && entry.content.user && entry.content.user.id">
             <div class="card-header d-flex align-items-center justify-content-between">
-                <h5>User</h5>
+                <h5>Authenticated User</h5>
             </div>
 
             <table class="table mb-0 bg-secondary table-borderless">

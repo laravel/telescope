@@ -79350,7 +79350,7 @@ var staticRenderFns = [
         staticClass:
           "card-header d-flex align-items-center justify-content-between"
       },
-      [_c("h5", [_vm._v("User")])]
+      [_c("h5", [_vm._v("Authenticated User")])]
     )
   }
 ]
