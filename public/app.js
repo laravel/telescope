@@ -63497,7 +63497,20 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    methods: {
+        levelClass: function levelClass(level) {
+            if (level == 'debug') return 'info';
+            if (level == 'info') return 'info';
+            if (level == 'notice') return 'success';
+            if (level == 'warning') return 'warning';
+            if (level == 'error') return 'danger';
+            if (level == 'critical') return 'danger';
+            if (level == 'alert') return 'danger';
+            if (level == 'emergency') return 'danger';
+        }
+    }
+});
 
 /***/ }),
 /* 226 */
@@ -63523,7 +63536,21 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(slotProps.entry.content.level))
+                _c(
+                  "span",
+                  {
+                    staticClass: "badge font-weight-light",
+                    class:
+                      "badge-" + _vm.levelClass(slotProps.entry.content.level)
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(slotProps.entry.content.level) +
+                        "\n            "
+                    )
+                  ]
+                )
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
@@ -65142,8 +65169,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         typeClass: function typeClass(type) {
             if (type == 'hit') return 'success';
-            if (type == 'set') return 'warning';
-            if (type == 'missed' || type == 'forget') return 'danger';
+            if (type == 'set') return 'info';
+            if (type == 'forget') return 'warning';
+            if (type == 'missed') return 'danger';
         }
     }
 });
@@ -65173,13 +65201,15 @@ var render = function() {
                 _c(
                   "span",
                   {
-                    class: "text-" + _vm.typeClass(slotProps.entry.content.type)
+                    staticClass: "badge font-weight-light",
+                    class:
+                      "badge-" + _vm.typeClass(slotProps.entry.content.type)
                   },
                   [
                     _vm._v(
-                      "\n                " +
+                      "\n                    " +
                         _vm._s(slotProps.entry.content.type) +
-                        "\n            "
+                        "\n                "
                     )
                   ]
                 )
@@ -69459,9 +69489,9 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                " +
+                      "\n                    " +
                         _vm._s(slotProps.entry.content.method) +
-                        "\n            "
+                        "\n                "
                     )
                   ]
                 )
@@ -69475,15 +69505,16 @@ var render = function() {
                 _c(
                   "span",
                   {
+                    staticClass: "badge font-weight-light",
                     class:
-                      "text-" +
+                      "badge-" +
                       _vm.statusClass(slotProps.entry.content.response_status)
                   },
                   [
                     _vm._v(
-                      "\n                " +
+                      "\n                    " +
                         _vm._s(slotProps.entry.content.response_status) +
-                        "\n            "
+                        "\n                "
                     )
                   ]
                 )

@@ -3,8 +3,9 @@
         methods: {
             typeClass(type){
                 if (type == 'hit') return 'success';
-                if (type == 'set') return 'warning';
-                if (type == 'missed' || type == 'forget') return 'danger';
+                if (type == 'set') return 'info';
+                if (type == 'forget') return 'warning';
+                if (type == 'missed') return 'danger';
             }
         }
     }
@@ -24,9 +25,12 @@
             <td>{{truncate(slotProps.entry.content.key, 80)}}</td>
 
             <td class="table-fit">
-                <span :class="'text-'+typeClass(slotProps.entry.content.type)">
+                <span class="badge font-weight-light" :class="'badge-'+typeClass(slotProps.entry.content.type)">
                     {{slotProps.entry.content.type}}
                 </span>
+<!--                 <span :class="'text-'+typeClass(slotProps.entry.content.type)">
+                    {{slotProps.entry.content.type}}
+                </span> -->
             </td>
 
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
