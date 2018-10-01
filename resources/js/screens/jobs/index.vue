@@ -16,9 +16,7 @@
 
         <template slot="row" slot-scope="slotProps">
             <td :title="slotProps.entry.content.name">{{truncate(slotProps.entry.content.name, 40)}}</td>
-
             <td :title="slotProps.entry.content.connection" class="table-fit">{{truncate(slotProps.entry.content.connection, 10)}}</td>
-
             <td :title="slotProps.entry.content.queue" class="table-fit">{{truncate(slotProps.entry.content.queue, 10)}}</td>
 
             <td class="table-fit">
