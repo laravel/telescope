@@ -63500,9 +63500,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     methods: {
         levelClass: function levelClass(level) {
-            if (level == 'debug') return 'info';
+            if (level == 'debug') return 'success';
             if (level == 'info') return 'info';
-            if (level == 'notice') return 'success';
+            if (level == 'notice') return 'secondary';
             if (level == 'warning') return 'warning';
             if (level == 'error') return 'danger';
             if (level == 'critical') return 'danger';

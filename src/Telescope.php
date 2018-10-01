@@ -3,6 +3,7 @@
 namespace Laravel\Telescope;
 
 use Closure;
+use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Debug\ExceptionHandler;
@@ -355,14 +356,12 @@ class Telescope
         }
 
         try {
-            throw new \Exception('nostore');
-
             $storage->store(static::collectEntries(Str::orderedUuid()));
 
             if ($storage instanceof TerminableRepository) {
                 $storage->terminate();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             resolve(ExceptionHandler::class)->report($e);
         }
 

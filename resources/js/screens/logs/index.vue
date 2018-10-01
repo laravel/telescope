@@ -2,9 +2,9 @@
     export default {
         methods: {
             levelClass(level){
-                if (level == 'debug') return 'info';
+                if (level == 'debug') return 'success';
                 if (level == 'info') return 'info';
-                if (level == 'notice') return 'success';
+                if (level == 'notice') return 'secondary';
                 if (level == 'warning') return 'warning';
                 if (level == 'error') return 'danger';
                 if (level == 'critical') return 'danger';
