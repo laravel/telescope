@@ -65131,7 +65131,15 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    methods: {
+        typeClass: function typeClass(type) {
+            if (type == 'hit') return 'success';
+            if (type == 'set') return 'warning';
+            if (type == 'missed' || type == 'forget') return 'danger';
+        }
+    }
+});
 
 /***/ }),
 /* 252 */
@@ -65155,7 +65163,19 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(slotProps.entry.content.type))
+                _c(
+                  "span",
+                  {
+                    class: "text-" + _vm.typeClass(slotProps.entry.content.type)
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(slotProps.entry.content.type) +
+                        "\n            "
+                    )
+                  ]
+                )
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [

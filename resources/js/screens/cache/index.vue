@@ -1,5 +1,13 @@
 <script type="text/ecmascript-6">
-    export default {}
+    export default {
+        methods: {
+            typeClass(type){
+                if (type == 'hit') return 'success';
+                if (type == 'set') return 'warning';
+                if (type == 'missed' || type == 'forget') return 'danger';
+            }
+        }
+    }
 </script>
 
 <template>
@@ -15,7 +23,11 @@
         <template slot="row" slot-scope="slotProps">
             <td>{{truncate(slotProps.entry.content.key, 80)}}</td>
 
-            <td class="table-fit">{{slotProps.entry.content.type}}</td>
+            <td class="table-fit">
+                <span :class="'text-'+typeClass(slotProps.entry.content.type)">
+                    {{slotProps.entry.content.type}}
+                </span>
+            </td>
 
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
 
