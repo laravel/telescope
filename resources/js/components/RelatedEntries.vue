@@ -31,16 +31,16 @@
                 this.currentTab = 'logs'
             } else if (this.queries.length) {
                 this.currentTab = 'queries'
+            } else if (this.models.length) {
+                this.currentTab = 'models'
+            } else if (this.jobs.length) {
+                this.currentTab = 'jobs'
             } else if (this.events.length) {
                 this.currentTab = 'events'
             } else if (this.cache.length) {
                 this.currentTab = 'cache'
             } else if (this.redis.length) {
                 this.currentTab = 'redis'
-            } else if (this.models.length) {
-                this.currentTab = 'models'
-            } else if (this.jobs.length) {
-                this.currentTab = 'jobs'
             }
         },
 
@@ -75,6 +75,10 @@
                 return this.batchEntriesOfType('model')
             },
 
+            jobs() {
+                return this.batchEntriesOfType('job')
+            },
+
             events() {
                 return this.batchEntriesOfType('event')
             },
@@ -85,10 +89,6 @@
 
             redis() {
                 return this.batchEntriesOfType('redis')
-            },
-
-            jobs() {
-                return this.batchEntriesOfType('job')
             }
         }
     }
@@ -244,6 +244,41 @@
                 </tbody>
             </table>
 
+            <!-- Related Jobs -->
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='jobs' && jobs.length">
+                <thead>
+                <tr>
+                    <th>Job</th>
+                    <th>Connection</th>
+                    <th>Queue</th>
+                    <th scope="col">Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr v-for="entry in jobs">
+                    <td :title="entry.content.name">{{truncate(entry.content.name, 100)}}</td>
+                    <td class="table-fit">{{truncate(entry.content.connection, 10)}}</td>
+                    <td class="table-fit">{{truncate(entry.content.queue, 10)}}</td>
+
+                    <td class="table-fit">
+                        <span class="badge font-weight-light" :class="'badge-'+jobStatusClass(entry.content.status)">
+                            {{entry.content.status}}
+                        </span>
+                    </td>
+
+                    <td class="table-fit">
+                        <router-link :to="{name:'job-preview', params:{id: entry.id}}" class="control-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
+                                <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
             <!-- Related Events -->
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='events' && events.length">
                 <thead>
@@ -326,42 +361,6 @@
 
                     <td class="table-fit">
                         <router-link :to="{name:'redis-preview', params:{id: entry.id}}" class="control-action">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
-                                <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
-                            </svg>
-                        </router-link>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-
-            <!-- Related Jobs -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='jobs' && jobs.length">
-                <thead>
-                <tr>
-                    <th>Job</th>
-                    <th>Connection</th>
-                    <th>Queue</th>
-                    <th scope="col">Status</th>
-                    <th></th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr v-for="entry in jobs">
-                    <td :title="entry.content.name">{{truncate(entry.content.name, 100)}}</td>
-                    <td class="table-fit">{{truncate(entry.content.connection, 10)}}</td>
-                    <td class="table-fit">{{truncate(entry.content.queue, 10)}}</td>
-
-                    <td class="table-fit">
-                        <span class="badge font-weight-light" :class="'badge-'+jobStatusClass(entry.content.status)">
-                            {{entry.content.status}}
-                        </span>
-                    </td>
-
-                    <td class="table-fit">
-                        <router-link :to="{name:'job-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
