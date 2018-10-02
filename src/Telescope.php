@@ -390,6 +390,10 @@ class Telescope
             if ($storage instanceof TerminableRepository) {
                 $storage->terminate();
             }
+
+            if (config('telescope.limit')) {
+                static::pruneEntries($storage, config('telescope.limit'));
+            }
         } catch (Exception $e) {
             resolve(ExceptionHandler::class)->report($e);
         }
@@ -432,6 +436,30 @@ class Telescope
             ->each(function ($entry) use ($batchId) {
                 $entry->change(['updated_batch_id' => $batchId]);
             });
+    }
+
+    /**
+     * Prune the entries.
+     *
+     * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
+     * @param  int  $limit
+     * @return void
+     */
+    protected static function pruneEntries(EntriesRepository $storage, int $limit)
+    {
+        $storage->pruneEntries(EntryType::CACHE, $limit);
+        $storage->pruneEntries(EntryType::COMMAND, $limit);
+        $storage->pruneEntries(EntryType::EVENT, $limit);
+        $storage->pruneEntries(EntryType::EXCEPTION, $limit);
+        $storage->pruneEntries(EntryType::LOG, $limit);
+        $storage->pruneEntries(EntryType::MAIL, $limit);
+        $storage->pruneEntries(EntryType::NOTIFICATION, $limit);
+        $storage->pruneEntries(EntryType::QUERY, $limit);
+        $storage->pruneEntries(EntryType::REQUEST, $limit);
+        $storage->pruneEntries(EntryType::SCHEDULED_COMMAND, $limit);
+        $storage->pruneEntries(EntryType::REDIS, $limit);
+        $storage->pruneEntries(EntryType::MODEL, $limit);
+
     }
 
     /**

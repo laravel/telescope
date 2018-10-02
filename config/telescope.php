@@ -25,6 +25,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Entry Pruning
+    |--------------------------------------------------------------------------
+    |
+    | This configuration options determines how many Telescope records of
+    | a given type will be kept in storage. This allows you to control
+    | the amount of disk space claimed by Telescope's entry storage.
+    |
+    */
+
+    'limit' => 100,
+
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Watchers
     |--------------------------------------------------------------------------
     |

@@ -303,7 +303,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
         $this->monitoredTags = null;
 
         if (Telescope::hasWatcher(DumpWatcher::class)) {
-            $this->prune(EntryType::DUMP, 50);
+            $this->pruneEntries(EntryType::DUMP, 50);
         }
     }
 
