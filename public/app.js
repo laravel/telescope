@@ -63496,20 +63496,12 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__ = __webpack_require__(372);
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    methods: {
-        levelClass: function levelClass(level) {
-            if (level == 'debug') return 'success';
-            if (level == 'info') return 'info';
-            if (level == 'notice') return 'secondary';
-            if (level == 'warning') return 'warning';
-            if (level == 'error') return 'danger';
-            if (level == 'critical') return 'danger';
-            if (level == 'alert') return 'danger';
-            if (level == 'emergency') return 'danger';
-        }
-    }
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__["a" /* default */]]
 });
 
 /***/ }),
@@ -63541,7 +63533,8 @@ var render = function() {
                   {
                     staticClass: "badge font-weight-light",
                     class:
-                      "badge-" + _vm.levelClass(slotProps.entry.content.level)
+                      "badge-" +
+                      _vm.logLevelClass(slotProps.entry.content.level)
                   },
                   [
                     _vm._v(
@@ -64408,15 +64401,12 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__ = __webpack_require__(372);
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    methods: {
-        statusClass: function statusClass(status) {
-            if (status == 'pending') return 'secondary';
-            if (status == 'processed') return 'success';
-            if (status == 'failed') return 'danger';
-        }
-    }
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__["a" /* default */]]
 });
 
 /***/ }),
@@ -64472,13 +64462,14 @@ var render = function() {
                   {
                     staticClass: "badge font-weight-light",
                     class:
-                      "badge-" + _vm.statusClass(slotProps.entry.content.status)
+                      "badge-" +
+                      _vm.jobStatusClass(slotProps.entry.content.status)
                   },
                   [
                     _vm._v(
-                      "\n                    " +
+                      "\n                " +
                         _vm._s(slotProps.entry.content.status) +
-                        "\n                "
+                        "\n            "
                     )
                   ]
                 )
@@ -65160,16 +65151,12 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__ = __webpack_require__(372);
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    methods: {
-        typeClass: function typeClass(type) {
-            if (type == 'hit') return 'success';
-            if (type == 'set') return 'info';
-            if (type == 'forget') return 'warning';
-            if (type == 'missed') return 'danger';
-        }
-    }
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__["a" /* default */]]
 });
 
 /***/ }),
@@ -65199,13 +65186,14 @@ var render = function() {
                   {
                     staticClass: "badge font-weight-light",
                     class:
-                      "badge-" + _vm.typeClass(slotProps.entry.content.type)
+                      "badge-" +
+                      _vm.cacheActionTypeClass(slotProps.entry.content.type)
                   },
                   [
                     _vm._v(
-                      "\n                    " +
+                      "\n                " +
                         _vm._s(slotProps.entry.content.type) +
-                        "\n                "
+                        "\n            "
                     )
                   ]
                 )
@@ -69034,15 +69022,12 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__ = __webpack_require__(372);
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    methods: {
-        actionClass: function actionClass(action) {
-            if (action == 'created') return 'success';
-            if (action == 'updated') return 'info';
-            if (action == 'deleted' || action == 'forceDeleted') return 'danger';
-        }
-    }
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__["a" /* default */]]
 });
 
 /***/ }),
@@ -69072,7 +69057,8 @@ var render = function() {
                   {
                     staticClass: "badge font-weight-light",
                     class:
-                      "badge-" + _vm.actionClass(slotProps.entry.content.action)
+                      "badge-" +
+                      _vm.modelActionClass(slotProps.entry.content.action)
                   },
                   [
                     _vm._v(
@@ -69459,22 +69445,12 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__ = __webpack_require__(372);
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    methods: {
-        statusClass: function statusClass(status) {
-            if (status < 400) return 'success';
-            if (status < 500) return 'warning';
-            if (status >= 500) return 'danger';
-        },
-        methodClass: function methodClass(method) {
-            if (method == 'GET') return 'secondary';
-            if (method == 'POST') return 'info';
-            if (method == 'PATCH') return 'info';
-            if (method == 'PUT') return 'info';
-            if (method == 'DELETE') return 'danger';
-        }
-    }
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__["a" /* default */]]
 });
 
 /***/ }),
@@ -69500,13 +69476,14 @@ var render = function() {
                   {
                     staticClass: "badge font-weight-light",
                     class:
-                      "badge-" + _vm.methodClass(slotProps.entry.content.method)
+                      "badge-" +
+                      _vm.requestMethodClass(slotProps.entry.content.method)
                   },
                   [
                     _vm._v(
-                      "\n                    " +
+                      "\n                " +
                         _vm._s(slotProps.entry.content.method) +
-                        "\n                "
+                        "\n            "
                     )
                   ]
                 )
@@ -69523,13 +69500,15 @@ var render = function() {
                     staticClass: "badge font-weight-light",
                     class:
                       "badge-" +
-                      _vm.statusClass(slotProps.entry.content.response_status)
+                      _vm.requestStatusClass(
+                        slotProps.entry.content.response_status
+                      )
                   },
                   [
                     _vm._v(
-                      "\n                    " +
+                      "\n                " +
                         _vm._s(slotProps.entry.content.response_status) +
-                        "\n                "
+                        "\n            "
                     )
                   ]
                 )
@@ -77661,9 +77640,14 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__ = __webpack_require__(372);
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['entry', 'batch'],
+
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__["a" /* default */]],
 
     /**
      * The component's data.
@@ -77693,6 +77677,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.currentTab = 'redis';
         } else if (this.models.length) {
             this.currentTab = 'models';
+        } else if (this.jobs.length) {
+            this.currentTab = 'jobs';
         }
     },
 
@@ -77729,6 +77715,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         redis: function redis() {
             return this.batchEntriesOfType('redis');
+        },
+        jobs: function jobs() {
+            return this.batchEntriesOfType('job');
         }
     }
 });
@@ -77882,6 +77871,26 @@ var render = function() {
                   [_vm._v("Redis (" + _vm._s(_vm.redis.length) + ")")]
                 )
               : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "nav-item" }, [
+            _vm.jobs.length
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    class: { active: _vm.currentTab == "jobs" },
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.currentTab = "jobs"
+                      }
+                    }
+                  },
+                  [_vm._v("Jobs (" + _vm._s(_vm.jobs.length) + ")")]
+                )
+              : _vm._e()
           ])
         ]),
         _vm._v(" "),
@@ -77977,6 +77986,24 @@ var render = function() {
                   return _c("tr", [
                     _c("td", { attrs: { title: entry.content.message } }, [
                       _vm._v(_vm._s(_vm.truncate(entry.content.message, 100)))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-fit" }, [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "badge font-weight-light",
+                          class:
+                            "badge-" + _vm.logLevelClass(entry.content.level)
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(entry.content.level) +
+                              "\n                    "
+                          )
+                        ]
+                      )
                     ]),
                     _vm._v(" "),
                     _c(
@@ -78120,7 +78147,22 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "table-fit" }, [
-                      _vm._v(_vm._s(entry.content.action))
+                      _c(
+                        "span",
+                        {
+                          staticClass: "badge font-weight-light",
+                          class:
+                            "badge-" +
+                            _vm.modelActionClass(entry.content.action)
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(entry.content.action) +
+                              "\n                    "
+                          )
+                        ]
+                      )
                     ]),
                     _vm._v(" "),
                     _c(
@@ -78282,7 +78324,22 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "table-fit" }, [
-                      _vm._v(_vm._s(entry.content.type))
+                      _c(
+                        "span",
+                        {
+                          staticClass: "badge font-weight-light",
+                          class:
+                            "badge-" +
+                            _vm.cacheActionTypeClass(entry.content.type)
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(entry.content.type) +
+                              "\n                    "
+                          )
+                        ]
+                      )
                     ]),
                     _vm._v(" "),
                     _c(
@@ -78399,6 +78456,100 @@ var render = function() {
                 })
               )
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "table",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.currentTab == "jobs" && _vm.jobs.length,
+                  expression: "currentTab=='jobs' && jobs.length"
+                }
+              ],
+              staticClass: "table table-hover table-sm mb-0"
+            },
+            [
+              _vm._m(7),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.jobs, function(entry) {
+                  return _c("tr", [
+                    _c("td", { attrs: { title: entry.content.name } }, [
+                      _vm._v(_vm._s(_vm.truncate(entry.content.name, 100)))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-fit" }, [
+                      _vm._v(_vm._s(_vm.truncate(entry.content.connection, 10)))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-fit" }, [
+                      _vm._v(_vm._s(_vm.truncate(entry.content.queue, 10)))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-fit" }, [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "badge font-weight-light",
+                          class:
+                            "badge-" + _vm.jobStatusClass(entry.content.status)
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(entry.content.status) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "table-fit" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "control-action",
+                            attrs: {
+                              to: {
+                                name: "redis-preview",
+                                params: { id: entry.id }
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  viewBox: "0 0 22 16"
+                                }
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    d:
+                                      "M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                })
+              )
+            ]
           )
         ])
       ])
@@ -78418,7 +78569,13 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("tr", [_c("th", [_vm._v("Message")]), _vm._v(" "), _c("th")])
+      _c("tr", [
+        _c("th", [_vm._v("Message")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Level")]),
+        _vm._v(" "),
+        _c("th")
+      ])
     ])
   },
   function() {
@@ -78486,6 +78643,24 @@ var staticRenderFns = [
         _c("th", [_vm._v("Command")]),
         _vm._v(" "),
         _c("th", [_vm._v("Duration")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Job")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Connection")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Queue")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
         _vm._v(" "),
         _c("th")
       ])
@@ -79789,6 +79964,58 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+    methods: {
+        cacheActionTypeClass: function cacheActionTypeClass(type) {
+            if (type == 'hit') return 'success';
+            if (type == 'set') return 'info';
+            if (type == 'forget') return 'warning';
+            if (type == 'missed') return 'danger';
+        },
+        jobStatusClass: function jobStatusClass(status) {
+            if (status == 'pending') return 'secondary';
+            if (status == 'processed') return 'success';
+            if (status == 'failed') return 'danger';
+        },
+        logLevelClass: function logLevelClass(level) {
+            if (level == 'debug') return 'success';
+            if (level == 'info') return 'info';
+            if (level == 'notice') return 'secondary';
+            if (level == 'warning') return 'warning';
+            if (level == 'error') return 'danger';
+            if (level == 'critical') return 'danger';
+            if (level == 'alert') return 'danger';
+            if (level == 'emergency') return 'danger';
+        },
+        modelActionClass: function modelActionClass(action) {
+            if (action == 'created') return 'success';
+            if (action == 'updated') return 'info';
+            if (action == 'deleted' || action == 'forceDeleted') return 'danger';
+        },
+        requestStatusClass: function requestStatusClass(status) {
+            if (status < 400) return 'success';
+            if (status < 500) return 'warning';
+            if (status >= 500) return 'danger';
+        },
+        requestMethodClass: function requestMethodClass(method) {
+            if (method == 'GET') return 'secondary';
+            if (method == 'POST') return 'info';
+            if (method == 'PATCH') return 'info';
+            if (method == 'PUT') return 'info';
+            if (method == 'DELETE') return 'danger';
+        }
+    }
+});
 
 /***/ })
 /******/ ]);

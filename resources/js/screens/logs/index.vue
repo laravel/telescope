@@ -1,17 +1,10 @@
 <script type="text/ecmascript-6">
+    import StylesMixin from './../../mixins/entriesStyles';
+
     export default {
-        methods: {
-            levelClass(level){
-                if (level == 'debug') return 'success';
-                if (level == 'info') return 'info';
-                if (level == 'notice') return 'secondary';
-                if (level == 'warning') return 'warning';
-                if (level == 'error') return 'danger';
-                if (level == 'critical') return 'danger';
-                if (level == 'alert') return 'danger';
-                if (level == 'emergency') return 'danger';
-            }
-        }
+        mixins: [
+            StylesMixin,
+        ],
     }
 </script>
 
@@ -27,10 +20,8 @@
         <template slot="row" slot-scope="slotProps">
             <td :title="slotProps.entry.content.message">{{truncate(slotProps.entry.content.message, 75)}}</td>
 
-            <!-- <td class="table-fit">{{slotProps.entry.content.level}}</td> -->
-
             <td class="table-fit">
-                <span class="badge font-weight-light" :class="'badge-'+levelClass(slotProps.entry.content.level)">
+                <span class="badge font-weight-light" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">
                     {{slotProps.entry.content.level}}
                 </span>
             </td>

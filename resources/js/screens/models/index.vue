@@ -1,12 +1,10 @@
 <script type="text/ecmascript-6">
+    import StylesMixin from './../../mixins/entriesStyles';
+
     export default {
-        methods: {
-            actionClass(action){
-                if (action == 'created') return 'success';
-                if (action == 'updated') return 'info';
-                if (action == 'deleted' || action == 'forceDeleted') return 'danger';
-            }
-        }
+        mixins: [
+            StylesMixin,
+        ],
     }
 </script>
 
@@ -24,7 +22,7 @@
             <td>{{truncate(slotProps.entry.content.model, 80)}}</td>
 
             <td class="table-fit">
-                <span class="badge font-weight-light" :class="'badge-'+actionClass(slotProps.entry.content.action)">
+                <span class="badge font-weight-light" :class="'badge-'+modelActionClass(slotProps.entry.content.action)">
                     {{slotProps.entry.content.action}}
                 </span>
             </td>

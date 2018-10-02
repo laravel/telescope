@@ -1,21 +1,10 @@
 <script type="text/ecmascript-6">
+    import StylesMixin from './../../mixins/entriesStyles';
+
     export default {
-        methods: {
-            statusClass(status){
-                if (status < 400) return 'success';
-                if (status < 500) return 'warning';
-                if (status >= 500) return 'danger';
-            },
-
-
-            methodClass(method){
-                if (method == 'GET') return 'secondary';
-                if (method == 'POST') return 'info';
-                if (method == 'PATCH') return 'info';
-                if (method == 'PUT') return 'info';
-                if (method == 'DELETE') return 'danger';
-            }
-        }
+        mixins: [
+            StylesMixin,
+        ],
     }
 </script>
 
@@ -32,7 +21,7 @@
 
         <template slot="row" slot-scope="slotProps">
             <td class="table-fit pr-0">
-                <span class="badge font-weight-light" :class="'badge-'+methodClass(slotProps.entry.content.method)">
+                <span class="badge font-weight-light" :class="'badge-'+requestMethodClass(slotProps.entry.content.method)">
                     {{slotProps.entry.content.method}}
                 </span>
             </td>
@@ -40,11 +29,7 @@
             <td :title="slotProps.entry.content.uri">{{truncate(slotProps.entry.content.uri, 90)}}</td>
 
             <td class="table-fit">
-<!--                 <span :class="'text-'+statusClass(slotProps.entry.content.response_status)">
-                    {{slotProps.entry.content.response_status}}
-                </span> -->
-
-                <span class="badge font-weight-light" :class="'badge-'+statusClass(slotProps.entry.content.response_status)">
+                <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(slotProps.entry.content.response_status)">
                     {{slotProps.entry.content.response_status}}
                 </span>
             </td>

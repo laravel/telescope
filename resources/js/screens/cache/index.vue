@@ -1,13 +1,10 @@
 <script type="text/ecmascript-6">
+    import StylesMixin from './../../mixins/entriesStyles';
+
     export default {
-        methods: {
-            typeClass(type){
-                if (type == 'hit') return 'success';
-                if (type == 'set') return 'info';
-                if (type == 'forget') return 'warning';
-                if (type == 'missed') return 'danger';
-            }
-        }
+        mixins: [
+            StylesMixin,
+        ],
     }
 </script>
 
@@ -25,12 +22,9 @@
             <td>{{truncate(slotProps.entry.content.key, 80)}}</td>
 
             <td class="table-fit">
-                <span class="badge font-weight-light" :class="'badge-'+typeClass(slotProps.entry.content.type)">
+                <span class="badge font-weight-light" :class="'badge-'+cacheActionTypeClass(slotProps.entry.content.type)">
                     {{slotProps.entry.content.type}}
                 </span>
-<!--                 <span :class="'text-'+typeClass(slotProps.entry.content.type)">
-                    {{slotProps.entry.content.type}}
-                </span> -->
             </td>
 
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
