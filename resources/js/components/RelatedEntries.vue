@@ -192,7 +192,16 @@
                 <tbody>
                 <tr v-for="entry in queries">
                     <td :title="entry.content.sql">{{truncate(entry.content.sql, 110)}}</td>
-                    <td class="table-fit">{{entry.content.time}}ms</td>
+
+                    <td class="table-fit">
+                        <span class="badge badge-danger font-weight-light" v-if="entry.content.slow">
+                            {{entry.content.time}}ms
+                        </span>
+
+                        <span v-else>
+                            {{entry.content.time}}ms
+                        </span>
+                    </td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'query-preview', params:{id: entry.id}}" class="control-action">
