@@ -63284,7 +63284,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -63295,12 +63295,17 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__ = __webpack_require__(372);
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
         'code-preview': __webpack_require__(18),
         'stack-trace': __webpack_require__(19)
     },
+
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__["a" /* default */]],
 
     data: function data() {
         return {
@@ -63332,10 +63337,21 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(slotProps.entry.content.level) +
-                    "\n            "
+                _c(
+                  "span",
+                  {
+                    staticClass: "badge font-weight-light",
+                    class:
+                      "badge-" +
+                      _vm.logLevelClass(slotProps.entry.content.level)
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(slotProps.entry.content.level) +
+                        "\n                "
+                    )
+                  ]
                 )
               ])
             ])
@@ -64014,7 +64030,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64027,6 +64043,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_entriesStyles__ = __webpack_require__(372);
+
 
 
 
@@ -64035,6 +64053,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'code-preview': __webpack_require__(18),
         'stack-trace': __webpack_require__(19)
     },
+
+    mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_entriesStyles__["a" /* default */]],
 
     data: function data() {
         return {
@@ -64071,10 +64091,21 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(slotProps.entry.content.status) +
-                    "\n            "
+                _c(
+                  "span",
+                  {
+                    staticClass: "badge font-weight-light",
+                    class:
+                      "badge-" +
+                      _vm.jobStatusClass(slotProps.entry.content.status)
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(slotProps.entry.content.status) +
+                        "\n                "
+                    )
+                  ]
                 )
               ])
             ]),
@@ -64992,8 +65023,13 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__ = __webpack_require__(372);
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_entriesStyles__["a" /* default */]],
+
     data: function data() {
         return {
             entry: null,
@@ -65027,10 +65063,21 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(slotProps.entry.content.type) +
-                    "\n            "
+                _c(
+                  "span",
+                  {
+                    staticClass: "badge font-weight-light",
+                    class:
+                      "badge-" +
+                      _vm.cacheActionTypeClass(slotProps.entry.content.type)
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(slotProps.entry.content.type) +
+                        "\n                "
+                    )
+                  ]
                 )
               ])
             ]),
@@ -68867,10 +68914,14 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_entriesStyles__ = __webpack_require__(372);
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_entriesStyles__["a" /* default */]],
+
     data: function data() {
         return {
             entry: null,
@@ -68918,10 +68969,21 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(slotProps.entry.content.action) +
-                    "\n            "
+                _c(
+                  "span",
+                  {
+                    staticClass: "badge font-weight-light",
+                    class:
+                      "badge-" +
+                      _vm.modelActionClass(slotProps.entry.content.action)
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(slotProps.entry.content.action) +
+                        "\n                "
+                    )
+                  ]
                 )
               ])
             ])
@@ -78518,7 +78580,7 @@ var render = function() {
                             staticClass: "control-action",
                             attrs: {
                               to: {
-                                name: "redis-preview",
+                                name: "job-preview",
                                 params: { id: entry.id }
                               }
                             }

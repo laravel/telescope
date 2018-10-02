@@ -1,9 +1,17 @@
 <script type="text/ecmascript-6">
+    import StylesMixin from './../../mixins/entriesStyles';
+
     export default {
         components: {
             'code-preview': require('./../../components/ExceptionCodePreview'),
             'stack-trace': require('./../../components/Stacktrace')
         },
+
+
+        mixins: [
+            StylesMixin,
+        ],
+
 
         data(){
             return {
@@ -21,7 +29,9 @@
             <tr>
                 <td class="table-fit font-weight-bold">Level</td>
                 <td>
-                    {{slotProps.entry.content.level}}
+                    <span class="badge font-weight-light" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">
+                        {{slotProps.entry.content.level}}
+                    </span>
                 </td>
             </tr>
         </template>

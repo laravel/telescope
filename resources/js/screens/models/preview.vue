@@ -1,7 +1,13 @@
 <script type="text/ecmascript-6">
     import _ from 'lodash';
+    import StylesMixin from './../../mixins/entriesStyles';
 
     export default {
+        mixins: [
+            StylesMixin,
+        ],
+
+
         data(){
             return {
                 entry: null,
@@ -24,7 +30,9 @@
             <tr>
                 <td class="table-fit font-weight-bold">Action</td>
                 <td>
-                    {{slotProps.entry.content.action}}
+                    <span class="badge font-weight-light" :class="'badge-'+modelActionClass(slotProps.entry.content.action)">
+                        {{slotProps.entry.content.action}}
+                    </span>
                 </td>
             </tr>
         </template>

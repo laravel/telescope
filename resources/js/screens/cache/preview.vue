@@ -1,5 +1,12 @@
 <script type="text/ecmascript-6">
+    import StylesMixin from './../../mixins/entriesStyles';
+
     export default {
+        mixins: [
+            StylesMixin,
+        ],
+
+
         data(){
             return {
                 entry: null,
@@ -15,7 +22,9 @@
             <tr>
                 <td class="table-fit font-weight-bold">Action</td>
                 <td>
-                    {{slotProps.entry.content.type}}
+                    <span class="badge font-weight-light" :class="'badge-'+cacheActionTypeClass(slotProps.entry.content.type)">
+                        {{slotProps.entry.content.type}}
+                    </span>
                 </td>
             </tr>
 

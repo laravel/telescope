@@ -1,11 +1,18 @@
 <script type="text/ecmascript-6">
     import axios from 'axios';
+    import StylesMixin from './../../mixins/entriesStyles';
 
     export default {
         components: {
             'code-preview': require('./../../components/ExceptionCodePreview'),
             'stack-trace': require('./../../components/Stacktrace')
         },
+
+
+        mixins: [
+            StylesMixin,
+        ],
+
 
         data(){
             return {
@@ -23,7 +30,9 @@
             <tr>
                 <td class="table-fit font-weight-bold">Status</td>
                 <td>
-                    {{slotProps.entry.content.status}}
+                    <span class="badge font-weight-light" :class="'badge-'+jobStatusClass(slotProps.entry.content.status)">
+                        {{slotProps.entry.content.status}}
+                    </span>
                 </td>
             </tr>
 
