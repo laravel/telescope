@@ -77824,16 +77824,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.currentTab = 'logs';
         } else if (this.queries.length) {
             this.currentTab = 'queries';
+        } else if (this.models.length) {
+            this.currentTab = 'models';
+        } else if (this.jobs.length) {
+            this.currentTab = 'jobs';
         } else if (this.events.length) {
             this.currentTab = 'events';
         } else if (this.cache.length) {
             this.currentTab = 'cache';
         } else if (this.redis.length) {
             this.currentTab = 'redis';
-        } else if (this.models.length) {
-            this.currentTab = 'models';
-        } else if (this.jobs.length) {
-            this.currentTab = 'jobs';
         }
     },
 
@@ -77862,6 +77862,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         models: function models() {
             return this.batchEntriesOfType('model');
         },
+        jobs: function jobs() {
+            return this.batchEntriesOfType('job');
+        },
         events: function events() {
             return this.batchEntriesOfType('event');
         },
@@ -77870,9 +77873,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         redis: function redis() {
             return this.batchEntriesOfType('redis');
-        },
-        jobs: function jobs() {
-            return this.batchEntriesOfType('job');
         }
     }
 });
@@ -78392,6 +78392,100 @@ var render = function() {
                 {
                   name: "show",
                   rawName: "v-show",
+                  value: _vm.currentTab == "jobs" && _vm.jobs.length,
+                  expression: "currentTab=='jobs' && jobs.length"
+                }
+              ],
+              staticClass: "table table-hover table-sm mb-0"
+            },
+            [
+              _vm._m(4),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.jobs, function(entry) {
+                  return _c("tr", [
+                    _c("td", { attrs: { title: entry.content.name } }, [
+                      _vm._v(_vm._s(_vm.truncate(entry.content.name, 100)))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-fit" }, [
+                      _vm._v(_vm._s(_vm.truncate(entry.content.connection, 10)))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-fit" }, [
+                      _vm._v(_vm._s(_vm.truncate(entry.content.queue, 10)))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "table-fit" }, [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "badge font-weight-light",
+                          class:
+                            "badge-" + _vm.jobStatusClass(entry.content.status)
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(entry.content.status) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { staticClass: "table-fit" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "control-action",
+                            attrs: {
+                              to: {
+                                name: "job-preview",
+                                params: { id: entry.id }
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "svg",
+                              {
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  viewBox: "0 0 22 16"
+                                }
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    d:
+                                      "M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                })
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "table",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
                   value: _vm.currentTab == "events" && _vm.events.length,
                   expression: "currentTab=='events' && events.length"
                 }
@@ -78399,7 +78493,7 @@ var render = function() {
               staticClass: "table table-hover table-sm mb-0"
             },
             [
-              _vm._m(4),
+              _vm._m(5),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -78489,7 +78583,7 @@ var render = function() {
               staticClass: "table table-hover table-sm mb-0"
             },
             [
-              _vm._m(5),
+              _vm._m(6),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -78576,7 +78670,7 @@ var render = function() {
               staticClass: "table table-hover table-sm mb-0"
             },
             [
-              _vm._m(6),
+              _vm._m(7),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -78601,100 +78695,6 @@ var render = function() {
                             attrs: {
                               to: {
                                 name: "redis-preview",
-                                params: { id: entry.id }
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "svg",
-                              {
-                                attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  viewBox: "0 0 22 16"
-                                }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    d:
-                                      "M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"
-                                  }
-                                })
-                              ]
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    )
-                  ])
-                })
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "table",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.currentTab == "jobs" && _vm.jobs.length,
-                  expression: "currentTab=='jobs' && jobs.length"
-                }
-              ],
-              staticClass: "table table-hover table-sm mb-0"
-            },
-            [
-              _vm._m(7),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.jobs, function(entry) {
-                  return _c("tr", [
-                    _c("td", { attrs: { title: entry.content.name } }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.name, 100)))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-fit" }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.connection, 10)))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-fit" }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.queue, 10)))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-fit" }, [
-                      _c(
-                        "span",
-                        {
-                          staticClass: "badge font-weight-light",
-                          class:
-                            "badge-" + _vm.jobStatusClass(entry.content.status)
-                        },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(entry.content.status) +
-                              "\n                    "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      { staticClass: "table-fit" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "control-action",
-                            attrs: {
-                              to: {
-                                name: "job-preview",
                                 params: { id: entry.id }
                               }
                             }
@@ -78788,6 +78788,24 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th", [_vm._v("Job")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Connection")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Queue")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Listeners")]),
@@ -78819,24 +78837,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Command")]),
         _vm._v(" "),
         _c("th", [_vm._v("Duration")]),
-        _vm._v(" "),
-        _c("th")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Job")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Connection")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Queue")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
         _vm._v(" "),
         _c("th")
       ])
