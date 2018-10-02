@@ -35,7 +35,8 @@ export default {
 
 
         requestStatusClass(status){
-            if (status < 400) return 'success';
+            if (status < 300) return 'secondary';
+            if (status < 400) return 'info';
             if (status < 500) return 'warning';
             if (status >= 500) return 'danger';
         },

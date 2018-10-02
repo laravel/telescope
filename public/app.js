@@ -5029,7 +5029,8 @@ module.exports = {
             if (action == 'deleted' || action == 'forceDeleted') return 'danger';
         },
         requestStatusClass: function requestStatusClass(status) {
-            if (status < 400) return 'success';
+            if (status < 300) return 'secondary';
+            if (status < 400) return 'info';
             if (status < 500) return 'warning';
             if (status >= 500) return 'danger';
         },
@@ -68688,11 +68689,25 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(slotProps.entry.content.time) +
-                    "ms\n            "
-                )
+                slotProps.entry.content.slow
+                  ? _c(
+                      "span",
+                      { staticClass: "badge badge-danger font-weight-light" },
+                      [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(slotProps.entry.content.time) +
+                            "ms\n                "
+                        )
+                      ]
+                    )
+                  : _c("span", [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(slotProps.entry.content.time) +
+                          "ms\n                "
+                      )
+                    ])
               ])
             ])
           ]
@@ -69387,10 +69402,23 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(slotProps.entry.content.response_status) +
-                    "\n        "
+                _c(
+                  "span",
+                  {
+                    staticClass: "badge font-weight-light",
+                    class:
+                      "badge-" +
+                      _vm.requestStatusClass(
+                        slotProps.entry.content.response_status
+                      )
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(slotProps.entry.content.response_status) +
+                        "\n            "
+                    )
+                  ]
                 )
               ])
             ])

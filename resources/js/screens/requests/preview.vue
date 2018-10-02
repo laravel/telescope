@@ -39,7 +39,9 @@
         <tr>
             <td class="table-fit font-weight-bold">Status</td>
             <td>
-                {{slotProps.entry.content.response_status}}
+                <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(slotProps.entry.content.response_status)">
+                    {{slotProps.entry.content.response_status}}
+                </span>
             </td>
         </tr>
         </template>
