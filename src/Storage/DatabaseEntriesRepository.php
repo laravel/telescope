@@ -316,13 +316,25 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
             return;
         }
 
-        EntryModel::where('type', EntryType::DUMP)
-            ->whereNotIn('sequence', function ($query) {
+        $this->prune(EntryType::DUMP, 50);
+    }
+
+    /**
+     * Prune the entries of the given type.
+     *
+     * @param  string  $type
+     * @param  int  $limit
+     * @return void
+     */
+    public function pruneEntries($type, $limit)
+    {
+        EntryModel::where('type', $type)
+            ->whereNotIn('sequence', function ($query) use ($type, $limit) {
                 $query->select('sequence')->fromSub(
                     EntryModel::select('sequence')->orderBy('sequence', 'desc')
-                            ->where('type', EntryType::DUMP)
-                            ->limit(50)->toBase(),
-                    'dumps_temp'
+                            ->where('type', $type)
+                            ->limit($limit)->toBase(),
+                    'entries_temp'
                 );
             })->delete();
     }
