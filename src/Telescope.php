@@ -163,8 +163,15 @@ class Telescope
      */
     protected static function record(string $type, IncomingEntry $entry)
     {
-        if (static::$shouldRecord) {
-            static::$entriesQueue[] = $entry->type($type);
+        if (! static::$shouldRecord) {
+            return;
+        }
+
+        $entry->type($type)
+              ->tags(static::$tagUsing ? call_user_func(static::$tagUsing, $entry) : []);
+
+        if (collect(static::$filterUsing)->every->__invoke($entry)) {
+            static::$entriesQueue[] = $entry;
         }
     }
 
@@ -406,31 +413,10 @@ class Telescope
                     $entry->user(auth()->user());
                 }
 
-                if ($tagger = static::$tagUsing) {
-                    $entry->tags($tagger($entry));
-                }
-
                 if ($entry->isDump()) {
                     $entry->assignEntryPointFromBatch(static::$entriesQueue);
                 }
-            })->when(! empty(static::$filterUsing), function ($entries) {
-                return static::applyFilters($entries);
             });
-    }
-
-    /**
-     * Apply the filter callbacks to the given collection.
-     *
-     * @param  \Illuminate\Support\Collection  $entries
-     * @return \Illuminate\Support\Collection
-     */
-    protected static function applyFilters(Collection $entries)
-    {
-        foreach (static::$filterUsing as $filter) {
-            $entries = $entries->filter($filter);
-        }
-
-        return $entries;
     }
 
     /**
