@@ -5029,7 +5029,8 @@ module.exports = {
             if (action == 'deleted' || action == 'forceDeleted') return 'danger';
         },
         requestStatusClass: function requestStatusClass(status) {
-            if (status < 400) return 'success';
+            if (status < 300) return 'secondary';
+            if (status < 400) return 'info';
             if (status < 500) return 'warning';
             if (status >= 500) return 'danger';
         },
@@ -64726,7 +64727,8 @@ var render = function() {
                   ? _c(
                       "span",
                       {
-                        staticClass: "badge badge-info font-weight-light ml-2"
+                        staticClass:
+                          "badge badge-secondary font-weight-light ml-2"
                       },
                       [
                         _vm._v(
@@ -64937,7 +64939,8 @@ var render = function() {
                   ? _c(
                       "span",
                       {
-                        staticClass: "badge badge-info font-weight-light ml-2"
+                        staticClass:
+                          "badge badge-secondary font-weight-light ml-2"
                       },
                       [_vm._v("\n                Broadcast\n            ")]
                     )
@@ -68688,11 +68691,25 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(slotProps.entry.content.time) +
-                    "ms\n            "
-                )
+                slotProps.entry.content.slow
+                  ? _c(
+                      "span",
+                      { staticClass: "badge badge-danger font-weight-light" },
+                      [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(slotProps.entry.content.time) +
+                            "ms\n                "
+                        )
+                      ]
+                    )
+                  : _c("span", [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(slotProps.entry.content.time) +
+                          "ms\n                "
+                      )
+                    ])
               ])
             ])
           ]
@@ -69305,10 +69322,14 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_entriesStyles__ = __webpack_require__(3);
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_entriesStyles__["a" /* default */]],
+
     data: function data() {
         return {
             entry: null,
@@ -69344,10 +69365,21 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(slotProps.entry.content.method) +
-                    "\n        "
+                _c(
+                  "span",
+                  {
+                    staticClass: "badge font-weight-light",
+                    class:
+                      "badge-" +
+                      _vm.requestMethodClass(slotProps.entry.content.method)
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(slotProps.entry.content.method) +
+                        "\n            "
+                    )
+                  ]
                 )
               ])
             ]),
@@ -69372,10 +69404,23 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(slotProps.entry.content.response_status) +
-                    "\n        "
+                _c(
+                  "span",
+                  {
+                    staticClass: "badge font-weight-light",
+                    class:
+                      "badge-" +
+                      _vm.requestStatusClass(
+                        slotProps.entry.content.response_status
+                      )
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(slotProps.entry.content.response_status) +
+                        "\n            "
+                    )
+                  ]
                 )
               ])
             ])
@@ -77924,6 +77969,26 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("li", { staticClass: "nav-item" }, [
+            _vm.jobs.length
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    class: { active: _vm.currentTab == "jobs" },
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.currentTab = "jobs"
+                      }
+                    }
+                  },
+                  [_vm._v("Jobs (" + _vm._s(_vm.jobs.length) + ")")]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "nav-item" }, [
             _vm.events.length
               ? _c(
                   "a",
@@ -77979,26 +78044,6 @@ var render = function() {
                     }
                   },
                   [_vm._v("Redis (" + _vm._s(_vm.redis.length) + ")")]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _vm.jobs.length
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.currentTab == "jobs" },
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.currentTab = "jobs"
-                      }
-                    }
-                  },
-                  [_vm._v("Jobs (" + _vm._s(_vm.jobs.length) + ")")]
                 )
               : _vm._e()
           ])
@@ -78185,7 +78230,28 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "table-fit" }, [
-                      _vm._v(_vm._s(entry.content.time) + "ms")
+                      entry.content.slow
+                        ? _c(
+                            "span",
+                            {
+                              staticClass:
+                                "badge badge-danger font-weight-light"
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(entry.content.time) +
+                                  "ms\n                    "
+                              )
+                            ]
+                          )
+                        : _c("span", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(entry.content.time) +
+                                "ms\n                    "
+                            )
+                          ])
                     ]),
                     _vm._v(" "),
                     _c(

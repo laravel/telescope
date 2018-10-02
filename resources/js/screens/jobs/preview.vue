@@ -30,7 +30,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Status</td>
                 <td>
-                    <span class="badge font-weight-light" :class="'badge-'+jobStatusClass(slotProps.entry.content.status)">
+                    <span class="badge font-weight-light" :class="'badge-' + jobStatusClass(slotProps.entry.content.status)">
                         {{slotProps.entry.content.status}}
                     </span>
                 </td>

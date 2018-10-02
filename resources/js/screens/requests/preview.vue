@@ -1,7 +1,12 @@
 <script type="text/ecmascript-6">
     import axios from 'axios';
+    import StylesMixin from './../../mixins/entriesStyles';
 
     export default {
+        mixins: [
+            StylesMixin,
+        ],
+
         data() {
             return {
                 entry: null,
@@ -18,7 +23,9 @@
         <tr>
             <td class="table-fit font-weight-bold">Method</td>
             <td>
-                {{slotProps.entry.content.method}}
+                <span class="badge font-weight-light" :class="'badge-'+requestMethodClass(slotProps.entry.content.method)">
+                    {{slotProps.entry.content.method}}
+                </span>
             </td>
         </tr>
 
@@ -32,7 +39,9 @@
         <tr>
             <td class="table-fit font-weight-bold">Status</td>
             <td>
-                {{slotProps.entry.content.response_status}}
+                <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(slotProps.entry.content.response_status)">
+                    {{slotProps.entry.content.response_status}}
+                </span>
             </td>
         </tr>
         </template>

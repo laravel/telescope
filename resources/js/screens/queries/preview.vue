@@ -43,7 +43,13 @@
             <tr>
                 <td class="table-fit font-weight-bold">Duration</td>
                 <td>
-                    {{slotProps.entry.content.time}}ms
+                    <span class="badge badge-danger font-weight-light" v-if="slotProps.entry.content.slow">
+                        {{slotProps.entry.content.time}}ms
+                    </span>
+
+                    <span v-else>
+                        {{slotProps.entry.content.time}}ms
+                    </span>
                 </td>
             </tr>
         </template>
