@@ -21,8 +21,8 @@
         },
 
         methods:{
-            formatSQL(sql, params){
-                return sqlFormatter.format(sql,{
+            formatSQL(sql, params) {
+                return sqlFormatter.format(sql, {
                     params: _.map(params, param => _.isString(param) ? '"'+param+'"' : param)
                 });
             }
