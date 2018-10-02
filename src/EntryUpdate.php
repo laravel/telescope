@@ -71,4 +71,18 @@ class EntryUpdate
 
         return $this;
     }
+
+    /**
+     * Remove tags from the entry.
+     *
+     * @param  array  $tags
+     * @return $this
+     */
+    public function removeTags(array $tags){
+        $this->tagsChanges['removed'] = array_unique(
+            array_merge($this->tagsChanges['removed'], $tags)
+        );
+
+        return $this;
+    }
 }

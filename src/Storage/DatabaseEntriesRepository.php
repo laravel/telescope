@@ -214,6 +214,13 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
                 })->toArray()
             );
         }
+
+        collect($entry->tagsChanges['removed'])->each(function ($tag) use ($entry) {
+            $this->table('telescope_entries_tags')->where([
+                'entry_uuid' => $entry->uuid,
+                'tag' => $tag,
+            ])->delete();
+        });
     }
 
     /**
