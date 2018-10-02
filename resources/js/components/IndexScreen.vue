@@ -43,9 +43,7 @@
             this.loadEntries((entries) => {
                 this.entries = entries;
 
-                this.newEntriesTimeout = setTimeout(() => {
-                    this.checkForNewEntries();
-                }, this.newEntriesTimeoutInSeconds);
+                this.checkForNewEntries();
 
                 this.ready = true;
             });
@@ -81,9 +79,7 @@
                 this.loadEntries((entries) => {
                     this.entries = entries;
 
-                    this.newEntriesTimeout = setTimeout(() => {
-                        this.checkForNewEntries();
-                    }, this.newEntriesTimeoutInSeconds);
+                    this.checkForNewEntries();
 
                     this.ready = true;
                 });
@@ -117,18 +113,18 @@
              * Keep checking if there are new entries.
              */
             checkForNewEntries(){
-                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1' + '&family_hash=' + this.familyHash)
-                        .then(response => {
-                            if (response.data.entries.length && !this.entries.length) {
-                                this.loadNewEntries();
-                            } else if (response.data.entries.length && _.first(response.data.entries).id != _.first(this.entries).id) {
-                                this.hasNewEntries = true;
-                            } else {
-                                this.newEntriesTimeout = setTimeout(() => {
+                this.newEntriesTimeout = setTimeout(() => {
+                    axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1' + '&family_hash=' + this.familyHash)
+                            .then(response => {
+                                if (response.data.entries.length && !this.entries.length) {
+                                    this.loadNewEntries();
+                                } else if (response.data.entries.length && _.first(response.data.entries).id != _.first(this.entries).id) {
+                                    this.hasNewEntries = true;
+                                } else {
                                     this.checkForNewEntries();
-                                }, this.newEntriesTimeoutInSeconds);
-                            }
-                        })
+                                }
+                            })
+                }, this.newEntriesTimeoutInSeconds);
             },
 
 
@@ -147,9 +143,7 @@
                     this.loadEntries((entries) => {
                         this.entries = entries;
 
-                        this.newEntriesTimeout = setTimeout(() => {
-                            this.checkForNewEntries();
-                        }, this.newEntriesTimeoutInSeconds);
+                        this.checkForNewEntries();
                     });
                 });
             },
@@ -189,11 +183,9 @@
 
                     this.loadingNewEntries = false;
 
-                    this.newEntriesTimeout = setTimeout(() => {
-                        this.checkForNewEntries();
-                    }, this.newEntriesTimeoutInSeconds);
+                    this.checkForNewEntries();
                 });
-            }
+            },
         }
     }
 </script>
