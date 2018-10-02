@@ -191,6 +191,28 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
                             ->where('uuid', $update->uuid)
                             ->where('type', $update->type)
                             ->update(['content' => $content]);
+
+            $this->updateTags($update);
+        }
+    }
+
+    /**
+     * Update tags of the given entry.
+     *
+     * @param  \Laravel\Telescope\EntryUpdate  $entry
+     * @return void
+     */
+    protected function updateTags($entry)
+    {
+        if (! empty($entry->tagsChanges['added'])) {
+            $this->table('telescope_entries_tags')->insert(
+                collect($entry->tagsChanges['added'])->map(function ($tag) use ($entry) {
+                    return [
+                        'entry_uuid' => $entry->uuid,
+                        'tag' => $tag,
+                    ];
+                })->toArray()
+            );
         }
     }
 
