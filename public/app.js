@@ -64727,7 +64727,8 @@ var render = function() {
                   ? _c(
                       "span",
                       {
-                        staticClass: "badge badge-info font-weight-light ml-2"
+                        staticClass:
+                          "badge badge-secondary font-weight-light ml-2"
                       },
                       [
                         _vm._v(
@@ -64938,7 +64939,8 @@ var render = function() {
                   ? _c(
                       "span",
                       {
-                        staticClass: "badge badge-info font-weight-light ml-2"
+                        staticClass:
+                          "badge badge-secondary font-weight-light ml-2"
                       },
                       [_vm._v("\n                Broadcast\n            ")]
                     )
