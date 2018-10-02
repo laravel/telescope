@@ -4,7 +4,6 @@ namespace Laravel\Telescope\Watchers;
 
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\ExtractTags;
-use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\ExceptionContext;
 use Illuminate\Log\Events\MessageLogged;
 use Laravel\Telescope\IncomingExceptionEntry;

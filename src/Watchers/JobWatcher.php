@@ -3,7 +3,6 @@
 namespace Laravel\Telescope\Watchers;
 
 use Illuminate\Queue\Queue;
-use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\EntryUpdate;

@@ -64,7 +64,8 @@ class EntryUpdate
      * @param  array  $changes
      * @return $this
      */
-    public function change(array $changes){
+    public function change(array $changes)
+    {
         $this->changes = array_merge($this->changes, $changes);
 
         return $this;
@@ -76,7 +77,8 @@ class EntryUpdate
      * @param  array  $tags
      * @return $this
      */
-    public function addTags(array $tags){
+    public function addTags(array $tags)
+    {
         $this->tagsChanges['added'] = array_unique(
             array_merge($this->tagsChanges['added'], $tags)
         );
@@ -90,7 +92,8 @@ class EntryUpdate
      * @param  array  $tags
      * @return $this
      */
-    public function removeTags(array $tags){
+    public function removeTags(array $tags)
+    {
         $this->tagsChanges['removed'] = array_unique(
             array_merge($this->tagsChanges['removed'], $tags)
         );

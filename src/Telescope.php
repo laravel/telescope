@@ -5,7 +5,6 @@ namespace Laravel\Telescope;
 use Closure;
 use Exception;
 use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
@@ -431,7 +430,7 @@ class Telescope
     {
         return collect(static::$updatesQueue)
             ->each(function ($entry) use ($batchId) {
-                $entry->change(['modification_batch_id' => $batchId]);
+                $entry->change(['updated_batch_id' => $batchId]);
             });
     }
 

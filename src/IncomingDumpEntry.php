@@ -45,7 +45,7 @@ class IncomingDumpEntry extends IncomingEntry
      */
     private function entryPointDescription($entryPoint)
     {
-        switch ($entryPoint->type){
+        switch ($entryPoint->type) {
             case (EntryType::REQUEST):
                 return $entryPoint->content['method'].' '.$entryPoint->content['uri'];
                 break;

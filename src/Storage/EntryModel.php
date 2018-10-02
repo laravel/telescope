@@ -2,7 +2,6 @@
 
 namespace Laravel\Telescope\Storage;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class EntryModel extends Model
