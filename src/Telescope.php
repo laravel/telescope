@@ -383,8 +383,10 @@ class Telescope
         }
 
         try {
-            $storage->store(static::collectEntries(Str::orderedUuid()));
-            $storage->update(collect(static::$updatesQueue));
+            $batchId = Str::orderedUuid()->toString();
+
+            $storage->store(static::collectEntries($batchId));
+            $storage->update(static::collectUpdates($batchId));
 
             if ($storage instanceof TerminableRepository) {
                 $storage->terminate();
@@ -398,7 +400,7 @@ class Telescope
     }
 
     /**
-     * Collection the entries for storage.
+     * Collect the entries for storage.
      *
      * @param  string  $batchId
      * @return \Illuminate\Support\Collection
@@ -416,6 +418,20 @@ class Telescope
                 if ($entry->isDump()) {
                     $entry->assignEntryPointFromBatch(static::$entriesQueue);
                 }
+            });
+    }
+
+    /**
+     * Collect the updated entries for storage.
+     *
+     * @param  string  $batchId
+     * @return \Illuminate\Support\Collection
+     */
+    protected static function collectUpdates($batchId)
+    {
+        return collect(static::$updatesQueue)
+            ->each(function ($entry) use ($batchId) {
+                $entry->change(['modification_batch_id' => $batchId]);
             });
     }
 

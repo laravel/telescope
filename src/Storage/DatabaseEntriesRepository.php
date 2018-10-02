@@ -48,7 +48,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
      */
     public function find($id) : EntryResult
     {
-        $entry = EntryModel::on($this->connection)->whereUuid($id)->first();
+        $entry = EntryModel::on($this->connection)->whereUuid($id)->firstOrFail();
 
         $tags = $this->table('telescope_entries_tags')
                         ->where('entry_uuid', $id)

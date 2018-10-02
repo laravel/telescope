@@ -59,6 +59,18 @@ class EntryUpdate
     }
 
     /**
+     * Set the properties that should be updated.
+     *
+     * @param  array  $changes
+     * @return $this
+     */
+    public function change(array $changes){
+        $this->changes = array_merge($this->changes, $changes);
+
+        return $this;
+    }
+
+    /**
      * Add tags to the entry.
      *
      * @param  array  $tags
