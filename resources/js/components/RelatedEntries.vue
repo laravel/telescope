@@ -110,6 +110,9 @@
                 <a class="nav-link" :class="{active: currentTab=='models'}" href="#" v-on:click.prevent="currentTab='models'" v-if="models.length">Models ({{models.length}})</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" :class="{active: currentTab=='jobs'}" href="#" v-on:click.prevent="currentTab='jobs'" v-if="jobs.length">Jobs ({{jobs.length}})</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" :class="{active: currentTab=='events'}" href="#" v-on:click.prevent="currentTab='events'" v-if="events.length">Events ({{events.length}})</a>
             </li>
             <li class="nav-item">
@@ -117,9 +120,6 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" :class="{active: currentTab=='redis'}" href="#" v-on:click.prevent="currentTab='redis'" v-if="redis.length">Redis ({{redis.length}})</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" :class="{active: currentTab=='jobs'}" href="#" v-on:click.prevent="currentTab='jobs'" v-if="jobs.length">Jobs ({{jobs.length}})</a>
             </li>
         </ul>
         <div>
