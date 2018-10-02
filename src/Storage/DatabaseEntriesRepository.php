@@ -302,21 +302,9 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     {
         $this->monitoredTags = null;
 
-        $this->pruneDumps();
-    }
-
-    /**
-     * Prune the dump entries so the table doesn't get too big.
-     *
-     * @return void
-     */
-    protected function pruneDumps()
-    {
-        if (! Telescope::hasWatcher(DumpWatcher::class)) {
-            return;
+        if (Telescope::hasWatcher(DumpWatcher::class)) {
+            $this->prune(EntryType::DUMP, 50);
         }
-
-        $this->prune(EntryType::DUMP, 50);
     }
 
     /**
