@@ -78956,9 +78956,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         this.loadEntries(function (entries) {
             _this.entries = entries;
 
-            _this.newEntriesTimeout = setTimeout(function () {
-                _this.checkForNewEntries();
-            }, _this.newEntriesTimeoutInSeconds);
+            _this.checkForNewEntries();
 
             _this.ready = true;
         });
@@ -78996,9 +78994,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             this.loadEntries(function (entries) {
                 _this2.entries = entries;
 
-                _this2.newEntriesTimeout = setTimeout(function () {
-                    _this2.checkForNewEntries();
-                }, _this2.newEntriesTimeoutInSeconds);
+                _this2.checkForNewEntries();
 
                 _this2.ready = true;
             });
@@ -79035,17 +79031,17 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         checkForNewEntries: function checkForNewEntries() {
             var _this4 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1' + '&family_hash=' + this.familyHash).then(function (response) {
-                if (response.data.entries.length && !_this4.entries.length) {
-                    _this4.loadNewEntries();
-                } else if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this4.entries).id) {
-                    _this4.hasNewEntries = true;
-                } else {
-                    _this4.newEntriesTimeout = setTimeout(function () {
+            this.newEntriesTimeout = setTimeout(function () {
+                __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + _this4.resource + '?tag=' + _this4.tag + '&take=1' + '&family_hash=' + _this4.familyHash).then(function (response) {
+                    if (response.data.entries.length && !_this4.entries.length) {
+                        _this4.loadNewEntries();
+                    } else if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this4.entries).id) {
+                        _this4.hasNewEntries = true;
+                    } else {
                         _this4.checkForNewEntries();
-                    }, _this4.newEntriesTimeoutInSeconds);
-                }
-            });
+                    }
+                });
+            }, this.newEntriesTimeoutInSeconds);
         },
 
 
@@ -79066,9 +79062,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 _this5.loadEntries(function (entries) {
                     _this5.entries = entries;
 
-                    _this5.newEntriesTimeout = setTimeout(function () {
-                        _this5.checkForNewEntries();
-                    }, _this5.newEntriesTimeoutInSeconds);
+                    _this5.checkForNewEntries();
                 });
             });
         },
@@ -79114,9 +79108,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
                 _this7.loadingNewEntries = false;
 
-                _this7.newEntriesTimeout = setTimeout(function () {
-                    _this7.checkForNewEntries();
-                }, _this7.newEntriesTimeoutInSeconds);
+                _this7.checkForNewEntries();
             });
         }
     }
