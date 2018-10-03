@@ -209,6 +209,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a scheduled task.
+     *
+     * @return bool
+     */
+    public function isScheduledTask()
+    {
+        return $this->type === EntryType::SCHEDULED_TASK;
+    }
+
+    /**
      * Get the family look-up hash for the incoming entry.
      *
      * @return string|null
