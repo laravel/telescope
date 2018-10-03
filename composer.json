@@ -1,5 +1,5 @@
 {
-    "name": "Laravel/telescope",
+    "name": "laravel/telescope",
     "description": "A monitoring tool for Laravel.",
     "keywords": [
         "laravel",
