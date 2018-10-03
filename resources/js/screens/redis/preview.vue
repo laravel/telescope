@@ -33,7 +33,7 @@
             <div class="card mt-5">
                 <div class="card-header"><h5>Command</h5></div>
 
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.command}}</pre>
+                <pre class="code-bg p-4 mb-0 text-white">{{slotProps.entry.content.command}}</pre>
             </div>
         </div>
     </preview-screen>

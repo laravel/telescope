@@ -61459,7 +61459,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "pre",
-    { staticClass: "bg-dark px-4 mb-0 text-white" },
+    { staticClass: "code-bg px-4 mb-0 text-white" },
     [
       _vm._v("    "),
       _vm._l(_vm.lines, function(line, number) {
@@ -61775,7 +61775,7 @@ var render = function() {
                           expression: "currentTab=='message'"
                         }
                       ],
-                      staticClass: "bg-dark p-4 mb-0 text-white"
+                      staticClass: "code-bg p-4 mb-0 text-white"
                     },
                     [_vm._v(_vm._s(slotProps.entry.content.message))]
                   ),
@@ -63113,7 +63113,7 @@ var render = function() {
     _vm.ready && _vm.entries.length > 0
       ? _c(
           "div",
-          { staticClass: "bg-dark px-3 pt-3" },
+          { staticClass: "code-bg px-3 pt-3" },
           [
             _c(
               "transition-group",
@@ -63462,7 +63462,7 @@ var render = function() {
                         expression: "currentTab=='message'"
                       }
                     ],
-                    staticClass: "bg-dark p-4 mb-0 text-white"
+                    staticClass: "code-bg p-4 mb-0 text-white"
                   },
                   [_vm._v(_vm._s(slotProps.entry.content.message))]
                 ),
@@ -63478,7 +63478,7 @@ var render = function() {
                         expression: "currentTab=='context'"
                       }
                     ],
-                    staticClass: "bg-dark p-4 mb-0 text-white"
+                    staticClass: "code-bg p-4 mb-0 text-white"
                   },
                   [
                     _c("tree-view", {
@@ -64333,7 +64333,7 @@ var render = function() {
                             expression: "currentTab=='data'"
                           }
                         ],
-                        staticClass: "bg-dark p-4 mb-0 text-white"
+                        staticClass: "code-bg p-4 mb-0 text-white"
                       },
                       [
                         _c("tree-view", {
@@ -64358,7 +64358,7 @@ var render = function() {
                                 expression: "currentTab=='exception'"
                               }
                             ],
-                            staticClass: "bg-dark p-4 mb-0 text-white"
+                            staticClass: "code-bg p-4 mb-0 text-white"
                           },
                           [
                             _vm._v(
@@ -64797,7 +64797,7 @@ var render = function() {
                         expression: "currentTab=='data'"
                       }
                     ],
-                    staticClass: "bg-dark p-4 mb-0 text-white"
+                    staticClass: "code-bg p-4 mb-0 text-white"
                   },
                   [
                     _c("tree-view", {
@@ -65175,7 +65175,7 @@ var render = function() {
                     _c("h5", [_vm._v("Value")])
                   ]),
                   _vm._v(" "),
-                  _c("pre", { staticClass: "bg-dark p-4 mb-0 text-white" }, [
+                  _c("pre", { staticClass: "code-bg p-4 mb-0 text-white" }, [
                     _vm._v(_vm._s(slotProps.entry.content.value))
                   ])
                 ])
@@ -68726,7 +68726,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "pre",
-                { ref: "sqlcode", staticClass: "bg-dark p-4 mb-0 text-white" },
+                { ref: "sqlcode", staticClass: "code-bg p-4 mb-0 text-white" },
                 [
                   _vm._v(
                     _vm._s(
@@ -69067,7 +69067,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "bg-dark p-4 mb-0 text-white" },
+                    { staticClass: "code-bg p-4 mb-0 text-white" },
                     [
                       _c("tree-view", {
                         attrs: {
@@ -69322,14 +69322,10 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_entriesStyles__ = __webpack_require__(3);
-
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_entriesStyles__["a" /* default */]],
-
     data: function data() {
         return {
             entry: null,
@@ -69365,21 +69361,10 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _c(
-                  "span",
-                  {
-                    staticClass: "badge font-weight-light",
-                    class:
-                      "badge-" +
-                      _vm.requestMethodClass(slotProps.entry.content.method)
-                  },
-                  [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(slotProps.entry.content.method) +
-                        "\n            "
-                    )
-                  ]
+                _vm._v(
+                  "\n            " +
+                    _vm._s(slotProps.entry.content.method) +
+                    "\n        "
                 )
               ])
             ]),
@@ -69404,23 +69389,10 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", [
-                _c(
-                  "span",
-                  {
-                    staticClass: "badge font-weight-light",
-                    class:
-                      "badge-" +
-                      _vm.requestStatusClass(
-                        slotProps.entry.content.response_status
-                      )
-                  },
-                  [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(slotProps.entry.content.response_status) +
-                        "\n            "
-                    )
-                  ]
+                _vm._v(
+                  "\n            " +
+                    _vm._s(slotProps.entry.content.response_status) +
+                    "\n        "
                 )
               ])
             ])
@@ -69493,7 +69465,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "bg-dark p-4 mb-0 text-white" },
+                  { staticClass: "code-bg p-4 mb-0 text-white" },
                   [
                     _vm.currentTab == "payload"
                       ? _c("tree-view", {
@@ -69917,7 +69889,7 @@ var render = function() {
                           expression: "currentTab=='arguments'"
                         }
                       ],
-                      staticClass: "bg-dark p-4 mb-0 text-white"
+                      staticClass: "code-bg p-4 mb-0 text-white"
                     },
                     [
                       _c("tree-view", {
@@ -69941,7 +69913,7 @@ var render = function() {
                           expression: "currentTab=='options'"
                         }
                       ],
-                      staticClass: "bg-dark p-4 mb-0 text-white"
+                      staticClass: "code-bg p-4 mb-0 text-white"
                     },
                     [
                       _c("tree-view", {
@@ -70300,7 +70272,7 @@ var render = function() {
                     _c("h5", [_vm._v("Output")])
                   ]),
                   _vm._v(" "),
-                  _c("pre", { staticClass: "bg-dark p-4 mb-0 text-white" }, [
+                  _c("pre", { staticClass: "code-bg p-4 mb-0 text-white" }, [
                     _vm._v(_vm._s(slotProps.entry.content.output))
                   ])
                 ])
@@ -70602,7 +70574,7 @@ var render = function() {
                 _c("h5", [_vm._v("Command")])
               ]),
               _vm._v(" "),
-              _c("pre", { staticClass: "bg-dark p-4 mb-0 text-white" }, [
+              _c("pre", { staticClass: "code-bg p-4 mb-0 text-white" }, [
                 _vm._v(_vm._s(slotProps.entry.content.command))
               ])
             ])

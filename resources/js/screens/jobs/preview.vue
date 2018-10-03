@@ -30,7 +30,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Status</td>
                 <td>
-                    <span class="badge font-weight-light" :class="'badge-' + jobStatusClass(slotProps.entry.content.status)">
+                    <span class="badge font-weight-light" :class="'badge-'+jobStatusClass(slotProps.entry.content.status)">
                         {{slotProps.entry.content.status}}
                     </span>
                 </td>
@@ -90,10 +90,10 @@
                     </li>
                 </ul>
                 <div>
-                    <div class="bg-dark p-4 mb-0 text-white" v-show="currentTab=='data'">
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='data'">
                         <tree-view :data="slotProps.entry.content.data" :options="{maxDepth: 3}"></tree-view>
                     </div>
-                    <pre class="bg-dark p-4 mb-0 text-white" v-if="slotProps.entry.content.exception" v-show="currentTab=='exception'">{{slotProps.entry.content.exception.message}}</pre>
+                    <pre class="code-bg p-4 mb-0 text-white" v-if="slotProps.entry.content.exception" v-show="currentTab=='exception'">{{slotProps.entry.content.exception.message}}</pre>
                     <stack-trace :trace="slotProps.entry.content.exception.trace" v-if="slotProps.entry.content.exception" v-show="currentTab=='trace'"></stack-trace>
                     <code-preview
                             v-if="slotProps.entry.content.exception"

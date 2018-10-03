@@ -37,7 +37,7 @@
                 </ul>
                 <div>
                     <!-- Event Payload -->
-                    <div class="bg-dark p-4 mb-0 text-white" v-show="currentTab=='data'">
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='data'">
                         <tree-view :data="slotProps.entry.content.payload" :options="{maxDepth: 3}"></tree-view>
                     </div>
 

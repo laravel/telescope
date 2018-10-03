@@ -48,10 +48,10 @@
                 </ul>
                 <div>
                     <!-- Log Message -->
-                    <pre class="bg-dark p-4 mb-0 text-white" v-show="currentTab=='message'">{{slotProps.entry.content.message}}</pre>
+                    <pre class="code-bg p-4 mb-0 text-white" v-show="currentTab=='message'">{{slotProps.entry.content.message}}</pre>
 
                     <!-- Context -->
-                    <div class="bg-dark p-4 mb-0 text-white" v-show="currentTab=='context'">
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='context'">
                         <tree-view :data="slotProps.entry.content.context" :options="{maxDepth: 3}"></tree-view>
                     </div>
                 </div>

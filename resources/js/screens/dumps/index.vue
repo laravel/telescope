@@ -69,7 +69,7 @@
             <span>No entries found.</span>
         </div>
 
-        <div v-if="ready && entries.length > 0" class="bg-dark px-3 pt-3">
+        <div v-if="ready && entries.length > 0" class="code-bg px-3 pt-3">
             <transition-group tag="div" name="list">
                 <div v-for="entry in entries" :key="entry.id" class="mb-4">
                     <div class="entryPointDescription d-flex justify-content-between align-items-center">

@@ -41,7 +41,7 @@
             <div class="card mt-5" v-if="slotProps.entry.content.changes">
                 <div class="card-header"><h5>Changes</h5></div>
 
-                <div class="bg-dark p-4 mb-0 text-white">
+                <div class="code-bg p-4 mb-0 text-white">
                     <tree-view :data="slotProps.entry.content.changes" :options="{maxDepth: 3}"></tree-view>
                 </div>
             </div>

@@ -47,7 +47,7 @@
             <div class="card mt-5" v-if="slotProps.entry.content.value">
                 <div class="card-header"><h5>Value</h5></div>
 
-                <pre class="bg-dark p-4 mb-0 text-white">{{slotProps.entry.content.value}}</pre>
+                <pre class="code-bg p-4 mb-0 text-white">{{slotProps.entry.content.value}}</pre>
             </div>
         </div>
     </preview-screen>

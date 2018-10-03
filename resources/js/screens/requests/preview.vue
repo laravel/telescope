@@ -1,12 +1,7 @@
 <script type="text/ecmascript-6">
     import axios from 'axios';
-    import StylesMixin from './../../mixins/entriesStyles';
 
     export default {
-        mixins: [
-            StylesMixin,
-        ],
-
         data() {
             return {
                 entry: null,
@@ -23,9 +18,7 @@
         <tr>
             <td class="table-fit font-weight-bold">Method</td>
             <td>
-                <span class="badge font-weight-light" :class="'badge-'+requestMethodClass(slotProps.entry.content.method)">
-                    {{slotProps.entry.content.method}}
-                </span>
+                {{slotProps.entry.content.method}}
             </td>
         </tr>
 
@@ -39,9 +32,7 @@
         <tr>
             <td class="table-fit font-weight-bold">Status</td>
             <td>
-                <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(slotProps.entry.content.response_status)">
-                    {{slotProps.entry.content.response_status}}
-                </span>
+                {{slotProps.entry.content.response_status}}
             </td>
         </tr>
         </template>
@@ -59,7 +50,7 @@
                         <a class="nav-link" :class="{active: currentTab=='response'}" href="#" v-on:click.prevent="currentTab='response'">Response</a>
                     </li>
                 </ul>
-                <div class="bg-dark p-4 mb-0 text-white">
+                <div class="code-bg p-4 mb-0 text-white">
                     <tree-view :data="slotProps.entry.content.payload" :options="{maxDepth: 3}" v-if="currentTab=='payload'"></tree-view>
                     <tree-view :data="slotProps.entry.content.headers" :options="{maxDepth: 3}" v-if="currentTab=='headers'"></tree-view>
                     <tree-view :data="slotProps.entry.content.response" :options="{maxDepth: 3}" v-if="currentTab=='response'"></tree-view>
