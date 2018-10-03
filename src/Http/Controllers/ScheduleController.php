@@ -13,6 +13,6 @@ class ScheduleController extends EntryController
      */
     protected function entryType()
     {
-        return EntryType::SCHEDULED_COMMAND;
+        return EntryType::SCHEDULED_TASK;
     }
 }

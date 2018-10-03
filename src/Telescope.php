@@ -341,7 +341,7 @@ class Telescope
 
     public static function recordScheduledCommand(IncomingEntry $entry)
     {
-        return static::record(EntryType::SCHEDULED_COMMAND, $entry);
+        return static::record(EntryType::SCHEDULED_TASK, $entry);
     }
 
     /**
@@ -457,7 +457,7 @@ class Telescope
         $storage->pruneEntries(EntryType::NOTIFICATION, $limit);
         $storage->pruneEntries(EntryType::QUERY, $limit);
         $storage->pruneEntries(EntryType::REQUEST, $limit);
-        $storage->pruneEntries(EntryType::SCHEDULED_COMMAND, $limit);
+        $storage->pruneEntries(EntryType::SCHEDULED_TASK, $limit);
         $storage->pruneEntries(EntryType::REDIS, $limit);
         $storage->pruneEntries(EntryType::MODEL, $limit);
 
