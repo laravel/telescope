@@ -23,9 +23,11 @@
                 hasNewEntries: false,
                 entriesPerRequest: 50,
                 newEntriesTimeout: null,
+                updateEntriesTimeout: null,
                 loadingNewEntries: false,
                 loadingMoreEntries: false,
-                newEntriesTimeoutInSeconds: 5000,
+                newEntriesTimer: 5000,
+                updateEntriesTimer: 5000,
             };
         },
 
@@ -47,6 +49,8 @@
 
                 this.ready = true;
             });
+
+            this.updateEntries();
         },
 
 
@@ -55,6 +59,7 @@
          */
         destroyed() {
             clearTimeout(this.newEntriesTimeout);
+            clearTimeout(this.updateEntriesTimeout);
         },
 
 
@@ -63,7 +68,6 @@
                 clearTimeout(this.newEntriesTimeout);
 
                 this.hasNewEntries = false;
-
                 this.lastEntryIndex = '';
 
                 if (!this.$route.query.family_hash) {
@@ -89,21 +93,20 @@
 
         methods: {
             loadEntries(after){
-                axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&family_hash=' + this.familyHash).then(response => {
-                    if (response.data.entries.length) {
-                        this.lastEntryIndex = _.last(response.data.entries).sequence;
-                    }
+                axios.post('/telescope/telescope-api/' + this.resource +
+                        '?tag=' + this.tag +
+                        '&before=' + this.lastEntryIndex +
+                        '&take=' + this.entriesPerRequest +
+                        '&family_hash=' + this.familyHash
+                ).then(response => {
+                    this.lastEntryIndex = response.data.entries.length ? _.last(response.data.entries).sequence : this.lastEntryIndex;
 
-                    if (response.data.entries.length < this.entriesPerRequest) {
-                        this.hasMoreEntries = false;
-                    } else {
-                        this.hasMoreEntries = true;
-                    }
+                    this.hasMoreEntries = response.data.entries.length >= this.entriesPerRequest;
 
                     if (_.isFunction(after)) {
-                        after(_.uniqBy(response.data.entries, entry => {
-                            return entry.family_hash || _.uniqueId();
-                        }));
+                        after(
+                                this.familyHash ? response.data.entries : _.uniqBy(response.data.entries, entry => entry.family_hash || _.uniqueId())
+                        );
                     }
                 })
             },
@@ -114,17 +117,20 @@
              */
             checkForNewEntries(){
                 this.newEntriesTimeout = setTimeout(() => {
-                    axios.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&take=1' + '&family_hash=' + this.familyHash)
-                            .then(response => {
-                                if (response.data.entries.length && !this.entries.length) {
-                                    this.loadNewEntries();
-                                } else if (response.data.entries.length && _.first(response.data.entries).id != _.first(this.entries).id) {
-                                    this.hasNewEntries = true;
-                                } else {
-                                    this.checkForNewEntries();
-                                }
-                            })
-                }, this.newEntriesTimeoutInSeconds);
+                    axios.post('/telescope/telescope-api/' + this.resource +
+                            '?tag=' + this.tag +
+                            '&take=1' +
+                            '&family_hash=' + this.familyHash
+                    ).then(response => {
+                        if (response.data.entries.length && !this.entries.length) {
+                            this.loadNewEntries();
+                        } else if (response.data.entries.length && _.first(response.data.entries).id != _.first(this.entries).id) {
+                            this.hasNewEntries = true;
+                        } else {
+                            this.checkForNewEntries();
+                        }
+                    })
+                }, this.newEntriesTimer);
             },
 
 
@@ -139,12 +145,6 @@
                     clearTimeout(this.newEntriesTimeout);
 
                     this.$router.push({query: _.assign({}, this.$route.query, {tag: this.tag})});
-
-                    this.loadEntries((entries) => {
-                        this.entries = entries;
-
-                        this.checkForNewEntries();
-                    });
                 });
             },
 
@@ -172,10 +172,6 @@
                 this.lastEntryIndex = '';
                 this.loadingNewEntries = true;
 
-                setTimeout(() => {
-                    $('.newItem').removeClass('newItem');
-                }, 2000);
-
                 clearTimeout(this.newEntriesTimeout);
 
                 this.loadEntries((entries) => {
@@ -186,6 +182,32 @@
                     this.checkForNewEntries();
                 });
             },
+
+
+            /**
+             * Update the existing entries if needed.
+             */
+            updateEntries(){
+                if (this.resource != 'jobs') return;
+
+                this.updateEntriesTimeout = setTimeout(() => {
+                    let uuids = _.chain(this.entries).filter(entry => entry.content.status == 'pending').map('id').value();
+
+                    if (uuids.length) {
+                        axios.post('/telescope/telescope-api/' + this.resource, {
+                            uuids: uuids
+                        }).then(response => {
+                            this.entries = _.map(this.entries, entry => {
+                                if (!_.includes(uuids, entry.id)) return entry;
+                                
+                                return _.find(response.data.entries, {id: entry.id});
+                            });
+                        })
+                    }
+
+                    this.updateEntries();
+                }, this.updateEntriesTimer);
+            }
         }
     }
 </script>

@@ -78906,9 +78906,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             hasNewEntries: false,
             entriesPerRequest: 50,
             newEntriesTimeout: null,
+            updateEntriesTimeout: null,
             loadingNewEntries: false,
             loadingMoreEntries: false,
-            newEntriesTimeoutInSeconds: 5000
+            newEntriesTimer: 5000,
+            updateEntriesTimer: 5000
         };
     },
 
@@ -78932,6 +78934,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
             _this.ready = true;
         });
+
+        this.updateEntries();
     },
 
 
@@ -78940,6 +78944,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
      */
     destroyed: function destroyed() {
         clearTimeout(this.newEntriesTimeout);
+        clearTimeout(this.updateEntriesTimeout);
     },
 
 
@@ -78950,7 +78955,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             clearTimeout(this.newEntriesTimeout);
 
             this.hasNewEntries = false;
-
             this.lastEntryIndex = '';
 
             if (!this.$route.query.family_hash) {
@@ -78977,19 +78981,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         loadEntries: function loadEntries(after) {
             var _this3 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&family_hash=' + this.familyHash).then(function (response) {
-                if (response.data.entries.length) {
-                    _this3.lastEntryIndex = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.last(response.data.entries).sequence;
-                }
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&family_hash=' + this.familyHash).then(function (response) {
+                _this3.lastEntryIndex = response.data.entries.length ? __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.last(response.data.entries).sequence : _this3.lastEntryIndex;
 
-                if (response.data.entries.length < _this3.entriesPerRequest) {
-                    _this3.hasMoreEntries = false;
-                } else {
-                    _this3.hasMoreEntries = true;
-                }
+                _this3.hasMoreEntries = response.data.entries.length >= _this3.entriesPerRequest;
 
                 if (__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.isFunction(after)) {
-                    after(__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.uniqBy(response.data.entries, function (entry) {
+                    after(_this3.familyHash ? response.data.entries : __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.uniqBy(response.data.entries, function (entry) {
                         return entry.family_hash || __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.uniqueId();
                     }));
                 }
@@ -79004,7 +79002,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             var _this4 = this;
 
             this.newEntriesTimeout = setTimeout(function () {
-                __WEBPACK_IMPORTED_MODULE_2_axios___default.a.get('/telescope/telescope-api/' + _this4.resource + '?tag=' + _this4.tag + '&take=1' + '&family_hash=' + _this4.familyHash).then(function (response) {
+                __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/telescope/telescope-api/' + _this4.resource + '?tag=' + _this4.tag + '&take=1' + '&family_hash=' + _this4.familyHash).then(function (response) {
                     if (response.data.entries.length && !_this4.entries.length) {
                         _this4.loadNewEntries();
                     } else if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this4.entries).id) {
@@ -79013,7 +79011,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                         _this4.checkForNewEntries();
                     }
                 });
-            }, this.newEntriesTimeoutInSeconds);
+            }, this.newEntriesTimer);
         },
 
 
@@ -79030,12 +79028,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 clearTimeout(_this5.newEntriesTimeout);
 
                 _this5.$router.push({ query: __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.assign({}, _this5.$route.query, { tag: _this5.tag }) });
-
-                _this5.loadEntries(function (entries) {
-                    _this5.entries = entries;
-
-                    _this5.checkForNewEntries();
-                });
             });
         },
 
@@ -79069,10 +79061,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             this.lastEntryIndex = '';
             this.loadingNewEntries = true;
 
-            setTimeout(function () {
-                __WEBPACK_IMPORTED_MODULE_0_jquery___default()('.newItem').removeClass('newItem');
-            }, 2000);
-
             clearTimeout(this.newEntriesTimeout);
 
             this.loadEntries(function (entries) {
@@ -79082,6 +79070,36 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
                 _this7.checkForNewEntries();
             });
+        },
+
+
+        /**
+         * Update the existing entries if needed.
+         */
+        updateEntries: function updateEntries() {
+            var _this8 = this;
+
+            if (this.resource != 'jobs') return;
+
+            this.updateEntriesTimeout = setTimeout(function () {
+                var uuids = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.chain(_this8.entries).filter(function (entry) {
+                    return entry.content.status == 'pending';
+                }).map('id').value();
+
+                if (uuids.length) {
+                    __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/telescope/telescope-api/' + _this8.resource, {
+                        uuids: uuids
+                    }).then(function (response) {
+                        _this8.entries = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.map(_this8.entries, function (entry) {
+                            if (!__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.includes(uuids, entry.id)) return entry;
+
+                            return __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.find(response.data.entries, { id: entry.id });
+                        });
+                    });
+                }
+
+                _this8.updateEntries();
+            }, this.updateEntriesTimer);
         }
     }
 });

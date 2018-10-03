@@ -35,6 +35,13 @@ class EntryQueryOptions
     public $beforeSequence;
 
     /**
+     * The list of UUIDs of entries tor retrieve.
+     *
+     * @var mixed
+     */
+    public $uuids;
+
+    /**
      * The number of entries to retrieve.
      *
      * @var int
@@ -51,6 +58,7 @@ class EntryQueryOptions
     {
         return (new static)
                 ->batchId($request->batch_id)
+                ->uuids($request->uuids)
                 ->beforeSequence($request->before)
                 ->tag($request->tag)
                 ->familyHash($request->family_hash)
@@ -77,6 +85,19 @@ class EntryQueryOptions
     public function batchId(?string $batchId)
     {
         $this->batchId = $batchId;
+
+        return $this;
+    }
+
+    /**
+     * Set the list of UUIDs of entries tor retrieve.
+     *
+     * @param  array  $uuids
+     * @return $this
+     */
+    public function uuids(?array $uuids)
+    {
+        $this->uuids = $uuids;
 
         return $this;
     }
