@@ -5,6 +5,7 @@ namespace Laravel\Telescope;
 use Closure;
 use Exception;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
@@ -163,6 +164,8 @@ class Telescope
     {
         $shouldRecord = static::$shouldRecord;
 
+        static::$shouldRecord = false;
+
         call_user_func($callback);
 
         static::$shouldRecord = $shouldRecord;
@@ -185,9 +188,15 @@ class Telescope
             static::$tagUsing ? call_user_func(static::$tagUsing, $entry) : []
         );
 
-        if (collect(static::$filterUsing)->every->__invoke($entry)) {
-            static::$entriesQueue[] = $entry;
+        if (Auth::hasUser()) {
+            $entry->user(Auth::getUser());
         }
+
+        static::withoutRecording(function () use ($entry) {
+            if (collect(static::$filterUsing)->every->__invoke($entry)) {
+                static::$entriesQueue[] = $entry;
+            }
+        });
     }
 
     /**
@@ -430,9 +439,9 @@ class Telescope
             ->each(function ($entry) use ($batchId) {
                 $entry->batchId($batchId);
 
-                if (auth()->user()) {
-                    $entry->user(auth()->user());
-                }
+                // if (auth()->user()) {
+                //     $entry->user(auth()->user());
+                // }
 
                 if ($entry->isDump()) {
                     $entry->assignEntryPointFromBatch(static::$entriesQueue);

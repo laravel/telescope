@@ -137,7 +137,7 @@
 
 
                     <div class="modal-footer justify-content-center">
-                        <button class="btn btn-outline-success" @click="monitorNewTag">
+                        <button class="btn btn-primary" @click="monitorNewTag">
                             Monitor
                         </button>
 
