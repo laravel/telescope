@@ -35,7 +35,7 @@ class IncomingExceptionEntry extends IncomingEntry
     public function isReportableException()
     {
         return resolve(ExceptionHandler::class)
-                        ->shouldReport($this->exception);
+            ->shouldReport($this->exception);
     }
 
     /**
