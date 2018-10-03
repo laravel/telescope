@@ -154,6 +154,21 @@ class Telescope
     }
 
     /**
+     * Execute the given callback without recording Telescope entries.
+     *
+     * @param  callable  $callback
+     * @return void
+     */
+    public static function withoutRecording($callback)
+    {
+        $shouldRecord = static::$shouldRecord;
+
+        call_user_func($callback);
+
+        static::$shouldRecord = $shouldRecord;
+    }
+
+    /**
      * Record the given entry.
      *
      * @param  string  $type
