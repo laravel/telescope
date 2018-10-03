@@ -36,7 +36,7 @@
 
         methods: {
             loadEntries(){
-                axios.get('/telescope/telescope-api/dumps').then(response => {
+                axios.post('/telescope/telescope-api/dumps').then(response => {
                     this.entries = response.data.entries;
 
                     this.ready = true;

@@ -62161,7 +62161,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         loadEntries: function loadEntries() {
             var _this = this;
 
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/telescope/telescope-api/dumps').then(function (response) {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/telescope/telescope-api/dumps').then(function (response) {
                 _this.entries = response.data.entries;
 
                 _this.ready = true;
