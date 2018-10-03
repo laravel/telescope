@@ -7,9 +7,31 @@ use Laravel\Telescope\IncomingDumpEntry;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+use Illuminate\Contracts\Cache\Factory as CacheFactory;
 
 class DumpWatcher extends Watcher
 {
+    /**
+     * The cache factory implementation.
+     *
+     * @var \Illuminate\Contracts\Cache\Factory
+     */
+    protected $cache;
+
+    /**
+     * Create a new watcher instance.
+     *
+     * @param  \Illuminate\Contracts\Cache\Factory  $cache
+     * @param  array  $options
+     * @return void
+     */
+    public function __construct(CacheFactory $cache, array $options = [])
+    {
+        parent::__construct($options);
+
+        $this->cache = $cache;
+    }
+
     /**
      * Register the watcher.
      *
@@ -18,6 +40,10 @@ class DumpWatcher extends Watcher
      */
     public function register($app)
     {
+        if (! $this->cache->get('telescope:dump-watcher')) {
+            return;
+        }
+
         VarDumper::setHandler(function ($var) {
             $this->recordDump((new HtmlDumper)->dump(
                 (new VarCloner)->cloneVar($var), true
