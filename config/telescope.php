@@ -1,6 +1,7 @@
 <?php
 
 use Laravel\Telescope\Watchers;
+use Laravel\Telescope\Http\Middleware\Authorize;
 
 return [
 
@@ -18,7 +19,7 @@ return [
     'driver' => env('TELESCOPE_DRIVER', 'database'),
 
     'storage' => [
-        'database' => [
+    'database' => [
             'connection' => 'mysql',
         ]
     ],
@@ -37,6 +38,22 @@ return [
     */
 
     'limit' => env('TELESCOPE_LIMIT', 100),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Telescope Route Middleware
+    |--------------------------------------------------------------------------
+    |
+    | These middleware will be assigned to every Telescope route, giving you
+    | the chance to add your own middleware to this list or change any of
+    | the existing middleware. Or, you can simply stick with this list.
+    |
+    */
+
+    'middleware' => [
+        'web',
+        Authorize::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------

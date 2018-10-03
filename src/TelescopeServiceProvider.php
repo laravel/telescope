@@ -16,6 +16,8 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Route::middlewareGroup('telescope', config('telescope.middleware', []));
+
         $this->registerRoutes();
         $this->registerMigrations();
         $this->registerPublishing();
@@ -50,6 +52,7 @@ class TelescopeServiceProvider extends ServiceProvider
         return [
             'namespace' => 'Laravel\Telescope\Http\Controllers',
             'prefix' => 'telescope',
+            'middleware' => 'telescope',
         ];
     }
 

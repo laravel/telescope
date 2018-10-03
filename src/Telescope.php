@@ -12,7 +12,8 @@ use Laravel\Telescope\Contracts\TerminableRepository;
 
 class Telescope
 {
-    use ExtractsMailableTags,
+    use AuthorizesRequests,
+        ExtractsMailableTags,
         ListensForStorageOpportunities,
         RegistersWatchers;
 
