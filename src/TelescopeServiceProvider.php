@@ -94,6 +94,8 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerStorageDriver();
+
         $this->mergeConfigFrom(
             __DIR__.'/../config/telescope.php', 'telescope'
         );
@@ -101,8 +103,6 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->commands([
             Console\InstallCommand::class,
         ]);
-
-        $this->registerStorageDriver();
     }
 
     /**
