@@ -25,27 +25,39 @@
          * Prepare the component.
          */
         mounted(){
-            if (this.exceptions.length) {
-                this.currentTab = 'exceptions'
-            } else if (this.logs.length) {
-                this.currentTab = 'logs'
-            } else if (this.queries.length) {
-                this.currentTab = 'queries'
-            } else if (this.models.length) {
-                this.currentTab = 'models'
-            } else if (this.jobs.length) {
-                this.currentTab = 'jobs'
-            } else if (this.events.length) {
-                this.currentTab = 'events'
-            } else if (this.cache.length) {
-                this.currentTab = 'cache'
-            } else if (this.redis.length) {
-                this.currentTab = 'redis'
+            this.activateFirstTab();
+        },
+
+
+        watch: {
+            entry(){
+                this.activateFirstTab();
             }
         },
 
 
         methods: {
+            activateFirstTab(){
+                if (this.exceptions.length) {
+                    this.currentTab = 'exceptions'
+                } else if (this.logs.length) {
+                    this.currentTab = 'logs'
+                } else if (this.queries.length) {
+                    this.currentTab = 'queries'
+                } else if (this.models.length) {
+                    this.currentTab = 'models'
+                } else if (this.jobs.length) {
+                    this.currentTab = 'jobs'
+                } else if (this.events.length) {
+                    this.currentTab = 'events'
+                } else if (this.cache.length) {
+                    this.currentTab = 'cache'
+                } else if (this.redis.length) {
+                    this.currentTab = 'redis'
+                }
+            },
+
+
             batchEntriesOfType(type) {
                 return _.filter(this.batch, {type: type})
             },
