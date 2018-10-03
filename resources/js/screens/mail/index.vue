@@ -18,7 +18,7 @@
 
             <td>{{Object.keys(slotProps.entry.content.to)[0]}}</td>
 
-            <td>{{truncate(slotProps.entry.content.subject, 20)}}</td>
+            <td :title="slotProps.entry.content.subject">{{truncate(slotProps.entry.content.subject, 20)}}</td>
 
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
 

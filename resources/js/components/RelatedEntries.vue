@@ -54,6 +54,10 @@
                     this.currentTab = 'cache'
                 } else if (this.redis.length) {
                     this.currentTab = 'redis'
+                } else if (this.mails.length) {
+                    this.currentTab = 'mails'
+                } else if (this.notifications.length) {
+                    this.currentTab = 'notifications'
                 }
             },
 
@@ -101,6 +105,14 @@
 
             redis() {
                 return this.batchEntriesOfType('redis')
+            },
+
+            mails() {
+                return this.batchEntriesOfType('mail')
+            },
+
+            notifications() {
+                return this.batchEntriesOfType('notification')
             }
         }
     }
@@ -132,6 +144,12 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" :class="{active: currentTab=='redis'}" href="#" v-on:click.prevent="currentTab='redis'" v-if="redis.length">Redis ({{redis.length}})</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" :class="{active: currentTab=='mails'}" href="#" v-on:click.prevent="currentTab='mails'" v-if="mails.length">Mail ({{mails.length}})</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" :class="{active: currentTab=='notifications'}" href="#" v-on:click.prevent="currentTab='notifications'" v-if="notifications.length">Notifications ({{notifications.length}})</a>
             </li>
         </ul>
         <div>
@@ -373,6 +391,62 @@
 
                     <td class="table-fit">
                         <router-link :to="{name:'redis-preview', params:{id: entry.id}}" class="control-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
+                                <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Related Mail -->
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='mails' && mails.length">
+                <thead>
+                <tr>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Subject</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr v-for="entry in mails">
+                    <td>{{Object.keys(entry.content.from)[0]}}</td>
+                    <td>{{Object.keys(entry.content.to)[0]}}</td>
+                    <td :title="entry.content.subject">{{truncate(entry.content.subject, 20)}}</td>
+
+                    <td class="table-fit">
+                        <router-link :to="{name:'mail-preview', params:{id: entry.id}}" class="control-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
+                                <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Related Notifications -->
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='notifications' && notifications.length">
+                <thead>
+                <tr>
+                    <th>Notifiable</th>
+                    <th>Notification</th>
+                    <th>Channel</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr v-for="entry in notifications">
+                    <td :title="entry.content.notifiable">{{truncate(entry.content.notifiable, 50)}}</td>
+                    <td :title="entry.content.notification">{{truncate(entry.content.notification, 50)}}</td>
+                    <td class="table-fit">{{truncate(entry.content.channel, 20)}}</td>
+
+                    <td class="table-fit">
+                        <router-link :to="{name:'notification-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
