@@ -22,11 +22,13 @@
                 hasMoreEntries: true,
                 hasNewEntries: false,
                 entriesPerRequest: 50,
-                newEntriesTimeout: null,
-                updateEntriesTimeout: null,
                 loadingNewEntries: false,
                 loadingMoreEntries: false,
+
+                newEntriesTimeout: null,
                 newEntriesTimer: 5000,
+
+                updateEntriesTimeout: null,
                 updateEntriesTimer: 5000,
             };
         },

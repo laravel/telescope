@@ -19,6 +19,9 @@
                 entry: null,
                 batch: null,
                 ready: false,
+
+                updateEntryTimeout: null,
+                updateEntryTimer: 5000,
             };
         },
 
@@ -37,8 +40,19 @@
                 this.$parent.batch = response.data.batch;
 
                 this.ready = true;
+
+                this.updateEntry();
             });
         },
+
+
+        /**
+         * Clean after the component is destroyed.
+         */
+        destroyed() {
+            clearTimeout(this.updateEntryTimeout);
+        },
+
 
         computed: {
             job(){
@@ -66,6 +80,29 @@
                     this.ready = true;
                 })
             },
+
+
+            /**
+             * Update the existing entry if needed.
+             */
+            updateEntry(){
+                if (this.resource != 'jobs') return;
+                if (this.entry.content.status != 'pending') return;
+
+                this.updateEntryTimeout = setTimeout(() => {
+                    this.loadEntry((response) => {
+                        this.entry = response.data.entry;
+                        this.batch = response.data.batch;
+
+                        this.$parent.entry = response.data.entry;
+                        this.$parent.batch = response.data.batch;
+
+                        this.ready = true;
+                    });
+
+                    this.updateEntry();
+                }, this.updateEntryTimer);
+            }
         }
     }
 </script>

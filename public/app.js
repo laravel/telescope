@@ -78905,11 +78905,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             hasMoreEntries: true,
             hasNewEntries: false,
             entriesPerRequest: 50,
-            newEntriesTimeout: null,
-            updateEntriesTimeout: null,
             loadingNewEntries: false,
             loadingMoreEntries: false,
+
+            newEntriesTimeout: null,
             newEntriesTimer: 5000,
+
+            updateEntriesTimeout: null,
             updateEntriesTimer: 5000
         };
     },
@@ -79393,7 +79395,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             entry: null,
             batch: null,
-            ready: false
+            ready: false,
+
+            updateEntryTimeout: null,
+            updateEntryTimer: 5000
         };
     },
 
@@ -79414,7 +79419,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             _this.$parent.batch = response.data.batch;
 
             _this.ready = true;
+
+            _this.updateEntry();
         });
+    },
+
+
+    /**
+     * Clean after the component is destroyed.
+     */
+    destroyed: function destroyed() {
+        clearTimeout(this.updateEntryTimeout);
     },
 
 
@@ -79441,6 +79456,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 _this2.ready = true;
             });
+        },
+
+
+        /**
+         * Update the existing entry if needed.
+         */
+        updateEntry: function updateEntry() {
+            var _this3 = this;
+
+            if (this.resource != 'jobs') return;
+            if (this.entry.content.status != 'pending') return;
+
+            this.updateEntryTimeout = setTimeout(function () {
+                _this3.loadEntry(function (response) {
+                    _this3.entry = response.data.entry;
+                    _this3.batch = response.data.batch;
+
+                    _this3.$parent.entry = response.data.entry;
+                    _this3.$parent.batch = response.data.batch;
+
+                    _this3.ready = true;
+                });
+
+                _this3.updateEntry();
+            }, this.updateEntryTimer);
         }
     }
 });
