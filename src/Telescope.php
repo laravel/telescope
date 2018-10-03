@@ -166,8 +166,9 @@ class Telescope
             return;
         }
 
-        $entry->type($type)
-              ->tags(static::$tagUsing ? call_user_func(static::$tagUsing, $entry) : []);
+        $entry->type($type)->tags(
+            static::$tagUsing ? call_user_func(static::$tagUsing, $entry) : []
+        );
 
         if (collect(static::$filterUsing)->every->__invoke($entry)) {
             static::$entriesQueue[] = $entry;
