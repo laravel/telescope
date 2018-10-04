@@ -34,6 +34,7 @@ class RequestWatcher extends Watcher
             'method' => $event->request->method(),
             'headers' => $this->headers($event->request->headers->all()),
             'payload' => $this->payload($event->request->all()),
+            'session' => $this->payload($event->request->session()->all()),
             'response_status' => $event->response->getStatusCode(),
             'response' => $this->response($event->response),
         ]));

@@ -47,12 +47,16 @@
                         <a class="nav-link" :class="{active: currentTab=='headers'}" href="#" v-on:click.prevent="currentTab='headers'">Headers</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='session'}" href="#" v-on:click.prevent="currentTab='session'">Session</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" :class="{active: currentTab=='response'}" href="#" v-on:click.prevent="currentTab='response'">Response</a>
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
                     <tree-view :data="slotProps.entry.content.payload" :options="{maxDepth: 3}" v-if="currentTab=='payload'"></tree-view>
                     <tree-view :data="slotProps.entry.content.headers" :options="{maxDepth: 3}" v-if="currentTab=='headers'"></tree-view>
+                    <tree-view :data="slotProps.entry.content.session" :options="{maxDepth: 3}" v-if="currentTab=='session'"></tree-view>
                     <tree-view :data="slotProps.entry.content.response" :options="{maxDepth: 3}" v-if="currentTab=='response'"></tree-view>
                 </div>
             </div>

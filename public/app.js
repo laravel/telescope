@@ -69449,6 +69449,24 @@ var render = function() {
                       "a",
                       {
                         staticClass: "nav-link",
+                        class: { active: _vm.currentTab == "session" },
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.currentTab = "session"
+                          }
+                        }
+                      },
+                      [_vm._v("Session")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link",
                         class: { active: _vm.currentTab == "response" },
                         attrs: { href: "#" },
                         on: {
@@ -69480,6 +69498,15 @@ var render = function() {
                       ? _c("tree-view", {
                           attrs: {
                             data: slotProps.entry.content.headers,
+                            options: { maxDepth: 3 }
+                          }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.currentTab == "session"
+                      ? _c("tree-view", {
+                          attrs: {
+                            data: slotProps.entry.content.session,
                             options: { maxDepth: 3 }
                           }
                         })
