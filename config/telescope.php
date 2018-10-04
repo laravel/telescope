@@ -7,7 +7,7 @@ return [
 
     'path' => 'telescope',
 
-    'autoload' => false,
+    'autoload' => env('TELESCOPE_AUTOLOAD', false),
 
     /*
     |--------------------------------------------------------------------------
