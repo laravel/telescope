@@ -478,13 +478,13 @@ class Telescope
         $storage->pruneEntries(EntryType::EVENT, $limit);
         $storage->pruneEntries(EntryType::EXCEPTION, $limit);
         $storage->pruneEntries(EntryType::LOG, $limit);
+        $storage->pruneEntries(EntryType::MODEL, $limit);
         $storage->pruneEntries(EntryType::MAIL, $limit);
         $storage->pruneEntries(EntryType::NOTIFICATION, $limit);
         $storage->pruneEntries(EntryType::QUERY, $limit);
         $storage->pruneEntries(EntryType::REQUEST, $limit);
-        $storage->pruneEntries(EntryType::SCHEDULED_TASK, $limit);
         $storage->pruneEntries(EntryType::REDIS, $limit);
-        $storage->pruneEntries(EntryType::MODEL, $limit);
+        $storage->pruneEntries(EntryType::SCHEDULED_TASK, $limit);
 
     }
 
