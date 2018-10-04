@@ -440,10 +440,6 @@ class Telescope
             ->each(function ($entry) use ($batchId) {
                 $entry->batchId($batchId);
 
-                // if (auth()->user()) {
-                //     $entry->user(auth()->user());
-                // }
-
                 if ($entry->isDump()) {
                     $entry->assignEntryPointFromBatch(static::$entriesQueue);
                 }
