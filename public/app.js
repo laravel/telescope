@@ -79249,7 +79249,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     if (response.data.entries.length && !_this4.entries.length) {
                         _this4.loadNewEntries();
                     } else if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this4.entries).id) {
-                        _this4.hasNewEntries = true;
+                        if (Telescope.autoload) {
+                            _this4.loadNewEntries();
+                        } else {
+                            _this4.hasNewEntries = true;
+                        }
                     } else {
                         _this4.checkForNewEntries();
                     }
