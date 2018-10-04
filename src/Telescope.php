@@ -4,11 +4,14 @@ namespace Laravel\Telescope;
 
 use Closure;
 use Exception;
+use Throwable;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class Telescope
 {
@@ -521,5 +524,24 @@ class Telescope
         static::$useDarkTheme = true;
 
         return new static;
+    }
+
+    /**
+     * Log the given exception.
+     *
+     * @param  Throwable|Exception  $e
+     * @param  array  $tags
+     * @return void
+     */
+    public static function logException($e, $tags = [])
+    {
+        $e = $e instanceof Throwable && ! $e instanceof Exception
+                        ? new FatalThrowableError($e) : $e;
+
+        event(
+            new MessageLogged('error', $e->getMessage(),
+                ['exception' => $e, 'telescope' => $tags]
+            )
+        );
     }
 }
