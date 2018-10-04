@@ -33,7 +33,7 @@ class InstallCommand extends Command
         $this->comment('Publishing Telescope Assets...');
         $this->callSilent('vendor:publish', ['--tag' => 'telescope-assets']);
 
-        $this->registerNovaServiceProvider();
+        $this->registerTelescopeServiceProvider();
 
         $this->info('Telescope scaffolding installed successfully.');
     }
@@ -43,7 +43,7 @@ class InstallCommand extends Command
      *
      * @return void
      */
-    protected function registerNovaServiceProvider()
+    protected function registerTelescopeServiceProvider()
     {
         file_put_contents(config_path('app.php'), str_replace(
             "App\\Providers\EventServiceProvider::class,".PHP_EOL,

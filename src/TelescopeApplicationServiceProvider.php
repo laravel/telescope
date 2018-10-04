@@ -18,7 +18,7 @@ class TelescopeApplicationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Configure the Nova authorization services.
+     * Configure the Telescope authorization services.
      *
      * @return void
      */
@@ -33,9 +33,9 @@ class TelescopeApplicationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the Nova gate.
+     * Register the Telescope gate.
      *
-     * This gate determines who can access Nova in non-local environments.
+     * This gate determines who can access Telescope in non-local environments.
      *
      * @return void
      */
