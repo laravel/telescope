@@ -120,7 +120,7 @@ class EventWatcher extends Watcher
      */
     protected function shouldIgnore($eventName)
     {
-        return Telescope::ignoresFrameworkEvents() &&
+        return Telescope::$ignoreFrameworkEvents &&
                $this->eventIsFiredByTheFramework($eventName);
     }
 
