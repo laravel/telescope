@@ -14,7 +14,9 @@ trait ExtractsMailableTags
     protected static function registerMailableTagExtractor()
     {
         Mailable::buildViewDataUsing(function ($mailable) {
-            return ['__telescope' => ExtractTags::from($mailable)];
+            return [
+                '__telescope' => ExtractTags::from($mailable),
+            ];
         });
     }
 }
