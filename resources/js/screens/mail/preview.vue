@@ -24,6 +24,17 @@
     <preview-screen title="Mail Details" resource="mail" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
+                <td class="table-fit font-weight-bold">Mailable</td>
+                <td>
+                    {{slotProps.entry.content.mailable}}
+
+                    <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.queued">
+                        Queued
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
                 <td class="table-fit font-weight-bold">From</td>
                 <td>
                     {{formatAddresses(slotProps.entry.content.from)}}

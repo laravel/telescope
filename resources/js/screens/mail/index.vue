@@ -5,8 +5,8 @@
 <template>
     <index-screen title="Mail" resource="mail">
         <tr slot="table-header">
-            <th scope="col">From</th>
-            <th scope="col">To</th>
+            <th scope="col">Mailable</th>
+            <!-- <th scope="col">To</th> -->
             <th scope="col">Subject</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -14,11 +14,19 @@
 
 
         <template slot="row" slot-scope="slotProps">
-            <td>{{Object.keys(slotProps.entry.content.from)[0]}}</td>
+            <td :title="slotProps.entry.content.mailable">
+                {{truncate(slotProps.entry.content.mailable, 50)}}
 
-            <td>{{Object.keys(slotProps.entry.content.to)[0]}}</td>
+                <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.queued">
+                    Queued
+                </span>
+            </td>
 
-            <td :title="slotProps.entry.content.subject">{{truncate(slotProps.entry.content.subject, 20)}}</td>
+            <!-- <td>{{Object.keys(slotProps.entry.content.to)[0]}}</td> -->
+
+            <td :title="slotProps.entry.content.subject">
+                {{truncate(slotProps.entry.content.subject, 20)}}
+            </td>
 
             <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
 
