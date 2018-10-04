@@ -87,6 +87,10 @@ class Telescope
      */
     public static function start($app)
     {
+        if ($app->runningUnitTests()) {
+            return;
+        }
+
         static::registerWatchers($app);
 
         static::registerMailableTagExtractor();
