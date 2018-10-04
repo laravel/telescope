@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Symfony\Component\HttpFoundation\Response;
@@ -91,7 +91,7 @@ class RequestWatcher extends Watcher
     /**
      * Extract the session variables from the given request.
      *
-     * @param  \Illuminate\Http\Request $event
+     * @param  \Illuminate\Http\Request  $event
      * @return array
      */
     private function sessionVariables(Request $request)
