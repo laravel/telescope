@@ -373,6 +373,25 @@ class Telescope
     }
 
     /**
+     * Record the given exception.
+     *
+     * @param  Throwable|Exception  $e
+     * @param  array  $tags
+     * @return void
+     */
+    public static function catch($e, $tags = [])
+    {
+        if ($e instanceof Throwable && ! $e instanceof Exception) {
+            $e = new FatalThrowableError($e);
+        }
+
+        event(new MessageLogged('error', $e->getMessage(), [
+            'exception' => $e,
+            'telescope' => $tags
+        ]));
+    }
+
+    /**
      * Set the callback that filters the entries that should be recorded.
      *
      * @param  \Closure $callback
@@ -524,25 +543,6 @@ class Telescope
         static::$useDarkTheme = true;
 
         return new static;
-    }
-
-    /**
-     * Log the given exception.
-     *
-     * @param  Throwable|Exception  $e
-     * @param  array  $tags
-     * @return void
-     */
-    public static function logException($e, $tags = [])
-    {
-        $e = $e instanceof Throwable && ! $e instanceof Exception
-                        ? new FatalThrowableError($e) : $e;
-
-        event(
-            new MessageLogged('error', $e->getMessage(),
-                ['exception' => $e, 'telescope' => $tags]
-            )
-        );
     }
 
     /**
