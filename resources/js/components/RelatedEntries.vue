@@ -412,8 +412,7 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='mails' && mails.length">
                 <thead>
                 <tr>
-                    <th>From</th>
-                    <th>To</th>
+                    <th>Mailable</th>
                     <th>Subject</th>
                     <th></th>
                 </tr>
@@ -421,8 +420,14 @@
 
                 <tbody>
                 <tr v-for="entry in mails">
-                    <td>{{Object.keys(entry.content.from)[0]}}</td>
-                    <td>{{Object.keys(entry.content.to)[0]}}</td>
+                    <td :title="entry.content.mailable">
+                        {{truncate(entry.content.mailable, 50)}}
+
+                        <span class="badge badge-secondary font-weight-light ml-2" v-if="entry.content.queued">
+                            Queued
+                        </span>
+                    </td>
+
                     <td :title="entry.content.subject">{{truncate(entry.content.subject, 20)}}</td>
 
                     <td class="table-fit">
@@ -441,8 +446,8 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='notifications' && notifications.length">
                 <thead>
                 <tr>
-                    <th>Notifiable</th>
                     <th>Notification</th>
+                    <th>Notifiable</th>
                     <th>Channel</th>
                     <th></th>
                 </tr>
@@ -450,8 +455,15 @@
 
                 <tbody>
                 <tr v-for="entry in notifications">
+                    <td :title="entry.content.notification">
+                        {{truncate(entry.content.notification, 50)}}
+
+                        <span class="badge badge-secondary font-weight-light ml-2" v-if="entry.content.queued">
+                            Queued
+                        </span>
+                    </td>
+
                     <td :title="entry.content.notifiable">{{truncate(entry.content.notifiable, 50)}}</td>
-                    <td :title="entry.content.notification">{{truncate(entry.content.notification, 50)}}</td>
                     <td class="table-fit">{{truncate(entry.content.channel, 20)}}</td>
 
                     <td class="table-fit">

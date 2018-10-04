@@ -78846,12 +78846,26 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.mails, function(entry) {
                   return _c("tr", [
-                    _c("td", [
-                      _vm._v(_vm._s(Object.keys(entry.content.from)[0]))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(Object.keys(entry.content.to)[0]))
+                    _c("td", { attrs: { title: entry.content.mailable } }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.truncate(entry.content.mailable, 50)) +
+                          "\n\n                    "
+                      ),
+                      entry.content.queued
+                        ? _c(
+                            "span",
+                            {
+                              staticClass:
+                                "badge badge-secondary font-weight-light ml-2"
+                            },
+                            [
+                              _vm._v(
+                                "\n                        Queued\n                    "
+                              )
+                            ]
+                          )
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _c("td", { attrs: { title: entry.content.subject } }, [
@@ -78925,14 +78939,30 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.notifications, function(entry) {
                   return _c("tr", [
-                    _c("td", { attrs: { title: entry.content.notifiable } }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.notifiable, 50)))
-                    ]),
-                    _vm._v(" "),
                     _c("td", { attrs: { title: entry.content.notification } }, [
                       _vm._v(
-                        _vm._s(_vm.truncate(entry.content.notification, 50))
-                      )
+                        "\n                    " +
+                          _vm._s(_vm.truncate(entry.content.notification, 50)) +
+                          "\n\n                    "
+                      ),
+                      entry.content.queued
+                        ? _c(
+                            "span",
+                            {
+                              staticClass:
+                                "badge badge-secondary font-weight-light ml-2"
+                            },
+                            [
+                              _vm._v(
+                                "\n                        Queued\n                    "
+                              )
+                            ]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { title: entry.content.notifiable } }, [
+                      _vm._v(_vm._s(_vm.truncate(entry.content.notifiable, 50)))
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "table-fit" }, [
@@ -79103,9 +79133,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("From")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("To")]),
+        _c("th", [_vm._v("Mailable")]),
         _vm._v(" "),
         _c("th", [_vm._v("Subject")]),
         _vm._v(" "),
@@ -79119,9 +79147,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Notifiable")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Notification")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Notifiable")]),
         _vm._v(" "),
         _c("th", [_vm._v("Channel")]),
         _vm._v(" "),
