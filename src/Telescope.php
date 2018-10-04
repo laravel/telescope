@@ -514,13 +514,13 @@ class Telescope
     }
 
     /**
-     * Specifies that Telescope should ignore events fired by Laravel.
+     * Specifies that Telescope should record events fired by Laravel.
      *
      * @return static
      */
-    public static function ignoreFrameworkEvents()
+    public static function recordFrameworkEvents()
     {
-        static::$ignoreFrameworkEvents = true;
+        static::$ignoreFrameworkEvents = false;
 
         return new static;
     }
