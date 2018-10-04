@@ -69099,6 +69099,7 @@ var render = function() {
         key: "after-attributes-card",
         fn: function(slotProps) {
           return _c("div", {}, [
+            slotProps.entry.content.action != "deleted" &&
             slotProps.entry.content.changes
               ? _c("div", { staticClass: "card mt-5" }, [
                   _c("div", { staticClass: "card-header" }, [
