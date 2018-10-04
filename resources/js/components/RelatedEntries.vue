@@ -153,7 +153,7 @@
                 </a>
             </li>
             <li class="nav-item dropdown" v-if="dropdownTabs.length">
-                <a class="nav-link dropdown-toggle" :class="{active: dropdownTabSelected}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Other</a>
+                <a class="nav-link dropdown-toggle" :class="{active: dropdownTabSelected}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" :class="{active: currentTab==tab.type}" href="#" v-for="tab in dropdownTabs" v-on:click.prevent="currentTab=tab.type">{{tab.title}} ({{tab.count}})</a>
                 </div>
