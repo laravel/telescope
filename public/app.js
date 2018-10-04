@@ -77968,7 +77968,7 @@ var render = function() {
                         "aria-expanded": "false"
                       }
                     },
-                    [_vm._v("Other")]
+                    [_vm._v("More")]
                   ),
                   _vm._v(" "),
                   _c(
