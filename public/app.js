@@ -61213,9 +61213,14 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -61945,9 +61950,14 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -63611,9 +63621,14 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -63921,9 +63936,14 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -64555,9 +64575,14 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -64951,9 +64976,14 @@ var render = function() {
                 _vm._v(_vm._s(slotProps.entry.content.listeners.length))
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -65297,9 +65327,14 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -68854,9 +68889,14 @@ var render = function() {
                     ])
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -69197,9 +69237,14 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -69668,9 +69713,14 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -70059,9 +70109,14 @@ var render = function() {
                 _vm._v(_vm._s(slotProps.entry.content.exit_code))
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -70406,9 +70461,14 @@ var render = function() {
                 _vm._v(_vm._s(slotProps.entry.content.expression))
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -70704,9 +70764,14 @@ var render = function() {
                 _vm._v(_vm._s(slotProps.entry.content.time) + "ms")
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "table-fit" }, [
-                _vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "table-fit",
+                  attrs: { "data-timeago": slotProps.entry.created_at }
+                },
+                [_vm._v(_vm._s(_vm.timeAgo(slotProps.entry.created_at)))]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -79078,6 +79143,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             loadingNewEntries: false,
             loadingMoreEntries: false,
 
+            updateTimeAgoTimeout: null,
+
             newEntriesTimeout: null,
             newEntriesTimer: 5000,
 
@@ -79108,6 +79175,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         });
 
         this.updateEntries();
+
+        this.updateTimeAgo();
     },
 
 
@@ -79117,6 +79186,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     destroyed: function destroyed() {
         clearTimeout(this.newEntriesTimeout);
         clearTimeout(this.updateEntriesTimeout);
+        clearTimeout(this.updateTimeAgoTimeout);
     },
 
 
@@ -79185,21 +79255,32 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 });
             }, this.newEntriesTimer);
         },
+        updateTimeAgo: function updateTimeAgo() {
+            var _this5 = this;
+
+            this.updateTimeAgoTimeout = setTimeout(function () {
+                __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.each(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('[data-timeago]'), function (time) {
+                    __WEBPACK_IMPORTED_MODULE_0_jquery___default()(time).html(_this5.timeAgo(__WEBPACK_IMPORTED_MODULE_0_jquery___default()(time).data('timeago')));
+                });
+
+                _this5.updateTimeAgo();
+            }, 60000);
+        },
 
 
         /**
          * Search the entries of this type.
          */
         search: function search() {
-            var _this5 = this;
+            var _this6 = this;
 
             this.debouncer(function () {
-                _this5.hasNewEntries = false;
-                _this5.lastEntryIndex = '';
+                _this6.hasNewEntries = false;
+                _this6.lastEntryIndex = '';
 
-                clearTimeout(_this5.newEntriesTimeout);
+                clearTimeout(_this6.newEntriesTimeout);
 
-                _this5.$router.push({ query: __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.assign({}, _this5.$route.query, { tag: _this5.tag }) });
+                _this6.$router.push({ query: __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.assign({}, _this6.$route.query, { tag: _this6.tag }) });
             });
         },
 
@@ -79208,16 +79289,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
          * Load more entries.
          */
         loadOlderEntries: function loadOlderEntries() {
-            var _this6 = this;
+            var _this7 = this;
 
             this.loadingMoreEntries = true;
 
             this.loadEntries(function (entries) {
                 var _entries;
 
-                (_entries = _this6.entries).push.apply(_entries, _toConsumableArray(entries));
+                (_entries = _this7.entries).push.apply(_entries, _toConsumableArray(entries));
 
-                _this6.loadingMoreEntries = false;
+                _this7.loadingMoreEntries = false;
             });
         },
 
@@ -79226,7 +79307,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
          * Load new entries.
          */
         loadNewEntries: function loadNewEntries() {
-            var _this7 = this;
+            var _this8 = this;
 
             this.hasMoreEntries = true;
             this.hasNewEntries = false;
@@ -79236,11 +79317,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             clearTimeout(this.newEntriesTimeout);
 
             this.loadEntries(function (entries) {
-                _this7.entries = entries;
+                _this8.entries = entries;
 
-                _this7.loadingNewEntries = false;
+                _this8.loadingNewEntries = false;
 
-                _this7.checkForNewEntries();
+                _this8.checkForNewEntries();
             });
         },
 
@@ -79249,20 +79330,20 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
          * Update the existing entries if needed.
          */
         updateEntries: function updateEntries() {
-            var _this8 = this;
+            var _this9 = this;
 
             if (this.resource != 'jobs') return;
 
             this.updateEntriesTimeout = setTimeout(function () {
-                var uuids = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.chain(_this8.entries).filter(function (entry) {
+                var uuids = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.chain(_this9.entries).filter(function (entry) {
                     return entry.content.status == 'pending';
                 }).map('id').value();
 
                 if (uuids.length) {
-                    __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/' + Telescope.path + '/telescope-api/' + _this8.resource, {
+                    __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/' + Telescope.path + '/telescope-api/' + _this9.resource, {
                         uuids: uuids
                     }).then(function (response) {
-                        _this8.entries = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.map(_this8.entries, function (entry) {
+                        _this9.entries = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.map(_this9.entries, function (entry) {
                             if (!__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.includes(uuids, entry.id)) return entry;
 
                             return __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.find(response.data.entries, { id: entry.id });
@@ -79270,7 +79351,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                     });
                 }
 
-                _this8.updateEntries();
+                _this9.updateEntries();
             }, this.updateEntriesTimer);
         }
     }

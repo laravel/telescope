@@ -20,7 +20,7 @@
 
             <td :title="slotProps.entry.content.subject">{{truncate(slotProps.entry.content.subject, 20)}}</td>
 
-            <td class="table-fit">{{timeAgo(slotProps.entry.created_at)}}</td>
+            <td class="table-fit" :data-timeago="slotProps.entry.created_at">{{timeAgo(slotProps.entry.created_at)}}</td>
 
             <td class="table-fit">
                 <router-link :to="{name:'mail-preview', params:{id: slotProps.entry.id}}" class="control-action">

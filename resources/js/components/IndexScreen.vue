@@ -25,6 +25,8 @@
                 loadingNewEntries: false,
                 loadingMoreEntries: false,
 
+                updateTimeAgoTimeout: null,
+
                 newEntriesTimeout: null,
                 newEntriesTimer: 5000,
 
@@ -53,6 +55,8 @@
             });
 
             this.updateEntries();
+
+            this.updateTimeAgo();
         },
 
 
@@ -62,6 +66,7 @@
         destroyed() {
             clearTimeout(this.newEntriesTimeout);
             clearTimeout(this.updateEntriesTimeout);
+            clearTimeout(this.updateTimeAgoTimeout);
         },
 
 
@@ -133,6 +138,17 @@
                         }
                     })
                 }, this.newEntriesTimer);
+            },
+
+
+            updateTimeAgo(){
+                this.updateTimeAgoTimeout = setTimeout(() => {
+                    _.each($('[data-timeago]'), time => {
+                        $(time).html(this.timeAgo($(time).data('timeago')));
+                    });
+
+                    this.updateTimeAgo();
+                }, 60000)
             },
 
 
