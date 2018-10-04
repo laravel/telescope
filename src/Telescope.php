@@ -554,6 +554,7 @@ class Telescope
     {
         return [
             'path' => config('telescope.path'),
+            'autoload' => config('telescope.autoload'),
         ];
     }
 }
