@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
@@ -34,7 +35,7 @@ class RequestWatcher extends Watcher
             'method' => $event->request->method(),
             'headers' => $this->headers($event->request->headers->all()),
             'payload' => $this->payload($event->request->all()),
-            'session' => $this->payload($event->request->session()->all()),
+            'session' => $this->payload($this->sessionVariables($event->request)),
             'response_status' => $event->response->getStatusCode(),
             'response' => $this->response($event->response),
         ]));
@@ -85,5 +86,16 @@ class RequestWatcher extends Watcher
         }
 
         return "HTML Response";
+    }
+
+    /**
+     * Extract the session variables from the given request.
+     *
+     * @param  \Illuminate\Http\Request $event
+     * @return array
+     */
+    private function sessionVariables(Request $request)
+    {
+        return $request->hasSession() ? $request->session()->all() : [];
     }
 }

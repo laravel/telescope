@@ -49091,7 +49091,7 @@ window.Popper = __webpack_require__(163).default;
 var router = new __WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]({
     routes: __WEBPACK_IMPORTED_MODULE_2__routes__["a" /* default */],
     mode: 'history',
-    base: '/telescope/'
+    base: '/' + window.Telescope.path + '/'
 });
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('related-entries', __webpack_require__(353));
@@ -79153,7 +79153,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         loadEntries: function loadEntries(after) {
             var _this3 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/telescope/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&family_hash=' + this.familyHash).then(function (response) {
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/' + Telescope.path + '/telescope-api/' + this.resource + '?tag=' + this.tag + '&before=' + this.lastEntryIndex + '&take=' + this.entriesPerRequest + '&family_hash=' + this.familyHash).then(function (response) {
                 _this3.lastEntryIndex = response.data.entries.length ? __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.last(response.data.entries).sequence : _this3.lastEntryIndex;
 
                 _this3.hasMoreEntries = response.data.entries.length >= _this3.entriesPerRequest;
@@ -79174,7 +79174,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             var _this4 = this;
 
             this.newEntriesTimeout = setTimeout(function () {
-                __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/telescope/telescope-api/' + _this4.resource + '?tag=' + _this4.tag + '&take=1' + '&family_hash=' + _this4.familyHash).then(function (response) {
+                __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/' + Telescope.path + '/telescope-api/' + _this4.resource + '?tag=' + _this4.tag + '&take=1' + '&family_hash=' + _this4.familyHash).then(function (response) {
                     if (response.data.entries.length && !_this4.entries.length) {
                         _this4.loadNewEntries();
                     } else if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this4.entries).id) {
@@ -79259,7 +79259,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 }).map('id').value();
 
                 if (uuids.length) {
-                    __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/telescope/telescope-api/' + _this8.resource, {
+                    __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/' + Telescope.path + '/telescope-api/' + _this8.resource, {
                         uuids: uuids
                     }).then(function (response) {
                         _this8.entries = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.map(_this8.entries, function (entry) {
@@ -79619,7 +79619,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         loadEntry: function loadEntry(after) {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/telescope/telescope-api/' + this.resource + '/' + this.id).then(function (response) {
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/' + Telescope.path + '/telescope-api/' + this.resource + '/' + this.id).then(function (response) {
                 if (__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.isFunction(after)) {
                     after(response);
                 }

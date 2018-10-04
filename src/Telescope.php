@@ -132,7 +132,7 @@ class Telescope
     protected static function handlingNonTelescopeRequest($app)
     {
         return ! $app->runningInConsole() && ! $app['request']->is(
-            'telescope*',
+            config('telescope.path').'*',
             'telescope-api*',
             'vendors/telescope*'
         );
@@ -543,5 +543,17 @@ class Telescope
                 ['exception' => $e, 'telescope' => $tags]
             )
         );
+    }
+
+    /**
+     * Get the default JavaScript variables for Telescope.
+     *
+     * @return array
+     */
+    public static function scriptVariables()
+    {
+        return [
+            'path' => config('telescope.path'),
+        ];
     }
 }

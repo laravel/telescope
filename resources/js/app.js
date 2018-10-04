@@ -14,7 +14,7 @@ window.Popper = require('popper.js').default;
 const router = new VueRouter({
     routes: Routes,
     mode: 'history',
-    base: '/telescope/',
+    base: '/'+window.Telescope.path+'/',
 });
 
 Vue.component('related-entries', require('./components/RelatedEntries.vue'));

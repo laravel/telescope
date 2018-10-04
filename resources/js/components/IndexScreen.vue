@@ -95,7 +95,7 @@
 
         methods: {
             loadEntries(after){
-                axios.post('/telescope/telescope-api/' + this.resource +
+                axios.post('/' + Telescope.path + '/telescope-api/' + this.resource +
                         '?tag=' + this.tag +
                         '&before=' + this.lastEntryIndex +
                         '&take=' + this.entriesPerRequest +
@@ -119,7 +119,7 @@
              */
             checkForNewEntries(){
                 this.newEntriesTimeout = setTimeout(() => {
-                    axios.post('/telescope/telescope-api/' + this.resource +
+                    axios.post('/' + Telescope.path + '/telescope-api/' + this.resource +
                             '?tag=' + this.tag +
                             '&take=1' +
                             '&family_hash=' + this.familyHash
@@ -196,12 +196,12 @@
                     let uuids = _.chain(this.entries).filter(entry => entry.content.status == 'pending').map('id').value();
 
                     if (uuids.length) {
-                        axios.post('/telescope/telescope-api/' + this.resource, {
+                        axios.post('/' + Telescope.path + '/telescope-api/' + this.resource, {
                             uuids: uuids
                         }).then(response => {
                             this.entries = _.map(this.entries, entry => {
                                 if (!_.includes(uuids, entry.id)) return entry;
-                                
+
                                 return _.find(response.data.entries, {id: entry.id});
                             });
                         })
