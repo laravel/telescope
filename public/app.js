@@ -79256,6 +79256,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 });
             }, this.newEntriesTimer);
         },
+
+
+        /**
+         * Update the timeago of each entry.
+         */
         updateTimeAgo: function updateTimeAgo() {
             var _this5 = this;
 

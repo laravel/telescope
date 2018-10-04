@@ -141,6 +141,9 @@
             },
 
 
+            /**
+             * Update the timeago of each entry.
+             */
             updateTimeAgo(){
                 this.updateTimeAgoTimeout = setTimeout(() => {
                     _.each($('[data-timeago]'), time => {
