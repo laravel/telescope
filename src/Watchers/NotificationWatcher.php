@@ -6,6 +6,7 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Events\NotificationSent;
 
 class NotificationWatcher extends Watcher
@@ -31,6 +32,7 @@ class NotificationWatcher extends Watcher
     {
         Telescope::recordNotification(IncomingEntry::make([
             'notification' => get_class($event->notification),
+            'queued' => in_array(ShouldQueue::class, class_implements($event->notification)),
             'notifiable' => $this->formatNotifiable($event->notifiable),
             'channel' => $event->channel,
             'response' => $event->response,

@@ -63820,8 +63820,18 @@ var render = function() {
                 _vm._v(
                   "\n                " +
                     _vm._s(slotProps.entry.content.notification) +
-                    "\n            "
-                )
+                    "\n\n                "
+                ),
+                slotProps.entry.content.queued
+                  ? _c(
+                      "span",
+                      {
+                        staticClass:
+                          "badge badge-secondary font-weight-light ml-2"
+                      },
+                      [_vm._v("\n                    Queued\n                ")]
+                    )
+                  : _vm._e()
               ])
             ]),
             _vm._v(" "),
@@ -63929,22 +63939,34 @@ var render = function() {
             return [
               _c(
                 "td",
-                { attrs: { title: slotProps.entry.content.notifiable } },
+                { attrs: { title: slotProps.entry.content.notification } },
                 [
                   _vm._v(
-                    _vm._s(_vm.truncate(slotProps.entry.content.notifiable, 50))
-                  )
+                    "\n            " +
+                      _vm._s(
+                        _vm.truncate(slotProps.entry.content.notification, 50)
+                      ) +
+                      "\n\n            "
+                  ),
+                  slotProps.entry.content.queued
+                    ? _c(
+                        "span",
+                        {
+                          staticClass:
+                            "badge badge-secondary font-weight-light ml-2"
+                        },
+                        [_vm._v("\n                Queued\n            ")]
+                      )
+                    : _vm._e()
                 ]
               ),
               _vm._v(" "),
               _c(
                 "td",
-                { attrs: { title: slotProps.entry.content.notification } },
+                { attrs: { title: slotProps.entry.content.notifiable } },
                 [
                   _vm._v(
-                    _vm._s(
-                      _vm.truncate(slotProps.entry.content.notification, 50)
-                    )
+                    _vm._s(_vm.truncate(slotProps.entry.content.notifiable, 50))
                   )
                 ]
               ),
@@ -64004,9 +64026,9 @@ var render = function() {
     },
     [
       _c("tr", { attrs: { slot: "table-header" }, slot: "table-header" }, [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Notifiable")]),
-        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Notification")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Notifiable")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Channel")]),
         _vm._v(" "),

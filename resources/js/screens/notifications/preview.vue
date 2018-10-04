@@ -23,6 +23,10 @@
                 <td class="table-fit font-weight-bold">Notification</td>
                 <td>
                     {{slotProps.entry.content.notification}}
+
+                    <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.queued">
+                        Queued
+                    </span>
                 </td>
             </tr>
 
