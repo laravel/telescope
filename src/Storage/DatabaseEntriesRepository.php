@@ -284,11 +284,11 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
      * Prune all of the entries older than the given date.
      *
      * @param  \DateTimeInterface  $before
-     * @return void
+     * @return int
      */
     public function prune(DateTimeInterface $before)
     {
-        $this->table('telescope_entries')
+        return $this->table('telescope_entries')
                 ->where('created_at', '<', $before)
                 ->delete();
     }
