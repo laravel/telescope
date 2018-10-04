@@ -19,7 +19,7 @@ return [
     'driver' => env('TELESCOPE_DRIVER', 'database'),
 
     'storage' => [
-    'database' => [
+        'database' => [
             'connection' => 'mysql',
         ]
     ],
