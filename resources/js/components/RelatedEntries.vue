@@ -48,22 +48,17 @@
                     this.currentTab = 'models'
                 } else if (this.jobs.length) {
                     this.currentTab = 'jobs'
+                } else if (this.mails.length) {
+                    this.currentTab = 'mails'
+                } else if (this.notifications.length) {
+                    this.currentTab = 'notifications'
                 } else if (this.events.length) {
                     this.currentTab = 'events'
                 } else if (this.cache.length) {
                     this.currentTab = 'cache'
                 } else if (this.redis.length) {
                     this.currentTab = 'redis'
-                } else if (this.mails.length) {
-                    this.currentTab = 'mails'
-                } else if (this.notifications.length) {
-                    this.currentTab = 'notifications'
                 }
-            },
-
-
-            batchEntriesOfType(type) {
-                return _.filter(this.batch, {type: type})
             },
         },
 
@@ -71,48 +66,79 @@
         computed: {
             hasRelatedEntries(){
                 return !!_.reject(this.batch, entry => {
-                    return _.includes(['request', 'command', 'job'], entry.type);
+                    return _.includes(['request', 'command'], entry.type);
                 }).length;
             },
 
+            entryTypesAvailable(){
+                return _.uniqBy(this.batch, 'type').length;
+            },
+
             exceptions() {
-                return this.batchEntriesOfType('exception')
+                return _.filter(this.batch, {type: 'exception'});
             },
 
             logs() {
-                return this.batchEntriesOfType('log')
+                return _.filter(this.batch, {type: 'log'});
             },
 
             queries() {
-                return this.batchEntriesOfType('query')
+                return _.filter(this.batch, {type: 'query'});
             },
 
             models() {
-                return this.batchEntriesOfType('model')
+                return _.filter(this.batch, {type: 'model'});
             },
 
             jobs() {
-                return this.batchEntriesOfType('job')
+                return _.filter(this.batch, {type: 'job'});
             },
 
             events() {
-                return this.batchEntriesOfType('event')
+                return _.filter(this.batch, {type: 'event'});
             },
 
             cache() {
-                return this.batchEntriesOfType('cache')
+                return _.filter(this.batch, {type: 'cache'});
             },
 
             redis() {
-                return this.batchEntriesOfType('redis')
+                return _.filter(this.batch, {type: 'redis'});
             },
 
             mails() {
-                return this.batchEntriesOfType('mail')
+                return _.filter(this.batch, {type: 'mail'});
             },
 
             notifications() {
-                return this.batchEntriesOfType('notification')
+                return _.filter(this.batch, {type: 'notification'});
+            },
+
+            tabs(){
+                return _.filter([
+                    {title: "Exceptions", type: "exceptions", count: this.exceptions.length},
+                    {title: "Logs", type: "logs", count: this.logs.length},
+                    {title: "Queries", type: "queries", count: this.queries.length},
+                    {title: "Models", type: "models", count: this.models.length},
+                    {title: "Jobs", type: "jobs", count: this.jobs.length},
+                    {title: "Mail", type: "mails", count: this.mails.length},
+                    {title: "Notifications", type: "notifications", count: this.notifications.length},
+                    {title: "Events", type: "events", count: this.events.length},
+                    {title: "Cache", type: "cache", count: this.cache.length},
+                    {title: "Redis", type: "redis", count: this.redis.length},
+                ], tab => tab.count > 0);
+            },
+
+            separateTabs(){
+                return _.slice(this.tabs, 0, 7);
+            },
+
+            dropdownTabs(){
+                return _.slice(this.tabs, 7, 10);
+            },
+
+            dropdownTabSelected(){
+                return _.includes(_.map(this.dropdownTabs, 'type'), this.currentTab);
             }
         }
     }
@@ -121,35 +147,16 @@
 <template>
     <div class="card mt-5" v-if="hasRelatedEntries">
         <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a class="nav-link" :class="{active: currentTab=='exceptions'}" href="#" v-on:click.prevent="currentTab='exceptions'" v-if="exceptions.length">Exceptions ({{exceptions.length}})</a>
+            <li class="nav-item" v-for="tab in separateTabs">
+                <a class="nav-link" :class="{active: currentTab==tab.type}" href="#" v-on:click.prevent="currentTab=tab.type" v-if="tab.count">
+                    {{tab.title}} ({{tab.count}})
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" :class="{active: currentTab=='logs'}" href="#" v-on:click.prevent="currentTab='logs'" v-if="logs.length">Logs ({{logs.length}})</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" :class="{active: currentTab=='queries'}" href="#" v-on:click.prevent="currentTab='queries'" v-if="queries.length">Queries ({{queries.length}})</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" :class="{active: currentTab=='models'}" href="#" v-on:click.prevent="currentTab='models'" v-if="models.length">Models ({{models.length}})</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" :class="{active: currentTab=='jobs'}" href="#" v-on:click.prevent="currentTab='jobs'" v-if="jobs.length">Jobs ({{jobs.length}})</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" :class="{active: currentTab=='events'}" href="#" v-on:click.prevent="currentTab='events'" v-if="events.length">Events ({{events.length}})</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" :class="{active: currentTab=='cache'}" href="#" v-on:click.prevent="currentTab='cache'" v-if="cache.length">Cache ({{cache.length}})</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" :class="{active: currentTab=='redis'}" href="#" v-on:click.prevent="currentTab='redis'" v-if="redis.length">Redis ({{redis.length}})</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" :class="{active: currentTab=='mails'}" href="#" v-on:click.prevent="currentTab='mails'" v-if="mails.length">Mail ({{mails.length}})</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" :class="{active: currentTab=='notifications'}" href="#" v-on:click.prevent="currentTab='notifications'" v-if="notifications.length">Notifications ({{notifications.length}})</a>
+            <li class="nav-item dropdown" v-if="dropdownTabs.length">
+                <a class="nav-link dropdown-toggle" :class="{active: dropdownTabSelected}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Other</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" :class="{active: currentTab==tab.type}" href="#" v-for="tab in dropdownTabs" v-on:click.prevent="currentTab=tab.type">{{tab.title}} ({{tab.count}})</a>
+                </div>
             </li>
         </ul>
         <div>
@@ -400,6 +407,7 @@
                 </tbody>
             </table>
 
+
             <!-- Related Mail -->
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='mails' && mails.length">
                 <thead>
@@ -427,6 +435,7 @@
                 </tr>
                 </tbody>
             </table>
+
 
             <!-- Related Notifications -->
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='notifications' && notifications.length">

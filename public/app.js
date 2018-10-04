@@ -77812,58 +77812,72 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.currentTab = 'models';
             } else if (this.jobs.length) {
                 this.currentTab = 'jobs';
+            } else if (this.mails.length) {
+                this.currentTab = 'mails';
+            } else if (this.notifications.length) {
+                this.currentTab = 'notifications';
             } else if (this.events.length) {
                 this.currentTab = 'events';
             } else if (this.cache.length) {
                 this.currentTab = 'cache';
             } else if (this.redis.length) {
                 this.currentTab = 'redis';
-            } else if (this.mails.length) {
-                this.currentTab = 'mails';
-            } else if (this.notifications.length) {
-                this.currentTab = 'notifications';
             }
-        },
-        batchEntriesOfType: function batchEntriesOfType(type) {
-            return _.filter(this.batch, { type: type });
         }
     },
 
     computed: {
         hasRelatedEntries: function hasRelatedEntries() {
             return !!_.reject(this.batch, function (entry) {
-                return _.includes(['request', 'command', 'job'], entry.type);
+                return _.includes(['request', 'command'], entry.type);
             }).length;
         },
+        entryTypesAvailable: function entryTypesAvailable() {
+            return _.uniqBy(this.batch, 'type').length;
+        },
         exceptions: function exceptions() {
-            return this.batchEntriesOfType('exception');
+            return _.filter(this.batch, { type: 'exception' });
         },
         logs: function logs() {
-            return this.batchEntriesOfType('log');
+            return _.filter(this.batch, { type: 'log' });
         },
         queries: function queries() {
-            return this.batchEntriesOfType('query');
+            return _.filter(this.batch, { type: 'query' });
         },
         models: function models() {
-            return this.batchEntriesOfType('model');
+            return _.filter(this.batch, { type: 'model' });
         },
         jobs: function jobs() {
-            return this.batchEntriesOfType('job');
+            return _.filter(this.batch, { type: 'job' });
         },
         events: function events() {
-            return this.batchEntriesOfType('event');
+            return _.filter(this.batch, { type: 'event' });
         },
         cache: function cache() {
-            return this.batchEntriesOfType('cache');
+            return _.filter(this.batch, { type: 'cache' });
         },
         redis: function redis() {
-            return this.batchEntriesOfType('redis');
+            return _.filter(this.batch, { type: 'redis' });
         },
         mails: function mails() {
-            return this.batchEntriesOfType('mail');
+            return _.filter(this.batch, { type: 'mail' });
         },
         notifications: function notifications() {
-            return this.batchEntriesOfType('notification');
+            return _.filter(this.batch, { type: 'notification' });
+        },
+        tabs: function tabs() {
+            return _.filter([{ title: "Exceptions", type: "exceptions", count: this.exceptions.length }, { title: "Logs", type: "logs", count: this.logs.length }, { title: "Queries", type: "queries", count: this.queries.length }, { title: "Models", type: "models", count: this.models.length }, { title: "Jobs", type: "jobs", count: this.jobs.length }, { title: "Mail", type: "mails", count: this.mails.length }, { title: "Notifications", type: "notifications", count: this.notifications.length }, { title: "Events", type: "events", count: this.events.length }, { title: "Cache", type: "cache", count: this.cache.length }, { title: "Redis", type: "redis", count: this.redis.length }], function (tab) {
+                return tab.count > 0;
+            });
+        },
+        separateTabs: function separateTabs() {
+            return _.slice(this.tabs, 0, 7);
+        },
+        dropdownTabs: function dropdownTabs() {
+            return _.slice(this.tabs, 7, 10);
+        },
+        dropdownTabSelected: function dropdownTabSelected() {
+            return _.includes(_.map(this.dropdownTabs, 'type'), this.currentTab);
         }
     }
 });
@@ -77878,211 +77892,88 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.hasRelatedEntries
     ? _c("div", { staticClass: "card mt-5" }, [
-        _c("ul", { staticClass: "nav nav-pills" }, [
-          _c("li", { staticClass: "nav-item" }, [
-            _vm.exceptions.length
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.currentTab == "exceptions" },
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.currentTab = "exceptions"
-                      }
-                    }
-                  },
-                  [_vm._v("Exceptions (" + _vm._s(_vm.exceptions.length) + ")")]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _vm.logs.length
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.currentTab == "logs" },
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.currentTab = "logs"
-                      }
-                    }
-                  },
-                  [_vm._v("Logs (" + _vm._s(_vm.logs.length) + ")")]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _vm.queries.length
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.currentTab == "queries" },
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.currentTab = "queries"
-                      }
-                    }
-                  },
-                  [_vm._v("Queries (" + _vm._s(_vm.queries.length) + ")")]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _vm.models.length
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.currentTab == "models" },
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.currentTab = "models"
-                      }
-                    }
-                  },
-                  [_vm._v("Models (" + _vm._s(_vm.models.length) + ")")]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _vm.jobs.length
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.currentTab == "jobs" },
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.currentTab = "jobs"
-                      }
-                    }
-                  },
-                  [_vm._v("Jobs (" + _vm._s(_vm.jobs.length) + ")")]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _vm.events.length
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.currentTab == "events" },
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.currentTab = "events"
-                      }
-                    }
-                  },
-                  [_vm._v("Events (" + _vm._s(_vm.events.length) + ")")]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _vm.cache.length
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.currentTab == "cache" },
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.currentTab = "cache"
-                      }
-                    }
-                  },
-                  [_vm._v("Cache (" + _vm._s(_vm.cache.length) + ")")]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _vm.redis.length
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.currentTab == "redis" },
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.currentTab = "redis"
-                      }
-                    }
-                  },
-                  [_vm._v("Redis (" + _vm._s(_vm.redis.length) + ")")]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _vm.mails.length
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.currentTab == "mails" },
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.currentTab = "mails"
-                      }
-                    }
-                  },
-                  [_vm._v("Mail (" + _vm._s(_vm.mails.length) + ")")]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "nav-item" }, [
-            _vm.notifications.length
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "nav-link",
-                    class: { active: _vm.currentTab == "notifications" },
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.currentTab = "notifications"
-                      }
-                    }
-                  },
-                  [
-                    _vm._v(
-                      "Notifications (" + _vm._s(_vm.notifications.length) + ")"
+        _c(
+          "ul",
+          { staticClass: "nav nav-pills" },
+          [
+            _vm._l(_vm.separateTabs, function(tab) {
+              return _c("li", { staticClass: "nav-item" }, [
+                tab.count
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        class: { active: _vm.currentTab == tab.type },
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.currentTab = tab.type
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(tab.title) +
+                            " (" +
+                            _vm._s(tab.count) +
+                            ")\n            "
+                        )
+                      ]
                     )
-                  ]
-                )
+                  : _vm._e()
+              ])
+            }),
+            _vm._v(" "),
+            _vm.dropdownTabs.length
+              ? _c("li", { staticClass: "nav-item dropdown" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link dropdown-toggle",
+                      class: { active: _vm.dropdownTabSelected },
+                      attrs: {
+                        "data-toggle": "dropdown",
+                        href: "#",
+                        role: "button",
+                        "aria-haspopup": "true",
+                        "aria-expanded": "false"
+                      }
+                    },
+                    [_vm._v("Other")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "dropdown-menu" },
+                    _vm._l(_vm.dropdownTabs, function(tab) {
+                      return _c(
+                        "a",
+                        {
+                          staticClass: "dropdown-item",
+                          class: { active: _vm.currentTab == tab.type },
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.currentTab = tab.type
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(tab.title) + " (" + _vm._s(tab.count) + ")"
+                          )
+                        ]
+                      )
+                    })
+                  )
+                ])
               : _vm._e()
-          ])
-        ]),
+          ],
+          2
+        ),
         _vm._v(" "),
         _c("div", [
           _c(

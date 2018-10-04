@@ -47,6 +47,9 @@ $new-entries-bg: #505e4a;
 
 $control-action-icon-color: #ccd2df;
 
+$dropdown-bg: $table-headers-color;
+$dropdown-link-color: #fff;
+
 @import "syntaxhighlight";
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "base";

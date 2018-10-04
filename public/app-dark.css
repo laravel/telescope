@@ -3639,7 +3639,7 @@ input[type="button"].btn-block {
   color: #E2EDF4;
   text-align: left;
   list-style: none;
-  background-color: #fff;
+  background-color: #181818;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem;
@@ -3765,7 +3765,7 @@ input[type="button"].btn-block {
   padding: 0.25rem 1.5rem;
   clear: both;
   font-weight: 400;
-  color: #212529;
+  color: #fff;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
@@ -3808,7 +3808,7 @@ input[type="button"].btn-block {
 .dropdown-item-text {
   display: block;
   padding: 0.25rem 1.5rem;
-  color: #212529;
+  color: #fff;
 }
 
 .btn-group,
@@ -14158,7 +14158,7 @@ input[type="button"].btn-block {
   color: #E2EDF4;
   text-align: left;
   list-style: none;
-  background-color: #fff;
+  background-color: #181818;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem;
@@ -14284,7 +14284,7 @@ input[type="button"].btn-block {
   padding: 0.25rem 1.5rem;
   clear: both;
   font-weight: 400;
-  color: #212529;
+  color: #fff;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
@@ -14327,7 +14327,7 @@ input[type="button"].btn-block {
 .dropdown-item-text {
   display: block;
   padding: 0.25rem 1.5rem;
-  color: #212529;
+  color: #fff;
 }
 
 .btn-group,
