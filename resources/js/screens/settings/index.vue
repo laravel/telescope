@@ -38,10 +38,22 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h5>Settings</h5>
-
-            <button class="btn btn-primary" v-on:click.prevent="store">Store</button>
         </div>
 
-        
+        <div class="card-body card-bg-secondary">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                    Night Mode
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                    Auto-load new Entries
+                </label>
+            </div>
+        </div>
     </div>
 </template>

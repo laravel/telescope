@@ -80616,34 +80616,59 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c(
-      "div",
-      {
-        staticClass:
-          "card-header d-flex align-items-center justify-content-between"
-      },
-      [
-        _c("h5", [_vm._v("Settings")]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary",
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.store($event)
-              }
-            }
-          },
-          [_vm._v("Store")]
-        )
-      ]
-    )
-  ])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "card-header d-flex align-items-center justify-content-between"
+        },
+        [_c("h5", [_vm._v("Settings")])]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body card-bg-secondary" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            staticClass: "form-check-input",
+            attrs: { type: "checkbox", value: "", id: "defaultCheck1" }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            {
+              staticClass: "form-check-label",
+              attrs: { for: "defaultCheck1" }
+            },
+            [_vm._v("\n                Night Mode\n            ")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-check" }, [
+          _c("input", {
+            staticClass: "form-check-input",
+            attrs: { type: "checkbox", value: "", id: "defaultCheck1" }
+          }),
+          _vm._v(" "),
+          _c(
+            "label",
+            {
+              staticClass: "form-check-label",
+              attrs: { for: "defaultCheck1" }
+            },
+            [_vm._v("\n                Auto-load new Entries\n            ")]
+          )
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
