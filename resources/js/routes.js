@@ -134,7 +134,9 @@ export default [
     },
 
     {
-        path: '/commands', name: 'commands', component: require('./screens/commands/index')
+        path: '/commands',
+        name: 'commands',
+        component: require('./screens/commands/index')
     },
 
     {
@@ -165,5 +167,11 @@ export default [
         path: '/monitored-tags',
         name: 'monitored-tags',
         component: require('./screens/monitoring/index')
+    },
+
+    {
+        path: '/settings',
+        name: 'settings',
+        component: require('./screens/settings/index')
     },
 ];
