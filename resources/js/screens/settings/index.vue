@@ -9,6 +9,8 @@
         data() {
             return {
                 ready: false,
+                nightMode: localStorage.nightMode === 'true',
+                autoLoadEntries: localStorage.autoLoadEntries  === 'true',
             };
         },
 
@@ -25,10 +27,15 @@
             })
         },
 
+        watch: {
+            nightMode(v){
+                localStorage.nightMode = v;
 
-        methods: {
-            store(){
+                location.reload();
+            },
 
+            autoLoadEntries(v){
+                localStorage.autoLoadEntries = v;
             }
         }
     }
@@ -42,15 +49,15 @@
 
         <div class="card-body card-bg-secondary">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">
+                <input class="form-check-input" type="checkbox" v-model="nightMode" id="nightMode">
+                <label class="form-check-label" for="nightMode">
                     Night Mode
                 </label>
             </div>
 
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">
+                <input class="form-check-input" type="checkbox" v-model="autoLoadEntries" id="autoLoadEntries">
+                <label class="form-check-label" for="autoLoadEntries">
                     Auto-load new Entries
                 </label>
             </div>

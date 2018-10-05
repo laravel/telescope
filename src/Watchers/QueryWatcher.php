@@ -31,7 +31,7 @@ class QueryWatcher extends Watcher
 
         Telescope::recordQuery(IncomingEntry::make([
             'connection' => $event->connectionName,
-            'bindings' => $this->formatBindings($event->bindings),
+            'bindings' => $this->formatBindings($event),
             'sql' => $event->sql,
             'time' => number_format($time, 2),
             'slow' => isset($this->options['slow']) && $time >= $this->options['slow'],
@@ -52,13 +52,11 @@ class QueryWatcher extends Watcher
     /**
      * Format the given bindings to strings.
      *
-     * @param  array  $bindings
+     * @param \Illuminate\Database\Events\QueryExecuted  $event
      * @return array
      */
-    protected function formatBindings($bindings)
+    protected function formatBindings($event)
     {
-        return collect($bindings)->map(function ($value) {
-            return (string) $value;
-        })->toArray();
+        return $event->connection->prepareBindings($event->bindings);
     }
 }

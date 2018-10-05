@@ -80582,7 +80582,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
      */
     data: function data() {
         return {
-            ready: false
+            ready: false,
+            nightMode: localStorage.nightMode === 'true',
+            autoLoadEntries: localStorage.autoLoadEntries === 'true'
         };
     },
 
@@ -80603,8 +80605,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
 
-    methods: {
-        store: function store() {}
+    watch: {
+        nightMode: function nightMode(v) {
+            localStorage.nightMode = v;
+
+            location.reload();
+        },
+        autoLoadEntries: function autoLoadEntries(v) {
+            localStorage.autoLoadEntries = v;
+        }
     }
 });
 
@@ -80616,57 +80625,122 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "card" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body card-bg-secondary" }, [
+      _c("div", { staticClass: "form-check" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.nightMode,
+              expression: "nightMode"
+            }
+          ],
+          staticClass: "form-check-input",
+          attrs: { type: "checkbox", id: "nightMode" },
+          domProps: {
+            checked: Array.isArray(_vm.nightMode)
+              ? _vm._i(_vm.nightMode, null) > -1
+              : _vm.nightMode
+          },
+          on: {
+            change: function($event) {
+              var $$a = _vm.nightMode,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v)
+                if ($$el.checked) {
+                  $$i < 0 && (_vm.nightMode = $$a.concat([$$v]))
+                } else {
+                  $$i > -1 &&
+                    (_vm.nightMode = $$a
+                      .slice(0, $$i)
+                      .concat($$a.slice($$i + 1)))
+                }
+              } else {
+                _vm.nightMode = $$c
+              }
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          { staticClass: "form-check-label", attrs: { for: "nightMode" } },
+          [_vm._v("\n                Night Mode\n            ")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-check" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.autoLoadEntries,
+              expression: "autoLoadEntries"
+            }
+          ],
+          staticClass: "form-check-input",
+          attrs: { type: "checkbox", id: "autoLoadEntries" },
+          domProps: {
+            checked: Array.isArray(_vm.autoLoadEntries)
+              ? _vm._i(_vm.autoLoadEntries, null) > -1
+              : _vm.autoLoadEntries
+          },
+          on: {
+            change: function($event) {
+              var $$a = _vm.autoLoadEntries,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v)
+                if ($$el.checked) {
+                  $$i < 0 && (_vm.autoLoadEntries = $$a.concat([$$v]))
+                } else {
+                  $$i > -1 &&
+                    (_vm.autoLoadEntries = $$a
+                      .slice(0, $$i)
+                      .concat($$a.slice($$i + 1)))
+                }
+              } else {
+                _vm.autoLoadEntries = $$c
+              }
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "label",
+          {
+            staticClass: "form-check-label",
+            attrs: { for: "autoLoadEntries" }
+          },
+          [_vm._v("\n                Auto-load new Entries\n            ")]
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "card-header d-flex align-items-center justify-content-between"
-        },
-        [_c("h5", [_vm._v("Settings")])]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body card-bg-secondary" }, [
-        _c("div", { staticClass: "form-check" }, [
-          _c("input", {
-            staticClass: "form-check-input",
-            attrs: { type: "checkbox", value: "", id: "defaultCheck1" }
-          }),
-          _vm._v(" "),
-          _c(
-            "label",
-            {
-              staticClass: "form-check-label",
-              attrs: { for: "defaultCheck1" }
-            },
-            [_vm._v("\n                Night Mode\n            ")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-check" }, [
-          _c("input", {
-            staticClass: "form-check-input",
-            attrs: { type: "checkbox", value: "", id: "defaultCheck1" }
-          }),
-          _vm._v(" "),
-          _c(
-            "label",
-            {
-              staticClass: "form-check-label",
-              attrs: { for: "defaultCheck1" }
-            },
-            [_vm._v("\n                Auto-load new Entries\n            ")]
-          )
-        ])
-      ])
-    ])
+    return _c(
+      "div",
+      {
+        staticClass:
+          "card-header d-flex align-items-center justify-content-between"
+      },
+      [_c("h5", [_vm._v("Settings")])]
+    )
   }
 ]
 render._withStripped = true
