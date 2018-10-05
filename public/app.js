@@ -79806,7 +79806,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             ready: false,
 
             updateEntryTimeout: null,
-            updateEntryTimer: 5000
+            updateEntryTimer: 2500
         };
     },
 
