@@ -28,10 +28,10 @@
                 updateTimeAgoTimeout: null,
 
                 newEntriesTimeout: null,
-                newEntriesTimer: 5000,
+                newEntriesTimer: 2500,
 
                 updateEntriesTimeout: null,
-                updateEntriesTimer: 5000,
+                updateEntriesTimer: 2500,
             };
         },
 
