@@ -71107,7 +71107,7 @@ var render = function() {
             _c(
               "svg",
               {
-                staticClass: "icon spin mr-2",
+                staticClass: "icon spin mr-2 fill-text-color",
                 attrs: {
                   xmlns: "http://www.w3.org/2000/svg",
                   viewBox: "0 0 20 20"

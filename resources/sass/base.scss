@@ -138,6 +138,16 @@ button:hover{
   }
 }
 
+.btn-outline-primary.active{
+  .fill-primary {
+    fill: $body-bg;
+  }
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled).active:focus{
+  box-shadow: none !important;
+}
+
 .control-action {
   svg {
     fill: $control-action-icon-color;

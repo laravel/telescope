@@ -21154,6 +21154,15 @@ button:hover .fill-primary {
   fill: #fff;
 }
 
+.btn-outline-primary.active .fill-primary {
+  fill: #EDF1F3;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled).active:focus {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
 .control-action svg {
   fill: #ccd2df;
   width: 1.2rem;
