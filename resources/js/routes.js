@@ -168,10 +168,4 @@ export default [
         name: 'monitored-tags',
         component: require('./screens/monitoring/index')
     },
-
-    {
-        path: '/settings',
-        name: 'settings',
-        component: require('./screens/settings/index')
-    },
 ];

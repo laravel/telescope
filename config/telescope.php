@@ -7,8 +7,6 @@ return [
 
     'path' => 'telescope',
 
-    'autoload' => env('TELESCOPE_AUTOLOAD', false),
-
     /*
     |--------------------------------------------------------------------------
     | Telescope Storage Driver

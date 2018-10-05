@@ -132,7 +132,7 @@
                         if (response.data.entries.length && !this.entries.length) {
                             this.loadNewEntries();
                         } else if (response.data.entries.length && _.first(response.data.entries).id != _.first(this.entries).id) {
-                            if (Telescope.autoload) {
+                            if (this.$root.autoLoadsNewEntries) {
                                 this.loadNewEntries();
                             } else {
                                 this.hasNewEntries = true;
