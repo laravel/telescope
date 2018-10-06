@@ -60370,9 +60370,26 @@ exports.clearImmediate = clearImmediate;
          * Show the time ago format for the given time.
          */
         timeAgo: function timeAgo(time) {
-            var withoutSuffex = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+            __WEBPACK_IMPORTED_MODULE_1_moment___default.a.updateLocale('en', {
+                relativeTime: {
+                    future: "in %s",
+                    past: "%s ago",
+                    s: 'Just now',
+                    ss: '%ds ago',
+                    m: "1m ago",
+                    mm: "%dm ago",
+                    h: "1h ago",
+                    hh: "%dh ago",
+                    d: "1d ago",
+                    dd: "%dd ago",
+                    M: "a month ago",
+                    MM: "%d months ago",
+                    y: "a year ago",
+                    yy: "%d years ago"
+                }
+            });
 
-            return __WEBPACK_IMPORTED_MODULE_1_moment___default()(time + ' Z').utc().local().fromNow(withoutSuffex);
+            return __WEBPACK_IMPORTED_MODULE_1_moment___default()(time + ' Z').utc().local().fromNow(true);
         },
 
 
@@ -61221,7 +61238,13 @@ module.exports = Component.exports
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    methods: {
+        recipientsCount: function recipientsCount(entry) {
+            return _.union(Object.keys(entry.content.to), entry.content.cc ? Object.keys(entry.content.cc) : [], entry.content.bcc ? Object.keys(entry.content.bcc) : [], entry.content.replyTo ? Object.keys(entry.content.replyTo) : []).length;
+        }
+    }
+});
 
 /***/ }),
 /* 180 */
@@ -61240,12 +61263,22 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return [
-              _c("td", { attrs: { title: slotProps.entry.content.mailable } }, [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.truncate(slotProps.entry.content.mailable, 50)) +
-                    "\n\n            "
+              _c("td", [
+                _c(
+                  "span",
+                  { attrs: { title: slotProps.entry.content.mailable } },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm.truncate(
+                          slotProps.entry.content.mailable || "-",
+                          70
+                        )
+                      )
+                    )
+                  ]
                 ),
+                _vm._v(" "),
                 slotProps.entry.content.queued
                   ? _c(
                       "span",
@@ -61255,15 +61288,30 @@ var render = function() {
                       },
                       [_vm._v("\n                Queued\n            ")]
                     )
-                  : _vm._e()
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c(
+                  "small",
+                  {
+                    staticClass: "text-muted",
+                    attrs: { title: slotProps.entry.content.subject }
+                  },
+                  [
+                    _vm._v(
+                      "\n                Subject: " +
+                        _vm._s(
+                          _vm.truncate(slotProps.entry.content.subject, 90)
+                        ) +
+                        "\n            "
+                    )
+                  ]
+                )
               ]),
               _vm._v(" "),
-              _c("td", { attrs: { title: slotProps.entry.content.subject } }, [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.truncate(slotProps.entry.content.subject, 20)) +
-                    "\n        "
-                )
+              _c("td", { staticClass: "table-fit" }, [
+                _vm._v(_vm._s(_vm.recipientsCount(slotProps.entry)))
               ]),
               _vm._v(" "),
               _c(
@@ -61322,7 +61370,7 @@ var render = function() {
       _c("tr", { attrs: { slot: "table-header" }, slot: "table-header" }, [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Mailable")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Subject")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Recipients")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Happened")]),
         _vm._v(" "),
@@ -63992,39 +64040,52 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return [
-              _c(
-                "td",
-                { attrs: { title: slotProps.entry.content.notification } },
-                [
-                  _vm._v(
-                    "\n            " +
+              _c("td", [
+                _c(
+                  "span",
+                  { attrs: { title: slotProps.entry.content.notification } },
+                  [
+                    _vm._v(
                       _vm._s(
-                        _vm.truncate(slotProps.entry.content.notification, 50)
-                      ) +
-                      "\n\n            "
-                  ),
-                  slotProps.entry.content.queued
-                    ? _c(
-                        "span",
-                        {
-                          staticClass:
-                            "badge badge-secondary font-weight-light ml-2"
-                        },
-                        [_vm._v("\n                Queued\n            ")]
+                        _vm.truncate(
+                          slotProps.entry.content.notification || "-",
+                          70
+                        )
                       )
-                    : _vm._e()
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { attrs: { title: slotProps.entry.content.notifiable } },
-                [
-                  _vm._v(
-                    _vm._s(_vm.truncate(slotProps.entry.content.notifiable, 50))
-                  )
-                ]
-              ),
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                slotProps.entry.content.queued
+                  ? _c(
+                      "span",
+                      {
+                        staticClass:
+                          "badge badge-secondary font-weight-light ml-2"
+                      },
+                      [_vm._v("\n                Queued\n            ")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c(
+                  "small",
+                  {
+                    staticClass: "text-muted",
+                    attrs: { title: slotProps.entry.content.notifiable }
+                  },
+                  [
+                    _vm._v(
+                      "\n                Recipient: " +
+                        _vm._s(
+                          _vm.truncate(slotProps.entry.content.notifiable, 90)
+                        ) +
+                        "\n            "
+                    )
+                  ]
+                )
+              ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
                 _vm._v(
@@ -64087,8 +64148,6 @@ var render = function() {
     [
       _c("tr", { attrs: { slot: "table-header" }, slot: "table-header" }, [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Notification")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Notifiable")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Channel")]),
         _vm._v(" "),
@@ -64622,35 +64681,22 @@ var render = function() {
           key: "row",
           fn: function(slotProps) {
             return [
-              _c("td", { attrs: { title: slotProps.entry.content.name } }, [
-                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.name, 40)))
+              _c("td", [
+                _c("span", { attrs: { title: slotProps.entry.content.name } }, [
+                  _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.name, 68)))
+                ]),
+                _c("br"),
+                _vm._v(" "),
+                _c("small", { staticClass: "text-muted" }, [
+                  _vm._v(
+                    "\n                Connection: " +
+                      _vm._s(slotProps.entry.content.connection) +
+                      " | Queue: " +
+                      _vm._s(slotProps.entry.content.queue) +
+                      "\n            "
+                  )
+                ])
               ]),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  staticClass: "table-fit",
-                  attrs: { title: slotProps.entry.content.connection }
-                },
-                [
-                  _vm._v(
-                    _vm._s(_vm.truncate(slotProps.entry.content.connection, 10))
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  staticClass: "table-fit",
-                  attrs: { title: slotProps.entry.content.queue }
-                },
-                [
-                  _vm._v(
-                    _vm._s(_vm.truncate(slotProps.entry.content.queue, 10))
-                  )
-                ]
-              ),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
                 _c(
@@ -64726,10 +64772,6 @@ var render = function() {
     [
       _c("tr", { attrs: { slot: "table-header" }, slot: "table-header" }, [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Job")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Connection")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Queue")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
         _vm._v(" "),
@@ -68960,7 +69002,7 @@ var render = function() {
           fn: function(slotProps) {
             return [
               _c("td", { attrs: { title: slotProps.entry.content.sql } }, [
-                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.sql, 80)))
+                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.sql, 90)))
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [

@@ -6,7 +6,6 @@
     <index-screen title="Notifications" resource="notifications">
         <tr slot="table-header">
             <th scope="col">Notification</th>
-            <th scope="col">Notifiable</th>
             <th scope="col">Channel</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -14,15 +13,19 @@
 
 
         <template slot="row" slot-scope="slotProps">
-            <td :title="slotProps.entry.content.notification">
-                {{truncate(slotProps.entry.content.notification, 50)}}
+            <td>
+                <span :title="slotProps.entry.content.notification">{{truncate(slotProps.entry.content.notification || '-', 70)}}</span>
 
                 <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.queued">
                     Queued
                 </span>
-            </td>
 
-            <td :title="slotProps.entry.content.notifiable">{{truncate(slotProps.entry.content.notifiable, 50)}}</td>
+                <br>
+
+                <small class="text-muted" :title="slotProps.entry.content.notifiable">
+                    Recipient: {{truncate(slotProps.entry.content.notifiable, 90)}}
+                </small>
+            </td>
 
             <td class="table-fit">{{truncate(slotProps.entry.content.channel, 20)}}</td>
 

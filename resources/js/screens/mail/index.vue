@@ -1,32 +1,42 @@
 <script type="text/ecmascript-6">
-    export default {}
+    export default {
+        methods: {
+            recipientsCount(entry){
+                return _.union(Object.keys(entry.content.to),
+                        (entry.content.cc ? Object.keys(entry.content.cc) : []),
+                        (entry.content.bcc ? Object.keys(entry.content.bcc) : []),
+                        (entry.content.replyTo ? Object.keys(entry.content.replyTo) : [])).length;
+            }
+        }
+    }
 </script>
 
 <template>
     <index-screen title="Mail" resource="mail">
         <tr slot="table-header">
             <th scope="col">Mailable</th>
-            <!-- <th scope="col">To</th> -->
-            <th scope="col">Subject</th>
+            <th scope="col">Recipients</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
 
 
         <template slot="row" slot-scope="slotProps">
-            <td :title="slotProps.entry.content.mailable">
-                {{truncate(slotProps.entry.content.mailable, 50)}}
+            <td>
+                <span :title="slotProps.entry.content.mailable">{{truncate(slotProps.entry.content.mailable || '-', 70)}}</span>
 
                 <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.queued">
                     Queued
                 </span>
+
+                <br>
+
+                <small class="text-muted" :title="slotProps.entry.content.subject">
+                    Subject: {{truncate(slotProps.entry.content.subject, 90)}}
+                </small>
             </td>
 
-            <!-- <td>{{Object.keys(slotProps.entry.content.to)[0]}}</td> -->
-
-            <td :title="slotProps.entry.content.subject">
-                {{truncate(slotProps.entry.content.subject, 20)}}
-            </td>
+            <td class="table-fit">{{recipientsCount(slotProps.entry)}}</td>
 
             <td class="table-fit" :data-timeago="slotProps.entry.created_at">{{timeAgo(slotProps.entry.created_at)}}</td>
 
