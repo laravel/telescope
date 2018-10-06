@@ -171,7 +171,7 @@
 
                 <tbody>
                 <tr v-for="entry in exceptions">
-                    <td :title="entry.content.message">{{truncate(entry.content.message, 100)}}</td>
+                    <td :title="entry.content.message">{{truncate(entry.content.message, 90)}}</td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'exception-preview', params:{id: entry.id}}" class="control-action">
@@ -197,7 +197,7 @@
 
                 <tbody>
                 <tr v-for="entry in logs">
-                    <td :title="entry.content.message">{{truncate(entry.content.message, 100)}}</td>
+                    <td :title="entry.content.message">{{truncate(entry.content.message, 90)}}</td>
                     <td class="table-fit">
                         <span class="badge font-weight-light" :class="'badge-'+logLevelClass(entry.content.level)">
                             {{entry.content.level}}
@@ -286,8 +286,6 @@
                 <thead>
                 <tr>
                     <th>Job</th>
-                    <th>Connection</th>
-                    <th>Queue</th>
                     <th scope="col">Status</th>
                     <th></th>
                 </tr>
@@ -295,9 +293,12 @@
 
                 <tbody>
                 <tr v-for="entry in jobs">
-                    <td :title="entry.content.name">{{truncate(entry.content.name, 100)}}</td>
-                    <td class="table-fit">{{truncate(entry.content.connection, 10)}}</td>
-                    <td class="table-fit">{{truncate(entry.content.queue, 10)}}</td>
+                    <td>
+                        <span :title="entry.content.name">{{truncate(entry.content.name, 68)}}</span><br>
+                        <small class="text-muted">
+                            Connection: {{entry.content.connection}} | Queue: {{entry.content.queue}}
+                        </small>
+                    </td>
 
                     <td class="table-fit">
                         <span class="badge font-weight-light" :class="'badge-'+jobStatusClass(entry.content.status)">
@@ -413,22 +414,25 @@
                 <thead>
                 <tr>
                     <th>Mailable</th>
-                    <th>Subject</th>
                     <th></th>
                 </tr>
                 </thead>
 
                 <tbody>
                 <tr v-for="entry in mails">
-                    <td :title="entry.content.mailable">
-                        {{truncate(entry.content.mailable, 50)}}
+                    <td>
+                        <span :title="entry.content.mailable">{{truncate(entry.content.mailable || '-', 70)}}</span>
 
                         <span class="badge badge-secondary font-weight-light ml-2" v-if="entry.content.queued">
                             Queued
                         </span>
-                    </td>
 
-                    <td :title="entry.content.subject">{{truncate(entry.content.subject, 20)}}</td>
+                        <br>
+
+                        <small class="text-muted" :title="entry.content.subject">
+                            Subject: {{truncate(entry.content.subject, 90)}}
+                        </small>
+                    </td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'mail-preview', params:{id: entry.id}}" class="control-action">
@@ -447,7 +451,6 @@
                 <thead>
                 <tr>
                     <th>Notification</th>
-                    <th>Notifiable</th>
                     <th>Channel</th>
                     <th></th>
                 </tr>
@@ -455,15 +458,20 @@
 
                 <tbody>
                 <tr v-for="entry in notifications">
-                    <td :title="entry.content.notification">
-                        {{truncate(entry.content.notification, 50)}}
+                    <td>
+                        <span :title="entry.content.notification">{{truncate(entry.content.notification || '-', 70)}}</span>
 
                         <span class="badge badge-secondary font-weight-light ml-2" v-if="entry.content.queued">
                             Queued
                         </span>
+
+                        <br>
+
+                        <small class="text-muted" :title="entry.content.notifiable">
+                            Recipient: {{truncate(entry.content.notifiable, 90)}}
+                        </small>
                     </td>
 
-                    <td :title="entry.content.notifiable">{{truncate(entry.content.notifiable, 50)}}</td>
                     <td class="table-fit">{{truncate(entry.content.channel, 20)}}</td>
 
                     <td class="table-fit">

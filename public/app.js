@@ -78229,7 +78229,7 @@ var render = function() {
                 _vm._l(_vm.exceptions, function(entry) {
                   return _c("tr", [
                     _c("td", { attrs: { title: entry.content.message } }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.message, 100)))
+                      _vm._v(_vm._s(_vm.truncate(entry.content.message, 90)))
                     ]),
                     _vm._v(" "),
                     _c(
@@ -78297,7 +78297,7 @@ var render = function() {
                 _vm._l(_vm.logs, function(entry) {
                   return _c("tr", [
                     _c("td", { attrs: { title: entry.content.message } }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.message, 100)))
+                      _vm._v(_vm._s(_vm.truncate(entry.content.message, 90)))
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "table-fit" }, [
@@ -78562,16 +78562,21 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.jobs, function(entry) {
                   return _c("tr", [
-                    _c("td", { attrs: { title: entry.content.name } }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.name, 100)))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-fit" }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.connection, 10)))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "table-fit" }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.queue, 10)))
+                    _c("td", [
+                      _c("span", { attrs: { title: entry.content.name } }, [
+                        _vm._v(_vm._s(_vm.truncate(entry.content.name, 68)))
+                      ]),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("small", { staticClass: "text-muted" }, [
+                        _vm._v(
+                          "\n                        Connection: " +
+                            _vm._s(entry.content.connection) +
+                            " | Queue: " +
+                            _vm._s(entry.content.queue) +
+                            "\n                    "
+                        )
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "table-fit" }, [
@@ -78905,12 +78910,15 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.mails, function(entry) {
                   return _c("tr", [
-                    _c("td", { attrs: { title: entry.content.mailable } }, [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(_vm.truncate(entry.content.mailable, 50)) +
-                          "\n\n                    "
-                      ),
+                    _c("td", [
+                      _c("span", { attrs: { title: entry.content.mailable } }, [
+                        _vm._v(
+                          _vm._s(
+                            _vm.truncate(entry.content.mailable || "-", 70)
+                          )
+                        )
+                      ]),
+                      _vm._v(" "),
                       entry.content.queued
                         ? _c(
                             "span",
@@ -78924,11 +78932,24 @@ var render = function() {
                               )
                             ]
                           )
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { title: entry.content.subject } }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.subject, 20)))
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "small",
+                        {
+                          staticClass: "text-muted",
+                          attrs: { title: entry.content.subject }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Subject: " +
+                              _vm._s(_vm.truncate(entry.content.subject, 90)) +
+                              "\n                    "
+                          )
+                        ]
+                      )
                     ]),
                     _vm._v(" "),
                     _c(
@@ -78998,12 +79019,22 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.notifications, function(entry) {
                   return _c("tr", [
-                    _c("td", { attrs: { title: entry.content.notification } }, [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(_vm.truncate(entry.content.notification, 50)) +
-                          "\n\n                    "
+                    _c("td", [
+                      _c(
+                        "span",
+                        { attrs: { title: entry.content.notification } },
+                        [
+                          _vm._v(
+                            _vm._s(
+                              _vm.truncate(
+                                entry.content.notification || "-",
+                                70
+                              )
+                            )
+                          )
+                        ]
                       ),
+                      _vm._v(" "),
                       entry.content.queued
                         ? _c(
                             "span",
@@ -79017,11 +79048,26 @@ var render = function() {
                               )
                             ]
                           )
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { title: entry.content.notifiable } }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.notifiable, 50)))
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "small",
+                        {
+                          staticClass: "text-muted",
+                          attrs: { title: entry.content.notifiable }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Recipient: " +
+                              _vm._s(
+                                _vm.truncate(entry.content.notifiable, 90)
+                              ) +
+                              "\n                    "
+                          )
+                        ]
+                      )
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "table-fit" }, [
@@ -79134,10 +79180,6 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Job")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Connection")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Queue")]),
-        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
         _vm._v(" "),
         _c("th")
@@ -79191,13 +79233,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Mailable")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Subject")]),
-        _vm._v(" "),
-        _c("th")
-      ])
+      _c("tr", [_c("th", [_vm._v("Mailable")]), _vm._v(" "), _c("th")])
     ])
   },
   function() {
@@ -79207,8 +79243,6 @@ var staticRenderFns = [
     return _c("thead", [
       _c("tr", [
         _c("th", [_vm._v("Notification")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Notifiable")]),
         _vm._v(" "),
         _c("th", [_vm._v("Channel")]),
         _vm._v(" "),
