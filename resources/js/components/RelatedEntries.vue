@@ -171,7 +171,10 @@
 
                 <tbody>
                 <tr v-for="entry in exceptions">
-                    <td :title="entry.content.message">{{truncate(entry.content.message, 90)}}</td>
+                    <td :title="entry.content.class">
+                        {{truncate(entry.content.class, 70)}}<br>
+                        <small class="text-muted">{{truncate(entry.content.message, 100)}}</small>
+                    </td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'exception-preview', params:{id: entry.id}}" class="control-action">

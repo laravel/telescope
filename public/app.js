@@ -78261,8 +78261,16 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.exceptions, function(entry) {
                   return _c("tr", [
-                    _c("td", { attrs: { title: entry.content.message } }, [
-                      _vm._v(_vm._s(_vm.truncate(entry.content.message, 90)))
+                    _c("td", { attrs: { title: entry.content.class } }, [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.truncate(entry.content.class, 70))
+                      ),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("small", { staticClass: "text-muted" }, [
+                        _vm._v(_vm._s(_vm.truncate(entry.content.message, 100)))
+                      ])
                     ]),
                     _vm._v(" "),
                     _c(
