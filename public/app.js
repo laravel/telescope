@@ -78263,7 +78263,7 @@ var render = function() {
                   return _c("tr", [
                     _c("td", { attrs: { title: entry.content.class } }, [
                       _vm._v(
-                        "\n                    " +
+                        "\n                        " +
                           _vm._s(_vm.truncate(entry.content.class, 70))
                       ),
                       _c("br"),
