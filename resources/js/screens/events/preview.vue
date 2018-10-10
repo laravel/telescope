@@ -45,7 +45,13 @@
                     <table class="table mb-0" v-show="currentTab=='listeners'">
                         <tbody>
                         <tr v-for="listener in slotProps.entry.content.listeners">
-                            <td class="card-bg-secondary">{{listener}}</td>
+                            <td class="card-bg-secondary">
+                                {{ listener.name }}
+
+                                <span class="badge badge-secondary font-weight-light ml-2" v-if="listener.queued">
+                                    Queued
+                                </span>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

@@ -9,6 +9,7 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\ExtractProperties;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class EventWatcher extends Watcher
@@ -92,6 +93,15 @@ class EventWatcher extends Watcher
                 return $this->formatClosureListener($listener);
             })->reject(function ($listener) {
                 return Str::contains($listener, 'Laravel\\Telescope');
+            })->map(function ($listener) {
+                if (Str::contains($listener, '@')) {
+                    $queued = in_array(ShouldQueue::class, class_implements(explode('@', $listener)[0]));
+                }
+
+                return [
+                    'name' => $listener,
+                    'queued' => $queued ?? false,
+                ];
             })->values()->toArray();
     }
 

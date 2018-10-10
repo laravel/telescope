@@ -64994,7 +64994,25 @@ var render = function() {
                       ) {
                         return _c("tr", [
                           _c("td", { staticClass: "card-bg-secondary" }, [
-                            _vm._v(_vm._s(listener))
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(listener.name) +
+                                "\n\n                            "
+                            ),
+                            listener.queued
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-secondary font-weight-light ml-2"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                Queued\n                            "
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
                           ])
                         ])
                       })
