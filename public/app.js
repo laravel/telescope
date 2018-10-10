@@ -65272,6 +65272,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             entry: null,
             batch: []
         };
+    },
+
+
+    methods: {
+        formatExpiration: function formatExpiration(expiration) {
+            if (expiration < 1) {
+                return expiration * 60 + ' seconds';
+            }
+
+            return expiration + ' minutes';
+        }
     }
 });
 
@@ -65342,7 +65353,11 @@ var render = function() {
                   _c("td", [
                     _vm._v(
                       "\n                " +
-                        _vm._s(slotProps.entry.content.expiration) +
+                        _vm._s(
+                          _vm.formatExpiration(
+                            slotProps.entry.content.expiration
+                          )
+                        ) +
                         "\n            "
                     )
                   ])

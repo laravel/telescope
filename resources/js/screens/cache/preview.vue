@@ -1,4 +1,4 @@
-<script type="text/ecmascript-6">
+<script>
     import StylesMixin from './../../mixins/entriesStyles';
 
     export default {
@@ -7,12 +7,22 @@
         ],
 
 
-        data(){
+        data() {
             return {
                 entry: null,
                 batch: [],
             };
         },
+
+        methods: {
+            formatExpiration(expiration) {
+                if (expiration < 1) {
+                    return expiration * 60 + ' seconds';
+                }
+
+                return expiration + ' minutes';
+            }
+        }
     }
 </script>
 
@@ -38,7 +48,7 @@
             <tr v-if="slotProps.entry.content.expiration">
                 <td class="table-fit font-weight-bold">Expiration</td>
                 <td>
-                    {{slotProps.entry.content.expiration}}
+                    {{formatExpiration(slotProps.entry.content.expiration)}}
                 </td>
             </tr>
         </template>
