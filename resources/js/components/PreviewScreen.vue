@@ -178,7 +178,13 @@
                     <tr v-if="entry.tags.length">
                         <td class="table-fit font-weight-bold">Tags</td>
                         <td>
-                            <span class="badge badge-info mr-1 font-weight-light" v-for="tag in entry.tags">{{tag}}</span>
+                            <router-link
+                                    v-for="tag in entry.tags"
+                                    :key="tag"
+                                    :to="{name:resource, query: {tag: tag}}"
+                                    class="badge badge-info mr-1 font-weight-light">
+                                {{tag}}
+                            </router-link>
                         </td>
                     </tr>
                     </tbody>

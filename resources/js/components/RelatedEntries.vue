@@ -490,3 +490,9 @@
         </div>
     </div>
 </template>
+
+<style scoped>
+    td {
+        vertical-align: middle !important;
+    }
+</style>
