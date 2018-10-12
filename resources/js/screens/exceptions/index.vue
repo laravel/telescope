@@ -15,6 +15,7 @@
         <template slot="row" slot-scope="slotProps">
             <td :title="slotProps.entry.content.class" v-if="!$route.query.family_hash">
                 {{truncate(slotProps.entry.content.class, 70)}}<br>
+
                 <small class="text-muted">{{truncate(slotProps.entry.content.message, 100)}}</small>
             </td>
 
@@ -22,7 +23,19 @@
                 <span>{{slotProps.entry.content.occurrences}}</span>
             </td>
 
-            <td :title="slotProps.entry.content.message" v-if="$route.query.family_hash">{{truncate(slotProps.entry.content.message, 80)}}</td>
+            <td :title="slotProps.entry.content.message" v-if="$route.query.family_hash">
+                {{truncate(slotProps.entry.content.message, 80)}}<br>
+
+                <small class="text-muted">
+                    <span v-if="slotProps.entry.content.user && slotProps.entry.content.user.email">
+                        User: {{ slotProps.entry.content.user.email }} ({{ slotProps.entry.content.user.id }})
+                    </span>
+
+                    <span v-else>
+                        User: N/A
+                    </span>
+                </small>
+            </td>
 
             <td class="table-fit" :data-timeago="slotProps.entry.created_at">{{timeAgo(slotProps.entry.created_at)}}</td>
 

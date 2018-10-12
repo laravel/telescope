@@ -62041,10 +62041,31 @@ var render = function() {
                     { attrs: { title: slotProps.entry.content.message } },
                     [
                       _vm._v(
-                        _vm._s(
-                          _vm.truncate(slotProps.entry.content.message, 80)
-                        )
-                      )
+                        "\n            " +
+                          _vm._s(
+                            _vm.truncate(slotProps.entry.content.message, 80)
+                          )
+                      ),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("small", { staticClass: "text-muted" }, [
+                        slotProps.entry.content.user &&
+                        slotProps.entry.content.user.email
+                          ? _c("span", [
+                              _vm._v(
+                                "\n                    User: " +
+                                  _vm._s(slotProps.entry.content.user.email) +
+                                  " (" +
+                                  _vm._s(slotProps.entry.content.user.id) +
+                                  ")\n                "
+                              )
+                            ])
+                          : _c("span", [
+                              _vm._v(
+                                "\n                    User: N/A\n                "
+                              )
+                            ])
+                      ])
                     ]
                   )
                 : _vm._e(),
