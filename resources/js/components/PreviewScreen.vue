@@ -1,4 +1,4 @@
-<script type="text/ecmascript-6">
+<script>
     import _ from 'lodash';
     import axios from 'axios';
 
@@ -26,23 +26,18 @@
         },
 
 
+        watch: {
+            id() {
+                this.prepareEntry()
+            }
+        },
+
+
         /**
          * Prepare the component.
          */
         mounted() {
-            document.title = this.title + " - Telescope";
-
-            this.loadEntry((response) => {
-                this.entry = response.data.entry;
-                this.batch = response.data.batch;
-
-                this.$parent.entry = response.data.entry;
-                this.$parent.batch = response.data.batch;
-
-                this.ready = true;
-
-                this.updateEntry();
-            });
+            this.prepareEntry()
         },
 
 
@@ -71,6 +66,23 @@
 
 
         methods: {
+            prepareEntry() {
+                document.title = this.title + " - Telescope";
+
+                this.loadEntry((response) => {
+                    this.entry = response.data.entry;
+                    this.batch = response.data.batch;
+
+                    this.$parent.entry = response.data.entry;
+                    this.$parent.batch = response.data.batch;
+
+                    this.ready = true;
+
+                    this.updateEntry();
+                });
+            },
+
+
             loadEntry(after){
                 axios.get('/' + Telescope.path + '/telescope-api/' + this.resource + '/' + this.id).then(response => {
                     if (_.isFunction(after)) {

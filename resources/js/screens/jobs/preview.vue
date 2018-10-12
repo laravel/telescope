@@ -1,4 +1,4 @@
-<script type="text/ecmascript-6">
+<script>
     import axios from 'axios';
     import StylesMixin from './../../mixins/entriesStyles';
 
@@ -14,7 +14,7 @@
         ],
 
 
-        data(){
+        data() {
             return {
                 entry: null,
                 batch: [],
