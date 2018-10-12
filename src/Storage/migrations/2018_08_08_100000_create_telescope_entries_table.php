@@ -23,7 +23,7 @@ class CreateTelescopeEntriesTable extends Migration
             $table->json('content');
             $table->dateTime('created_at')->nullable();
 
-            $table->unique(['uuid', 'type']);
+            $table->unique('uuid');
             $table->index('batch_id');
             $table->index(['type', 'should_display_on_index']);
         });
