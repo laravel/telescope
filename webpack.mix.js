@@ -15,7 +15,7 @@ mix
     .js('resources/js/app.js', 'public')
     .sass('resources/sass/app.scss', 'public')
     .sass('resources/sass/app-dark.scss', 'public')
-    .copy('public', '../telescopetest/public/vendors/telescope')
+    .copy('public', '../telescopetest/public/vendor/telescope')
     .webpackConfig({
         resolve: {
             symlinks: false,

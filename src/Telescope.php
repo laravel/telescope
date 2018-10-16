@@ -138,7 +138,7 @@ class Telescope
         return ! $app->runningInConsole() && ! $app['request']->is(
             config('telescope.path').'*',
             'telescope-api*',
-            'vendors/telescope*'
+            'vendor/telescope*'
         );
     }
 
