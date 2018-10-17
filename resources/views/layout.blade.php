@@ -10,9 +10,9 @@
     <!-- Style sheets-->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     @if(\Laravel\Telescope\Telescope::$useDarkTheme)
-        <link href='{{asset('vendors/telescope/app-dark.css')}}' rel='stylesheet' type='text/css'>
+        <link href='{{asset('vendor/telescope/app-dark.css')}}' rel='stylesheet' type='text/css'>
     @else
-        <link href='{{asset('vendors/telescope/app.css')}}' rel='stylesheet' type='text/css'>
+        <link href='{{asset('vendor/telescope/app.css')}}' rel='stylesheet' type='text/css'>
     @endif
 </head>
 <body>
@@ -180,6 +180,6 @@
     )); ?>;
 </script>
 
-<script src="{{asset('vendors/telescope/app.js')}}"></script>
+<script src="{{asset('vendor/telescope/app.js')}}"></script>
 </body>
 </html>

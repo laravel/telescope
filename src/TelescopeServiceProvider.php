@@ -77,7 +77,7 @@ class TelescopeServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../public' => public_path('vendors/telescope'),
+                __DIR__.'/../public' => public_path('vendor/telescope'),
             ], 'telescope-assets');
 
             $this->publishes([
