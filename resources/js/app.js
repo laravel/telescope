@@ -14,7 +14,7 @@ window.Popper = require('popper.js').default;
 const router = new VueRouter({
     routes: Routes,
     mode: 'history',
-    base: '/'+window.Telescope.path+'/',
+    base: '/' + window.Telescope.path + '/',
 });
 
 Vue.component('related-entries', require('./components/RelatedEntries.vue'));
@@ -43,12 +43,12 @@ new Vue({
         }
     },
 
-    methods:{
+    methods: {
         autoLoadNewEntries(){
-            if(! this.autoLoadsNewEntries){
+            if (!this.autoLoadsNewEntries) {
                 this.autoLoadsNewEntries = true;
                 localStorage.autoLoadsNewEntries = 1;
-            }else{
+            } else {
                 this.autoLoadsNewEntries = false;
                 localStorage.autoLoadsNewEntries = 0;
             }

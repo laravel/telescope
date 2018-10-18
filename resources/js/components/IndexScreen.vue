@@ -57,6 +57,8 @@
             this.updateEntries();
 
             this.updateTimeAgo();
+
+            this.focusOnSearch();
         },
 
 
@@ -67,6 +69,8 @@
             clearTimeout(this.newEntriesTimeout);
             clearTimeout(this.updateEntriesTimeout);
             clearTimeout(this.updateTimeAgoTimeout);
+
+            document.onkeyup = null;
         },
 
 
@@ -232,6 +236,22 @@
 
                     this.updateEntries();
                 }, this.updateEntriesTimer);
+            },
+
+
+            /**
+             * Focus on the search input when "/" key is hit.
+             */
+            focusOnSearch(){
+                document.onkeyup = event => {
+                    if (event.which == 191 || event.keyCode == 191) {
+                        let searchInput = document.getElementById("searchInput");
+
+                        if (searchInput) {
+                            searchInput.focus();
+                        }
+                    }
+                };
             }
         }
     }
@@ -244,6 +264,7 @@
 
             <input type="text" class="form-control w-25"
                    v-if="tag || entries.length > 0"
+                   id="searchInput"
                    placeholder="Search Tag" v-model="tag" @input.stop="search">
         </div>
 
