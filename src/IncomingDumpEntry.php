@@ -40,7 +40,7 @@ class IncomingDumpEntry extends IncomingEntry
     /**
      * Description for the entry point.
      *
-     * @param  IncomingDumpEntry  $entryPoint
+     * @param  \Laravel\Telescope\IncomingDumpEntry  $entryPoint
      * @return string
      */
     private function entryPointDescription($entryPoint)
