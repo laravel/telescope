@@ -29,7 +29,7 @@ class MonitoredTagController extends Controller
     /**
      * Get all of the tags being monitored.
      *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
