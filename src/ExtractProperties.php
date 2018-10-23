@@ -14,6 +14,8 @@ class ExtractProperties
      *
      * @param  mixed  $target
      * @return array
+     *
+     * @throws \ReflectionException
      */
     public static function from($target)
     {
