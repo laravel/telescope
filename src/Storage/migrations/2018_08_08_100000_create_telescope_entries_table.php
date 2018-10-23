@@ -20,7 +20,7 @@ class CreateTelescopeEntriesTable extends Migration
             $table->string('family_hash')->nullable()->index();
             $table->boolean('should_display_on_index')->default(true);
             $table->string('type', 20);
-            $table->json('content');
+            $table->text('content');
             $table->dateTime('created_at')->nullable();
 
             $table->unique('uuid');
