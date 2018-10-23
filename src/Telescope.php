@@ -228,7 +228,7 @@ class Telescope
      */
     public static function recordCache(IncomingEntry $entry)
     {
-        return static::record(EntryType::CACHE, $entry);
+        static::record(EntryType::CACHE, $entry);
     }
 
     /**
@@ -239,7 +239,7 @@ class Telescope
      */
     public static function recordCommand(IncomingEntry $entry)
     {
-        return static::record(EntryType::COMMAND, $entry);
+        static::record(EntryType::COMMAND, $entry);
     }
 
     /**
@@ -250,7 +250,7 @@ class Telescope
      */
     public static function recordDump(IncomingEntry $entry)
     {
-        return static::record(EntryType::DUMP, $entry);
+        static::record(EntryType::DUMP, $entry);
     }
 
     /**
@@ -261,7 +261,7 @@ class Telescope
      */
     public static function recordEvent(IncomingEntry $entry)
     {
-        return static::record(EntryType::EVENT, $entry);
+        static::record(EntryType::EVENT, $entry);
     }
 
     /**
@@ -272,7 +272,7 @@ class Telescope
      */
     public static function recordException(IncomingEntry $entry)
     {
-        return static::record(EntryType::EXCEPTION, $entry);
+        static::record(EntryType::EXCEPTION, $entry);
     }
 
     /**
@@ -283,7 +283,7 @@ class Telescope
      */
     public static function recordJob($entry)
     {
-        return static::record(EntryType::JOB, $entry);
+        static::record(EntryType::JOB, $entry);
     }
 
     /**
@@ -294,7 +294,7 @@ class Telescope
      */
     public static function recordLog(IncomingEntry $entry)
     {
-        return static::record(EntryType::LOG, $entry);
+        static::record(EntryType::LOG, $entry);
     }
 
     /**
@@ -305,7 +305,7 @@ class Telescope
      */
     public static function recordMail(IncomingEntry $entry)
     {
-        return static::record(EntryType::MAIL, $entry);
+        static::record(EntryType::MAIL, $entry);
     }
 
     /**
@@ -316,7 +316,7 @@ class Telescope
      */
     public static function recordNotification($entry)
     {
-        return static::record(EntryType::NOTIFICATION, $entry);
+        static::record(EntryType::NOTIFICATION, $entry);
     }
 
     /**
@@ -327,7 +327,7 @@ class Telescope
      */
     public static function recordQuery(IncomingEntry $entry)
     {
-        return static::record(EntryType::QUERY, $entry);
+        static::record(EntryType::QUERY, $entry);
     }
 
     /**
@@ -338,7 +338,7 @@ class Telescope
      */
     public static function recordModelEvent(IncomingEntry $entry)
     {
-        return static::record(EntryType::MODEL, $entry);
+        static::record(EntryType::MODEL, $entry);
     }
 
     /**
@@ -349,7 +349,7 @@ class Telescope
      */
     public static function recordRedis(IncomingEntry $entry)
     {
-        return static::record(EntryType::REDIS, $entry);
+        static::record(EntryType::REDIS, $entry);
     }
 
     /**
@@ -361,7 +361,7 @@ class Telescope
 
     public static function recordRequest(IncomingEntry $entry)
     {
-        return static::record(EntryType::REQUEST, $entry);
+        static::record(EntryType::REQUEST, $entry);
     }
 
     /**
@@ -373,7 +373,7 @@ class Telescope
 
     public static function recordScheduledCommand(IncomingEntry $entry)
     {
-        return static::record(EntryType::SCHEDULED_TASK, $entry);
+        static::record(EntryType::SCHEDULED_TASK, $entry);
     }
 
     /**
