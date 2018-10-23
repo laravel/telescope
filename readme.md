@@ -30,6 +30,8 @@ After installing Telescope, publish its assets using the `telescope:install` Art
 
 After publishing Telescope's assets, its primary configuration file will be located at `config/telescope.php`. This configuration file allows you to configure your watcher options and each configuration option includes a description of its purpose, so be sure to thoroughly explore this file.
 
+> **Note:** Using APP_ENV=testing will disable Telescope. Make sure to use a different value.
+
 <a name="dashboard-authorization"></a>
 ### Dashboard Authorization
 
