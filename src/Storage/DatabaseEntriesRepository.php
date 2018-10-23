@@ -87,7 +87,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
                     $entry->batch_id,
                     $entry->type,
                     $entry->family_hash,
-                    $entry->content,
+                    is_array($entry->content) ? $entry->content : [],
                     $entry->created_at,
                     []
                 );
