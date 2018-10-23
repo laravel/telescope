@@ -44,7 +44,7 @@ class EntryModel extends Model
     protected $keyType = 'string';
 
     /**
-     * Scope the query for the given qeury options.
+     * Scope the query for the given query options.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  string  $type
