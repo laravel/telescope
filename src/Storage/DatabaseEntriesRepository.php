@@ -106,9 +106,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
 
         $this->storeExceptions($exceptions);
 
-        $createdAt = now();
-
-        $this->table('telescope_entries')->insert($entries->map(function ($entry) use ($createdAt) {
+        $this->table('telescope_entries')->insert($entries->map(function ($entry) {
             $entry->content = json_encode($entry->content);
 
             return $entry->toArray();
