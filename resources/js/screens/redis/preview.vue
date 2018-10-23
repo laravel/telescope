@@ -1,6 +1,4 @@
 <script type="text/ecmascript-6">
-    import _ from 'lodash';
-
     export default {
         data(){
             return {
