@@ -18,7 +18,7 @@ class IncomingDumpEntry extends IncomingEntry
      * Assign entry point parameters from the given batch entries.
      *
      * @param  array  $batch
-     * @return $this
+     * @return void
      */
     public function assignEntryPointFromBatch(array $batch)
     {
