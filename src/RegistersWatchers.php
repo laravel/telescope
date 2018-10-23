@@ -14,6 +14,7 @@ trait RegistersWatchers
     /**
      * Determine if a given watcher has been registered.
      *
+     * @param  string  $class
      * @return bool
      */
     public static function hasWatcher($class)
