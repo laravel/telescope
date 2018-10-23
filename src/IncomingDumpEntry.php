@@ -18,7 +18,7 @@ class IncomingDumpEntry extends IncomingEntry
      * Assign entry point parameters from the given batch entries.
      *
      * @param  array  $batch
-     * @return $this
+     * @return void
      */
     public function assignEntryPointFromBatch(array $batch)
     {
@@ -40,7 +40,7 @@ class IncomingDumpEntry extends IncomingEntry
     /**
      * Description for the entry point.
      *
-     * @param  IncomingDumpEntry  $entryPoint
+     * @param  \Laravel\Telescope\IncomingDumpEntry  $entryPoint
      * @return string
      */
     private function entryPointDescription($entryPoint)

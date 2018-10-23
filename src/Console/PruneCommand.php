@@ -29,6 +29,8 @@ class PruneCommand extends Command
      */
     public function handle(EntriesRepository $storage)
     {
-        $this->info($storage->prune(now()->subHours(24)).' entries pruned.');
+        if (method_exists($storage, 'prune')) {
+            $this->info($storage->prune(now()->subHours(24)).' entries pruned.');
+        }
     }
 }

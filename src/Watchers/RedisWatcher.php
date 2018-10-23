@@ -22,7 +22,7 @@ class RedisWatcher extends Watcher
     /**
      * Record a Redis command was executed.
      *
-     * @param Illuminate\Redis\Events\CommandExecuted;  $event
+     * @param \Illuminate\Redis\Events\CommandExecuted  $event
      * @return void
      */
     public function recordCommand(CommandExecuted $event)
@@ -38,7 +38,7 @@ class RedisWatcher extends Watcher
      * Format the given Redis command.
      *
      * @param  string  $command
-     * @param  string  $parameters
+     * @param  array  $parameters
      * @return string
      */
     private function formatCommand($command, $parameters)

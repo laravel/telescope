@@ -20,7 +20,7 @@ You may use Composer to install Telescope into your Laravel project:
 
     composer require laravel/telescope --dev
 
-> **Note:** Telescope requires Laravel 5.7+.
+> **Note:** Telescope requires Laravel 5.7.7+.
 
 After installing Telescope, publish its assets using the `telescope:install` Artisan command. After installing Telescope, you should also run the `migrate` command:
 

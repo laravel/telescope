@@ -197,7 +197,7 @@ class Telescope
         );
 
         if (Auth::hasUser()) {
-            $entry->user(Auth::getUser());
+            $entry->user(Auth::user());
         }
 
         static::withoutRecording(function () use ($entry) {
@@ -379,7 +379,7 @@ class Telescope
     /**
      * Record the given exception.
      *
-     * @param  Throwable|Exception  $e
+     * @param  \Throwable|\Exception  $e
      * @param  array  $tags
      * @return void
      */
@@ -513,7 +513,7 @@ class Telescope
     /**
      * Hide the given request parameters;
      *
-     * @param  $attributes  array
+     * @param  array  $attributes
      * @return static
      */
     public static function hideRequestParameters(array $attributes)

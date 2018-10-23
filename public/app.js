@@ -81028,11 +81028,7 @@ var render = function() {
                     staticClass: "btn btn-secondary btn-sm",
                     on: { click: _vm.close }
                   },
-                  [
-                    _vm._v(
-                      "\n                        CLOSE\n                    "
-                    )
-                  ]
+                  [_vm._v("\n                    CLOSE\n                ")]
                 )
               : _vm._e(),
             _vm._v(" "),
@@ -81043,7 +81039,7 @@ var render = function() {
                     staticClass: "btn btn-secondary btn-sm",
                     on: { click: _vm.close }
                   },
-                  [_vm._v("\n                        OK\n                    ")]
+                  [_vm._v("\n                    OK\n                ")]
                 )
               : _vm._e(),
             _vm._v(" "),
@@ -81054,11 +81050,7 @@ var render = function() {
                     staticClass: "btn btn-danger btn-sm",
                     on: { click: _vm.confirm }
                   },
-                  [
-                    _vm._v(
-                      "\n                        YES\n                    "
-                    )
-                  ]
+                  [_vm._v("\n                    YES\n                ")]
                 )
               : _vm._e(),
             _vm._v(" "),
@@ -81069,11 +81061,7 @@ var render = function() {
                     staticClass: "btn btn-secondary btn-sm",
                     on: { click: _vm.cancel }
                   },
-                  [
-                    _vm._v(
-                      "\n                        NO, CANCEL\n                    "
-                    )
-                  ]
+                  [_vm._v("\n                    NO, CANCEL\n                ")]
                 )
               : _vm._e()
           ])

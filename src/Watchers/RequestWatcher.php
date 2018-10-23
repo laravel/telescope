@@ -75,7 +75,7 @@ class RequestWatcher extends Watcher
      * Format the given response object.
      *
      * @param  \Symfony\Component\HttpFoundation\Response  $response
-     * @return array
+     * @return array|string
      */
     protected function response(Response $response)
     {
@@ -91,7 +91,7 @@ class RequestWatcher extends Watcher
     /**
      * Extract the session variables from the given request.
      *
-     * @param  \Illuminate\Http\Request  $event
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     private function sessionVariables(Request $request)
