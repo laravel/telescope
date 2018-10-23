@@ -53,21 +53,21 @@ trait ListensForStorageOpportunities
      */
     protected static function storeEntriesAfterWorkerLoop($app)
     {
-        $app['events']->listen(JobProcessing::class, function ($event) {
+        $app['events']->listen(JobProcessing::class, function () {
             static::startRecording();
 
             static::$processingJobs[] = true;
         });
 
-        $app['events']->listen(JobProcessed::class, function ($event) use ($app) {
-            static::storeIfDoneProcessingJob($app, $event);
+        $app['events']->listen(JobProcessed::class, function () use ($app) {
+            static::storeIfDoneProcessingJob($app);
         });
 
-        $app['events']->listen(JobFailed::class, function ($event) use ($app) {
-            static::storeIfDoneProcessingJob($app, $event);
+        $app['events']->listen(JobFailed::class, function () use ($app) {
+            static::storeIfDoneProcessingJob($app);
         });
 
-        $app['events']->listen(JobExceptionOccurred::class, function ($event) use ($app) {
+        $app['events']->listen(JobExceptionOccurred::class, function () use ($app) {
             array_pop(static::$processingJobs);
         });
     }
@@ -76,10 +76,9 @@ trait ListensForStorageOpportunities
      * Store the recorded entries if totally done processing the current job.
      *
      * @param  \Illuminate\Foundation\Application  $app
-     * @param  mixed  $event
      * @return void
      */
-    protected static function storeIfDoneProcessingJob($app, $event)
+    protected static function storeIfDoneProcessingJob($app)
     {
         array_pop(static::$processingJobs);
 
