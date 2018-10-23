@@ -197,7 +197,7 @@ class Telescope
         );
 
         if (Auth::hasUser()) {
-            $entry->user(Auth::getUser());
+            $entry->user(Auth::user());
         }
 
         static::withoutRecording(function () use ($entry) {
