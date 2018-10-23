@@ -64,4 +64,4 @@ Route::post('/telescope-api/monitored-tags/delete', 'MonitoredTagController@dest
 
 Route::get('/{view?}', function () {
     return view('telescope::layout');
-})->where('view', '(.*)');
+})->where('view', '(.*)')->name('telescope::home');
