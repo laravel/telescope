@@ -136,6 +136,8 @@ class ExtractTags
      *
      * @param  array  $targets
      * @return \Illuminate\Support\Collection
+     *
+     * @throws \ReflectionException
      */
     protected static function modelsFor(array $targets)
     {
@@ -163,6 +165,8 @@ class ExtractTags
      *
      * @param  mixed  $job
      * @return mixed
+     *
+     * @throws \ReflectionException
      */
     protected static function extractListener($job)
     {
