@@ -75,7 +75,7 @@ class RequestWatcher extends Watcher
      * Format the given response object.
      *
      * @param  \Symfony\Component\HttpFoundation\Response  $response
-     * @return array
+     * @return array|string
      */
     protected function response(Response $response)
     {
