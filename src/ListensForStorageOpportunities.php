@@ -67,7 +67,7 @@ trait ListensForStorageOpportunities
             static::storeIfDoneProcessingJob($app, $event);
         });
 
-        $app['events']->listen(JobExceptionOccurred::class, function ($event) use ($app) {
+        $app['events']->listen(JobExceptionOccurred::class, function ($event) {
             array_pop(static::$processingJobs);
         });
     }
