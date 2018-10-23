@@ -48,7 +48,9 @@ class InstallCommand extends Command
      */
     protected function registerTelescopeServiceProvider()
     {
-        if (($appConfig = file_get_contents(config_path('app.php'))) && str_contains($appConfig, "App\Providers\TelescopeServiceProvider::class")) {
+        $appConfig = file_get_contents(config_path('app.php'));
+
+        if (str_contains($appConfig, "App\Providers\TelescopeServiceProvider::class")) {
             return;
         }
 
