@@ -32,7 +32,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     /**
      * Create a new database repository.
      *
-     * @param  string  $connectionName
+     * @param  string  $connection
      * @return void
      */
     public function __construct(string $connection)
