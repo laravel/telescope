@@ -4,14 +4,14 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 
-class RouterController extends Controller
+class HomeController extends Controller
 {
     /**
-     * Display the Telescope Vue router.
+     * Display the Telescope view.
      *
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function index()
     {
         return view('telescope::layout');
     }
