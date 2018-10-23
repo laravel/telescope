@@ -23,7 +23,9 @@
         "moontoast/math": "^1.1",
         "symfony/var-dumper": "^4.1"
     },
-    "require-dev": {},
+    "require-dev": {
+        "nunomaduro/larastan": "^0.3.4"
+    },
     "autoload": {
         "psr-4": {
             "Laravel\\Telescope\\": "src/"
