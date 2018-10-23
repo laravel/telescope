@@ -67,11 +67,13 @@ class EntryResult implements JsonSerializable
      * Create a new entry result instance.
      *
      * @param  mixed  $id
+     * @param  mixed $sequence
      * @param  string  $batchId
      * @param  string  $type
      * @param  string|null  $familyHash
      * @param  array  $content
      * @param  \DateTimeInterface  $createdAt
+     * @param  array  $tags
      */
     public function __construct($id, $sequence, string $batchId, string $type, ?string $familyHash, array $content, DateTimeInterface $createdAt, $tags = [])
     {
@@ -86,7 +88,7 @@ class EntryResult implements JsonSerializable
     }
 
     /**
-     * Get the array reprentation of the entry.
+     * Get the array representation of the entry.
      *
      * @return array
      */

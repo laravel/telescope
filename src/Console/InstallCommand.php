@@ -33,6 +33,9 @@ class InstallCommand extends Command
         $this->comment('Publishing Telescope Assets...');
         $this->callSilent('vendor:publish', ['--tag' => 'telescope-assets']);
 
+        $this->comment('Publishing Telescope Configuration...');
+        $this->callSilent('vendor:publish', ['--tag' => 'telescope-config']);
+
         $this->registerTelescopeServiceProvider();
 
         $this->info('Telescope scaffolding installed successfully.');
@@ -45,10 +48,16 @@ class InstallCommand extends Command
      */
     protected function registerTelescopeServiceProvider()
     {
+        $appConfig = file_get_contents(config_path('app.php'));
+
+        if (str_contains($appConfig, "App\Providers\TelescopeServiceProvider::class")) {
+            return;
+        }
+
         file_put_contents(config_path('app.php'), str_replace(
             "App\\Providers\EventServiceProvider::class,".PHP_EOL,
             "App\\Providers\EventServiceProvider::class,".PHP_EOL."        App\Providers\TelescopeServiceProvider::class,".PHP_EOL,
-            file_get_contents(config_path('app.php'))
+            $appConfig
         ));
     }
 }

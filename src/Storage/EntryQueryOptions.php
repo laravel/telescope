@@ -144,7 +144,7 @@ class EntryQueryOptions
     /**
      * Set the number of entries that should be retrieved.
      *
-     * @param  string  $limit
+     * @param  int  $limit
      * @return $this
      */
     public function limit(int $limit)

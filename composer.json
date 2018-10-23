@@ -18,11 +18,15 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": "^7.1.3",
+        "ext-json": "*",
+        "laravel/framework" : "~5.7.7",
         "moontoast/math": "^1.1",
         "symfony/var-dumper": "^4.1"
     },
-    "require-dev": {},
+    "require-dev": {
+        "nunomaduro/larastan": "^0.3.4"
+    },
     "autoload": {
         "psr-4": {
             "Laravel\\Telescope\\": "src/"

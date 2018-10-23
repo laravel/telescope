@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Base from './base'
 import Routes from './routes'
 import VueRouter from 'vue-router'
-import TreeView from "vue-json-tree-view"
+import TreeView from 'vue-json-tree-view'
+import moment from 'moment-timezone';
 
 require('bootstrap');
 
@@ -10,6 +11,8 @@ Vue.use(VueRouter);
 Vue.use(TreeView);
 
 window.Popper = require('popper.js').default;
+
+moment.tz.setDefault(Telescope.timezone);
 
 const router = new VueRouter({
     routes: Routes,

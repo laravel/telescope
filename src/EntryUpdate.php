@@ -37,7 +37,7 @@ class EntryUpdate
      *
      * @param  string  $uuid
      * @param  string  $type
-     * @param  array  $content
+     * @param  array  $changes
      * @return void
      */
     public function __construct($uuid, $type, array $changes)

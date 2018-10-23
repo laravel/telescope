@@ -29,7 +29,7 @@ class MonitoredTagController extends Controller
     /**
      * Get all of the tags being monitored.
      *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -42,7 +42,7 @@ class MonitoredTagController extends Controller
      * Begin monitoring the given tag.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @return void
      */
     public function store(Request $request)
     {
@@ -53,7 +53,7 @@ class MonitoredTagController extends Controller
      * Stop monitoring the given tag.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @return void
      */
     public function destroy(Request $request)
     {

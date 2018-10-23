@@ -32,7 +32,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     /**
      * Create a new database repository.
      *
-     * @param  string  $connectionName
+     * @param  string  $connection
      * @return void
      */
     public function __construct(string $connection)
@@ -106,9 +106,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
 
         $this->storeExceptions($exceptions);
 
-        $createdAt = now();
-
-        $this->table('telescope_entries')->insert($entries->map(function ($entry) use ($createdAt) {
+        $this->table('telescope_entries')->insert($entries->map(function ($entry) {
             $entry->content = json_encode($entry->content);
 
             return $entry->toArray();
