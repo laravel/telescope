@@ -221,32 +221,34 @@
                 <h5>Authenticated User</h5>
             </div>
 
-            <table class="table mb-0 card-bg-secondary table-borderless">
-                <tr>
-                    <td class="table-fit font-weight-bold">ID</td>
+            <div class="table-responsive">
+                <table class="table mb-0 card-bg-secondary table-borderless">
+                    <tr>
+                        <td class="table-fit font-weight-bold">ID</td>
 
-                    <td>
-                        {{entry.content.user.id}}
-                    </td>
-                </tr>
+                        <td>
+                            {{entry.content.user.id}}
+                        </td>
+                    </tr>
 
-                <tr v-if="entry.content.user.name">
-                    <td class="table-fit font-weight-bold align-middle">Name</td>
+                    <tr v-if="entry.content.user.name">
+                        <td class="table-fit font-weight-bold align-middle">Name</td>
 
-                    <td class="align-middle">
-                        <img :src="gravatarUrl" class="mr-2 rounded-circle" height="40" width="40" v-if="gravatarUrl">
-                        {{entry.content.user.name}}
-                    </td>
-                </tr>
+                        <td class="align-middle">
+                            <img :src="gravatarUrl" class="mr-2 rounded-circle" height="40" width="40" v-if="gravatarUrl">
+                            {{entry.content.user.name}}
+                        </td>
+                    </tr>
 
-                <tr v-if="entry.content.user.email">
-                    <td class="table-fit font-weight-bold">Email Address</td>
+                    <tr v-if="entry.content.user.email">
+                        <td class="table-fit font-weight-bold">Email Address</td>
 
-                    <td>
-                        {{entry.content.user.email}}
-                    </td>
-                </tr>
-            </table>
+                        <td>
+                            {{entry.content.user.email}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <slot v-if="ready && entry" name="after-attributes-card" :entry="entry"></slot>
