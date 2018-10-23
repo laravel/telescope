@@ -48,7 +48,7 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-2 sidebar">
+            <div class="col-sm-3 sidebar">
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <router-link active-class="active" to="/requests" class="nav-link d-flex align-items-center pt-0">
@@ -166,7 +166,7 @@
                 </ul>
             </div>
 
-            <div class="col-10">
+            <div class="col-sm-9">
                 <router-view></router-view>
             </div>
         </div>
