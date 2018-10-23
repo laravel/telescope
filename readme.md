@@ -22,6 +22,8 @@ You may use Composer to install Telescope into your Laravel project:
 
 > **Note:** Telescope requires Laravel 5.7.7+.
 
+> **Note:** If you're using MariaDB make sure you use 10.2.7+.
+
 After installing Telescope, publish its assets using the `telescope:install` Artisan command. After installing Telescope, you should also run the `migrate` command:
 
     php artisan telescope:install
