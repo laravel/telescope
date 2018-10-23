@@ -86,7 +86,7 @@ class EntryResult implements JsonSerializable
     }
 
     /**
-     * Get the array reprentation of the entry.
+     * Get the array representation of the entry.
      *
      * @return array
      */
