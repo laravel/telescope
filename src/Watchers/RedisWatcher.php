@@ -38,7 +38,7 @@ class RedisWatcher extends Watcher
      * Format the given Redis command.
      *
      * @param  string  $command
-     * @param  string  $parameters
+     * @param  array  $parameters
      * @return string
      */
     private function formatCommand($command, $parameters)
