@@ -48,10 +48,14 @@ class InstallCommand extends Command
      */
     protected function registerTelescopeServiceProvider()
     {
+        if (($appConfig = file_get_contents(config_path('app.php'))) && str_contains($appConfig, "App\Providers\TelescopeServiceProvider::class")) {
+            return;
+        }
+
         file_put_contents(config_path('app.php'), str_replace(
             "App\\Providers\EventServiceProvider::class,".PHP_EOL,
             "App\\Providers\EventServiceProvider::class,".PHP_EOL."        App\Providers\TelescopeServiceProvider::class,".PHP_EOL,
-            file_get_contents(config_path('app.php'))
+            $appConfig
         ));
     }
 }
