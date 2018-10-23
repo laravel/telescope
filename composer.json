@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": "^7.1.3",
         "moontoast/math": "^1.1",
         "symfony/var-dumper": "^4.1"
     },
