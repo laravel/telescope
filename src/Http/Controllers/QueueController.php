@@ -2,7 +2,6 @@
 
 namespace Laravel\Telescope\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Storage\EntryQueryOptions;
 use Laravel\Telescope\Contracts\EntriesRepository;
@@ -22,12 +21,11 @@ class QueueController extends EntryController
     /**
      * Get an entry with the given ID.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, EntriesRepository $storage, $id)
+    public function show(EntriesRepository $storage, $id)
     {
         $entry = $storage->find($id);
 
