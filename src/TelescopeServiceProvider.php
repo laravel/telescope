@@ -138,4 +138,16 @@ class TelescopeServiceProvider extends ServiceProvider
             ->needs('$connection')
             ->give(config('telescope.storage.database.connection'));
     }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [
+            EntriesRepository::class,
+        ];
+    }
 }
