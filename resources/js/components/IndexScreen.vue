@@ -287,35 +287,38 @@
         </div>
 
 
-        <table v-if="ready && entries.length > 0" id="indexScreen" class="table table-hover table-sm mb-0 penultimate-column-right">
-            <thead>
-            <slot name="table-header"></slot>
-            </thead>
+        <div v-if="ready && entries.length > 0" class="table-responsive">
+            <table id="indexScreen" class="table table-hover table-sm mb-0 penultimate-column-right">
+                <thead>
+                <slot name="table-header"></slot>
+                </thead>
 
 
-            <transition-group tag="tbody" name="list">
-                <tr v-if="hasNewEntries" key="newEntries" class="dontanimate">
-                    <td colspan="100" class="text-center card-bg-secondary py-1">
-                        <small><a href="#" v-on:click.prevent="loadNewEntries" v-if="!loadingNewEntries">Load New Entries</a></small>
+                <transition-group tag="tbody" name="list">
+                    <tr v-if="hasNewEntries" key="newEntries" class="dontanimate">
+                        <td colspan="100" class="text-center card-bg-secondary py-1">
+                            <small><a href="#" v-on:click.prevent="loadNewEntries" v-if="!loadingNewEntries">Load New Entries</a></small>
 
-                        <small v-if="loadingNewEntries">Loading...</small>
-                    </td>
-                </tr>
-
-
-                <tr v-for="entry in entries" :key="entry.id">
-                    <slot name="row" :entry="entry"></slot>
-                </tr>
+                            <small v-if="loadingNewEntries">Loading...</small>
+                        </td>
+                    </tr>
 
 
-                <tr v-if="hasMoreEntries" key="olderEntries" class="dontanimate">
-                    <td colspan="100" class="text-center card-bg-secondary py-1">
-                        <small><a href="#" v-on:click.prevent="loadOlderEntries" v-if="!loadingMoreEntries">Load Older Entries</a></small>
+                    <tr v-for="entry in entries" :key="entry.id">
+                        <slot name="row" :entry="entry"></slot>
+                    </tr>
 
-                        <small v-if="loadingMoreEntries">Loading...</small>
-                    </td>
-                </tr>
-            </transition-group>
-        </table>
+
+                    <tr v-if="hasMoreEntries" key="olderEntries" class="dontanimate">
+                        <td colspan="100" class="text-center card-bg-secondary py-1">
+                            <small><a href="#" v-on:click.prevent="loadOlderEntries" v-if="!loadingMoreEntries">Load Older Entries</a></small>
+
+                            <small v-if="loadingMoreEntries">Loading...</small>
+                        </td>
+                    </tr>
+                </transition-group>
+            </table>
+        </div>
+
     </div>
 </template>
