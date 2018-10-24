@@ -23,7 +23,7 @@ class QueueController extends EntryController
      *
      * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(EntriesRepository $storage, $id)
     {
