@@ -1,29 +1,29 @@
 export default {
     methods: {
         cacheActionTypeClass(type){
-            if (type == 'hit') return 'success';
-            if (type == 'set') return 'info';
-            if (type == 'forget') return 'warning';
-            if (type == 'missed') return 'danger';
+            if (type === 'hit') return 'success';
+            if (type === 'set') return 'info';
+            if (type === 'forget') return 'warning';
+            if (type === 'missed') return 'danger';
         },
 
 
         jobStatusClass(status){
-            if (status == 'pending') return 'secondary';
-            if (status == 'processed') return 'success';
-            if (status == 'failed') return 'danger';
+            if (status === 'pending') return 'secondary';
+            if (status === 'processed') return 'success';
+            if (status === 'failed') return 'danger';
         },
 
 
         logLevelClass(level){
-            if (level == 'debug') return 'success';
-            if (level == 'info') return 'info';
-            if (level == 'notice') return 'secondary';
-            if (level == 'warning') return 'warning';
-            if (level == 'error') return 'danger';
-            if (level == 'critical') return 'danger';
-            if (level == 'alert') return 'danger';
-            if (level == 'emergency') return 'danger';
+            if (level === 'debug') return 'success';
+            if (level === 'info') return 'info';
+            if (level === 'notice') return 'secondary';
+            if (level === 'warning') return 'warning';
+            if (level === 'error') return 'danger';
+            if (level === 'critical') return 'danger';
+            if (level === 'alert') return 'danger';
+            if (level === 'emergency') return 'danger';
         },
 
 

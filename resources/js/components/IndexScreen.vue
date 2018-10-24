@@ -135,7 +135,7 @@
                     ).then(response => {
                         if (response.data.entries.length && !this.entries.length) {
                             this.loadNewEntries();
-                        } else if (response.data.entries.length && _.first(response.data.entries).id != _.first(this.entries).id) {
+                        } else if (response.data.entries.length && _.first(response.data.entries).id !== _.first(this.entries).id) {
                             if (this.$root.autoLoadsNewEntries) {
                                 this.loadNewEntries();
                             } else {
@@ -217,10 +217,10 @@
              * Update the existing entries if needed.
              */
             updateEntries(){
-                if (this.resource != 'jobs') return;
+                if (this.resource !== 'jobs') return;
 
                 this.updateEntriesTimeout = setTimeout(() => {
-                    let uuids = _.chain(this.entries).filter(entry => entry.content.status == 'pending').map('id').value();
+                    let uuids = _.chain(this.entries).filter(entry => entry.content.status === 'pending').map('id').value();
 
                     if (uuids.length) {
                         axios.post('/' + Telescope.path + '/telescope-api/' + this.resource, {
@@ -244,7 +244,7 @@
              */
             focusOnSearch(){
                 document.onkeyup = event => {
-                    if (event.which == 191 || event.keyCode == 191) {
+                    if (event.which === 191 || event.keyCode === 191) {
                         let searchInput = document.getElementById("searchInput");
 
                         if (searchInput) {
