@@ -31,7 +31,7 @@ class DumpController extends EntryController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request, EntriesRepository $storage)
     {
