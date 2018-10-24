@@ -447,7 +447,7 @@ class Telescope
                 static::pruneEntries($storage, config('telescope.limit'));
             }
         } catch (Exception $e) {
-            resolve(ExceptionHandler::class)->report($e);
+            app(ExceptionHandler::class)->report($e);
         }
 
         static::$entriesQueue = [];

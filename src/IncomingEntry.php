@@ -161,7 +161,7 @@ class IncomingEntry
     public function hasMonitoredTag()
     {
         if (! empty($this->tags)) {
-            return resolve(EntriesRepository::class)->isMonitoring($this->tags);
+            return app(EntriesRepository::class)->isMonitoring($this->tags);
         }
 
         return false;
