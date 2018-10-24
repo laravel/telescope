@@ -40,7 +40,6 @@ class LogWatcher extends Watcher
         );
     }
 
-
     /**
      * Extract tags from the given event.
      *
