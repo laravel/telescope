@@ -136,8 +136,6 @@ class ExtractTags
      *
      * @param  array  $targets
      * @return \Illuminate\Support\Collection
-     *
-     * @throws \ReflectionException
      */
     protected static function modelsFor(array $targets)
     {
