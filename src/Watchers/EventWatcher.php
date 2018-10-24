@@ -110,8 +110,6 @@ class EventWatcher extends Watcher
      *
      * @param Closure  $listener
      * @return string
-     *
-     * @throws \ReflectionException
      */
     protected function formatClosureListener(Closure $listener)
     {
