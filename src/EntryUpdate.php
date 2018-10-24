@@ -55,7 +55,7 @@ class EntryUpdate
      */
     public static function make(...$arguments)
     {
-        return (new static(...$arguments));
+        return new static(...$arguments);
     }
 
     /**

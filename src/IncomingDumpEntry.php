@@ -46,13 +46,13 @@ class IncomingDumpEntry extends IncomingEntry
     private function entryPointDescription($entryPoint)
     {
         switch ($entryPoint->type) {
-            case (EntryType::REQUEST):
+            case EntryType::REQUEST:
                 return $entryPoint->content['method'].' '.$entryPoint->content['uri'];
 
-            case (EntryType::JOB):
+            case EntryType::JOB:
                 return $entryPoint->content['name'];
 
-            case (EntryType::COMMAND):
+            case EntryType::COMMAND:
                 return $entryPoint->content['command'];
         }
 
