@@ -120,7 +120,7 @@ class IncomingEntry
     /**
      * Set the currently authenticated user.
      *
-     * @param  mixed  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @return $this
      */
     public function user($user)
@@ -129,7 +129,7 @@ class IncomingEntry
 
         $this->content = array_merge($this->content, [
             'user' => [
-                'id' => $user->getKey(),
+                'id' => $user->getAuthIdentifier(),
                 'name' => $user->name ?? null,
                 'email' => $user->email ?? null,
             ],
