@@ -35,7 +35,7 @@ class JobWatcher extends Watcher
      * Record a job being created.
      *
      * @param  string  $connection
-     * @param  string $queue
+     * @param  string  $queue
      * @param  array  $payload
      * @return \Laravel\Telescope\IncomingEntry
      */

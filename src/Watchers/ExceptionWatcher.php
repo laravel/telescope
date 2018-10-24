@@ -24,7 +24,7 @@ class ExceptionWatcher extends Watcher
     /**
      * Record an exception was logged.
      *
-     * @param \Illuminate\Log\Events\MessageLogged  $event
+     * @param  \Illuminate\Log\Events\MessageLogged  $event
      * @return void
      */
     public function recordException(MessageLogged $event)
