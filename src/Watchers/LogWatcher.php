@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Support\Arr;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Log\Events\MessageLogged;
@@ -35,7 +36,7 @@ class LogWatcher extends Watcher
             IncomingEntry::make([
                 'level' => $event->level,
                 'message' => $event->message,
-                'context' => array_except($event->context, ['telescope']),
+                'context' => Arr::except($event->context, ['telescope']),
             ])->tags($this->tags($event))
         );
     }
