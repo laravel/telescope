@@ -11,8 +11,8 @@ class EntryType
     public const EXCEPTION = 'exception';
     public const JOB = 'job';
     public const LOG = 'log';
-    public const MODEL = 'model';
     public const MAIL = 'mail';
+    public const MODEL = 'model';
     public const NOTIFICATION = 'notification';
     public const QUERY = 'query';
     public const REDIS = 'redis';
