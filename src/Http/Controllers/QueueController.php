@@ -2,7 +2,6 @@
 
 namespace Laravel\Telescope\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Storage\EntryQueryOptions;
 use Laravel\Telescope\Contracts\EntriesRepository;
