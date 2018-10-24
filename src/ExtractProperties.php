@@ -23,7 +23,9 @@ class ExtractProperties
 
                 if (($value = $property->getValue($target)) instanceof Model) {
                     return [$property->getName() => get_class($value).':'.$value->getKey()];
-                } elseif (is_object($value)) {
+                }
+
+                if (is_object($value)) {
                     return [
                         $property->getName() => [
                             'class' => get_class($value),

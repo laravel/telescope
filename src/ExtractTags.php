@@ -58,7 +58,9 @@ class ExtractTags
         $models = collect($data)->map(function ($value) {
             if ($value instanceof Model) {
                 return [$value];
-            } elseif ($value instanceof EloquentCollection) {
+            }
+
+            if ($value instanceof EloquentCollection) {
                 return $value->all();
             }
         })->collapse()->filter();
@@ -149,7 +151,9 @@ class ExtractTags
 
                 if ($value instanceof Model) {
                     return [$value];
-                } elseif ($value instanceof EloquentCollection) {
+                }
+
+                if ($value instanceof EloquentCollection) {
                     return $value->all();
                 }
             })->collapse()->filter()->all();

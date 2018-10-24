@@ -63,7 +63,9 @@ class NotificationWatcher extends Watcher
     {
         if ($notifiable instanceof Model) {
             return get_class($notifiable) . ':' . $notifiable->getKey();
-        } elseif ($notifiable instanceof AnonymousNotifiable) {
+        }
+
+        if ($notifiable instanceof AnonymousNotifiable) {
             return 'Anonymous:'.implode(',', $notifiable->routes);
         }
 

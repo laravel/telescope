@@ -86,7 +86,9 @@ class EventWatcher extends Watcher
 
                 if (is_string($listener)) {
                     return Str::contains($listener, '@') ? $listener : $listener.'@handle';
-                } elseif (is_array($listener)) {
+                }
+
+                if (is_array($listener)) {
                     return get_class($listener[0]).'@'.$listener[1];
                 }
 
