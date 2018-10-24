@@ -38,6 +38,8 @@ class JobWatcher extends Watcher
      * @param  string $queue
      * @param  array  $payload
      * @return \Laravel\Telescope\IncomingEntry
+     *
+     * @throws \ReflectionException
      */
     public function recordJob($connection, $queue, array $payload)
     {
@@ -125,6 +127,8 @@ class JobWatcher extends Watcher
      *
      * @param  array  $payload
      * @return array
+     *
+     * @throws \ReflectionException
      */
     protected function data(array $payload)
     {
@@ -142,6 +146,8 @@ class JobWatcher extends Watcher
      *
      * @param  array  $payload
      * @return array
+     *
+     * @throws \ReflectionException
      */
     protected function tags(array $payload)
     {

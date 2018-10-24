@@ -31,6 +31,8 @@ class EventWatcher extends Watcher
      * @param  string  $eventName
      * @param  array  $payload
      * @return void
+     *
+     * @throws \ReflectionException
      */
     public function recordEvent($eventName, $payload)
     {
@@ -56,6 +58,8 @@ class EventWatcher extends Watcher
      * @param  string  $eventName
      * @param  array  $payload
      * @return array
+     *
+     * @throws \ReflectionException
      */
     protected function extractPayload($eventName, $payload)
     {

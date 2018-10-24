@@ -27,6 +27,8 @@ class NotificationWatcher extends Watcher
      *
      * @param  \Illuminate\Notifications\Events\NotificationSent  $event
      * @return void
+     *
+     * @throws \ReflectionException
      */
     public function recordNotification(NotificationSent $event)
     {
@@ -44,6 +46,8 @@ class NotificationWatcher extends Watcher
      *
      * @param  \Illuminate\Notifications\Events\NotificationSent  $event
      * @return array
+     *
+     * @throws \ReflectionException
      */
     private function tags($event)
     {

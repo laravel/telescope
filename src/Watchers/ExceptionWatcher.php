@@ -26,6 +26,8 @@ class ExceptionWatcher extends Watcher
      *
      * @param \Illuminate\Log\Events\MessageLogged  $event
      * @return void
+     *
+     * @throws \ReflectionException
      */
     public function recordException(MessageLogged $event)
     {
@@ -52,6 +54,8 @@ class ExceptionWatcher extends Watcher
      *
      * @param  \Illuminate\Log\Events\MessageLogged  $event
      * @return array
+     *
+     * @throws \ReflectionException
      */
     protected function tags($event)
     {

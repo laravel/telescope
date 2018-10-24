@@ -10,7 +10,7 @@ class ExceptionContext
      * Get the exception code context for the given exception.
      *
      * @param  \Throwable  $exception
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     public static function get(Throwable $exception)
     {

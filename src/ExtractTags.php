@@ -18,6 +18,8 @@ class ExtractTags
      *
      * @param  mixed  $target
      * @return array
+     *
+     * @throws \ReflectionException
      */
     public static function from($target)
     {
@@ -35,6 +37,8 @@ class ExtractTags
      *
      * @param  mixed  $job
      * @return array
+     *
+     * @throws \ReflectionException
      */
     public static function fromJob($job)
     {
@@ -51,7 +55,7 @@ class ExtractTags
      * Determine the tags for the given array.
      *
      * @param  array  $data
-     * @return array
+     * @return \Illuminate\Support\Collection
      */
     public static function fromArray(array $data)
     {
@@ -73,6 +77,8 @@ class ExtractTags
      *
      * @param  mixed  $job
      * @return array
+     *
+     * @throws \ReflectionException
      */
     protected static function extractExplicitTags($job)
     {
@@ -86,6 +92,8 @@ class ExtractTags
      *
      * @param  mixed  $job
      * @return array
+     *
+     * @throws \ReflectionException
      */
     protected static function tagsForListener($job)
     {
