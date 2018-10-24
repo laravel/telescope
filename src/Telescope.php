@@ -511,7 +511,7 @@ class Telescope
     }
 
     /**
-     * Hide the given request parameters;
+     * Hide the given request parameters.
      *
      * @param  array  $attributes
      * @return static
