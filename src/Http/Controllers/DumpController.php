@@ -5,24 +5,24 @@ namespace Laravel\Telescope\Http\Controllers;
 use Illuminate\Http\Request;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Contracts\EntriesRepository;
-use Illuminate\Contracts\Cache\Factory as CacheFactory;
+use Illuminate\Contracts\Cache\Repository as CacheRepository;
 
 class DumpController extends EntryController
 {
     /**
-     * The cache factory implementation.
+     * The cache repository implementation.
      *
-     * @var \Illuminate\Contracts\Cache\Factory
+     * @var \Illuminate\Contracts\Cache\Repository
      */
     protected $cache;
 
     /**
      * Create a new controller instance.
      *
-     * @param  \Illuminate\Contracts\Cache\Factory  $cache
+     * @param  \Illuminate\Contracts\Cache\Repository  $cache
      * @return void
      */
-    public function __construct(CacheFactory $cache)
+    public function __construct(CacheRepository $cache)
     {
         $this->cache = $cache;
     }
