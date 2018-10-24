@@ -7,13 +7,32 @@ use Illuminate\Database\Migrations\Migration;
 class CreateTelescopeEntriesTable extends Migration
 {
     /**
+     * The database schema.
+     *
+     * @var Schema
+     */
+    protected $schema;
+
+    /**
+     * Create a new migration instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->schema = Schema::connection(
+            config('telescope.storage.database.connection')
+        );
+    }
+
+    /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('telescope_entries', function (Blueprint $table) {
+        $this->schema->create('telescope_entries', function (Blueprint $table) {
             $table->bigIncrements('sequence');
             $table->uuid('uuid');
             $table->uuid('batch_id');
@@ -28,7 +47,7 @@ class CreateTelescopeEntriesTable extends Migration
             $table->index(['type', 'should_display_on_index']);
         });
 
-        Schema::create('telescope_entries_tags', function (Blueprint $table) {
+        $this->schema->create('telescope_entries_tags', function (Blueprint $table) {
             $table->uuid('entry_uuid');
             $table->string('tag');
 
@@ -41,7 +60,7 @@ class CreateTelescopeEntriesTable extends Migration
                   ->onDelete('cascade');
         });
 
-        Schema::create('telescope_monitoring', function (Blueprint $table) {
+        $this->schema->create('telescope_monitoring', function (Blueprint $table) {
             $table->string('tag');
         });
     }
@@ -53,8 +72,8 @@ class CreateTelescopeEntriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('telescope_entries_tags');
-        Schema::dropIfExists('telescope_entries');
-        Schema::dropIfExists('telescope_monitoring');
+        $this->schema->dropIfExists('telescope_entries_tags');
+        $this->schema->dropIfExists('telescope_entries');
+        $this->schema->dropIfExists('telescope_monitoring');
     }
 }
