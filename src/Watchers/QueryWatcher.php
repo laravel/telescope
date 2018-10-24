@@ -22,7 +22,7 @@ class QueryWatcher extends Watcher
     /**
      * Record a query was executed.
      *
-     * @param \Illuminate\Database\Events\QueryExecuted  $event
+     * @param  \Illuminate\Database\Events\QueryExecuted  $event
      * @return void
      */
     public function recordQuery(QueryExecuted $event)
@@ -41,7 +41,7 @@ class QueryWatcher extends Watcher
     /**
      * Get the tags for the query.
      *
-     * @param \Illuminate\Database\Events\QueryExecuted  $event
+     * @param  \Illuminate\Database\Events\QueryExecuted  $event
      * @return array
      */
     protected function tags($event)
@@ -52,7 +52,7 @@ class QueryWatcher extends Watcher
     /**
      * Format the given bindings to strings.
      *
-     * @param \Illuminate\Database\Events\QueryExecuted  $event
+     * @param  \Illuminate\Database\Events\QueryExecuted  $event
      * @return array
      */
     protected function formatBindings($event)
