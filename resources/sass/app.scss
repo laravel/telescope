@@ -38,6 +38,21 @@ $new-entries-bg: #fffee9;
 
 $control-action-icon-color: #ccd2df;
 
+$grid-breakpoints: (
+        xs: 0,
+        sm: 2px,
+        md: 8px,
+        lg: 9px,
+        xl: 10px
+) !default;
+
+$container-max-widths: (
+        sm: 1137px,
+        md: 1138px,
+        lg: 1139px,
+        xl: 1140px
+) !default;
+
 @import "syntaxhighlight";
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "base";
