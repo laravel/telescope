@@ -3,6 +3,7 @@
 namespace Laravel\Telescope;
 
 use Illuminate\Support\Str;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
 class IncomingEntry
@@ -38,7 +39,7 @@ class IncomingEntry
     /**
      * The currently authenticated user, if applicable.
      *
-     * @var mixed
+     * @var \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public $user;
 
@@ -123,7 +124,7 @@ class IncomingEntry
      * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @return $this
      */
-    public function user($user)
+    public function user(Authenticatable $user)
     {
         $this->user = $user;
 
@@ -135,7 +136,7 @@ class IncomingEntry
             ],
         ]);
 
-        $this->tags(['Auth:'.$user->getKey()]);
+        $this->tags(['Auth:'.$user->getAuthIdentifier()]);
 
         return $this;
     }

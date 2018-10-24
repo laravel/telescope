@@ -5,6 +5,7 @@ namespace Laravel\Telescope\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laravel\Telescope\Storage\EntryQueryOptions;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
 abstract class EntryController extends Controller
@@ -21,11 +22,12 @@ abstract class EntryController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
+     * @param  \Illuminate\Contracts\Routing\ResponseFactory  $responseFactory
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request, EntriesRepository $storage)
+    public function index(Request $request, EntriesRepository $storage, ResponseFactory $responseFactory)
     {
-        return response()->json([
+        return $responseFactory->json([
             'entries' => $storage->get(
                 $this->entryType(),
                 EntryQueryOptions::fromRequest($request)
@@ -37,14 +39,15 @@ abstract class EntryController extends Controller
      * Get an entry with the given ID.
      *
      * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
+     * @param  \Illuminate\Contracts\Routing\ResponseFactory  $responseFactory
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(EntriesRepository $storage, $id)
+    public function show(EntriesRepository $storage, ResponseFactory $responseFactory, $id)
     {
         $entry = $storage->find($id);
 
-        return response()->json([
+        return $responseFactory->json([
             'entry' => $entry,
             'batch' => $storage->get(null, EntryQueryOptions::forBatchId($entry->batchId)),
         ]);

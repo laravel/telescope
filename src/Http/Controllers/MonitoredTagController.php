@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
 class MonitoredTagController extends Controller
@@ -29,11 +30,12 @@ class MonitoredTagController extends Controller
     /**
      * Get all of the tags being monitored.
      *
+     * @param  \Illuminate\Contracts\Routing\ResponseFactory  $responseFactory
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(ResponseFactory $responseFactory)
     {
-        return response()->json([
+        return $responseFactory->json([
             'tags' => $this->entries->monitoring()
         ]);
     }

@@ -8,6 +8,9 @@ use Laravel\Telescope\Telescope;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
+use Laravel\Telescope\EntryUpdate;
+use Laravel\Telescope\IncomingEntry;
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Telescope\Watchers\DumpWatcher;
 use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
@@ -106,7 +109,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
 
         $this->storeExceptions($exceptions);
 
-        $this->table('telescope_entries')->insert($entries->map(function ($entry) {
+        $this->table('telescope_entries')->insert($entries->map(function (IncomingEntry $entry) {
             $entry->content = json_encode($entry->content);
 
             return $entry->toArray();
@@ -123,7 +126,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
      */
     protected function storeExceptions(Collection $exceptions)
     {
-        $this->table('telescope_entries')->insert($exceptions->map(function ($exception) {
+        $this->table('telescope_entries')->insert($exceptions->map(function (IncomingEntry $exception) {
             $occurrences = $this->table('telescope_entries')
                     ->where('type', EntryType::EXCEPTION)
                     ->where('family_hash', $exception->familyHash())
@@ -200,7 +203,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
      * @param  \Laravel\Telescope\EntryUpdate  $entry
      * @return void
      */
-    protected function updateTags($entry)
+    protected function updateTags(EntryUpdate $entry)
     {
         if (! empty($entry->tagsChanges['added'])) {
             $this->table('telescope_entries_tags')->insert(
@@ -315,7 +318,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     public function pruneEntries($type, $limit)
     {
         EntryModel::where('type', $type)
-            ->whereNotIn('sequence', function ($query) use ($type, $limit) {
+            ->whereNotIn('sequence', function (Builder $query) use ($type, $limit) {
                 $query->select('sequence')->fromSub(
                     EntryModel::select('sequence')->orderBy('sequence', 'desc')
                             ->where('type', $type)

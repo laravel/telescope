@@ -5,6 +5,8 @@ namespace Laravel\Telescope;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Queue\Events\JobExceptionOccurred;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
@@ -20,10 +22,10 @@ trait ListensForStorageOpportunities
     /**
      * Register listeners that store the recorded Telescope entries.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public static function listenForStorageOpportunities($app)
+    public static function listenForStorageOpportunities(Application $app)
     {
         static::storeEntriesBeforeTermination($app);
 
@@ -35,39 +37,42 @@ trait ListensForStorageOpportunities
      *
      * This handles storing entries for HTTP requests and Artisan commands.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    protected static function storeEntriesBeforeTermination($app)
+    protected static function storeEntriesBeforeTermination(Application $app)
     {
         $app->terminating(function () use ($app) {
-            static::store($app[EntriesRepository::class]);
+            static::store($app->make(EntriesRepository::class));
         });
     }
 
     /**
      * Store entries after the queue worker loops.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    protected static function storeEntriesAfterWorkerLoop($app)
+    protected static function storeEntriesAfterWorkerLoop(Application $app)
     {
-        $app['events']->listen(JobProcessing::class, function () {
+        /** @var \Illuminate\Contracts\Events\Dispatcher $dispatcher */
+        $dispatcher = $app->make(Dispatcher::class);
+
+        $dispatcher->listen(JobProcessing::class, function () {
             static::startRecording();
 
             static::$processingJobs[] = true;
         });
 
-        $app['events']->listen(JobProcessed::class, function () use ($app) {
+        $dispatcher->listen(JobProcessed::class, function () use ($app) {
             static::storeIfDoneProcessingJob($app);
         });
 
-        $app['events']->listen(JobFailed::class, function () use ($app) {
+        $dispatcher->listen(JobFailed::class, function () use ($app) {
             static::storeIfDoneProcessingJob($app);
         });
 
-        $app['events']->listen(JobExceptionOccurred::class, function () {
+        $dispatcher->listen(JobExceptionOccurred::class, function () {
             array_pop(static::$processingJobs);
         });
     }
@@ -75,15 +80,15 @@ trait ListensForStorageOpportunities
     /**
      * Store the recorded entries if totally done processing the current job.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    protected static function storeIfDoneProcessingJob($app)
+    protected static function storeIfDoneProcessingJob(Application $app)
     {
         array_pop(static::$processingJobs);
 
         if (empty(static::$processingJobs)) {
-            static::store($app[EntriesRepository::class]);
+            static::store($app->make(EntriesRepository::class));
 
             static::stopRecording();
         }

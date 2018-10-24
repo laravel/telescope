@@ -6,7 +6,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
+use Illuminate\Contracts\Events\Dispatcher;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 
 class RequestWatcher extends Watcher
@@ -17,9 +19,9 @@ class RequestWatcher extends Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public function register($app)
+    public function register(Application $app)
     {
-        $app['events']->listen(RequestHandled::class, [$this, 'recordRequest']);
+        $app->make(Dispatcher::class)->listen(RequestHandled::class, [$this, 'recordRequest']);
     }
 
     /**

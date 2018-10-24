@@ -6,9 +6,12 @@ use Closure;
 use Exception;
 use Throwable;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Log\Events\MessageLogged;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Contracts\Foundation\Application;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
@@ -82,10 +85,10 @@ class Telescope
     /**
      * Register the Telescope watchers and start recording if necessary.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public static function start($app)
+    public static function start(Application $app)
     {
         if ($app->runningUnitTests()) {
             return;
@@ -104,10 +107,10 @@ class Telescope
     /**
      * Determine if the application is running an approved command.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return bool
      */
-    protected static function runningApprovedArtisanCommand($app)
+    protected static function runningApprovedArtisanCommand(Application $app)
     {
         return $app->runningInConsole() && ! in_array(
             $_SERVER['argv'][1] ?? null,
@@ -123,20 +126,20 @@ class Telescope
                 'horizon',
                 'horizon:work',
                 'horizon:supervisor',
-            ], config('telescope.ignoreCommands', []))
+            ], $app->make(Repository::class)->get('telescope.ignoreCommands', []))
         );
     }
 
     /**
      * Determine if the application is handling a request not originating from Telescope.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return bool
      */
-    protected static function handlingNonTelescopeRequest($app)
+    protected static function handlingNonTelescopeRequest(Application $app)
     {
-        return ! $app->runningInConsole() && ! $app['request']->is(
-            config('telescope.path').'*',
+        return ! $app->runningInConsole() && ! $app->make(Request::class)->is(
+            $app->make(Repository::class)->get('telescope.path').'*',
             'telescope-api*',
             'vendor/telescope*'
         );
@@ -196,8 +199,11 @@ class Telescope
             static::$tagUsing ? call_user_func(static::$tagUsing, $entry) : []
         );
 
-        if (Auth::hasUser()) {
-            $entry->user(Auth::user());
+        /** @var \Illuminate\Contracts\Auth\Guard $guard */
+        $guard = app(Factory::class)->guard();
+        $user = $guard->user();
+        if ($user !== null) {
+            $entry->user($user);
         }
 
         static::withoutRecording(function () use ($entry) {
@@ -281,7 +287,7 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordJob($entry)
+    public static function recordJob(IncomingEntry $entry)
     {
         static::record(EntryType::JOB, $entry);
     }
@@ -314,7 +320,7 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-    public static function recordNotification($entry)
+    public static function recordNotification(IncomingEntry $entry)
     {
         static::record(EntryType::NOTIFICATION, $entry);
     }
@@ -379,11 +385,11 @@ class Telescope
     /**
      * Record the given exception.
      *
-     * @param  \Throwable|\Exception  $e
+     * @param  \Throwable  $e
      * @param  array  $tags
      * @return void
      */
-    public static function catch($e, $tags = [])
+    public static function catch(Throwable $e, $tags = [])
     {
         if ($e instanceof Throwable && ! $e instanceof Exception) {
             $e = new FatalThrowableError($e);
@@ -463,7 +469,7 @@ class Telescope
     protected static function collectEntries($batchId)
     {
         return collect(static::$entriesQueue)
-            ->each(function ($entry) use ($batchId) {
+            ->each(function (IncomingEntry $entry) use ($batchId) {
                 $entry->batchId($batchId);
 
                 if ($entry->isDump()) {
@@ -481,7 +487,7 @@ class Telescope
     protected static function collectUpdates($batchId)
     {
         return collect(static::$updatesQueue)
-            ->each(function ($entry) use ($batchId) {
+            ->each(function (EntryUpdate $entry) use ($batchId) {
                 $entry->change(['updated_batch_id' => $batchId]);
             });
     }

@@ -2,6 +2,10 @@
 
 namespace Laravel\Telescope;
 
+use Laravel\Telescope\Watchers\Watcher;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Foundation\Application;
+
 trait RegistersWatchers
 {
     /**
@@ -25,12 +29,12 @@ trait RegistersWatchers
     /**
      * Register the configured Telescope watchers.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    protected static function registerWatchers($app)
+    protected static function registerWatchers(Application $app)
     {
-        foreach (config('telescope.watchers') as $key => $watcher) {
+        foreach ($app->make(Repository::class)->get('telescope.watchers') as $key => $watcher) {
             if (is_string($key) && $watcher === false) {
                 continue;
             }
@@ -39,7 +43,8 @@ trait RegistersWatchers
                 continue;
             }
 
-            $watcher = $app->makeWith(is_string($key) ? $key : $watcher, [
+            /** @var \Laravel\Telescope\Watchers\Watcher $watcher */
+            $watcher = $app->make(is_string($key) ? $key : $watcher, [
                 'options' => is_array($watcher) ? $watcher : []
             ]);
 

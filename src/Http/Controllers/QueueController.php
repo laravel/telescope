@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Storage\EntryQueryOptions;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
 class QueueController extends EntryController
@@ -22,14 +23,15 @@ class QueueController extends EntryController
      * Get an entry with the given ID.
      *
      * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
+     * @param  \Illuminate\Contracts\Routing\ResponseFactory  $responseFactory
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(EntriesRepository $storage, $id)
+    public function show(EntriesRepository $storage, ResponseFactory $responseFactory, $id)
     {
         $entry = $storage->find($id);
 
-        return response()->json([
+        return $responseFactory->json([
             'entry' => $entry,
             'batch' => isset($entry->content['updated_batch_id'])
                             ? $storage->get(null, EntryQueryOptions::forBatchId($entry->content['updated_batch_id']))

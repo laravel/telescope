@@ -2,6 +2,9 @@
 
 namespace Laravel\Telescope;
 
+use Closure;
+use Illuminate\Http\Request;
+
 trait AuthorizesRequests
 {
     /**
@@ -17,7 +20,7 @@ trait AuthorizesRequests
      * @param  \Closure  $callback
      * @return static
      */
-    public static function auth($callback)
+    public static function auth(Closure $callback)
     {
         static::$authUsing = $callback;
 
@@ -30,7 +33,7 @@ trait AuthorizesRequests
      * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
-    public static function check($request)
+    public static function check(Request $request)
     {
         return (static::$authUsing ?: function () {
             return app()->environment('local');

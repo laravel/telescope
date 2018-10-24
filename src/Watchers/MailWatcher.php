@@ -2,9 +2,12 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Swift_Message;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Mail\Events\MessageSent;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 
 class MailWatcher extends Watcher
 {
@@ -14,9 +17,9 @@ class MailWatcher extends Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public function register($app)
+    public function register(Application $app)
     {
-        $app['events']->listen(MessageSent::class, [$this, 'recordMail']);
+        $app->make(Dispatcher::class)->listen(MessageSent::class, [$this, 'recordMail']);
     }
 
     /**
@@ -47,7 +50,7 @@ class MailWatcher extends Watcher
      * @param  \Illuminate\Mail\Events\MessageSent  $event
      * @return string
      */
-    protected function getMailable($event)
+    protected function getMailable(MessageSent $event)
     {
         if (isset($event->data['__laravel_notification'])) {
             return $event->data['__laravel_notification'];
@@ -62,7 +65,7 @@ class MailWatcher extends Watcher
      * @param  \Illuminate\Mail\Events\MessageSent  $event
      * @return bool
      */
-    protected function getQueuedStatus($event)
+    protected function getQueuedStatus(MessageSent $event)
     {
         if (isset($event->data['__laravel_notification_queued'])) {
             return $event->data['__laravel_notification_queued'];
@@ -78,7 +81,7 @@ class MailWatcher extends Watcher
      * @param  array  $data
      * @return array
      */
-    private function tags($message, $data)
+    private function tags(Swift_Message $message, $data)
     {
         return array_merge(
             array_keys($message->getTo() ?: []),

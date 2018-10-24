@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Laravel\Telescope\EntryType;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 
@@ -26,18 +27,20 @@ class DumpController extends EntryController
     {
         $this->cache = $cache;
     }
+
     /**
      * List the entries of the given type.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
+     * @param  \Illuminate\Contracts\Routing\ResponseFactory  $responseFactory
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request, EntriesRepository $storage)
+    public function index(Request $request, EntriesRepository $storage, ResponseFactory $responseFactory)
     {
         $this->cache->put('telescope:dump-watcher', true, now()->addSecond(4));
 
-        return parent::index($request, $storage);
+        return parent::index($request, $storage, $responseFactory);
     }
 
     /**

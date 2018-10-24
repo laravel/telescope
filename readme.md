@@ -52,11 +52,12 @@ Telescope exposes a dashboard at `/telescope`. By default, you will only be able
  *
  * This gate determines who can access Telescope in non-local environments.
  *
+ * @param  \Illuminate\Contracts\Auth\Access\Gate  $gate
  * @return void
  */
-protected function gate()
+protected function gate(Gate $gate)
 {
-    Gate::define('viewTelescope', function ($user) {
+    $gate->define('viewTelescope', function ($user) {
         return in_array($user->email, [
             'taylor@laravel.com',
         ]);

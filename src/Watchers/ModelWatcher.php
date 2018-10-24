@@ -5,6 +5,8 @@ namespace Laravel\Telescope\Watchers;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 
 class ModelWatcher extends Watcher
 {
@@ -14,9 +16,9 @@ class ModelWatcher extends Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public function register($app)
+    public function register(Application $app)
     {
-        $app['events']->listen('eloquent.*', [$this, 'recordAction']);
+        $app->make(Dispatcher::class)->listen('eloquent.*', [$this, 'recordAction']);
     }
 
     /**
