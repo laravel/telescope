@@ -22,12 +22,11 @@ class QueueController extends EntryController
     /**
      * Get an entry with the given ID.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, EntriesRepository $storage, $id)
+    public function show(EntriesRepository $storage, $id)
     {
         $entry = $storage->find($id);
 

@@ -21030,6 +21030,14 @@ body {
   padding-bottom: 20px;
 }
 
+.container {
+  width: 1140px;
+}
+
+html {
+  min-width: 1140px;
+}
+
 [v-cloak] {
   display: none;
 }

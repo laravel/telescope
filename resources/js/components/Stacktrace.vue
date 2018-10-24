@@ -23,19 +23,17 @@
 </script>
 
 <template>
-    <div class="table-responsive">
-        <table class="table mb-0">
-            <tbody>
-            <tr v-for="line in lines">
-                <td class="card-bg-secondary">{{line.file}}:{{line.line}}</td>
-            </tr>
+    <table class="table mb-0">
+        <tbody>
+        <tr v-for="line in lines">
+            <td class="card-bg-secondary">{{line.file}}:{{line.line}}</td>
+        </tr>
 
-            <tr v-if="! showAll">
-                <td class="card-bg-secondary"><a href="*" v-on:click.prevent="showAll = true">Show All</a></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        <tr v-if="! showAll">
+            <td class="card-bg-secondary"><a href="*" v-on:click.prevent="showAll = true">Show All</a></td>
+        </tr>
+        </tbody>
+    </table>
 </template>
 
 <style scoped>

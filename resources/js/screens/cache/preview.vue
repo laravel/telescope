@@ -1,4 +1,4 @@
-<script>
+<script type="text/ecmascript-6">
     import StylesMixin from './../../mixins/entriesStyles';
 
     export default {

@@ -7111,7 +7111,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -50352,114 +50352,112 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.ready && _vm.entries.length > 0
-      ? _c("div", { staticClass: "table-responsive" }, [
-          _c(
-            "table",
-            {
-              staticClass:
-                "table table-hover table-sm mb-0 penultimate-column-right",
-              attrs: { id: "indexScreen" }
-            },
-            [
-              _c("thead", [_vm._t("table-header")], 2),
-              _vm._v(" "),
-              _c(
-                "transition-group",
-                { attrs: { tag: "tbody", name: "list" } },
-                [
-                  _vm.hasNewEntries
-                    ? _c(
-                        "tr",
-                        { key: "newEntries", staticClass: "dontanimate" },
-                        [
-                          _c(
-                            "td",
-                            {
-                              staticClass: "text-center card-bg-secondary py-1",
-                              attrs: { colspan: "100" }
-                            },
-                            [
-                              _c("small", [
-                                !_vm.loadingNewEntries
-                                  ? _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "#" },
-                                        on: {
-                                          click: function($event) {
-                                            $event.preventDefault()
-                                            return _vm.loadNewEntries($event)
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("Load New Entries")]
-                                    )
-                                  : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              _vm.loadingNewEntries
-                                ? _c("small", [_vm._v("Loading...")])
-                                : _vm._e()
-                            ]
-                          )
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm._l(_vm.entries, function(entry) {
-                    return _c(
+      ? _c(
+          "table",
+          {
+            staticClass:
+              "table table-hover table-sm mb-0 penultimate-column-right",
+            attrs: { id: "indexScreen" }
+          },
+          [
+            _c("thead", [_vm._t("table-header")], 2),
+            _vm._v(" "),
+            _c(
+              "transition-group",
+              { attrs: { tag: "tbody", name: "list" } },
+              [
+                _vm.hasNewEntries
+                  ? _c(
                       "tr",
-                      { key: entry.id },
-                      [_vm._t("row", null, { entry: entry })],
-                      2
-                    )
-                  }),
-                  _vm._v(" "),
-                  _vm.hasMoreEntries
-                    ? _c(
-                        "tr",
-                        { key: "olderEntries", staticClass: "dontanimate" },
-                        [
-                          _c(
-                            "td",
-                            {
-                              staticClass: "text-center card-bg-secondary py-1",
-                              attrs: { colspan: "100" }
-                            },
-                            [
-                              _c("small", [
-                                !_vm.loadingMoreEntries
-                                  ? _c(
-                                      "a",
-                                      {
-                                        attrs: { href: "#" },
-                                        on: {
-                                          click: function($event) {
-                                            $event.preventDefault()
-                                            return _vm.loadOlderEntries($event)
-                                          }
+                      { key: "newEntries", staticClass: "dontanimate" },
+                      [
+                        _c(
+                          "td",
+                          {
+                            staticClass: "text-center card-bg-secondary py-1",
+                            attrs: { colspan: "100" }
+                          },
+                          [
+                            _c("small", [
+                              !_vm.loadingNewEntries
+                                ? _c(
+                                    "a",
+                                    {
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.loadNewEntries($event)
                                         }
-                                      },
-                                      [_vm._v("Load Older Entries")]
-                                    )
-                                  : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              _vm.loadingMoreEntries
-                                ? _c("small", [_vm._v("Loading...")])
+                                      }
+                                    },
+                                    [_vm._v("Load New Entries")]
+                                  )
                                 : _vm._e()
-                            ]
-                          )
-                        ]
-                      )
-                    : _vm._e()
-                ],
-                2
-              )
-            ],
-            1
-          )
-        ])
+                            ]),
+                            _vm._v(" "),
+                            _vm.loadingNewEntries
+                              ? _c("small", [_vm._v("Loading...")])
+                              : _vm._e()
+                          ]
+                        )
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.entries, function(entry) {
+                  return _c(
+                    "tr",
+                    { key: entry.id },
+                    [_vm._t("row", null, { entry: entry })],
+                    2
+                  )
+                }),
+                _vm._v(" "),
+                _vm.hasMoreEntries
+                  ? _c(
+                      "tr",
+                      { key: "olderEntries", staticClass: "dontanimate" },
+                      [
+                        _c(
+                          "td",
+                          {
+                            staticClass: "text-center card-bg-secondary py-1",
+                            attrs: { colspan: "100" }
+                          },
+                          [
+                            _c("small", [
+                              !_vm.loadingMoreEntries
+                                ? _c(
+                                    "a",
+                                    {
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          return _vm.loadOlderEntries($event)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Load Older Entries")]
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _vm.loadingMoreEntries
+                              ? _c("small", [_vm._v("Loading...")])
+                              : _vm._e()
+                          ]
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ],
+              2
+            )
+          ],
+          1
+        )
       : _vm._e()
   ])
 }
@@ -51140,42 +51138,40 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "table-responsive" }, [
-    _c("table", { staticClass: "table mb-0" }, [
-      _c(
-        "tbody",
-        [
-          _vm._l(_vm.lines, function(line) {
-            return _c("tr", [
+  return _c("table", { staticClass: "table mb-0" }, [
+    _c(
+      "tbody",
+      [
+        _vm._l(_vm.lines, function(line) {
+          return _c("tr", [
+            _c("td", { staticClass: "card-bg-secondary" }, [
+              _vm._v(_vm._s(line.file) + ":" + _vm._s(line.line))
+            ])
+          ])
+        }),
+        _vm._v(" "),
+        !_vm.showAll
+          ? _c("tr", [
               _c("td", { staticClass: "card-bg-secondary" }, [
-                _vm._v(_vm._s(line.file) + ":" + _vm._s(line.line))
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "*" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.showAll = true
+                      }
+                    }
+                  },
+                  [_vm._v("Show All")]
+                )
               ])
             ])
-          }),
-          _vm._v(" "),
-          !_vm.showAll
-            ? _c("tr", [
-                _c("td", { staticClass: "card-bg-secondary" }, [
-                  _c(
-                    "a",
-                    {
-                      attrs: { href: "*" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.showAll = true
-                        }
-                      }
-                    },
-                    [_vm._v("Show All")]
-                  )
-                ])
-              ])
-            : _vm._e()
-        ],
-        2
-      )
-    ])
+          : _vm._e()
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = []
@@ -52815,198 +52811,196 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _c("div", { staticClass: "table-responsive" }, [
-            _vm.ready && _vm.entry
-              ? _c(
-                  "table",
-                  {
-                    staticClass: "table mb-0 card-bg-secondary table-borderless"
-                  },
-                  [
-                    _c(
-                      "tbody",
-                      [
-                        _c("tr", [
-                          _c(
-                            "td",
-                            { staticClass: "table-fit font-weight-bold" },
-                            [_vm._v("Time")]
-                          ),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(_vm.localTime(_vm.entry.created_at)) +
-                                " (" +
-                                _vm._s(_vm.timeAgo(_vm.entry.created_at)) +
-                                ")\n                    "
+          _vm.ready && _vm.entry
+            ? _c(
+                "table",
+                {
+                  staticClass: "table mb-0 card-bg-secondary table-borderless"
+                },
+                [
+                  _c(
+                    "tbody",
+                    [
+                      _c("tr", [
+                        _c(
+                          "td",
+                          { staticClass: "table-fit font-weight-bold" },
+                          [_vm._v("Time")]
+                        ),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.localTime(_vm.entry.created_at)) +
+                              " (" +
+                              _vm._s(_vm.timeAgo(_vm.entry.created_at)) +
+                              ")\n                "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c(
+                          "td",
+                          { staticClass: "table-fit font-weight-bold" },
+                          [_vm._v("Hostname")]
+                        ),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n                    " +
+                              _vm._s(_vm.entry.content.hostname) +
+                              "\n                "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._t("table-parameters", null, { entry: _vm.entry }),
+                      _vm._v(" "),
+                      !_vm.entryPoint && _vm.job
+                        ? _c("tr", [
+                            _c(
+                              "td",
+                              { staticClass: "table-fit font-weight-bold" },
+                              [_vm._v("Job")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticClass: "control-action",
+                                    attrs: {
+                                      to: {
+                                        name: "job-preview",
+                                        params: { id: _vm.job.id }
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                        View Job\n                    "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
                             )
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c(
-                            "td",
-                            { staticClass: "table-fit font-weight-bold" },
-                            [_vm._v("Hostname")]
-                          ),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(_vm.entry.content.hostname) +
-                                "\n                    "
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.entryPoint && _vm.request
+                        ? _c("tr", [
+                            _c(
+                              "td",
+                              { staticClass: "table-fit font-weight-bold" },
+                              [_vm._v("Request")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticClass: "control-action",
+                                    attrs: {
+                                      to: {
+                                        name: "request-preview",
+                                        params: { id: _vm.request.id }
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                        View Request\n                    "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
                             )
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _vm._t("table-parameters", null, { entry: _vm.entry }),
-                        _vm._v(" "),
-                        !_vm.entryPoint && _vm.job
-                          ? _c("tr", [
-                              _c(
-                                "td",
-                                { staticClass: "table-fit font-weight-bold" },
-                                [_vm._v("Job")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "td",
-                                [
-                                  _c(
-                                    "router-link",
-                                    {
-                                      staticClass: "control-action",
-                                      attrs: {
-                                        to: {
-                                          name: "job-preview",
-                                          params: { id: _vm.job.id }
-                                        }
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.entryPoint && _vm.command
+                        ? _c("tr", [
+                            _c(
+                              "td",
+                              { staticClass: "table-fit font-weight-bold" },
+                              [_vm._v("Command")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticClass: "control-action",
+                                    attrs: {
+                                      to: {
+                                        name: "command-preview",
+                                        params: { id: _vm.command.id }
                                       }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                            View Job\n                        "
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.entryPoint && _vm.request
-                          ? _c("tr", [
-                              _c(
-                                "td",
-                                { staticClass: "table-fit font-weight-bold" },
-                                [_vm._v("Request")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "td",
-                                [
-                                  _c(
-                                    "router-link",
-                                    {
-                                      staticClass: "control-action",
-                                      attrs: {
-                                        to: {
-                                          name: "request-preview",
-                                          params: { id: _vm.request.id }
-                                        }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                        View Command\n                    "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.entry.tags.length
+                        ? _c("tr", [
+                            _c(
+                              "td",
+                              { staticClass: "table-fit font-weight-bold" },
+                              [_vm._v("Tags")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              _vm._l(_vm.entry.tags, function(tag) {
+                                return _c(
+                                  "router-link",
+                                  {
+                                    key: tag,
+                                    staticClass:
+                                      "badge badge-info mr-1 font-weight-light",
+                                    attrs: {
+                                      to: {
+                                        name: _vm.resource,
+                                        query: { tag: tag }
                                       }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                            View Request\n                        "
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.entryPoint && _vm.command
-                          ? _c("tr", [
-                              _c(
-                                "td",
-                                { staticClass: "table-fit font-weight-bold" },
-                                [_vm._v("Command")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "td",
-                                [
-                                  _c(
-                                    "router-link",
-                                    {
-                                      staticClass: "control-action",
-                                      attrs: {
-                                        to: {
-                                          name: "command-preview",
-                                          params: { id: _vm.command.id }
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                            View Command\n                        "
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.entry.tags.length
-                          ? _c("tr", [
-                              _c(
-                                "td",
-                                { staticClass: "table-fit font-weight-bold" },
-                                [_vm._v("Tags")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "td",
-                                _vm._l(_vm.entry.tags, function(tag) {
-                                  return _c(
-                                    "router-link",
-                                    {
-                                      key: tag,
-                                      staticClass:
-                                        "badge badge-info mr-1 font-weight-light",
-                                      attrs: {
-                                        to: {
-                                          name: _vm.resource,
-                                          query: { tag: tag }
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                            " +
-                                          _vm._s(tag) +
-                                          "\n                        "
-                                      )
-                                    ]
-                                  )
-                                })
-                              )
-                            ])
-                          : _vm._e()
-                      ],
-                      2
-                    )
-                  ]
-                )
-              : _vm._e()
-          ]),
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                        " +
+                                        _vm._s(tag) +
+                                        "\n                    "
+                                    )
+                                  ]
+                                )
+                              })
+                            )
+                          ])
+                        : _vm._e()
+                    ],
+                    2
+                  )
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
           _vm.ready && _vm.entry
             ? _vm._t("below-table", null, { entry: _vm.entry })
@@ -53022,78 +53016,71 @@ var render = function() {
         ? _c("div", { staticClass: "card mt-5" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "table-responsive" }, [
-              _c(
-                "table",
-                {
-                  staticClass: "table mb-0 card-bg-secondary table-borderless"
-                },
-                [
-                  _c("tr", [
-                    _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                      _vm._v("ID")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(_vm.entry.content.user.id) +
-                          "\n                    "
-                      )
-                    ])
+            _c(
+              "table",
+              { staticClass: "table mb-0 card-bg-secondary table-borderless" },
+              [
+                _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("ID")
                   ]),
                   _vm._v(" "),
-                  _vm.entry.content.user.name
-                    ? _c("tr", [
-                        _c(
-                          "td",
-                          {
-                            staticClass:
-                              "table-fit font-weight-bold align-middle"
-                          },
-                          [_vm._v("Name")]
-                        ),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "align-middle" }, [
-                          _vm.gravatarUrl
-                            ? _c("img", {
-                                staticClass: "mr-2 rounded-circle",
-                                attrs: {
-                                  src: _vm.gravatarUrl,
-                                  height: "40",
-                                  width: "40"
-                                }
-                              })
-                            : _vm._e(),
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(_vm.entry.content.user.name) +
-                              "\n                    "
-                          )
-                        ])
+                  _c("td", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.entry.content.user.id) +
+                        "\n                "
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm.entry.content.user.name
+                  ? _c("tr", [
+                      _c(
+                        "td",
+                        {
+                          staticClass: "table-fit font-weight-bold align-middle"
+                        },
+                        [_vm._v("Name")]
+                      ),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "align-middle" }, [
+                        _vm.gravatarUrl
+                          ? _c("img", {
+                              staticClass: "mr-2 rounded-circle",
+                              attrs: {
+                                src: _vm.gravatarUrl,
+                                height: "40",
+                                width: "40"
+                              }
+                            })
+                          : _vm._e(),
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(_vm.entry.content.user.name) +
+                            "\n                "
+                        )
                       ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.entry.content.user.email
-                    ? _c("tr", [
-                        _c(
-                          "td",
-                          { staticClass: "table-fit font-weight-bold" },
-                          [_vm._v("Email Address")]
-                        ),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(_vm.entry.content.user.email) +
-                              "\n                    "
-                          )
-                        ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.entry.content.user.email
+                  ? _c("tr", [
+                      _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                        _vm._v("Email Address")
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(_vm.entry.content.user.email) +
+                            "\n                "
+                        )
                       ])
-                    : _vm._e()
-                ]
-              )
-            ])
+                    ])
+                  : _vm._e()
+              ]
+            )
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -54107,7 +54094,7 @@ var render = function() {
           [_c("span", [_vm._v("No tags are currently being monitored.")])]
         )
       : _vm._e(),
-    _vm._v("\n\n\n<<<<<<< HEAD\n        "),
+    _vm._v(" "),
     _vm.ready && _vm.tags.length > 0
       ? _c("table", { staticClass: "table table-hover table-sm mb-0" }, [
           _vm._m(0),
@@ -54157,59 +54144,7 @@ var render = function() {
           )
         ])
       : _vm._e(),
-    _vm._v("\n=======\n        "),
-    _vm.ready && _vm.tags.length > 0
-      ? _c("div", { staticClass: "table-responsive" }, [
-          _c("table", { staticClass: "table table-hover table-sm mb-0" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.tags, function(tag) {
-                return _c("tr", { key: tag.tag }, [
-                  _c("td", [_vm._v(_vm._s(_vm.truncate(tag, 140)))]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "table-fit" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "control-action",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.removeTag(tag)
-                          }
-                        }
-                      },
-                      [
-                        _c(
-                          "svg",
-                          {
-                            attrs: {
-                              xmlns: "http://www.w3.org/2000/svg",
-                              viewBox: "0 0 20 20"
-                            }
-                          },
-                          [
-                            _c("path", {
-                              attrs: {
-                                d:
-                                  "M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"
-                              }
-                            })
-                          ]
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              })
-            )
-          ])
-        ])
-      : _vm._e(),
-    _vm._v("\n>>>>>>> 19001712a23c5e3e4ed1e3df129116178f3fbe9a\n\n        "),
+    _vm._v(" "),
     _c(
       "div",
       {
@@ -54281,7 +54216,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                            Monitor\n                        "
+                        "\n                        Monitor\n                    "
                       )
                     ]
                   ),
@@ -54291,7 +54226,7 @@ var render = function() {
                     { staticClass: "btn", on: { click: _vm.cancelNewTag } },
                     [
                       _vm._v(
-                        "\n                            Cancel\n                        "
+                        "\n                        Cancel\n                    "
                       )
                     ]
                   )
@@ -54305,12 +54240,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [_c("th", [_vm._v("Tag")]), _vm._v(" "), _c("th")])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

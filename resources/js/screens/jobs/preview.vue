@@ -1,4 +1,4 @@
-<script>
+<script type="text/ecmascript-6">
     import axios from 'axios';
     import StylesMixin from './../../mixins/entriesStyles';
 
