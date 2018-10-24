@@ -429,7 +429,7 @@ class Telescope
      */
     public static function store(EntriesRepository $storage)
     {
-        if (empty(static::$entriesQueue)) {
+        if (empty(static::$entriesQueue) && empty(static::$updatesQueue)) {
             return;
         }
 
