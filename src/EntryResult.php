@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope;
 
+use Carbon\Carbon;
 use JsonSerializable;
-use DateTimeInterface;
 
 class EntryResult implements JsonSerializable
 {
@@ -52,7 +52,7 @@ class EntryResult implements JsonSerializable
     /**
      * The datetime that the entry was recorded.
      *
-     * @var \DateTimeInterface
+     * @var Carbon
      */
     public $createdAt;
 
@@ -72,10 +72,10 @@ class EntryResult implements JsonSerializable
      * @param  string  $type
      * @param  string|null  $familyHash
      * @param  array  $content
-     * @param  \DateTimeInterface  $createdAt
+     * @param  Carbon  $createdAt
      * @param  array  $tags
      */
-    public function __construct($id, $sequence, string $batchId, string $type, ?string $familyHash, array $content, DateTimeInterface $createdAt, $tags = [])
+    public function __construct($id, $sequence, string $batchId, string $type, ?string $familyHash, array $content, Carbon $createdAt, $tags = [])
     {
         $this->id = $id;
         $this->type = $type;
