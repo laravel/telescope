@@ -104,7 +104,7 @@
 
         methods: {
             loadEntries(after){
-                axios.post('/' + Telescope.path + '/telescope-api/' + this.resource +
+                axios.post(Telescope.path + '/telescope-api/' + this.resource +
                         '?tag=' + this.tag +
                         '&before=' + this.lastEntryIndex +
                         '&take=' + this.entriesPerRequest +
@@ -128,7 +128,7 @@
              */
             checkForNewEntries(){
                 this.newEntriesTimeout = setTimeout(() => {
-                    axios.post('/' + Telescope.path + '/telescope-api/' + this.resource +
+                    axios.post(Telescope.path + '/telescope-api/' + this.resource +
                             '?tag=' + this.tag +
                             '&take=1' +
                             '&family_hash=' + this.familyHash
