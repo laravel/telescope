@@ -32,7 +32,7 @@
         methods: {
             removeTag(tag){
                 this.alertConfirm('Are you sure you want to remove this tag?', ()=> {
-                    this.tags = _.reject(this.tags, t => t == tag);
+                    this.tags = _.reject(this.tags, t => t === tag);
 
                     axios.post('/' + Telescope.path + '/telescope-api/monitored-tags/delete', {tag: tag});
                 });
