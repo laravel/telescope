@@ -33,7 +33,7 @@ class CommandWatcher extends Watcher
         }
 
         Telescope::recordCommand(IncomingEntry::make([
-            'command' => $event->command,
+            'command' => $event->command ?? $event->input->getArguments()['command'] ?? 'default',
             'exit_code' => $event->exitCode,
             'arguments' => $event->input->getArguments(),
             'options' => $event->input->getOptions(),
