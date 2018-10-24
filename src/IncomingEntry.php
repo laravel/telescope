@@ -174,7 +174,7 @@ class IncomingEntry
      */
     public function isFailedJob()
     {
-        return $this->type == EntryType::JOB &&
+        return $this->type === EntryType::JOB &&
                ($this->content['status'] ?? null) === 'failed';
     }
 

@@ -30,8 +30,8 @@ class ScheduleWatcher extends Watcher
      */
     public function recordCommand(CommandStarting $event)
     {
-        if ($event->command != 'schedule:run' &&
-            $event->command != 'schedule:finish') {
+        if ($event->command !== 'schedule:run' &&
+            $event->command !== 'schedule:finish') {
             return;
         }
 
@@ -58,7 +58,7 @@ class ScheduleWatcher extends Watcher
     protected function getEventOutput(Event $event)
     {
         if (! $event->output ||
-            $event->output == $event->getDefaultOutput() ||
+            $event->output === $event->getDefaultOutput() ||
             $event->shouldAppendOutput ||
             ! file_exists($event->output)) {
             return '';
