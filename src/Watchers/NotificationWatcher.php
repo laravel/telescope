@@ -7,6 +7,7 @@ use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Notifications\Events\NotificationSent;
 
 class NotificationWatcher extends Watcher
@@ -60,8 +61,12 @@ class NotificationWatcher extends Watcher
      */
     private function formatNotifiable($notifiable)
     {
-        return $notifiable instanceof Model
-                ? get_class($notifiable).':'.$notifiable->getKey()
-                : $notifiable;
+        if ($notifiable instanceof Model) {
+            return get_class($notifiable) . ':' . $notifiable->getKey();
+        } elseif ($notifiable instanceof AnonymousNotifiable) {
+            return 'Anonymous:'.implode(',', $notifiable->routes);
+        }
+
+        return $notifiable;
     }
 }
