@@ -79,13 +79,13 @@
             <tr>
                 <td class="table-fit font-weight-bold">Download</td>
                 <td>
-                    <a :href="'/telescope/telescope-api/mail/'+$route.params.id+'/download'">Download .eml file</a>
+                    <a :href="'/' + Telescope.path + '/telescope-api/mail/'+$route.params.id+'/download'">Download .eml file</a>
                 </td>
             </tr>
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
-            <iframe :src="'/telescope/telescope-api/mail/'+$route.params.id+'/preview'" width="100%" height="400"></iframe>
+            <iframe :src="'/' + Telescope.path + '/telescope-api/mail/'+$route.params.id+'/preview'" width="100%" height="400"></iframe>
         </div>
     </preview-screen>
 </template>
