@@ -102,6 +102,10 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
      */
     public function store(Collection $entries)
     {
+        if ($entries->isEmpty()) {
+            return;
+        }
+
         [$exceptions, $entries] = $entries->partition->isException();
 
         $this->storeExceptions($exceptions);
