@@ -22,7 +22,7 @@ class RedisWatcher extends Watcher
     /**
      * Record a Redis command was executed.
      *
-     * @param \Illuminate\Redis\Events\CommandExecuted  $event
+     * @param  \Illuminate\Redis\Events\CommandExecuted  $event
      * @return void
      */
     public function recordCommand(CommandExecuted $event)
