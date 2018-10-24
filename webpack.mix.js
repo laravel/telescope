@@ -1,4 +1,5 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
+const webpack = require('webpack');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,6 +13,15 @@ let mix = require('laravel-mix');
  */
 
 mix
+    .options({
+        uglify: {
+            uglifyOptions: {
+                compress: {
+                    drop_console: true,
+                }
+            }
+        }
+    })
     .js('resources/js/app.js', 'public')
     .sass('resources/sass/app.scss', 'public')
     .sass('resources/sass/app-dark.scss', 'public')
@@ -22,5 +32,8 @@ mix
             alias: {
                 '@': path.resolve(__dirname, 'resources/js/'),
             }
-        }
+        },
+        plugins: [
+            new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+        ],
     });
