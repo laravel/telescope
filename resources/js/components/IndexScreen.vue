@@ -1,7 +1,6 @@
 <script type="text/ecmascript-6">
     import $ from 'jquery';
     import _ from 'lodash';
-    import axios from 'axios';
 
     export default {
         props: [

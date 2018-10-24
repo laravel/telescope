@@ -1,5 +1,4 @@
 <script>
-    import axios from 'axios';
     import StylesMixin from './../../mixins/entriesStyles';
 
     export default {
