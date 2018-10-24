@@ -4,7 +4,9 @@ namespace Laravel\Telescope\Watchers;
 
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Redis\Events\CommandExecuted;
+use Illuminate\Contracts\Foundation\Application;
 
 class RedisWatcher extends Watcher
 {
@@ -14,9 +16,9 @@ class RedisWatcher extends Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public function register($app)
+    public function register(Application $app)
     {
-        $app['events']->listen(CommandExecuted::class, [$this, 'recordCommand']);
+        $app->make(Dispatcher::class)->listen(CommandExecuted::class, [$this, 'recordCommand']);
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Contracts\Foundation\Application;
+
 abstract class Watcher
 {
     /**
@@ -28,5 +30,5 @@ abstract class Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    abstract public function register($app);
+    abstract public function register(Application $app);
 }

@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Storage;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class EntryModel extends Model
 {
@@ -51,7 +52,7 @@ class EntryModel extends Model
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWithTelescopeOptions($query, $type, EntryQueryOptions $options)
+    public function scopeWithTelescopeOptions(Builder $query, $type, EntryQueryOptions $options)
     {
         $this->whereType($query, $type)
                 ->whereBatchId($query, $options)
@@ -70,9 +71,9 @@ class EntryModel extends Model
      * @param  string  $type
      * @return $this
      */
-    protected function whereType($query, $type)
+    protected function whereType(Builder $query, $type)
     {
-        $query->when($type, function ($query, $type) {
+        $query->when($type, function (Builder $query, $type) {
             return $query->where('type', $type);
         });
 
@@ -86,9 +87,9 @@ class EntryModel extends Model
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return $this
      */
-    protected function whereBatchId($query, EntryQueryOptions $options)
+    protected function whereBatchId(Builder $query, EntryQueryOptions $options)
     {
-        $query->when($options->batchId, function ($query, $batchId) {
+        $query->when($options->batchId, function (Builder $query, $batchId) {
             return $query->where('batch_id', $batchId);
         });
 
@@ -102,10 +103,10 @@ class EntryModel extends Model
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return $this
      */
-    protected function whereTag($query, EntryQueryOptions $options)
+    protected function whereTag(Builder $query, EntryQueryOptions $options)
     {
-        $query->when($options->tag, function ($query, $tag) {
-            return $query->whereIn('uuid', function ($query) use ($tag) {
+        $query->when($options->tag, function (Builder $query, $tag) {
+            return $query->whereIn('uuid', function (Builder $query) use ($tag) {
                 $query->select('entry_uuid')->from('telescope_entries_tags')->whereTag($tag);
             });
         });
@@ -120,9 +121,9 @@ class EntryModel extends Model
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return $this
      */
-    protected function whereFamilyHash($query, EntryQueryOptions $options)
+    protected function whereFamilyHash(Builder $query, EntryQueryOptions $options)
     {
-        $query->when($options->familyHash, function ($query, $hash) {
+        $query->when($options->familyHash, function (Builder $query, $hash) {
             return $query->where('family_hash', $hash);
         });
 
@@ -136,9 +137,9 @@ class EntryModel extends Model
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return $this
      */
-    protected function whereBeforeSequence($query, EntryQueryOptions $options)
+    protected function whereBeforeSequence(Builder $query, EntryQueryOptions $options)
     {
-        $query->when($options->beforeSequence, function ($query, $beforeSequence) {
+        $query->when($options->beforeSequence, function (Builder $query, $beforeSequence) {
             return $query->where('sequence', '<', $beforeSequence);
         });
 
@@ -152,7 +153,7 @@ class EntryModel extends Model
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return $this
      */
-    protected function filter($query, EntryQueryOptions $options)
+    protected function filter(Builder $query, EntryQueryOptions $options)
     {
         if ($options->familyHash || $options->tag || $options->batchId) {
             return $this;

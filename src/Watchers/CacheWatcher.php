@@ -9,6 +9,8 @@ use Illuminate\Cache\Events\CacheHit;
 use Illuminate\Cache\Events\KeyWritten;
 use Illuminate\Cache\Events\CacheMissed;
 use Illuminate\Cache\Events\KeyForgotten;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 
 class CacheWatcher extends Watcher
 {
@@ -18,13 +20,15 @@ class CacheWatcher extends Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public function register($app)
+    public function register(Application $app)
     {
-        $app['events']->listen(CacheHit::class, [$this, 'recordCacheHit']);
-        $app['events']->listen(CacheMissed::class, [$this, 'recordCacheMissed']);
+        /** @var \Illuminate\Contracts\Events\Dispatcher $dispatcher */
+        $dispatcher = $app->make(Dispatcher::class);
+        $dispatcher->listen(CacheHit::class, [$this, 'recordCacheHit']);
+        $dispatcher->listen(CacheMissed::class, [$this, 'recordCacheMissed']);
 
-        $app['events']->listen(KeyWritten::class, [$this, 'recordKeyWritten']);
-        $app['events']->listen(KeyForgotten::class, [$this, 'recordKeyForgotten']);
+        $dispatcher->listen(KeyWritten::class, [$this, 'recordKeyWritten']);
+        $dispatcher->listen(KeyForgotten::class, [$this, 'recordKeyForgotten']);
     }
 
     /**

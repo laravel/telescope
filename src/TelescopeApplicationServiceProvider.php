@@ -2,33 +2,36 @@
 
 namespace Laravel\Telescope;
 
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Auth\Access\Gate;
 
 class TelescopeApplicationServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
      *
+     * @param  \Illuminate\Contracts\Auth\Access\Gate  $gate
      * @return void
      */
-    public function boot()
+    public function boot(Gate $gate)
     {
-        $this->authorization();
+        $this->authorization($gate);
     }
 
     /**
      * Configure the Telescope authorization services.
      *
+     * @param  \Illuminate\Contracts\Auth\Access\Gate  $gate
      * @return void
      */
-    protected function authorization()
+    protected function authorization(Gate $gate)
     {
-        $this->gate();
+        $this->gate($gate);
 
-        Telescope::auth(function ($request) {
-            return app()->environment('local') ||
-                   Gate::check('viewTelescope', [$request->user()]);
+        Telescope::auth(function (Request $request) use ($gate) {
+            return $this->app->environment('local') ||
+                $gate->check('viewTelescope', [$request->user()]);
         });
     }
 
@@ -37,11 +40,12 @@ class TelescopeApplicationServiceProvider extends ServiceProvider
      *
      * This gate determines who can access Telescope in non-local environments.
      *
+     * @param  \Illuminate\Contracts\Auth\Access\Gate  $gate
      * @return void
      */
-    protected function gate()
+    protected function gate(Gate $gate)
     {
-        Gate::define('viewTelescope', function ($user) {
+        $gate->define('viewTelescope', function ($user) {
             return in_array($user->email, [
                 //
             ]);

@@ -2,8 +2,9 @@
 
 namespace Laravel\Telescope;
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Config\Repository;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 
@@ -12,13 +13,15 @@ class TelescopeServiceProvider extends ServiceProvider
     /**
      * Bootstrap any package services.
      *
+     * @param  \Illuminate\Routing\Router  $router
+     * @param  \Illuminate\Contracts\Config\Repository  $config
      * @return void
      */
-    public function boot()
+    public function boot(Router $router, Repository $config)
     {
-        Route::middlewareGroup('telescope', config('telescope.middleware', []));
+        $router->middlewareGroup('telescope', $config->get('telescope.middleware', []));
 
-        $this->registerRoutes();
+        $this->registerRoutes($router);
         $this->registerMigrations();
         $this->registerPublishing();
 
@@ -33,11 +36,12 @@ class TelescopeServiceProvider extends ServiceProvider
     /**
      * Register the package routes.
      *
+     * @param  \Illuminate\Routing\Router  $router
      * @return void
      */
-    private function registerRoutes()
+    private function registerRoutes(Router $router)
     {
-        Route::group($this->routeConfiguration(), function () {
+        $router->group($this->routeConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
         });
     }

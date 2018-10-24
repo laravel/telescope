@@ -6,7 +6,9 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Notifications\Events\NotificationSent;
 
@@ -18,9 +20,9 @@ class NotificationWatcher extends Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public function register($app)
+    public function register(Application $app)
     {
-        $app['events']->listen(NotificationSent::class, [$this, 'recordNotification']);
+        $app->make(Dispatcher::class)->listen(NotificationSent::class, [$this, 'recordNotification']);
     }
 
     /**
@@ -46,7 +48,7 @@ class NotificationWatcher extends Watcher
      * @param  \Illuminate\Notifications\Events\NotificationSent  $event
      * @return array
      */
-    private function tags($event)
+    private function tags(NotificationSent $event)
     {
         return array_merge([
             $this->formatNotifiable($event->notifiable),

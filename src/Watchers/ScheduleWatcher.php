@@ -5,9 +5,11 @@ namespace Laravel\Telescope\Watchers;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Console\Scheduling\Event;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Console\Events\CommandStarting;
 use Illuminate\Console\Scheduling\CallbackEvent;
+use Illuminate\Contracts\Foundation\Application;
 
 class ScheduleWatcher extends Watcher
 {
@@ -17,9 +19,9 @@ class ScheduleWatcher extends Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public function register($app)
+    public function register(Application $app)
     {
-        $app['events']->listen(CommandStarting::class, [$this, 'recordCommand']);
+        $app->make(Dispatcher::class)->listen(CommandStarting::class, [$this, 'recordCommand']);
     }
 
     /**
@@ -35,7 +37,7 @@ class ScheduleWatcher extends Watcher
             return;
         }
 
-        collect(app(Schedule::class)->events())->each(function ($event) {
+        collect(app(Schedule::class)->events())->each(function (Event $event) {
             $event->then(function () use ($event) {
                 Telescope::recordScheduledCommand(IncomingEntry::make([
                     'command' => $event instanceof CallbackEvent ? 'Closure' : $event->command,
@@ -52,7 +54,7 @@ class ScheduleWatcher extends Watcher
     /**
      * Get the output for the scheduled event.
      *
-     * @param  \Illuminate\Console\Scheduling\Event  $event
+     * @param  \Illuminate\Console\Scheduling\Event $event
      * @return string|null
      */
     protected function getEventOutput(Event $event)

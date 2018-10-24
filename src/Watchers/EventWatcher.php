@@ -9,7 +9,9 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\ExtractProperties;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class EventWatcher extends Watcher
@@ -20,9 +22,9 @@ class EventWatcher extends Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public function register($app)
+    public function register(Application $app)
     {
-        $app['events']->listen('*', [$this, 'recordEvent']);
+        $app->make(Dispatcher::class)->listen('*', [$this, 'recordEvent']);
     }
 
     /**

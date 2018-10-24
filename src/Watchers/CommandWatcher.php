@@ -5,7 +5,9 @@ namespace Laravel\Telescope\Watchers;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Console\Events\CommandFinished;
+use Illuminate\Contracts\Foundation\Application;
 
 class CommandWatcher extends Watcher
 {
@@ -15,9 +17,9 @@ class CommandWatcher extends Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public function register($app)
+    public function register(Application $app)
     {
-        $app['events']->listen(CommandFinished::class, [$this, 'recordCommand']);
+        $app->make(Dispatcher::class)->listen(CommandFinished::class, [$this, 'recordCommand']);
     }
 
     /**

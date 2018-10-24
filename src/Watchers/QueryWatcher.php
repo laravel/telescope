@@ -4,7 +4,9 @@ namespace Laravel\Telescope\Watchers;
 
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Contracts\Foundation\Application;
 
 class QueryWatcher extends Watcher
 {
@@ -14,9 +16,9 @@ class QueryWatcher extends Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public function register($app)
+    public function register(Application $app)
     {
-        $app['events']->listen(QueryExecuted::class, [$this, 'recordQuery']);
+        $app->make(Dispatcher::class)->listen(QueryExecuted::class, [$this, 'recordQuery']);
     }
 
     /**
@@ -44,7 +46,7 @@ class QueryWatcher extends Watcher
      * @param  \Illuminate\Database\Events\QueryExecuted  $event
      * @return array
      */
-    protected function tags($event)
+    protected function tags(QueryExecuted $event)
     {
         return isset($this->options['slow']) && $event->time >= $this->options['slow'] ? ['slow'] : [];
     }
@@ -55,7 +57,7 @@ class QueryWatcher extends Watcher
      * @param  \Illuminate\Database\Events\QueryExecuted  $event
      * @return array
      */
-    protected function formatBindings($event)
+    protected function formatBindings(QueryExecuted $event)
     {
         return $event->connection->prepareBindings($event->bindings);
     }

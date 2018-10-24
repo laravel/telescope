@@ -6,7 +6,9 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\ExceptionContext;
 use Illuminate\Log\Events\MessageLogged;
+use Illuminate\Contracts\Events\Dispatcher;
 use Laravel\Telescope\IncomingExceptionEntry;
+use Illuminate\Contracts\Foundation\Application;
 
 class ExceptionWatcher extends Watcher
 {
@@ -16,9 +18,9 @@ class ExceptionWatcher extends Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public function register($app)
+    public function register(Application $app)
     {
-        $app['events']->listen(MessageLogged::class, [$this, 'recordException']);
+        $app->make(Dispatcher::class)->listen(MessageLogged::class, [$this, 'recordException']);
     }
 
     /**
@@ -53,7 +55,7 @@ class ExceptionWatcher extends Watcher
      * @param  \Illuminate\Log\Events\MessageLogged  $event
      * @return array
      */
-    protected function tags($event)
+    protected function tags(MessageLogged $event)
     {
         return array_merge(ExtractTags::from($event->context['exception']),
             $event->context['telescope'] ?? []

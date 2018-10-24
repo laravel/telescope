@@ -6,6 +6,8 @@ use Illuminate\Support\Arr;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Log\Events\MessageLogged;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 
 class LogWatcher extends Watcher
 {
@@ -15,9 +17,9 @@ class LogWatcher extends Watcher
      * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
-    public function register($app)
+    public function register(Application $app)
     {
-        $app['events']->listen(MessageLogged::class, [$this, 'recordLog']);
+        $app->make(Dispatcher::class)->listen(MessageLogged::class, [$this, 'recordLog']);
     }
 
     /**
@@ -47,7 +49,7 @@ class LogWatcher extends Watcher
      * @param  \Illuminate\Log\Events\MessageLogged  $event
      * @return array
      */
-    private function tags($event)
+    private function tags(MessageLogged $event)
     {
         return $event->context['telescope'] ?? [];
     }

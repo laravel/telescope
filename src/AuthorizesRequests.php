@@ -2,6 +2,8 @@
 
 namespace Laravel\Telescope;
 
+use Illuminate\Http\Request;
+
 trait AuthorizesRequests
 {
     /**
@@ -30,7 +32,7 @@ trait AuthorizesRequests
      * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
-    public static function check($request)
+    public static function check(Request $request)
     {
         return (static::$authUsing ?: function () {
             return app()->environment('local');
