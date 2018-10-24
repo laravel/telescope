@@ -2,6 +2,7 @@
 
 use Laravel\Telescope\Watchers;
 use Laravel\Telescope\Http\Middleware\Authorize;
+use Laravel\Telescope\Http\Middleware\SetTelescopeRequestId;
 
 return [
 
@@ -55,6 +56,7 @@ return [
     'middleware' => [
         'web',
         Authorize::class,
+        SetTelescopeRequestId::class,
     ],
 
     /*
