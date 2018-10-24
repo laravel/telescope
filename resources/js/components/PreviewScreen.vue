@@ -107,7 +107,7 @@
              */
             updateEntry(){
                 if (this.resource != 'jobs') return;
-                if (this.entry.content.status != 'pending') return;
+                if (this.entry.content.status !== 'pending') return;
 
                 this.updateEntryTimeout = setTimeout(() => {
                     this.loadEntry((response) => {
