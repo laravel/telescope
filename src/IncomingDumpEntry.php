@@ -48,15 +48,12 @@ class IncomingDumpEntry extends IncomingEntry
         switch ($entryPoint->type) {
             case (EntryType::REQUEST):
                 return $entryPoint->content['method'].' '.$entryPoint->content['uri'];
-                break;
 
             case (EntryType::JOB):
                 return $entryPoint->content['name'];
-                break;
 
             case (EntryType::COMMAND):
                 return $entryPoint->content['command'];
-                break;
         }
 
         return '';
