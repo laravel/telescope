@@ -83,9 +83,7 @@
                 </ul>
 
                 <div>
-                    <pre class="code-bg p-4 mb-0 text-white" ref="sqlcode" v-show="currentTab=='query'">
-                        {{formatSQL(slotProps.entry.content.sql, slotProps.entry.content.bindings)}}
-                    </pre>
+                    <pre class="code-bg p-4 mb-0 text-white" ref="sqlcode" v-show="currentTab=='query'">{{formatSQL(slotProps.entry.content.sql, slotProps.entry.content.bindings)}}</pre>
 
                     <stack-trace
                             v-if="showSource"
