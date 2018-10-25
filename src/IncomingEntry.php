@@ -135,7 +135,7 @@ class IncomingEntry
             ],
         ]);
 
-        $this->tags(['Auth:'.$user->getKey()]);
+        $this->tags(['Auth:'.$user->getAuthIdentifier()]);
 
         return $this;
     }
