@@ -22,8 +22,10 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->registerMigrations();
         $this->registerPublishing();
 
-        Telescope::start($this->app);
-        Telescope::listenForStorageOpportunities($this->app);
+        if (config('telescope.enabled', true)) {
+            Telescope::start($this->app);
+            Telescope::listenForStorageOpportunities($this->app);
+        }
 
         $this->loadViewsFrom(
             __DIR__.'/../resources/views', 'telescope'
