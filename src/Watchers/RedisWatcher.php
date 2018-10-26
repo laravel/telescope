@@ -43,6 +43,16 @@ class RedisWatcher extends Watcher
      */
     private function formatCommand($command, $parameters)
     {
-        return $command.' '.implode(' ', $parameters);
+        $parameters = collect($parameters)->map(function ($parameter) {
+            if (is_array($parameter)) {
+                return collect($parameter)->map(function ($value, $key) {
+                    return is_int($key) ? $value : "{$key} {$value}";
+                })->implode(' ');
+            }
+
+            return $parameter;
+        })->implode(' ');
+
+        return "{$command} {$parameters}";
     }
 }
