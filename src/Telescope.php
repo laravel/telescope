@@ -561,4 +561,16 @@ class Telescope
             'timezone' => config('app.timezone')
         ];
     }
+
+    /**
+     * Flush all entries in the queue.
+     *
+     * @return  static
+     */
+    public static function flushEntries()
+    {
+        static::$entriesQueue = [];
+
+        return new static;
+    }
 }

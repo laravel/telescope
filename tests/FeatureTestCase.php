@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Illuminate\Foundation\Testing\TestResponse;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
@@ -21,6 +22,13 @@ class FeatureTestCase extends TestCase
         parent::setUp();
 
         TestResponse::macro('terminateTelescope', [$this, 'terminateTelescope']);
+    }
+
+    protected function tearDown()
+    {
+        Telescope::flushEntries();
+
+        parent::tearDown();
     }
 
     protected function getPackageProviders($app)
@@ -72,11 +80,9 @@ class FeatureTestCase extends TestCase
     protected function prepareDatabase()
     {
         Telescope::withoutRecording(function () {
-            $this->loadLaravelMigrations();
-
             $this->terminateTelescope();
 
-            EntryModel::query()->truncate();
+            EntryModel::query()->delete();
         });
     }
 }

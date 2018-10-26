@@ -25,14 +25,14 @@ class QueryWatcherTest extends FeatureTestCase
     {
         $this->prepareDatabase();
 
-        $this->app->get('db')->table('users')->count();
+        $this->app->get('db')->table('telescope_entries')->count();
 
         $this->terminateTelescope();
 
         $entry = EntryModel::query()->first();
 
         self::assertSame('query', $entry->type);
-        self::assertSame('select count(*) as aggregate from "users"', $entry->content['sql']);
+        self::assertSame('select count(*) as aggregate from "telescope_entries"', $entry->content['sql']);
         self::assertSame('testbench', $entry->content['connection']);
         self::assertFalse($entry->content['slow']);
     }
@@ -41,14 +41,13 @@ class QueryWatcherTest extends FeatureTestCase
     {
         $this->prepareDatabase();
 
-        $records = Collection::times(100, function ($count) {
+        $records = Collection::times(300, function () {
             return [
-                'name' => 'Laravel',
-                'email' => $count . '@laravel.com',
-                'password' => 'secret',
+                'tag' => str_random(),
             ];
         });
-        $this->app->get('db')->table('users')->insert($records->toArray());
+
+        $this->app->get('db')->table('telescope_monitoring')->insert($records->toArray());
 
         $this->terminateTelescope();
 
