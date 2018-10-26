@@ -53,4 +53,28 @@ class RequestWatchersTest extends FeatureTestCase
         self::assertSame(404, $entry->content['response_status']);
         self::assertSame('whatever', $entry->content['uri']);
     }
+
+    public function test_request_watcher_hides_password()
+    {
+        Route::post('/auth', function () {
+            return response('success');
+        });
+
+        $this->post('/auth', [
+            'email' => 'telescope@laravel.com',
+            'password' => 'secret',
+            'password_confirmation' => 'secret',
+        ])->terminateTelescope();
+
+        $this->assertDatabaseHas('telescope_entries', [
+            'type' => 'request'
+        ]);
+
+        $entry = EntryModel::query()->first();
+
+        self::assertSame('POST', $entry->content['method']);
+        self::assertSame('telescope@laravel.com', $entry->content['payload']['email']);
+        self::assertSame('********', $entry->content['payload']['password']);
+        self::assertSame('********', $entry->content['payload']['password_confirmation']);
+    }
 }
