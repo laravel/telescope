@@ -32,10 +32,35 @@ class EventWatcherTest extends FeatureTestCase
         self::assertSame('event', $entry->type);
         self::assertSame(DummyEvent::class, $entry->content['name']);
     }
+
+    public function test_event_watcher_stores_payloads()
+    {
+        Event::listen(DummyEvent::class, function ($payload) {
+        });
+
+        event(new DummyEvent('Telescope', 'Laravel', 'PHP'));
+
+        $this->terminateTelescope();
+
+        $entry = EntryModel::query()->first();
+
+        self::assertSame('event', $entry->type);
+        self::assertSame(DummyEvent::class, $entry->content['name']);
+        self::assertArrayHasKey('data', $entry->content['payload']);
+        self::assertArraySubset(['Telescope', 'Laravel', 'PHP'], $entry->content['payload']['data']);
+
+    }
 }
 
 class DummyEvent
 {
+    public $data;
+
+    public function __construct(...$payload)
+    {
+        $this->data = $payload;
+    }
+
     public function handle()
     {
 
