@@ -47,6 +47,7 @@ export default {
             if (method == 'POST') return 'info';
             if (method == 'PATCH') return 'info';
             if (method == 'PUT') return 'info';
+            if (method == 'OPTIONS') return 'info';
             if (method == 'DELETE') return 'danger';
         }
     }
