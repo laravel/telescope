@@ -44,10 +44,10 @@ export default {
 
         requestMethodClass(method){
             if (method == 'GET') return 'secondary';
+            if (method == 'OPTIONS') return 'secondary';
             if (method == 'POST') return 'info';
             if (method == 'PATCH') return 'info';
             if (method == 'PUT') return 'info';
-            if (method == 'OPTIONS') return 'info';
             if (method == 'DELETE') return 'danger';
         }
     }
