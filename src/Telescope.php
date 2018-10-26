@@ -377,6 +377,18 @@ class Telescope
     }
 
     /**
+     * Flush all entries in the queue.
+     *
+     * @return  static
+     */
+    public static function flushEntries()
+    {
+        static::$entriesQueue = [];
+
+        return new static;
+    }
+
+    /**
      * Record the given exception.
      *
      * @param  \Throwable|\Exception  $e
@@ -560,17 +572,5 @@ class Telescope
             'path' => config('telescope.path'),
             'timezone' => config('app.timezone')
         ];
-    }
-
-    /**
-     * Flush all entries in the queue.
-     *
-     * @return  static
-     */
-    public static function flushEntries()
-    {
-        static::$entriesQueue = [];
-
-        return new static;
     }
 }
