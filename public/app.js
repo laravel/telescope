@@ -1871,7 +1871,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/' + Telescope.path + '/telescope-api/' + _this4.resource + '?tag=' + _this4.tag + '&take=1' + '&family_hash=' + _this4.familyHash).then(function (response) {
                     if (response.data.entries.length && !_this4.entries.length) {
                         _this4.loadNewEntries();
-                    } else if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id != __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this4.entries).id) {
+                    } else if (response.data.entries.length && __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(response.data.entries).id !== __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.first(_this4.entries).id) {
                         if (_this4.$root.autoLoadsNewEntries) {
                             _this4.loadNewEntries();
                         } else {
@@ -1965,11 +1965,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         updateEntries: function updateEntries() {
             var _this9 = this;
 
-            if (this.resource != 'jobs') return;
+            if (this.resource !== 'jobs') return;
 
             this.updateEntriesTimeout = setTimeout(function () {
                 var uuids = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.chain(_this9.entries).filter(function (entry) {
-                    return entry.content.status == 'pending';
+                    return entry.content.status === 'pending';
                 }).map('id').value();
 
                 if (uuids.length) {
@@ -1994,7 +1994,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
          */
         focusOnSearch: function focusOnSearch() {
             document.onkeyup = function (event) {
-                if (event.which == 191 || event.keyCode == 191) {
+                if (event.which === 191 || event.keyCode === 191) {
                     var searchInput = document.getElementById("searchInput");
 
                     if (searchInput) {
@@ -2122,7 +2122,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this3 = this;
 
             if (this.resource != 'jobs') return;
-            if (this.entry.content.status != 'pending') return;
+            if (this.entry.content.status !== 'pending') return;
 
             this.updateEntryTimeout = setTimeout(function () {
                 _this3.loadEntry(function (response) {
@@ -2721,7 +2721,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.alertConfirm('Are you sure you want to remove this tag?', function () {
                 _this2.tags = _.reject(_this2.tags, function (t) {
-                    return t == tag;
+                    return t === tag;
                 });
 
                 __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/' + Telescope.path + '/telescope-api/monitored-tags/delete', { tag: tag });
@@ -52426,6 +52426,24 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
+            slotProps.entry.content.file
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Location")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(slotProps.entry.content.file) +
+                        ":" +
+                        _vm._s(slotProps.entry.content.line) +
+                        "\n            "
+                    )
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
                 _vm._v("Duration")
@@ -68915,25 +68933,25 @@ module.exports = Component.exports
 /* harmony default export */ __webpack_exports__["a"] = ({
     methods: {
         cacheActionTypeClass: function cacheActionTypeClass(type) {
-            if (type == 'hit') return 'success';
-            if (type == 'set') return 'info';
-            if (type == 'forget') return 'warning';
-            if (type == 'missed') return 'danger';
+            if (type === 'hit') return 'success';
+            if (type === 'set') return 'info';
+            if (type === 'forget') return 'warning';
+            if (type === 'missed') return 'danger';
         },
         jobStatusClass: function jobStatusClass(status) {
-            if (status == 'pending') return 'secondary';
-            if (status == 'processed') return 'success';
-            if (status == 'failed') return 'danger';
+            if (status === 'pending') return 'secondary';
+            if (status === 'processed') return 'success';
+            if (status === 'failed') return 'danger';
         },
         logLevelClass: function logLevelClass(level) {
-            if (level == 'debug') return 'success';
-            if (level == 'info') return 'info';
-            if (level == 'notice') return 'secondary';
-            if (level == 'warning') return 'warning';
-            if (level == 'error') return 'danger';
-            if (level == 'critical') return 'danger';
-            if (level == 'alert') return 'danger';
-            if (level == 'emergency') return 'danger';
+            if (level === 'debug') return 'success';
+            if (level === 'info') return 'info';
+            if (level === 'notice') return 'secondary';
+            if (level === 'warning') return 'warning';
+            if (level === 'error') return 'danger';
+            if (level === 'critical') return 'danger';
+            if (level === 'alert') return 'danger';
+            if (level === 'emergency') return 'danger';
         },
         modelActionClass: function modelActionClass(action) {
             if (action == 'created') return 'success';

@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Events\QueryExecuted;
@@ -71,15 +72,12 @@ class QueryWatcher extends Watcher
      */
     protected function getCallerFromStackTrace()
     {
-        // Get stack trace without objects or args
-        $trace = collect(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
-        // Remove the first frame from the trace (this method)
-        $trace->forget(0);
+        $trace = collect(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS))->forget(0);
 
-        // Get the first frame that has a file path outside of {base_path}/vendor/laravel
-        $frameworkPath = base_path('vendor'.DIRECTORY_SEPARATOR.'laravel');
-        return $trace->first(function ($frame) use ($frameworkPath) {
-            return strpos(array_get($frame, 'file'), $frameworkPath) !== 0;
-        }, ['file' => 'Unknown', 'line' => 0]);
+        return $trace->first(function ($frame) {
+            return ! Str::contains($frame['file'],
+                base_path('vendor'.DIRECTORY_SEPARATOR.'laravel')
+            );
+        });
     }
 }

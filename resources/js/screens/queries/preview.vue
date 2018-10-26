@@ -40,7 +40,7 @@
                 </td>
             </tr>
 
-            <tr>
+            <tr  v-if="slotProps.entry.content.file">
                 <td class="table-fit font-weight-bold">Location</td>
                 <td>
                     {{slotProps.entry.content.file}}:{{slotProps.entry.content.line}}
