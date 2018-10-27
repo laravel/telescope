@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Illuminate\Support\Facades\Route;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\RequestWatcher;
@@ -24,16 +25,11 @@ class RequestWatchersTest extends FeatureTestCase
             return ['email' => 'themsaid@laravel.com'];
         });
 
-        $this->get('/emails')
-            ->assertSuccessful()
-            ->terminateTelescope();
+        $this->get('/emails')->assertSuccessful();
 
-        $this->assertDatabaseHas('telescope_entries', [
-            'type' => 'request'
-        ]);
+        $entry = $this->loadTelescopeEntries()->first();
 
-        $entry = EntryModel::query()->first();
-
+        self::assertSame(EntryType::REQUEST, $entry->type);
         self::assertSame('GET', $entry->content['method']);
         self::assertSame(200, $entry->content['response_status']);
         self::assertSame('emails', $entry->content['uri']);
@@ -41,14 +37,11 @@ class RequestWatchersTest extends FeatureTestCase
 
     public function test_request_watcher_registers_404()
     {
-        $this->get('/whatever')->terminateTelescope();
+        $this->get('/whatever');
 
-        $this->assertDatabaseHas('telescope_entries', [
-            'type' => 'request'
-        ]);
+        $entry = $this->loadTelescopeEntries()->first();
 
-        $entry = EntryModel::query()->first();
-
+        self::assertSame(EntryType::REQUEST, $entry->type);
         self::assertSame('GET', $entry->content['method']);
         self::assertSame(404, $entry->content['response_status']);
         self::assertSame('whatever', $entry->content['uri']);
@@ -64,14 +57,11 @@ class RequestWatchersTest extends FeatureTestCase
             'email' => 'telescope@laravel.com',
             'password' => 'secret',
             'password_confirmation' => 'secret',
-        ])->terminateTelescope();
-
-        $this->assertDatabaseHas('telescope_entries', [
-            'type' => 'request'
         ]);
 
-        $entry = EntryModel::query()->first();
+        $entry = $this->loadTelescopeEntries()->first();
 
+        self::assertSame(EntryType::REQUEST, $entry->type);
         self::assertSame('POST', $entry->content['method']);
         self::assertSame('telescope@laravel.com', $entry->content['payload']['email']);
         self::assertSame('********', $entry->content['payload']['password']);

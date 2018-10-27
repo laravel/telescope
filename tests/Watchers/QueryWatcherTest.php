@@ -25,9 +25,7 @@ class QueryWatcherTest extends FeatureTestCase
     {
         $this->app->get('db')->table('telescope_entries')->count();
 
-        $this->terminateTelescope();
-
-        $entry = EntryModel::query()->first();
+        $entry = $this->loadTelescopeEntries()->first();
 
         self::assertSame('query', $entry->type);
         self::assertSame('select count(*) as aggregate from "telescope_entries"', $entry->content['sql']);
@@ -45,9 +43,7 @@ class QueryWatcherTest extends FeatureTestCase
 
         $this->app->get('db')->table('telescope_monitoring')->insert($records->toArray());
 
-        $this->terminateTelescope();
-
-        $entry = EntryModel::query()->first();
+        $entry = $this->loadTelescopeEntries()->first();
 
         self::assertSame('query', $entry->type);
         self::assertCount(300, $entry->content['bindings']);
