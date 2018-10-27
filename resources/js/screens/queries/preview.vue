@@ -12,18 +12,17 @@
             };
         },
 
-        mounted(){
-           setTimeout(() => {
-               hljs.registerLanguage('sql', sql);
-
-               hljs.highlightBlock(this.$refs.sqlcode);
-           }, 500);
-        },
-
         methods:{
             formatSQL(sql, params) {
                 return sqlFormatter.format(sql, {
                     params: _.map(params, param => _.isString(param) ? '"'+param+'"' : param)
+                });
+            },
+
+            highlightSQL() {
+                this.$nextTick(() => {
+                    hljs.registerLanguage('sql', sql);
+                    hljs.highlightBlock(this.$refs.sqlcode);
                 });
             }
         }
@@ -31,7 +30,7 @@
 </script>
 
 <template>
-    <preview-screen title="Query Details" resource="queries" :id="$route.params.id">
+    <preview-screen title="Query Details" resource="queries" :id="$route.params.id" v-on:ready="highlightSQL()">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit font-weight-bold">Connection</td>

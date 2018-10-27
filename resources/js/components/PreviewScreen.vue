@@ -76,6 +76,14 @@
         methods: {
             prepareEntry() {
                 document.title = this.title + " - Telescope";
+                this.ready = false;
+
+                let unwatch = this.$watch('ready', newVal => {
+                    if (newVal) {
+                        this.$emit('ready');
+                        unwatch();
+                    }
+                });
 
                 this.loadEntry((response) => {
                     this.entry = response.data.entry;
