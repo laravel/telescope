@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Illuminate\Console\Command;
+use Laravel\Telescope\EntryType;
 use Illuminate\Contracts\Console\Kernel;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\CommandWatcher;
@@ -26,7 +27,7 @@ class CommandWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame('command', $entry->type);
+        self::assertSame(EntryType::COMMAND, $entry->type);
         self::assertSame('telescope:test-command', $entry->content['command']);
         self::assertSame(0, $entry->content['exit_code']);
     }
