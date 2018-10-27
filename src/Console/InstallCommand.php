@@ -2,11 +2,14 @@
 
 namespace Laravel\Telescope\Console;
 
-use Illuminate\Support\Str;
+use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class InstallCommand extends Command
 {
+    use DetectsApplicationNamespace;
+
     /**
      * The name and signature of the console command.
      *
@@ -49,16 +52,24 @@ class InstallCommand extends Command
      */
     protected function registerTelescopeServiceProvider()
     {
+        $appNamespace = $this->getAppNamespace();
         $appConfig = file_get_contents(config_path('app.php'));
+        $serviceProvider = file_get_contents(app_path('Providers/TelescopeServiceProvider.php'));
 
-        if (Str::contains($appConfig, "App\Providers\TelescopeServiceProvider::class")) {
+        if (Str::contains($appConfig, $appNamespace . "Providers\TelescopeServiceProvider::class")) {
             return;
         }
 
         file_put_contents(config_path('app.php'), str_replace(
-            "App\\Providers\EventServiceProvider::class,".PHP_EOL,
-            "App\\Providers\EventServiceProvider::class,".PHP_EOL."        App\Providers\TelescopeServiceProvider::class,".PHP_EOL,
+            $appNamespace . "Providers\EventServiceProvider::class,".PHP_EOL,
+            $appNamespace . "Providers\EventServiceProvider::class,".PHP_EOL."        " . $appNamespace . "Providers\TelescopeServiceProvider::class,".PHP_EOL,
             $appConfig
+        ));
+
+        file_put_contents(app_path('Providers/TelescopeServiceProvider.php'), str_replace(
+            "namespace App\Providers;",
+            "namespace " . $appNamespace . "Providers;",
+            $serviceProvider
         ));
     }
 }
