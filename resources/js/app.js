@@ -49,7 +49,9 @@ new Vue({
                 confirmationCancel: null,
             },
 
-            autoLoadsNewEntries: localStorage.autoLoadsNewEntries === '1'
+            autoLoadsNewEntries: localStorage.autoLoadsNewEntries === '1',
+
+            telescopeApiPath : '/' + window.Telescope.path + '/telescope-api'
         }
     },
 

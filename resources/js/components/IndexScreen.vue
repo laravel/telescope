@@ -104,7 +104,7 @@
 
         methods: {
             loadEntries(after){
-                axios.post('/' + Telescope.path + '/telescope-api/' + this.resource +
+                axios.post(`${this.$root.telescopeApiPath}/${this.resource}` +
                         '?tag=' + this.tag +
                         '&before=' + this.lastEntryIndex +
                         '&take=' + this.entriesPerRequest +
@@ -128,7 +128,7 @@
              */
             checkForNewEntries(){
                 this.newEntriesTimeout = setTimeout(() => {
-                    axios.post('/' + Telescope.path + '/telescope-api/' + this.resource +
+                    axios.post(`${this.$root.telescopeApiPath}/${this.resource}` +
                             '?tag=' + this.tag +
                             '&take=1' +
                             '&family_hash=' + this.familyHash
@@ -223,7 +223,7 @@
                     let uuids = _.chain(this.entries).filter(entry => entry.content.status === 'pending').map('id').value();
 
                     if (uuids.length) {
-                        axios.post('/' + Telescope.path + '/telescope-api/' + this.resource, {
+                        axios.post(`${this.$root.telescopeApiPath}/${this.resource}`, {
                             uuids: uuids
                         }).then(response => {
                             this.entries = _.map(this.entries, entry => {

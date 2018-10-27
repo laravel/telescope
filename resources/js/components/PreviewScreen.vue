@@ -92,7 +92,7 @@
 
 
             loadEntry(after){
-                axios.get('/' + Telescope.path + '/telescope-api/' + this.resource + '/' + this.id).then(response => {
+                axios.get(`${this.$root.telescopeApiPath}/${this.resource}` + '/' + this.id).then(response => {
                     if (_.isFunction(after)) {
                         after(response);
                     }
