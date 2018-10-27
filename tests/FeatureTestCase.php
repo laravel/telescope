@@ -74,6 +74,13 @@ class FeatureTestCase extends TestCase
             ->give('testbench');
     }
 
+    protected function loadTelescopeEntries()
+    {
+        $this->terminateTelescope();
+
+        return EntryModel::all();
+    }
+
     public function terminateTelescope()
     {
         Telescope::store(app(EntriesRepository::class));
