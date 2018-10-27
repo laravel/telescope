@@ -4,7 +4,6 @@ namespace Laravel\Telescope\Tests\Watchers;
 
 use Illuminate\Support\Facades\Route;
 use Laravel\Telescope\EntryType;
-use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\RequestWatcher;
 

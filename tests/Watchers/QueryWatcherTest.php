@@ -3,7 +3,7 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Illuminate\Support\Collection;
-use Laravel\Telescope\Storage\EntryModel;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\QueryWatcher;
 
@@ -27,7 +27,7 @@ class QueryWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame('query', $entry->type);
+        self::assertSame(EntryType::QUERY, $entry->type);
         self::assertSame('select count(*) as aggregate from "telescope_entries"', $entry->content['sql']);
         self::assertSame('testbench', $entry->content['connection']);
         self::assertFalse($entry->content['slow']);
@@ -45,7 +45,7 @@ class QueryWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame('query', $entry->type);
+        self::assertSame(EntryType::QUERY, $entry->type);
         self::assertCount(300, $entry->content['bindings']);
         self::assertSame('testbench', $entry->content['connection']);
         self::assertTrue($entry->content['slow']);
