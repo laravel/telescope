@@ -25,9 +25,7 @@ class EventWatcherTest extends FeatureTestCase
 
         event(new DummyEvent);
 
-        $this->terminateTelescope();
-
-        $entry = EntryModel::query()->first();
+        $entry = $this->loadTelescopeEntries()->first();
 
         self::assertSame('event', $entry->type);
         self::assertSame(DummyEvent::class, $entry->content['name']);
@@ -40,9 +38,7 @@ class EventWatcherTest extends FeatureTestCase
 
         event(new DummyEvent('Telescope', 'Laravel', 'PHP'));
 
-        $this->terminateTelescope();
-
-        $entry = EntryModel::query()->first();
+        $entry = $this->loadTelescopeEntries()->first();
 
         self::assertSame('event', $entry->type);
         self::assertSame(DummyEvent::class, $entry->content['name']);
