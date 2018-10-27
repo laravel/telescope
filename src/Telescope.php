@@ -128,7 +128,7 @@ class Telescope
     }
 
     /**
-     * Determine if the application is handling a request not originating from Telescope.
+     * Determine if the application is handling a request not originating from Telescope, or Horizon.
      *
      * @param  \Illuminate\Foundation\Application  $app
      * @return bool
@@ -138,7 +138,9 @@ class Telescope
         return ! $app->runningInConsole() && ! $app['request']->is(
             config('telescope.path').'*',
             'telescope-api*',
-            'vendor/telescope*'
+            'vendor/telescope*',
+            'horizon*',
+            'vendor/horizon*'
         );
     }
 
