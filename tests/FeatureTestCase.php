@@ -22,6 +22,8 @@ class FeatureTestCase extends TestCase
         parent::setUp();
 
         TestResponse::macro('terminateTelescope', [$this, 'terminateTelescope']);
+
+        Telescope::flushEntries();
     }
 
     protected function tearDown()
@@ -72,17 +74,15 @@ class FeatureTestCase extends TestCase
             ->give('testbench');
     }
 
+    protected function loadTelescopeEntries()
+    {
+        $this->terminateTelescope();
+
+        return EntryModel::all();
+    }
+
     public function terminateTelescope()
     {
         Telescope::store(app(EntriesRepository::class));
-    }
-
-    protected function prepareDatabase()
-    {
-        Telescope::withoutRecording(function () {
-            $this->terminateTelescope();
-
-            EntryModel::query()->delete();
-        });
     }
 }

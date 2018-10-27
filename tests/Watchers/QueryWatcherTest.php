@@ -23,8 +23,6 @@ class QueryWatcherTest extends FeatureTestCase
 
     public function test_query_watcher_registers_database_queries()
     {
-        $this->prepareDatabase();
-
         $this->app->get('db')->table('telescope_entries')->count();
 
         $this->terminateTelescope();
@@ -39,8 +37,6 @@ class QueryWatcherTest extends FeatureTestCase
 
     public function test_query_watcher_can_tag_slow_queries()
     {
-        $this->prepareDatabase();
-
         $records = Collection::times(300, function () {
             return [
                 'tag' => str_random(),
