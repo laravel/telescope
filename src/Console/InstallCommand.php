@@ -56,19 +56,19 @@ class InstallCommand extends Command
         $appConfig = file_get_contents(config_path('app.php'));
         $serviceProvider = file_get_contents(app_path('Providers/TelescopeServiceProvider.php'));
 
-        if (Str::contains($appConfig, $appNamespace . "Providers\TelescopeServiceProvider::class")) {
+        if (Str::contains($appConfig, $appNamespace."Providers\TelescopeServiceProvider::class")) {
             return;
         }
 
         file_put_contents(config_path('app.php'), str_replace(
-            $appNamespace . "Providers\EventServiceProvider::class,".PHP_EOL,
-            $appNamespace . "Providers\EventServiceProvider::class,".PHP_EOL."        " . $appNamespace . "Providers\TelescopeServiceProvider::class,".PHP_EOL,
+            $appNamespace."Providers\EventServiceProvider::class,".PHP_EOL,
+            $appNamespace."Providers\EventServiceProvider::class,".PHP_EOL."        ".$appNamespace."Providers\TelescopeServiceProvider::class,".PHP_EOL,
             $appConfig
         ));
 
         file_put_contents(app_path('Providers/TelescopeServiceProvider.php'), str_replace(
             "namespace App\Providers;",
-            "namespace " . $appNamespace . "Providers;",
+            "namespace ".$appNamespace."Providers;",
             $serviceProvider
         ));
     }
