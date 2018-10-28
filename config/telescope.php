@@ -89,4 +89,20 @@ return [
         Watchers\RequestWatcher::class => env('TELESCOPE_REQUEST_WATCHER', true),
         Watchers\ScheduleWatcher::class => env('TELESCOPE_SCHEDULE_WATCHER', true),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Telescope Ignored Commands
+    |--------------------------------------------------------------------------
+    |
+    | The following array lists the commands that should be ignored / not
+    | recorded by Telescope. This list is additive to those commands listed
+    | in the Laravel\Telescope\Telescope class.
+    |
+    */
+    'ignoreCommands' => [
+        // 'db:seed',
+        // 'migrate',
+        // 'migrate:refresh',
+    ],
 ];
