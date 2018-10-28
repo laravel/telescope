@@ -4,7 +4,6 @@ namespace Laravel\Telescope\Tests\Watchers;
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\Kernel;
-use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\CommandWatcher;
 
