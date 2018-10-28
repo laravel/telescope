@@ -16,6 +16,10 @@ class MailHtmlController extends Controller
      */
     public function show(EntriesRepository $storage, $id)
     {
+        if (class_exists('Debugbar')) {
+            \Debugbar::disable();
+        }
+
         return $storage->find($id)->content['html'];
     }
 }
