@@ -12,6 +12,7 @@
     <index-screen title="Models" resource="models">
         <tr slot="table-header">
             <th scope="col">Model</th>
+            <th scope="col">App</th>
             <th scope="col">Action</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -20,6 +21,10 @@
 
         <template slot="row" slot-scope="slotProps">
             <td>{{truncate(slotProps.entry.content.model, 80)}}</td>
+
+            <td class="table-fit" v-if="appIdentifierEnabled()">
+                <span>{{slotProps.entry.app_identifier}}</span>
+            </td>
 
             <td class="table-fit">
                 <span class="badge font-weight-light" :class="'badge-'+modelActionClass(slotProps.entry.content.action)">

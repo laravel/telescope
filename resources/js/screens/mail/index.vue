@@ -15,6 +15,7 @@
     <index-screen title="Mail" resource="mail">
         <tr slot="table-header">
             <th scope="col">Mailable</th>
+            <th scope="col">App</th>
             <th scope="col">Recipients</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -34,6 +35,10 @@
                 <small class="text-muted" :title="slotProps.entry.content.subject">
                     Subject: {{truncate(slotProps.entry.content.subject, 90)}}
                 </small>
+            </td>
+
+            <td class="table-fit" v-if="appIdentifierEnabled()">
+                <span>{{slotProps.entry.app_identifier}}</span>
             </td>
 
             <td class="table-fit">{{recipientsCount(slotProps.entry)}}</td>

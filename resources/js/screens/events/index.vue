@@ -6,6 +6,7 @@
     <index-screen title="Events" resource="events">
         <tr slot="table-header">
             <th scope="col">Name</th>
+            <th scope="col">App</th>
             <th scope="col">Listeners</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -19,6 +20,10 @@
                 <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.broadcast">
                     Broadcast
                 </span>
+            </td>
+
+            <td class="table-fit" v-if="appIdentifierEnabled()">
+                <span>{{slotProps.entry.app_identifier}}</span>
             </td>
 
             <td class="table-fit">{{slotProps.entry.content.listeners.length}}</td>

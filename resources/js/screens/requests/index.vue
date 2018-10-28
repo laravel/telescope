@@ -12,6 +12,7 @@
     <index-screen title="Requests" resource="requests">
         <tr slot="table-header">
             <th scope="col">Verb</th>
+            <th scope="col">App</th>
             <th scope="col">Path</th>
             <th scope="col">Status</th>
             <th scope="col">Happened</th>
@@ -25,6 +26,8 @@
                     {{slotProps.entry.content.method}}
                 </span>
             </td>
+
+            <td :title="slotProps.entry.app_identifier">{{slotProps.entry.app_identifier}}</td>
 
             <td :title="slotProps.entry.content.uri">{{truncate(slotProps.entry.content.uri, 70)}}</td>
 

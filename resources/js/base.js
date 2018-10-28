@@ -85,5 +85,9 @@ export default {
             this.$root.alert.confirmationProceed = success;
             this.$root.alert.confirmationCancel = failure;
         },
+
+        appIdentifierEnabled(){
+            return window.Telescope.app_identifier_enabled;
+        }
     }
 };

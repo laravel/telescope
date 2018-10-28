@@ -12,6 +12,7 @@
     <index-screen title="Jobs" resource="jobs">
         <tr slot="table-header">
             <th scope="col">Job</th>
+            <th scope="col">App</th>
             <th scope="col">Status</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -24,6 +25,10 @@
                 <small class="text-muted">
                     Connection: {{slotProps.entry.content.connection}} | Queue: {{slotProps.entry.content.queue}}
                 </small>
+            </td>
+
+            <td class="table-fit" v-if="appIdentifierEnabled()">
+                <span>{{slotProps.entry.app_identifier}}</span>
             </td>
 
             <td class="table-fit">

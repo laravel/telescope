@@ -12,6 +12,7 @@
     <index-screen title="Logs" resource="logs">
         <tr slot="table-header">
             <th scope="col">Message</th>
+            <th scope="col">App</th>
             <th scope="col">Level</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -19,6 +20,10 @@
 
         <template slot="row" slot-scope="slotProps">
             <td :title="slotProps.entry.content.message">{{truncate(slotProps.entry.content.message, 75)}}</td>
+
+            <td class="table-fit" v-if="appIdentifierEnabled()">
+                <span>{{slotProps.entry.app_identifier}}</span>
+            </td>
 
             <td class="table-fit">
                 <span class="badge font-weight-light" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">

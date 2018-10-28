@@ -6,6 +6,7 @@
     <index-screen title="Commands" resource="commands">
         <tr slot="table-header">
             <th scope="col">Command</th>
+            <th scope="col">App</th>
             <th scope="col" class="table-fit">Exit Code</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -13,6 +14,10 @@
 
         <template slot="row" slot-scope="slotProps">
             <td :title="slotProps.entry.content.command">{{truncate(slotProps.entry.content.command, 90)}}</td>
+
+            <td class="table-fit" v-if="appIdentifierEnabled()">
+                <span>{{slotProps.entry.app_identifier}}</span>
+            </td>
 
             <td class="table-fit">{{slotProps.entry.content.exit_code}}</td>
 

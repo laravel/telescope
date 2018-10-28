@@ -6,6 +6,7 @@
     <index-screen title="Notifications" resource="notifications">
         <tr slot="table-header">
             <th scope="col">Notification</th>
+            <th scope="col">App</th>
             <th scope="col">Channel</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -25,6 +26,10 @@
                 <small class="text-muted" :title="slotProps.entry.content.notifiable">
                     Recipient: {{truncate(slotProps.entry.content.notifiable, 90)}}
                 </small>
+            </td>
+
+            <td class="table-fit" v-if="appIdentifierEnabled()">
+                <span>{{slotProps.entry.app_identifier}}</span>
             </td>
 
             <td class="table-fit">{{truncate(slotProps.entry.content.channel, 20)}}</td>

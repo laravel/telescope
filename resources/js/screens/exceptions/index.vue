@@ -6,6 +6,7 @@
     <index-screen title="Exceptions" resource="exceptions">
         <tr slot="table-header">
             <th scope="col" v-if="!$route.query.family_hash">Type</th>
+            <th scope="col">App</th>
             <th scope="col" v-if="!$route.query.family_hash && !$route.query.tag">Occurrences</th>
             <th scope="col" v-if="$route.query.family_hash">Message</th>
             <th scope="col">Happened</th>
@@ -17,6 +18,10 @@
                 {{truncate(slotProps.entry.content.class, 70)}}<br>
 
                 <small class="text-muted">{{truncate(slotProps.entry.content.message, 100)}}</small>
+            </td>
+
+            <td class="table-fit" v-if="appIdentifierEnabled()">
+                <span>{{slotProps.entry.app_identifier}}</span>
             </td>
 
             <td class="table-fit" v-if="!$route.query.family_hash && !$route.query.tag">

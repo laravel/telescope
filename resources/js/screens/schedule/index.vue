@@ -6,6 +6,7 @@
     <index-screen title="Schedule" resource="schedule">
         <tr slot="table-header">
             <th scope="col">Command</th>
+            <th scope="col">App</th>
             <th scope="col">Expression</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -13,6 +14,10 @@
 
         <template slot="row" slot-scope="slotProps">
             <td>{{ truncate(slotProps.entry.content.description, 85) || truncate(slotProps.entry.content.command, 85) }}</td>
+
+            <td class="table-fit" v-if="appIdentifierEnabled()">
+                <span>{{slotProps.entry.app_identifier}}</span>
+            </td>
 
             <td class="table-fit">{{slotProps.entry.content.expression}}</td>
 
