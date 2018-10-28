@@ -10,6 +10,7 @@ use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeServiceProvider;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Assert as PHPUnit;
 
 class FeatureTestCase extends TestCase
 {
@@ -20,6 +21,19 @@ class FeatureTestCase extends TestCase
         parent::setUp();
 
         TestResponse::macro('terminateTelescope', [$this, 'terminateTelescope']);
+
+        TestResponse::macro('assertJsonExactFragment', function ($expected, $key) {
+            $jsonResponse = $this->json();
+
+            PHPUnit::assertEquals(
+                $expected,
+                $actualValue = data_get($jsonResponse, $key),
+                "Failed asserting that [$actualValue] matches expected [$expected]." . PHP_EOL . PHP_EOL .
+                json_encode($jsonResponse)
+            );
+
+            return $this;
+        });
 
         Telescope::flushEntries();
     }
