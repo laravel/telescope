@@ -89,7 +89,8 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
                     $entry->family_hash,
                     $entry->content,
                     $entry->created_at,
-                    []
+                    [],
+                    $entry->app_identifier
                 );
             });
     }

@@ -64,18 +64,24 @@ class EntryResult implements JsonSerializable
     private $tags;
 
     /**
+     * @var null
+     */
+    private $appIdentifier;
+
+    /**
      * Create a new entry result instance.
      *
-     * @param  mixed  $id
-     * @param  mixed  $sequence
-     * @param  string  $batchId
-     * @param  string  $type
-     * @param  string|null  $familyHash
-     * @param  array  $content
-     * @param  \Carbon\Carbon  $createdAt
-     * @param  array  $tags
+     * @param  mixed $id
+     * @param  mixed $sequence
+     * @param  string $batchId
+     * @param  string $type
+     * @param  string|null $familyHash
+     * @param  array $content
+     * @param  \Carbon\Carbon $createdAt
+     * @param  array $tags
+     * @param null $appIdentifier
      */
-    public function __construct($id, $sequence, string $batchId, string $type, ?string $familyHash, array $content, Carbon $createdAt, $tags = [])
+    public function __construct($id, $sequence, string $batchId, string $type, ?string $familyHash, array $content, Carbon $createdAt, $tags = [], $appIdentifier = null)
     {
         $this->id = $id;
         $this->type = $type;
@@ -85,6 +91,7 @@ class EntryResult implements JsonSerializable
         $this->sequence = $sequence;
         $this->createdAt = $createdAt;
         $this->familyHash = $familyHash;
+        $this->appIdentifier = $appIdentifier;
     }
 
     /**
@@ -96,6 +103,7 @@ class EntryResult implements JsonSerializable
     {
         return [
             'id' => $this->id,
+            'app_identifier' => $this->appIdentifier,
             'sequence' => $this->sequence,
             'batch_id' => $this->batchId,
             'type' => $this->type,

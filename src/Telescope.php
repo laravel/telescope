@@ -572,7 +572,8 @@ class Telescope
     {
         return [
             'path' => config('telescope.path'),
-            'timezone' => config('app.timezone')
+            'timezone' => config('app.timezone'),
+            'app_identifier_enabled' => config('telescope.app_identifier.enabled')
         ];
     }
 }

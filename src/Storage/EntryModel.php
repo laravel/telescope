@@ -172,4 +172,5 @@ class EntryModel extends Model
     {
         return config('telescope.storage.database.connection');
     }
+
 }

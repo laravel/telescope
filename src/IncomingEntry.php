@@ -241,6 +241,7 @@ class IncomingEntry
             'type' => $this->type,
             'content' => $this->content,
             'created_at' => $this->recordedAt->toDateTimeString(),
+            'app_identifier' => config('telescope.app_identifier.name')
         ];
     }
 }
