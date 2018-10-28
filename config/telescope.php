@@ -7,6 +7,11 @@ return [
 
     'path' => 'telescope',
 
+    'app_identifier' => [
+        'name' => env('TELESCOPE_APP_IDENTIFIER', 'application'),
+        'enabled' => true
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Telescope Storage Driver
