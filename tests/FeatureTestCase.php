@@ -3,14 +3,12 @@
 namespace Laravel\Telescope\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Illuminate\Foundation\Testing\TestResponse;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeServiceProvider;
-use Laravel\Telescope\Watchers\RequestWatcher;
 use Orchestra\Testbench\TestCase;
 
 class FeatureTestCase extends TestCase

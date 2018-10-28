@@ -85,7 +85,9 @@ trait ListensForStorageOpportunities
         if (empty(static::$processingJobs)) {
             static::store($app[EntriesRepository::class]);
 
-            static::stopRecording();
+            if (! $app->make('queue.connection') instanceof SyncQueue) {
+                static::stopRecording();
+            }
         }
     }
 }

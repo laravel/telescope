@@ -44,6 +44,13 @@ class EntryModel extends Model
     protected $keyType = 'string';
 
     /**
+     * Prevent Eloquent from overriding uuid with `lastInsertId`
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
      * Scope the query for the given query options.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
