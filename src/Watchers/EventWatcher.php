@@ -109,7 +109,8 @@ class EventWatcher extends Watcher
      * Format a closure-based listener.
      *
      * @param  \Closure  $listener
-     * @return string
+     * @return string\
+     *
      * @throws \ReflectionException
      */
     protected function formatClosureListener(Closure $listener)
