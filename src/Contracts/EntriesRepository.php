@@ -51,13 +51,6 @@ interface EntriesRepository
     public function pruneEntries($type, $limit);
 
     /**
-     * Clear all the entries.
-     *
-     * @return void
-     */
-    public function clear();
-
-    /**
      * Determine if any of the given tags are currently being monitored.
      *
      * @param  array  $tags

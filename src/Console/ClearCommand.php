@@ -30,6 +30,7 @@ class ClearCommand extends Command
     public function handle(EntriesRepository $storage)
     {
         $storage->clear();
+
         $this->info('Telescope entries cleared!');
     }
 }
