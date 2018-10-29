@@ -2,26 +2,33 @@ import _ from 'lodash';
 import moment from 'moment-timezone';
 
 export default {
+    computed: {
+        Telescope(){
+            return Telescope;
+        }
+    },
+
+
     methods: {
         /**
          * Show the time ago format for the given time.
          */
         timeAgo(time){
             moment.updateLocale('en', {
-                relativeTime : {
+                relativeTime: {
                     future: "in %s",
-                    past:   "%s ago",
-                    s  : 'Just now',
-                    ss : '%ds ago',
-                    m:  "1m ago",
+                    past: "%s ago",
+                    s: 'Just now',
+                    ss: '%ds ago',
+                    m: "1m ago",
                     mm: "%dm ago",
-                    h:  "1h ago",
+                    h: "1h ago",
                     hh: "%dh ago",
-                    d:  "1d ago",
+                    d: "1d ago",
                     dd: "%dd ago",
-                    M:  "a month ago",
+                    M: "a month ago",
                     MM: "%d months ago",
-                    y:  "a year ago",
+                    y: "a year ago",
                     yy: "%d years ago"
                 }
             });

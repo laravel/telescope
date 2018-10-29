@@ -68540,6 +68540,22 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
+    computed: {
+        Telescope: function (_Telescope) {
+            function Telescope() {
+                return _Telescope.apply(this, arguments);
+            }
+
+            Telescope.toString = function () {
+                return _Telescope.toString();
+            };
+
+            return Telescope;
+        }(function () {
+            return Telescope;
+        })
+    },
+
     methods: {
         /**
          * Show the time ago format for the given time.
