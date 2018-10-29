@@ -303,7 +303,7 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     public function clear()
     {
         $this->table('telescope_entries')
-            ->delete();
+            ->truncate();
     }
 
     /**
