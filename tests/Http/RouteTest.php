@@ -2,22 +2,23 @@
 
 namespace Laravel\Telescope\Tests\Http;
 
-use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Telescope\EntryType;
-use Laravel\Telescope\Http\Middleware\Authorize;
+use PHPUnit\Framework\Assert as PHPUnit;
 use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Tests\FeatureTestCase;
+use Illuminate\Foundation\Testing\TestResponse;
+use Laravel\Telescope\Http\Middleware\Authorize;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
 
 class RouteTest extends FeatureTestCase
 {
-    use WithFaker;
-
     protected function setUp()
     {
         parent::setUp();
 
         $this->withoutMiddleware([Authorize::class, VerifyCsrfToken::class]);
+
+        $this->registerAssertJsonExactFragmentMacro();
     }
 
     public function telescopeIndexRoutesProvider()
@@ -47,13 +48,9 @@ class RouteTest extends FeatureTestCase
      */
     public function test_simple_list_of_entries($endpoint, $entryType)
     {
-        $entry = EntryModel::query()->create([
-            'sequence' => random_int(1, 10000),
-            'uuid' => $this->faker->uuid,
-            'batch_id' => $this->faker->uuid,
-            'type' => $entryType,
-            'content' => [$this->faker->word => $this->faker->word],
-        ]);
+        $this->loadFactoriesUsing($this->app, __DIR__ . '/../../src/Storage/factories');
+
+        $entry = factory(EntryModel::class)->create(['type' => $entryType]);
 
         $this->post($endpoint)
             ->assertSuccessful()
@@ -61,5 +58,21 @@ class RouteTest extends FeatureTestCase
             ->assertJsonExactFragment($entryType, 'entries.0.type')
             ->assertJsonExactFragment($entry->sequence, 'entries.0.sequence')
             ->assertJsonExactFragment($entry->batch_id, 'entries.0.batch_id');
+    }
+
+    private function registerAssertJsonExactFragmentMacro()
+    {
+        TestResponse::macro('assertJsonExactFragment', function ($expected, $key) {
+            $jsonResponse = $this->json();
+
+            PHPUnit::assertEquals(
+                $expected,
+                $actualValue = data_get($jsonResponse, $key),
+                "Failed asserting that [$actualValue] matches expected [$expected]." . PHP_EOL . PHP_EOL .
+                json_encode($jsonResponse)
+            );
+
+            return $this;
+        });
     }
 }
