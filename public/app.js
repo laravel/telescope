@@ -2089,6 +2089,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             document.title = this.title + " - Telescope";
+            this.ready = false;
+
+            var unwatch = this.$watch('ready', function (newVal) {
+                if (newVal) {
+                    _this.$emit('ready');
+                    unwatch();
+                }
+            });
 
             this.loadEntry(function (response) {
                 _this.entry = response.data.entry;
@@ -2833,15 +2841,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             batch: []
         };
     },
-    mounted: function mounted() {
-        var _this = this;
-
-        setTimeout(function () {
-            __WEBPACK_IMPORTED_MODULE_2_highlight_js_lib_highlight___default.a.registerLanguage('sql', __WEBPACK_IMPORTED_MODULE_3_highlight_js_lib_languages_sql___default.a);
-
-            __WEBPACK_IMPORTED_MODULE_2_highlight_js_lib_highlight___default.a.highlightBlock(_this.$refs.sqlcode);
-        }, 500);
-    },
 
 
     methods: {
@@ -2850,6 +2849,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 params: __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.map(params, function (param) {
                     return __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.isString(param) ? '"' + param + '"' : param;
                 })
+            });
+        },
+        highlightSQL: function highlightSQL() {
+            var _this = this;
+
+            this.$nextTick(function () {
+                __WEBPACK_IMPORTED_MODULE_2_highlight_js_lib_highlight___default.a.registerLanguage('sql', __WEBPACK_IMPORTED_MODULE_3_highlight_js_lib_languages_sql___default.a);
+                __WEBPACK_IMPORTED_MODULE_2_highlight_js_lib_highlight___default.a.highlightBlock(_this.$refs.sqlcode);
             });
         }
     }
@@ -52406,6 +52413,11 @@ var render = function() {
       title: "Query Details",
       resource: "queries",
       id: _vm.$route.params.id
+    },
+    on: {
+      ready: function($event) {
+        _vm.highlightSQL()
+      }
     },
     scopedSlots: _vm._u([
       {
