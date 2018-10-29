@@ -32,7 +32,7 @@ class ModelWatcher extends Watcher
             return;
         }
 
-        $model = get_class($data[0]).':'.$data[0]->getKey();
+        $model = get_class($data[0]) . ':' . implode('_', (array) $data[0]->getKey());
 
         $changes = $data[0]->getChanges();
 
