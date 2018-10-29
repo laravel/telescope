@@ -3,7 +3,7 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Illuminate\Support\Facades\Event;
-use Laravel\Telescope\Storage\EntryModel;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\EventWatcher;
 
@@ -25,11 +25,9 @@ class EventWatcherTest extends FeatureTestCase
 
         event(new DummyEvent);
 
-        $this->terminateTelescope();
+        $entry = $this->loadTelescopeEntries()->first();
 
-        $entry = EntryModel::query()->first();
-
-        self::assertSame('event', $entry->type);
+        self::assertSame(EntryType::EVENT, $entry->type);
         self::assertSame(DummyEvent::class, $entry->content['name']);
     }
 
@@ -40,11 +38,9 @@ class EventWatcherTest extends FeatureTestCase
 
         event(new DummyEvent('Telescope', 'Laravel', 'PHP'));
 
-        $this->terminateTelescope();
+        $entry = $this->loadTelescopeEntries()->first();
 
-        $entry = EntryModel::query()->first();
-
-        self::assertSame('event', $entry->type);
+        self::assertSame(EntryType::EVENT, $entry->type);
         self::assertSame(DummyEvent::class, $entry->content['name']);
         self::assertArrayHasKey('data', $entry->content['payload']);
         self::assertArraySubset(['Telescope', 'Laravel', 'PHP'], $entry->content['payload']['data']);
