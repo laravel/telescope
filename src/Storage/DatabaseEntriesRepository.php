@@ -296,6 +296,17 @@ class DatabaseEntriesRepository implements Contract, PrunableRepository, Termina
     }
 
     /**
+     * Clear all the entries.
+     *
+     * @return void
+     */
+    public function clear()
+    {
+        $this->table('telescope_entries')
+            ->delete();
+    }
+
+    /**
      * Perform any clean-up tasks needed after storing Telescope entries.
      *
      * @return void
