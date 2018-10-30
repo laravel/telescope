@@ -25,7 +25,7 @@
         "symfony/var-dumper": "^4.1"
     },
     "require-dev": {
-        "nunomaduro/larastan": "^0.3.4",
+        "nunomaduro/larastan": "^0.3.7",
         "orchestra/testbench": "~3.7"
     },
     "autoload": {
