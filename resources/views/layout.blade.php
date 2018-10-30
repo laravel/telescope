@@ -5,16 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('/vendor/telescope/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ url(asset('/vendor/telescope/favicon.ico')) }}">
 
     <title>Telescope</title>
 
     <!-- Style sheets-->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     @if(\Laravel\Telescope\Telescope::$useDarkTheme)
-        <link href='{{mix('app-dark.css', 'vendor/telescope')}}' rel='stylesheet' type='text/css'>
+        <link href='{{url(mix('app-dark.css', 'vendor/telescope'))}}' rel='stylesheet' type='text/css'>
     @else
-        <link href='{{mix('app.css', 'vendor/telescope')}}' rel='stylesheet' type='text/css'>
+        <link href='{{url(mix('app.css', 'vendor/telescope'))}}' rel='stylesheet' type='text/css'>
     @endif
 </head>
 <body>
@@ -182,6 +182,6 @@
     )); ?>;
 </script>
 
-<script src="{{mix('app.js', 'vendor/telescope')}}"></script>
+<script src="{{url(mix('app.js', 'vendor/telescope'))}}"></script>
 </body>
 </html>
