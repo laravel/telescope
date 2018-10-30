@@ -330,6 +330,10 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function pruneEntries($type, $limit)
     {
+        if (is_null($this->monitoredTags)) {
+            $this->monitoredTags = $this->monitoring();
+        }
+
         EntryModel::where('type', $type)
             ->whereNotIn('sequence', function ($query) use ($type, $limit) {
                 $query->select('sequence')->fromSub(
@@ -337,6 +341,15 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                             ->where('type', $type)
                             ->limit($limit)->toBase(),
                     'entries_temp'
+                );
+            })->whereNotIn('sequence', function ($query) use ($type, $limit) {
+                $query->select('sequence')->fromSub(
+                    EntryModel::select('sequence')
+                            ->join('telescope_entries_tags', 'telescope_entries_tags.entry_uuid', '=', 'telescope_entries.uuid')
+                            ->where('type', $type)
+                            ->whereIn('tag', $this->monitoredTags)
+                            ->toBase(),
+                    'entries_temp_two'
                 );
             })->delete();
     }
