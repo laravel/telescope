@@ -32,6 +32,10 @@ class CreateTelescopeEntriesTable extends Migration
      */
     public function up()
     {
+        $this->schema->create('telescope_monitoring', function (Blueprint $table) {
+            $table->string('tag');
+        });
+        
         $this->schema->create('telescope_entries', function (Blueprint $table) {
             $table->bigIncrements('sequence');
             $table->uuid('uuid');
@@ -58,10 +62,6 @@ class CreateTelescopeEntriesTable extends Migration
                   ->references('uuid')
                   ->on('telescope_entries')
                   ->onDelete('cascade');
-        });
-
-        $this->schema->create('telescope_monitoring', function (Blueprint $table) {
-            $table->string('tag');
         });
     }
 
