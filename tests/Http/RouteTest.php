@@ -24,6 +24,7 @@ class RouteTest extends FeatureTestCase
     public function telescopeIndexRoutesProvider()
     {
         return [
+            'Mail' => ['/telescope/telescope-api/mail', EntryType::MAIL],
             'Exceptions' => ['/telescope/telescope-api/exceptions', EntryType::EXCEPTION],
             'Dumps' => ['/telescope/telescope-api/dumps', EntryType::DUMP],
             'Logs' => ['/telescope/telescope-api/logs', EntryType::LOG],
