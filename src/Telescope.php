@@ -571,7 +571,7 @@ class Telescope
     public static function scriptVariables()
     {
         return [
-            'path' => config('telescope.path'),
+            'path' => str_replace( request()->getSchemeAndHttpHost(). '/','', url(config('telescope.path'))),
             'timezone' => config('app.timezone')
         ];
     }
