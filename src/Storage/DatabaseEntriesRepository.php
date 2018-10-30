@@ -4,11 +4,9 @@ namespace Laravel\Telescope\Storage;
 
 use DateTimeInterface;
 use Laravel\Telescope\EntryType;
-use Laravel\Telescope\Telescope;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
-use Laravel\Telescope\Watchers\DumpWatcher;
 use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Contracts\ClearableRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
@@ -315,43 +313,6 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     public function terminate()
     {
         $this->monitoredTags = null;
-
-        if (Telescope::hasWatcher(DumpWatcher::class)) {
-            $this->pruneEntries(EntryType::DUMP, 50);
-        }
-    }
-
-    /**
-     * Prune the entries of the given type.
-     *
-     * @param  string  $type
-     * @param  int  $limit
-     * @return void
-     */
-    public function pruneEntries($type, $limit)
-    {
-        if (is_null($this->monitoredTags)) {
-            $this->monitoredTags = $this->monitoring();
-        }
-
-        EntryModel::where('type', $type)
-            ->whereNotIn('sequence', function ($query) use ($type, $limit) {
-                $query->select('sequence')->fromSub(
-                    EntryModel::select('sequence')->orderBy('sequence', 'desc')
-                            ->where('type', $type)
-                            ->limit($limit)->toBase(),
-                    'entries_temp'
-                );
-            })->whereNotIn('sequence', function ($query) use ($type, $limit) {
-                $query->select('sequence')->fromSub(
-                    EntryModel::select('sequence')
-                            ->join('telescope_entries_tags', 'telescope_entries_tags.entry_uuid', '=', 'telescope_entries.uuid')
-                            ->where('type', $type)
-                            ->whereIn('tag', $this->monitoredTags)
-                            ->toBase(),
-                    'entries_temp_two'
-                );
-            })->delete();
     }
 
     /**
