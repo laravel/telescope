@@ -80,10 +80,7 @@ class EntryModel extends Model
     {
         return $query->whereDoesntHave('tags', function($query) {
             $query->whereIn('tag', function($query) {
-                $query->select('tag')->fromSub(
-                    MonitoredTagModel::select('tag')->toBase(),
-                    'monitored_tags'
-                );
+                $query->select('tag')->from('telescope_monitoring');
             });
         });
     }
