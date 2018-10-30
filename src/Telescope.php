@@ -457,8 +457,8 @@ class Telescope
                 $storage->terminate();
             }
 
-            if (config('telescope.limit')) {
-                static::pruneEntries($storage, config('telescope.limit'));
+            if (config('telescope.pruning.limit')) {
+                static::pruneEntries($storage, config('telescope.pruning.limit'));
             }
         } catch (Exception $e) {
             app(ExceptionHandler::class)->report($e);

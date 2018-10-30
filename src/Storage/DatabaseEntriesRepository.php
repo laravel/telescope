@@ -291,9 +291,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function prune(DateTimeInterface $before)
     {
-        return $this->table('telescope_entries')
-                ->where('created_at', '<', $before)
-                ->delete();
+        return EntryModel::where('created_at', '<', $before)
+                ->skipMonitoredForPruning()->delete();
     }
 
     /**
@@ -335,10 +334,11 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                 $query->select('sequence')->fromSub(
                     EntryModel::select('sequence')->orderBy('sequence', 'desc')
                             ->where('type', $type)
+                            ->skipMonitoredForPruning()
                             ->limit($limit)->toBase(),
                     'entries_temp'
                 );
-            })->delete();
+            })->skipMonitoredForPruning()->delete();
     }
 
     /**

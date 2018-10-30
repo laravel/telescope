@@ -35,11 +35,14 @@ return [
     | a given type will be kept in storage. This allows you to control
     | the amount of disk space claimed by Telescope's entry storage.
     |
-    | When "null", records will not be pruned.
+    | When limit is "null", records will not be pruned.
     |
     */
 
-    'limit' => env('TELESCOPE_LIMIT', 100),
+    'pruning' => [
+        'limit' => env('TELESCOPE_LIMIT', 100),
+        'skip_monitored_tags' => env('TELESCOPE_SKIP_PRUNING_MONITORED_TAGS', true),
+    ],
 
     /*
     |--------------------------------------------------------------------------

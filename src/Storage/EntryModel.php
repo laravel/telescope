@@ -71,6 +71,50 @@ class EntryModel extends Model
     }
 
     /**
+     * Scope the query to exclude entries with monitored tags.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNotMonitored($query)
+    {
+        return $query->whereDoesntHave('tags', function($query) {
+            $query->whereIn('tag', function($query) {
+                $query->select('tag')->fromSub(
+                    MonitoredTagModel::select('tag')->toBase(),
+                    'monitored_tags'
+                );
+            });
+        });
+    }
+
+    /**
+     * Scope the query to exclude entries with monitored tags if set in config.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSkipMonitoredForPruning($query)
+    {
+        return $query->when(config('telescope.pruning.skip_monitored_tags'),
+            function($query) {
+                $query->notMonitored();
+            }
+        );
+    }
+
+    /**
+     * Scope the query to exclude monitored tags.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function tags()
+    {
+        return $this->hasMany(EntryTagModel::class, 'entry_uuid');
+    }
+
+    /**
      * Scope the query for the given type.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
