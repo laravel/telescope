@@ -16,7 +16,7 @@ class QueryWatcherTest extends FeatureTestCase
         $app->get('config')->set('telescope.watchers', [
             QueryWatcher::class => [
                 'enabled' => true,
-                'slow' => 0.1,
+                'slow' => 0.2,
             ],
         ]);
     }
