@@ -24,11 +24,11 @@ class PruneCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param  \Laravel\Telescope\Contracts\PrunableRepository  $storage
+     * @param  \Laravel\Telescope\Contracts\PrunableRepository  $repository
      * @return void
      */
-    public function handle(PrunableRepository $storage)
+    public function handle(PrunableRepository $repository)
     {
-        $this->info($storage->prune(now()->subHours(24)).' entries pruned.');
+        $this->info($repository->prune(now()->subHours(24)).' entries pruned.');
     }
 }
