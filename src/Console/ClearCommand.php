@@ -3,7 +3,7 @@
 namespace Laravel\Telescope\Console;
 
 use Illuminate\Console\Command;
-use Laravel\Telescope\Contracts\EntriesRepository;
+use Laravel\Telescope\Contracts\ClearableRepository;
 
 class ClearCommand extends Command
 {
@@ -24,10 +24,10 @@ class ClearCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
+     * @param  \Laravel\Telescope\Contracts\ClearableRepository  $storage
      * @return void
      */
-    public function handle(EntriesRepository $storage)
+    public function handle(ClearableRepository $storage)
     {
         $storage->clear();
 
