@@ -3,7 +3,7 @@
 namespace Laravel\Telescope\Console;
 
 use Illuminate\Console\Command;
-use Laravel\Telescope\Contracts\EntriesRepository;
+use Laravel\Telescope\Contracts\PrunableRepository;
 
 class PruneCommand extends Command
 {
@@ -24,10 +24,10 @@ class PruneCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
+     * @param  \Laravel\Telescope\Contracts\PrunableRepository  $storage
      * @return void
      */
-    public function handle(EntriesRepository $storage)
+    public function handle(PrunableRepository $storage)
     {
         $this->info($storage->prune(now()->subHours(24)).' entries pruned.');
     }
