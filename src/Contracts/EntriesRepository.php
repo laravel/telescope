@@ -42,15 +42,6 @@ interface EntriesRepository
     public function update(Collection $updates);
 
     /**
-     * Prune the entries of the given type.
-     *
-     * @param  string  $type
-     * @param  int  $limit
-     * @return void
-     */
-    public function pruneEntries($type, $limit);
-
-    /**
      * Determine if any of the given tags are currently being monitored.
      *
      * @param  array  $tags
