@@ -28,7 +28,7 @@ class ModelWatcher extends Watcher
      */
     public function recordAction($event, $data)
     {
-        if ($this->shouldIgnore($event)) {
+        if (!$this->shouldListen($event)) {
             return;
         }
 
@@ -62,11 +62,10 @@ class ModelWatcher extends Watcher
      * @param  string  $eventName
      * @return bool
      */
-    private function shouldIgnore($eventName)
+    private function shouldListen($eventName)
     {
         return Str::is([
-            '*booting*', '*booted*', '*creating*', '*retrieved*', '*updating*',
-            '*saving*', '*saved*', '*restoring*', '*deleting*'
+            '*created*', '*updated*', '*restored*', '*deleted*'
         ], $eventName);
     }
 }
