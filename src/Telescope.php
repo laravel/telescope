@@ -542,8 +542,15 @@ class Telescope
      */
     public static function scriptVariables()
     {
+        $document_root = rtrim($_SERVER['DOCUMENT_ROOT'], '/');
+        $path = str_replace($document_root, '', public_path());
+        $path = ltrim($path, '/');
+        if ($path) {
+            $path .= '/';
+        }
+
         return [
-            'path' => config('telescope.path'),
+            'path' => $path . config('telescope.path'),
             'timezone' => config('app.timezone')
         ];
     }
