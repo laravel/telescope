@@ -71,7 +71,10 @@ return [
         ],
 
         Watchers\RedisWatcher::class => env('TELESCOPE_REDIS_WATCHER', true),
-        Watchers\RequestWatcher::class => env('TELESCOPE_REQUEST_WATCHER', true),
+        Watchers\RequestWatcher::class => [
+            'enabled' => env('TELESCOPE_REQUEST_WATCHER', true),
+            'response_purge_size' => env('TELESCOPE_RESPONSE_PURGE_SIZE_KB', 64),
+        ],
         Watchers\ScheduleWatcher::class => env('TELESCOPE_SCHEDULE_WATCHER', true),
     ],
 ];

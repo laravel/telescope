@@ -82,6 +82,12 @@ class RequestWatcher extends Watcher
         if (is_string($response->getContent()) &&
             is_array(json_decode($response->getContent(), true)) &&
             json_last_error() === JSON_ERROR_NONE) {
+            $purgeLimit = isset($this->options['response_purge_size']) ?
+                            intval($this->options['response_purge_size']) : 64;
+            if (($size = strlen($response->getContent()) / 1000) > $purgeLimit) {
+                return 'Response purged (' . round($size) . ' KB)';
+            }
+
             return json_decode($response->getContent(), true);
         }
 
