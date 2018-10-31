@@ -56,7 +56,7 @@ class InstallCommand extends Command
 
         $appConfig = file_get_contents(config_path('app.php'));
 
-        if (Str::contains($appConfig, $namespace."Providers\\TelescopeServiceProvider::class")) {
+        if (Str::contains($appConfig, $namespace."\\Providers\\TelescopeServiceProvider::class")) {
             return;
         }
 
