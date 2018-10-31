@@ -32,7 +32,7 @@ class ModelWatcher extends Watcher
             return;
         }
 
-        $model = array_shift($data);
+        $model = current($data);
 
         $entry = get_class($model) . ':' . $model->getKey();
 
