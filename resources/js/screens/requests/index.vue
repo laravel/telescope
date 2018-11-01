@@ -1,10 +1,18 @@
 <script type="text/ecmascript-6">
     import StylesMixin from './../../mixins/entriesStyles';
+    import $ from 'jquery';
 
     export default {
         mixins: [
             StylesMixin,
         ],
+
+        methods: {
+            uri({method, payload, uri}) {
+                const decodedUri = method.toUpperCase() === 'GET' && Object.keys(payload).length ? uri + decodeURIComponent( '?' + $.param(payload) ) : uri;
+                return this.truncate(decodedUri, 70);                
+            }
+        },
     }
 </script>
 
@@ -26,7 +34,7 @@
                 </span>
             </td>
 
-            <td :title="slotProps.entry.content.uri">{{truncate(slotProps.entry.content.uri, 70)}}</td>
+            <td :title="slotProps.entry.content.uri">{{uri(slotProps.entry.content)}}</td>
 
             <td class="table-fit">
                 <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(slotProps.entry.content.response_status)">
