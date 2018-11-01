@@ -198,7 +198,7 @@ class Telescope
             static::$tagUsing ? call_user_func(static::$tagUsing, $entry) : []
         );
 
-        if (Auth::check()) {
+        if (Auth::hasUser()) {
             $entry->user(Auth::user());
         }
 
