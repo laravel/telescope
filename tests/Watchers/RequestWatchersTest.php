@@ -31,7 +31,7 @@ class RequestWatchersTest extends FeatureTestCase
         self::assertSame(EntryType::REQUEST, $entry->type);
         self::assertSame('GET', $entry->content['method']);
         self::assertSame(200, $entry->content['response_status']);
-        self::assertSame('emails', $entry->content['uri']);
+        self::assertSame('/emails', $entry->content['uri']);
     }
 
     public function test_request_watcher_registers_404()
@@ -43,7 +43,7 @@ class RequestWatchersTest extends FeatureTestCase
         self::assertSame(EntryType::REQUEST, $entry->type);
         self::assertSame('GET', $entry->content['method']);
         self::assertSame(404, $entry->content['response_status']);
-        self::assertSame('whatever', $entry->content['uri']);
+        self::assertSame('/whatever', $entry->content['uri']);
     }
 
     public function test_request_watcher_hides_password()
