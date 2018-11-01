@@ -43,9 +43,10 @@ class JobWatcherTest extends FeatureTestCase
             '--queue' => 'on-demand',
         ]);
 
-        sleep(1);
+        $entry = $this->loadTelescopeEntries();
 
-        $entry = $this->loadTelescopeEntries()->first();
+        dump($entry->count());
+        dd($entry->toArray());
 
         self::assertSame(EntryType::JOB, $entry->type);
         self::assertSame('processed', $entry->content['status']);
@@ -65,8 +66,6 @@ class JobWatcherTest extends FeatureTestCase
             'connection' => 'database',
             '--once' => true,
         ]);
-
-        sleep(1);
 
         $entry = $this->loadTelescopeEntries()->first();
 
