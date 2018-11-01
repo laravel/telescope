@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Queue\Queue;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 use Laravel\Telescope\Storage\EntryModel;
@@ -27,6 +28,8 @@ class FeatureTestCase extends TestCase
     protected function tearDown()
     {
         Telescope::flushEntries();
+
+        Queue::createPayloadUsing(null);
 
         parent::tearDown();
     }
