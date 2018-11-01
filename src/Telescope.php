@@ -123,7 +123,7 @@ class Telescope
                 'horizon',
                 'horizon:work',
                 'horizon:supervisor',
-            ], config('telescope.ignoreCommands', []))
+            ], config('telescope.ignoreCommands', []), config('telescope.ignore_commands', []))
         );
     }
 
