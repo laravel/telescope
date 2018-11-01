@@ -31,7 +31,7 @@ class RequestWatcher extends Watcher
     public function recordRequest(RequestHandled $event)
     {
         Telescope::recordRequest(IncomingEntry::make([
-            'uri' => str_replace($event->request->root(), '', $event->request->path()),
+            'uri' => str_replace($event->request->root(), '', $event->request->fullUrl()),
             'method' => $event->request->method(),
             'headers' => $this->headers($event->request->headers->all()),
             'payload' => $this->payload($event->request->all()),
