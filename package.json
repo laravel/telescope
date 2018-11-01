@@ -20,7 +20,7 @@
         "moment": "^2.10.6",
         "moment-timezone": "^0.5.21",
         "popper.js": "^1.12",
-        "sql-formatter": "^2.3.1",
+        "sql-formatter": "^2.3.2",
         "vue": "^2.5.7",
         "vue-json-tree-view": "^2.1.4",
         "vue-router": "^3.0.1"
