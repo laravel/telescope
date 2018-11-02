@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Redis\Events\CommandExecuted;
@@ -27,6 +28,10 @@ class RedisWatcher extends Watcher
      */
     public function recordCommand(CommandExecuted $event)
     {
+        if ($this->shouldIgnore($event->command)) {
+            return;
+        }
+
         Telescope::recordRedis(IncomingEntry::make([
             'connection' => $event->connectionName,
             'command' => $this->formatCommand($event->command, $event->parameters),
@@ -54,5 +59,16 @@ class RedisWatcher extends Watcher
         })->implode(' ');
 
         return "{$command} {$parameters}";
+    }
+
+    /**
+     * Determine if the Redis command should be ignored.
+     *
+     * @param  string  $command
+     * @return bool
+     */
+    protected function shouldIgnore($command)
+    {
+        return Str::is($this->options['ignore'] ?? [], $command);
     }
 }

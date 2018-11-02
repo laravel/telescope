@@ -49,7 +49,8 @@ return [
     |
     | The following array lists the "watchers" that will be registered with
     | Telescope. The watchers gather the application's profile data when
-    | a request or task is executed. Feel free to customize this list.
+    | a request or task is executed. You can also ignore specific entries
+    | from being stored. Feel free to customize this list.
     |
     */
 

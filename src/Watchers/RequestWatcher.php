@@ -30,6 +30,10 @@ class RequestWatcher extends Watcher
      */
     public function recordRequest(RequestHandled $event)
     {
+        if ($this->shouldIgnore($event)) {
+            return;
+        }
+
         Telescope::recordRequest(IncomingEntry::make([
             'uri' => str_replace($event->request->root(), '', $event->request->fullUrl()),
             'method' => $event->request->method(),
@@ -113,5 +117,16 @@ class RequestWatcher extends Watcher
         $limit = $this->options['size_limit'] ?? 64;
 
         return mb_strlen($content) / 1000 <= $limit;
+    }
+
+    /**
+     * Determine if the current request should be ignored.
+     *
+     * @param  \Illuminate\Foundation\Http\Events\RequestHandled  $event
+     * @return bool
+     */
+    private function shouldIgnore($event)
+    {
+        return $event->request->is($this->options['ignore'] ?? []);
     }
 }

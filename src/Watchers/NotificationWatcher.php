@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
@@ -31,6 +32,10 @@ class NotificationWatcher extends Watcher
      */
     public function recordNotification(NotificationSent $event)
     {
+        if ($this->shouldIgnore(get_class($event->notification))) {
+            return;
+        }
+
         Telescope::recordNotification(IncomingEntry::make([
             'notification' => get_class($event->notification),
             'queued' => in_array(ShouldQueue::class, class_implements($event->notification)),
@@ -68,5 +73,16 @@ class NotificationWatcher extends Watcher
         }
 
         return $notifiable;
+    }
+
+    /**
+     * Determine if the notification should be ignored.
+     *
+     * @param  string  $notification
+     * @return bool
+     */
+    protected function shouldIgnore($notification)
+    {
+        return Str::is($this->options['ignore'] ?? [], $notification);
     }
 }

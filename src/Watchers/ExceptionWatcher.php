@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\ExceptionContext;
@@ -35,6 +36,10 @@ class ExceptionWatcher extends Watcher
 
         $exception = $event->context['exception'];
 
+        if ($this->shouldIgnore(get_class($exception))) {
+            return;
+        }
+
         Telescope::recordException(
             IncomingExceptionEntry::make($exception, [
                 'class' => get_class($exception),
@@ -58,5 +63,16 @@ class ExceptionWatcher extends Watcher
         return array_merge(ExtractTags::from($event->context['exception']),
             $event->context['telescope'] ?? []
         );
+    }
+
+    /**
+     * Determine if the exception should be ignored.
+     *
+     * @param  string  $exception
+     * @return bool
+     */
+    protected function shouldIgnore($exception)
+    {
+        return Str::is($this->options['ignore'] ?? [], $exception);
     }
 }

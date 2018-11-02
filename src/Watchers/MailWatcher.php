@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Mail\Events\MessageSent;
@@ -27,6 +28,10 @@ class MailWatcher extends Watcher
      */
     public function recordMail(MessageSent $event)
     {
+        if ($this->shouldIgnore($this->getMailable($event))) {
+            return;
+        }
+
         Telescope::recordMail(IncomingEntry::make([
             'mailable' => $this->getMailable($event),
             'queued' => $this->getQueuedStatus($event),
@@ -86,5 +91,16 @@ class MailWatcher extends Watcher
             array_keys($message->getBcc() ?: []),
             $data['__telescope'] ?? []
         );
+    }
+
+    /**
+     * Determine if the mailable should be ignored.
+     *
+     * @param  string  $mailable
+     * @return bool
+     */
+    protected function shouldIgnore($mailable)
+    {
+        return Str::is($this->options['ignore'] ?? [], $mailable);
     }
 }
