@@ -106,9 +106,9 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->registerStorageDriver();
 
         $this->commands([
+            Console\ClearCommand::class,
             Console\InstallCommand::class,
             Console\PruneCommand::class,
-            Console\ClearCommand::class,
             Console\PublishCommand::class,
         ]);
     }
