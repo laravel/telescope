@@ -54,18 +54,6 @@ class InstallCommand extends Command
     {
         $namespace = str_replace_last('\\', '', $this->getAppNamespace());
 
-        $appConfig = file_get_contents(config_path('app.php'));
-
-        if (Str::contains($appConfig, $namespace."\\Providers\\TelescopeServiceProvider::class")) {
-            return;
-        }
-
-        file_put_contents(config_path('app.php'), str_replace(
-            "{$namespace}\\Providers\EventServiceProvider::class,".PHP_EOL,
-            "{$namespace}\\Providers\EventServiceProvider::class,".PHP_EOL."        {$namespace}\Providers\TelescopeServiceProvider::class,".PHP_EOL,
-            $appConfig
-        ));
-
         file_put_contents(app_path('Providers/TelescopeServiceProvider.php'), str_replace(
             "namespace App\Providers;",
             "namespace {$namespace}\Providers;",
