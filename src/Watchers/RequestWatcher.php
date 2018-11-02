@@ -72,6 +72,17 @@ class RequestWatcher extends Watcher
     }
 
     /**
+     * Extract the session variables from the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    private function sessionVariables(Request $request)
+    {
+        return $request->hasSession() ? $request->session()->all() : [];
+    }
+
+    /**
      * Format the given response object.
      *
      * @param  \Symfony\Component\HttpFoundation\Response  $response
@@ -89,17 +100,6 @@ class RequestWatcher extends Watcher
         }
 
         return "HTML Response";
-    }
-
-    /**
-     * Extract the session variables from the given request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    private function sessionVariables(Request $request)
-    {
-        return $request->hasSession() ? $request->session()->all() : [];
     }
 
     /**
