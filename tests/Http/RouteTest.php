@@ -83,4 +83,13 @@ class RouteTest extends FeatureTestCase
             return $this;
         });
     }
+
+    public function test_named_route()
+    {
+
+        $this->assertEquals(
+            url(config('telescope.path')),
+            route('telescope')
+        );
+    }
 }
