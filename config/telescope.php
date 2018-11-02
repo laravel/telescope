@@ -74,7 +74,7 @@ return [
         
         Watchers\RequestWatcher::class => [
             'enabled' => env('TELESCOPE_REQUEST_WATCHER', true),
-            'size_limit' => env('TELESCOPE_REQUEST_SIZE_LIMIT', 64),
+            'size_limit' => env('TELESCOPE_RESPONSE_SIZE_LIMIT', 64),
         ],
         
         Watchers\ScheduleWatcher::class => env('TELESCOPE_SCHEDULE_WATCHER', true),
