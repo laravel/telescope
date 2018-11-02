@@ -35,6 +35,12 @@
                 {{slotProps.entry.content.response_status}}
             </td>
         </tr>
+        <tr>
+            <td class="table-fit font-weight-bold">Status</td>
+            <td>
+                {{slotProps.entry.content.duration}}
+            </td>
+        </tr>
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">

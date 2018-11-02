@@ -14,6 +14,7 @@
             <th scope="col">Verb</th>
             <th scope="col">Path</th>
             <th scope="col">Status</th>
+            <th scope="col">Duration</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
@@ -33,6 +34,8 @@
                     {{slotProps.entry.content.response_status}}
                 </span>
             </td>
+
+            <td>{{slotProps.entry.content.duration}}</td>
 
             <td class="table-fit" :data-timeago="slotProps.entry.created_at">{{timeAgo(slotProps.entry.created_at)}}</td>
 
