@@ -18,10 +18,9 @@ class MailWatcherTest extends FeatureTestCase
         ]);
 
         $app->get('config')->set('mail.driver', 'array');
-
     }
 
-    public function test_dump_watcher_register_entry()
+    public function test_mail_watcher_registers_entry()
     {
         
         Mail::raw('Telescope is amazing!', function($message) {
