@@ -13,7 +13,7 @@ class DumpWatcherTest extends FeatureTestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        $app->make(Repository::class)->forever('telescope:dump-watcher', '1');
+        $app->make(Repository::class)->forever('telescope:dump-watcher', true);
 
         $app->get('config')->set('telescope.watchers', [
             DumpWatcher::class => true,
