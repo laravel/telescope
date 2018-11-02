@@ -4,7 +4,6 @@ namespace Laravel\Telescope\Console;
 
 use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 
 class PublishCommand extends Command
 {
