@@ -50160,6 +50160,10 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
+              _c("td", { staticClass: "table-fit" }, [
+                _vm._v(_vm._s(slotProps.entry.content.duration) + " ms")
+              ]),
+              _vm._v(" "),
               _c(
                 "td",
                 {
@@ -50219,6 +50223,8 @@ var render = function() {
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Path")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Duration")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Happened")]),
         _vm._v(" "),
@@ -53795,6 +53801,20 @@ var render = function() {
                   "\n            " +
                     _vm._s(slotProps.entry.content.response_status) +
                     "\n        "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("tr", [
+              _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                _vm._v("Duration")
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(slotProps.entry.content.duration) +
+                    " ms\n        "
                 )
               ])
             ])

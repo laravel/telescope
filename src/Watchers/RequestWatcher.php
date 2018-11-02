@@ -38,6 +38,7 @@ class RequestWatcher extends Watcher
             'session' => $this->payload($this->sessionVariables($event->request)),
             'response_status' => $event->response->getStatusCode(),
             'response' => $this->response($event->response),
+            'duration' => floor((microtime(true) - LARAVEL_START) * 1000)
         ]));
     }
 

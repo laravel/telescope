@@ -20,6 +20,10 @@ class FeatureTestCase extends TestCase
     {
         parent::setUp();
 
+        // Prevent "Use of undefined constant LARAVEL_START" exception
+        if(!defined('LARAVEL_START'))
+            define('LARAVEL_START', microtime(true));
+
         TestResponse::macro('terminateTelescope', [$this, 'terminateTelescope']);
 
         Telescope::flushEntries();
