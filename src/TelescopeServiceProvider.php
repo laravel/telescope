@@ -109,6 +109,7 @@ class TelescopeServiceProvider extends ServiceProvider
             Console\InstallCommand::class,
             Console\PruneCommand::class,
             Console\ClearCommand::class,
+            Console\PublishCommand::class,
         ]);
     }
 
