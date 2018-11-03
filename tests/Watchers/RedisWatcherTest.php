@@ -5,7 +5,6 @@ namespace Laravel\Telescope\Tests\Watchers;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\RedisWatcher;
-use Illuminate\Foundation\Testing\Concerns\InteractsWithRedis;
 use Illuminate\Support\Facades\Redis;
 
 class RedisWatcherTest extends FeatureTestCase
