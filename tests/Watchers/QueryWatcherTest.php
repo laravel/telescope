@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Illuminate\Support\Collection;
 use Laravel\Telescope\EntryType;
+use Illuminate\Support\Collection;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\QueryWatcher;
 

@@ -3,10 +3,10 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Exception;
-use Illuminate\Contracts\Debug\ExceptionHandler;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\ExceptionWatcher;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 
 class ExceptionWatcherTest extends FeatureTestCase
 {

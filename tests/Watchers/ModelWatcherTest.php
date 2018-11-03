@@ -2,9 +2,9 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Telescope;
+use Illuminate\Database\Eloquent\Model;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\ModelWatcher;
 

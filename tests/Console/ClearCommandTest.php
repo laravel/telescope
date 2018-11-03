@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Laravel\Telescope\Tests\Console;
 
 use Illuminate\Support\Facades\DB;
