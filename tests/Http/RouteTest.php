@@ -86,7 +86,6 @@ class RouteTest extends FeatureTestCase
 
     public function test_named_route()
     {
-
         $this->assertEquals(
             url(config('telescope.path')),
             route('telescope')
