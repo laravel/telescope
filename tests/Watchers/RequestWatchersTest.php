@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Illuminate\Support\Facades\Route;
 use Laravel\Telescope\EntryType;
+use Illuminate\Support\Facades\Route;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\RequestWatcher;
 
