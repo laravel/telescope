@@ -16,6 +16,7 @@ class RedisWatcher extends Watcher
      */
     public function register($app)
     {
+        $app['redis']->enableEvents();
         $app['events']->listen(CommandExecuted::class, [$this, 'recordCommand']);
     }
 
