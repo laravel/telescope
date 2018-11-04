@@ -2,9 +2,8 @@
 
 namespace Laravel\Telescope\Tests\Http;
 
-use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\Telescope;
-use Laravel\Telescope\TelescopeApplicationServiceProvider;
+use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
 
