@@ -2,7 +2,9 @@
 
 namespace Laravel\Telescope\Tests\Http;
 
+use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\TelescopeApplicationServiceProvider;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
 
@@ -33,5 +35,25 @@ class AuthorizationTest extends FeatureTestCase
 
         $this->post('/telescope/telescope-api/requests')
             ->assertSuccessful();
+    }
+
+    public function test_unauthorized_by_gate()
+    {
+        $this->restoreDefaultAuthCallback();
+
+        Gate::define('viewTelescope', function ($user) {
+            return false;
+        });
+
+        $this->post('/telescope/telescope-api/requests')
+            ->assertStatus(403);
+    }
+
+    private function restoreDefaultAuthCallback()
+    {
+        Telescope::auth(function ($request) {
+            return app()->environment('local') ||
+                Gate::check('viewTelescope', [$request->user()]);
+        });
     }
 }
