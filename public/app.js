@@ -53835,7 +53835,7 @@ var render = function() {
               _c("td", [
                 _vm._v(
                   "\n            " +
-                    _vm._s(slotProps.entry.content.duration) +
+                    _vm._s(slotProps.entry.content.duration || "-") +
                     " ms\n        "
                 )
               ])

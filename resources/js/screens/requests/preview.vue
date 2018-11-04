@@ -53,7 +53,7 @@
         <tr>
             <td class="table-fit font-weight-bold">Duration</td>
             <td>
-                {{slotProps.entry.content.duration}} ms
+                {{slotProps.entry.content.duration || '-'}} ms
             </td>
         </tr>
         </template>
