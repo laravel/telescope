@@ -8,9 +8,18 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
+use Laravel\Telescope\TelescopeApplicationServiceProvider;
 
 class AuthorizationTest extends FeatureTestCase
 {
+    protected function getPackageProviders($app)
+    {
+        return array_merge(
+            parent::getPackageProviders($app),
+            [TelescopeApplicationServiceProvider::class]
+        );
+    }
+
     protected function setUp()
     {
         parent::setUp();
@@ -23,6 +32,12 @@ class AuthorizationTest extends FeatureTestCase
         parent::tearDown();
 
         Telescope::auth(null);
+    }
+
+    public function test_clean_telescope_installation_denies_access_by_default()
+    {
+        $this->post('/telescope/telescope-api/requests')
+            ->assertStatus(403);
     }
 
     public function test_guests_gets_unauthorized_by_gate()
