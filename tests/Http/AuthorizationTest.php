@@ -16,6 +16,13 @@ class AuthorizationTest extends FeatureTestCase
         $this->withoutMiddleware([VerifyCsrfToken::class]);
     }
 
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        Telescope::auth(null);
+    }
+
     public function test_unauthorized_by_gate()
     {
         Gate::define('viewTelescope', function ($user) {
