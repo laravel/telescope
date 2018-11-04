@@ -2,11 +2,11 @@
 
 namespace Laravel\Telescope\Tests\Http;
 
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Laravel\Telescope\Telescope;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\Tests\FeatureTestCase;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
 
 class AuthorizationTest extends FeatureTestCase
@@ -49,6 +49,20 @@ class AuthorizationTest extends FeatureTestCase
 
         Gate::define('viewTelescope', function (Authenticatable $user) {
             return $user->getAuthIdentifier() == 'telescope-test';
+        });
+
+        $this->post('/telescope/telescope-api/requests')
+            ->assertStatus(200);
+    }
+
+    public function test_guests_can_be_authorized()
+    {
+        Telescope::auth(function (Request $request) {
+            return Gate::check('viewTelescope', [$request->user()]);
+        });
+
+        Gate::define('viewTelescope', function (?Authenticatable $user) {
+            return true;
         });
 
         $this->post('/telescope/telescope-api/requests')
