@@ -20,6 +20,8 @@ class RedisWatcherTest extends FeatureTestCase
 
         $app->get('config')->set('database.redis.client', 'phpredis');
 
+        $app['redis']->enableEvents();
+
         $app->get('config')->set('telescope.watchers', [
             RedisWatcher::class => true,
         ]);
