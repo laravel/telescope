@@ -40,6 +40,14 @@ class AuthorizationTest extends FeatureTestCase
             ->assertStatus(403);
     }
 
+    public function test_clean_telescope_installation_denies_access_by_default_for_any_auth_user()
+    {
+        $this->actingAs(new Authenticated);
+
+        $this->post('/telescope/telescope-api/requests')
+            ->assertStatus(403);
+    }
+
     public function test_guests_gets_unauthorized_by_gate()
     {
         Telescope::auth(function (Request $request) {
@@ -107,6 +115,8 @@ class AuthorizationTest extends FeatureTestCase
 
 class Authenticated implements Authenticatable
 {
+    public $email;
+    
     public function getAuthIdentifierName()
     {
         return 'Telescope Test';
