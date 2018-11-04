@@ -16,6 +16,10 @@ class RequestWatchersTest extends FeatureTestCase
         $app->get('config')->set('telescope.watchers', [
             RequestWatcher::class => true,
         ]);
+
+        if (!defined('LARAVEL_START')) {
+            define('LARAVEL_START', microtime(true));
+        }
     }
 
     public function test_request_watcher_registers_requests()

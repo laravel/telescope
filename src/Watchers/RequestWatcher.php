@@ -8,6 +8,7 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Http\Events\RequestHandled;
+use Illuminate\Routing\Router;
 
 class RequestWatcher extends Watcher
 {
@@ -33,11 +34,14 @@ class RequestWatcher extends Watcher
         Telescope::recordRequest(IncomingEntry::make([
             'uri' => str_replace($event->request->root(), '', $event->request->fullUrl()),
             'method' => $event->request->method(),
+            'controller_action' => optional($event->request->route())->getActionName(),
+            'middleware' => optional($event->request->route())->gatherMiddleware(),
             'headers' => $this->headers($event->request->headers->all()),
             'payload' => $this->payload($event->request->all()),
             'session' => $this->payload($this->sessionVariables($event->request)),
             'response_status' => $event->response->getStatusCode(),
             'response' => $this->response($event->response),
+            'duration' => defined('LARAVEL_START') ? floor((microtime(true) - LARAVEL_START) * 1000) : null,
         ]));
     }
 
