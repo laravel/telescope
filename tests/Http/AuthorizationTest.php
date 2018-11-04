@@ -16,6 +16,16 @@ class AuthorizationTest extends FeatureTestCase
         $this->withoutMiddleware([VerifyCsrfToken::class]);
     }
 
+    public function test_unauthorized_by_gate()
+    {
+        Gate::define('viewTelescope', function ($user) {
+            return false;
+        });
+
+        $this->post('/telescope/telescope-api/requests')
+            ->assertStatus(403);
+    }
+
     public function test_unauthorized_requests()
     {
         Telescope::auth(function () {
@@ -34,25 +44,5 @@ class AuthorizationTest extends FeatureTestCase
 
         $this->post('/telescope/telescope-api/requests')
             ->assertSuccessful();
-    }
-
-    public function test_unauthorized_by_gate()
-    {
-        $this->restoreDefaultAuthCallback();
-
-        Gate::define('viewTelescope', function ($user) {
-            return false;
-        });
-
-        $this->post('/telescope/telescope-api/requests')
-            ->assertStatus(403);
-    }
-
-    private function restoreDefaultAuthCallback()
-    {
-        Telescope::auth(function ($request) {
-            return app()->environment('local') ||
-                Gate::check('viewTelescope', [$request->user()]);
-        });
     }
 }
