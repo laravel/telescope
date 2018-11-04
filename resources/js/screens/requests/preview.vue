@@ -23,6 +23,20 @@
         </tr>
 
         <tr>
+            <td class="table-fit font-weight-bold">Controller Action</td>
+            <td>
+                {{slotProps.entry.content.controller_action}}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="table-fit font-weight-bold">Middleware</td>
+            <td>
+                {{slotProps.entry.content.middleware.join(", ")}}
+            </td>
+        </tr>
+        
+        <tr>
             <td class="table-fit font-weight-bold">Path</td>
             <td>
                 {{slotProps.entry.content.uri}}
@@ -33,6 +47,13 @@
             <td class="table-fit font-weight-bold">Status</td>
             <td>
                 {{slotProps.entry.content.response_status}}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="table-fit font-weight-bold">Duration</td>
+            <td>
+                {{slotProps.entry.content.duration || '-'}} ms
             </td>
         </tr>
         </template>
