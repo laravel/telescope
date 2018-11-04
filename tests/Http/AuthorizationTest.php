@@ -24,4 +24,14 @@ class AuthorizationTest extends FeatureTestCase
         $this->get('/telescope/telescope-api/requests')
             ->assertStatus(403);
     }
+
+    public function test_authorized_requests()
+    {
+        Telescope::auth(function () {
+            return true;
+        });
+
+        $this->post('/telescope/telescope-api/requests')
+            ->assertSuccessful();
+    }
 }
