@@ -28,6 +28,13 @@ class Telescope
     public static $filterUsing = [];
 
     /**
+     * The callbacks that filter the entries that should be recorded.
+     *
+     * @var array
+     */
+    public static $filterBatchUsing = [];
+
+    /**
      * The callback that adds tags to the record.
      *
      * @var \Closure
@@ -423,6 +430,19 @@ class Telescope
     }
 
     /**
+     * Set the callback that filters the batches that should be recorded.
+     *
+     * @param  \Closure  $callback
+     * @return static
+     */
+    public static function filterBatch(Closure $callback)
+    {
+        static::$filterBatchUsing[] = $callback;
+
+        return new static;
+    }
+
+    /**
      * Set the callback that adds tags to the record.
      *
      * @param  \Closure  $callback
@@ -445,6 +465,10 @@ class Telescope
     {
         if (empty(static::$entriesQueue) && empty(static::$updatesQueue)) {
             return;
+        }
+
+        if (!collect(static::$filterBatchUsing)->every->__invoke(collect(static::$entriesQueue))) {
+            static::flushEntries();
         }
 
         try {
