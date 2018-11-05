@@ -28,7 +28,7 @@ class Telescope
     public static $filterUsing = [];
 
     /**
-     * The callbacks that filter the entries that should be recorded.
+     * The callbacks that filter the batches that should be recorded.
      *
      * @var array
      */
@@ -467,7 +467,7 @@ class Telescope
             return;
         }
 
-        if (!collect(static::$filterBatchUsing)->every->__invoke(collect(static::$entriesQueue))) {
+        if (! collect(static::$filterBatchUsing)->every->__invoke(collect(static::$entriesQueue))) {
             static::flushEntries();
         }
 
