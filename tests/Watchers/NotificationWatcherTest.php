@@ -8,7 +8,6 @@ use Laravel\Telescope\Watchers\NotificationWatcher;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Illuminate\Notifications\Notification as BaseNotification;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\RoutesNotifications;
 
 class NotificationWatcherTest extends FeatureTestCase
 {
