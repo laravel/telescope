@@ -32,7 +32,7 @@ class ModelWatcher extends Watcher
             return;
         }
 
-        $model = get_class($data[0]) . ':' . implode('_', (array) $data[0]->getKey());
+        $model = get_class($data[0]).':'.implode('_', (array) $data[0]->getKey());
 
         $changes = $data[0]->getChanges();
 
@@ -65,7 +65,7 @@ class ModelWatcher extends Watcher
     private function shouldRecord($eventName)
     {
         return Str::is([
-            '*created*', '*updated*', '*restored*', '*deleted*'
+            '*created*', '*updated*', '*restored*', '*deleted*',
         ], $eventName);
     }
 }

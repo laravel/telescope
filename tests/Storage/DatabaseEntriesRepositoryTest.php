@@ -10,7 +10,7 @@ class DatabaseEntriesRepositoryTest extends FeatureTestCase
 {
     public function test_find_entry_by_uuid()
     {
-        $this->loadFactoriesUsing($this->app, __DIR__ . '/../../src/Storage/factories');
+        $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
 
         $entry = factory(EntryModel::class)->create();
 

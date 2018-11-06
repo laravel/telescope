@@ -22,8 +22,7 @@ class MailWatcherTest extends FeatureTestCase
 
     public function test_mail_watcher_registers_entry()
     {
-        
-        Mail::raw('Telescope is amazing!', function($message) {
+        Mail::raw('Telescope is amazing!', function ($message) {
             $message->from('from@laravel.com')
                 ->to('to@laravel.com')
                 ->cc(['cc1@laravel.com', 'cc2@laravel.com'])
@@ -31,7 +30,6 @@ class MailWatcherTest extends FeatureTestCase
                 ->subject('Check this out!');
         });
 
-        
         $entry = $this->loadTelescopeEntries()->first();
 
         self::assertSame(EntryType::MAIL, $entry->type);

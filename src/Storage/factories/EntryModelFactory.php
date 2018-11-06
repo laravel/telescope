@@ -3,7 +3,7 @@
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Storage\EntryModel;
 
-/**
+/*
  * @var \Illuminate\Database\Eloquent\Factory $factory
  */
 

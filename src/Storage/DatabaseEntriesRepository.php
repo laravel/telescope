@@ -45,7 +45,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      * @param  mixed  $id
      * @return \Laravel\Telescope\EntryResult
      */
-    public function find($id) : EntryResult
+    public function find($id): EntryResult
     {
         $entry = EntryModel::on($this->connection)->whereUuid($id)->firstOrFail();
 

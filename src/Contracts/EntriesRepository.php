@@ -14,7 +14,7 @@ interface EntriesRepository
      * @param  mixed  $id
      * @return \Laravel\Telescope\EntryResult
      */
-    public function find($id) : EntryResult;
+    public function find($id): EntryResult;
 
     /**
      * Return all the entries of a given type.

@@ -44,7 +44,7 @@ class EntryModel extends Model
     protected $keyType = 'string';
 
     /**
-     * Prevent Eloquent from overriding uuid with `lastInsertId`
+     * Prevent Eloquent from overriding uuid with `lastInsertId`.
      *
      * @var bool
      */
