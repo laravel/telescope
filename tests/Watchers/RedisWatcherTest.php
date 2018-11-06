@@ -13,7 +13,7 @@ class RedisWatcherTest extends FeatureTestCase
     {
         parent::getEnvironmentSetUp($app);
 
-        if (!extension_loaded('redis')) {
+        if (! extension_loaded('redis')) {
             $this->markTestSkipped('The phpredis extension is required for this test.');
         }
 

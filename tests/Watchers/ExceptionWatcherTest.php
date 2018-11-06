@@ -5,8 +5,8 @@ namespace Laravel\Telescope\Tests\Watchers;
 use Exception;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
-use Laravel\Telescope\Watchers\ExceptionWatcher;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Laravel\Telescope\Watchers\ExceptionWatcher;
 
 class ExceptionWatcherTest extends FeatureTestCase
 {
@@ -42,4 +42,5 @@ class ExceptionWatcherTest extends FeatureTestCase
 
 class BananaException extends Exception
 {
+    //
 }

@@ -27,8 +27,8 @@ class ExtractProperties
                     return [
                         $property->getName() => [
                             'class' => get_class($value),
-                            'properties' => json_decode(json_encode($value), true)
-                        ]
+                            'properties' => json_decode(json_encode($value), true),
+                        ],
                     ];
                 } else {
                     return [$property->getName() => json_decode(json_encode($value), true)];

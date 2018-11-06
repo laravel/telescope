@@ -42,7 +42,7 @@ class JobWatcher extends Watcher
     public function recordJob($connection, $queue, array $payload)
     {
         $content = array_merge([
-            'status' => 'pending'
+            'status' => 'pending',
         ], $this->defaultJobData($connection, $queue, $payload, $this->data($payload)));
 
         Telescope::recordJob(

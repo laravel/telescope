@@ -6,10 +6,10 @@ use Illuminate\Queue\Queue;
 use Laravel\Telescope\Telescope;
 use Orchestra\Testbench\TestCase;
 use Laravel\Telescope\Storage\EntryModel;
-use Laravel\Telescope\TelescopeServiceProvider;
 use Illuminate\Foundation\Testing\TestResponse;
-use Laravel\Telescope\Contracts\EntriesRepository;
+use Laravel\Telescope\TelescopeServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 
 class FeatureTestCase extends TestCase
@@ -37,7 +37,7 @@ class FeatureTestCase extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            TelescopeServiceProvider::class
+            TelescopeServiceProvider::class,
         ];
     }
 
@@ -65,9 +65,9 @@ class FeatureTestCase extends TestCase
         $config->set('telescope.storage.database.connection', 'testbench');
 
         $config->set('database.connections.testbench', [
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix'   => '',
+            'prefix' => '',
         ]);
 
         $app->when(DatabaseEntriesRepository::class)

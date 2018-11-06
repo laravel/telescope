@@ -17,7 +17,7 @@ class RequestWatchersTest extends FeatureTestCase
             RequestWatcher::class => true,
         ]);
 
-        if (!defined('LARAVEL_START')) {
+        if (! defined('LARAVEL_START')) {
             define('LARAVEL_START', microtime(true));
         }
     }
