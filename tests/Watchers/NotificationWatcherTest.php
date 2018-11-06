@@ -22,7 +22,7 @@ class NotificationWatcherTest extends FeatureTestCase
         $app->get('config')->set('mail.driver', 'array');
     }
 
-    public function test_mail_watcher_registers_entry()
+    public function test_notification_watcher_registers_entry()
     {
         Notification::route('mail', 'telescope@laravel.com')
                     ->notify(new BoomerangNotification);
