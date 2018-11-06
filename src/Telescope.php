@@ -376,7 +376,6 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-
     public static function recordRequest(IncomingEntry $entry)
     {
         static::record(EntryType::REQUEST, $entry);
@@ -388,7 +387,6 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
-
     public static function recordScheduledCommand(IncomingEntry $entry)
     {
         static::record(EntryType::SCHEDULED_TASK, $entry);
@@ -397,7 +395,7 @@ class Telescope
     /**
      * Flush all entries in the queue.
      *
-     * @return  static
+     * @return static
      */
     public static function flushEntries()
     {
@@ -421,7 +419,7 @@ class Telescope
 
         event(new MessageLogged('error', $e->getMessage(), [
             'exception' => $e,
-            'telescope' => $tags
+            'telescope' => $tags,
         ]));
     }
 
@@ -592,7 +590,7 @@ class Telescope
     {
         return [
             'path' => config('telescope.path'),
-            'timezone' => config('app.timezone')
+            'timezone' => config('app.timezone'),
         ];
     }
 }

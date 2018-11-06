@@ -116,7 +116,7 @@ class AuthorizationTest extends FeatureTestCase
 class Authenticated implements Authenticatable
 {
     public $email;
-    
+
     public function getAuthIdentifierName()
     {
         return 'Telescope Test';

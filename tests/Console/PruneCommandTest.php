@@ -9,7 +9,7 @@ class PruneCommandTest extends FeatureTestCase
 {
     public function test_prune_command_will_clear_old_records()
     {
-        $this->loadFactoriesUsing($this->app, __DIR__ . '/../../src/Storage/factories');
+        $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
 
         $recent = factory(EntryModel::class)->create(['created_at' => now()]);
 

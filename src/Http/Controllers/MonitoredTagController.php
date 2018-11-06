@@ -34,7 +34,7 @@ class MonitoredTagController extends Controller
     public function index()
     {
         return response()->json([
-            'tags' => $this->entries->monitoring()
+            'tags' => $this->entries->monitoring(),
         ]);
     }
 

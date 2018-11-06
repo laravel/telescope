@@ -2,9 +2,9 @@
 
 namespace Laravel\Telescope\Console;
 
-use Illuminate\Console\DetectsApplicationNamespace;
-use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use Illuminate\Console\Command;
+use Illuminate\Console\DetectsApplicationNamespace;
 
 class InstallCommand extends Command
 {
@@ -56,7 +56,7 @@ class InstallCommand extends Command
 
         $appConfig = file_get_contents(config_path('app.php'));
 
-        if (Str::contains($appConfig, $namespace."\\Providers\\TelescopeServiceProvider::class")) {
+        if (Str::contains($appConfig, $namespace.'\\Providers\\TelescopeServiceProvider::class')) {
             return;
         }
 

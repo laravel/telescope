@@ -26,6 +26,7 @@ class DumpController extends EntryController
     {
         $this->cache = $cache;
     }
+
     /**
      * List the entries of the given type.
      *

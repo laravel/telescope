@@ -33,7 +33,7 @@ class RouteTest extends FeatureTestCase
             'Events' => ['/telescope/telescope-api/events', EntryType::EVENT],
             'Cache' => ['/telescope/telescope-api/cache', EntryType::CACHE],
             'Queries' => ['/telescope/telescope-api/queries', EntryType::QUERY],
-            'Models'  => ['/telescope/telescope-api/models', EntryType::MODEL],
+            'Models' => ['/telescope/telescope-api/models', EntryType::MODEL],
             'Request' => ['/telescope/telescope-api/requests', EntryType::REQUEST],
             'Commands' => ['/telescope/telescope-api/commands', EntryType::COMMAND],
             'Schedule' => ['/telescope/telescope-api/schedule', EntryType::SCHEDULED_TASK],
@@ -56,7 +56,7 @@ class RouteTest extends FeatureTestCase
      */
     public function test_simple_list_of_entries($endpoint, $entryType)
     {
-        $this->loadFactoriesUsing($this->app, __DIR__ . '/../../src/Storage/factories');
+        $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
 
         $entry = factory(EntryModel::class)->create(['type' => $entryType]);
 
@@ -76,7 +76,7 @@ class RouteTest extends FeatureTestCase
             PHPUnit::assertEquals(
                 $expected,
                 $actualValue = data_get($jsonResponse, $key),
-                "Failed asserting that [$actualValue] matches expected [$expected]." . PHP_EOL . PHP_EOL .
+                "Failed asserting that [$actualValue] matches expected [$expected].".PHP_EOL.PHP_EOL.
                 json_encode($jsonResponse)
             );
 

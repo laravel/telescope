@@ -29,7 +29,7 @@ abstract class EntryController extends Controller
             'entries' => $storage->get(
                 $this->entryType(),
                 EntryQueryOptions::fromRequest($request)
-            )
+            ),
         ]);
     }
 

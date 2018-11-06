@@ -10,7 +10,7 @@ class ClearCommandTest extends FeatureTestCase
 {
     public function test_clear_command_will_delete_all_entries()
     {
-        $this->loadFactoriesUsing($this->app, __DIR__ . '/../../src/Storage/factories');
+        $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
 
         factory(EntryModel::class)->create();
 

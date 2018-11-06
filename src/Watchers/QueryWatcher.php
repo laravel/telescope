@@ -66,7 +66,7 @@ class QueryWatcher extends Watcher
     }
 
     /**
-     * Find the first frame in the stack trace outside of Telescope/Laravel
+     * Find the first frame in the stack trace outside of Telescope/Laravel.
      *
      * @return array
      */

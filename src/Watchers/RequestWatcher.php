@@ -110,7 +110,7 @@ class RequestWatcher extends Watcher
                     ? json_decode($response->getContent(), true) : 'Purged By Telescope';
         }
 
-        return "HTML Response";
+        return 'HTML Response';
     }
 
     /**

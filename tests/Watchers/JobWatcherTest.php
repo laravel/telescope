@@ -95,7 +95,6 @@ class JobWatcherTest extends FeatureTestCase
             $table->longText('exception');
             $table->timestamp('failed_at')->useCurrent();
         });
-
     }
 }
 
@@ -114,7 +113,7 @@ class MyDatabaseJob implements ShouldQueue
 
     public function handle()
     {
-
+        //
     }
 }
 

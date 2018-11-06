@@ -39,6 +39,6 @@ class MyCommand extends Command
 
     public function handle()
     {
-
+        //
     }
 }

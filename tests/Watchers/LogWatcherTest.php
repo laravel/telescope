@@ -44,7 +44,7 @@ class LogWatcherTest extends FeatureTestCase
 
         $logger->$level("Logging Level [$level].", [
             'user' => 'Claire Redfield',
-            'role' => 'Zombie Hunter'
+            'role' => 'Zombie Hunter',
         ]);
 
         $entry = $this->loadTelescopeEntries()->first();
