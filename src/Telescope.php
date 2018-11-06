@@ -66,6 +66,15 @@ class Telescope
     ];
 
     /**
+     * The list of hidden request headers.
+     *
+     * @var array
+     */
+    public static $hiddenRequestHeaders = [
+        'authorization',
+    ];
+
+    /**
      * Indicates if Telescope should ignore events fired by Laravel.
      *
      * @var bool

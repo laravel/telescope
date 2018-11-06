@@ -52,9 +52,17 @@ class RequestWatcher extends Watcher
      */
     protected function headers($headers)
     {
-        return collect($headers)->map(function ($header) {
+        $headers = collect($headers)->map(function ($header) {
             return $header[0];
         })->toArray();
+
+        foreach(Telescope::$hiddenRequestHeaders as $header) {
+            if (Arr::get($headers, $header)) {
+                Arr::set($headers, $header, '********');
+            }
+        }
+
+        return $headers;
     }
 
     /**

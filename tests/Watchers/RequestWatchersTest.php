@@ -70,4 +70,23 @@ class RequestWatchersTest extends FeatureTestCase
         $this->assertSame('********', $entry->content['payload']['password']);
         $this->assertSame('********', $entry->content['payload']['password_confirmation']);
     }
+
+    public function test_request_watcher_hides_authorization()
+    {
+        Route::post('/dashboard', function () {
+            return response('success');
+        });
+
+        $this->post('/dashboard', [], [
+            'Authorization' => 'Basic YWxhZGRpbjpvcGVuc2VzYW1l',
+            'Content-Type' => 'application/json'
+        ]);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::REQUEST, $entry->type);
+        $this->assertSame('POST', $entry->content['method']);
+        $this->assertSame('application/json', $entry->content['headers']['content-type']);
+        $this->assertSame('********', $entry->content['headers']['authorization']);
+    }
 }
