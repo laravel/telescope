@@ -32,8 +32,8 @@ class RedisWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::REDIS, $entry->type);
-        self::assertSame('get telescope:test', $entry->content['command']);
-        self::assertSame('default', $entry->content['connection']);
+        $this->assertSame(EntryType::REDIS, $entry->type);
+        $this->assertSame('get telescope:test', $entry->content['command']);
+        $this->assertSame('default', $entry->content['connection']);
     }
 }

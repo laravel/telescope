@@ -27,8 +27,8 @@ class EventWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::EVENT, $entry->type);
-        self::assertSame(DummyEvent::class, $entry->content['name']);
+        $this->assertSame(EntryType::EVENT, $entry->type);
+        $this->assertSame(DummyEvent::class, $entry->content['name']);
     }
 
     public function test_event_watcher_stores_payloads()
@@ -40,10 +40,10 @@ class EventWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::EVENT, $entry->type);
-        self::assertSame(DummyEvent::class, $entry->content['name']);
-        self::assertArrayHasKey('data', $entry->content['payload']);
-        self::assertArraySubset(['Telescope', 'Laravel', 'PHP'], $entry->content['payload']['data']);
+        $this->assertSame(EntryType::EVENT, $entry->type);
+        $this->assertSame(DummyEvent::class, $entry->content['name']);
+        $this->assertArrayHasKey('data', $entry->content['payload']);
+        $this->assertArraySubset(['Telescope', 'Laravel', 'PHP'], $entry->content['payload']['data']);
 
     }
 }

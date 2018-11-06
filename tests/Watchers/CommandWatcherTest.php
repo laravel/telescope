@@ -27,9 +27,9 @@ class CommandWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::COMMAND, $entry->type);
-        self::assertSame('telescope:test-command', $entry->content['command']);
-        self::assertSame(0, $entry->content['exit_code']);
+        $this->assertSame(EntryType::COMMAND, $entry->type);
+        $this->assertSame('telescope:test-command', $entry->content['command']);
+        $this->assertSame(0, $entry->content['exit_code']);
     }
 }
 

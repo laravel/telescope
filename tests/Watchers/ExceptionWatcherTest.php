@@ -31,12 +31,12 @@ class ExceptionWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::EXCEPTION, $entry->type);
-        self::assertSame(BananaException::class, $entry->content['class']);
-        self::assertSame(__FILE__, $entry->content['file']);
-        self::assertSame(28, $entry->content['line']);
-        self::assertSame('Something went bananas.', $entry->content['message']);
-        self::assertArrayHasKey('trace', $entry->content);
+        $this->assertSame(EntryType::EXCEPTION, $entry->type);
+        $this->assertSame(BananaException::class, $entry->content['class']);
+        $this->assertSame(__FILE__, $entry->content['file']);
+        $this->assertSame(28, $entry->content['line']);
+        $this->assertSame('Something went bananas.', $entry->content['message']);
+        $this->assertArrayHasKey('trace', $entry->content);
     }
 }
 

@@ -25,9 +25,9 @@ class CacheWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::CACHE, $entry->type);
-        self::assertSame('missed', $entry->content['type']);
-        self::assertSame('empty-key', $entry->content['key']);
+        $this->assertSame(EntryType::CACHE, $entry->type);
+        $this->assertSame('missed', $entry->content['type']);
+        $this->assertSame('empty-key', $entry->content['key']);
     }
 
     public function test_cache_watcher_registers_store_entries()
@@ -36,10 +36,10 @@ class CacheWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::CACHE, $entry->type);
-        self::assertSame('set', $entry->content['type']);
-        self::assertSame('my-key', $entry->content['key']);
-        self::assertSame('laravel', $entry->content['value']);
+        $this->assertSame(EntryType::CACHE, $entry->type);
+        $this->assertSame('set', $entry->content['type']);
+        $this->assertSame('my-key', $entry->content['key']);
+        $this->assertSame('laravel', $entry->content['value']);
     }
 
     public function test_cache_watcher_registers_hit_entries()
@@ -54,10 +54,10 @@ class CacheWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::CACHE, $entry->type);
-        self::assertSame('hit', $entry->content['type']);
-        self::assertSame('telescope', $entry->content['key']);
-        self::assertSame('laravel', $entry->content['value']);
+        $this->assertSame(EntryType::CACHE, $entry->type);
+        $this->assertSame('hit', $entry->content['type']);
+        $this->assertSame('telescope', $entry->content['key']);
+        $this->assertSame('laravel', $entry->content['value']);
     }
 
     public function test_cache_watcher_registers_forget_entries()
@@ -72,8 +72,8 @@ class CacheWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::CACHE, $entry->type);
-        self::assertSame('forget', $entry->content['type']);
-        self::assertSame('outdated', $entry->content['key']);
+        $this->assertSame(EntryType::CACHE, $entry->type);
+        $this->assertSame('forget', $entry->content['type']);
+        $this->assertSame('outdated', $entry->content['key']);
     }
 }

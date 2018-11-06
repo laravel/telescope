@@ -27,10 +27,10 @@ class QueryWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::QUERY, $entry->type);
-        self::assertSame('select count(*) as aggregate from "telescope_entries"', $entry->content['sql']);
-        self::assertSame('testbench', $entry->content['connection']);
-        self::assertFalse($entry->content['slow']);
+        $this->assertSame(EntryType::QUERY, $entry->type);
+        $this->assertSame('select count(*) as aggregate from "telescope_entries"', $entry->content['sql']);
+        $this->assertSame('testbench', $entry->content['connection']);
+        $this->assertFalse($entry->content['slow']);
     }
 
     public function test_query_watcher_can_tag_slow_queries()
@@ -45,9 +45,9 @@ class QueryWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::QUERY, $entry->type);
-        self::assertCount(300, $entry->content['bindings']);
-        self::assertSame('testbench', $entry->content['connection']);
-        self::assertTrue($entry->content['slow']);
+        $this->assertSame(EntryType::QUERY, $entry->type);
+        $this->assertCount(300, $entry->content['bindings']);
+        $this->assertSame('testbench', $entry->content['connection']);
+        $this->assertTrue($entry->content['slow']);
     }
 }

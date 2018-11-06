@@ -49,10 +49,10 @@ class LogWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::LOG, $entry->type);
-        self::assertSame($level, $entry->content['level']);
-        self::assertSame("Logging Level [$level].", $entry->content['message']);
-        self::assertSame('Claire Redfield', $entry->content['context']['user']);
-        self::assertSame('Zombie Hunter', $entry->content['context']['role']);
+        $this->assertSame(EntryType::LOG, $entry->type);
+        $this->assertSame($level, $entry->content['level']);
+        $this->assertSame("Logging Level [$level].", $entry->content['message']);
+        $this->assertSame('Claire Redfield', $entry->content['context']['user']);
+        $this->assertSame('Zombie Hunter', $entry->content['context']['role']);
     }
 }

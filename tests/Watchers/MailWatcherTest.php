@@ -22,7 +22,7 @@ class MailWatcherTest extends FeatureTestCase
 
     public function test_mail_watcher_registers_entry()
     {
-        
+
         Mail::raw('Telescope is amazing!', function($message) {
             $message->from('from@laravel.com')
                 ->to('to@laravel.com')
@@ -31,19 +31,19 @@ class MailWatcherTest extends FeatureTestCase
                 ->subject('Check this out!');
         });
 
-        
+
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::MAIL, $entry->type);
-        self::assertEmpty($entry->content['mailable']);
-        self::assertSame(false, $entry->content['queued']);
-        self::assertSame(['from@laravel.com'], array_keys($entry->content['from']));
-        self::assertSame(['to@laravel.com'], array_keys($entry->content['to']));
-        self::assertSame(['cc1@laravel.com', 'cc2@laravel.com'], array_keys($entry->content['cc']));
-        self::assertSame(['bcc@laravel.com'], array_keys($entry->content['bcc']));
-        self::assertSame('Check this out!', $entry->content['subject']);
-        self::assertSame('Telescope is amazing!', $entry->content['html']);
-        self::assertContains('Telescope is amazing!', $entry->content['raw']);
-        self::assertEmpty($entry->content['replyTo']);
+        $this->assertSame(EntryType::MAIL, $entry->type);
+        $this->assertEmpty($entry->content['mailable']);
+        $this->assertSame(false, $entry->content['queued']);
+        $this->assertSame(['from@laravel.com'], array_keys($entry->content['from']));
+        $this->assertSame(['to@laravel.com'], array_keys($entry->content['to']));
+        $this->assertSame(['cc1@laravel.com', 'cc2@laravel.com'], array_keys($entry->content['cc']));
+        $this->assertSame(['bcc@laravel.com'], array_keys($entry->content['bcc']));
+        $this->assertSame('Check this out!', $entry->content['subject']);
+        $this->assertSame('Telescope is amazing!', $entry->content['html']);
+        $this->assertContains('Telescope is amazing!', $entry->content['raw']);
+        $this->assertEmpty($entry->content['replyTo']);
     }
 }
