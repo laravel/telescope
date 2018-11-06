@@ -545,6 +545,21 @@ class Telescope
     }
 
     /**
+     * Hide the given request header.
+     *
+     * @param  array  $headers
+     * @return static
+     */
+    public static function hideRequestHeader(array $headers)
+    {
+        static::$hiddenRequestHeaders= array_merge(
+            static::$hiddenRequestHeaders, $headers
+        );
+
+        return new static;
+    }
+
+    /**
      * Specifies that Telescope should record events fired by Laravel.
      *
      * @return static
