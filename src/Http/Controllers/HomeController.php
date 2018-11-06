@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Http\Controllers;
 
+use Laravel\Telescope\Telescope;
 use Illuminate\Routing\Controller;
 
 class HomeController extends Controller
@@ -13,6 +14,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('telescope::layout');
+        return response()->view('telescope::layout', [
+            'telescopeScriptVariables' => Telescope::scriptVariables(),
+        ]);
     }
 }

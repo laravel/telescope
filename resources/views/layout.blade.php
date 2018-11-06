@@ -177,9 +177,7 @@
 
 <!-- Global Telescope Object -->
 <script>
-    window.Telescope = <?php echo json_encode(array_merge(
-            \Laravel\Telescope\Telescope::scriptVariables(), []
-    )); ?>;
+    window.Telescope = @json($telescopeScriptVariables);
 </script>
 
 <script src="{{asset(mix('app.js', 'vendor/telescope'))}}"></script>
