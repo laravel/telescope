@@ -8,7 +8,6 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Http\Events\RequestHandled;
-use Illuminate\Routing\Router;
 
 class RequestWatcher extends Watcher
 {
