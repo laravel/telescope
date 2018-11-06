@@ -56,7 +56,7 @@ class RequestWatcher extends Watcher
             return $header[0];
         })->toArray();
 
-        foreach(Telescope::$hiddenRequestHeaders as $header) {
+        foreach (Telescope::$hiddenRequestHeaders as $header) {
             if (Arr::get($headers, $header)) {
                 Arr::set($headers, $header, '********');
             }

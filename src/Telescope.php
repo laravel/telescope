@@ -56,6 +56,15 @@ class Telescope
     public static $updatesQueue = [];
 
     /**
+     * The list of hidden request headers.
+     *
+     * @var array
+     */
+    public static $hiddenRequestHeaders = [
+        'authorization',
+    ];
+
+    /**
      * The list of hidden request parameters.
      *
      * @var array
@@ -63,15 +72,6 @@ class Telescope
     public static $hiddenRequestParameters = [
         'password',
         'password_confirmation',
-    ];
-
-    /**
-     * The list of hidden request headers.
-     *
-     * @var array
-     */
-    public static $hiddenRequestHeaders = [
-        'authorization',
     ];
 
     /**
@@ -530,6 +530,21 @@ class Telescope
     }
 
     /**
+     * Hide the given request header.
+     *
+     * @param  array  $headers
+     * @return static
+     */
+    public static function hideRequestHeaders(array $headers)
+    {
+        static::$hiddenRequestHeaders = array_merge(
+            static::$hiddenRequestHeaders, $headers
+        );
+
+        return new static;
+    }
+
+    /**
      * Hide the given request parameters.
      *
      * @param  array  $attributes
@@ -539,21 +554,6 @@ class Telescope
     {
         static::$hiddenRequestParameters = array_merge(
             static::$hiddenRequestParameters, $attributes
-        );
-
-        return new static;
-    }
-
-    /**
-     * Hide the given request header.
-     *
-     * @param  array  $headers
-     * @return static
-     */
-    public static function hideRequestHeader(array $headers)
-    {
-        static::$hiddenRequestHeaders= array_merge(
-            static::$hiddenRequestHeaders, $headers
         );
 
         return new static;
