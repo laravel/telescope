@@ -34,9 +34,9 @@ class ModelWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::MODEL, $entry->type);
-        self::assertSame('created', $entry->content['action']);
-        self::assertSame(UserEloquent::class . ':1', $entry->content['model']);
+        $this->assertSame(EntryType::MODEL, $entry->type);
+        $this->assertSame('created', $entry->content['action']);
+        $this->assertSame(UserEloquent::class . ':1', $entry->content['model']);
     }
 }
 

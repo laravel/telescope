@@ -32,10 +32,10 @@ class RequestWatchersTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::REQUEST, $entry->type);
-        self::assertSame('GET', $entry->content['method']);
-        self::assertSame(200, $entry->content['response_status']);
-        self::assertSame('/emails', $entry->content['uri']);
+        $this->assertSame(EntryType::REQUEST, $entry->type);
+        $this->assertSame('GET', $entry->content['method']);
+        $this->assertSame(200, $entry->content['response_status']);
+        $this->assertSame('/emails', $entry->content['uri']);
     }
 
     public function test_request_watcher_registers_404()
@@ -44,10 +44,10 @@ class RequestWatchersTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::REQUEST, $entry->type);
-        self::assertSame('GET', $entry->content['method']);
-        self::assertSame(404, $entry->content['response_status']);
-        self::assertSame('/whatever', $entry->content['uri']);
+        $this->assertSame(EntryType::REQUEST, $entry->type);
+        $this->assertSame('GET', $entry->content['method']);
+        $this->assertSame(404, $entry->content['response_status']);
+        $this->assertSame('/whatever', $entry->content['uri']);
     }
 
     public function test_request_watcher_hides_password()
@@ -64,10 +64,10 @@ class RequestWatchersTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::REQUEST, $entry->type);
-        self::assertSame('POST', $entry->content['method']);
-        self::assertSame('telescope@laravel.com', $entry->content['payload']['email']);
-        self::assertSame('********', $entry->content['payload']['password']);
-        self::assertSame('********', $entry->content['payload']['password_confirmation']);
+        $this->assertSame(EntryType::REQUEST, $entry->type);
+        $this->assertSame('POST', $entry->content['method']);
+        $this->assertSame('telescope@laravel.com', $entry->content['payload']['email']);
+        $this->assertSame('********', $entry->content['payload']['password']);
+        $this->assertSame('********', $entry->content['payload']['password_confirmation']);
     }
 }

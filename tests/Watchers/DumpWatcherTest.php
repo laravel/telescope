@@ -24,10 +24,10 @@ class DumpWatcherTest extends FeatureTestCase
     {
         $var = 'Telescopes are better than binoculars';
         dump($var);
-        
+
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::DUMP, $entry->type);
-        self::assertContains($var, $entry->content['dump']);
+        $this->assertSame(EntryType::DUMP, $entry->type);
+        $this->assertContains($var, $entry->content['dump']);
     }
 }

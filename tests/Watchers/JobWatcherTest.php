@@ -45,12 +45,12 @@ class JobWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::JOB, $entry->type);
-        self::assertSame('processed', $entry->content['status']);
-        self::assertSame('database', $entry->content['connection']);
-        self::assertSame(MyDatabaseJob::class, $entry->content['name']);
-        self::assertSame('on-demand', $entry->content['queue']);
-        self::assertSame('Awesome Laravel', $entry->content['data']['payload']);
+        $this->assertSame(EntryType::JOB, $entry->type);
+        $this->assertSame('processed', $entry->content['status']);
+        $this->assertSame('database', $entry->content['connection']);
+        $this->assertSame(MyDatabaseJob::class, $entry->content['name']);
+        $this->assertSame('on-demand', $entry->content['queue']);
+        $this->assertSame('Awesome Laravel', $entry->content['data']['payload']);
     }
 
     public function test_failed_jobs_register_entry()
@@ -66,13 +66,13 @@ class JobWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
-        self::assertSame(EntryType::JOB, $entry->type);
-        self::assertSame('failed', $entry->content['status']);
-        self::assertSame('database', $entry->content['connection']);
-        self::assertSame(MyFailedDatabaseJob::class, $entry->content['name']);
-        self::assertSame('default', $entry->content['queue']);
-        self::assertSame('I never watched Star Wars.', $entry->content['data']['message']);
-        self::assertArrayHasKey('exception', $entry->content);
+        $this->assertSame(EntryType::JOB, $entry->type);
+        $this->assertSame('failed', $entry->content['status']);
+        $this->assertSame('database', $entry->content['connection']);
+        $this->assertSame(MyFailedDatabaseJob::class, $entry->content['name']);
+        $this->assertSame('default', $entry->content['queue']);
+        $this->assertSame('I never watched Star Wars.', $entry->content['data']['message']);
+        $this->assertArrayHasKey('exception', $entry->content);
     }
 
     private function createJobsTable(): void
