@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Laravel\Telescope\Telescope;
@@ -110,7 +111,9 @@ class RequestWatcher extends Watcher
                     ? json_decode($response->getContent(), true) : 'Purged By Telescope';
         }
 
-        return 'HTML Response';
+        $originalContent = $response->getOriginalContent();
+
+        return $originalContent instanceof View ? ['view' => $originalContent->name(), 'path' => $originalContent->getPath(), 'data' => $originalContent->getData()] : 'HTML Response';
     }
 
     /**
