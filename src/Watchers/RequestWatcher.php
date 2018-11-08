@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
+use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 
@@ -113,7 +114,9 @@ class RequestWatcher extends Watcher
 
         $originalContent = $response->getOriginalContent();
 
-        return $originalContent instanceof View ? ['view' => $originalContent->name(), 'path' => $originalContent->getPath(), 'data' => $originalContent->getData()] : 'HTML Response';
+        return $originalContent instanceof View 
+                ? ['view' => $originalContent->getPath(), 'data' => $this->extractDataFromView($originalContent)]
+                : 'HTML Response';
     }
 
     /**
@@ -127,5 +130,27 @@ class RequestWatcher extends Watcher
         $limit = $this->options['size_limit'] ?? 64;
 
         return mb_strlen($content) / 1000 <= $limit;
+    }
+
+    /**
+     * Extract the data from the given view in array form.
+     *
+     * @param  \Illuminate\View\View  $view
+     * @return array
+     */
+    protected function extractDataFromView($view)
+    {
+        return collect($view->getData())->map(function ($value) {
+            if ($value instanceof Model) {
+                return get_class($value).':'.$value->getKey();
+            } elseif (is_object($value)) {
+                return [
+                    'class' => get_class($value),
+                    'properties' => json_decode(json_encode($value), true),
+                ];
+            } else {
+                return json_decode(json_encode($value), true);
+            }
+        })->toArray();
     }
 }
