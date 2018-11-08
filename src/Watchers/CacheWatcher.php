@@ -113,7 +113,7 @@ class CacheWatcher extends Watcher
         return Str::is([
             'illuminate:queue:restart',
             'framework/schedule*',
-            'telescope:dump-watcher',
+            'telescope:*',
         ], $event->key);
     }
 }
