@@ -167,7 +167,7 @@ class Telescope
      */
     public static function startRecording()
     {
-        static::$shouldRecord = true;
+        static::$shouldRecord = ! cache('telescope:pause-recording');
     }
 
     /**
@@ -178,16 +178,6 @@ class Telescope
     public static function stopRecording()
     {
         static::$shouldRecord = false;
-    }
-
-    /**
-     * Determine if Telescope is recording.
-     *
-     * @return boolean
-     */
-    public static function recording()
-    {
-        return static::$shouldRecord && ! cache('telescope:pause-recording');
     }
 
     /**
@@ -216,7 +206,7 @@ class Telescope
      */
     protected static function record(string $type, IncomingEntry $entry)
     {
-        if (! static::recording()) {
+        if (! static::$shouldRecord) {
             return;
         }
 
