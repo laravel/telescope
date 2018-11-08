@@ -181,6 +181,16 @@ class Telescope
     }
 
     /**
+     * Determine if Telescope is recording.
+     *
+     * @return boolean
+     */
+    public static function recording()
+    {
+        return static::$shouldRecord && ! cache('telescope:pause-recording');
+    }
+
+    /**
      * Execute the given callback without recording Telescope entries.
      *
      * @param  callable  $callback
@@ -206,7 +216,7 @@ class Telescope
      */
     protected static function record(string $type, IncomingEntry $entry)
     {
-        if (! static::$shouldRecord) {
+        if (! static::recording()) {
             return;
         }
 
@@ -591,6 +601,7 @@ class Telescope
         return [
             'path' => config('telescope.path'),
             'timezone' => config('app.timezone'),
+            'recording' => ! cache('telescope:pause-recording')
         ];
     }
 }

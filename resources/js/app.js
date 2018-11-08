@@ -49,9 +49,12 @@ new Vue({
                 confirmationCancel: null,
             },
 
-            autoLoadsNewEntries: localStorage.autoLoadsNewEntries === '1'
+            autoLoadsNewEntries: localStorage.autoLoadsNewEntries === '1',
+
+            recording: Telescope.recording,
         }
     },
+
 
     methods: {
         autoLoadNewEntries(){
@@ -62,6 +65,14 @@ new Vue({
                 this.autoLoadsNewEntries = false;
                 localStorage.autoLoadsNewEntries = 0;
             }
+        },
+
+
+        toggleRecording(){
+            axios.post('/' + Telescope.path + '/telescope-api/toggle-recording');
+
+            window.Telescope.recording = !Telescope.recording;
+            this.recording = !this.recording;
         }
     }
 });
