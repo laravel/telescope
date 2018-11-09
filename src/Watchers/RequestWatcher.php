@@ -105,6 +105,10 @@ class RequestWatcher extends Watcher
     {
         $content = $response->getContent();
 
+        if (empty($content)) {
+            return 'No Content';
+        }
+
         if (is_string($content) &&
             is_array(json_decode($content, true)) &&
             json_last_error() === JSON_ERROR_NONE) {
