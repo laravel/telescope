@@ -68562,7 +68562,9 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
                 confirmationCancel: null
             },
 
-            autoLoadsNewEntries: localStorage.autoLoadsNewEntries === '1'
+            autoLoadsNewEntries: localStorage.autoLoadsNewEntries === '1',
+
+            recording: Telescope.recording
         };
     },
 
@@ -68576,6 +68578,12 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
                 this.autoLoadsNewEntries = false;
                 localStorage.autoLoadsNewEntries = 0;
             }
+        },
+        toggleRecording: function toggleRecording() {
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/' + Telescope.path + '/telescope-api/toggle-recording');
+
+            window.Telescope.recording = !Telescope.recording;
+            this.recording = !this.recording;
         }
     }
 });

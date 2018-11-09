@@ -167,7 +167,7 @@ class Telescope
      */
     public static function startRecording()
     {
-        static::$shouldRecord = true;
+        static::$shouldRecord = ! cache('telescope:pause-recording');
     }
 
     /**
@@ -591,6 +591,7 @@ class Telescope
         return [
             'path' => config('telescope.path'),
             'timezone' => config('app.timezone'),
+            'recording' => ! cache('telescope:pause-recording')
         ];
     }
 }
