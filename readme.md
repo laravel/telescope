@@ -65,19 +65,12 @@ protected function gate()
 }
 ```
 
-#### Cleaning up old entries
+#### Pruning Entries
 
-If your application throws a lot of exceptions, the `telescope_entries` table can get very large, very quickly. Telescope can prune older entries from its database to help reduce this size.
+Without pruning, the `telescope_entries` table can accumulate records very quickly. To mitigate this, you should schedule the `telescope:prune` Artisan command to run daily:
 
-Either run this `artisan` command as a one-time cleanup or add it to your `Console/Kernel.php` as a scheduled task.
-
-```
-php artisan telescope:prune
-```
-
-As a scheduled task:
-```
-$schedule->command('telescope:prune')->dailyAt(1, '07:30');
+```php
+$schedule->command('telescope:prune')->daily();
 ```
 
 ## License
