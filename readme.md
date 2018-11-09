@@ -65,6 +65,21 @@ protected function gate()
 }
 ```
 
+#### Cleaning up old entries
+
+If your application throws a lot of exceptions, the `telescope_entries` table can get very large, very quickly. Telescope can prune older entries from its database to help reduce this size.
+
+Either run this `artisan` command as a one-time cleanup or add it to your `Console/Kernel.php` as a scheduled task.
+
+```
+php artisan telescope:prune
+```
+
+As a scheduled task:
+```
+$schedule->command('telescope:prune')->dailyAt(1, '07:30');
+```
+
 ## License
 
 Laravel Telescope is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
