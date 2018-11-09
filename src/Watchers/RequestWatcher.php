@@ -9,6 +9,7 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 
 class RequestWatcher extends Watcher
@@ -112,7 +113,8 @@ class RequestWatcher extends Watcher
                     ? json_decode($response->getContent(), true) : 'Purged By Telescope';
         }
 
-        $originalContent = $response->getOriginalContent();
+        $originalContent = $response instanceof IlluminateResponse
+                ? $response->getOriginalContent() : new \stdClass();
 
         return $originalContent instanceof View 
                 ? ['view' => $originalContent->getPath(), 'data' => $this->extractDataFromView($originalContent)]
