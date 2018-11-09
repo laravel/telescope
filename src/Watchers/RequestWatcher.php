@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Foundation\Http\Events\RequestHandled;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RequestWatcher extends Watcher
 {
@@ -113,12 +114,18 @@ class RequestWatcher extends Watcher
                     ? json_decode($response->getContent(), true) : 'Purged By Telescope';
         }
 
-        $originalContent = $response instanceof IlluminateResponse
-                ? $response->getOriginalContent() : new \stdClass();
+        if ($response instanceof RedirectResponse) {
+            return 'Redirected to '.$response->getTargetUrl();
+        }
 
-        return $originalContent instanceof View 
-                ? ['view' => $originalContent->getPath(), 'data' => $this->extractDataFromView($originalContent)]
-                : 'HTML Response';
+        if ($response instanceof IlluminateResponse && $response->getOriginalContent() instanceof View) {
+            return [
+                'view' => $response->getOriginalContent()->getPath(),
+                'data' => $this->extractDataFromView($response->getOriginalContent())
+            ];
+        }
+
+        return 'HTML Response';
     }
 
     /**
