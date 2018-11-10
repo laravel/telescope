@@ -26,7 +26,7 @@ class ModelWatcherTest extends FeatureTestCase
         });
 
         UserEloquent::query()
-                                                      ->create([
+            ->create([
                 'name' => 'Telescope',
                 'email' => 'telescope@laravel.com',
                 'password' => 1,
