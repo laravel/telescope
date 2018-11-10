@@ -6,6 +6,7 @@ use Laravel\Telescope\EntryType;
 use Illuminate\Support\Facades\Event;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\EventWatcher;
+use Laravel\Telescope\Tests\Fixtures\DummyEvent;
 
 class EventWatcherTest extends FeatureTestCase
 {
@@ -46,20 +47,5 @@ class EventWatcherTest extends FeatureTestCase
         $this->assertSame(DummyEvent::class, $entry->content['name']);
         $this->assertArrayHasKey('data', $entry->content['payload']);
         $this->assertArraySubset(['Telescope', 'Laravel', 'PHP'], $entry->content['payload']['data']);
-    }
-}
-
-class DummyEvent
-{
-    public $data;
-
-    public function __construct(...$payload)
-    {
-        $this->data = $payload;
-    }
-
-    public function handle()
-    {
-        //
     }
 }

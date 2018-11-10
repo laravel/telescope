@@ -5,9 +5,8 @@ namespace Laravel\Telescope\Tests\Watchers;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Notifications\Messages\MailMessage;
 use Laravel\Telescope\Watchers\NotificationWatcher;
-use Illuminate\Notifications\Notification as BaseNotification;
+use Laravel\Telescope\Tests\Fixtures\BoomerangNotification;
 
 class NotificationWatcherTest extends FeatureTestCase
 {
@@ -35,20 +34,5 @@ class NotificationWatcherTest extends FeatureTestCase
         $this->assertContains('telescope@laravel.com', $entry->content['notifiable']);
         $this->assertSame('mail', $entry->content['channel']);
         $this->assertNull($entry->content['response']);
-    }
-}
-
-class BoomerangNotification extends BaseNotification 
-{
-    public function via($notifiable)
-    {
-        return ['mail'];
-    }
-
-    public function toMail($notifiable)
-    {
-        return (new MailMessage)
-            ->greeting('Throw a boomerang')
-            ->line('They are fun!');
     }
 }

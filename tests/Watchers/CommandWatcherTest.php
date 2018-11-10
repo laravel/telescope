@@ -2,11 +2,11 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Illuminate\Console\Command;
 use Laravel\Telescope\EntryType;
 use Illuminate\Contracts\Console\Kernel;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\CommandWatcher;
+use Laravel\Telescope\Tests\Fixtures\MyCommand;
 
 class CommandWatcherTest extends FeatureTestCase
 {
@@ -30,15 +30,5 @@ class CommandWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::COMMAND, $entry->type);
         $this->assertSame('telescope:test-command', $entry->content['command']);
         $this->assertSame(0, $entry->content['exit_code']);
-    }
-}
-
-class MyCommand extends Command
-{
-    protected $signature = 'telescope:test-command';
-
-    public function handle()
-    {
-        //
     }
 }

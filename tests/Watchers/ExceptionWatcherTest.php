@@ -2,11 +2,11 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Exception;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Laravel\Telescope\Watchers\ExceptionWatcher;
+use Laravel\Telescope\Tests\Fixtures\BananaException;
 
 class ExceptionWatcherTest extends FeatureTestCase
 {
@@ -38,9 +38,4 @@ class ExceptionWatcherTest extends FeatureTestCase
         $this->assertSame('Something went bananas.', $entry->content['message']);
         $this->assertArrayHasKey('trace', $entry->content);
     }
-}
-
-class BananaException extends Exception
-{
-    //
 }

@@ -7,6 +7,7 @@ use Laravel\Telescope\Telescope;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Laravel\Telescope\Tests\Fixtures\Authenticated;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
 
@@ -110,40 +111,5 @@ class AuthorizationTest extends FeatureTestCase
 
         $this->post('/telescope/telescope-api/requests')
             ->assertSuccessful();
-    }
-}
-
-class Authenticated implements Authenticatable
-{
-    public $email;
-
-    public function getAuthIdentifierName()
-    {
-        return 'Telescope Test';
-    }
-
-    public function getAuthIdentifier()
-    {
-        return 'telescope-test';
-    }
-
-    public function getAuthPassword()
-    {
-        return 'secret';
-    }
-
-    public function getRememberToken()
-    {
-        return 'i-am-telescope';
-    }
-
-    public function setRememberToken($value)
-    {
-        //
-    }
-
-    public function getRememberTokenName()
-    {
-        //
     }
 }

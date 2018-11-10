@@ -4,9 +4,9 @@ namespace Laravel\Telescope\Tests\Watchers;
 
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Telescope;
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\ModelWatcher;
+use Laravel\Telescope\Tests\Fixtures\UserEloquent;
 
 class ModelWatcherTest extends FeatureTestCase
 {
@@ -26,7 +26,7 @@ class ModelWatcherTest extends FeatureTestCase
         });
 
         UserEloquent::query()
-            ->create([
+                                                      ->create([
                 'name' => 'Telescope',
                 'email' => 'telescope@laravel.com',
                 'password' => 1,
@@ -38,11 +38,4 @@ class ModelWatcherTest extends FeatureTestCase
         $this->assertSame('created', $entry->content['action']);
         $this->assertSame(UserEloquent::class.':1', $entry->content['model']);
     }
-}
-
-class UserEloquent extends Model
-{
-    protected $table = 'users';
-
-    protected $guarded = [];
 }

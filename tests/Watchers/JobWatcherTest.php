@@ -2,14 +2,14 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Exception;
 use Laravel\Telescope\EntryType;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Database\Schema\Blueprint;
 use Laravel\Telescope\Watchers\JobWatcher;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Laravel\Telescope\Tests\FeatureTestCase;
+use Laravel\Telescope\Tests\Fixtures\MyDatabaseJob;
+use Laravel\Telescope\Tests\Fixtures\MyFailedDatabaseJob;
 
 class JobWatcherTest extends FeatureTestCase
 {
@@ -95,43 +95,5 @@ class JobWatcherTest extends FeatureTestCase
             $table->longText('exception');
             $table->timestamp('failed_at')->useCurrent();
         });
-    }
-}
-
-class MyDatabaseJob implements ShouldQueue
-{
-    public $connection = 'database';
-
-    public $queue = 'on-demand';
-
-    private $payload;
-
-    public function __construct($payload)
-    {
-        $this->payload = $payload;
-    }
-
-    public function handle()
-    {
-        //
-    }
-}
-
-class MyFailedDatabaseJob implements ShouldQueue
-{
-    public $connection = 'database';
-
-    public $tries = 1;
-
-    private $message;
-
-    public function __construct($message)
-    {
-        $this->message = $message;
-    }
-
-    public function handle()
-    {
-        throw new Exception($this->message);
     }
 }
