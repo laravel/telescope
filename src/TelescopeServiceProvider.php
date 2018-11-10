@@ -18,7 +18,7 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Route::middlewareGroup('telescope', config('telescope.middleware', []));
+        Route::middlewareGroup('telescope', $this->app['config']->get('telescope.middleware', []));
 
         $this->registerRoutes();
         $this->registerMigrations();
@@ -53,7 +53,7 @@ class TelescopeServiceProvider extends ServiceProvider
     {
         return [
             'namespace' => 'Laravel\Telescope\Http\Controllers',
-            'prefix' => config('telescope.path'),
+            'prefix' => $this->app['config']->get('telescope.path'),
             'middleware' => 'telescope',
         ];
     }
@@ -120,7 +120,7 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     protected function registerStorageDriver()
     {
-        $driver = config('telescope.driver');
+        $driver = $this->app['config']->get('telescope.driver');
 
         if (method_exists($this, $method = 'register'.ucfirst($driver).'Driver')) {
             $this->$method();
@@ -148,6 +148,6 @@ class TelescopeServiceProvider extends ServiceProvider
 
         $this->app->when(DatabaseEntriesRepository::class)
             ->needs('$connection')
-            ->give(config('telescope.storage.database.connection'));
+            ->give($this->app['config']->get('telescope.storage.database.connection'));
     }
 }
