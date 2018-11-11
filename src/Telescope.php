@@ -105,7 +105,7 @@ class Telescope
     {
         if ($app->runningUnitTests() ||
             ! (static::runningApprovedArtisanCommand($app) ||
-            static::handlingNonTelescopeRequest($app))) {
+            static::handlingApprovedRequest($app))) {
             return;
         }
 
@@ -143,19 +143,21 @@ class Telescope
     }
 
     /**
-     * Determine if the application is handling a request not originating from Telescope, or Horizon.
+     * Determine if the application is handling an approved request.
      *
      * @param  \Illuminate\Foundation\Application  $app
      * @return bool
      */
-    protected static function handlingNonTelescopeRequest($app)
+    protected static function handlingApprovedRequest($app)
     {
         return ! $app->runningInConsole() && ! $app['request']->is(
-            config('telescope.path').'*',
-            'telescope-api*',
-            'vendor/telescope*',
-            'horizon*',
-            'vendor/horizon*'
+            array_merge([
+                config('telescope.path').'*',
+                'telescope-api*',
+                'vendor/telescope*',
+                'horizon*',
+                'vendor/horizon*'
+            ], config('telescope.ignore_routes', []))
         );
     }
 
