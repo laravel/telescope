@@ -62,6 +62,9 @@ class Telescope
      */
     public static $hiddenRequestHeaders = [
         'authorization',
+        'cookie',
+        'x-csrf-token',
+        'x-xsrf-token',
     ];
 
     /**
@@ -72,6 +75,7 @@ class Telescope
     public static $hiddenRequestParameters = [
         'password',
         'password_confirmation',
+        '_token',
     ];
 
     /**
