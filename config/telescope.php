@@ -44,6 +44,35 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Ignored Paths
+    |--------------------------------------------------------------------------
+    |
+    | The following array lists the request paths that will not be "watched"
+    | by Telescope. In addition to this list, Horizon and Telescope paths
+    | are ignored. Wildcards patterns are supported in this list below.
+    |
+    */
+    'ignore_paths' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Ignored Commands
+    |--------------------------------------------------------------------------
+    |
+    | The following array lists the Artisan commands that will not be watched
+    | by Telescope. In addition to this list, certain migration, queue and
+    | Horizon commands are ignored. Wildcard patterns are not supported.
+    |
+    */
+    'ignore_commands' => [
+        // 'db:seed',
+        // 'migrate',
+        // 'migrate:refresh',
+        // 'telescope:prune',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Watchers
     |--------------------------------------------------------------------------
     |
