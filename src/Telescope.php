@@ -157,7 +157,7 @@ class Telescope
                 'vendor/telescope*',
                 'horizon*',
                 'vendor/horizon*'
-            ], config('telescope.ignore_routes', []))
+            ], config('telescope.ignore_paths', []))
         );
     }
 
