@@ -10,9 +10,9 @@
 
 <template>
     <index-screen title="Requests" resource="requests">
-        <tr slot="table-header">
+        <tr slot="table-header" slot-scope="slotProps">
             <th scope="col">Verb</th>
-            <th scope="col">Path</th>
+            <th scope="col">Path <button v-on:click.prevent="slotProps.showHostname">Show Hostname</button> </th>
             <th scope="col">Status</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -26,7 +26,17 @@
                 </span>
             </td>
 
-            <td :title="slotProps.entry.content.uri">{{truncate(slotProps.entry.content.uri, 70)}}</td>
+            <td>
+                <div :title="slotProps.entry.content.headers.host" v-show="slotProps.showsHostname">
+                    <span class="badge" style="height: 18px; width: 18px; display: inline-block; vertical-align: middle;" :style="'background-color:#'+slotProps.entry.hostname_color"></span>
+                    {{slotProps.entry.content.headers.host}}
+                </div>
+
+                <div :title="slotProps.entry.content.uri">
+                    <span v-show="!slotProps.showsHostname" class="badge" style="height: 18px; width: 18px; display: inline-block; vertical-align: middle;" :style="'background-color:#'+slotProps.entry.hostname_color"></span>
+                    {{truncate(slotProps.entry.content.uri, 70)}}
+                </div>
+            </td>
 
             <td class="table-fit">
                 <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(slotProps.entry.content.response_status)">

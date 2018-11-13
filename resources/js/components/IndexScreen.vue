@@ -32,6 +32,8 @@
 
                 updateEntriesTimeout: null,
                 updateEntriesTimer: 2500,
+
+                showsHostname: localStorage.autoLoadsNewEntries === '1',
             };
         },
 
@@ -252,7 +254,20 @@
                         }
                     }
                 };
-            }
+            },
+
+            /**
+             * Toggle hostname display
+             */
+            showHostname(){
+                if (!this.showsHostname) {
+                    this.showsHostname = true;
+                    localStorage.showsHostname = 1;
+                } else {
+                    this.showsHostname = false;
+                    localStorage.showsHostname = 0;
+                }
+            },
         }
     }
 </script>
@@ -289,7 +304,7 @@
 
         <table id="indexScreen" class="table table-hover table-sm mb-0 penultimate-column-right" v-if="ready && entries.length > 0">
             <thead>
-            <slot name="table-header"></slot>
+            <slot name="table-header" :showHostname="showHostname"></slot>
             </thead>
 
 
@@ -304,7 +319,7 @@
 
 
                 <tr v-for="entry in entries" :key="entry.id">
-                    <slot name="row" :entry="entry"></slot>
+                    <slot name="row" :entry="entry" :showsHostname="showsHostname"></slot>
                 </tr>
 
 
