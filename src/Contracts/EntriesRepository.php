@@ -42,6 +42,13 @@ interface EntriesRepository
     public function update(Collection $updates);
 
     /**
+     * Load the monitored tags from storage.
+     *
+     * @return void
+     */
+    public function loadMonitoredTags();
+
+    /**
      * Determine if any of the given tags are currently being monitored.
      *
      * @param  array  $tags

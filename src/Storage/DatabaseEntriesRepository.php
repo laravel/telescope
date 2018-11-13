@@ -225,6 +225,16 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     }
 
     /**
+     * Load the monitored tags from storage.
+     *
+     * @return void
+     */
+    public function loadMonitoredTags()
+    {
+        $this->monitoredTags = $this->monitoring();
+    }
+
+    /**
      * Determine if any of the given tags are currently being monitored.
      *
      * @param  array  $tags
@@ -237,16 +247,6 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
         }
 
         return count(array_intersect($tags, $this->monitoredTags)) > 0;
-    }
-
-    /**
-     * Load the monitored tags from storage.
-     *
-     * @return void
-     */
-    public function loadMonitoredTags()
-    {
-        $this->monitoredTags = $this->monitoring();
     }
 
     /**
