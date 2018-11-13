@@ -215,8 +215,12 @@ class Telescope
             static::$tagUsing ? call_user_func(static::$tagUsing, $entry) : []
         );
 
-        if (Auth::hasUser()) {
-            $entry->user(Auth::user());
+        try{
+            if (Auth::hasUser()) {
+                $entry->user(Auth::user());
+            }
+        }catch(\Throwable $e){
+            // Do nothing.
         }
 
         static::withoutRecording(function () use ($entry) {
