@@ -168,6 +168,8 @@ class Telescope
      */
     public static function startRecording()
     {
+        app(EntriesRepository::class)->loadMonitoredTags();
+
         static::$shouldRecord = ! cache('telescope:pause-recording');
     }
 

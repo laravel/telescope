@@ -233,10 +233,20 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     public function isMonitoring(array $tags)
     {
         if (is_null($this->monitoredTags)) {
-            $this->monitoredTags = $this->monitoring();
+            $this->loadMonitoredTags();
         }
 
         return count(array_intersect($tags, $this->monitoredTags)) > 0;
+    }
+
+    /**
+     * Load the monitored tags from storage.
+     *
+     * @return void
+     */
+    public function loadMonitoredTags()
+    {
+        $this->monitoredTags = $this->monitoring();
     }
 
     /**
