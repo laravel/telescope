@@ -3,8 +3,8 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Laravel\Telescope\EntryType;
-use Laravel\Telescope\Tests\FeatureTestCase;
 use Illuminate\Support\Facades\Notification;
+use Laravel\Telescope\Tests\FeatureTestCase;
 use Illuminate\Notifications\Messages\MailMessage;
 use Laravel\Telescope\Watchers\NotificationWatcher;
 use Illuminate\Notifications\Notification as BaseNotification;
@@ -38,7 +38,7 @@ class NotificationWatcherTest extends FeatureTestCase
     }
 }
 
-class BoomerangNotification extends BaseNotification 
+class BoomerangNotification extends BaseNotification
 {
     public function via($notifiable)
     {

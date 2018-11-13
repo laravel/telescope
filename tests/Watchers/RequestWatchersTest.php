@@ -79,7 +79,7 @@ class RequestWatchersTest extends FeatureTestCase
 
         $this->post('/dashboard', [], [
             'Authorization' => 'Basic YWxhZGRpbjpvcGVuc2VzYW1l',
-            'Content-Type' => 'application/json'
+            'Content-Type' => 'application/json',
         ]);
 
         $entry = $this->loadTelescopeEntries()->first();

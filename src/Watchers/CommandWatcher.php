@@ -52,7 +52,7 @@ class CommandWatcher extends Watcher
         return in_array($event->command, array_merge($this->options['ignore'] ?? [], [
             'schedule:run',
             'schedule:finish',
-            'package:discover'
+            'package:discover',
         ]));
     }
 }
