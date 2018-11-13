@@ -44,31 +44,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Ignored Paths
+    | Ignored Paths & Commands
     |--------------------------------------------------------------------------
     |
-    | The following array lists the request paths that will not be "watched"
-    | by Telescope. In addition to this list, Horizon and Telescope paths
-    | are ignored. Wildcards patterns are supported in this list below.
+    | The following array lists the URI paths and Artisan commands that will
+    | not be watched by Telescope. In addition to this list, some Laravel
+    | commands, like migrations and queue commands, are always ignored.
     |
     */
-    'ignore_paths' => [],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Ignored Commands
-    |--------------------------------------------------------------------------
-    |
-    | The following array lists the Artisan commands that will not be watched
-    | by Telescope. In addition to this list, certain migration, queue and
-    | Horizon commands are ignored. Wildcard patterns are not supported.
-    |
-    */
+    'ignore_paths' => [
+        //
+    ],
+
     'ignore_commands' => [
-        // 'db:seed',
-        // 'migrate',
-        // 'migrate:refresh',
-        // 'telescope:prune',
+        //
     ],
 
     /*
