@@ -28,7 +28,7 @@ class RecordingController extends Controller
     /**
      * Toggle recording.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return int|null
      */
     public function toggle()
     {

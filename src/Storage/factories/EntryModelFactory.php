@@ -3,10 +3,7 @@
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Storage\EntryModel;
 
-/*
- * @var \Illuminate\Database\Eloquent\Factory $factory
- */
-
+/* @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(EntryModel::class, function (Faker\Generator $faker) {
     return [
         'sequence' => random_int(1, 10000),
