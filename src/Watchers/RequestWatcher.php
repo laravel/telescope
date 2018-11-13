@@ -40,7 +40,7 @@ class RequestWatcher extends Watcher
             'controller_action' => optional($event->request->route())->getActionName(),
             'middleware' => optional($event->request->route())->gatherMiddleware() ?? [],
             'headers' => $this->headers($event->request->headers->all()),
-            'payload' => $this->payload($event->request->all()),
+            'payload' => $this->payload($this->input($event->request)),
             'session' => $this->payload($this->sessionVariables($event->request)),
             'response_status' => $event->response->getStatusCode(),
             'response' => $this->response($event->response),
@@ -95,6 +95,23 @@ class RequestWatcher extends Watcher
     private function sessionVariables(Request $request)
     {
         return $request->hasSession() ? $request->session()->all() : [];
+    }
+
+    /**
+     * Extract the input from the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    private function input(Request $request)
+    {
+        $files = $request->files->all();
+
+        array_walk_recursive($files, function (&$value) {
+            $value = 'File detected by Telescope';
+        });
+
+        return array_replace_recursive($request->input(), $files);
     }
 
     /**
