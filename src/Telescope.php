@@ -156,7 +156,7 @@ class Telescope
                 'telescope-api*',
                 'vendor/telescope*',
                 'horizon*',
-                'vendor/horizon*'
+                'vendor/horizon*',
             ], config('telescope.ignore_paths', []))
         );
     }
@@ -217,11 +217,11 @@ class Telescope
             static::$tagUsing ? call_user_func(static::$tagUsing, $entry) : []
         );
 
-        try{
+        try {
             if (Auth::hasUser()) {
                 $entry->user(Auth::user());
             }
-        }catch(\Throwable $e){
+        } catch (Throwable $e) {
             // Do nothing.
         }
 
@@ -598,7 +598,7 @@ class Telescope
         return [
             'path' => config('telescope.path'),
             'timezone' => config('app.timezone'),
-            'recording' => ! cache('telescope:pause-recording')
+            'recording' => ! cache('telescope:pause-recording'),
         ];
     }
 }

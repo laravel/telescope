@@ -121,7 +121,7 @@ class RequestWatcher extends Watcher
         if ($response instanceof IlluminateResponse && $response->getOriginalContent() instanceof View) {
             return [
                 'view' => $response->getOriginalContent()->getPath(),
-                'data' => $this->extractDataFromView($response->getOriginalContent())
+                'data' => $this->extractDataFromView($response->getOriginalContent()),
             ];
         }
 
