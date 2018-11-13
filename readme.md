@@ -65,6 +65,14 @@ protected function gate()
 }
 ```
 
+#### Pruning Entries
+
+Without pruning, the `telescope_entries` table can accumulate records very quickly. To mitigate this, you should schedule the `telescope:prune` Artisan command to run daily:
+
+```php
+$schedule->command('telescope:prune')->daily();
+```
+
 ## License
 
 Laravel Telescope is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

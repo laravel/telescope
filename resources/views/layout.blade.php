@@ -11,11 +11,7 @@
 
     <!-- Style sheets-->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    @if(\Laravel\Telescope\Telescope::$useDarkTheme)
-        <link href='{{asset(mix('app-dark.css', 'vendor/telescope'))}}' rel='stylesheet' type='text/css'>
-    @else
-        <link href='{{asset(mix('app.css', 'vendor/telescope'))}}' rel='stylesheet' type='text/css'>
-    @endif
+    <link href='{{ asset(mix($cssFile, 'vendor/telescope')) }}' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <div id="telescope" v-cloak>
@@ -186,9 +182,7 @@
 
 <!-- Global Telescope Object -->
 <script>
-    window.Telescope = <?php echo json_encode(array_merge(
-            \Laravel\Telescope\Telescope::scriptVariables(), []
-    )); ?>;
+    window.Telescope = @json($telescopeScriptVariables);
 </script>
 
 <script src="{{asset(mix('app.js', 'vendor/telescope'))}}"></script>
