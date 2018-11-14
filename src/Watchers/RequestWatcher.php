@@ -107,8 +107,11 @@ class RequestWatcher extends Watcher
     {
         $files = $request->files->all();
 
-        array_walk_recursive($files, function (&$value) {
-            $value = 'File detected by Telescope';
+        array_walk_recursive($files, function (&$file) {
+            $file = [
+                'name' => $file->getClientOriginalName(),
+                'size' => ($file->getSize() / 1000).'KB',
+            ];
         });
 
         return array_replace_recursive($request->input(), $files);
