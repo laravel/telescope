@@ -29,7 +29,7 @@
             </td>
         </tr>
 
-        <tr>
+        <tr v-if="slotProps.entry.content.middleware">
             <td class="table-fit font-weight-bold">Middleware</td>
             <td>
                 {{slotProps.entry.content.middleware.join(", ")}}

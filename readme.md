@@ -64,7 +64,7 @@ public function register()
 When updating Telescope, you should re-publish Telescope's assets:
 
 ```sh
-php artisan vendor:publish --tag=telescope-assets --force
+php artisan telescope:publish
 ```
 <a name="dashboard-authorization"></a>
 ### Dashboard Authorization
