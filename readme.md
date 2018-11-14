@@ -17,13 +17,13 @@ Laravel Telescope is an elegant debug assistant for the Laravel framework. Teles
 
 ## Installation & Configuration
 
+> **Note:** Telescope requires Laravel 5.7.7+.
+
 You may use Composer to install Telescope into your Laravel project:
 
 ```sh
- composer require laravel/telescope --dev
+ composer require laravel/telescope
 ```
-
-> **Note:** Telescope requires Laravel 5.7.7+.
 
 After installing Telescope, publish its assets using the `telescope:install` Artisan command. After installing Telescope, you should also run the `migrate` command:
 
@@ -35,7 +35,31 @@ php artisan migrate
 
 After publishing Telescope's assets, its primary configuration file will be located at `config/telescope.php`. This configuration file allows you to configure your watcher options and each configuration option includes a description of its purpose, so be sure to thoroughly explore this file.
 
-#### Updating Telescope
+### Installing Telescope Only In Specific Environments
+
+If you plan to only use Telescope to assist your local development. You may install Telescope using the `--dev` flag:
+
+```sh
+composer require laravel/telescope --dev
+```
+
+After running `telescope:install`, you should remove the `TelescopeServiceProvider` service provider registration from your `app` configuration file. Instead, manually register the service provider in the `register` method of your `AppServiceProvider`:
+
+```php
+/**
+ * Register any application services.
+ *
+ * @return void
+ */
+public function register()
+{
+    if ($this->app->isLocal()) {
+        $this->app->register(TelescopeServiceProvider::class);
+    }
+}
+```
+
+### Updating Telescope
 
 When updating Telescope, you should re-publish Telescope's assets:
 
