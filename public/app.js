@@ -53785,19 +53785,21 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticClass: "table-fit font-weight-bold" }, [
-                _vm._v("Middleware")
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(slotProps.entry.content.middleware.join(", ")) +
-                    "\n        "
-                )
-              ])
-            ]),
+            slotProps.entry.content.middleware
+              ? _c("tr", [
+                  _c("td", { staticClass: "table-fit font-weight-bold" }, [
+                    _vm._v("Middleware")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(slotProps.entry.content.middleware.join(", ")) +
+                        "\n        "
+                    )
+                  ])
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("tr", [
               _c("td", { staticClass: "table-fit font-weight-bold" }, [
