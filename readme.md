@@ -15,87 +15,13 @@ Laravel Telescope is an elegant debug assistant for the Laravel framework. Teles
 <img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1539110860/Screen_Shot_2018-10-09_at_1.47.23_PM.png">
 </p>
 
-## Installation & Configuration
+## Official Documentation
 
-> **Note:** Telescope requires Laravel 5.7.7+.
+Documentation for Telescope can be found on the [Laravel website](https://laravel.com/docs/telescope).
 
-You may use Composer to install Telescope into your Laravel project:
+## License
 
-```sh
- composer require laravel/telescope
-```
-
-After installing Telescope, publish its assets using the `telescope:install` Artisan command. After installing Telescope, you should also run the `migrate` command:
-
-```sh
-php artisan telescope:install
-
-php artisan migrate
-```
-
-After publishing Telescope's assets, its primary configuration file will be located at `config/telescope.php`. This configuration file allows you to configure your watcher options and each configuration option includes a description of its purpose, so be sure to thoroughly explore this file.
-
-### Installing Telescope Only In Specific Environments
-
-If you plan to only use Telescope to assist your local development. You may install Telescope using the `--dev` flag:
-
-```sh
-composer require laravel/telescope --dev
-```
-
-After running `telescope:install`, you should remove the `TelescopeServiceProvider` service provider registration from your `app` configuration file. Instead, manually register the service provider in the `register` method of your `AppServiceProvider`:
-
-```php
-/**
- * Register any application services.
- *
- * @return void
- */
-public function register()
-{
-    if ($this->app->isLocal()) {
-        $this->app->register(TelescopeServiceProvider::class);
-    }
-}
-```
-
-### Updating Telescope
-
-When updating Telescope, you should re-publish Telescope's assets:
-
-```sh
-php artisan telescope:publish
-```
-<a name="dashboard-authorization"></a>
-### Dashboard Authorization
-
-Telescope exposes a dashboard at `/telescope`. By default, you will only be able to access this dashboard in the `local` environment. Within your `app/Providers/TelescopeServiceProvider.php` file, there is a `gate` method. This authorization gate controls access to Telescope in **non-local** environments. You are free to modify this gate as needed to restrict access to your Telescope installation:
-
-```php
-/**
- * Register the Telescope gate.
- *
- * This gate determines who can access Telescope in non-local environments.
- *
- * @return void
- */
-protected function gate()
-{
-    Gate::define('viewTelescope', function ($user) {
-        return in_array($user->email, [
-            'taylor@laravel.com',
-        ]);
-    });
-}
-```
-
-#### Pruning Entries
-
-Without pruning, the `telescope_entries` table can accumulate records very quickly. To mitigate this, you should schedule the `telescope:prune` Artisan command to run daily:
-
-```php
-$schedule->command('telescope:prune')->daily();
-```
+Laravel Telescope is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ## License
 
