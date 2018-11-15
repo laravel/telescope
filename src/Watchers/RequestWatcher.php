@@ -38,7 +38,7 @@ class RequestWatcher extends Watcher
             'uri' => str_replace($event->request->root(), '', $event->request->fullUrl()) ?: '/',
             'method' => $event->request->method(),
             'controller_action' => optional($event->request->route())->getActionName(),
-            'middleware' => optional($event->request->route())->gatherMiddleware() ?? [],
+            'middleware' => array_values(optional($event->request->route())->gatherMiddleware() ?? []),
             'headers' => $this->headers($event->request->headers->all()),
             'payload' => $this->payload($this->input($event->request)),
             'session' => $this->payload($this->sessionVariables($event->request)),
