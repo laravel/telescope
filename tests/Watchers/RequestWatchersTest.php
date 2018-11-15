@@ -3,10 +3,10 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Laravel\Telescope\EntryType;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Route;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\RequestWatcher;
-use Illuminate\Http\UploadedFile;
 
 class RequestWatchersTest extends FeatureTestCase
 {
@@ -96,14 +96,14 @@ class RequestWatchersTest extends FeatureTestCase
         $image = UploadedFile::fake()->image('avatar.jpg');
 
         $this->post('fake-upload-file-route', [
-            'image' => $image
+            'image' => $image,
         ]);
 
         $uploadedImage = $this->loadTelescopeEntries()->first()->content['payload']['image'];
 
         $this->assertSame($image->getClientOriginalName(), $uploadedImage['name']);
 
-        $this->assertSame($image->getSize() / 1000 . 'KB', $uploadedImage['size']);
+        $this->assertSame($image->getSize() / 1000 .'KB', $uploadedImage['size']);
     }
 
     public function test_request_watcher_handles_unlinked_file_uploads()
@@ -113,7 +113,7 @@ class RequestWatchersTest extends FeatureTestCase
         unlink($image->getPathName());
 
         $this->post('fake-upload-file-route', [
-            'unlinked-image' => $image
+            'unlinked-image' => $image,
         ]);
 
         $uploadedImage = $this->loadTelescopeEntries()->first()->content['payload']['unlinked-image'];
