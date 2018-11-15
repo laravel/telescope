@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Laravel\Telescope\EntryType;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Route;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\RequestWatcher;
@@ -88,5 +89,37 @@ class RequestWatchersTest extends FeatureTestCase
         $this->assertSame('POST', $entry->content['method']);
         $this->assertSame('application/json', $entry->content['headers']['content-type']);
         $this->assertSame('********', $entry->content['headers']['authorization']);
+    }
+
+    public function test_request_watcher_handles_file_uploads()
+    {
+        $image = UploadedFile::fake()->image('avatar.jpg');
+
+        $this->post('fake-upload-file-route', [
+            'image' => $image,
+        ]);
+
+        $uploadedImage = $this->loadTelescopeEntries()->first()->content['payload']['image'];
+
+        $this->assertSame($image->getClientOriginalName(), $uploadedImage['name']);
+
+        $this->assertSame($image->getSize() / 1000 .'KB', $uploadedImage['size']);
+    }
+
+    public function test_request_watcher_handles_unlinked_file_uploads()
+    {
+        $image = UploadedFile::fake()->image('unlinked-image.jpg');
+
+        unlink($image->getPathName());
+
+        $this->post('fake-upload-file-route', [
+            'unlinked-image' => $image,
+        ]);
+
+        $uploadedImage = $this->loadTelescopeEntries()->first()->content['payload']['unlinked-image'];
+
+        $this->assertSame($image->getClientOriginalName(), $uploadedImage['name']);
+
+        $this->assertSame('0KB', $uploadedImage['size']);
     }
 }
