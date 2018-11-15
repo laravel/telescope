@@ -120,6 +120,6 @@ class RequestWatchersTest extends FeatureTestCase
 
         $this->assertSame($image->getClientOriginalName(), $uploadedImage['name']);
 
-        $this->assertSame('0KB', $uploadedImage['size']);
+        $this->assertSame('0', $uploadedImage['size']);
     }
 }
