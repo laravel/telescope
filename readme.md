@@ -22,7 +22,3 @@ Documentation for Telescope can be found on the [Laravel website](https://larave
 ## License
 
 Laravel Telescope is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-## License
-
-Laravel Telescope is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
