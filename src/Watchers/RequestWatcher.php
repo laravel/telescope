@@ -110,7 +110,7 @@ class RequestWatcher extends Watcher
         array_walk_recursive($files, function (&$file) {
             $file = [
                 'name' => $file->getClientOriginalName(),
-                'size' => ($file->getSize() / 1000).'KB',
+                'size' => ($file->isValid() && $file->isFile() ? $file->getSize() : 0) / 1000 .'KB',
             ];
         });
 
