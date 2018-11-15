@@ -65,7 +65,7 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     private function registerMigrations()
     {
-        if ($this->app->runningInConsole()) {
+        if ($this->app->runningInConsole() && $this->shouldMigrate()) {
             $this->loadMigrationsFrom(__DIR__.'/Storage/migrations');
         }
     }
@@ -149,5 +149,15 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->app->when(DatabaseEntriesRepository::class)
             ->needs('$connection')
             ->give(config('telescope.storage.database.connection'));
+    }
+
+    /**
+     * Determine if we should register the migrations.
+     *
+     * @return bool
+     */
+    protected function shouldMigrate()
+    {
+        return config('telescope.driver') === 'database';
     }
 }
