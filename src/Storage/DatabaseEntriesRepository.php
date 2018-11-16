@@ -81,6 +81,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             ->take($options->limit)
             ->orderByDesc('sequence')
             ->get()->map(function ($entry) {
+                $hostnameColor = substr(md5($entry->content['headers']['host']), -6);
+
                 return new EntryResult(
                     $entry->uuid,
                     $entry->sequence,
@@ -88,6 +90,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                     $entry->type,
                     $entry->family_hash,
                     $entry->content,
+                    $hostnameColor,
                     $entry->created_at,
                     []
                 );

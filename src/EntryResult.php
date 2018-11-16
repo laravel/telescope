@@ -50,6 +50,13 @@ class EntryResult implements JsonSerializable
     public $content = [];
 
     /**
+     * The entry's hostname color in hex.
+     *
+     * @var string
+     */
+    public $hostnameColor;
+
+    /**
      * The datetime that the entry was recorded.
      *
      * @var Carbon
@@ -75,13 +82,14 @@ class EntryResult implements JsonSerializable
      * @param  \Carbon\Carbon  $createdAt
      * @param  array  $tags
      */
-    public function __construct($id, $sequence, string $batchId, string $type, ?string $familyHash, array $content, Carbon $createdAt, $tags = [])
+    public function __construct($id, $sequence, string $batchId, string $type, ?string $familyHash, array $content, ?string $hostnameColor, Carbon $createdAt, $tags = [])
     {
         $this->id = $id;
         $this->type = $type;
         $this->tags = $tags;
         $this->batchId = $batchId;
         $this->content = $content;
+        $this->hostnameColor = $hostnameColor;
         $this->sequence = $sequence;
         $this->createdAt = $createdAt;
         $this->familyHash = $familyHash;
@@ -100,6 +108,7 @@ class EntryResult implements JsonSerializable
             'batch_id' => $this->batchId,
             'type' => $this->type,
             'content' => $this->content,
+            'hostname_color' => $this->hostnameColor,
             'tags' => $this->tags,
             'family_hash' => $this->familyHash,
             'created_at' => $this->createdAt->toDateTimeString(),
