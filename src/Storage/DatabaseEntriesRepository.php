@@ -232,8 +232,11 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function loadMonitoredTags()
     {
-        $this->monitoredTags = Schema::connection($this->connection)->hasTable('telescope_monitoring')
-                            ? $this->monitoring() : [];
+        try {
+            $this->monitoredTags = $this->monitoring();
+        } catch (\Throwable $e) {
+            $this->monitoredTags = [];
+        }
     }
 
     /**
