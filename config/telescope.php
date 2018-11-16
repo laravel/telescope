@@ -73,6 +73,20 @@ return [
     'ignore_commands' => [
         //
     ],
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Pruning
+    |--------------------------------------------------------------------------
+    |
+    | Without pruning, the telescope_entries table can accumulate records very quickly. 
+    | To mitigate this, you should schedule the telescope:prune Artisan command to run daily.
+    | 
+    | Using this parameter you can set the age of records to be pruned (in hours)
+    |
+    */
+    
+    'prune_records_older_than' => 24,
 
     /*
     |--------------------------------------------------------------------------
