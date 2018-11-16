@@ -87,6 +87,10 @@ return [
         Watchers\QueryWatcher::class => [
             'enabled' => env('TELESCOPE_QUERY_WATCHER', true),
             'slow' => 100,
+            'explain' => [
+                'enabled' => env('TELESCOPE_EXPLAIN_QUERIES', false),
+                'types' => ['select'],  // ['select', 'insert', 'update', 'delete']
+            ],
         ],
 
         Watchers\RedisWatcher::class => env('TELESCOPE_REDIS_WATCHER', true),

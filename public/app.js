@@ -52509,7 +52509,295 @@ var render = function() {
                   )
                 ]
               )
-            ])
+            ]),
+            _vm._v(" "),
+            slotProps.entry.content.explains &&
+            slotProps.entry.content.explains.length
+              ? _c("div", { staticClass: "card mt-5" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h5", [_vm._v("Explains")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "table-responsive" }, [
+                    _c(
+                      "table",
+                      { staticClass: "table table-hover table-sm mb-0" },
+                      [
+                        _c("thead", [
+                          _c("tr", [
+                            _c("th", [_vm._v("id")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("select_type")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("table")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("partitions")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("type")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("possible_keys")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("key")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("key_len")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("ref")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("rows")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("filtered")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("Extra")])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(slotProps.entry.content.explains, function(
+                            explain
+                          ) {
+                            return _c("tr", [
+                              _c("td", [_vm._v(_vm._s(explain.id))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(explain.select_type))]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "table-fit" }, [
+                                explain.table
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(explain.table) +
+                                          "\n                                "
+                                      )
+                                    ])
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-secondary font-weight-light"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    NULL\n                                "
+                                        )
+                                      ]
+                                    )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "table-fit" }, [
+                                explain.partitions
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(explain.partitions) +
+                                          "\n                                "
+                                      )
+                                    ])
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-secondary font-weight-light"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    NULL\n                                "
+                                        )
+                                      ]
+                                    )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "table-fit" }, [
+                                explain.type
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(explain.type) +
+                                          "\n                                "
+                                      )
+                                    ])
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-secondary font-weight-light"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    NULL\n                                "
+                                        )
+                                      ]
+                                    )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "table-fit" }, [
+                                explain.possible_keys
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(explain.possible_keys) +
+                                          "\n                                "
+                                      )
+                                    ])
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-secondary font-weight-light"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    NULL\n                                "
+                                        )
+                                      ]
+                                    )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "table-fit" }, [
+                                explain.key
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(explain.key) +
+                                          "\n                                "
+                                      )
+                                    ])
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-secondary font-weight-light"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    NULL\n                                "
+                                        )
+                                      ]
+                                    )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "table-fit" }, [
+                                explain.key_len
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(explain.key_len) +
+                                          "\n                                "
+                                      )
+                                    ])
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-secondary font-weight-light"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    NULL\n                                "
+                                        )
+                                      ]
+                                    )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "table-fit" }, [
+                                explain.ref
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(explain.ref) +
+                                          "\n                                "
+                                      )
+                                    ])
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-secondary font-weight-light"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    NULL\n                                "
+                                        )
+                                      ]
+                                    )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "table-fit" }, [
+                                explain.rows
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(explain.rows) +
+                                          "\n                                "
+                                      )
+                                    ])
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-secondary font-weight-light"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    NULL\n                                "
+                                        )
+                                      ]
+                                    )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "table-fit" }, [
+                                explain.filtered
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(explain.filtered) +
+                                          "\n                                "
+                                      )
+                                    ])
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-secondary font-weight-light"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    NULL\n                                "
+                                        )
+                                      ]
+                                    )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "table-fit" }, [
+                                explain.Extra
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                    " +
+                                          _vm._s(explain.Extra) +
+                                          "\n                                "
+                                      )
+                                    ])
+                                  : _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-secondary font-weight-light"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    NULL\n                                "
+                                        )
+                                      ]
+                                    )
+                              ])
+                            ])
+                          })
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              : _vm._e()
           ])
         }
       }

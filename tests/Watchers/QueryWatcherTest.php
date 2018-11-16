@@ -17,6 +17,9 @@ class QueryWatcherTest extends FeatureTestCase
             QueryWatcher::class => [
                 'enabled' => true,
                 'slow' => 0.2,
+                'explain' => [
+                    'enabled' => false,
+                ],
             ],
         ]);
     }

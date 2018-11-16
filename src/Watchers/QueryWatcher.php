@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use PDO;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
@@ -40,6 +41,7 @@ class QueryWatcher extends Watcher
             'slow' => isset($this->options['slow']) && $time >= $this->options['slow'],
             'file' => $caller['file'],
             'line' => $caller['line'],
+            'explains' => $this->explains($event),
         ])->tags($this->tags($event)));
     }
 
@@ -79,9 +81,51 @@ class QueryWatcher extends Watcher
                 return false;
             }
 
-            return ! Str::contains($frame['file'],
+            return ! Str::contains(
+                $frame['file'],
                 base_path('vendor'.DIRECTORY_SEPARATOR.'laravel')
             );
         });
+    }
+
+    /**
+     * Run an explain query on the given event.
+     *
+     * @param  \Illuminate\Database\Events\QueryExecuted  $event
+     * @return array
+     */
+    protected function explains(QueryExecuted $event)
+    {
+        if (! $this->shouldRunExplainQuery($event)) {
+            return [];
+        }
+
+        $statement = $event->connection->getPdo()->prepare("EXPLAIN {$event->sql}");
+
+        $statement->execute($event->bindings);
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Determine if the explain query should run.
+     *
+     * @param  \Illuminate\Database\Events\QueryExecuted  $event
+     * @return bool
+     */
+    protected function shouldRunExplainQuery(QueryExecuted $event)
+    {
+        if (! array_get($this->options, 'explain.enabled', false)) {
+            return false;
+        }
+
+        if ($event->connection->getDriverName() !== 'mysql') {
+            return false;
+        }
+
+        return Str::startsWith(
+            $event->sql,
+            array_get($this->options, 'explain.types', [])
+        );
     }
 }
