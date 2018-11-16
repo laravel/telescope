@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Config\Repository;
 use Illuminate\Console\Command;
+use Illuminate\Config\Repository;
 use Illuminate\Database\Migrations\Migrator;
 
 class MigrateTelescopeCommand extends Command
