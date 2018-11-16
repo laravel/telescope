@@ -50,7 +50,7 @@ class EntryResult implements JsonSerializable
     public $content = [];
 
     /**
-     * The entry's hostname color in hex
+     * The entry's hostname color in hex.
      *
      * @var string
      */
