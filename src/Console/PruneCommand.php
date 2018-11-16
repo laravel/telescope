@@ -12,7 +12,7 @@ class PruneCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'telescope:prune {--age=24}';
+    protected $signature = 'telescope:prune {--hours=24 : The number of hours to retain Telescope data}';
 
     /**
      * The console command description.
@@ -29,6 +29,6 @@ class PruneCommand extends Command
      */
     public function handle(PrunableRepository $repository)
     {
-        $this->info($repository->prune(now()->subHours($this->argument('age'))).' entries pruned.');
+        $this->info($repository->prune(now()->subHours($this->argument('hours'))).' entries pruned.');
     }
 }
