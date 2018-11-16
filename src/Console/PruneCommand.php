@@ -29,6 +29,6 @@ class PruneCommand extends Command
      */
     public function handle(PrunableRepository $repository)
     {
-        $this->info($repository->prune(now()->subHours(24)).' entries pruned.');
+        $this->info($repository->prune(now()->subHours(config('telescope.prune_records_older_than', 24)).' entries pruned.');
     }
 }
