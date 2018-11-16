@@ -73,7 +73,7 @@ return [
     'ignore_commands' => [
         //
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Pruning
@@ -85,7 +85,7 @@ return [
     | Using this parameter you can set the age of records to be pruned (in hours)
     |
     */
-    
+
     'prune_records_older_than' => 24,
 
     /*
