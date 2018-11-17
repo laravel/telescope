@@ -21,4 +21,17 @@ class PruneCommandTest extends FeatureTestCase
 
         $this->assertDatabaseMissing('telescope_entries', ['uuid' => $old->uuid]);
     }
+
+    public function test_prune_command_can_vary_hours()
+    {
+        $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
+
+        $recent = factory(EntryModel::class)->create(['created_at' => now()->subHours(5)]);
+
+        $this->artisan('telescope:prune')->expectsOutput('0 entries pruned.');
+
+        $this->artisan('telescope:prune', ['--hours' => 4])->expectsOutput('1 entries pruned.');
+
+        $this->assertDatabaseMissing('telescope_entries', ['uuid' => $recent->uuid]);
+    }
 }
