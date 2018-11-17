@@ -133,6 +133,7 @@ class Telescope
                 // 'migrate:refresh',
                 'migrate:reset',
                 'migrate:install',
+                'package:discover',
                 'queue:listen',
                 'queue:work',
                 'horizon',
