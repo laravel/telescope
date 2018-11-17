@@ -24,7 +24,7 @@ class PruneCommandTest extends FeatureTestCase
 
     public function test_prune_command_can_vary_hours()
     {
-        $this->loadFactoriesUsing($this->app, __DIR__ . '/../../src/Storage/factories');
+        $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
 
         $recent = factory(EntryModel::class)->create(['created_at' => now()->subHours(5)]);
 
