@@ -6,8 +6,6 @@ use Illuminate\Console\Command;
 
 class PublishCommand extends Command
 {
-    use DetectsApplicationNamespace;
-
     /**
      * The name and signature of the console command.
      *
