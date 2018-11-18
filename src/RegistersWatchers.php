@@ -43,7 +43,7 @@ trait RegistersWatchers
                 continue;
             }
 
-            $watcher = $app->makeWith(is_string($key) ? $key : $watcher, [
+            $watcher = $app->make(is_string($key) ? $key : $watcher, [
                 'options' => is_array($watcher) ? $watcher : [],
             ]);
 
