@@ -60,8 +60,8 @@ trait ListensForStorageOpportunities
             static::$processingJobs[] = true;
         });
 
-        $app['events']->listen(JobProcessed::class, function () use ($app) {
-            static::storeIfDoneProcessingJob($app);
+        $app['events']->listen(JobProcessed::class, function ($event) use ($app) {
+            static::storeIfDoneProcessingJob($event, $app);
         });
 
         $app['events']->listen(JobFailed::class, function () use ($app) {
@@ -76,17 +76,18 @@ trait ListensForStorageOpportunities
     /**
      * Store the recorded entries if totally done processing the current job.
      *
+     * @param  \Illuminate\Queue\Events\JobProcessed $event
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
-    protected static function storeIfDoneProcessingJob($app)
+    protected static function storeIfDoneProcessingJob($event, $app)
     {
         array_pop(static::$processingJobs);
 
         if (empty(static::$processingJobs)) {
             static::store($app[EntriesRepository::class]);
 
-            if (! $app->make('queue.connection') instanceof SyncQueue) {
+            if ($event->connectionName != 'sync') {
                 static::stopRecording();
             }
         }
