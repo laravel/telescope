@@ -103,9 +103,7 @@ class Telescope
      */
     public static function start($app)
     {
-        if ($app->runningUnitTests() ||
-            ! (static::runningApprovedArtisanCommand($app) ||
-            static::handlingApprovedRequest($app))) {
+        if ($app->runningUnitTests()) {
             return;
         }
 
@@ -113,7 +111,11 @@ class Telescope
 
         static::registerMailableTagExtractor();
 
-        static::startRecording();
+        if (static::runningApprovedArtisanCommand($app) ||
+            static::handlingApprovedRequest($app)
+        ) {
+            static::startRecording();
+        }
     }
 
     /**
