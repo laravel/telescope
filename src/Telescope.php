@@ -103,7 +103,7 @@ class Telescope
      */
     public static function start($app)
     {
-        if ($app->runningUnitTests()) {
+        if ($app->runningUnitTests() && ! config('telescope.enabled_in_testing', false)) {
             return;
         }
 

@@ -39,6 +39,8 @@ return [
 
     'enabled' => env('TELESCOPE_ENABLED', true),
 
+    'enabled_in_testing' => env('TELESCOPE_ENABLED_IN_TESTING', false),
+
     /*
     |--------------------------------------------------------------------------
     | Telescope Route Middleware
