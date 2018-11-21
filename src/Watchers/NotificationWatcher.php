@@ -3,8 +3,8 @@
 namespace Laravel\Telescope\Watchers;
 
 use Laravel\Telescope\Telescope;
-use Laravel\Telescope\FormatModel;
 use Laravel\Telescope\ExtractTags;
+use Laravel\Telescope\FormatModel;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Queue\ShouldQueue;
