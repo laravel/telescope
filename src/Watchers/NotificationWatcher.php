@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Watchers;
 
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\FormatModel;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
@@ -62,7 +63,7 @@ class NotificationWatcher extends Watcher
     private function formatNotifiable($notifiable)
     {
         if ($notifiable instanceof Model) {
-            return get_class($notifiable).':'.$notifiable->getKey();
+            return FormatModel::given($notifiable);
         } elseif ($notifiable instanceof AnonymousNotifiable) {
             return 'Anonymous:'.implode(',', $notifiable->routes);
         }

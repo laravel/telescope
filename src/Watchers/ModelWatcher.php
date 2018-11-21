@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Watchers;
 
 use Illuminate\Support\Str;
+use Laravel\Telescope\FormatModel;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 
@@ -32,7 +33,7 @@ class ModelWatcher extends Watcher
             return;
         }
 
-        $model = get_class($data[0]).':'.implode('_', (array) $data[0]->getKey());
+        $model = FormatModel::given($data[0]);
 
         $changes = $data[0]->getChanges();
 
