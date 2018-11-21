@@ -17,6 +17,10 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     public function register()
     {
         // Telescope::night();
+        
+        if(date('H')>18 || date('H')<6){
+         Telescope::night();
+        }
 
         $this->hideSensitiveRequestDetails();
 
