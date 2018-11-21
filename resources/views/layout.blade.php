@@ -8,7 +8,9 @@
     <link rel="shortcut icon" href="{{ asset('/vendor/telescope/favicon.ico') }}">
 
     <title>Telescope</title>
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" 
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    
     <!-- Style sheets-->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset(mix($cssFile, 'vendor/telescope')) }}" rel="stylesheet" type="text/css">
@@ -52,6 +54,11 @@
                     </svg>
                 </router-link>
             </div>
+            
+            <a href="/" class="btn btn-outline-primary ml-3">
+                <i class="fas fa-home"></i>
+            </a>
+            
         </div>
 
         <div class="row mt-4">
