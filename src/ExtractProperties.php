@@ -22,7 +22,7 @@ class ExtractProperties
                 $property->setAccessible(true);
 
                 if (($value = $property->getValue($target)) instanceof Model) {
-                    return [$property->getName() => get_class($value).':'.$value->getKey()];
+                    return [$property->getName() => FormatModel::given($value)];
                 } elseif (is_object($value)) {
                     return [
                         $property->getName() => [

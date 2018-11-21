@@ -27,7 +27,7 @@ class ExtractTags
         }
 
         return static::modelsFor([$target])->map(function ($model) {
-            return get_class($model).':'.$model->getKey();
+            return FormatModel::given($model);
         })->all();
     }
 
@@ -44,7 +44,7 @@ class ExtractTags
         }
 
         return static::modelsFor(static::targetsFor($job))->map(function ($model) {
-            return get_class($model).':'.$model->getKey();
+            return FormatModel::given($model);
         })->all();
     }
 
@@ -65,7 +65,7 @@ class ExtractTags
         })->collapse()->filter();
 
         return $models->map(function ($model) {
-            return get_class($model).':'.$model->getKey();
+            return FormatModel::given($model);
         })->all();
     }
 

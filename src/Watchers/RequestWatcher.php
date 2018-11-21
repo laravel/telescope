@@ -6,6 +6,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\FormatModel;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpFoundation\Response;
@@ -171,7 +172,7 @@ class RequestWatcher extends Watcher
     {
         return collect($view->getData())->map(function ($value) {
             if ($value instanceof Model) {
-                return get_class($value).':'.$value->getKey();
+                return FormatModel::given($value);
             } elseif (is_object($value)) {
                 return [
                     'class' => get_class($value),
