@@ -9,7 +9,7 @@ export default [
 
     {
         path: '/mail',
-        name: 'mail-index',
+        name: 'mail',
         component: require('./screens/mail/index')
     },
 
