@@ -3,8 +3,8 @@
 namespace Laravel\Telescope\Watchers;
 
 use Illuminate\Support\Str;
-use Laravel\Telescope\FormatModel;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\FormatModel;
 use Laravel\Telescope\IncomingEntry;
 
 class ModelWatcher extends Watcher
