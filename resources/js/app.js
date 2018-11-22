@@ -1,9 +1,9 @@
-import Vue from 'vue'
-import Base from './base'
+import Vue from 'vue';
+import Base from './base';
 import axios from 'axios';
-import Routes from './routes'
-import VueRouter from 'vue-router'
-import TreeView from 'vue-json-tree-view'
+import Routes from './routes';
+import VueRouter from 'vue-router';
+import VueJsonPretty from 'vue-json-pretty';
 import moment from 'moment-timezone';
 
 require('bootstrap');
@@ -15,7 +15,6 @@ if (token) {
 }
 
 Vue.use(VueRouter);
-Vue.use(TreeView);
 
 window.Popper = require('popper.js').default;
 
@@ -27,6 +26,7 @@ const router = new VueRouter({
     base: '/' + window.Telescope.path + '/',
 });
 
+Vue.component('vue-json-pretty', VueJsonPretty);
 Vue.component('related-entries', require('./components/RelatedEntries.vue'));
 Vue.component('index-screen', require('./components/IndexScreen.vue'));
 Vue.component('preview-screen', require('./components/PreviewScreen.vue'));

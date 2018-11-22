@@ -1,30 +1,26 @@
-.tree-view-wrapper {
-  .tree-view-item{
-    margin-left: 30px;
+.vjs__tree {
+  .vjs__tree__content {
+    border-left: 1px dotted rgba(204, 204, 204, 0.28) !important;
   }
-
-  .tree-view-item-key {
-    color: #8bd72f;
+  .vjs__tree__node {
+    cursor: pointer;
+    &:hover {
+      color: #20a0ff;
+    }
   }
-
-  .tree-view-item-key-with-chevron[data-v-efc5bae2]::before {
-    color: #fff !important;
+  .vjs-checkbox {
+    position: absolute;
+    left: -30px;
   }
-
-  .tree-view-item-value-string {
+  .vjs__value__null {
+    color: #A291F5 !important;;
+  }
+  .vjs__value__number,
+  .vjs__value__boolean {
+    color: #A291F5 !important;;
+  }
+  .vjs__value__string {
     color: #DACB4D !important;
-  }
-
-  .tree-view-item-value-null {
-    color: #A291F5 !important;
-  }
-
-  .tree-view-item-value-boolean {
-    color: #A291F5 !important;
-  }
-
-  .tree-view-item-value-number{
-    color: #A291F5 !important;
   }
 }
 
@@ -41,6 +37,6 @@
   color: #DACB4D;
 }
 
-.hljs-number, .hljs-literal{
+.hljs-number, .hljs-literal {
   color: #A291F5 !important;
 }

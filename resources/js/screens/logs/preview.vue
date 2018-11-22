@@ -52,7 +52,7 @@
 
                     <!-- Context -->
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='context'">
-                        <tree-view :data="slotProps.entry.content.context" :options="{maxDepth: 3}"></tree-view>
+                        <vue-json-pretty :data="slotProps.entry.content.context"></vue-json-pretty>
                     </div>
                 </div>
             </div>

@@ -22,10 +22,8 @@
         "popper.js": "^1.12",
         "sql-formatter": "^2.3.1",
         "vue": "^2.5.7",
-        "vue-json-tree-view": "^2.1.4",
-        "vue-router": "^3.0.1"
-    },
-    "dependencies": {
-        "md5": "^2.2.1"
+        "vue-router": "^3.0.1",
+        "md5": "^2.2.1",
+        "vue-json-pretty": "^1.4.1"
     }
 }

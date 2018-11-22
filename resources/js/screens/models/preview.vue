@@ -42,7 +42,7 @@
                 <div class="card-header"><h5>Changes</h5></div>
 
                 <div class="code-bg p-4 mb-0 text-white">
-                    <tree-view :data="slotProps.entry.content.changes" :options="{maxDepth: 3}"></tree-view>
+                    <vue-json-pretty :data="slotProps.entry.content.changes"></vue-json-pretty>
                 </div>
             </div>
         </div>
