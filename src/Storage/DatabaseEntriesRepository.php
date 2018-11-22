@@ -111,6 +111,9 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
         $this->storeExceptions($exceptions);
 
         $this->table('telescope_entries')->insert($entries->map(function ($entry) {
+            if (isset($entry->content['session']) && isset($entry->content['session']['errors'])) {
+                $entry->content['session']['errors'] = $entry->content['session']['errors']->getBags();
+            }
             $entry->content = json_encode($entry->content);
 
             return $entry->toArray();
