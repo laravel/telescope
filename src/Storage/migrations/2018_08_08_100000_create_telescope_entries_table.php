@@ -42,7 +42,7 @@ class CreateTelescopeEntriesTable extends Migration
                 $table->string('type', 20);
                 $table->text('content');
                 $table->dateTime('created_at')->nullable();
-    
+
                 $table->unique('uuid');
                 $table->index('batch_id');
                 $table->index(['type', 'should_display_on_index']);
@@ -53,10 +53,10 @@ class CreateTelescopeEntriesTable extends Migration
             $this->schema->create('telescope_entries_tags', function (Blueprint $table) {
                 $table->uuid('entry_uuid');
                 $table->string('tag');
-    
+
                 $table->index(['entry_uuid', 'tag']);
                 $table->index('tag');
-    
+
                 $table->foreign('entry_uuid')
                       ->references('uuid')
                       ->on('telescope_entries')
