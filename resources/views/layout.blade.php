@@ -35,7 +35,7 @@
                     <path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"/>
                 </svg>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon fill-primary" v-else>
-                    <path d="M4 4l12 6-12 6z"/><
+                    <path d="M4 4l12 6-12 6z"/>
                 </svg>
             </button>
 
