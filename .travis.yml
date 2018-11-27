@@ -28,11 +28,10 @@ services:
 
 before_install:
   - phpenv config-rm xdebug.ini || true
-  - printf "\n" | pecl install -f redis
-  - travis_retry composer self-update
+  - printf '\n' | pecl install -f redis
 
 install:
-  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
-  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
+  - if [[ $setup == stable ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
+  - if [[ $setup == lowest ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
 
 script: vendor/bin/phpunit
