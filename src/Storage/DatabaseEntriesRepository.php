@@ -80,7 +80,9 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             ->withTelescopeOptions($type, $options)
             ->take($options->limit)
             ->orderByDesc('sequence')
-            ->get()->map(function ($entry) {
+            ->get()->reject(function ($entry) {
+                return ! is_array($entry->content);
+            })->map(function ($entry) {
                 return new EntryResult(
                     $entry->uuid,
                     $entry->sequence,
