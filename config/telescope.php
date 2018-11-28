@@ -99,6 +99,7 @@ return [
 
         Watchers\QueryWatcher::class => [
             'enabled' => env('TELESCOPE_QUERY_WATCHER', true),
+            'ignore_packages' => true,
             'slow' => 100,
         ],
 
