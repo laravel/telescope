@@ -601,4 +601,31 @@ class Telescope
             'recording' => ! cache('telescope:pause-recording'),
         ];
     }
+
+    /**
+     * Get the navigation items for telescope.
+     *
+     * @return array
+     */
+    public static function navigation()
+    {
+        return array_map(function ($watcher) {
+            return $watcher::$label ?? Str::replaceFirst('Watcher', '', class_basename($watcher));
+        },
+        array_keys(static::enabledWatchers()));
+    }
+
+    /**
+     * Get list of the enabled watchers.
+     *
+     * @return array
+     */
+    public static function enabledWatchers()
+    {
+        return array_filter(config('telescope.watchers'), function ($options) {
+            $status = is_array($options) ? $options['enabled'] : $options;
+
+            return $status === true;
+        });
+    }
 }

@@ -57,6 +57,7 @@
         <div class="row mt-4">
             <div class="col-2 sidebar">
                 <ul class="nav flex-column">
+                    @if(in_array('Request', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/requests" class="nav-link d-flex align-items-center pt-0">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -65,6 +66,8 @@
                             <span>Requests</span>
                         </router-link>
                     </li>
+                    @endif
+                    @if(in_array('Command', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/commands" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -73,6 +76,8 @@
                             <span>Commands</span>
                         </router-link>
                     </li>
+                    @endif
+                    @if(in_array('Schedule', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/schedule" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -81,6 +86,8 @@
                             <span>Schedule</span>
                         </router-link>
                     </li>
+                    @endif
+                    @if(in_array('Job', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/jobs" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -89,7 +96,8 @@
                             <span>Jobs</span>
                         </router-link>
                     </li>
-
+                    @endif
+                    @if(in_array('Exception', $navigation))
                     <li class="nav-item mt-3">
                         <router-link active-class="active" to="/exceptions" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -98,6 +106,8 @@
                             <span>Exceptions</span>
                         </router-link>
                     </li>
+                    @endif
+                    @if(in_array('Log', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/logs" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -106,6 +116,8 @@
                             <span>Logs</span>
                         </router-link>
                     </li>
+                    @endif
+                    @if(in_array('Dump', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/dumps" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -114,6 +126,8 @@
                             <span>Dumps</span>
                         </router-link>
                     </li>
+                    @endif
+                    @if(in_array('Query', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/queries" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -122,6 +136,8 @@
                             <span>Queries</span>
                         </router-link>
                     </li>
+                    @endif
+                    @if(in_array('Model', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/models" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -130,6 +146,8 @@
                             <span>Models</span>
                         </router-link>
                     </li>
+                    @endif
+                    @if(in_array('Event', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/events" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -138,6 +156,8 @@
                             <span>Events</span>
                         </router-link>
                     </li>
+                    @endif
+                    @if(in_array('Mail', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/mail" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -146,6 +166,8 @@
                             <span>Mail</span>
                         </router-link>
                     </li>
+                    @endif
+                    @if(in_array('Notification', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/notifications" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -154,6 +176,8 @@
                             <span>Notifications</span>
                         </router-link>
                     </li>
+                    @endif
+                    @if(in_array('Cache', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/cache" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -162,6 +186,8 @@
                             <span>Cache</span>
                         </router-link>
                     </li>
+                    @endif
+                    @if(in_array('Redis', $navigation))
                     <li class="nav-item">
                         <router-link active-class="active" to="/redis" class="nav-link d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -170,6 +196,7 @@
                             <span>Redis</span>
                         </router-link>
                     </li>
+                    @endif
                 </ul>
             </div>
 
