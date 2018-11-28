@@ -287,7 +287,7 @@
         </div>
 
 
-        <table id="indexScreen" class="table table-hover table-sm mb-0 penultimate-column-right" v-if="ready && entries.length > 0">
+        <table id="indexScreen" class="table table-hover table-sm mb-0 penultimate-column-right table-responsive" v-if="ready && entries.length > 0">
             <thead>
             <slot name="table-header"></slot>
             </thead>
