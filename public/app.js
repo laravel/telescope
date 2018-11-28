@@ -50357,7 +50357,7 @@ var render = function() {
           "table",
           {
             staticClass:
-              "table table-hover table-sm mb-0 penultimate-column-right",
+              "table table-hover table-sm mb-0 penultimate-column-right table-responsive",
             attrs: { id: "indexScreen" }
           },
           [
