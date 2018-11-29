@@ -109,7 +109,7 @@ class Telescope
 
         $needsRecording = static::runningApprovedArtisanCommand($app) ||
             static::handlingApprovedRequest($app);
-        
+
         static::registerWatchers($app, ! $needsRecording);
 
         static::registerMailableTagExtractor();

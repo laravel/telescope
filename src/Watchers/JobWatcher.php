@@ -16,7 +16,6 @@ use Laravel\Telescope\Contracts\BootableWatcher;
 
 class JobWatcher extends Watcher implements BootableWatcher
 {
-
     /**
      * Boot the watcher.
      *
