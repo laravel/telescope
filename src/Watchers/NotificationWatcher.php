@@ -32,6 +32,10 @@ class NotificationWatcher extends Watcher
      */
     public function recordNotification(NotificationSent $event)
     {
+        if (! Telescope::isRecording()) {
+            return;
+        }
+
         Telescope::recordNotification(IncomingEntry::make([
             'notification' => get_class($event->notification),
             'queued' => in_array(ShouldQueue::class, class_implements($event->notification)),

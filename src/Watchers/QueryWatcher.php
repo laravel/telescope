@@ -28,6 +28,10 @@ class QueryWatcher extends Watcher
      */
     public function recordQuery(QueryExecuted $event)
     {
+        if (! Telescope::isRecording()) {
+            return;
+        }
+
         $time = $event->time;
 
         $caller = $this->getCallerFromStackTrace();

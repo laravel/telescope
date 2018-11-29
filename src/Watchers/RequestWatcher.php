@@ -35,6 +35,10 @@ class RequestWatcher extends Watcher
      */
     public function recordRequest(RequestHandled $event)
     {
+        if (! Telescope::isRecording()) {
+            return;
+        }
+
         Telescope::recordRequest(IncomingEntry::make([
             'uri' => str_replace($event->request->root(), '', $event->request->fullUrl()) ?: '/',
             'method' => $event->request->method(),

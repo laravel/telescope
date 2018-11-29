@@ -34,7 +34,7 @@ class EventWatcher extends Watcher
      */
     public function recordEvent($eventName, $payload)
     {
-        if ($this->shouldIgnore($eventName)) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($eventName)) {
             return;
         }
 

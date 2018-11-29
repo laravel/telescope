@@ -30,7 +30,8 @@ class ScheduleWatcher extends Watcher
      */
     public function recordCommand(CommandStarting $event)
     {
-        if ($event->command !== 'schedule:run' &&
+        if (! Telescope::isRecording() ||
+            $event->command !== 'schedule:run' &&
             $event->command !== 'schedule:finish') {
             return;
         }

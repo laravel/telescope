@@ -29,7 +29,7 @@ class ExceptionWatcher extends Watcher
      */
     public function recordException(MessageLogged $event)
     {
-        if (! isset($event->context['exception'])) {
+        if (! Telescope::isRecording() || ! isset($event->context['exception'])) {
             return;
         }
 
