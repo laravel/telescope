@@ -107,13 +107,14 @@ class Telescope
             return;
         }
 
-        static::registerWatchers($app);
+        $needsRecording = static::runningApprovedArtisanCommand($app) ||
+            static::handlingApprovedRequest($app);
+        
+        static::registerWatchers($app, ! $needsRecording);
 
         static::registerMailableTagExtractor();
 
-        if (static::runningApprovedArtisanCommand($app) ||
-            static::handlingApprovedRequest($app)
-        ) {
+        if ($needsRecording) {
             static::startRecording();
         }
     }

@@ -12,9 +12,23 @@ use Illuminate\Queue\Events\JobFailed;
 use Laravel\Telescope\ExceptionContext;
 use Laravel\Telescope\ExtractProperties;
 use Illuminate\Queue\Events\JobProcessed;
+use Laravel\Telescope\Contracts\BootableWatcher;
 
-class JobWatcher extends Watcher
+class JobWatcher extends Watcher implements BootableWatcher
 {
+
+    /**
+     * Boot the watcher.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @return void
+     */
+    public function boot($app)
+    {
+        $app['events']->listen(JobProcessed::class, [$this, 'recordProcessedJob']);
+        $app['events']->listen(JobFailed::class, [$this, 'recordFailedJob']);
+    }
+
     /**
      * Register the watcher.
      *
@@ -26,9 +40,6 @@ class JobWatcher extends Watcher
         Queue::createPayloadUsing(function ($connection, $queue, $payload) {
             return ['telescope_uuid' => $this->recordJob($connection, $queue, $payload)->uuid];
         });
-
-        $app['events']->listen(JobProcessed::class, [$this, 'recordProcessedJob']);
-        $app['events']->listen(JobFailed::class, [$this, 'recordFailedJob']);
     }
 
     /**

@@ -26,9 +26,10 @@ trait RegistersWatchers
      * Register the configured Telescope watchers.
      *
      * @param  \Illuminate\Foundation\Application  $app
+     * @param  bool  $bootOnly
      * @return void
      */
-    protected static function registerWatchers($app)
+    protected static function registerWatchers($app, $bootOnly = false)
     {
         if (! config('telescope.enabled')) {
             return;
@@ -49,7 +50,13 @@ trait RegistersWatchers
 
             static::$watchers[] = get_class($watcher);
 
-            $watcher->register($app);
+            if (method_exists($watcher, 'boot')) {
+                $watcher->boot($app);
+            }
+
+            if (! $bootOnly) {
+                $watcher->register($app);
+            }
         }
     }
 }
