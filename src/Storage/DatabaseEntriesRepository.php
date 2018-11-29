@@ -7,7 +7,6 @@ use Laravel\Telescope\EntryType;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\EntryResult;
-use Illuminate\Support\Facades\Schema;
 use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Contracts\ClearableRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
