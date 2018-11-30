@@ -59,7 +59,7 @@ class EventWatcher extends Watcher
      */
     protected function extractPayload($eventName, $payload)
     {
-        if (class_exists($eventName)) {
+        if (class_exists($eventName) && isset($payload[0]) && is_object($payload[0])) {
             return ExtractProperties::from($payload[0]);
         }
 
