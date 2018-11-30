@@ -1,5 +1,6 @@
 <script type="text/ecmascript-6">
     import axios from 'axios';
+    import IndexMixin from './../../mixins/indexScreens';
 
     export default {
         /**
@@ -14,6 +15,9 @@
             };
         },
 
+        mixins: [
+            IndexMixin,
+        ],
 
         /**
          * Prepare the component.
@@ -87,7 +91,10 @@
                             Command: {{entry.content.entry_point_description}}
                         </router-link>
 
-                        <span class="text-white text-monospace" style="font-size: 12px;">{{timeAgo(entry.created_at)}}</span>
+                        <button class="btn btn-link p-0 text-white text-monospace" :class="{active: displayVerboseTimes}" style="font-size: 12px;" href="#" v-on:click.prevent="toggleVerboseTimes" title="Verbose times">
+                            <span v-if="displayVerboseTimes">{{verboseTime(entry.created_at)}}</span>
+                            <span v-else>{{timeAgo(entry.created_at)}}</span>
+                        </button>
                     </div>
 
                     <div v-html="entry.content.dump"></div>

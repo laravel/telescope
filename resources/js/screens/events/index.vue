@@ -1,5 +1,11 @@
 <script type="text/ecmascript-6">
-    export default {}
+    import IndexMixin from './../../mixins/indexScreens';
+
+    export default {
+        mixins: [
+            IndexMixin,
+        ],
+    }
 </script>
 
 <template>
@@ -7,7 +13,11 @@
         <tr slot="table-header">
             <th scope="col">Name</th>
             <th scope="col">Listeners</th>
-            <th scope="col">Happened</th>
+            <th scope="col">
+                <button class="btn btn-link p-0" :class="{active: displayVerboseTimes}" href="#" v-on:click.prevent="toggleVerboseTimes" title="Verbose times">
+                    Happened
+                </button>
+            </th>
             <th scope="col"></th>
         </tr>
 
@@ -23,7 +33,8 @@
 
             <td class="table-fit">{{slotProps.entry.content.listeners.length}}</td>
 
-            <td class="table-fit" :data-timeago="slotProps.entry.created_at">{{timeAgo(slotProps.entry.created_at)}}</td>
+            <td v-if="displayVerboseTimes" class="table-fit">{{verboseTime(slotProps.entry.created_at)}}</td>
+            <td v-else class="table-fit" :data-timeago="slotProps.entry.created_at">{{timeAgo(slotProps.entry.created_at)}}</td>
 
             <td class="table-fit">
                 <router-link :to="{name:'event-preview', params:{id: slotProps.entry.id}}" class="control-action">

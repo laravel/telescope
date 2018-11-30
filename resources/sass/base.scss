@@ -156,6 +156,10 @@ button:hover{
   box-shadow: none !important;
 }
 
+.btn-link.active {
+  font-weight: 600;
+}
+
 .control-action {
   svg {
     fill: $control-action-icon-color;
@@ -165,6 +169,9 @@ button:hover{
     &:hover {
       fill: $primary;
     }
+  }
+  &.active svg {
+    fill: $primary;
   }
 }
 
