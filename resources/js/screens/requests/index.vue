@@ -14,6 +14,7 @@
             <th scope="col">Verb</th>
             <th scope="col">Path</th>
             <th scope="col">Status</th>
+            <th scope="col">Duration</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
@@ -32,6 +33,10 @@
                 <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(slotProps.entry.content.response_status)">
                     {{slotProps.entry.content.response_status}}
                 </span>
+            </td>
+
+            <td class="table-fit">
+                {{slotProps.entry.content.duration || '-'}} ms
             </td>
 
             <td class="table-fit" :data-timeago="slotProps.entry.created_at">{{timeAgo(slotProps.entry.created_at)}}</td>
