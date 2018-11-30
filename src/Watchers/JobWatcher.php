@@ -41,6 +41,10 @@ class JobWatcher extends Watcher
      */
     public function recordJob($connection, $queue, array $payload)
     {
+        if (! Telescope::isRecording()) {
+            return;
+        }
+
         $content = array_merge([
             'status' => 'pending',
         ], $this->defaultJobData($connection, $queue, $payload, $this->data($payload)));
@@ -61,6 +65,10 @@ class JobWatcher extends Watcher
      */
     public function recordProcessedJob(JobProcessed $event)
     {
+        if (! Telescope::isRecording()) {
+            return;
+        }
+
         $uuid = $event->job->payload()['telescope_uuid'] ?? null;
 
         if (! $uuid) {
@@ -80,6 +88,10 @@ class JobWatcher extends Watcher
      */
     public function recordFailedJob(JobFailed $event)
     {
+        if (! Telescope::isRecording()) {
+            return;
+        }
+
         $uuid = $event->job->payload()['telescope_uuid'] ?? null;
 
         if (! $uuid) {

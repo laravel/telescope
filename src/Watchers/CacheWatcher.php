@@ -35,7 +35,7 @@ class CacheWatcher extends Watcher
      */
     public function recordCacheHit(CacheHit $event)
     {
-        if ($this->shouldIgnore($event)) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 

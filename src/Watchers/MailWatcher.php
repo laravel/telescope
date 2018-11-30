@@ -27,6 +27,10 @@ class MailWatcher extends Watcher
      */
     public function recordMail(MessageSent $event)
     {
+        if (! Telescope::isRecording()) {
+            return;
+        }
+
         Telescope::recordMail(IncomingEntry::make([
             'mailable' => $this->getMailable($event),
             'queued' => $this->getQueuedStatus($event),

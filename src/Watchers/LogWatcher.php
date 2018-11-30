@@ -28,7 +28,7 @@ class LogWatcher extends Watcher
      */
     public function recordLog(MessageLogged $event)
     {
-        if (isset($event->context['exception'])) {
+        if (! Telescope::isRecording() || isset($event->context['exception'])) {
             return;
         }
 

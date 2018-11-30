@@ -204,6 +204,16 @@ class Telescope
     }
 
     /**
+     * Determine if Telescope is recording.
+     *
+     * @return bool
+     */
+    public static function isRecording()
+    {
+        return static::$shouldRecord;
+    }
+
+    /**
      * Record the given entry.
      *
      * @param  string  $type
@@ -212,7 +222,7 @@ class Telescope
      */
     protected static function record(string $type, IncomingEntry $entry)
     {
-        if (! static::$shouldRecord) {
+        if (! static::isRecording()) {
             return;
         }
 

@@ -27,6 +27,10 @@ class RedisWatcher extends Watcher
      */
     public function recordCommand(CommandExecuted $event)
     {
+        if (! Telescope::isRecording()) {
+            return;
+        }
+
         Telescope::recordRedis(IncomingEntry::make([
             'connection' => $event->connectionName,
             'command' => $this->formatCommand($event->command, $event->parameters),
