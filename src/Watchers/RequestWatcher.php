@@ -140,9 +140,11 @@ class RequestWatcher extends Watcher
         }
 
         if ($response instanceof IlluminateResponse && $response->getOriginalContent() instanceof View) {
+            $data = $this->extractDataFromView($response->getOriginalContent());
+
             return [
                 'view' => $response->getOriginalContent()->getPath(),
-                'data' => $this->extractDataFromView($response->getOriginalContent()),
+                'data' => $this->contentWithinLimits(json_encode($data)) ? $data : 'Purged By Telescope',
             ];
         }
 
