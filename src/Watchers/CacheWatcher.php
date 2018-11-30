@@ -54,7 +54,7 @@ class CacheWatcher extends Watcher
      */
     public function recordCacheMissed(CacheMissed $event)
     {
-        if ($this->shouldIgnore($event)) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 
@@ -72,7 +72,7 @@ class CacheWatcher extends Watcher
      */
     public function recordKeyWritten(KeyWritten $event)
     {
-        if ($this->shouldIgnore($event)) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 
@@ -92,7 +92,7 @@ class CacheWatcher extends Watcher
      */
     public function recordKeyForgotten(KeyForgotten $event)
     {
-        if ($this->shouldIgnore($event)) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 
