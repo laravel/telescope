@@ -23,6 +23,13 @@ class TelescopeTest extends FeatureTestCase
         ]);
     }
 
+    protected function tearDown()
+    {
+        Telescope::$afterRecordingHook = null;
+
+        parent::tearDown();
+    }
+
     /**
      * @test
      */
