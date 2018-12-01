@@ -39,7 +39,7 @@ class Telescope
      *
      * @var \Closure
      */
-    public static $recordingCallback;
+    public static $afterRecordingHook;
 
     /**
      * The callback that adds tags to the record.
@@ -250,8 +250,8 @@ class Telescope
                 static::$entriesQueue[] = $entry;
             }
 
-            if (static::$recordingCallback) {
-                call_user_func(static::$recordingCallback, new static);
+            if (static::$afterRecordingHook) {
+                call_user_func(static::$afterRecordingHook, new static);
             }
         });
     }
@@ -488,7 +488,7 @@ class Telescope
      */
     public static function afterRecording(Closure $callback)
     {
-        static::$recordingCallback = $callback;
+        static::$afterRecordingHook = $callback;
 
         return new static;
     }
