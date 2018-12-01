@@ -68601,7 +68601,9 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
                 relativeTime: {
                     future: "in %s",
                     past: "%s ago",
-                    s: 'Just now',
+                    s: function s(number) {
+                        return number + "s ago";
+                    },
                     ss: '%ds ago',
                     m: "1m ago",
                     mm: "%dm ago",

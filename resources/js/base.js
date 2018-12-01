@@ -18,7 +18,7 @@ export default {
                 relativeTime: {
                     future: "in %s",
                     past: "%s ago",
-                    s: 'Just now',
+                    s: number=>number + "s ago",
                     ss: '%ds ago',
                     m: "1m ago",
                     mm: "%dm ago",
