@@ -33,7 +33,15 @@ export default {
                 }
             });
 
-            return moment(time).fromNow(true);
+            let secondsElapsed = moment().diff(time, 'seconds');
+
+            if (secondsElapsed > 300 || secondsElapsed < 60) {
+                return moment(time).fromNow(true);
+            } else {
+                return moment("2015-01-01").startOf('day')
+                        .seconds(moment().diff(time, 'seconds'))
+                        .format('m:ss') + 'm ago';
+            }
         },
 
 
