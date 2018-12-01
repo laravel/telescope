@@ -36,7 +36,8 @@
             </td>
 
             <td class="table-fit">
-                {{slotProps.entry.content.duration || '-'}} ms
+                <span v-if="slotProps.entry.content.duration">{{slotProps.entry.content.duration}}ms</span>
+                <span v-else>-</span>
             </td>
 
             <td class="table-fit" :data-timeago="slotProps.entry.created_at">{{timeAgo(slotProps.entry.created_at)}}</td>

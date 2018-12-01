@@ -50154,6 +50154,14 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
+              _c("td", { staticClass: "table-fit" }, [
+                slotProps.entry.content.duration
+                  ? _c("span", [
+                      _vm._v(_vm._s(slotProps.entry.content.duration) + "ms")
+                    ])
+                  : _c("span", [_vm._v("-")])
+              ]),
+              _vm._v(" "),
               _c(
                 "td",
                 {
@@ -50213,6 +50221,8 @@ var render = function() {
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Path")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Duration")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Happened")]),
         _vm._v(" "),
