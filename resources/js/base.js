@@ -34,13 +34,14 @@ export default {
             });
 
             let secondsElapsed = moment().diff(time, 'seconds');
+            let dayStart = moment("2018-01-01").startOf('day').seconds(secondsElapsed);
 
-            if (secondsElapsed > 300 || secondsElapsed < 60) {
+            if (secondsElapsed > 300) {
                 return moment(time).fromNow(true);
+            } else if (secondsElapsed < 60) {
+                return dayStart.format('s') + 's ago';
             } else {
-                return moment("2015-01-01").startOf('day')
-                        .seconds(moment().diff(time, 'seconds'))
-                        .format('m:ss') + 'm ago';
+                return dayStart.format('m:ss') + 'm ago';
             }
         },
 

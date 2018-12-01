@@ -68619,11 +68619,14 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             });
 
             var secondsElapsed = __WEBPACK_IMPORTED_MODULE_1_moment_timezone___default()().diff(time, 'seconds');
+            var dayStart = __WEBPACK_IMPORTED_MODULE_1_moment_timezone___default()("2018-01-01").startOf('day').seconds(secondsElapsed);
 
-            if (secondsElapsed > 300 || secondsElapsed < 60) {
+            if (secondsElapsed > 300) {
                 return __WEBPACK_IMPORTED_MODULE_1_moment_timezone___default()(time).fromNow(true);
+            } else if (secondsElapsed < 60) {
+                return dayStart.format('s') + 's ago';
             } else {
-                return __WEBPACK_IMPORTED_MODULE_1_moment_timezone___default()("2015-01-01").startOf('day').seconds(__WEBPACK_IMPORTED_MODULE_1_moment_timezone___default()().diff(time, 'seconds')).format('m:ss') + 'm ago';
+                return dayStart.format('m:ss') + 'm ago';
             }
         },
 
