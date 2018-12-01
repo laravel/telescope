@@ -2,10 +2,10 @@
 
 namespace Laravel\Telescope\Tests\Telescope;
 
-use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\QueryWatcher;
+use Laravel\Telescope\Contracts\EntriesRepository;
 
 class TelescopeTest extends FeatureTestCase
 {
