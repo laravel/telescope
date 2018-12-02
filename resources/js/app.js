@@ -67,6 +67,10 @@ new Vue({
             }
         },
 
+        clearEntries(){
+            axios.post('/' + Telescope.path + '/telescope-api/clear-entries')
+                .then(() => router.go());
+        },
 
         toggleRecording(){
             axios.post('/' + Telescope.path + '/telescope-api/toggle-recording');

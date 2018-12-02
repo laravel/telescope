@@ -68563,6 +68563,11 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
                 localStorage.autoLoadsNewEntries = 0;
             }
         },
+        clearEntries: function clearEntries() {
+            __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/' + Telescope.path + '/telescope-api/clear-entries').then(function () {
+                return router.go();
+            });
+        },
         toggleRecording: function toggleRecording() {
             __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/' + Telescope.path + '/telescope-api/toggle-recording');
 
