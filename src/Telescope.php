@@ -21,6 +21,13 @@ class Telescope
         RegistersWatchers;
 
     /**
+     * The uuid for the process to be used when storing entries.
+     *
+     * @var string
+     */
+    public static $batchId;
+
+    /**
      * The callbacks that filter the entries that should be recorded.
      *
      * @var array
@@ -174,6 +181,8 @@ class Telescope
         app(EntriesRepository::class)->loadMonitoredTags();
 
         static::$shouldRecord = ! cache('telescope:pause-recording');
+
+        static::$batchId = Str::orderedUuid()->toString();
     }
 
     /**
@@ -499,10 +508,8 @@ class Telescope
         }
 
         try {
-            $batchId = Str::orderedUuid()->toString();
-
-            $storage->store(static::collectEntries($batchId));
-            $storage->update(static::collectUpdates($batchId));
+            $storage->store(static::collectEntries(static::$batchId));
+            $storage->update(static::collectUpdates(static::$batchId));
 
             if ($storage instanceof TerminableRepository) {
                 $storage->terminate();
