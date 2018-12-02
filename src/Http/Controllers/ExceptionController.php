@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Http\Controllers;
 
 use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Watchers\ExceptionWatcher;
 
 class ExceptionController extends EntryController
 {
@@ -14,5 +15,15 @@ class ExceptionController extends EntryController
     protected function entryType()
     {
         return EntryType::EXCEPTION;
+    }
+
+    /**
+     * The watcher class for the controller.
+     *
+     * @return string
+     */
+    protected function watcher()
+    {
+        return ExceptionWatcher::class;
     }
 }

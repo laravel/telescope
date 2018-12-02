@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Watchers\DumpWatcher;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 
@@ -49,5 +50,15 @@ class DumpController extends EntryController
     protected function entryType()
     {
         return EntryType::DUMP;
+    }
+
+    /**
+     * The watcher class for the controller.
+     *
+     * @return string
+     */
+    protected function watcher()
+    {
+        return DumpWatcher::class;
     }
 }

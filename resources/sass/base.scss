@@ -257,3 +257,9 @@ button:hover{
 .code-bg{
   background: $code-bg;
 }
+
+.disabled-watcher {
+  padding: 0.75rem;
+  color: #fff;
+  background: $danger;
+}

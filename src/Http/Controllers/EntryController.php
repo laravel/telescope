@@ -17,6 +17,13 @@ abstract class EntryController extends Controller
     abstract protected function entryType();
 
     /**
+     * The watcher class for the controller.
+     *
+     * @return string
+     */
+    abstract protected function watcher();
+
+    /**
      * List the entries of the given type.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -30,6 +37,7 @@ abstract class EntryController extends Controller
                 $this->entryType(),
                 EntryQueryOptions::fromRequest($request)
             ),
+            'status' => $this->status(),
         ]);
     }
 
@@ -48,5 +56,27 @@ abstract class EntryController extends Controller
             'entry' => $entry,
             'batch' => $storage->get(null, EntryQueryOptions::forBatchId($entry->batchId)->limit(-1)),
         ]);
+    }
+
+    /**
+     * Determine the watcher recording status.
+     *
+     * @return string
+     */
+    protected function status()
+    {
+        if (! config('telescope.enabled', false)) {
+            return 'disabled';
+        }
+
+        if (cache('telescope:pause-recording', false)) {
+            return 'paused';
+        }
+
+        if (! config('telescope.watchers.' . $this->watcher(), false)) {
+            return 'off';
+        }
+
+        return 'enabled';
     }
 }

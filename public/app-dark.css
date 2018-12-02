@@ -10747,3 +10747,9 @@ button:hover .fill-primary {
   background: #262525;
 }
 
+.disabled-watcher {
+  padding: 0.75rem;
+  color: #fff;
+  background: #621B18;
+}
+
