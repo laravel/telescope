@@ -63,7 +63,7 @@ class ModelWatcherTest extends FeatureTestCase
         $this->assertCount(1, $entries);
         $this->assertSame(EntryType::MODEL, $entry->type);
         $this->assertSame('created', $entry->content['action']);
-        $this->assertSame(UserEloquent::class . ':1', $entry->content['model']);
+        $this->assertSame(UserEloquent::class.':1', $entry->content['model']);
     }
 }
 
