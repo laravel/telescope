@@ -50306,48 +50306,55 @@ var render = function() {
     ),
     _vm._v(" "),
     _vm.recordingStatus !== "enabled"
-      ? _c("p", { staticClass: "mt-0 mb-0 disabled-watcher" }, [
-          _c(
-            "svg",
-            {
-              attrs: {
-                xmlns: "http://www.w3.org/2000/svg",
-                x: "0px",
-                y: "0px",
-                width: "20px",
-                height: "20px",
-                viewBox: "0 0 90 90"
-              }
-            },
-            [
-              _c("path", {
+      ? _c(
+          "p",
+          {
+            staticClass: "mt-0 mb-0 disabled-watcher d-flex align-items-center"
+          },
+          [
+            _c(
+              "svg",
+              {
+                staticClass: "mr-2",
                 attrs: {
-                  fill: "#FFFFFF",
-                  d:
-                    "M45 0C20.1 0 0 20.1 0 45s20.1 45 45 45 45-20.1 45-45S69.9 0 45 0zM45 74.5c-3.6 0-6.5-2.9-6.5-6.5s2.9-6.5 6.5-6.5 6.5 2.9 6.5 6.5S48.6 74.5 45 74.5zM52.1 23.9l-2.5 29.6c0 2.5-2.1 4.6-4.6 4.6 -2.5 0-4.6-2.1-4.6-4.6l-2.5-29.6c-0.1-0.4-0.1-0.7-0.1-1.1 0-4 3.2-7.2 7.2-7.2 4 0 7.2 3.2 7.2 7.2C52.2 23.1 52.2 23.5 52.1 23.9z"
+                  xmlns: "http://www.w3.org/2000/svg",
+                  x: "0px",
+                  y: "0px",
+                  width: "20px",
+                  height: "20px",
+                  viewBox: "0 0 90 90"
                 }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _vm.recordingStatus == "disabled"
-            ? _c("span", { staticClass: "ml-1" }, [
-                _vm._v("Telescope is currently disabled.")
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.recordingStatus == "paused"
-            ? _c("span", { staticClass: "ml-1" }, [
-                _vm._v("Telescope recording is paused.")
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.recordingStatus == "off"
-            ? _c("span", { staticClass: "ml-1" }, [
-                _vm._v("This watcher is turned off.")
-              ])
-            : _vm._e()
-        ])
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    fill: "#FFFFFF",
+                    d:
+                      "M45 0C20.1 0 0 20.1 0 45s20.1 45 45 45 45-20.1 45-45S69.9 0 45 0zM45 74.5c-3.6 0-6.5-2.9-6.5-6.5s2.9-6.5 6.5-6.5 6.5 2.9 6.5 6.5S48.6 74.5 45 74.5zM52.1 23.9l-2.5 29.6c0 2.5-2.1 4.6-4.6 4.6 -2.5 0-4.6-2.1-4.6-4.6l-2.5-29.6c-0.1-0.4-0.1-0.7-0.1-1.1 0-4 3.2-7.2 7.2-7.2 4 0 7.2 3.2 7.2 7.2C52.2 23.1 52.2 23.5 52.1 23.9z"
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _vm.recordingStatus == "disabled"
+              ? _c("span", { staticClass: "ml-1" }, [
+                  _vm._v("Telescope is currently disabled.")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.recordingStatus == "paused"
+              ? _c("span", { staticClass: "ml-1" }, [
+                  _vm._v("Telescope recording is paused.")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.recordingStatus == "off"
+              ? _c("span", { staticClass: "ml-1" }, [
+                  _vm._v("This watcher is turned off.")
+                ])
+              : _vm._e()
+          ]
+        )
       : _vm._e(),
     _vm._v(" "),
     !_vm.ready
