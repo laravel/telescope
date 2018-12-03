@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Http\Controllers;
 
 use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Watchers\JobWatcher;
 use Laravel\Telescope\Storage\EntryQueryOptions;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
@@ -35,5 +36,15 @@ class QueueController extends EntryController
                             ? $storage->get(null, EntryQueryOptions::forBatchId($entry->content['updated_batch_id']))
                             : null,
         ]);
+    }
+
+    /**
+     * The watcher class for the controller.
+     *
+     * @return string
+     */
+    protected function watcher()
+    {
+        return JobWatcher::class;
     }
 }
