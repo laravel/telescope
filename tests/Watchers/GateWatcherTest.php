@@ -19,6 +19,8 @@ class GateWatcherTest extends FeatureTestCase
             GateWatcher::class => true,
         ]);
 
+        $app->setBasePath(dirname(__FILE__, 3));
+
         Gate::define('potato', function (User $user) {
             return $user->email === 'allow';
         });
@@ -40,6 +42,8 @@ class GateWatcherTest extends FeatureTestCase
 
         $this->assertTrue($check);
         $this->assertSame(EntryType::GATE, $entry->type);
+        $this->assertSame(__FILE__, $entry->content['file']);
+        $this->assertSame(39, $entry->content['line']);
         $this->assertSame('potato', $entry->content['ability']);
         $this->assertSame('allowed', $entry->content['result']);
         $this->assertEmpty($entry->content['arguments']);
@@ -53,6 +57,8 @@ class GateWatcherTest extends FeatureTestCase
 
         $this->assertFalse($check);
         $this->assertSame(EntryType::GATE, $entry->type);
+        $this->assertSame(__FILE__, $entry->content['file']);
+        $this->assertSame(54, $entry->content['line']);
         $this->assertSame('potato', $entry->content['ability']);
         $this->assertSame('denied', $entry->content['result']);
         $this->assertSame(['banana'], $entry->content['arguments']);
@@ -66,6 +72,8 @@ class GateWatcherTest extends FeatureTestCase
 
         $this->assertTrue($check);
         $this->assertSame(EntryType::GATE, $entry->type);
+        $this->assertSame(__FILE__, $entry->content['file']);
+        $this->assertSame(69, $entry->content['line']);
         $this->assertSame('guest potato', $entry->content['ability']);
         $this->assertSame('allowed', $entry->content['result']);
         $this->assertEmpty($entry->content['arguments']);
@@ -79,6 +87,8 @@ class GateWatcherTest extends FeatureTestCase
 
         $this->assertFalse($check);
         $this->assertSame(EntryType::GATE, $entry->type);
+        $this->assertSame(__FILE__, $entry->content['file']);
+        $this->assertSame(84, $entry->content['line']);
         $this->assertSame('deny potato', $entry->content['ability']);
         $this->assertSame('denied', $entry->content['result']);
         $this->assertSame(['gelato'], $entry->content['arguments']);
