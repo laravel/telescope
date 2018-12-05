@@ -4,8 +4,8 @@ namespace Laravel\Telescope\Watchers;
 
 use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
-use Laravel\Telescope\IncomingEntry;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Telescope\IncomingEntry;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 class GateWatcher extends Watcher
