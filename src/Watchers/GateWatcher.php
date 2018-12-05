@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class GateWatcher extends Watcher
 {
@@ -29,7 +30,7 @@ class GateWatcher extends Watcher
      * @param  array  $arguments
      * @return bool
      */
-    public function recordGateCheck($user, $ability, $result, $arguments)
+    public function recordGateCheck(?Authenticatable $user, $ability, $result, $arguments)
     {
         if (! Telescope::isRecording() || $this->shouldIgnore($ability)) {
             return;
