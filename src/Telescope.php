@@ -591,8 +591,7 @@ class Telescope
     public static function hideRequestHeaders(array $headers)
     {
         static::$hiddenRequestHeaders = array_merge(
-            static::$hiddenRequestHeaders,
-            $headers
+            static::$hiddenRequestHeaders, $headers
         );
 
         return new static;
@@ -607,8 +606,7 @@ class Telescope
     public static function hideRequestParameters(array $attributes)
     {
         static::$hiddenRequestParameters = array_merge(
-            static::$hiddenRequestParameters,
-            $attributes
+            static::$hiddenRequestParameters, $attributes
         );
 
         return new static;
