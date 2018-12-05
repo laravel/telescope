@@ -10,6 +10,8 @@ use Illuminate\Contracts\Auth\Authenticatable;
 
 class GateWatcher extends Watcher
 {
+    use FetchesStackTrace;
+
     /**
      * Register the watcher.
      *
@@ -36,10 +38,14 @@ class GateWatcher extends Watcher
             return;
         }
 
+        $caller = $this->getCallerFromStackTrace();
+
         Telescope::recordGate(IncomingEntry::make([
             'ability' => $ability,
             'result' => $result ? 'allowed' : 'denied',
             'arguments' => $arguments,
+            'file' => $caller['file'],
+            'line' => $caller['line'],
         ]));
 
         return $result;
