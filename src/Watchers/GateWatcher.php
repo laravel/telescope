@@ -1,0 +1,57 @@
+<?php
+
+namespace Laravel\Telescope\Watchers;
+
+use Illuminate\Support\Str;
+use Laravel\Telescope\Telescope;
+use Laravel\Telescope\IncomingEntry;
+use Illuminate\Support\Facades\Gate;
+
+class GateWatcher extends Watcher
+{
+    /**
+     * Register the watcher.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @return void
+     */
+    public function register($app)
+    {
+        Gate::after([$this, 'recordGateCheck']);
+    }
+
+    /**
+     * Record a gate check.
+     *
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
+     * @param  string  $ability
+     * @param  bool  $result
+     * @param  array  $arguments
+     * @return bool
+     */
+    public function recordGateCheck($user, $ability, $result, $arguments)
+    {
+        if (! Telescope::isRecording() || $this->shouldIgnore($ability)) {
+            return;
+        }
+
+        Telescope::recordGate(IncomingEntry::make([
+            'ability' => $ability,
+            'result' => $result ? 'allowed' : 'denied',
+            'arguments' => $arguments,
+        ]));
+
+        return $result;
+    }
+
+    /**
+     * Determine if the ability should be ignored.
+     *
+     * @param  string  $ability
+     * @return bool
+     */
+    private function shouldIgnore($ability)
+    {
+        return Str::is($this->options['ignore_abilities'] ?? [], $ability);
+    }
+}

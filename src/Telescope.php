@@ -330,6 +330,17 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
+    public static function recordGate(IncomingEntry $entry)
+    {
+        static::record(EntryType::GATE, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
     public static function recordJob($entry)
     {
         static::record(EntryType::JOB, $entry);
@@ -580,7 +591,8 @@ class Telescope
     public static function hideRequestHeaders(array $headers)
     {
         static::$hiddenRequestHeaders = array_merge(
-            static::$hiddenRequestHeaders, $headers
+            static::$hiddenRequestHeaders,
+            $headers
         );
 
         return new static;
@@ -595,7 +607,8 @@ class Telescope
     public static function hideRequestParameters(array $attributes)
     {
         static::$hiddenRequestParameters = array_merge(
-            static::$hiddenRequestParameters, $attributes
+            static::$hiddenRequestParameters,
+            $attributes
         );
 
         return new static;
