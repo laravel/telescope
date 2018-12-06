@@ -24,7 +24,7 @@ class JobWatcher extends Watcher
     public function register($app)
     {
         Queue::createPayloadUsing(function ($connection, $queue, $payload) {
-            return ['telescope_uuid' => $this->recordJob($connection, $queue, $payload)->uuid];
+            return ['telescope_uuid' => optional($this->recordJob($connection, $queue, $payload))->uuid];
         });
 
         $app['events']->listen(JobProcessed::class, [$this, 'recordProcessedJob']);
@@ -37,7 +37,7 @@ class JobWatcher extends Watcher
      * @param  string  $connection
      * @param  string  $queue
      * @param  array  $payload
-     * @return \Laravel\Telescope\IncomingEntry
+     * @return \Laravel\Telescope\IncomingEntry|null
      */
     public function recordJob($connection, $queue, array $payload)
     {
