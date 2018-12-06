@@ -330,6 +330,17 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
+    public static function recordGate(IncomingEntry $entry)
+    {
+        static::record(EntryType::GATE, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
     public static function recordJob($entry)
     {
         static::record(EntryType::JOB, $entry);

@@ -32,6 +32,18 @@ export default [
     },
 
     {
+        path: '/gate/:id',
+        name: 'gate-preview',
+        component: require('./screens/gates/preview')
+    },
+
+    {
+        path: '/gates',
+        name: 'gates',
+        component: require('./screens/gates/index')
+    },
+
+    {
         path: '/logs/:id',
         name: 'log-preview',
         component: require('./screens/logs/preview')

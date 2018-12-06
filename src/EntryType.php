@@ -9,6 +9,7 @@ class EntryType
     public const DUMP = 'dump';
     public const EVENT = 'event';
     public const EXCEPTION = 'exception';
+    public const GATE = 'gate';
     public const JOB = 'job';
     public const LOG = 'log';
     public const MAIL = 'mail';

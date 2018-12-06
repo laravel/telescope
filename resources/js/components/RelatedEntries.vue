@@ -56,6 +56,8 @@
                     this.currentTab = 'events'
                 } else if (this.cache.length) {
                     this.currentTab = 'cache'
+                } else if (this.gates.length) {
+                    this.currentTab = 'gates'
                 } else if (this.redis.length) {
                     this.currentTab = 'redis'
                 }
@@ -76,6 +78,10 @@
 
             exceptions() {
                 return _.filter(this.batch, {type: 'exception'});
+            },
+
+            gates() {
+                return _.filter(this.batch, {type: 'gate'});
             },
 
             logs() {
@@ -120,6 +126,7 @@
                     {title: "Logs", type: "logs", count: this.logs.length},
                     {title: "Queries", type: "queries", count: this.queries.length},
                     {title: "Models", type: "models", count: this.models.length},
+                    {title: "Gates", type: "gates", count: this.gates.length},
                     {title: "Jobs", type: "jobs", count: this.jobs.length},
                     {title: "Mail", type: "mails", count: this.mails.length},
                     {title: "Notifications", type: "notifications", count: this.notifications.length},
@@ -275,6 +282,36 @@
 
                     <td class="table-fit">
                         <router-link :to="{name:'model-preview', params:{id: entry.id}}" class="control-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
+                                <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Related Gates -->
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='gates' && gates.length">
+                <thead>
+                <tr>
+                    <th>Ability</th>
+                    <th>Result</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr v-for="entry in gates">
+                    <td :title="entry.content.ability">{{truncate(entry.content.ability, 80)}}</td>
+                    <td class="table-fit">
+                        <span class="badge font-weight-light" :class="'badge-'+gateResultClass(entry.content.result)">
+                            {{entry.content.result}}
+                        </span>
+                    </td>
+
+                    <td class="table-fit">
+                        <router-link :to="{name:'gate-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>

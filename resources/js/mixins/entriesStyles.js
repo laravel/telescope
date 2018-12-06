@@ -7,6 +7,12 @@ export default {
             if (type === 'missed') return 'danger';
         },
 
+        
+        gateResultClass(result){
+            if (result === 'allowed') return 'success';
+            if (result === 'denied') return 'danger';
+        },
+
 
         jobStatusClass(status){
             if (status === 'pending') return 'secondary';

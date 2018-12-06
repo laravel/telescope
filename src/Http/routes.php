@@ -29,6 +29,10 @@ Route::get('/telescope-api/jobs/{telescopeEntryId}', 'QueueController@show');
 Route::post('/telescope-api/events', 'EventsController@index');
 Route::get('/telescope-api/events/{telescopeEntryId}', 'EventsController@show');
 
+// Gates entries...
+Route::post('/telescope-api/gates', 'GatesController@index');
+Route::get('/telescope-api/gates/{telescopeEntryId}', 'GatesController@show');
+
 // Cache entries...
 Route::post('/telescope-api/cache', 'CacheController@index');
 Route::get('/telescope-api/cache/{telescopeEntryId}', 'CacheController@show');
