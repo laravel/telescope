@@ -42,7 +42,7 @@ class JobWatcher extends Watcher
     public function recordJob($connection, $queue, array $payload)
     {
         if (! Telescope::isRecording()) {
-            return null;
+            return;
         }
 
         $content = array_merge([
