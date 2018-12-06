@@ -29,6 +29,9 @@
             </svg>
 
             <h4 class="mb-0 ml-3"><strong>Laravel</strong> Telescope</h4>
+             <a href="#" class="badge badge-info ml-3">
+                {{$appEnv}}
+            </a>
 
             <button class="btn btn-outline-primary ml-auto mr-3" v-on:click.prevent="toggleRecording" title="Play/Pause">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon fill-primary" v-if="recording">
