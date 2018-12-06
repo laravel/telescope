@@ -69569,14 +69569,6 @@ module.exports = Component.exports
     name: 'dumps',
     component: __webpack_require__("./resources/js/screens/dumps/index.vue")
 }, {
-    path: '/gate/:id',
-    name: 'gate-preview',
-    component: __webpack_require__("./resources/js/screens/gates/preview.vue")
-}, {
-    path: '/gates',
-    name: 'gates',
-    component: __webpack_require__("./resources/js/screens/gates/index.vue")
-}, {
     path: '/logs/:id',
     name: 'log-preview',
     component: __webpack_require__("./resources/js/screens/logs/preview.vue")
@@ -69668,6 +69660,14 @@ module.exports = Component.exports
     path: '/monitored-tags',
     name: 'monitored-tags',
     component: __webpack_require__("./resources/js/screens/monitoring/index.vue")
+}, {
+    path: '/gates/:id',
+    name: 'gate-preview',
+    component: __webpack_require__("./resources/js/screens/gates/preview.vue")
+}, {
+    path: '/gates',
+    name: 'gates',
+    component: __webpack_require__("./resources/js/screens/gates/index.vue")
 }]);
 
 /***/ }),

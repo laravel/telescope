@@ -32,18 +32,6 @@ export default [
     },
 
     {
-        path: '/gate/:id',
-        name: 'gate-preview',
-        component: require('./screens/gates/preview')
-    },
-
-    {
-        path: '/gates',
-        name: 'gates',
-        component: require('./screens/gates/index')
-    },
-
-    {
         path: '/logs/:id',
         name: 'log-preview',
         component: require('./screens/logs/preview')
@@ -179,5 +167,17 @@ export default [
         path: '/monitored-tags',
         name: 'monitored-tags',
         component: require('./screens/monitoring/index')
+    },
+
+    {
+        path: '/gates/:id',
+        name: 'gate-preview',
+        component: require('./screens/gates/preview')
+    },
+
+    {
+        path: '/gates',
+        name: 'gates',
+        component: require('./screens/gates/index')
     },
 ];

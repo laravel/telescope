@@ -4,8 +4,10 @@ namespace Laravel\Telescope\Watchers;
 
 use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
+use Laravel\Telescope\FormatModel;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\IncomingEntry;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 class GateWatcher extends Watcher
@@ -32,7 +34,7 @@ class GateWatcher extends Watcher
      * @param  array  $arguments
      * @return bool
      */
-    public function recordGateCheck(?Authenticatable $user, $ability, $result, $arguments)
+    public function recordGateCheck($user, $ability, $result, $arguments)
     {
         if (! Telescope::isRecording() || $this->shouldIgnore($ability)) {
             return;
@@ -43,7 +45,7 @@ class GateWatcher extends Watcher
         Telescope::recordGate(IncomingEntry::make([
             'ability' => $ability,
             'result' => $result ? 'allowed' : 'denied',
-            'arguments' => $arguments,
+            'arguments' => $this->formatArguments($arguments),
             'file' => $caller['file'],
             'line' => $caller['line'],
         ]));
@@ -60,5 +62,18 @@ class GateWatcher extends Watcher
     private function shouldIgnore($ability)
     {
         return Str::is($this->options['ignore_abilities'] ?? [], $ability);
+    }
+
+    /**
+     * Format the given arguments
+     *
+     * @param  array  $arguments
+     * @return array
+     */
+    private function formatArguments($arguments)
+    {
+        return collect($arguments)->map(function ($argument) {
+            return $argument instanceof Model ? FormatModel::given($argument) : $argument;
+        })->toArray();
     }
 }
