@@ -72,6 +72,6 @@ class NotificationWatcher extends Watcher
             return 'Anonymous:'.implode(',', $notifiable->routes);
         }
 
-        return $notifiable;
+        return get_class($notifiable);
     }
 }
