@@ -100,7 +100,7 @@ class GateWatcherTest extends FeatureTestCase
         Gate::policy(TestResource::class, TestPolicy::class);
 
         (new TestController())->create(new TestResource());
-        
+
         $entry = $this->loadTelescopeEntries()->first();
 
         $this->assertSame(EntryType::GATE, $entry->type);
@@ -117,7 +117,7 @@ class GateWatcherTest extends FeatureTestCase
 
         try {
             (new TestController())->update(new TestResource());
-        } catch(\Exception $ex) {
+        } catch (\Exception $ex) {
             // ignore
         }
         
@@ -179,11 +179,11 @@ class TestResource
 
 class TestController
 {
-	use AuthorizesRequests;
+    use AuthorizesRequests;
 
-	public function create($object)
-	{
-		$this->authorize($object);
+    public function create($object)
+    {
+        $this->authorize($object);
     }
 
     public function update($object)
