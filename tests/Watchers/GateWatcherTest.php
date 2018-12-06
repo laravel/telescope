@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\Watchers\GateWatcher;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class GateWatcherTest extends FeatureTestCase
 {
@@ -43,7 +44,7 @@ class GateWatcherTest extends FeatureTestCase
         $this->assertTrue($check);
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(39, $entry->content['line']);
+        $this->assertSame(40, $entry->content['line']);
         $this->assertSame('potato', $entry->content['ability']);
         $this->assertSame('allowed', $entry->content['result']);
         $this->assertEmpty($entry->content['arguments']);
@@ -58,7 +59,7 @@ class GateWatcherTest extends FeatureTestCase
         $this->assertFalse($check);
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(54, $entry->content['line']);
+        $this->assertSame(55, $entry->content['line']);
         $this->assertSame('potato', $entry->content['ability']);
         $this->assertSame('denied', $entry->content['result']);
         $this->assertSame(['banana'], $entry->content['arguments']);
@@ -73,7 +74,7 @@ class GateWatcherTest extends FeatureTestCase
         $this->assertTrue($check);
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(69, $entry->content['line']);
+        $this->assertSame(70, $entry->content['line']);
         $this->assertSame('guest potato', $entry->content['ability']);
         $this->assertSame('allowed', $entry->content['result']);
         $this->assertEmpty($entry->content['arguments']);
@@ -88,10 +89,46 @@ class GateWatcherTest extends FeatureTestCase
         $this->assertFalse($check);
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(84, $entry->content['line']);
+        $this->assertSame(85, $entry->content['line']);
         $this->assertSame('deny potato', $entry->content['ability']);
         $this->assertSame('denied', $entry->content['result']);
         $this->assertSame(['gelato'], $entry->content['arguments']);
+    }
+
+    public function test_gate_watcher_registers_allowed_policy_entries()
+    {
+        Gate::policy(TestResource::class, TestPolicy::class);
+
+        (new TestController())->create(new TestResource());
+        
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::GATE, $entry->type);
+        $this->assertSame(__FILE__, $entry->content['file']);
+        $this->assertSame(186, $entry->content['line']);
+        $this->assertSame('create', $entry->content['ability']);
+        $this->assertSame('allowed', $entry->content['result']);
+        $this->assertSame([[]], $entry->content['arguments']);
+    }
+
+    public function test_gate_watcher_registers_denied_policy_entries()
+    {
+        Gate::policy(TestResource::class, TestPolicy::class);
+
+        try {
+            (new TestController())->update(new TestResource());
+        } catch(\Exception $ex) {
+            // ignore
+        }
+        
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::GATE, $entry->type);
+        $this->assertSame(__FILE__, $entry->content['file']);
+        $this->assertSame(191, $entry->content['line']);
+        $this->assertSame('update', $entry->content['ability']);
+        $this->assertSame('denied', $entry->content['result']);
+        $this->assertSame([[]], $entry->content['arguments']);
     }
 }
 
@@ -132,5 +169,38 @@ class User implements Authenticatable
     public function getRememberTokenName()
     {
         //
+    }
+}
+
+class TestResource
+{
+    //
+}
+
+class TestController
+{
+	use AuthorizesRequests;
+
+	public function create($object)
+	{
+		$this->authorize($object);
+    }
+
+    public function update($object)
+    {
+        $this->authorize($object);
+    }
+}
+
+class TestPolicy
+{
+    public function create(?User $user)
+    {
+        return true;
+    }
+
+    public function update(?User $user)
+    {
+        return false;
     }
 }
