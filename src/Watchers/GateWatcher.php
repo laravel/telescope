@@ -65,7 +65,7 @@ class GateWatcher extends Watcher
     }
 
     /**
-     * Format the given arguments
+     * Format the given arguments.
      *
      * @param  array  $arguments
      * @return array

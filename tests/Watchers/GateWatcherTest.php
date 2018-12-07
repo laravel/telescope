@@ -120,7 +120,7 @@ class GateWatcherTest extends FeatureTestCase
         } catch (\Exception $ex) {
             // ignore
         }
-        
+
         $entry = $this->loadTelescopeEntries()->first();
 
         $this->assertSame(EntryType::GATE, $entry->type);

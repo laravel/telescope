@@ -69,7 +69,7 @@ class RedisWatcher extends Watcher
     private function shouldIgnore($event)
     {
         return in_array($event->command, [
-            'pipeline', 'transaction'
+            'pipeline', 'transaction',
         ]);
     }
 }
