@@ -27,7 +27,7 @@ class RedisWatcher extends Watcher
      */
     public function recordCommand(CommandExecuted $event)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 
@@ -58,5 +58,18 @@ class RedisWatcher extends Watcher
         })->implode(' ');
 
         return "{$command} {$parameters}";
+    }
+
+    /**
+     * Determine if the event should be ignored.
+     *
+     * @param  mixed  $event
+     * @return bool
+     */
+    private function shouldIgnore($event)
+    {
+        return in_array($event->command, [
+            'pipeline', 'transaction'
+        ]);
     }
 }
