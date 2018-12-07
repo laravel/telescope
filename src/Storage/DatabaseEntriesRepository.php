@@ -92,7 +92,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                     $entry->created_at,
                     []
                 );
-            });
+            })->values();
     }
 
     /**
