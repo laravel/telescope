@@ -71,7 +71,7 @@ class AuthorizationTest extends FeatureTestCase
         });
 
         Gate::define('viewTelescope', function (Authenticatable $user) {
-            return $user->getAuthIdentifier() == 'telescope-test';
+            return $user->getAuthIdentifier() === 'telescope-test';
         });
 
         $this->post('/telescope/telescope-api/requests')

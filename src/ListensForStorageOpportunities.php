@@ -86,7 +86,7 @@ trait ListensForStorageOpportunities
         if (empty(static::$processingJobs)) {
             static::store($app[EntriesRepository::class]);
 
-            if ($event->connectionName != 'sync') {
+            if ($event->connectionName !== 'sync') {
                 static::stopRecording();
             }
         }
