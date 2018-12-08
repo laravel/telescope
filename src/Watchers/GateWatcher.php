@@ -28,7 +28,7 @@ class GateWatcher extends Watcher
     /**
      * Record a gate check.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable|null  $user
      * @param  string  $ability
      * @param  bool  $result
      * @param  array  $arguments
