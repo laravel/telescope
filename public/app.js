@@ -50399,7 +50399,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("td", { attrs: { title: slotProps.entry.content.uri } }, [
-                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.uri, 70)))
+                _vm._v(_vm._s(_vm.truncate(slotProps.entry.content.uri, 60)))
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "table-fit" }, [
@@ -50803,7 +50803,7 @@ var render = function() {
           "table",
           {
             staticClass:
-              "table table-hover table-sm mb-0 penultimate-column-right table-responsive",
+              "table table-hover table-sm mb-0 penultimate-column-right",
             attrs: { id: "indexScreen" }
           },
           [
