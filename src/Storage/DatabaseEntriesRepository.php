@@ -71,7 +71,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      *
      * @param  string|null  $type
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
-     * @return \Illuminate\Support\Collection[\Laravel\Telescope\EntryResult]
+     * @return \Illuminate\Support\Collection|\Laravel\Telescope\EntryResult[]
      */
     public function get($type, EntryQueryOptions $options)
     {
@@ -98,7 +98,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     /**
      * Store the given array of entries.
      *
-     * @param  \Illuminate\Support\Collection[\Laravel\Telescope\IncomingEntry]  $entries
+     * @param  \Illuminate\Support\Collection|\Laravel\Telescope\IncomingEntry[]  $entries
      * @return void
      */
     public function store(Collection $entries)
@@ -123,7 +123,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     /**
      * Store the given array of exception entries.
      *
-     * @param  \Illuminate\Support\Collection[\Laravel\Telescope\IncomingEntry]  $entries
+     * @param  \Illuminate\Support\Collection|\Laravel\Telescope\IncomingEntry[]  $exceptions
      * @return void
      */
     protected function storeExceptions(Collection $exceptions)
@@ -171,7 +171,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     /**
      * Store the given entry updates.
      *
-     * @param  \Illuminate\Support\Collection[\Laravel\Telescope\EntryUpdate]  $updates
+     * @param  \Illuminate\Support\Collection|\Laravel\Telescope\EntryUpdate[]  $updates
      * @return void
      */
     public function update(Collection $updates)

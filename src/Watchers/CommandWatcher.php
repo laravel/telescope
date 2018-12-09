@@ -35,7 +35,7 @@ class CommandWatcher extends Watcher
             'command' => $event->command ?? $event->input->getArguments()['command'] ?? 'default',
             'exit_code' => $event->exitCode,
             'arguments' => $event->input->getArguments(),
-            'options' => $event->input->getOptions()
+            'options' => $event->input->getOptions(),
         ]));
     }
 
