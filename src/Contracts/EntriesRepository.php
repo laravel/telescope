@@ -21,14 +21,14 @@ interface EntriesRepository
      *
      * @param  string|null  $type
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
-     * @return \Illuminate\Support\Collection[\Laravel\Telescope\EntryResult]
+     * @return \Illuminate\Support\Collection|\Laravel\Telescope\EntryResult[]
      */
     public function get($type, EntryQueryOptions $options);
 
     /**
      * Store the given entries.
      *
-     * @param  \Illuminate\Support\Collection[\Laravel\Telescope\IncomingEntry]  $entries
+     * @param  \Illuminate\Support\Collection|\Laravel\Telescope\IncomingEntry[]  $entries
      * @return void
      */
     public function store(Collection $entries);
@@ -36,7 +36,7 @@ interface EntriesRepository
     /**
      * Store the given entry updates.
      *
-     * @param  \Illuminate\Support\Collection[\Laravel\Telescope\EntryUpdate]  $updates
+     * @param  \Illuminate\Support\Collection|\Laravel\Telescope\EntryUpdate[]  $updates
      * @return void
      */
     public function update(Collection $updates);
