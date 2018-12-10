@@ -72,6 +72,6 @@ class LogWatcher extends Watcher
      */
     private function shouldIgnore(MessageLogged $event)
     {
-        return $this->level(['level' => $event->level]) < $this->level(['level' => ($this->options['level'] ?? 'info')]);
+        return $this->level(['level' => $event->level]) < $this->level(['level' => ($this->options['level'] ?? 'debug')]);
     }
 }
