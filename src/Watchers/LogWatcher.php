@@ -11,6 +11,7 @@ use Illuminate\Log\ParsesLogConfiguration;
 class LogWatcher extends Watcher
 {
     use ParsesLogConfiguration;
+
     /**
      * Register the watcher.
      *
