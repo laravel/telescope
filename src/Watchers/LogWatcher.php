@@ -4,11 +4,13 @@ namespace Laravel\Telescope\Watchers;
 
 use Illuminate\Support\Arr;
 use Laravel\Telescope\Telescope;
+use Illuminate\Log\ParsesLogConfiguration;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Log\Events\MessageLogged;
 
 class LogWatcher extends Watcher
 {
+    use ParsesLogConfiguration;
     /**
      * Register the watcher.
      *
@@ -28,7 +30,7 @@ class LogWatcher extends Watcher
      */
     public function recordLog(MessageLogged $event)
     {
-        if (! Telescope::isRecording() || isset($event->context['exception'])) {
+        if (! Telescope::isRecording() || isset($event->context['exception']) || $this->shouldIgnore($event)) {
             return;
         }
 
@@ -50,5 +52,26 @@ class LogWatcher extends Watcher
     private function tags($event)
     {
         return $event->context['telescope'] ?? [];
+    }
+
+    /**
+     * Abstract function getFallbackChannelName(); must be defined to use the ParsesLogConfiguration Trait
+     *
+     * @return void
+     */
+    protected function getFallbackChannelName()
+    {
+        return;
+    }
+
+    /**
+     * Determine if the event should be ignored. Checks if log level too low
+     *
+     * @param  \Illuminate\Log\Events\MessageLogged $event
+     * @return bool
+     */
+    private function shouldIgnore(MessageLogged $event)
+    {
+        return $this->level(['level' => $event->level]) < $this->level(['level' => ($this->options['level'] ?? 'info')]);
     }
 }

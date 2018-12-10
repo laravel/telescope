@@ -97,7 +97,10 @@ return [
         Watchers\EventWatcher::class => env('TELESCOPE_EVENT_WATCHER', true),
         Watchers\ExceptionWatcher::class => env('TELESCOPE_EXCEPTION_WATCHER', true),
         Watchers\JobWatcher::class => env('TELESCOPE_JOB_WATCHER', true),
-        Watchers\LogWatcher::class => env('TELESCOPE_LOG_WATCHER', true),
+        Watchers\LogWatcher::class => env('TELESCOPE_LOG_WATCHER', [
+            'enabled' => true,
+            'level'   => 'error',
+        ]),
         Watchers\MailWatcher::class => env('TELESCOPE_MAIL_WATCHER', true),
 
         Watchers\ModelWatcher::class => [
