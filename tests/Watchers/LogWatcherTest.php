@@ -61,7 +61,7 @@ class LogWatcherTest extends FeatureTestCase
         $logger = $this->app->get(LoggerInterface::class);
 
         $logger->error("Logging Level ['error'].", [
-            'exception' => 'Some error message'
+            'exception' => 'Some error message',
         ]);
 
         $entry = $this->loadTelescopeEntries()->first();
