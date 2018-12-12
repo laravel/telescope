@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Exception;
 use Illuminate\Support\Arr;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
@@ -28,7 +29,8 @@ class LogWatcher extends Watcher
      */
     public function recordLog(MessageLogged $event)
     {
-        if (! Telescope::isRecording() || isset($event->context['exception'])) {
+        if (! Telescope::isRecording()
+            || (isset($event->context['exception']) && $event->context['exception'] instanceof Exception)) {
             return;
         }
 
