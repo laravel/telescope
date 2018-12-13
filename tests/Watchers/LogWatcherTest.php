@@ -60,7 +60,7 @@ class LogWatcherTest extends FeatureTestCase
     {
         $logger = $this->app->get(LoggerInterface::class);
 
-        $logger->error("Logging Level ['error'].", [
+        $logger->error("Some message", [
             'exception' => 'Some error message',
         ]);
 
