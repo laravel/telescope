@@ -29,8 +29,7 @@ class LogWatcher extends Watcher
      */
     public function recordLog(MessageLogged $event)
     {
-        if (! Telescope::isRecording()
-            || (isset($event->context['exception']) && $event->context['exception'] instanceof Exception)) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 
@@ -52,5 +51,17 @@ class LogWatcher extends Watcher
     private function tags($event)
     {
         return $event->context['telescope'] ?? [];
+    }
+
+    /**
+     * Determine if the event should be ignored.
+     *
+     * @param  mixed  $event
+     * @return bool
+     */
+    private function shouldIgnore($event)
+    {
+        return isset($event->context['exception']) &&
+            $event->context['exception'] instanceof Exception;
     }
 }

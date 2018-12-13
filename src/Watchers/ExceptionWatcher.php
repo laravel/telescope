@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Exception;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\ExceptionContext;
@@ -29,7 +30,7 @@ class ExceptionWatcher extends Watcher
      */
     public function recordException(MessageLogged $event)
     {
-        if (! Telescope::isRecording() || ! isset($event->context['exception'])) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 
@@ -58,5 +59,17 @@ class ExceptionWatcher extends Watcher
         return array_merge(ExtractTags::from($event->context['exception']),
             $event->context['telescope'] ?? []
         );
+    }
+
+    /**
+     * Determine if the event should be ignored.
+     *
+     * @param  mixed  $event
+     * @return bool
+     */
+    private function shouldIgnore($event)
+    {
+        return ! isset($event->context['exception']) ||
+            ! $event->context['exception'] instanceof Exception;
     }
 }
