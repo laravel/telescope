@@ -55,4 +55,20 @@ class LogWatcherTest extends FeatureTestCase
         $this->assertSame('Claire Redfield', $entry->content['context']['user']);
         $this->assertSame('Zombie Hunter', $entry->content['context']['role']);
     }
+
+    public function test_log_watcher_registers_entry_with_exception_key()
+    {
+        $logger = $this->app->get(LoggerInterface::class);
+
+        $logger->error('Some message', [
+            'exception' => 'Some error message',
+        ]);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::LOG, $entry->type);
+        $this->assertSame('error', $entry->content['level']);
+        $this->assertSame('Some message', $entry->content['message']);
+        $this->assertSame('Some error message', $entry->content['context']['exception']);
+    }
 }
