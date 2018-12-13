@@ -68,7 +68,7 @@ class LogWatcherTest extends FeatureTestCase
 
         $this->assertSame(EntryType::LOG, $entry->type);
         $this->assertSame('error', $entry->content['level']);
-        $this->assertSame("Logging Level ['error'].", $entry->content['message']);
+        $this->assertSame('Some message', $entry->content['message']);
         $this->assertSame('Some error message', $entry->content['context']['exception']);
     }
 }
