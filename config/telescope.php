@@ -9,6 +9,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Dark Mode
+    |--------------------------------------------------------------------------
+    |
+    | This configuration options determines if telescope will load its dark theme
+    | as default theme to use on its UI
+    |
+    */
+
+    'dark_mode' => env('TELESCOPE_DARK_MODE', false),
+    
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Storage Driver
     |--------------------------------------------------------------------------
     |
