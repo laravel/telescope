@@ -70294,123 +70294,123 @@ __webpack_require__.r(__webpack_exports__);
 }, {
   path: '/mail/:id',
   name: 'mail-preview',
-  component: __webpack_require__(/*! ./screens/mail/preview */ "./resources/js/screens/mail/preview.vue")
+  component: __webpack_require__(/*! ./screens/mail/preview */ "./resources/js/screens/mail/preview.vue").default
 }, {
   path: '/mail',
   name: 'mail',
-  component: __webpack_require__(/*! ./screens/mail/index */ "./resources/js/screens/mail/index.vue")
+  component: __webpack_require__(/*! ./screens/mail/index */ "./resources/js/screens/mail/index.vue").default
 }, {
   path: '/exceptions/:id',
   name: 'exception-preview',
-  component: __webpack_require__(/*! ./screens/exceptions/preview */ "./resources/js/screens/exceptions/preview.vue")
+  component: __webpack_require__(/*! ./screens/exceptions/preview */ "./resources/js/screens/exceptions/preview.vue").default
 }, {
   path: '/exceptions',
   name: 'exceptions',
-  component: __webpack_require__(/*! ./screens/exceptions/index */ "./resources/js/screens/exceptions/index.vue")
+  component: __webpack_require__(/*! ./screens/exceptions/index */ "./resources/js/screens/exceptions/index.vue").default
 }, {
   path: '/dumps',
   name: 'dumps',
-  component: __webpack_require__(/*! ./screens/dumps/index */ "./resources/js/screens/dumps/index.vue")
+  component: __webpack_require__(/*! ./screens/dumps/index */ "./resources/js/screens/dumps/index.vue").default
 }, {
   path: '/logs/:id',
   name: 'log-preview',
-  component: __webpack_require__(/*! ./screens/logs/preview */ "./resources/js/screens/logs/preview.vue")
+  component: __webpack_require__(/*! ./screens/logs/preview */ "./resources/js/screens/logs/preview.vue").default
 }, {
   path: '/logs',
   name: 'logs',
-  component: __webpack_require__(/*! ./screens/logs/index */ "./resources/js/screens/logs/index.vue")
+  component: __webpack_require__(/*! ./screens/logs/index */ "./resources/js/screens/logs/index.vue").default
 }, {
   path: '/notifications/:id',
   name: 'notification-preview',
-  component: __webpack_require__(/*! ./screens/notifications/preview */ "./resources/js/screens/notifications/preview.vue")
+  component: __webpack_require__(/*! ./screens/notifications/preview */ "./resources/js/screens/notifications/preview.vue").default
 }, {
   path: '/notifications',
   name: 'notifications',
-  component: __webpack_require__(/*! ./screens/notifications/index */ "./resources/js/screens/notifications/index.vue")
+  component: __webpack_require__(/*! ./screens/notifications/index */ "./resources/js/screens/notifications/index.vue").default
 }, {
   path: '/jobs/:id',
   name: 'job-preview',
-  component: __webpack_require__(/*! ./screens/jobs/preview */ "./resources/js/screens/jobs/preview.vue")
+  component: __webpack_require__(/*! ./screens/jobs/preview */ "./resources/js/screens/jobs/preview.vue").default
 }, {
   path: '/jobs',
   name: 'jobs',
-  component: __webpack_require__(/*! ./screens/jobs/index */ "./resources/js/screens/jobs/index.vue")
+  component: __webpack_require__(/*! ./screens/jobs/index */ "./resources/js/screens/jobs/index.vue").default
 }, {
   path: '/events/:id',
   name: 'event-preview',
-  component: __webpack_require__(/*! ./screens/events/preview */ "./resources/js/screens/events/preview.vue")
+  component: __webpack_require__(/*! ./screens/events/preview */ "./resources/js/screens/events/preview.vue").default
 }, {
   path: '/events',
   name: 'events',
-  component: __webpack_require__(/*! ./screens/events/index */ "./resources/js/screens/events/index.vue")
+  component: __webpack_require__(/*! ./screens/events/index */ "./resources/js/screens/events/index.vue").default
 }, {
   path: '/cache/:id',
   name: 'cache-preview',
-  component: __webpack_require__(/*! ./screens/cache/preview */ "./resources/js/screens/cache/preview.vue")
+  component: __webpack_require__(/*! ./screens/cache/preview */ "./resources/js/screens/cache/preview.vue").default
 }, {
   path: '/cache',
   name: 'cache',
-  component: __webpack_require__(/*! ./screens/cache/index */ "./resources/js/screens/cache/index.vue")
+  component: __webpack_require__(/*! ./screens/cache/index */ "./resources/js/screens/cache/index.vue").default
 }, {
   path: '/queries/:id',
   name: 'query-preview',
-  component: __webpack_require__(/*! ./screens/queries/preview */ "./resources/js/screens/queries/preview.vue")
+  component: __webpack_require__(/*! ./screens/queries/preview */ "./resources/js/screens/queries/preview.vue").default
 }, {
   path: '/queries',
   name: 'queries',
-  component: __webpack_require__(/*! ./screens/queries/index */ "./resources/js/screens/queries/index.vue")
+  component: __webpack_require__(/*! ./screens/queries/index */ "./resources/js/screens/queries/index.vue").default
 }, {
   path: '/models/:id',
   name: 'model-preview',
-  component: __webpack_require__(/*! ./screens/models/preview */ "./resources/js/screens/models/preview.vue")
+  component: __webpack_require__(/*! ./screens/models/preview */ "./resources/js/screens/models/preview.vue").default
 }, {
   path: '/models',
   name: 'models',
-  component: __webpack_require__(/*! ./screens/models/index */ "./resources/js/screens/models/index.vue")
+  component: __webpack_require__(/*! ./screens/models/index */ "./resources/js/screens/models/index.vue").default
 }, {
   path: '/requests/:id',
   name: 'request-preview',
-  component: __webpack_require__(/*! ./screens/requests/preview */ "./resources/js/screens/requests/preview.vue")
+  component: __webpack_require__(/*! ./screens/requests/preview */ "./resources/js/screens/requests/preview.vue").default
 }, {
   path: '/requests',
   name: 'requests',
-  component: __webpack_require__(/*! ./screens/requests/index */ "./resources/js/screens/requests/index.vue")
+  component: __webpack_require__(/*! ./screens/requests/index */ "./resources/js/screens/requests/index.vue").default
 }, {
   path: '/commands/:id',
   name: 'command-preview',
-  component: __webpack_require__(/*! ./screens/commands/preview */ "./resources/js/screens/commands/preview.vue")
+  component: __webpack_require__(/*! ./screens/commands/preview */ "./resources/js/screens/commands/preview.vue").default
 }, {
   path: '/commands',
   name: 'commands',
-  component: __webpack_require__(/*! ./screens/commands/index */ "./resources/js/screens/commands/index.vue")
+  component: __webpack_require__(/*! ./screens/commands/index */ "./resources/js/screens/commands/index.vue").default
 }, {
   path: '/schedule/:id',
   name: 'schedule-preview',
-  component: __webpack_require__(/*! ./screens/schedule/preview */ "./resources/js/screens/schedule/preview.vue")
+  component: __webpack_require__(/*! ./screens/schedule/preview */ "./resources/js/screens/schedule/preview.vue").default
 }, {
   path: '/schedule',
   name: 'schedule',
-  component: __webpack_require__(/*! ./screens/schedule/index */ "./resources/js/screens/schedule/index.vue")
+  component: __webpack_require__(/*! ./screens/schedule/index */ "./resources/js/screens/schedule/index.vue").default
 }, {
   path: '/redis/:id',
   name: 'redis-preview',
-  component: __webpack_require__(/*! ./screens/redis/preview */ "./resources/js/screens/redis/preview.vue")
+  component: __webpack_require__(/*! ./screens/redis/preview */ "./resources/js/screens/redis/preview.vue").default
 }, {
   path: '/redis',
   name: 'redis',
-  component: __webpack_require__(/*! ./screens/redis/index */ "./resources/js/screens/redis/index.vue")
+  component: __webpack_require__(/*! ./screens/redis/index */ "./resources/js/screens/redis/index.vue").default
 }, {
   path: '/monitored-tags',
   name: 'monitored-tags',
-  component: __webpack_require__(/*! ./screens/monitoring/index */ "./resources/js/screens/monitoring/index.vue")
+  component: __webpack_require__(/*! ./screens/monitoring/index */ "./resources/js/screens/monitoring/index.vue").default
 }, {
   path: '/gates/:id',
   name: 'gate-preview',
-  component: __webpack_require__(/*! ./screens/gates/preview */ "./resources/js/screens/gates/preview.vue")
+  component: __webpack_require__(/*! ./screens/gates/preview */ "./resources/js/screens/gates/preview.vue").default
 }, {
   path: '/gates',
   name: 'gates',
-  component: __webpack_require__(/*! ./screens/gates/index */ "./resources/js/screens/gates/index.vue")
+  component: __webpack_require__(/*! ./screens/gates/index */ "./resources/js/screens/gates/index.vue").default
 }]);
 
 /***/ }),
