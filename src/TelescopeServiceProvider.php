@@ -158,6 +158,6 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     protected function shouldMigrate()
     {
-        return config('telescope.driver') === 'database';
+        return config('telescope.driver') === 'database' && config('app.env') !== 'testing';
     }
 }
