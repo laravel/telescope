@@ -65,4 +65,8 @@ $container-max-widths: (
         xl: 1140px
 ) !default;
 
+#emailContainer {
+  color: #fff;
+}
+
 @import "base";
