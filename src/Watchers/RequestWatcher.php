@@ -130,8 +130,14 @@ class RequestWatcher extends Watcher
         if (is_string($content) &&
             is_array(json_decode($content, true)) &&
             json_last_error() === JSON_ERROR_NONE) {
+            $all = json_decode($content, true);
+            foreach (Telescope::$hiddenResponseParameters as $parameter) {
+                if (Arr::get($all, $parameter)) {
+                    Arr::set($all, $parameter, '********');
+                }
+            }
             return $this->contentWithinLimits($content)
-                    ? json_decode($response->getContent(), true) : 'Purged By Telescope';
+                ? $all : 'Purged By Telescope';
         }
 
         if ($response instanceof RedirectResponse) {
