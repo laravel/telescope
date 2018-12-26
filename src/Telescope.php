@@ -82,6 +82,13 @@ class Telescope
     ];
 
     /**
+     * The list of hidden response parameters.
+     *
+     * @var array
+     */
+    public static $hiddenResponseParameters = [];
+
+    /**
      * Indicates if Telescope should ignore events fired by Laravel.
      *
      * @var bool
@@ -607,6 +614,21 @@ class Telescope
     {
         static::$hiddenRequestParameters = array_merge(
             static::$hiddenRequestParameters, $attributes
+        );
+
+        return new static;
+    }
+
+    /**
+     * Hide the given response parameters.
+     *
+     * @param  array  $attributes
+     * @return static
+     */
+    public static function hideResponseParameters(array $attributes)
+    {
+        static::$hiddenResponseParameters = array_merge(
+            static::$hiddenResponseParameters, $attributes
         );
 
         return new static;

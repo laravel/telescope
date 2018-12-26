@@ -65,13 +65,9 @@ class RequestWatcher extends Watcher
             return $header[0];
         })->toArray();
 
-        foreach (Telescope::$hiddenRequestHeaders as $header) {
-            if (Arr::get($headers, $header)) {
-                Arr::set($headers, $header, '********');
-            }
-        }
-
-        return $headers;
+        return $this->hideParameters($headers,
+            Telescope::$hiddenRequestHeaders
+        );
     }
 
     /**
@@ -82,13 +78,27 @@ class RequestWatcher extends Watcher
      */
     protected function payload($payload)
     {
-        foreach (Telescope::$hiddenRequestParameters as $parameter) {
-            if (Arr::get($payload, $parameter)) {
-                Arr::set($payload, $parameter, '********');
+        return $this->hideParameters($payload,
+            Telescope::$hiddenRequestParameters
+        );
+    }
+
+    /**
+     * Hide the given parameters.
+     *
+     * @param  array  $data
+     * @param  array  $hidden
+     * @return mixed
+     */
+    protected function hideParameters($data, $hidden)
+    {
+        foreach ($hidden as $parameter) {
+            if (Arr::get($data, $parameter)) {
+                Arr::set($data, $parameter, '********');
             }
         }
 
-        return $payload;
+        return $data;
     }
 
     /**
@@ -136,7 +146,8 @@ class RequestWatcher extends Watcher
             is_array(json_decode($content, true)) &&
             json_last_error() === JSON_ERROR_NONE) {
             return $this->contentWithinLimits($content)
-                    ? json_decode($response->getContent(), true) : 'Purged By Telescope';
+                    ? $this->hideParameters(json_decode($content, true), Telescope::$hiddenResponseParameters)
+                    : 'Purged By Telescope';
         }
 
         if ($response instanceof RedirectResponse) {
