@@ -175,6 +175,7 @@ class ExtractTags
                 $flat_array = array_merge($flat_array, [$item]);
             }
         });
+
         return $flat_array;
     }
 
