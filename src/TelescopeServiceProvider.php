@@ -162,6 +162,6 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     protected function shouldMigrate()
     {
-        return config('telescope.driver') === 'database';
+        return Telescope::$runsMigrations && config('telescope.driver') === 'database';
     }
 }

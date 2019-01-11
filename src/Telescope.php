@@ -110,6 +110,13 @@ class Telescope
     public static $shouldRecord = false;
 
     /**
+     * Indicates if Telescope migrations will be run.
+     *
+     * @var bool
+     */
+    public static $runsMigrations = true;
+
+    /**
      * Register the Telescope watchers and start recording if necessary.
      *
      * @param  \Illuminate\Foundation\Application  $app
@@ -670,5 +677,17 @@ class Telescope
             'timezone' => config('app.timezone'),
             'recording' => ! cache('telescope:pause-recording'),
         ];
+    }
+
+    /**
+     * Configure Telescope to not register it's migrations.
+     *
+     * @return static
+     */
+    public static function ignoreMigrations()
+    {
+        static::$runsMigrations = false;
+
+        return new static;
     }
 }
