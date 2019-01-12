@@ -2,6 +2,8 @@
 
 namespace Laravel\Telescope\Tests\Telescope;
 
+use Illuminate\Mail\Mailable;
+use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\FormatModel;
 use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Tests\FeatureTestCase;
@@ -19,7 +21,7 @@ class ExtractTagTest extends FeatureTestCase
         $tag = FormatModel::given($flat_collection->first());
         $extracted_tag = ExtractTags::fromArray([$flat_collection]);
 
-        $this->assertSame($tag, $extracted_tag);
+        $this->assertSame($tag, $extracted_tag[0]);
     }
 
     /**
@@ -33,7 +35,7 @@ class ExtractTagTest extends FeatureTestCase
         $tag = FormatModel::given($flat_collection->first()->first());
         $extracted_tag = ExtractTags::fromArray([$deep_collection]);
 
-        $this->assertSame($tag, $extracted_tag);
+        $this->assertSame($tag, $extracted_tag[0]);
     }
 
     /**
@@ -48,7 +50,7 @@ class ExtractTagTest extends FeatureTestCase
         $tag = FormatModel::given($flat_collection->first()->first());
         $extracted_tag = ExtractTags::from($mailable);
 
-        $this->assertSame($tag, $extracted_tag);
+        $this->assertSame($tag, $extracted_tag[0]);
     }
 }
 
