@@ -32,7 +32,7 @@ class ExtractTagTest extends FeatureTestCase
         $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
         $deep_collection = factory(EntryModel::class, 1)->create()->groupBy('type');
 
-        $tag = FormatModel::given($flat_collection->first()->first());
+        $tag = FormatModel::given($deep_collection->first()->first());
         $extracted_tag = ExtractTags::fromArray([$deep_collection]);
 
         $this->assertSame($tag, $extracted_tag[0]);
@@ -47,7 +47,7 @@ class ExtractTagTest extends FeatureTestCase
         $deep_collection = factory(EntryModel::class, 1)->create()->groupBy('type');
         $mailable = new DummyMailableWithData($deep_collection);
 
-        $tag = FormatModel::given($flat_collection->first()->first());
+        $tag = FormatModel::given($deep_collection->first()->first());
         $extracted_tag = ExtractTags::from($mailable);
 
         $this->assertSame($tag, $extracted_tag[0]);
