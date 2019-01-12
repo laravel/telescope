@@ -60,7 +60,7 @@ class ExtractTags
             if ($value instanceof Model) {
                 return [$value];
             } elseif ($value instanceof EloquentCollection) {
-                return $value->all();
+                return static::flattenCollection($value);
             }
         })->collapse()->filter();
 
