@@ -56,7 +56,8 @@ class DummyMailableWithData extends Mailable
 {
     private $mail_data;
 
-    public function __construct($mail_data) {
+    public function __construct($mail_data)
+    {
         $this->mail_data = $mail_data;
     }
 
