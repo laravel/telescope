@@ -25,7 +25,7 @@ class ExtractTagTest extends FeatureTestCase
     /**
      * @test
      */
-    public function test_extract_tag_from array_containing_deep_collection()
+    public function test_extract_tag_from_array_containing_deep_collection()
     {
         $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
         $deep_collection = factory(EntryModel::class, 1)->create()->groupBy('type');
