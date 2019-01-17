@@ -42,7 +42,7 @@ class CreateTelescopeEntriesTable extends Migration
             $table->text('content');
             $table->dateTime('created_at')->nullable();
 
-            $table->unique('uuid');
+            $table->primary('uuid');
             $table->index('batch_id');
             $table->index(['type', 'should_display_on_index']);
         });
