@@ -60,7 +60,7 @@ class ExtractTags
             if ($value instanceof Model) {
                 return [$value];
             } elseif ($value instanceof EloquentCollection) {
-                return $value->all();
+                return static::flattenCollection($value);
             }
         })->collapse()->filter();
 
@@ -151,12 +151,32 @@ class ExtractTags
                 if ($value instanceof Model) {
                     return [$value];
                 } elseif ($value instanceof EloquentCollection) {
-                    return $value->all();
+                    return static::flattenCollection($value);
                 }
             })->collapse()->filter()->all();
         }
 
         return collect(Arr::collapse($models))->unique();
+    }
+
+    /**
+     * Flatten a potentially multi-level Collection and return any Models found.
+     *
+     * @param EloquentCollection $collection
+     * @return array
+     */
+    protected static function flattenCollection(EloquentCollection $collection)
+    {
+        $flat_array = [];
+        $collection->each(function ($item, $key) use (&$flat_array) {
+            if ($item instanceof EloquentCollection) {
+                $flat_array = array_merge($flat_array, static::flattenCollection($item));
+            } elseif ($item instanceof Model) {
+                $flat_array = array_merge($flat_array, [$item]);
+            }
+        });
+
+        return $flat_array;
     }
 
     /**
