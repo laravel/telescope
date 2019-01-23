@@ -7,6 +7,8 @@ return [
 
     'path' => 'telescope',
 
+	'domain' => null,
+
     /*
     |--------------------------------------------------------------------------
     | Telescope Storage Driver

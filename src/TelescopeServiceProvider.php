@@ -55,6 +55,7 @@ class TelescopeServiceProvider extends ServiceProvider
             'namespace' => 'Laravel\Telescope\Http\Controllers',
             'prefix' => config('telescope.path'),
             'middleware' => 'telescope',
+            'domain' => config('telescope.domain')
         ];
     }
 
