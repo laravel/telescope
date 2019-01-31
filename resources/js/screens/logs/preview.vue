@@ -3,8 +3,8 @@
 
     export default {
         components: {
-            'code-preview': require('./../../components/ExceptionCodePreview'),
-            'stack-trace': require('./../../components/Stacktrace')
+            'code-preview': require('./../../components/ExceptionCodePreview').default,
+            'stack-trace': require('./../../components/Stacktrace').default
         },
 
 
