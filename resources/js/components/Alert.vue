@@ -110,11 +110,4 @@
         z-index: 99999;
         background: rgba(0, 0, 0, 0.5);
     }
-
-    #alertModal svg {
-        display: block;
-        margin: 0 auto;
-        width: 4rem;
-        height: 4rem;
-    }
 </style>
