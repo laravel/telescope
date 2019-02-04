@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTelescopeEntriesTable extends Migration
 {
@@ -32,7 +32,7 @@ class CreateTelescopeEntriesTable extends Migration
      */
     public function up()
     {
-        if (!app()->environment('self-testing') && !$this->currentConnectionIsConfiguredTelescopeConnection()) {
+        if (! app()->environment('self-testing') && ! $this->currentConnectionIsConfiguredTelescopeConnection()) {
             return;
         }
 
@@ -84,7 +84,7 @@ class CreateTelescopeEntriesTable extends Migration
     /**
      * Determine if the current connection is the configured Telescope connection.
      *
-     * @return boolean
+     * @return bool
      */
     protected function currentConnectionIsConfiguredTelescopeConnection()
     {
