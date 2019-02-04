@@ -32,6 +32,10 @@ class CreateTelescopeEntriesTable extends Migration
      */
     public function up()
     {
+        if (!app()->environment('self-testing') && !$this->currentConnectionIsConfiguredTelescopeConnection()) {
+            return;
+        }
+
         $this->schema->create('telescope_entries', function (Blueprint $table) {
             $table->bigIncrements('sequence');
             $table->uuid('uuid');
@@ -75,5 +79,17 @@ class CreateTelescopeEntriesTable extends Migration
         $this->schema->dropIfExists('telescope_entries_tags');
         $this->schema->dropIfExists('telescope_entries');
         $this->schema->dropIfExists('telescope_monitoring');
+    }
+
+    /**
+     * Determine if the current connection is the configured Telescope connection.
+     *
+     * @return boolean
+     */
+    protected function currentConnectionIsConfiguredTelescopeConnection()
+    {
+        $currentConnection = resolve('migrator')->getConnection();
+
+        return $currentConnection == config('telescope.storage.database.connection');
     }
 }
