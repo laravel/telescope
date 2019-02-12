@@ -61,8 +61,8 @@ class InstallCommand extends Command
         }
 
         file_put_contents(config_path('app.php'), str_replace(
-            "{$namespace}\\Providers\EventServiceProvider::class,".PHP_EOL,
-            "{$namespace}\\Providers\EventServiceProvider::class,".PHP_EOL."        {$namespace}\Providers\TelescopeServiceProvider::class,".PHP_EOL,
+            "{$namespace}\\Providers\EventServiceProvider::class,",
+            "{$namespace}\\Providers\EventServiceProvider::class,".PHP_EOL."        {$namespace}\Providers\TelescopeServiceProvider::class,",
             $appConfig
         ));
 
