@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
+use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
 use Illuminate\Support\Collection;
 use Laravel\Telescope\Tests\FeatureTestCase;
@@ -37,7 +38,7 @@ class QueryWatcherTest extends FeatureTestCase
     {
         $records = Collection::times(300, function () {
             return [
-                'tag' => str_random(),
+                'tag' => Str::random(),
             ];
         });
 
