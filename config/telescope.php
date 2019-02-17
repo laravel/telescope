@@ -5,6 +5,30 @@ use Laravel\Telescope\Http\Middleware\Authorize;
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | Telescope Domain
+    |--------------------------------------------------------------------------
+    |
+    | This is the domain of where Telescope will be accessible from. Do not
+    | change this setting if you'd want Telescope to live under the same
+    | domain as your app. Change this if you'd want to use sub-domain.
+    |
+    */
+
+    'domain' => null,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Telescope Path
+    |--------------------------------------------------------------------------
+    |
+    | This is the URI path where Telescope will be accessible from. Feel free
+    | to change this path to anything you like. Note that the URI will not
+    | affect the paths of its internal API which aren't exposed to users.
+    |
+    */
+
     'path' => 'telescope',
 
     /*
