@@ -52,6 +52,7 @@ class TelescopeServiceProvider extends ServiceProvider
     private function routeConfiguration()
     {
         return [
+            'domain' => config('telescope.domain', null),
             'namespace' => 'Laravel\Telescope\Http\Controllers',
             'prefix' => config('telescope.path'),
             'middleware' => 'telescope',
