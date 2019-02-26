@@ -23,7 +23,7 @@ class TelescopeTest extends FeatureTestCase
         ]);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Telescope::$afterRecordingHook = null;
 

@@ -20,14 +20,14 @@ class AuthorizationTest extends FeatureTestCase
         );
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->withoutMiddleware([VerifyCsrfToken::class]);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

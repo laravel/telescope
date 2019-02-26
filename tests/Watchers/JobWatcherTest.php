@@ -26,7 +26,7 @@ class JobWatcherTest extends FeatureTestCase
         $app->get('config')->set('logging.default', 'syslog');
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

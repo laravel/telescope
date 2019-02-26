@@ -16,7 +16,7 @@ class FeatureTestCase extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -25,7 +25,7 @@ class FeatureTestCase extends TestCase
         Telescope::flushEntries();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Telescope::flushEntries();
 

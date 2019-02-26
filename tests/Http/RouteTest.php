@@ -12,7 +12,7 @@ use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
 
 class RouteTest extends FeatureTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
