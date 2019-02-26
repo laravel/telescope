@@ -16,11 +16,7 @@
 
         methods: {
             formatExpiration(expiration) {
-                if (expiration < 1) {
-                    return expiration * 60 + ' seconds';
-                }
-
-                return expiration + ' minutes';
+                return expiration + ' seconds';
             }
         }
     }
