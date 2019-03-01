@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope;
 
-use Carbon\CarbonInterface;
 use JsonSerializable;
+use Carbon\CarbonInterface;
 
 class EntryResult implements JsonSerializable
 {
