@@ -52,7 +52,7 @@ class EntryResult implements JsonSerializable
     /**
      * The datetime that the entry was recorded.
      *
-     * @var CarbonInterface
+     * @var \Carbon\CarbonInterface
      */
     public $createdAt;
 
