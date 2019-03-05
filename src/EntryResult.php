@@ -53,7 +53,7 @@ class EntryResult implements JsonSerializable
     /**
      * The datetime that the entry was recorded.
      *
-     * @var CarbonInterface
+     * @var \Carbon\CarbonInterface|\Carbon\Carbon
      */
     public $createdAt;
 
@@ -73,10 +73,10 @@ class EntryResult implements JsonSerializable
      * @param  string  $type
      * @param  string|null  $familyHash
      * @param  array  $content
-     * @param  \Carbon\CarbonInterface  $createdAt
+     * @param  \Carbon\CarbonInterface|\Carbon\Carbon  $createdAt
      * @param  array  $tags
      */
-    public function __construct($id, $sequence, string $batchId, string $type, ?string $familyHash, array $content, CarbonInterface $createdAt, $tags = [])
+    public function __construct($id, $sequence, string $batchId, string $type, ?string $familyHash, array $content, $createdAt, $tags = [])
     {
         $this->id = $id;
         $this->type = $type;
