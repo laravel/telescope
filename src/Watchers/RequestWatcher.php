@@ -64,7 +64,6 @@ class RequestWatcher extends Watcher
         return ['Status:'.$event->response->getStatusCode()];
     }
 
-
     /**
      * Format the given headers.
      *
