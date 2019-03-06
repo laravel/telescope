@@ -50,8 +50,20 @@ class RequestWatcher extends Watcher
             'response_status' => $event->response->getStatusCode(),
             'response' => $this->response($event->response),
             'duration' => defined('LARAVEL_START') ? floor((microtime(true) - LARAVEL_START) * 1000) : null,
-        ]));
+        ])->tags($this->tags($event)));
     }
+
+    /**
+     * Get the tags for the request.
+     *
+     * @param  \Illuminate\Foundation\Http\Events\RequestHandled  $event
+     * @return array
+     */
+    protected function tags($event)
+    {
+        return ['Status:'.$event->response->getStatusCode()];
+    }
+
 
     /**
      * Format the given headers.
