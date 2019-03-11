@@ -80,7 +80,7 @@ class CacheWatcher extends Watcher
             'type' => 'set',
             'key' => $event->key,
             'value' => $event->value,
-            'expiration' => $event->seconds,
+            'expiration' => $event->seconds ?? $event->minutes,
         ]));
     }
 
