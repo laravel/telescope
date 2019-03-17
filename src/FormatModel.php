@@ -15,6 +15,12 @@ class FormatModel
      */
     public static function given($model)
     {
-        return get_class($model).':'.implode('_', Arr::wrap($model->getKey()));
+        if (method_exists($model, 'getTelescopeKey')) {
+            $key = $model->getTelescopeKey();
+        } else {
+            $key = $model->getKey();
+        }
+
+        return get_class($model).':'.implode('_', Arr::wrap($key));
     }
 }
