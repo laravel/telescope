@@ -60,9 +60,17 @@ class InstallCommand extends Command
             return;
         }
 
+        $lineEndingCount = [
+            "\r\n" => substr_count($appConfig, "\r\n"),
+            "\r" => substr_count($appConfig, "\r"),
+            "\n" => substr_count($appConfig, "\n")
+        ];
+
+        $eol = array_keys($lineEndingCount, max($lineEndingCount))[0];
+
         file_put_contents(config_path('app.php'), str_replace(
-            "{$namespace}\\Providers\EventServiceProvider::class,".PHP_EOL,
-            "{$namespace}\\Providers\EventServiceProvider::class,".PHP_EOL."        {$namespace}\Providers\TelescopeServiceProvider::class,".PHP_EOL,
+            "{$namespace}\\Providers\EventServiceProvider::class,".$eol,
+            "{$namespace}\\Providers\EventServiceProvider::class,".$eol."        {$namespace}\Providers\TelescopeServiceProvider::class,".$eol,
             $appConfig
         ));
 
