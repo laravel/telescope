@@ -80,7 +80,7 @@ class CacheWatcher extends Watcher
             'type' => 'set',
             'key' => $event->key,
             'value' => $event->value,
-            'expiration' => $event->seconds ?? $event->minutes,
+            'expiration' => $this->formatExpiration($event),
         ]));
     }
 
@@ -100,6 +100,16 @@ class CacheWatcher extends Watcher
             'type' => 'forget',
             'key' => $event->key,
         ]));
+    }
+
+    /**
+     * @param  \Illuminate\Cache\Events\KeyWritten  $event
+     * @return mixed
+     */
+    protected function formatExpiration(KeyWritten $event)
+    {
+        return property_exists($event, 'seconds')
+                ? $event->seconds : $event->minutes * 60;
     }
 
     /**
