@@ -191,10 +191,10 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             }
 
             $currentEntryContent = json_decode($entry->content, true);
-            if (!is_array($currentEntryContent)) {
+            if (! is_array($currentEntryContent)) {
                 $currentEntryContent = [];
             }
-            
+
             $content = json_encode(array_merge(
                 $currentEntryContent, $update->changes
             ));
