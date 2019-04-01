@@ -1,4 +1,7 @@
 .vjs__tree {
+  // Fallback for missing fonts from vue-json-pretty on Ubuntu
+  font-family: Monaco, Menlo, Consolas, Bitstream Vera Sans Mono, monospace !important;
+
   .vjs__tree__content {
     border-left: 1px dotted rgba(204, 204, 204, 0.28) !important;
   }
