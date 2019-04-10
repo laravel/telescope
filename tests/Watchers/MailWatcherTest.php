@@ -41,7 +41,7 @@ class MailWatcherTest extends FeatureTestCase
         $this->assertSame(['bcc@laravel.com'], array_keys($entry->content['bcc']));
         $this->assertSame('Check this out!', $entry->content['subject']);
         $this->assertSame('Telescope is amazing!', $entry->content['html']);
-        $this->assertContains('Telescope is amazing!', $entry->content['raw']);
+        $this->assertStringContainsString('Telescope is amazing!', $entry->content['raw']);
         $this->assertEmpty($entry->content['replyTo']);
     }
 }
