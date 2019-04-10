@@ -45,7 +45,9 @@ class EventWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::EVENT, $entry->type);
         $this->assertSame(DummyEvent::class, $entry->content['name']);
         $this->assertArrayHasKey('data', $entry->content['payload']);
-        $this->assertArraySubset(['Telescope', 'Laravel', 'PHP'], $entry->content['payload']['data']);
+        $this->assertContains('Telescope', $entry->content['payload']['data']);
+        $this->assertContains('Laravel', $entry->content['payload']['data']);
+        $this->assertContains('PHP', $entry->content['payload']['data']);
     }
 }
 

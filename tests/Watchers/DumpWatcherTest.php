@@ -28,6 +28,6 @@ class DumpWatcherTest extends FeatureTestCase
         $entry = $this->loadTelescopeEntries()->first();
 
         $this->assertSame(EntryType::DUMP, $entry->type);
-        $this->assertContains($var, $entry->content['dump']);
+        $this->assertStringContainsString($var, $entry->content['dump']);
     }
 }
