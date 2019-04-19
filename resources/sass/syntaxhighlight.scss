@@ -1,45 +1,46 @@
 .vjs__tree {
-  // Fallback for missing fonts from vue-json-pretty on Ubuntu
-  font-family: Monaco, Menlo, Consolas, Bitstream Vera Sans Mono, monospace !important;
+    // Fallback for missing fonts from vue-json-pretty on Ubuntu
+    font-family: Monaco, Menlo, Consolas, Bitstream Vera Sans Mono, monospace !important;
 
-  .vjs__tree__content {
-    border-left: 1px dotted rgba(204, 204, 204, 0.28) !important;
-  }
-  .vjs__tree__node {
-    cursor: pointer;
-    &:hover {
-      color: #20a0ff;
+    .vjs__tree__content {
+        border-left: 1px dotted rgba(204, 204, 204, 0.28) !important;
     }
-  }
-  .vjs-checkbox {
-    position: absolute;
-    left: -30px;
-  }
-  .vjs__value__null {
-    color: #A291F5 !important;;
-  }
-  .vjs__value__number,
-  .vjs__value__boolean {
-    color: #A291F5 !important;;
-  }
-  .vjs__value__string {
-    color: #DACB4D !important;
-  }
+    .vjs__tree__node {
+        cursor: pointer;
+        &:hover {
+            color: #20a0ff;
+        }
+    }
+    .vjs-checkbox {
+        position: absolute;
+        left: -30px;
+    }
+    .vjs__value__null {
+        color: #a291f5 !important;
+    }
+    .vjs__value__number,
+    .vjs__value__boolean {
+        color: #a291f5 !important;
+    }
+    .vjs__value__string {
+        color: #dacb4d !important;
+    }
 }
 
 .hljs-keyword,
 .hljs-selector-tag,
 .hljs-addition {
-  color: #8bd72f;
+    color: #8bd72f;
 }
 
 .hljs-string,
 .hljs-meta .hljs-meta-string,
 .hljs-doctag,
 .hljs-regexp {
-  color: #DACB4D;
+    color: #dacb4d;
 }
 
-.hljs-number, .hljs-literal {
-  color: #A291F5 !important;
+.hljs-number,
+.hljs-literal {
+    color: #a291f5 !important;
 }

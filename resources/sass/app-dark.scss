@@ -4,21 +4,21 @@ $badge-font-size: 0.95rem;
 
 $primary: #adadff;
 $secondary: #494444;
-$success: #1F9D55;
-$info: #1C3D5A;
-$warning: #684F1D;
-$danger: #621B18;
+$success: #1f9d55;
+$info: #1c3d5a;
+$warning: #684f1d;
+$danger: #621b18;
 $gray-800: $secondary;
 
-$body-bg: #1C1C1C;
-$body-color: #E2EDF4;
+$body-bg: #1c1c1c;
+$body-color: #e2edf4;
 
 $sidebar-nav-color: #6e6b6b;
 $sidebar-icon-color: #9f9898;
 
 $pill-link-active: $primary;
 
-$border-color: #EFEFEF;
+$border-color: #efefef;
 $table-border-color: #343434;
 $table-headers-color: #181818;
 $table-hover-bg: #343434;
@@ -26,10 +26,10 @@ $table-hover-bg: #343434;
 $header-border-color: $table-border-color;
 
 $input-bg: #242424;
-$input-color: #E2EDF4;
+$input-color: #e2edf4;
 $input-border-color: $table-border-color;
 
-$card-cap-bg: #120F12;
+$card-cap-bg: #120f12;
 $card-bg-secondary: #262525;
 $card-bg: $card-cap-bg;
 $card-shadow-color: $body-bg;
@@ -51,18 +51,18 @@ $dropdown-bg: $table-headers-color;
 $dropdown-link-color: #fff;
 
 $grid-breakpoints: (
-        xs: 0,
-        sm: 2px,
-        md: 8px,
-        lg: 9px,
-        xl: 10px
+    xs: 0,
+    sm: 2px,
+    md: 8px,
+    lg: 9px,
+    xl: 10px
 ) !default;
 
 $container-max-widths: (
-        sm: 1137px,
-        md: 1138px,
-        lg: 1139px,
-        xl: 1140px
+    sm: 1137px,
+    md: 1138px,
+    lg: 1139px,
+    xl: 1140px
 ) !default;
 
-@import "base";
+@import 'base';
