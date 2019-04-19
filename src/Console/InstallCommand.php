@@ -63,7 +63,7 @@ class InstallCommand extends Command
         $lineEndingCount = [
             "\r\n" => substr_count($appConfig, "\r\n"),
             "\r" => substr_count($appConfig, "\r"),
-            "\n" => substr_count($appConfig, "\n")
+            "\n" => substr_count($appConfig, "\n"),
         ];
 
         $eol = array_keys($lineEndingCount, max($lineEndingCount))[0];

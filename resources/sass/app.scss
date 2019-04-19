@@ -3,14 +3,14 @@ $font-family-base: Nunito;
 $font-size-base: 0.95rem;
 $badge-font-size: 0.95rem;
 
-$primary: #4040C8;
-$secondary: #DAE1E7;
-$success: #51D88A;
-$info: #BCDEFA;
-$warning: #FFF382;
-$danger: #EF5753;
+$primary: #4040c8;
+$secondary: #dae1e7;
+$success: #51d88a;
+$info: #bcdefa;
+$warning: #fff382;
+$danger: #ef5753;
 
-$body-bg: #EDF1F3;
+$body-bg: #edf1f3;
 
 $btn-focus-width: 0;
 
@@ -19,9 +19,9 @@ $sidebar-icon-color: #c3cbd3;
 
 $pill-link-active: $primary;
 
-$border-color: #EFEFEF;
-$table-headers-color: #F3F4F6;
-$table-border-color: #EFEFEF;
+$border-color: #efefef;
+$table-headers-color: #f3f4f6;
+$table-border-color: #efefef;
 $table-hover-bg: #f1f7fa;
 
 $header-border-color: #d5dfe9;
@@ -30,7 +30,7 @@ $card-cap-bg: #fff;
 $card-bg-secondary: #f1f7fa;
 $card-shadow-color: #cdd8df;
 
-$code-bg: #120F12;
+$code-bg: #120f12;
 
 $paginator-button-color: #9ea7ac;
 
@@ -39,18 +39,18 @@ $new-entries-bg: #fffee9;
 $control-action-icon-color: #ccd2df;
 
 $grid-breakpoints: (
-        xs: 0,
-        sm: 2px,
-        md: 8px,
-        lg: 9px,
-        xl: 10px
+    xs: 0,
+    sm: 2px,
+    md: 8px,
+    lg: 9px,
+    xl: 10px
 ) !default;
 
 $container-max-widths: (
-        sm: 1137px,
-        md: 1138px,
-        lg: 1139px,
-        xl: 1140px
+    sm: 1137px,
+    md: 1138px,
+    lg: 1139px,
+    xl: 1140px
 ) !default;
 
-@import "base";
+@import 'base';

@@ -39,7 +39,7 @@ new Vue({
 
     router,
 
-    data(){
+    data() {
         return {
             alert: {
                 type: null,
@@ -52,12 +52,11 @@ new Vue({
             autoLoadsNewEntries: localStorage.autoLoadsNewEntries === '1',
 
             recording: Telescope.recording,
-        }
+        };
     },
 
-
     methods: {
-        autoLoadNewEntries(){
+        autoLoadNewEntries() {
             if (!this.autoLoadsNewEntries) {
                 this.autoLoadsNewEntries = true;
                 localStorage.autoLoadsNewEntries = 1;
@@ -67,12 +66,11 @@ new Vue({
             }
         },
 
-
-        toggleRecording(){
+        toggleRecording() {
             axios.post('/' + Telescope.path + '/telescope-api/toggle-recording');
 
             window.Telescope.recording = !Telescope.recording;
             this.recording = !this.recording;
-        }
-    }
+        },
+    },
 });
