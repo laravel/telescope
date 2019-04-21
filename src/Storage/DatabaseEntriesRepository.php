@@ -22,6 +22,13 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     protected $connection;
 
     /**
+     * Number of recorded entries that will be inserted at once into the database.
+     *
+     * @var int
+     */
+    protected $chunkSize = 1000;
+
+    /**
      * The tags currently being monitored.
      *
      * @var array|null
@@ -32,11 +39,16 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      * Create a new database repository.
      *
      * @param  string  $connection
+     * @param  int     $chunkSize
      * @return void
      */
-    public function __construct(string $connection)
+    public function __construct(string $connection, int $chunkSize = null)
     {
         $this->connection = $connection;
+
+        if ($chunkSize) {
+            $this->chunkSize = $chunkSize;
+        }
     }
 
     /**
@@ -113,7 +125,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
 
         $table = $this->table('telescope_entries');
 
-        $entries->chunk(1000)->each(function ($chunked) use ($table) {
+        $entries->chunk($this->chunkSize)->each(function ($chunked) use ($table) {
             $table->insert($chunked->map(function ($entry) {
                 $entry->content = json_encode($entry->content);
 

@@ -154,6 +154,9 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->app->when(DatabaseEntriesRepository::class)
             ->needs('$connection')
             ->give(config('telescope.storage.database.connection'));
+        $this->app->when(DatabaseEntriesRepository::class)
+            ->needs('$chunkSize')
+            ->give(config('telescope.storage.database.chunk_size'));
     }
 
     /**
