@@ -22,7 +22,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     protected $connection;
 
     /**
-     * Number of recorded entries that will be inserted at once into the database.
+     * The number of entries that will be inserted at once into the database.
      *
      * @var int
      */
