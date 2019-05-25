@@ -25,8 +25,8 @@ window.Telescope.basePath = '/' + window.Telescope.path;
 let routerBasePath = window.Telescope.basePath + '/';
 
 if (window.Telescope.path === '' || window.Telescope.path === '/') {
-  routerBasePath = '/';
-  window.Telescope.basePath = '';
+    routerBasePath = '/';
+    window.Telescope.basePath = '';
 }
 
 const router = new VueRouter({
