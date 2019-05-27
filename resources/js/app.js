@@ -20,10 +20,19 @@ window.Popper = require('popper.js').default;
 
 moment.tz.setDefault(Telescope.timezone);
 
+window.Telescope.basePath = '/' + window.Telescope.path;
+
+let routerBasePath = window.Telescope.basePath + '/';
+
+if (window.Telescope.path === '' || window.Telescope.path === '/') {
+    routerBasePath = '/';
+    window.Telescope.basePath = '';
+}
+
 const router = new VueRouter({
     routes: Routes,
     mode: 'history',
-    base: '/' + window.Telescope.path + '/',
+    base: routerBasePath,
 });
 
 Vue.component('vue-json-pretty', VueJsonPretty);
@@ -67,7 +76,7 @@ new Vue({
         },
 
         toggleRecording() {
-            axios.post('/' + Telescope.path + '/telescope-api/toggle-recording');
+            axios.post(Telescope.basePath + '/telescope-api/toggle-recording');
 
             window.Telescope.recording = !Telescope.recording;
             this.recording = !this.recording;
