@@ -434,6 +434,8 @@ class Telescope
      */
     public static function recordRequest(IncomingEntry $entry)
     {
+        $entry->tags[] = 'Status:' . $entry->content['response_status'];
+        
         static::record(EntryType::REQUEST, $entry);
     }
 
