@@ -182,7 +182,7 @@ class Telescope
                 'horizon*',
                 'vendor/horizon*',
             ], config('telescope.ignore_paths', []))
-        );
+        ) && ! in_array($app['request']->method(), config('telescope.ignore_request_methods', []));
     }
 
     /**

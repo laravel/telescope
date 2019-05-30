@@ -85,11 +85,16 @@ return [
     | Ignored Paths & Commands
     |--------------------------------------------------------------------------
     |
-    | The following array lists the URI paths and Artisan commands that will
-    | not be watched by Telescope. In addition to this list, some Laravel
-    | commands, like migrations and queue commands, are always ignored.
+    | The following arrays list the request methods, the URI paths and Artisan
+    | commands that will not be watched by Telescope. In addition to this list,
+    | some Laravel commands, like migrations and queue commands,
+    | are always ignored.
     |
     */
+
+    'ignore_request_methods' => [
+        //
+    ],
 
     'ignore_paths' => [
         //
