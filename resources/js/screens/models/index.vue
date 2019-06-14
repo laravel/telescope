@@ -19,7 +19,7 @@
 
 
         <template slot="row" slot-scope="slotProps">
-            <td>{{truncate(slotProps.entry.content.model, 80)}}</td>
+            <td>{{truncate(slotProps.entry.content.model, 70)}}</td>
 
             <td class="table-fit">
                 <span class="badge font-weight-light" :class="'badge-'+modelActionClass(slotProps.entry.content.action)">
