@@ -3,7 +3,6 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Laravel\Telescope\EntryType;
-use Laravel\Telescope\Telescope;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\Watchers\GateWatcher;
 use Laravel\Telescope\Tests\FeatureTestCase;
