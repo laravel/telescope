@@ -67,7 +67,7 @@
             gravatarUrl() {
                 if (this.entry.content.user.email) {
                     const md5 = require('md5')
-                    return 'https://www.gravatar.com/avatar/' + md5(this.entry.content.user.email) + '?s=200'
+                    return 'https://www.gravatar.com/avatar/' + md5(this.entry.content.user.email.toLowerCase()) + '?s=200'
                 }
             }
         },
