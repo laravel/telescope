@@ -321,9 +321,17 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function prune(DateTimeInterface $before)
     {
-        return $this->table('telescope_entries')
-                ->where('created_at', '<', $before)
-                ->delete();
+        $query = $this->table('telescope_entries')
+                ->where('created_at', '<', $before);
+
+        $deleted = 0;
+
+        do {
+            $newDeleted = $query->take($this->chunkSize)->delete();
+            $deleted += $newDeleted;
+        } while ($newDeleted !== 0);
+
+        return $deleted;
     }
 
     /**
