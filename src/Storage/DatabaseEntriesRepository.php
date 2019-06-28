@@ -324,14 +324,15 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
         $query = $this->table('telescope_entries')
                 ->where('created_at', '<', $before);
 
-        $deleted = 0;
+        $totalDeleted = 0;
 
         do {
-            $newDeleted = $query->take($this->chunkSize)->delete();
-            $deleted += $newDeleted;
-        } while ($newDeleted !== 0);
+            $deleted = $query->take($this->chunkSize)->delete();
 
-        return $deleted;
+            $totalDeleted += $deleted;
+        } while ($deleted !== 0);
+
+        return $totalDeleted;
     }
 
     /**
