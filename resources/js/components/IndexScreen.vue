@@ -105,12 +105,12 @@
 
         methods: {
             loadEntries(after){
-                axios.post(Telescope.basePath + '/telescope-api/' + this.resource +
-                        '?tag=' + this.tag +
-                        '&before=' + this.lastEntryIndex +
-                        '&take=' + this.entriesPerRequest +
-                        '&family_hash=' + this.familyHash
-                ).then(response => {
+                axios.post(Telescope.basePath + '/telescope-api/' + this.resource , {
+                        tag: this.tag,
+                        before: this.lastEntryIndex,
+                        take: this.entriesPerRequest,
+                        family_hash: this.familyHash
+                }).then(response => {
                     this.lastEntryIndex = response.data.entries.length ? _.last(response.data.entries).sequence : this.lastEntryIndex;
 
                     this.hasMoreEntries = response.data.entries.length >= this.entriesPerRequest;
@@ -131,11 +131,12 @@
              */
             checkForNewEntries(){
                 this.newEntriesTimeout = setTimeout(() => {
-                    axios.post(Telescope.basePath + '/telescope-api/' + this.resource +
-                            '?tag=' + this.tag +
-                            '&take=1' +
-                            '&family_hash=' + this.familyHash
-                    ).then(response => {
+                    axios.axios.post(Telescope.basePath + '/telescope-api/' + this.resource , {
+                        tag: this.tag,
+                        before: this.lastEntryIndex,
+                        take: this.entriesPerRequest,
+                        family_hash: this.familyHash
+                    }).then(response => {
                         this.recordingStatus = response.data.status;
 
                         if (response.data.entries.length && !this.entries.length) {

@@ -1,5 +1,5 @@
 {
-    "name": "laravel/telescope",
+    "name": "ahmad-shawky/telescope",
     "description": "An elegant debug assistant for the Laravel framework.",
     "keywords": ["laravel", "monitoring", "debugging"],
     "license": "MIT",
