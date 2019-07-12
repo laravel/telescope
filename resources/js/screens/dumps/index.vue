@@ -37,7 +37,7 @@
 
         methods: {
             loadEntries(){
-                axios.post('/' + Telescope.path + '/telescope-api/dumps').then(response => {
+                axios.post(Telescope.basePath + '/telescope-api/dumps').then(response => {
                     this.entries = response.data.entries;
                     this.recordingStatus = response.data.status;
 

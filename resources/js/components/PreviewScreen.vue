@@ -67,7 +67,7 @@
             gravatarUrl() {
                 if (this.entry.content.user.email) {
                     const md5 = require('md5')
-                    return 'https://www.gravatar.com/avatar/' + md5(this.entry.content.user.email) + '?s=200'
+                    return 'https://www.gravatar.com/avatar/' + md5(this.entry.content.user.email.toLowerCase()) + '?s=200'
                 }
             }
         },
@@ -100,7 +100,7 @@
 
 
             loadEntry(after){
-                axios.get('/' + Telescope.path + '/telescope-api/' + this.resource + '/' + this.id).then(response => {
+                axios.get(Telescope.basePath + '/telescope-api/' + this.resource + '/' + this.id).then(response => {
                     if (_.isFunction(after)) {
                         after(response);
                     }
