@@ -56,6 +56,13 @@
                 {{slotProps.entry.content.duration || '-'}} ms
             </td>
         </tr>
+
+        <tr v-if="slotProps.entry.content.peak_memory">
+            <td class="table-fit font-weight-bold">Memory</td>
+            <td>
+                {{(slotProps.entry.content.peak_memory/1024/1024).toFixed(2)}} mb
+            </td>
+        </tr>
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">

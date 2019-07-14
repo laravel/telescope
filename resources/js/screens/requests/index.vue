@@ -15,6 +15,7 @@
             <th scope="col">Path</th>
             <th scope="col">Status</th>
             <th scope="col">Duration</th>
+            <th scope="col">Memory</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
@@ -37,6 +38,11 @@
 
             <td class="table-fit">
                 <span v-if="slotProps.entry.content.duration">{{slotProps.entry.content.duration}}ms</span>
+                <span v-else>-</span>
+            </td>
+
+            <td class="table-fit">
+                <span v-if="slotProps.entry.content.peak_memory">{{(slotProps.entry.content.peak_memory/1024/1024).toFixed(2)}}mb</span>
                 <span v-else>-</span>
             </td>
 
