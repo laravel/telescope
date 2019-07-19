@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use Laravel\Telescope\Telescope;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\Tests\FeatureTestCase;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
+use Laravel\Telescope\Tests\Http\Authenticated;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class AuthorizationTest extends FeatureTestCase
 {
@@ -50,9 +51,7 @@ class AuthorizationTest extends FeatureTestCase
 
     public function test_guests_gets_unauthorized_by_gate()
     {
-        Telescope::auth(function (Request $request) {
-            return Gate::check('viewTelescope', [$request->user()]);
-        });
+        $this->telescopeAuth();
 
         Gate::define('viewTelescope', function ($user) {
             return true;
@@ -66,9 +65,7 @@ class AuthorizationTest extends FeatureTestCase
     {
         $this->actingAs(new Authenticated);
 
-        Telescope::auth(function (Request $request) {
-            return Gate::check('viewTelescope', [$request->user()]);
-        });
+        $this->telescopeAuth();
 
         Gate::define('viewTelescope', function (Authenticatable $user) {
             return $user->getAuthIdentifier() === 'telescope-test';
@@ -80,9 +77,7 @@ class AuthorizationTest extends FeatureTestCase
 
     public function test_guests_can_be_authorized()
     {
-        Telescope::auth(function (Request $request) {
-            return Gate::check('viewTelescope', [$request->user()]);
-        });
+        $this->telescopeAuth();
 
         Gate::define('viewTelescope', function (?Authenticatable $user) {
             return true;
@@ -111,39 +106,11 @@ class AuthorizationTest extends FeatureTestCase
         $this->post('/telescope/telescope-api/requests')
             ->assertSuccessful();
     }
-}
 
-class Authenticated implements Authenticatable
-{
-    public $email;
-
-    public function getAuthIdentifierName()
+    protected function telescopeAuth()
     {
-        return 'Telescope Test';
-    }
-
-    public function getAuthIdentifier()
-    {
-        return 'telescope-test';
-    }
-
-    public function getAuthPassword()
-    {
-        return 'secret';
-    }
-
-    public function getRememberToken()
-    {
-        return 'i-am-telescope';
-    }
-
-    public function setRememberToken($value)
-    {
-        //
-    }
-
-    public function getRememberTokenName()
-    {
-        //
+        return Telescope::auth(function (Request $request) {
+            return Gate::check('viewTelescope', [$request->user()]);
+        });
     }
 }
