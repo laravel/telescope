@@ -17,7 +17,9 @@
 
             <td class="table-fit">{{slotProps.entry.content.time}}ms</td>
 
-            <td class="table-fit" :data-timeago="slotProps.entry.created_at">{{timeAgo(slotProps.entry.created_at)}}</td>
+            <td class="table-fit" :data-timeago="slotProps.entry.created_at" :title="slotProps.entry.created_at">
+                {{timeAgo(slotProps.entry.created_at)}}
+            </td>
 
             <td class="table-fit">
                 <router-link :to="{name:'redis-preview', params:{id: slotProps.entry.id}}" class="control-action">
