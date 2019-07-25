@@ -29,7 +29,7 @@ class TelescopeServiceProvider extends ServiceProvider
             Telescope::listenForStorageOpportunities($this->app);
 
             $this->loadViewsFrom(
-                __DIR__ . '/../resources/views', 'telescope'
+                __DIR__.'/../resources/views', 'telescope'
             );
         }
     }
