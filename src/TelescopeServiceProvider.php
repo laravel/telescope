@@ -18,20 +18,22 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (config('telescope.enabled') === true) {
-            Route::middlewareGroup('telescope', config('telescope.middleware', []));
-
-            $this->registerRoutes();
-            $this->registerMigrations();
-            $this->registerPublishing();
-
-            Telescope::start($this->app);
-            Telescope::listenForStorageOpportunities($this->app);
-
-            $this->loadViewsFrom(
-                __DIR__.'/../resources/views', 'telescope'
-            );
+        if (! config('telescope.enabled')) {
+            return;
         }
+
+        Route::middlewareGroup('telescope', config('telescope.middleware', []));
+
+        $this->registerRoutes();
+        $this->registerMigrations();
+        $this->registerPublishing();
+
+        Telescope::start($this->app);
+        Telescope::listenForStorageOpportunities($this->app);
+
+        $this->loadViewsFrom(
+            __DIR__.'/../resources/views', 'telescope'
+        );
     }
 
     /**
