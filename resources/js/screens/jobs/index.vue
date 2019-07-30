@@ -32,7 +32,9 @@
                 </span>
             </td>
 
-            <td class="table-fit" :data-timeago="slotProps.entry.created_at">{{ timeAgo(slotProps.entry.created_at) }}</td>
+            <td class="table-fit" :data-timeago="slotProps.entry.created_at" :title="slotProps.entry.created_at">
+                {{ timeAgo(slotProps.entry.created_at) }}
+            </td>
 
             <td class="table-fit">
                 <router-link :to="{name:'job-preview', params:{id: slotProps.entry.id}}" class="control-action">

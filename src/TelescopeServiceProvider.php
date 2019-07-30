@@ -18,6 +18,10 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (! config('telescope.enabled')) {
+            return;
+        }
+
         Route::middlewareGroup('telescope', config('telescope.middleware', []));
 
         $this->registerRoutes();
