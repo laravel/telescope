@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 // Mail entries...
 Route::post('/telescope-api/mail', 'MailController@index');
 Route::get('/telescope-api/mail/{telescopeEntryId}', 'MailController@show');
