@@ -180,4 +180,16 @@ export default [
         name: 'gates',
         component: require('./screens/gates/index').default,
     },
+
+    {
+        path: '/views/:id',
+        name: 'view-preview',
+        component: require('./screens/views/preview').default,
+    },
+
+    {
+        path: '/views',
+        name: 'views',
+        component: require('./screens/views/index').default,
+    },
 ];
