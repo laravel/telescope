@@ -37,7 +37,7 @@ class DumpController extends EntryController
      */
     public function index(Request $request, EntriesRepository $storage)
     {
-        $this->cache->put('telescope:dump-watcher', true, now()->addSecond(4));
+        $this->cache->put('telescope:dump-watcher', true, now()->addSeconds(4));
 
         return parent::index($request, $storage);
     }
