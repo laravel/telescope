@@ -11,7 +11,7 @@
                 ready: false,
                 error: null,
                 newEntriesTimeout: null,
-                newEntriesTimeoutInSeconds: 2000,
+                newEntriesTimer: 2000,
                 recordingStatus: 'enabled'
             };
         },
@@ -43,9 +43,7 @@
                     this.entries = response.data.entries;
                     this.recordingStatus = response.data.status;
 
-                    this.newEntriesTimeout = setTimeout(() => {
-                        this.loadEntries();
-                    }, this.newEntriesTimeoutInSeconds);
+                    this.checkForNewEntries();
                 }).catch(error => {
                     if (error.response && error.response.data.message) {
                         this.error = error.response.data.message;
@@ -55,7 +53,27 @@
                 }).finally(() => {
                     this.ready = true;
                 });
-            }
+            },
+
+
+            /**
+             * Keep checking if there are new entries.
+             */
+            checkForNewEntries(){
+                this.newEntriesTimeout = setTimeout(() => {
+                    axios.post(Telescope.basePath + '/telescope-api/dumps?take=1').then(response => {
+                        this.recordingStatus = response.data.status;
+
+                        if (response.data.entries.length && !this.entries.length) {
+                            this.loadEntries();
+                        } else if (response.data.entries.length && _.first(response.data.entries).id !== _.first(this.entries).id) {
+                            this.loadEntries();
+                        } else {
+                            this.checkForNewEntries();
+                        }
+                    })
+                }, this.newEntriesTimer);
+            },
         }
     }
 </script>
