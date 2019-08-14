@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope\Http\Controllers;
 
-use Illuminate\Cache\ArrayStore;
 use Illuminate\Http\Request;
+use Illuminate\Cache\ArrayStore;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Watchers\DumpWatcher;
 use Laravel\Telescope\Contracts\EntriesRepository;
@@ -40,7 +40,7 @@ class DumpController extends EntryController
     {
         if ($this->cache->getStore() instanceof ArrayStore) {
             return response()->json([
-                'message' => 'The Array cache driver cannot be used for Dumps. Please use a persistent cache.'
+                'message' => 'The Array cache driver cannot be used for Dumps. Please use a persistent cache.',
             ], 400);
         }
         $this->cache->put('telescope:dump-watcher', true, now()->addSeconds(4));
