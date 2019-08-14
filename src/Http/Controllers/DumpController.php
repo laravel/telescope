@@ -43,6 +43,7 @@ class DumpController extends EntryController
                 'message' => 'The Array cache driver cannot be used for Dumps. Please use a persistent cache.',
             ], 400);
         }
+
         $this->cache->put('telescope:dump-watcher', true, now()->addSeconds(4));
 
         return parent::index($request, $storage);
