@@ -9,8 +9,9 @@
             return {
                 entries: [],
                 ready: false,
+                error: null,
                 newEntriesTimeout: null,
-                newEntriesTimeoutInSeconds: 2000,
+                newEntriesTimer: 2000,
                 recordingStatus: 'enabled'
             };
         },
@@ -38,16 +39,41 @@
         methods: {
             loadEntries(){
                 axios.post(Telescope.basePath + '/telescope-api/dumps').then(response => {
+                    this.error = null;
                     this.entries = response.data.entries;
                     this.recordingStatus = response.data.status;
 
+                    this.checkForNewEntries();
+                }).catch(error => {
+                    if (error.response && error.response.data.message) {
+                        this.error = error.response.data.message;
+                    } else {
+                        this.error = 'Something went wrong';
+                    }
+                }).finally(() => {
                     this.ready = true;
-
-                    this.newEntriesTimeout = setTimeout(() => {
-                        this.loadEntries();
-                    }, this.newEntriesTimeoutInSeconds);
                 });
-            }
+            },
+
+
+            /**
+             * Keep checking if there are new entries.
+             */
+            checkForNewEntries(){
+                this.newEntriesTimeout = setTimeout(() => {
+                    axios.post(Telescope.basePath + '/telescope-api/dumps?take=1').then(response => {
+                        this.recordingStatus = response.data.status;
+
+                        if (response.data.entries.length && !this.entries.length) {
+                            this.loadEntries();
+                        } else if (response.data.entries.length && _.first(response.data.entries).id !== _.first(this.entries).id) {
+                            this.loadEntries();
+                        } else {
+                            this.checkForNewEntries();
+                        }
+                    })
+                }, this.newEntriesTimer);
+            },
         }
     }
 </script>
@@ -76,12 +102,20 @@
         </div>
 
 
-        <div v-if="ready && entries.length == 0" class="d-flex flex-column align-items-center justify-content-center card-bg-secondary p-5 bottom-radius">
+        <div v-if="ready && entries.length == 0 && !error" class="d-flex flex-column align-items-center justify-content-center card-bg-secondary p-5 bottom-radius">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" class="fill-text-color" style="width: 200px;">
                 <path fill-rule="evenodd" d="M7 10h41a11 11 0 0 1 0 22h-8a3 3 0 0 0 0 6h6a6 6 0 1 1 0 12H10a4 4 0 1 1 0-8h2a2 2 0 1 0 0-4H7a5 5 0 0 1 0-10h3a3 3 0 0 0 0-6H7a6 6 0 1 1 0-12zm14 19a1 1 0 0 1-1-1 1 1 0 0 0-2 0 1 1 0 0 1-1 1 1 1 0 0 0 0 2 1 1 0 0 1 1 1 1 1 0 0 0 2 0 1 1 0 0 1 1-1 1 1 0 0 0 0-2zm-5.5-11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm24 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm1 18a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm-14-3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm22-23a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM33 18a1 1 0 0 1-1-1v-1a1 1 0 0 0-2 0v1a1 1 0 0 1-1 1h-1a1 1 0 0 0 0 2h1a1 1 0 0 1 1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 0-2h-1z"></path>
             </svg>
 
             <span>We didn't find anything - just empty space.</span>
+        </div>
+
+        <div v-if="error" class="d-flex flex-column align-items-center justify-content-center card-bg-secondary p-5 bottom-radius">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" class="fill-text-color" style="width: 200px;">
+                <path fill-rule="evenodd" d="M7 10h41a11 11 0 0 1 0 22h-8a3 3 0 0 0 0 6h6a6 6 0 1 1 0 12H10a4 4 0 1 1 0-8h2a2 2 0 1 0 0-4H7a5 5 0 0 1 0-10h3a3 3 0 0 0 0-6H7a6 6 0 1 1 0-12zm14 19a1 1 0 0 1-1-1 1 1 0 0 0-2 0 1 1 0 0 1-1 1 1 1 0 0 0 0 2 1 1 0 0 1 1 1 1 1 0 0 0 2 0 1 1 0 0 1 1-1 1 1 0 0 0 0-2zm-5.5-11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm24 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm1 18a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm-14-3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm22-23a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM33 18a1 1 0 0 1-1-1v-1a1 1 0 0 0-2 0v1a1 1 0 0 1-1 1h-1a1 1 0 0 0 0 2h1a1 1 0 0 1 1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 0-2h-1z"></path>
+            </svg>
+
+            <span>Whoops: {{ error }}</span>
         </div>
 
         <div v-if="ready && entries.length > 0" class="code-bg px-3 pt-3">

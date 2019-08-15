@@ -18,7 +18,8 @@
         "ext-json": "*",
         "laravel/framework": "~5.8.0|^6.0",
         "moontoast/math": "^1.1",
-        "symfony/var-dumper": "^4.1"
+        "symfony/var-dumper": "^4.1",
+        "phpseclib/bcmath_compat": ">=1.0.0"
     },
     "require-dev": {
         "orchestra/testbench": "~3.7"
@@ -35,7 +36,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-dev"
+            "dev-master": "3.0-dev"
         },
         "laravel": {
             "providers": [
