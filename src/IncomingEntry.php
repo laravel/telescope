@@ -177,7 +177,7 @@ class IncomingEntry
         return $this->type === EntryType::REQUEST &&
             ($this->content['response_status'] ?? 200) >= 500;
     }
-    
+
     /**
      * Determine if the incoming entry is a failed job.
      *
