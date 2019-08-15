@@ -27,6 +27,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 
             return $entry->isReportableException() ||
                    $entry->isFailedJob() ||
+                   $entry->isFailedRequest() ||
                    $entry->isScheduledTask() ||
                    $entry->hasMonitoredTag();
         });

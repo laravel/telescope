@@ -179,6 +179,17 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a failed request.
+     *
+     * @return bool
+     */
+    public function isFailedRequest()
+    {
+        return $this->type === EntryType::REQUEST &&
+            ($this->content['response_status'] ?? 200) >= 500;
+    }
+
+    /**
      * Determine if the incoming entry is a reportable exception.
      *
      * @return bool
