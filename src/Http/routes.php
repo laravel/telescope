@@ -63,6 +63,9 @@ Route::get('/telescope-api/schedule/{telescopeEntryId}', 'ScheduleController@sho
 Route::post('/telescope-api/redis', 'RedisController@index');
 Route::get('/telescope-api/redis/{telescopeEntryId}', 'RedisController@show');
 
+// Timing entries
+Route::get('/telescope-api/timing/{telescopeEntryId}', 'TimingController@show');
+
 // Monitored Tags...
 Route::get('/telescope-api/monitored-tags', 'MonitoredTagController@index');
 Route::post('/telescope-api/monitored-tags/', 'MonitoredTagController@store');

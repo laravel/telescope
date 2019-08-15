@@ -75,7 +75,10 @@ class IncomingEntry
 
         $this->recordedAt = now();
 
-        $this->content = array_merge($content, ['hostname' => gethostname()]);
+        $this->content = array_merge($content, [
+            'hostname' => gethostname(),
+            'timeEnd' => microtime(true),
+        ]);
 
         // $this->tags = ['hostname:'.gethostname()];
     }

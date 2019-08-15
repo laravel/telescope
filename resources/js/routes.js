@@ -180,4 +180,10 @@ export default [
         name: 'gates',
         component: require('./screens/gates/index').default,
     },
+
+    {
+        path: '/timing/:id',
+        name: 'timing-preview',
+        component: require('./screens/timing/preview').default,
+    },
 ];
