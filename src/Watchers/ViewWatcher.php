@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Watchers;
 
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 
@@ -37,8 +38,39 @@ class ViewWatcher extends Watcher
 
         Telescope::recordView(IncomingEntry::make(array_filter([
             'name' => $view->getName(),
-            'path' => $view->getPath(),
-            'data' => array_keys($view->getData()),
+            'path' => $this->extractPath($view),
+            'data' => $this->extractKeysFromData($view),
         ])));
+    }
+
+    /**
+     * Extract the path from the given view.
+     *
+     * @param  \Illuminate\View\View  $view
+     * @return string
+     */
+    protected function extractPath($view)
+    {
+        $path = $view->getPath();
+
+        if (Str::startsWith($path, base_path())) {
+            $path = substr($path, strlen(base_path()));
+        }
+
+        return $path;
+    }
+
+
+    /**
+     * Extract the keys from the given view in array form.
+     *
+     * @param  \Illuminate\View\View  $view
+     * @return array
+     */
+    protected function extractKeysFromData($view)
+    {
+        return collect($view->getData())->filter(function ($value, $key) {
+            return ! in_array($key, ['app', '__env', 'obLevel', 'errors']);
+        })->keys();
     }
 }
