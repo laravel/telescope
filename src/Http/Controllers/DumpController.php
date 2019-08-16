@@ -38,15 +38,23 @@ class DumpController extends EntryController
      */
     public function index(Request $request, EntriesRepository $storage)
     {
-        if ($this->cache->getStore() instanceof ArrayStore) {
-            return response()->json([
-                'message' => 'The Array cache driver cannot be used for Dumps. Please use a persistent cache.',
-            ], 400);
-        }
-
         $this->cache->put('telescope:dump-watcher', true, now()->addSeconds(4));
 
         return parent::index($request, $storage);
+    }
+
+    /**
+     * Determine the watcher recording status.
+     *
+     * @return string
+     */
+    protected function status()
+    {
+        if ($this->cache->getStore() instanceof ArrayStore) {
+            return 'wrong-cache';
+        }
+
+        return parent::status();
     }
 
     /**
