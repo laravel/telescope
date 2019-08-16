@@ -49,6 +49,15 @@ class DumpWatcher extends Watcher
                 (new VarCloner)->cloneVar($var), true
             ));
         });
+        
+        // When we die without storing the entries, show the dumps (eg. for `dd()`)
+        register_shutdown_function(function() {
+            foreach (Telescope::$entriesQueue as $entry) {
+                if ($entry instanceof IncomingDumpEntry) {
+                    echo $entry->content['dump'];
+                }
+            }
+        });
     }
 
     /**
