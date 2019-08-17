@@ -42,11 +42,11 @@ class Telescope
     public static $afterRecordingHook;
 
     /**
-     * The callback that adds tags to the record.
+     * The callbacks that add tags to the record.
      *
-     * @var \Closure
+     * @var \Closure[]
      */
-    public static $tagUsing;
+    public static $tagUsing = [];
 
     /**
      * The list of queued entries to be stored.
@@ -247,9 +247,9 @@ class Telescope
             return;
         }
 
-        $entry->type($type)->tags(
-            static::$tagUsing ? call_user_func(static::$tagUsing, $entry) : []
-        );
+        $entry->type($type)->tags(array_map(function ($tagCallback) use ($entry) {
+            $tagCallback($entry);
+        }, static::$tagUsing));
 
         try {
             if (Auth::hasUser()) {
@@ -519,14 +519,14 @@ class Telescope
     }
 
     /**
-     * Set the callback that adds tags to the record.
+     * Add a callback that adds tags to the record.
      *
      * @param  \Closure  $callback
      * @return static
      */
     public static function tag(Closure $callback)
     {
-        static::$tagUsing = $callback;
+        static::$tagUsing[] = $callback;
 
         return new static;
     }
@@ -605,7 +605,8 @@ class Telescope
     public static function hideRequestHeaders(array $headers)
     {
         static::$hiddenRequestHeaders = array_merge(
-            static::$hiddenRequestHeaders, $headers
+            static::$hiddenRequestHeaders,
+            $headers
         );
 
         return new static;
@@ -620,7 +621,8 @@ class Telescope
     public static function hideRequestParameters(array $attributes)
     {
         static::$hiddenRequestParameters = array_merge(
-            static::$hiddenRequestParameters, $attributes
+            static::$hiddenRequestParameters,
+            $attributes
         );
 
         return new static;
@@ -635,7 +637,8 @@ class Telescope
     public static function hideResponseParameters(array $attributes)
     {
         static::$hiddenResponseParameters = array_merge(
-            static::$hiddenResponseParameters, $attributes
+            static::$hiddenResponseParameters,
+            $attributes
         );
 
         return new static;
