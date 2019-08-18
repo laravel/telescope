@@ -18,5 +18,6 @@ class EntryType
     public const REDIS = 'redis';
     public const REQUEST = 'request';
     public const SCHEDULED_TASK = 'schedule';
+    public const TIMING = 'timing';
     public const GATE = 'gate';
 }

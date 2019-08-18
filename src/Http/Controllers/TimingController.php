@@ -35,6 +35,8 @@ class TimingController extends Controller
 
                 list($timeStart, $timeEnd) = $this->getTimesForEntry($entry);
 
+                $label = $this->getLabelForEntry($entry);
+                    
                 return [
                     'id' => $entry->id,
                     'entryType' => $entry->type,
@@ -95,6 +97,10 @@ class TimingController extends Controller
             $start -= $entry->content['duration'] ?? 0;
         }
 
+        if ($entry->type === EntryType::TIMING) {
+            $start -= $entry->content['duration'] ?? 0;
+        }
+
         return [round($start, 2), round($end, 2)];
     }
 
@@ -106,6 +112,10 @@ class TimingController extends Controller
 
         if ($entry->type === EntryType::LOG) {
             return $entry->content['message'] ?? 'LOG';
+        }
+
+        if ($entry->type === EntryType::TIMING) {
+            return $entry->content['label'] ?? 'TIMING';
         }
 
         return $entry->type;
