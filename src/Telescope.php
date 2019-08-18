@@ -526,7 +526,7 @@ class Telescope
      */
     public static function tag(Closure $callback)
     {
-        static::$tagUsing = $callback;
+        static::$tagUsing[] = $callback;
 
         return new static;
     }
