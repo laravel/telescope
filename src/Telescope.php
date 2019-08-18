@@ -248,7 +248,7 @@ class Telescope
         }
 
         $entry->type($type)->tags(array_map(function ($tagCallback) use ($entry) {
-            $tagCallback($entry);
+            return $tagCallback($entry);
         }, static::$tagUsing));
 
         try {
