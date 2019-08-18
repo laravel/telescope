@@ -23,19 +23,14 @@ class TimingController extends Controller
     {
         $entry = $storage->find($id);
 
-        $start = 0;
-        $end = 0;
         $batch = $storage->get(null, EntryQueryOptions::forBatchId($entry->batchId)->limit(-1))
             ->map(function(EntryResult $entry) {
 
-                $timeEnd = $entry->content['timeEnd'] ?? null;
                 if ($entry->content['timeEnd'] === null) {
                     return;
                 }
 
                 list($timeStart, $timeEnd) = $this->getTimesForEntry($entry);
-
-                $label = $this->getLabelForEntry($entry);
                     
                 return [
                     'id' => $entry->id,
