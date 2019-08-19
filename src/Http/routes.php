@@ -51,6 +51,10 @@ Route::get('/telescope-api/models/{telescopeEntryId}', 'ModelsController@show');
 Route::post('/telescope-api/requests', 'RequestsController@index');
 Route::get('/telescope-api/requests/{telescopeEntryId}', 'RequestsController@show');
 
+// View entries...
+Route::post('/telescope-api/views', 'ViewsController@index');
+Route::get('/telescope-api/views/{telescopeEntryId}', 'ViewsController@show');
+
 // Artisan Commands entries...
 Route::post('/telescope-api/commands', 'CommandsController@index');
 Route::get('/telescope-api/commands/{telescopeEntryId}', 'CommandsController@show');
@@ -62,10 +66,6 @@ Route::get('/telescope-api/schedule/{telescopeEntryId}', 'ScheduleController@sho
 // Redis Commands entries...
 Route::post('/telescope-api/redis', 'RedisController@index');
 Route::get('/telescope-api/redis/{telescopeEntryId}', 'RedisController@show');
-
-// View entries...
-Route::post('/telescope-api/views', 'ViewsController@index');
-Route::get('/telescope-api/views/{telescopeEntryId}', 'ViewsController@show');
 
 // Monitored Tags...
 Route::get('/telescope-api/monitored-tags', 'MonitoredTagController@index');

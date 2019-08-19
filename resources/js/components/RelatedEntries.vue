@@ -130,6 +130,7 @@
                 return _.filter([
                     {title: "Exceptions", type: "exceptions", count: this.exceptions.length},
                     {title: "Logs", type: "logs", count: this.logs.length},
+                    {title: "Views", type: "views", count: this.views.length},
                     {title: "Queries", type: "queries", count: this.queries.length},
                     {title: "Models", type: "models", count: this.models.length},
                     {title: "Gates", type: "gates", count: this.gates.length},
@@ -139,7 +140,6 @@
                     {title: "Events", type: "events", count: this.events.length},
                     {title: "Cache", type: "cache", count: this.cache.length},
                     {title: "Redis", type: "redis", count: this.redis.length},
-                    {title: "Views", type: "views", count: this.views.length},
                 ], tab => tab.count > 0);
             },
 
