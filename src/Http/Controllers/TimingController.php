@@ -23,18 +23,15 @@ class TimingController extends Controller
     {
         $entry = $storage->find($id);
 
-        $start = 0;
-        $end = 0;
         $batch = $storage->get(null, EntryQueryOptions::forBatchId($entry->batchId)->limit(-1))
             ->map(function(EntryResult $entry) {
 
-                $timeEnd = $entry->content['timeEnd'] ?? null;
                 if ($entry->content['timeEnd'] === null) {
                     return;
                 }
 
                 list($timeStart, $timeEnd) = $this->getTimesForEntry($entry);
-
+                    
                 return [
                     'id' => $entry->id,
                     'entryType' => $entry->type,
@@ -95,6 +92,10 @@ class TimingController extends Controller
             $start -= $entry->content['duration'] ?? 0;
         }
 
+        if ($entry->type === EntryType::TIMING) {
+            $start -= $entry->content['duration'] ?? 0;
+        }
+
         return [round($start, 2), round($end, 2)];
     }
 
@@ -106,6 +107,10 @@ class TimingController extends Controller
 
         if ($entry->type === EntryType::LOG) {
             return $entry->content['message'] ?? 'LOG';
+        }
+
+        if ($entry->type === EntryType::TIMING) {
+            return $entry->content['label'] ?? 'TIMING';
         }
 
         return $entry->type;

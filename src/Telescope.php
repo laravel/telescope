@@ -117,6 +117,13 @@ class Telescope
     public static $runsMigrations = true;
 
     /**
+     * Timing start times by timing label
+     *
+     * @var int[]
+     */
+    public static $timings = [];
+
+    /**
      * Register the Telescope watchers and start recording if necessary.
      *
      * @param  \Illuminate\Foundation\Application  $app
@@ -446,6 +453,54 @@ class Telescope
     public static function recordScheduledCommand(IncomingEntry $entry)
     {
         static::record(EntryType::SCHEDULED_TASK, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return string
+     */
+    public static function startTiming(string $label)
+    {
+        $providedLabel = $label;
+        $labelAppendix = 0;
+        while(isset(static::$timings[$label])) {
+            $labelAppendix++;
+            $label = "{$providedLabel}_{$i}";
+        }
+        static::$timings[$label] = microtime(true);
+        return $label;
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
+    public static function stopTiming(string $label)
+    {
+        if(!isset(static::$timings[$label])) {
+            throw new Exception('There was no timing started with the label: '.$label);
+        }
+        $startTime = static::$timings[$label];
+        static::recordTiming(IncomingEntry::make([
+            'label' => $label,
+            'start' => $startTime,
+            'duration' => (microtime(true) - $startTime) * 1000
+        ]));
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
+    public static function recordTiming(IncomingEntry $entry)
+    {
+        static::record(EntryType::TIMING, $entry);
     }
 
     /**

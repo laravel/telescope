@@ -40,7 +40,7 @@
                             <tr v-for="timing in batch" :key="timing.id">
                                 <td class="table-fit pr-0">
                                 <span class="badge font-weight-light" :class="'badge-'+entryTypeClass(timing.entryType)">
-                                    {{timing.entryType}}
+                                    {{timing.entryType === 'timing' ? timing.label : timing.entryType}}
                                 </span>
                                 </td>
 
