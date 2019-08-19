@@ -60,7 +60,6 @@ class ViewWatcher extends Watcher
         return $path;
     }
 
-
     /**
      * Extract the keys from the given view in array form.
      *
