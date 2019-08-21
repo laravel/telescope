@@ -7,7 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('/vendor/telescope/favicon.ico') }}">
     
-    <!-- Disavowing all robots "access" -->
     <meta name="robots" content="noindex, nofollow">
 
     <title>Telescope{{ config('app.name') ? ' - ' . config('app.name') : '' }}</title>
