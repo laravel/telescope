@@ -38,7 +38,9 @@
 
         methods: {
             activateFirstTab(){
-                if (this.exceptions.length) {
+                if (window.location.hash) {
+                    this.currentTab = window.location.hash.substring(1);
+                } else if (this.exceptions.length) {
                     this.currentTab = 'exceptions'
                 } else if (this.logs.length) {
                     this.currentTab = 'logs'
@@ -64,6 +66,13 @@
                     this.currentTab = 'views'
                 }
             },
+
+            activateTab(tab){
+                this.currentTab = tab;
+                if(window.history.replaceState) {
+                    window.history.replaceState(null, null, '#' + this.currentTab);
+                }
+            }
         },
 
 
@@ -162,14 +171,14 @@
     <div class="card mt-5" v-if="hasRelatedEntries">
         <ul class="nav nav-pills">
             <li class="nav-item" v-for="tab in separateTabs">
-                <a class="nav-link" :class="{active: currentTab==tab.type}" href="#" v-on:click.prevent="currentTab=tab.type" v-if="tab.count">
+                <a class="nav-link" :class="{active: currentTab==tab.type}" href="#" v-on:click.prevent="activateTab(tab.type)" v-if="tab.count">
                     {{tab.title}} ({{tab.count}})
                 </a>
             </li>
             <li class="nav-item dropdown" v-if="dropdownTabs.length">
                 <a class="nav-link dropdown-toggle" :class="{active: dropdownTabSelected}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" :class="{active: currentTab==tab.type}" href="#" v-for="tab in dropdownTabs" v-on:click.prevent="currentTab=tab.type">{{tab.title}} ({{tab.count}})</a>
+                    <a class="dropdown-item" :class="{active: currentTab==tab.type}" href="#" v-for="tab in dropdownTabs" v-on:click.prevent="activateTab(tab.type)">{{tab.title}} ({{tab.count}})</a>
                 </div>
             </li>
         </ul>
