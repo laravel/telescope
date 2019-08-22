@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Events\QueryExecuted;
@@ -37,15 +38,23 @@ class QueryWatcher extends Watcher
 
         $caller = $this->getCallerFromStackTrace();
 
+        $sql = $event->sql;
+        $bindings = $this->formatBindings($event);
+
+        if (isset($this->options['format_sql']) && $this->options['format_sql']) {
+            $sql = $this->formatSql($sql, $bindings);
+            $bindings = [];
+        }
+
         Telescope::recordQuery(IncomingEntry::make([
             'connection' => $event->connectionName,
-            'bindings' => $this->formatBindings($event),
-            'sql' => $event->sql,
+            'bindings' => $bindings,
+            'sql' => $sql,
             'time' => number_format($time, 2),
             'slow' => isset($this->options['slow']) && $time >= $this->options['slow'],
             'file' => $caller['file'],
             'line' => $caller['line'],
-        ])->tags($this->tags($event)));
+        ])->tags($this->tags($event))->withFamilyHash($this->familyHash($event)));
     }
 
     /**
@@ -60,6 +69,17 @@ class QueryWatcher extends Watcher
     }
 
     /**
+     * Calculate the family look-up hash for the query event.
+     *
+     * @param  \Illuminate\Database\Events\QueryExecuted  $event
+     * @return string
+     */
+    public function familyHash($event)
+    {
+        return md5($event->sql);
+    }
+
+    /**
      * Format the given bindings to strings.
      *
      * @param  \Illuminate\Database\Events\QueryExecuted  $event
@@ -68,5 +88,33 @@ class QueryWatcher extends Watcher
     protected function formatBindings($event)
     {
         return $event->connection->prepareBindings($event->bindings);
+    }
+
+    /**
+     * Replace the placeholders with the actual bindings.
+     *
+     * @param string $sql
+     * @param array $bindings
+     * @return string
+     */
+    public function formatSql(string $sql, array $bindings)
+    {
+        foreach ($bindings as $key => $binding) {
+            // This regex matches placeholders only, not the question marks,
+            // nested in quotes, while we iterate through the bindings
+            // and substitute placeholders by suitable values.
+            $regex = is_numeric($key)
+                ? "/\?(?=(?:[^'\\\']*'[^'\\\']*')*[^'\\\']*$)/"
+                : "/:{$key}(?=(?:[^'\\\']*'[^'\\\']*')*[^'\\\']*$)/";
+
+            // Quote strings
+            if (is_string($binding)) {
+                $binding = "'$binding'";
+            }
+
+            $sql = preg_replace($regex, $binding, $sql, 1);
+        }
+
+        return $sql;
     }
 }

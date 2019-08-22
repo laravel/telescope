@@ -118,6 +118,19 @@ class IncomingEntry
     }
 
     /**
+     * Assign the entry a family hash.
+     *
+     * @param  string  $familyHash
+     * @return $this
+     */
+    public function withFamilyHash(string $familyHash)
+    {
+        $this->familyHash = $familyHash;
+
+        return $this;
+    }
+
+    /**
      * Set the currently authenticated user.
      *
      * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
@@ -249,6 +262,7 @@ class IncomingEntry
         return [
             'uuid' => $this->uuid,
             'batch_id' => $this->batchId,
+            'family_hash' => $this->familyHash,
             'type' => $this->type,
             'content' => $this->content,
             'created_at' => $this->recordedAt->toDateTimeString(),

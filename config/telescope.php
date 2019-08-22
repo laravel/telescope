@@ -136,6 +136,7 @@ return [
             'enabled' => env('TELESCOPE_QUERY_WATCHER', true),
             'ignore_packages' => true,
             'slow' => 100,
+            'format_sql' => true,
         ],
 
         Watchers\RedisWatcher::class => env('TELESCOPE_REDIS_WATCHER', true),
