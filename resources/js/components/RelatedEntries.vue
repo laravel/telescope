@@ -44,6 +44,8 @@
                     this.currentTab = 'exceptions'
                 } else if (this.logs.length) {
                     this.currentTab = 'logs'
+                } else if (this.views.length) {
+                    this.currentTab = 'views'
                 } else if (this.queries.length) {
                     this.currentTab = 'queries'
                 } else if (this.models.length) {
@@ -62,8 +64,6 @@
                     this.currentTab = 'gates'
                 } else if (this.redis.length) {
                     this.currentTab = 'redis'
-                } else if (this.views.length) {
-                    this.currentTab = 'views'
                 }
             },
 
