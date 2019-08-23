@@ -38,10 +38,14 @@
 
         methods: {
             activateFirstTab(){
-                if (this.exceptions.length) {
+                if (window.location.hash) {
+                    this.currentTab = window.location.hash.substring(1);
+                } else if (this.exceptions.length) {
                     this.currentTab = 'exceptions'
                 } else if (this.logs.length) {
                     this.currentTab = 'logs'
+                } else if (this.views.length) {
+                    this.currentTab = 'views'
                 } else if (this.queries.length) {
                     this.currentTab = 'queries'
                 } else if (this.models.length) {
@@ -62,6 +66,13 @@
                     this.currentTab = 'redis'
                 }
             },
+
+            activateTab(tab){
+                this.currentTab = tab;
+                if(window.history.replaceState) {
+                    window.history.replaceState(null, null, '#' + this.currentTab);
+                }
+            }
         },
 
 
@@ -120,10 +131,15 @@
                 return _.filter(this.batch, {type: 'notification'});
             },
 
+            views() {
+                return _.filter(this.batch, {type: 'view'});
+            },
+
             tabs(){
                 return _.filter([
                     {title: "Exceptions", type: "exceptions", count: this.exceptions.length},
                     {title: "Logs", type: "logs", count: this.logs.length},
+                    {title: "Views", type: "views", count: this.views.length},
                     {title: "Queries", type: "queries", count: this.queries.length},
                     {title: "Models", type: "models", count: this.models.length},
                     {title: "Gates", type: "gates", count: this.gates.length},
@@ -155,14 +171,14 @@
     <div class="card mt-5" v-if="hasRelatedEntries">
         <ul class="nav nav-pills">
             <li class="nav-item" v-for="tab in separateTabs">
-                <a class="nav-link" :class="{active: currentTab==tab.type}" href="#" v-on:click.prevent="currentTab=tab.type" v-if="tab.count">
+                <a class="nav-link" :class="{active: currentTab==tab.type}" href="#" v-on:click.prevent="activateTab(tab.type)" v-if="tab.count">
                     {{tab.title}} ({{tab.count}})
                 </a>
             </li>
             <li class="nav-item dropdown" v-if="dropdownTabs.length">
                 <a class="nav-link dropdown-toggle" :class="{active: dropdownTabSelected}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" :class="{active: currentTab==tab.type}" href="#" v-for="tab in dropdownTabs" v-on:click.prevent="currentTab=tab.type">{{tab.title}} ({{tab.count}})</a>
+                    <a class="dropdown-item" :class="{active: currentTab==tab.type}" href="#" v-for="tab in dropdownTabs" v-on:click.prevent="activateTab(tab.type)">{{tab.title}} ({{tab.count}})</a>
                 </div>
             </li>
         </ul>
@@ -524,6 +540,36 @@
                 </tr>
                 </tbody>
             </table>
+
+            <!-- Related Views -->
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='views' && views.length">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Path</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr v-for="entry in views">
+                    <td class="table-fit">
+                        {{entry.content.name}}
+                    </td>
+
+                    <td :title="entry.content.path">{{truncate(entry.content.path, 100)}}</td>
+
+                    <td class="table-fit">
+                        <router-link :to="{name:'view-preview', params:{id: entry.id}}" class="control-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
+                                <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
         </div>
     </div>
 </template>

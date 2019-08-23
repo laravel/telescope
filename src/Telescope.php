@@ -449,6 +449,17 @@ class Telescope
     }
 
     /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
+    public static function recordView(IncomingEntry $entry)
+    {
+        static::record(EntryType::VIEW, $entry);
+    }
+
+    /**
      * Flush all entries in the queue.
      *
      * @return static

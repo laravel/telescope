@@ -1,8 +1,0 @@
-includes:
-    - ./vendor/nunomaduro/larastan/extension.neon
-parameters:
-    excludes_analyse:
-        - %rootDir%/../../../src/Storage/factories
-    level: 1
-    paths:
-        - src
