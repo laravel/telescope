@@ -37,12 +37,12 @@ class QueryWatcher extends Watcher
 
         $caller = $this->getCallerFromStackTrace();
 
-        $sql = $event->sql;
-        $bindings = $this->formatBindings($event);
-
         if (isset($this->options['format_sql']) && $this->options['format_sql']) {
-            $sql = $this->formatSql($sql, $bindings);
+            $sql = $this->formatSql($event);
             $bindings = [];
+        } else {
+            $sql = $event->sql;
+            $bindings = $this->formatBindings($event);
         }
 
         Telescope::recordQuery(IncomingEntry::make([
@@ -92,13 +92,14 @@ class QueryWatcher extends Watcher
     /**
      * Replace the placeholders with the actual bindings.
      *
-     * @param string $sql
-     * @param array $bindings
+     * @param  \Illuminate\Database\Events\QueryExecuted  $event
      * @return string
      */
-    public function formatSql(string $sql, array $bindings)
+    public function formatSql($event)
     {
-        foreach ($bindings as $key => $binding) {
+        $sql = $event->sql;
+
+        foreach ($this->formatBindings($event) as $key => $binding) {
             // This regex matches placeholders only, not the question marks,
             // nested in quotes, while we iterate through the bindings
             // and substitute placeholders by suitable values.
@@ -107,8 +108,8 @@ class QueryWatcher extends Watcher
                 : "/:{$key}(?=(?:[^'\\\']*'[^'\\\']*')*[^'\\\']*$)/";
 
             // Quote strings
-            if (is_string($binding)) {
-                $binding = "'$binding'";
+            if (!is_int($binding) && !is_float($binding)) {
+                $binding = $event->connection->getPdo()->quote($binding);
             }
 
             $sql = preg_replace($regex, $binding, $sql, 1);
