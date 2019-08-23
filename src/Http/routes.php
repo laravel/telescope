@@ -11,6 +11,7 @@ Route::get('/telescope-api/mail/{telescopeEntryId}/download', 'MailEmlController
 // Exception entries...
 Route::post('/telescope-api/exceptions', 'ExceptionController@index');
 Route::get('/telescope-api/exceptions/{telescopeEntryId}', 'ExceptionController@show');
+Route::put('/telescope-api/exceptions/{telescopeEntryId}', 'ExceptionController@update');
 
 // Dump entries...
 Route::post('/telescope-api/dumps', 'DumpController@index');
