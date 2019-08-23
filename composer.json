@@ -18,7 +18,7 @@
         "ext-json": "*",
         "laravel/framework": "^6.0|^7.0",
         "moontoast/math": "^1.1",
-        "symfony/var-dumper": "^4.1"
+        "symfony/var-dumper": "^4.3"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0|^5.0"
