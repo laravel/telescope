@@ -108,7 +108,7 @@ class QueryWatcher extends Watcher
                 : "/:{$key}(?=(?:[^'\\\']*'[^'\\\']*')*[^'\\\']*$)/";
 
             // Quote strings
-            if (!is_int($binding) && !is_float($binding)) {
+            if ( ! is_int($binding) && ! is_float($binding)) {
                 $binding = $event->connection->getPdo()->quote($binding);
             }
 
