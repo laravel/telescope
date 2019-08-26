@@ -37,18 +37,10 @@ class QueryWatcher extends Watcher
 
         $caller = $this->getCallerFromStackTrace();
 
-        if (isset($this->options['format_sql']) && $this->options['format_sql']) {
-            $sql = $this->formatSql($event);
-            $bindings = [];
-        } else {
-            $sql = $event->sql;
-            $bindings = $this->formatBindings($event);
-        }
-
         Telescope::recordQuery(IncomingEntry::make([
             'connection' => $event->connectionName,
-            'bindings' => $bindings,
-            'sql' => $sql,
+            'bindings' => [],
+            'sql' => $this->replaceBindings($event),
             'time' => number_format($time, 2),
             'slow' => isset($this->options['slow']) && $time >= $this->options['slow'],
             'file' => $caller['file'],
@@ -95,7 +87,7 @@ class QueryWatcher extends Watcher
      * @param  \Illuminate\Database\Events\QueryExecuted  $event
      * @return string
      */
-    public function formatSql($event)
+    public function replaceBindings($event)
     {
         $sql = $event->sql;
 
