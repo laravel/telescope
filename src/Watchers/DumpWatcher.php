@@ -6,8 +6,8 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\IncomingDumpEntry;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Laravel\Telescope\Contracts\EntriesRepository;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
 
 class DumpWatcher extends Watcher
