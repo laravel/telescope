@@ -7,6 +7,7 @@ use Laravel\Telescope\IncomingDumpEntry;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+use Laravel\Telescope\Contracts\EntriesRepository;
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
 
 class DumpWatcher extends Watcher
@@ -19,17 +20,26 @@ class DumpWatcher extends Watcher
     protected $cache;
 
     /**
+     * @var EntriesRepository
+     */
+    protected $entriesRepository;
+
+    /**
      * Create a new watcher instance.
      *
      * @param  \Illuminate\Contracts\Cache\Factory  $cache
      * @param  array  $options
      * @return void
      */
-    public function __construct(CacheFactory $cache, array $options = [])
-    {
+    public function __construct(
+        CacheFactory $cache,
+        EntriesRepository $entriesRepository,
+        array $options = []
+    ) {
         parent::__construct($options);
 
         $this->cache = $cache;
+        $this->entriesRepository = $entriesRepository;
     }
 
     /**
@@ -65,5 +75,7 @@ class DumpWatcher extends Watcher
         Telescope::recordDump(
             IncomingDumpEntry::make(['dump' => $dump])
         );
+
+        Telescope::store($this->entriesRepository, false);
     }
 }

@@ -116,6 +116,8 @@ class Telescope
      */
     public static $runsMigrations = true;
 
+    public static $batchId = null;
+
     /**
      * Register the Telescope watchers and start recording if necessary.
      *
@@ -546,9 +548,10 @@ class Telescope
      * Store the queued entries and flush the queue.
      *
      * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
+     * @param  bool $finishBatch
      * @return void
      */
-    public static function store(EntriesRepository $storage)
+    public static function store(EntriesRepository $storage, $finishBatch = true)
     {
         if (empty(static::$entriesQueue) && empty(static::$updatesQueue)) {
             return;
@@ -559,7 +562,7 @@ class Telescope
         }
 
         try {
-            $batchId = Str::orderedUuid()->toString();
+            $batchId = static::batchId();
 
             $storage->store(static::collectEntries($batchId));
             $storage->update(static::collectUpdates($batchId));
@@ -569,6 +572,10 @@ class Telescope
             }
         } catch (Exception $e) {
             app(ExceptionHandler::class)->report($e);
+        }
+
+        if ($finishBatch) {
+            static::$batchId = null;
         }
 
         static::$entriesQueue = [];
@@ -700,5 +707,14 @@ class Telescope
         static::$runsMigrations = false;
 
         return new static;
+    }
+
+    public static function batchId()
+    {
+        if (static::$batchId === null) {
+            static::$batchId = Str::orderedUuid()->toString();
+        }
+
+        return static::$batchId;
     }
 }
