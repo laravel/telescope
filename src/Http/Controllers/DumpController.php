@@ -8,8 +8,8 @@ use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Watchers\DumpWatcher;
 use Laravel\Telescope\Storage\EntryQueryOptions;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Laravel\Telescope\Contracts\EntriesRepository;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 
 class DumpController extends EntryController
