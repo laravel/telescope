@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Cache\ArrayStore;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Watchers\DumpWatcher;
+use Laravel\Telescope\Storage\EntryQueryOptions;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 
@@ -40,7 +43,14 @@ class DumpController extends EntryController
     {
         $this->cache->put('telescope:dump-watcher', true, now()->addSeconds(4));
 
-        return parent::index($request, $storage);
+        return response()->json([
+            'dump' => (new HtmlDumper())->dump((new VarCloner)->cloneVar(true), true),
+            'entries' => $storage->get(
+                $this->entryType(),
+                EntryQueryOptions::fromRequest($request)
+            ),
+            'status' => $this->status(),
+        ]);
     }
 
     /**
