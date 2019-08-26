@@ -63,7 +63,7 @@
                         {{localTime(entry.content.resolved_at)}} ({{timeAgo(entry.content.resolved_at)}})
                     </span>
                     <span v-if="!entry.content.resolved_at">
-                        <a href="#" class="btn btn-sm btn-success" v-on:click.prevent="resolveException(entry)">Resolve now</a>
+                        <a href="#" class="badge badge-success mr-1 font-weight-light" v-on:click.prevent="resolveException(entry)">Resolve now</a>
                     </span>
                 </td>
             </tr>
