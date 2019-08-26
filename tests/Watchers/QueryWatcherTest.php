@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
 use Illuminate\Support\Collection;
@@ -47,8 +48,24 @@ class QueryWatcherTest extends FeatureTestCase
         $entry = $this->loadTelescopeEntries()->first();
 
         $this->assertSame(EntryType::QUERY, $entry->type);
-        $this->assertCount(300, $entry->content['bindings']);
+        $this->assertGreaterThan(300 * 16, strlen($entry->content['sql']));
         $this->assertSame('testbench', $entry->content['connection']);
         $this->assertTrue($entry->content['slow']);
+    }
+
+    public function test_query_watcher_can_prepare_bindings()
+    {
+        $this->app->get('db')->table('telescope_entries')
+            ->where('type', 'query')
+            ->where('should_display_on_index', true)
+            ->whereNull('family_hash')
+            ->where('created_at', '<', Carbon::parse('2019-01-01'))
+            ->count();
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::QUERY, $entry->type);
+        $this->assertSame('select count(*) as aggregate from "telescope_entries" where "type" = \'query\' and "should_display_on_index" = 1 and "family_hash" is null and "created_at" < \'2019-01-01 00:00:00\'', $entry->content['sql']);
+        $this->assertSame('testbench', $entry->content['connection']);
     }
 }
