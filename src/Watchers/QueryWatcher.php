@@ -92,14 +92,10 @@ class QueryWatcher extends Watcher
         $sql = $event->sql;
 
         foreach ($this->formatBindings($event) as $key => $binding) {
-            // This regex matches placeholders only, not the question marks,
-            // nested in quotes, while we iterate through the bindings
-            // and substitute placeholders by suitable values.
             $regex = is_numeric($key)
                 ? "/\?(?=(?:[^'\\\']*'[^'\\\']*')*[^'\\\']*$)/"
                 : "/:{$key}(?=(?:[^'\\\']*'[^'\\\']*')*[^'\\\']*$)/";
 
-            // Quote strings
             if (! is_int($binding) && ! is_float($binding)) {
                 $binding = $event->connection->getPdo()->quote($binding);
             }
