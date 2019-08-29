@@ -39,13 +39,13 @@ class QueryWatcher extends Watcher
 
         Telescope::recordQuery(IncomingEntry::make([
             'connection' => $event->connectionName,
-            'bindings' => $this->formatBindings($event),
-            'sql' => $event->sql,
+            'bindings' => [],
+            'sql' => $this->replaceBindings($event),
             'time' => number_format($time, 2),
             'slow' => isset($this->options['slow']) && $time >= $this->options['slow'],
             'file' => $caller['file'],
             'line' => $caller['line'],
-        ])->tags($this->tags($event)));
+        ])->tags($this->tags($event))->withFamilyHash($this->familyHash($event)));
     }
 
     /**
@@ -60,6 +60,17 @@ class QueryWatcher extends Watcher
     }
 
     /**
+     * Calculate the family look-up hash for the query event.
+     *
+     * @param  \Illuminate\Database\Events\QueryExecuted  $event
+     * @return string
+     */
+    public function familyHash($event)
+    {
+        return md5($event->sql);
+    }
+
+    /**
      * Format the given bindings to strings.
      *
      * @param  \Illuminate\Database\Events\QueryExecuted  $event
@@ -68,5 +79,34 @@ class QueryWatcher extends Watcher
     protected function formatBindings($event)
     {
         return $event->connection->prepareBindings($event->bindings);
+    }
+
+    /**
+     * Replace the placeholders with the actual bindings.
+     *
+     * @param  \Illuminate\Database\Events\QueryExecuted  $event
+     * @return string
+     */
+    public function replaceBindings($event)
+    {
+        $sql = $event->sql;
+
+        foreach ($this->formatBindings($event) as $key => $binding) {
+            // This regex matches placeholders only, not the question marks,
+            // nested in quotes, while we iterate through the bindings
+            // and substitute placeholders by suitable values.
+            $regex = is_numeric($key)
+                ? "/\?(?=(?:[^'\\\']*'[^'\\\']*')*[^'\\\']*$)/"
+                : "/:{$key}(?=(?:[^'\\\']*'[^'\\\']*')*[^'\\\']*$)/";
+
+            // Quote strings
+            if (! is_int($binding) && ! is_float($binding)) {
+                $binding = $event->connection->getPdo()->quote($binding);
+            }
+
+            $sql = preg_replace($regex, $binding, $sql, 1);
+        }
+
+        return $sql;
     }
 }

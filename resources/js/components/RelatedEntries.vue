@@ -135,6 +135,13 @@
                 return _.filter(this.batch, {type: 'view'});
             },
 
+            queriesSummary() {
+                return {
+                    time: _.reduce(this.queries, (time, q) => { return time + parseFloat(q.content.time) }, 0.00),
+                    duplicated: this.queries.length - _.size(_.groupBy(this.queries, 'family_hash')),
+                };
+            },
+
             tabs(){
                 return _.filter([
                     {title: "Exceptions", type: "exceptions", count: this.exceptions.length},
@@ -246,12 +253,11 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='queries' && queries.length">
                 <thead>
                 <tr>
-                    <th>Query</th>
-                    <th>Duration</th>
+                    <th>Query<br/><small>{{ queries.length }} queries, {{ queriesSummary.duplicated }} of which are duplicated.</small></th>
+                    <th>Duration<br/><small>{{ queriesSummary.duplicated }} ms</small></th>
                     <th></th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <tr v-for="entry in queries">
                     <td :title="entry.content.sql">{{truncate(entry.content.sql, 110)}}</td>
