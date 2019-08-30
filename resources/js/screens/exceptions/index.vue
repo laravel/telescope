@@ -6,9 +6,10 @@
     <index-screen title="Exceptions" resource="exceptions">
         <tr slot="table-header">
             <th scope="col" v-if="!$route.query.family_hash">Type</th>
-            <th scope="col" v-if="!$route.query.family_hash && !$route.query.tag">Occurrences</th>
+            <th scope="col" v-if="!$route.query.family_hash && !$route.query.tag">#</th>
             <th scope="col" v-if="$route.query.family_hash">Message</th>
             <th scope="col">Happened</th>
+            <th scope="col">Resolved</th>
             <th scope="col"></th>
         </tr>
 
@@ -39,6 +40,17 @@
 
             <td class="table-fit" :data-timeago="slotProps.entry.created_at" :title="slotProps.entry.created_at">
                 {{timeAgo(slotProps.entry.created_at)}}
+            </td>
+
+            <td class="table-fit">
+                <div v-if="slotProps.entry.content.resolved_at" :data-timeago="slotProps.entry.content.resolved_at" :title="slotProps.entry.content.resolved_at">
+                     {{timeAgo(slotProps.entry.content.resolved_at)}}
+                </div>
+                <div v-if="!slotProps.entry.content.resolved_at" class="control-action text-center">
+                     <svg viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <path fill="#ef5753"  d="M2.92893219,17.0710678 C6.83417511,20.9763107 13.1658249,20.9763107 17.0710678,17.0710678 C20.9763107,13.1658249 20.9763107,6.83417511 17.0710678,2.92893219 C13.1658249,-0.976310729 6.83417511,-0.976310729 2.92893219,2.92893219 C-0.976310729,6.83417511 -0.976310729,13.1658249 2.92893219,17.0710678 Z M9,5 L11,5 L11,11 L9,11 L9,5 Z M9,13 L11,13 L11,15 L9,15 L9,13 Z" id="Combined-Shape"></path>
+                    </svg>
+                </div>
             </td>
 
             <td class="table-fit">
