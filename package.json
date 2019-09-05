@@ -26,7 +26,7 @@
         "sass-loader": "^7.1.0",
         "sql-formatter": "^2.3.1",
         "vue": "^2.5.7",
-        "vue-json-pretty": "^1.4.1",
+        "vue-json-pretty": "^1.6.2",
         "vue-router": "^3.0.1",
         "vue-template-compiler": "^2.5.21"
     }

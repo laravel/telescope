@@ -1,11 +1,11 @@
-.vjs__tree {
+.vjs-tree {
     // Fallback for missing fonts from vue-json-pretty on Ubuntu
     font-family: Monaco, Menlo, Consolas, Bitstream Vera Sans Mono, monospace !important;
 
-    .vjs__tree__content {
+    .vjs-tree__content {
         border-left: 1px dotted rgba(204, 204, 204, 0.28) !important;
     }
-    .vjs__tree__node {
+    .vjs-tree__node {
         cursor: pointer;
         &:hover {
             color: #20a0ff;
@@ -15,14 +15,14 @@
         position: absolute;
         left: -30px;
     }
-    .vjs__value__null {
+    .vjs-value__null {
         color: #a291f5 !important;
     }
-    .vjs__value__number,
-    .vjs__value__boolean {
+    .vjs-value__number,
+    .vjs-value__boolean {
         color: #a291f5 !important;
     }
-    .vjs__value__string {
+    .vjs-value__string {
         color: #dacb4d !important;
     }
 }
