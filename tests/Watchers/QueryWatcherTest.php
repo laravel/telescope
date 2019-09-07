@@ -68,7 +68,7 @@ class QueryWatcherTest extends FeatureTestCase
         $entry = $this->loadTelescopeEntries()->first();
 
         $this->assertSame(EntryType::QUERY, $entry->type);
-        $this->assertSame(<<<SQL
+        $this->assertSame(<<<'SQL'
 update "telescope_entries" set "content" = null, "should_display_on_index" = 0 where "type" = 'query' and "should_display_on_index" = 1 and "family_hash" is null and "created_at" < '2019-01-01 00:00:00'
 SQL
             , $entry->content['sql']);
