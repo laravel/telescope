@@ -60,12 +60,19 @@ class QueryWatcherTest extends FeatureTestCase
             ->where('should_display_on_index', true)
             ->whereNull('family_hash')
             ->where('created_at', '<', Carbon::parse('2019-01-01'))
-            ->count();
+            ->update([
+                'content' => null,
+                'should_display_on_index' => false,
+            ]);
 
         $entry = $this->loadTelescopeEntries()->first();
 
         $this->assertSame(EntryType::QUERY, $entry->type);
-        $this->assertSame('select count(*) as aggregate from "telescope_entries" where "type" = \'query\' and "should_display_on_index" = 1 and "family_hash" is null and "created_at" < \'2019-01-01 00:00:00\'', $entry->content['sql']);
+        $this->assertSame(<<<SQL
+update "telescope_entries" set "content" = null, "should_display_on_index" = 0 where "type" = 'query' and "should_display_on_index" = 1 and "family_hash" is null and "created_at" < '2019-01-01 00:00:00'
+SQL
+            , $entry->content['sql']);
+
         $this->assertSame('testbench', $entry->content['connection']);
     }
 }
