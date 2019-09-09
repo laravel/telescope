@@ -7,6 +7,7 @@ use Exception;
 use Throwable;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Laravel\Telescope\Contracts\EntriesRepository;
@@ -700,5 +701,21 @@ class Telescope
         static::$runsMigrations = false;
 
         return new static;
+    }
+
+    /**
+     * Check if assets are up-to-date
+     *
+     * @return bool
+     */
+    public static function assetsUpdated()
+    {
+        $publishedPath = public_path('vendor/telescope/mix-manifest.json');
+
+        if (!File::exists($publishedPath)) {
+            throw new \RuntimeException('The Telescope assets are not published. Please run: php artisan telescope:publish');
+        }
+
+        return File::get($publishedPath) === File::get(__DIR__ .'/../public/mix-manifest.json');
     }
 }

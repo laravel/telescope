@@ -192,6 +192,11 @@
             </div>
 
             <div class="col-10">
+                @if(!$assetsUpdated)
+                    <div class="alert alert-warning">
+                        The published Telescope assets are not up-to-date with the installed version. To update, run:<br/><code>php artisan telescope:publish</code>
+                    </div>
+                @endif
                 <router-view></router-view>
             </div>
         </div>
