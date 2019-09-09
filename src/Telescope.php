@@ -704,18 +704,19 @@ class Telescope
     }
 
     /**
-     * Check if assets are up-to-date
+     * Check if assets are up-to-date.
      *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @return bool
      */
     public static function assetsUpdated()
     {
         $publishedPath = public_path('vendor/telescope/mix-manifest.json');
 
-        if (!File::exists($publishedPath)) {
+        if (! File::exists($publishedPath)) {
             throw new \RuntimeException('The Telescope assets are not published. Please run: php artisan telescope:publish');
         }
 
-        return File::get($publishedPath) === File::get(__DIR__ .'/../public/mix-manifest.json');
+        return File::get($publishedPath) === File::get(__DIR__.'/../public/mix-manifest.json');
     }
 }
