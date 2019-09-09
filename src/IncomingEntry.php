@@ -71,7 +71,7 @@ class IncomingEntry
      */
     public function __construct(array $content)
     {
-        $this->uuid = Str::orderedUuid()->toString();
+        $this->uuid = (string) Str::orderedUuid();
 
         $this->recordedAt = now();
 
