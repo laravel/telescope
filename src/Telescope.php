@@ -709,7 +709,7 @@ class Telescope
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @return bool
      */
-    public static function assetsUpdated()
+    public static function assetsAreCurrent()
     {
         $publishedPath = public_path('vendor/telescope/mix-manifest.json');
 
