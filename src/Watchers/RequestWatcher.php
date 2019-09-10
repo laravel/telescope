@@ -2,17 +2,17 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Illuminate\View\View;
-use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Http\Request;
-use Laravel\Telescope\Telescope;
+use Illuminate\Http\Response as IlluminateResponse;
+use Illuminate\Support\Arr;
+use Illuminate\View\View;
 use Laravel\Telescope\FormatModel;
 use Laravel\Telescope\IncomingEntry;
-use Illuminate\Database\Eloquent\Model;
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Http\Response as IlluminateResponse;
-use Illuminate\Foundation\Http\Events\RequestHandled;
+use Laravel\Telescope\Telescope;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class RequestWatcher extends Watcher
 {

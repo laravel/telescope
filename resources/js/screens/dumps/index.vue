@@ -7,6 +7,7 @@
          */
         data() {
             return {
+                dump: null,
                 entries: [],
                 ready: false,
                 newEntriesTimeout: null,
@@ -39,6 +40,7 @@
             loadEntries(){
                 axios.post(Telescope.basePath + '/telescope-api/dumps').then(response => {
                     this.ready = true;
+                    this.dump = response.data.dump;
                     this.entries = response.data.entries;
                     this.recordingStatus = response.data.status;
 
@@ -102,8 +104,13 @@
             <span>We didn't find anything - just empty space.</span>
         </div>
 
+        <div style="display: none;" v-if="dump">
+            <div v-html="dump"></div>
+        </div>
+
         <div v-if="ready && entries.length > 0" class="code-bg px-3 pt-3">
             <transition-group tag="div" name="list">
+                
                 <div v-for="entry in entries" :key="entry.id" class="mb-4">
                     <div class="entryPointDescription d-flex justify-content-between align-items-center">
                         <router-link :to="{name:'request-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'request'">

@@ -71,7 +71,7 @@ class IncomingEntry
      */
     public function __construct(array $content)
     {
-        $this->uuid = Str::orderedUuid();
+        $this->uuid = (string) Str::orderedUuid();
 
         $this->recordedAt = now();
 
@@ -113,6 +113,19 @@ class IncomingEntry
     public function type(string $type)
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Assign the entry a family hash.
+     *
+     * @param  string  $familyHash
+     * @return $this
+     */
+    public function withFamilyHash(string $familyHash)
+    {
+        $this->familyHash = $familyHash;
 
         return $this;
     }
@@ -249,6 +262,7 @@ class IncomingEntry
         return [
             'uuid' => $this->uuid,
             'batch_id' => $this->batchId,
+            'family_hash' => $this->familyHash,
             'type' => $this->type,
             'content' => $this->content,
             'created_at' => $this->recordedAt->toDateTimeString(),

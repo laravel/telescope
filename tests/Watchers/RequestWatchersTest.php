@@ -2,9 +2,9 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Laravel\Telescope\EntryType;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Route;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\RequestWatcher;
 

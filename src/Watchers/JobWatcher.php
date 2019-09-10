@@ -2,16 +2,16 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Queue;
 use Laravel\Telescope\EntryType;
-use Laravel\Telescope\Telescope;
 use Laravel\Telescope\EntryUpdate;
-use Laravel\Telescope\ExtractTags;
-use Laravel\Telescope\IncomingEntry;
-use Illuminate\Queue\Events\JobFailed;
 use Laravel\Telescope\ExceptionContext;
 use Laravel\Telescope\ExtractProperties;
-use Illuminate\Queue\Events\JobProcessed;
+use Laravel\Telescope\ExtractTags;
+use Laravel\Telescope\IncomingEntry;
+use Laravel\Telescope\Telescope;
 
 class JobWatcher extends Watcher
 {

@@ -2,12 +2,12 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Laravel\Telescope\Telescope;
+use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Laravel\Telescope\IncomingDumpEntry;
-use Symfony\Component\VarDumper\VarDumper;
+use Laravel\Telescope\Telescope;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
-use Illuminate\Contracts\Cache\Factory as CacheFactory;
+use Symfony\Component\VarDumper\VarDumper;
 
 class DumpWatcher extends Watcher
 {
@@ -44,8 +44,11 @@ class DumpWatcher extends Watcher
             return;
         }
 
-        VarDumper::setHandler(function ($var) {
-            $this->recordDump((new HtmlDumper)->dump(
+        $htmlDumper = new HtmlDumper();
+        $htmlDumper->setDumpHeader('');
+
+        VarDumper::setHandler(function ($var) use ($htmlDumper) {
+            $this->recordDump($htmlDumper->dump(
                 (new VarCloner)->cloneVar($var), true
             ));
         });

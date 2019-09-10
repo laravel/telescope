@@ -1,4 +1,6 @@
 <script type="text/ecmascript-6">
+    import axios from 'axios';
+
     export default {
         components: {
             'code-preview': require('./../../components/ExceptionCodePreview').default,
@@ -12,6 +14,19 @@
                 currentTab: 'message'
             };
         },
+
+        methods: {
+            resolveException(entry) {
+                this.alertConfirm('Are you sure you want to resolve this exception?', () => {
+
+                    axios.put(Telescope.basePath + '/telescope-api/exceptions/' + entry.id, {
+                        'resolved_at': 'now',
+                    }).then(response => {
+                        this.entry = response.data.entry;
+                    })
+                });
+            },
+        }
     }
 </script>
 
@@ -38,6 +53,18 @@
                     <router-link :to="{name:'exceptions', query: {family_hash: slotProps.entry.family_hash}}" class="control-action">
                         View Other Occurrences
                     </router-link>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="table-fit font-weight-bold">Resolved at</td>
+                <td>
+                    <span v-if="entry.content.resolved_at">
+                        {{localTime(entry.content.resolved_at)}} ({{timeAgo(entry.content.resolved_at)}})
+                    </span>
+                    <span v-if="!entry.content.resolved_at">
+                        <a href="#" class="badge badge-success mr-1 font-weight-light" v-on:click.prevent="resolveException(entry)">Resolve now</a>
+                    </span>
                 </td>
             </tr>
         </template>

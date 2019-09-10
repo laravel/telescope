@@ -2,9 +2,9 @@
 
 namespace Laravel\Telescope\Console;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Console\DetectsApplicationNamespace;
+use Illuminate\Support\Str;
 
 class InstallCommand extends Command
 {

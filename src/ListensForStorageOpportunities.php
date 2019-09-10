@@ -2,10 +2,10 @@
 
 namespace Laravel\Telescope;
 
+use Illuminate\Queue\Events\JobExceptionOccurred;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
-use Illuminate\Queue\Events\JobExceptionOccurred;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
 trait ListensForStorageOpportunities
@@ -53,10 +53,12 @@ trait ListensForStorageOpportunities
      */
     protected static function storeEntriesAfterWorkerLoop($app)
     {
-        $app['events']->listen(JobProcessing::class, function () {
-            static::startRecording();
+        $app['events']->listen(JobProcessing::class, function ($event) {
+            if ($event->connectionName !== 'sync') {
+                static::startRecording();
 
-            static::$processingJobs[] = true;
+                static::$processingJobs[] = true;
+            }
         });
 
         $app['events']->listen(JobProcessed::class, function ($event) use ($app) {

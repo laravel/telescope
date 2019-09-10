@@ -2,9 +2,9 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Laravel\Telescope\Telescope;
-use Laravel\Telescope\IncomingEntry;
 use Illuminate\Console\Events\CommandFinished;
+use Laravel\Telescope\IncomingEntry;
+use Laravel\Telescope\Telescope;
 
 class CommandWatcher extends Watcher
 {

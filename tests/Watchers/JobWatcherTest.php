@@ -3,13 +3,13 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Exception;
-use Laravel\Telescope\EntryType;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Contracts\Bus\Dispatcher;
-use Illuminate\Database\Schema\Blueprint;
-use Laravel\Telescope\Watchers\JobWatcher;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
+use Laravel\Telescope\Watchers\JobWatcher;
 
 class JobWatcherTest extends FeatureTestCase
 {

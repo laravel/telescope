@@ -2,10 +2,10 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Illuminate\View\View;
 use Illuminate\Support\Str;
-use Laravel\Telescope\Telescope;
+use Illuminate\View\View;
 use Laravel\Telescope\IncomingEntry;
+use Laravel\Telescope\Telescope;
 
 class ViewWatcher extends Watcher
 {

@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Laravel\Telescope\EntryType;
 use Illuminate\Support\Facades\Event;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\EventWatcher;
 

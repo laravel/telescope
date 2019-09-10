@@ -4,14 +4,14 @@ namespace Laravel\Telescope;
 
 use Closure;
 use Exception;
-use Throwable;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Log\Events\MessageLogged;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Throwable;
 
 class Telescope
 {

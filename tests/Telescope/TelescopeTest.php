@@ -2,10 +2,12 @@
 
 namespace Laravel\Telescope\Tests\Telescope;
 
+use Illuminate\Contracts\Bus\Dispatcher;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\QueryWatcher;
-use Laravel\Telescope\Contracts\EntriesRepository;
 
 class TelescopeTest extends FeatureTestCase
 {
@@ -69,5 +71,38 @@ class TelescopeTest extends FeatureTestCase
         $this->app->get('db')->table('telescope_entries')->count();
 
         $this->assertCount(1, Telescope::$entriesQueue);
+    }
+
+    /**
+     * @test
+     */
+    public function dont_start_recording_when_dispatching_job_synchronously()
+    {
+        Telescope::stopRecording();
+
+        $this->assertFalse(Telescope::isRecording());
+
+        $this->app->get(Dispatcher::class)->dispatch(
+            new MySyncJob('Awesome Laravel')
+        );
+
+        $this->assertFalse(Telescope::isRecording());
+    }
+}
+
+class MySyncJob implements ShouldQueue
+{
+    public $connection = 'sync';
+
+    private $payload;
+
+    public function __construct($payload)
+    {
+        $this->payload = $payload;
+    }
+
+    public function handle()
+    {
+        //
     }
 }
