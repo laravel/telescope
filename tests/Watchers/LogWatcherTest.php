@@ -2,11 +2,11 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Psr\Log\LogLevel;
-use Psr\Log\LoggerInterface;
 use Laravel\Telescope\EntryType;
-use Laravel\Telescope\Watchers\LogWatcher;
 use Laravel\Telescope\Tests\FeatureTestCase;
+use Laravel\Telescope\Watchers\LogWatcher;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 class LogWatcherTest extends FeatureTestCase
 {

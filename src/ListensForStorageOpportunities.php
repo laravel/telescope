@@ -2,10 +2,10 @@
 
 namespace Laravel\Telescope;
 
+use Illuminate\Queue\Events\JobExceptionOccurred;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Events\JobProcessing;
-use Illuminate\Queue\Events\JobExceptionOccurred;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
 trait ListensForStorageOpportunities

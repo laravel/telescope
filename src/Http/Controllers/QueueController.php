@@ -2,10 +2,10 @@
 
 namespace Laravel\Telescope\Http\Controllers;
 
-use Laravel\Telescope\EntryType;
-use Laravel\Telescope\Watchers\JobWatcher;
-use Laravel\Telescope\Storage\EntryQueryOptions;
 use Laravel\Telescope\Contracts\EntriesRepository;
+use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Storage\EntryQueryOptions;
+use Laravel\Telescope\Watchers\JobWatcher;
 
 class QueueController extends EntryController
 {

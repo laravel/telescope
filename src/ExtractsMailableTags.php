@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope;
 
-use Illuminate\Mail\Mailable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
 
 trait ExtractsMailableTags
 {

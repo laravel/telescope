@@ -4,9 +4,9 @@ namespace Laravel\Telescope;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Telescope\Contracts\ClearableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\PrunableRepository;
-use Laravel\Telescope\Contracts\ClearableRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 
 class TelescopeServiceProvider extends ServiceProvider

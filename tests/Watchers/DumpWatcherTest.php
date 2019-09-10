@@ -2,10 +2,10 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Laravel\Telescope\EntryType;
 use Illuminate\Contracts\Cache\Repository;
-use Laravel\Telescope\Watchers\DumpWatcher;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
+use Laravel\Telescope\Watchers\DumpWatcher;
 
 class DumpWatcherTest extends FeatureTestCase
 {

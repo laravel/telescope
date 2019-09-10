@@ -2,15 +2,15 @@
 
 namespace Laravel\Telescope;
 
-use stdClass;
-use ReflectionClass;
-use Illuminate\Support\Arr;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Mail\SendQueuedMailable;
-use Illuminate\Events\CallQueuedListener;
 use Illuminate\Broadcasting\BroadcastEvent;
-use Illuminate\Notifications\SendQueuedNotifications;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Events\CallQueuedListener;
+use Illuminate\Mail\SendQueuedMailable;
+use Illuminate\Notifications\SendQueuedNotifications;
+use Illuminate\Support\Arr;
+use ReflectionClass;
+use stdClass;
 
 class ExtractTags
 {

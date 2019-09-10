@@ -2,12 +2,12 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Laravel\Telescope\EntryType;
-use Illuminate\Support\Facades\Gate;
-use Laravel\Telescope\Watchers\GateWatcher;
-use Laravel\Telescope\Tests\FeatureTestCase;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Gate;
+use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Tests\FeatureTestCase;
+use Laravel\Telescope\Watchers\GateWatcher;
 
 class GateWatcherTest extends FeatureTestCase
 {
