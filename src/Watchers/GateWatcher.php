@@ -2,13 +2,13 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Illuminate\Support\Str;
-use Laravel\Telescope\Telescope;
-use Laravel\Telescope\FormatModel;
-use Illuminate\Support\Facades\Gate;
-use Laravel\Telescope\IncomingEntry;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
+use Laravel\Telescope\FormatModel;
+use Laravel\Telescope\IncomingEntry;
+use Laravel\Telescope\Telescope;
 
 class GateWatcher extends Watcher
 {

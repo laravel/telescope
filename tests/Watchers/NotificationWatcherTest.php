@@ -2,12 +2,12 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Laravel\Telescope\EntryType;
-use Illuminate\Support\Facades\Notification;
-use Laravel\Telescope\Tests\FeatureTestCase;
 use Illuminate\Notifications\Messages\MailMessage;
-use Laravel\Telescope\Watchers\NotificationWatcher;
 use Illuminate\Notifications\Notification as BaseNotification;
+use Illuminate\Support\Facades\Notification;
+use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Tests\FeatureTestCase;
+use Laravel\Telescope\Watchers\NotificationWatcher;
 
 class NotificationWatcherTest extends FeatureTestCase
 {

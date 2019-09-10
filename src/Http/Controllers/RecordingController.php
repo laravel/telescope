@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope\Http\Controllers;
 
-use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
+use Illuminate\Routing\Controller;
 
 class RecordingController extends Controller
 {

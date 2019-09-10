@@ -2,13 +2,13 @@
 
 namespace Laravel\Telescope\Tests\Http;
 
-use Illuminate\Http\Request;
-use Laravel\Telescope\Telescope;
-use Illuminate\Support\Facades\Gate;
-use Laravel\Telescope\Tests\FeatureTestCase;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
+use Laravel\Telescope\Tests\FeatureTestCase;
+use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
 
 class AuthorizationTest extends FeatureTestCase
 {

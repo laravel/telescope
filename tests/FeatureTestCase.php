@@ -2,15 +2,15 @@
 
 namespace Laravel\Telescope\Tests;
 
-use Illuminate\Queue\Queue;
-use Laravel\Telescope\Telescope;
-use Orchestra\Testbench\TestCase;
-use Laravel\Telescope\Storage\EntryModel;
-use Illuminate\Foundation\Testing\TestResponse;
-use Laravel\Telescope\TelescopeServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Queue\Queue;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
+use Laravel\Telescope\Storage\EntryModel;
+use Laravel\Telescope\Telescope;
+use Laravel\Telescope\TelescopeServiceProvider;
+use Orchestra\Testbench\TestCase;
 
 class FeatureTestCase extends TestCase
 {

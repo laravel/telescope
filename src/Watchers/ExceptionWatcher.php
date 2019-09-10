@@ -3,11 +3,11 @@
 namespace Laravel\Telescope\Watchers;
 
 use Exception;
-use Laravel\Telescope\Telescope;
-use Laravel\Telescope\ExtractTags;
-use Laravel\Telescope\ExceptionContext;
 use Illuminate\Log\Events\MessageLogged;
+use Laravel\Telescope\ExceptionContext;
+use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingExceptionEntry;
+use Laravel\Telescope\Telescope;
 
 class ExceptionWatcher extends Watcher
 {

@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope\Http\Controllers;
 
-use Laravel\Telescope\Telescope;
 use Illuminate\Routing\Controller;
+use Laravel\Telescope\Telescope;
 
 class HomeController extends Controller
 {
