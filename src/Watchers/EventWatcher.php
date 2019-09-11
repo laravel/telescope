@@ -3,14 +3,14 @@
 namespace Laravel\Telescope\Watchers;
 
 use Closure;
-use ReflectionFunction;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Str;
-use Laravel\Telescope\Telescope;
+use Laravel\Telescope\ExtractProperties;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
-use Laravel\Telescope\ExtractProperties;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Laravel\Telescope\Telescope;
+use ReflectionFunction;
 
 class EventWatcher extends Watcher
 {

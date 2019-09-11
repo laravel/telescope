@@ -2,9 +2,9 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Laravel\Telescope\Telescope;
-use Laravel\Telescope\IncomingEntry;
 use Illuminate\Database\Events\QueryExecuted;
+use Laravel\Telescope\IncomingEntry;
+use Laravel\Telescope\Telescope;
 
 class QueryWatcher extends Watcher
 {
@@ -96,7 +96,9 @@ class QueryWatcher extends Watcher
                 ? "/\?(?=(?:[^'\\\']*'[^'\\\']*')*[^'\\\']*$)/"
                 : "/:{$key}(?=(?:[^'\\\']*'[^'\\\']*')*[^'\\\']*$)/";
 
-            if (! is_int($binding) && ! is_float($binding)) {
+            if ($binding === null) {
+                $binding = 'null';
+            } elseif (! is_int($binding) && ! is_float($binding)) {
                 $binding = $event->connection->getPdo()->quote($binding);
             }
 

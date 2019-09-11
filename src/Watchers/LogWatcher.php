@@ -3,10 +3,10 @@
 namespace Laravel\Telescope\Watchers;
 
 use Exception;
-use Illuminate\Support\Arr;
-use Laravel\Telescope\Telescope;
-use Laravel\Telescope\IncomingEntry;
 use Illuminate\Log\Events\MessageLogged;
+use Illuminate\Support\Arr;
+use Laravel\Telescope\IncomingEntry;
+use Laravel\Telescope\Telescope;
 
 class LogWatcher extends Watcher
 {

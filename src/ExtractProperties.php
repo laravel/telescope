@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope;
 
-use ReflectionClass;
 use Illuminate\Database\Eloquent\Model;
+use ReflectionClass;
 
 class ExtractProperties
 {

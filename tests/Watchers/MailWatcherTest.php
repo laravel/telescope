@@ -2,10 +2,10 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Laravel\Telescope\EntryType;
 use Illuminate\Support\Facades\Mail;
-use Laravel\Telescope\Watchers\MailWatcher;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
+use Laravel\Telescope\Watchers\MailWatcher;
 
 class MailWatcherTest extends FeatureTestCase
 {

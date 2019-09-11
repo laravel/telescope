@@ -2,13 +2,13 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Illuminate\Support\Str;
-use Laravel\Telescope\Telescope;
-use Laravel\Telescope\IncomingEntry;
 use Illuminate\Cache\Events\CacheHit;
-use Illuminate\Cache\Events\KeyWritten;
 use Illuminate\Cache\Events\CacheMissed;
 use Illuminate\Cache\Events\KeyForgotten;
+use Illuminate\Cache\Events\KeyWritten;
+use Illuminate\Support\Str;
+use Laravel\Telescope\IncomingEntry;
+use Laravel\Telescope\Telescope;
 
 class CacheWatcher extends Watcher
 {

@@ -4,11 +4,11 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\EntryUpdate;
 use Laravel\Telescope\Storage\EntryQueryOptions;
 use Laravel\Telescope\Watchers\ExceptionWatcher;
-use Laravel\Telescope\Contracts\EntriesRepository;
 
 class ExceptionController extends EntryController
 {

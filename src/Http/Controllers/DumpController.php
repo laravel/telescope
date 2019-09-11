@@ -2,15 +2,15 @@
 
 namespace Laravel\Telescope\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Cache\ArrayStore;
-use Laravel\Telescope\EntryType;
-use Laravel\Telescope\Watchers\DumpWatcher;
-use Laravel\Telescope\Storage\EntryQueryOptions;
-use Symfony\Component\VarDumper\Cloner\VarCloner;
-use Laravel\Telescope\Contracts\EntriesRepository;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
+use Illuminate\Http\Request;
+use Laravel\Telescope\Contracts\EntriesRepository;
+use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Storage\EntryQueryOptions;
+use Laravel\Telescope\Watchers\DumpWatcher;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
 class DumpController extends EntryController
 {

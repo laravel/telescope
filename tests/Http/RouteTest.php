@@ -2,13 +2,13 @@
 
 namespace Laravel\Telescope\Tests\Http;
 
+use Illuminate\Foundation\Testing\TestResponse;
 use Laravel\Telescope\EntryType;
-use PHPUnit\Framework\Assert as PHPUnit;
+use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Tests\FeatureTestCase;
-use Illuminate\Foundation\Testing\TestResponse;
-use Laravel\Telescope\Http\Middleware\Authorize;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
+use PHPUnit\Framework\Assert as PHPUnit;
 
 class RouteTest extends FeatureTestCase
 {
