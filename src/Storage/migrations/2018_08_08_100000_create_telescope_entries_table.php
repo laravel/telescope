@@ -9,7 +9,7 @@ class CreateTelescopeEntriesTable extends Migration
     /**
      * The database schema.
      *
-     * @var \lluminate\Support\Facades\Schema
+     * @var \Illuminate\Database\Schema\Builder
      */
     protected $schema;
 
