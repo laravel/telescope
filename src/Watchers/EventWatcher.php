@@ -132,8 +132,8 @@ class EventWatcher extends Watcher
      */
     protected function shouldIgnore($eventName)
     {
-        return Telescope::$ignoreFrameworkEvents &&
-               $this->eventIsFiredByTheFramework($eventName);
+        return $this->eventIsIgnored($eventName) ||
+            (Telescope::$ignoreFrameworkEvents && $this->eventIsFiredByTheFramework($eventName));
     }
 
     /**
@@ -148,5 +148,16 @@ class EventWatcher extends Watcher
             ['Illuminate\*', 'eloquent*', 'bootstrapped*', 'bootstrapping*', 'creating*', 'composing*'],
             $eventName
         );
+    }
+
+    /**
+     * Determine if the event was fired internally by Laravel.
+     *
+     * @param  string  $eventName
+     * @return bool
+     */
+    protected function eventIsIgnored($eventName)
+    {
+        return Str::is($this->options['ignore'] ?? [], $eventName);
     }
 }
