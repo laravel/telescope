@@ -137,7 +137,7 @@ class EventWatcher extends Watcher
     }
 
     /**
-     * Determine if the event was fired internally by Laravel.
+     * Determine if the event is ignored manually.
      *
      * @param  string  $eventName
      * @return bool
