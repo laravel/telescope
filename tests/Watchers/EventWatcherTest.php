@@ -18,8 +18,8 @@ class EventWatcherTest extends FeatureTestCase
                 'enabled' => true,
                 'ignore' => [
                     IgnoredEvent::class,
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
