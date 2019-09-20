@@ -70,6 +70,7 @@ class Telescope
      */
     public static $hiddenRequestHeaders = [
         'authorization',
+        'php-auth-pw',
     ];
 
     /**
