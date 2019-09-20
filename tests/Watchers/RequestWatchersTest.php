@@ -91,6 +91,23 @@ class RequestWatchersTest extends FeatureTestCase
         $this->assertSame('********', $entry->content['headers']['authorization']);
     }
 
+    public function test_request_watcher_hides_php_auth_pw()
+    {
+        Route::post('/dashboard', function () {
+            return response('success');
+        });
+
+        $this->post('/dashboard', [], [
+            'php-auth-pw' => 'secret',
+        ]);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::REQUEST, $entry->type);
+        $this->assertSame('POST', $entry->content['method']);
+        $this->assertSame('********', $entry->content['headers']['php-auth-pw']);
+    }
+
     public function test_request_watcher_handles_file_uploads()
     {
         $image = UploadedFile::fake()->image('avatar.jpg');
