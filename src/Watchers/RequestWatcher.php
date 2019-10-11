@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Laravel\Telescope\FormatModel;
 use Laravel\Telescope\IncomingEntry;
@@ -145,12 +146,18 @@ class RequestWatcher extends Watcher
     {
         $content = $response->getContent();
 
-        if (is_string($content) &&
-            is_array(json_decode($content, true)) &&
-            json_last_error() === JSON_ERROR_NONE) {
-            return $this->contentWithinLimits($content)
-                    ? $this->hideParameters(json_decode($content, true), Telescope::$hiddenResponseParameters)
-                    : 'Purged By Telescope';
+        if (is_string($content)) {
+            if (is_array(json_decode($content, true)) &&
+                json_last_error() === JSON_ERROR_NONE) {
+                return $this->contentWithinLimits($content)
+                        ? $this->hideParameters(json_decode($content, true), Telescope::$hiddenResponseParameters)
+                        : 'Purged By Telescope';
+            }
+
+            // return plain text responses
+            if (Str::startsWith(strtolower($response->headers->get('Content-Type')), 'text/plain')) {
+                return $this->contentWithinLimits($content) ? $content : 'Purged By Telescope';
+            }
         }
 
         if ($response instanceof RedirectResponse) {
