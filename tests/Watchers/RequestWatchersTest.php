@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
@@ -138,5 +139,22 @@ class RequestWatchersTest extends FeatureTestCase
         $this->assertSame($image->getClientOriginalName(), $uploadedImage['name']);
 
         $this->assertSame('0', $uploadedImage['size']);
+    }
+
+    public function test_request_watcher_plain_text_response()
+    {
+        Route::get('/fake-plain-text', function () {
+            return Response::make(
+                'plain telescope response', 200, ['Content-Type' => 'text/plain']
+            );
+        });
+
+        $this->get('/fake-plain-text')->assertSuccessful();
+
+        $entry = $this->loadTelescopeEntries()->first();
+        $this->assertSame(EntryType::REQUEST, $entry->type);
+        $this->assertSame('GET', $entry->content['method']);
+        $this->assertSame(200, $entry->content['response_status']);
+        $this->assertSame('plain telescope response', $entry->content['response']);
     }
 }
