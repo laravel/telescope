@@ -154,7 +154,6 @@ class RequestWatcher extends Watcher
                         : 'Purged By Telescope';
             }
 
-            // return plain text responses
             if (Str::startsWith(strtolower($response->headers->get('Content-Type')), 'text/plain')) {
                 return $this->contentWithinLimits($content) ? $content : 'Purged By Telescope';
             }
