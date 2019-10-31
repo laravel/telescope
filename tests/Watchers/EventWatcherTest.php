@@ -14,7 +14,12 @@ class EventWatcherTest extends FeatureTestCase
         parent::getEnvironmentSetUp($app);
 
         $app->get('config')->set('telescope.watchers', [
-            EventWatcher::class => true,
+            EventWatcher::class => [
+                'enabled' => true,
+                'ignore' => [
+                    IgnoredEvent::class,
+                ],
+            ],
         ]);
     }
 
@@ -49,6 +54,15 @@ class EventWatcherTest extends FeatureTestCase
         $this->assertContains('Laravel', $entry->content['payload']['data']);
         $this->assertContains('PHP', $entry->content['payload']['data']);
     }
+
+    public function test_event_watcher_ignore_event()
+    {
+        event(new IgnoredEvent());
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertNull($entry);
+    }
 }
 
 class DummyEvent
@@ -60,6 +74,14 @@ class DummyEvent
         $this->data = $payload;
     }
 
+    public function handle()
+    {
+        //
+    }
+}
+
+class IgnoredEvent
+{
     public function handle()
     {
         //

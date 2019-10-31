@@ -254,7 +254,7 @@
                 <thead>
                 <tr>
                     <th>Query<br/><small>{{ queries.length }} queries, {{ queriesSummary.duplicated }} of which are duplicated.</small></th>
-                    <th>Duration<br/><small>{{ queriesSummary.duplicated }} ms</small></th>
+                    <th>Duration<br/><small>{{ queriesSummary.time }} ms</small></th>
                     <th></th>
                 </tr>
                 </thead>
