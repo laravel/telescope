@@ -2,7 +2,6 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Closure;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Str;
@@ -14,6 +13,8 @@ use ReflectionFunction;
 
 class EventWatcher extends Watcher
 {
+    use FormatsClosure;
+
     /**
      * Register the watcher.
      *
@@ -103,25 +104,6 @@ class EventWatcher extends Watcher
                     'queued' => $queued ?? false,
                 ];
             })->values()->toArray();
-    }
-
-    /**
-     * Format a closure-based listener.
-     *
-     * @param  \Closure  $listener
-     * @return string
-     *
-     * @throws \ReflectionException
-     */
-    protected function formatClosureListener(Closure $listener)
-    {
-        $listener = new ReflectionFunction($listener);
-
-        return sprintf('Closure at %s[%s:%s]',
-            $listener->getFileName(),
-            $listener->getStartLine(),
-            $listener->getEndLine()
-        );
     }
 
     /**

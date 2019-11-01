@@ -7,6 +7,11 @@ export default {
             if (type === 'missed') return 'danger';
         },
 
+        composerTypeClass(type) {
+            if (type === 'composer') return 'info';
+            if (type === 'creator') return 'success';
+        },
+
         gateResultClass(result) {
             if (result === 'allowed') return 'success';
             if (result === 'denied') return 'danger';

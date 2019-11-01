@@ -12,7 +12,7 @@
     <index-screen title="Views" resource="views">
         <tr slot="table-header">
             <th scope="col">Name</th>
-            <th scope="col">Path</th>
+            <th scope="col">Composers</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
@@ -20,11 +20,14 @@
 
         <template slot="row" slot-scope="slotProps">
 
-            <td class="table-fit">
-                {{slotProps.entry.content.name}}
+            <td>
+                {{slotProps.entry.content.name}} <br/>
+                <small class="text-muted">{{truncate(slotProps.entry.content.path, 100)}}</small>
             </td>
 
-            <td>{{truncate(slotProps.entry.content.path, 80)}}</td>
+            <td class="table-fit">
+                {{slotProps.entry.content.composers.length}}
+            </td>
 
             <td class="table-fit" :data-timeago="slotProps.entry.created_at">{{timeAgo(slotProps.entry.created_at)}}</td>
 

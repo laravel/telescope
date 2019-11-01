@@ -2,13 +2,17 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
+use ReflectionFunction;
 
 class ViewWatcher extends Watcher
 {
+    use FormatsClosure;
+
     /**
      * Register the watcher.
      *
@@ -40,6 +44,7 @@ class ViewWatcher extends Watcher
             'name' => $view->getName(),
             'path' => $this->extractPath($view),
             'data' => $this->extractKeysFromData($view),
+            'composers' => $this->formatComposers($view),
         ])));
     }
 
@@ -71,5 +76,86 @@ class ViewWatcher extends Watcher
         return collect($view->getData())->filter(function ($value, $key) {
             return ! in_array($key, ['app', '__env', 'obLevel', 'errors']);
         })->keys();
+    }
+
+    /**
+     * Format list of view composers and view creators.
+     *
+     * @param  \Illuminate\View\View  $view
+     * @return array
+     */
+    protected function formatComposers($view)
+    {
+        $name = $view->getName();
+
+        return collect([
+            'composing: '.$name,
+            'creating: '.$name,
+        ])->map(function ($event) {
+            return $this->getComposersForEvent($event)
+                ->map(function ($composer) use ($event) {
+                    return [
+                        'name' => $composer,
+                        'type' => Str::startsWith($event, 'creating:') ? 'creator' : 'composer',
+                    ];
+                });
+        })->collapse()->values()->toArray();
+    }
+
+    /**
+     * Get all view composers for the given event.
+     *
+     * @param  string $eventName
+     * @return \Illuminate\Support\Collection
+     */
+    protected function getComposersForEvent($eventName)
+    {
+        return collect(app('events')->getListeners($eventName))
+            ->map(function ($listener) {
+                return (new ReflectionFunction($listener))->getStaticVariables();
+            })->reject(function ($variables) {
+                if (is_array($variables['listener'])) {
+                    return Str::contains(get_class($variables['listener'][0]), 'Laravel\\Telescope');
+                }
+
+                return false;
+            })->map(function ($variables) {
+                $closure = new ReflectionFunction($listener = $variables['listener']);
+
+                if ($this->isWildcardViewComposer($variables, $closure)) {
+                    $closure = new ReflectionFunction($listener = $closure->getStaticVariables()['callback']);
+                }
+
+                if ($this->isViewComposerClosure($closure)) {
+                    return $closure->getStaticVariables()['class'].'@'.$closure->getStaticVariables()['method'];
+                }
+
+                return $this->formatClosureListener($listener);
+            })->filter();
+    }
+
+    /**
+     * Check if we're dealing with a wildcard view composer.
+     *
+     * @param  array  $variables
+     * @param  \ReflectionFunction  $closure
+     * @return bool
+     */
+    protected function isWildcardViewComposer(array $variables, ReflectionFunction $closure): bool
+    {
+        return $variables['wildcard'] && array_key_exists('callback', $closure->getStaticVariables());
+    }
+
+    /**
+     * Check if the given closure is a view composer class. A wildcard view composer
+     * is wrapped in an extra closure.
+     *
+     * @param  \ReflectionFunction  $closure
+     * @return bool
+     */
+    protected function isViewComposerClosure(ReflectionFunction $closure): bool
+    {
+        return $closure->getClosureScopeClass()->implementsInterface(Factory::class) &&
+               array_key_exists('class', $closure->getStaticVariables());
     }
 }
