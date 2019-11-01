@@ -57,7 +57,6 @@ class ViewWatcherTest extends FeatureTestCase
     }
 }
 
-
 class ViewComposer
 {
     public function compose(\Illuminate\View\View $view)
@@ -65,4 +64,3 @@ class ViewComposer
         $view->with('bar', 'baz');
     }
 }
-
