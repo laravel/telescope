@@ -16,7 +16,7 @@ class HomeController extends Controller
     {
         return view('telescope::layout', [
             'cssFile' => Telescope::$useDarkTheme ? 'app-dark.css' : 'app.css',
-            'containerClass' => Telescope::$useFluidLayout ? 'container-fluid' : 'container',
+            'containerCssClass' => Telescope::$useFluidLayout ? 'container-fluid' : 'container',
             'telescopeScriptVariables' => Telescope::scriptVariables(),
             'assetsAreCurrent' => Telescope::assetsAreCurrent(),
         ]);
