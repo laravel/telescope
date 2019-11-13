@@ -105,6 +105,13 @@ class Telescope
     public static $useDarkTheme = false;
 
     /**
+     * Indicates if Telescope should use a fluid layout.
+     *
+     * @var bool
+     */
+    public static $useFluidLayout = false;
+
+    /**
      * Indicates if Telescope should record entries.
      *
      * @var bool
@@ -678,6 +685,18 @@ class Telescope
     public static function night()
     {
         static::$useDarkTheme = true;
+
+        return new static;
+    }
+
+    /**
+     * Specifies that Telescope should use a fluid layout.
+     *
+     * @return static
+     */
+    public static function fluid()
+    {
+        static::$useFluidLayout = true;
 
         return new static;
     }
