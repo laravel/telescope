@@ -552,18 +552,21 @@
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Path</th>
+                    <th>Composers</th>
                     <th></th>
                 </tr>
                 </thead>
 
                 <tbody>
                 <tr v-for="entry in views">
-                    <td class="table-fit">
-                        {{entry.content.name}}
+                    <td>
+                        {{entry.content.name}} <br/>
+                        <small class="text-muted">{{truncate(entry.content.path, 100)}}</small>
                     </td>
 
-                    <td :title="entry.content.path">{{truncate(entry.content.path, 100)}}</td>
+                    <td class="table-fit">
+                        {{entry.content.composers ? entry.content.composers.length : 0}}
+                    </td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'view-preview', params:{id: entry.id}}" class="control-action">

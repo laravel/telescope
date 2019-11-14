@@ -12,6 +12,7 @@
             return {
                 entry: null,
                 batch: [],
+                currentTab: 'data'
             };
         },
     }
@@ -37,10 +38,40 @@
 
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5" v-if="slotProps.entry.content.data">
-                <div class="card-header"><h5>Data</h5></div>
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Data</a>
+                    </li>
+                    <li class="nav-item" v-if="slotProps.entry.content.composers">
+                        <a class="nav-link" :class="{active: currentTab=='composers'}" href="#" v-on:click.prevent="currentTab='composers'">Composers</a>
+                    </li>
+                </ul>
+                <div>
+                    <!-- View Payload -->
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='data'">
+                        <vue-json-pretty :data="slotProps.entry.content.data"></vue-json-pretty>
+                    </div>
 
-                <div class="code-bg p-4 mb-0 text-white">
-                    <vue-json-pretty :data="slotProps.entry.content.data"></vue-json-pretty>
+                    <!-- View Composers -->
+                    <table class="table table-hover table-sm mb-0" v-show="currentTab=='composers'">
+                        <thead>
+                        <tr>
+                            <th>Composer</th>
+                            <th>Type</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr v-for="composer in slotProps.entry.content.composers">
+                            <td :title="composer.name">{{composer.name}}</td>
+                            <td class="table-fit">
+                                <span class="badge font-weight-light" :class="'badge-'+composerTypeClass(composer.type)">
+                                    {{composer.type}}
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
