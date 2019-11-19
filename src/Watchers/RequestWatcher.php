@@ -170,7 +170,7 @@ class RequestWatcher extends Watcher
             ];
         }
 
-        return 'HTML Response';
+        return is_string($content) ? substr($content, 0, 100) : 'HTML Response';
     }
 
     /**
