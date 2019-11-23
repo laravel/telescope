@@ -24,16 +24,26 @@ class NotificationWatcherTest extends FeatureTestCase
 
     public function test_notification_watcher_registers_entry()
     {
-        Notification::route('mail', 'telescope@laravel.com')
-                    ->notify(new BoomerangNotification);
+        $this->performNotificationAssertions('mail', 'telescope@laravel.com');
+    }
+
+    public function test_notification_watcher_registers_array_routes()
+    {
+        $this->performNotificationAssertions('mail', ['telescope@laravel.com','nestedroute@laravel.com']);
+    }
+
+    private function performNotificationAssertions($channel, $route)
+    {
+        Notification::route($channel, $route)
+            ->notify(new BoomerangNotification);
 
         $entry = $this->loadTelescopeEntries()->first();
 
         $this->assertSame(EntryType::NOTIFICATION, $entry->type);
         $this->assertSame(BoomerangNotification::class, $entry->content['notification']);
         $this->assertSame(false, $entry->content['queued']);
-        $this->assertStringContainsString('telescope@laravel.com', $entry->content['notifiable']);
-        $this->assertSame('mail', $entry->content['channel']);
+        $this->assertStringContainsString(is_array($route) ? implode(',', $route) : $route, $entry->content['notifiable']);
+        $this->assertSame($channel, $entry->content['channel']);
         $this->assertNull($entry->content['response']);
     }
 }
