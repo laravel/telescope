@@ -697,7 +697,7 @@ class Telescope
     }
 
     /**
-     * Configure Telescope to not register it's migrations.
+     * Configure Telescope to not register its migrations.
      *
      * @return static
      */
