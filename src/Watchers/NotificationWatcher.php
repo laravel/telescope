@@ -69,8 +69,8 @@ class NotificationWatcher extends Watcher
         if ($notifiable instanceof Model) {
             return FormatModel::given($notifiable);
         } elseif ($notifiable instanceof AnonymousNotifiable) {
-            $routes = array_map(function ($route){
-                return is_array( $route ) ? implode(',', $route) : $route;
+            $routes = array_map(function ($route) {
+                return is_array($route) ? implode(',', $route) : $route;
             }, $notifiable->routes);
 
             return 'Anonymous:'.implode(',', $routes);

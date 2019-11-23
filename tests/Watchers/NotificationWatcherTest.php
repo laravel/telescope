@@ -29,7 +29,7 @@ class NotificationWatcherTest extends FeatureTestCase
 
     public function test_notification_watcher_registers_array_routes()
     {
-        $this->performNotificationAssertions('mail', ['telescope@laravel.com','nestedroute@laravel.com']);
+        $this->performNotificationAssertions('mail', ['telescope@laravel.com', 'nestedroute@laravel.com']);
     }
 
     private function performNotificationAssertions($channel, $route)
