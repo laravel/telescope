@@ -711,8 +711,9 @@ class Telescope
     /**
      * Check if assets are up-to-date.
      *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @return bool
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public static function assetsAreCurrent()
     {
