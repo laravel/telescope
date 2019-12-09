@@ -45,7 +45,8 @@ class QueryWatcher extends Watcher
             'slow' => isset($this->options['slow']) && $time >= $this->options['slow'],
             'file' => $caller['file'],
             'line' => $caller['line'],
-        ])->tags($this->tags($event))->withFamilyHash($this->familyHash($event)));
+            'hash' => $this->familyHash($event),
+        ])->tags($this->tags($event)));
     }
 
     /**
