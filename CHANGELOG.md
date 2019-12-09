@@ -1,6 +1,6 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.1...2.0)
+## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.1...master)
 
 
 ## [v2.1.1 (2019-11-23)](https://github.com/laravel/telescope/compare/v2.1...v2.1.1)
