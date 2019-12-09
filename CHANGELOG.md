@@ -1,5 +1,58 @@
-# Changelog Release Notes
-## [Unreleased](https://github.com/laravel/telescope/compare/2.0...v2.0.5)
+# Release Notes
+
+## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.1...2.0)
+
+
+## [v2.1.1 (2019-11-23)](https://github.com/laravel/telescope/compare/v2.1...v2.1.1)
+
+### Added
+- Add information about view composers ([#766](https://github.com/laravel/telescope/pull/766))
+- Add formatted output support for plain text responses ([#749](https://github.com/laravel/telescope/pull/749))
+- Added support for event ignoring ([#738](https://github.com/laravel/telescope/pull/738))
+- Show warning when manifest is outdated ([#729](https://github.com/laravel/telescope/pull/729))
+
+### Changed
+- Add the Nova API to ignore paths array ([#752](https://github.com/laravel/telescope/pull/752))
+- Use getConnection method in Migrations ([#736](https://github.com/laravel/telescope/pull/736))
+
+### Fixed
+- Properly Implode Nested(Array) Notification Routes To Fix Array To String Conversion Exception ([#778](https://github.com/laravel/telescope/pull/778))
+- Don't use familyHash for queries ([#773](https://github.com/laravel/telescope/pull/773))
+- Hide php-auth-pw server variable by default ([#740](https://github.com/laravel/telescope/pull/740))
+- Use time instead of duplicated to show global queries duration ([#737](https://github.com/laravel/telescope/pull/737))
+- Check for null values in query bindings ([#727](https://github.com/laravel/telescope/pull/727))
+- Prevent resuming recording when processing sync job ([#720](https://github.com/laravel/telescope/pull/720))
+
+
+## [v2.1 (2019-09-03)](https://github.com/laravel/telescope/compare/v2.0.6...v2.1)
+
+### Added
+- Jump to related entry by hash ([#708](https://github.com/laravel/telescope/pull/708))
+- Format SQL in watcher ([#714](https://github.com/laravel/telescope/pull/714))
+- Mark exceptions as resolved ([#710](https://github.com/laravel/telescope/pull/710))
+- Full timestamp on hover ([#668](https://github.com/laravel/telescope/pull/668))
+- Add memory to request watcher ([#680](https://github.com/laravel/telescope/pull/680))
+- Add view collector ([#679](https://github.com/laravel/telescope/pull/679))
+
+### Changed
+- Adding meta for disavowing robots ([#703](https://github.com/laravel/telescope/pull/703))
+- Chunk storage of exceptions and tags ([#670](https://github.com/laravel/telescope/pull/670))
+- Simplify dump error screen ([#688](https://github.com/laravel/telescope/pull/688))
+
+### Fixed
+- Log failed requests ([#701](https://github.com/laravel/telescope/pull/701))
+- Fix view tab selection order ([#707](https://github.com/laravel/telescope/pull/707))
+- Only load sfDump header once ([#714](https://github.com/laravel/telescope/pull/714))
+- Fix events with ShouldBroadcastNow ([#623](https://github.com/laravel/telescope/pull/623))
+- Support duration calculation without constant `LARAVEL_START` ([#664](https://github.com/laravel/telescope/pull/664))
+- Optimize dump ([#683](https://github.com/laravel/telescope/pull/683))
+
+
+## [v2.0.6 (2019-07-12)](https://github.com/laravel/telescope/compare/v2.0.5...v2.0.6)
+
+### Fixed
+- Enable chunking on delete to prevent errors on large resultsets ([#658](https://github.com/laravel/telescope/pull/658), [32c3709](https://github.com/laravel/telescope/commit/32c37098f0f2843eb95f35f840adae3642e31e92))
+
 
 ## [v2.0.5 (2019-06-05)](https://github.com/laravel/telescope/compare/v2.0.4...v2.0.5)
 
@@ -11,10 +64,12 @@
 - PHPUnit 8 Warnings ([#610](https://github.com/laravel/telescope/pull/610))
 - Empty path config in frontend ([#637](https://github.com/laravel/telescope/pull/637))
 
+
 ## [v2.0.4 (2019-03-28)](https://github.com/laravel/telescope/compare/v2.0.3...v2.0.4)
 
 ### Fixed
 - use `property_exists` ([eb3f6f8](https://github.com/laravel/telescope/commit/eb3f6f8337050cc31fe1a1164240fe205e33b167))
+
 
 ## [v2.0.3 (2019-03-27)](https://github.com/laravel/telescope/compare/v2.0.2...v2.0.3)
 
@@ -24,11 +79,20 @@
 ### Fixed
 - Newline Config ([#595](https://github.com/laravel/telescope/pull/595))
 
+
 ## [v2.0.2 (2019-03-06)](https://github.com/laravel/telescope/compare/v2.0.1...v2.0.2)
+
+### Fixes
 - Support apps that run carbon 1.0 ([2b976e5](https://github.com/laravel/telescope/commit/2b976e5d6f5273d8ac86e2db9487386dd27a19ef))
 
+
 ## [v2.0.1 (2019-03-05)](https://github.com/laravel/telescope/compare/v2.0...v2.0.1)
+
+### Added
 - Added support for `Date::use(CarbonImmutable::class);` ([d7a3ca4](https://github.com/laravel/telescope/commit/d7a3ca4338b1a1527b8d19a5d62015a468f8ca56))
 
+
 ## [v2.0.0 (2019-02-27)](https://github.com/laravel/telescope/compare/v1.1...v2.0)
+
+### Changed
 - Update Cache to use seconds instead of minutes ([#562](https://github.com/laravel/telescope/pull/562))
