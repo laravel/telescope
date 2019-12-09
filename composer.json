@@ -21,6 +21,7 @@
         "symfony/var-dumper": "^4.1"
     },
     "require-dev": {
+        "ext-gd": "*",
         "orchestra/testbench": "^3.8|^4.0|^5.0"
     },
     "autoload": {
