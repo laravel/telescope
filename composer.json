@@ -18,9 +18,10 @@
         "ext-json": "*",
         "laravel/framework": "^6.0|^7.0",
         "moontoast/math": "^1.1",
-        "symfony/var-dumper": "^4.3"
+        "symfony/var-dumper": "^4.3|^5.0"
     },
     "require-dev": {
+        "ext-gd": "*",
         "orchestra/testbench": "^4.0|^5.0"
     },
     "autoload": {
