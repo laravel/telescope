@@ -78,6 +78,5 @@ class GenericListener
 
     public function handle()
     {
-
     }
 }
