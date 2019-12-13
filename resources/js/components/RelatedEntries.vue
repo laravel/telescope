@@ -137,7 +137,7 @@
 
             queriesSummary() {
                 return {
-                    time: _.reduce(this.queries, (time, q) => { return time + parseFloat(q.content.time) }, 0.00),
+                    time: _.reduce(this.queries, (time, q) => { return time + parseFloat(q.content.time) }, 0.00).toFixed(2),
                     duplicated: this.queries.length - _.size(_.groupBy(this.queries, (q) => { return q.content.hash })),
                 };
             },
@@ -254,7 +254,7 @@
                 <thead>
                 <tr>
                     <th>Query<br/><small>{{ queries.length }} queries, {{ queriesSummary.duplicated }} of which are duplicated.</small></th>
-                    <th>Duration<br/><small>{{ queriesSummary.time }} ms</small></th>
+                    <th>Duration<br/><small>{{ queriesSummary.time }}ms</small></th>
                     <th></th>
                 </tr>
                 </thead>

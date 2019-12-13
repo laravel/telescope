@@ -50,8 +50,7 @@ export default {
          * Show the time in local time.
          */
         localTime(time) {
-            return moment(time + ' Z')
-                .utc()
+            return moment(time)
                 .local()
                 .format('MMMM Do YYYY, h:mm:ss A');
         },

@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Closure;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -118,7 +119,7 @@ class ViewWatcher extends Watcher
                     return Str::contains(get_class($variables['listener'][0]), 'Laravel\\Telescope');
                 }
 
-                return false;
+                return ! $variables['listener'] instanceof Closure;
             })->map(function ($variables) {
                 $closure = new ReflectionFunction($listener = $variables['listener']);
 
