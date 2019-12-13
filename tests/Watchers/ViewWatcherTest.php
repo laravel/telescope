@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
@@ -13,6 +14,8 @@ class ViewWatcherTest extends FeatureTestCase
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
+
+        Event::subscribe(GenericListener::class);
 
         View::addNamespace('tests', $this->viewsDirectory);
 
@@ -31,6 +34,7 @@ class ViewWatcherTest extends FeatureTestCase
 
         $entries = $this->loadTelescopeEntries();
 
+        $this->assertCount(3, $entries);
         $this->assertSame(EntryType::VIEW, $entries[0]->type);
         $this->assertSame('tests::welcome', $entries[0]->content['name']);
         $this->assertSame($this->viewsDirectory.'/welcome.blade.php', $entries[0]->content['path']);
@@ -62,5 +66,18 @@ class ViewComposer
     public function compose(\Illuminate\View\View $view)
     {
         $view->with('bar', 'baz');
+    }
+}
+
+class GenericListener
+{
+    public function subscribe($events): void
+    {
+        $events->listen('*', static::class.'@handle');
+    }
+
+    public function handle()
+    {
+
     }
 }
