@@ -1,6 +1,14 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.1...2.0)
+## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.2...2.0)
+
+
+## [v2.1.2 (2019-12-13)](https://github.com/laravel/telescope/compare/v2.1.1...v2.1.2)
+
+### Fixed
+- Enable redis events by default if the watcher is enabled ([#789](https://github.com/laravel/telescope/pull/789))
+- Fix Round queries duration to 2 decimal places ([#791](https://github.com/laravel/telescope/pull/791))
+- Fix ignore generic listeners as view composer ([#794](https://github.com/laravel/telescope/pull/794))
 
 
 ## [v2.1.1 (2019-11-23)](https://github.com/laravel/telescope/compare/v2.1...v2.1.1)
