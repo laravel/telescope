@@ -26,7 +26,7 @@
             </td>
 
             <td class="table-fit">
-                 {{slotProps.entry.content.composers ? slotProps.entry.content.composers.length : 0}}
+                {{slotProps.entry.content.composers ? slotProps.entry.content.composers.length : 0}}
             </td>
 
             <td class="table-fit" :data-timeago="slotProps.entry.created_at">{{timeAgo(slotProps.entry.created_at)}}</td>
