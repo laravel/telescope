@@ -183,7 +183,6 @@ class Telescope
                 'vendor/telescope*',
                 'horizon*',
                 'vendor/horizon*',
-                'nova-api*',
             ], config('telescope.ignore_paths', []))
         );
     }
