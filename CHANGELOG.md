@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.2...2.0)
+## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.3...2.0)
+
+
+## [v2.1.3 (2019-12-19)](https://github.com/laravel/telescope/compare/v2.1.2...v2.1.3)
+
+### Fixed
+- Check if composers key exists ([#797](https://github.com/laravel/telescope/pull/797))
 
 
 ## [v2.1.2 (2019-12-13)](https://github.com/laravel/telescope/compare/v2.1.1...v2.1.2)
