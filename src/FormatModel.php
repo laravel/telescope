@@ -2,7 +2,6 @@
 
 namespace Laravel\Telescope;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
 class FormatModel

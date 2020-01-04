@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
+use RuntimeException;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Throwable;
 
@@ -713,14 +714,14 @@ class Telescope
      *
      * @return bool
      *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws \RuntimeException
      */
     public static function assetsAreCurrent()
     {
         $publishedPath = public_path('vendor/telescope/mix-manifest.json');
 
         if (! File::exists($publishedPath)) {
-            throw new \RuntimeException('The Telescope assets are not published. Please run: php artisan telescope:publish');
+            throw new RuntimeException('The Telescope assets are not published. Please run: php artisan telescope:publish');
         }
 
         return File::get($publishedPath) === File::get(__DIR__.'/../public/mix-manifest.json');
