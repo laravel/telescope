@@ -256,7 +256,7 @@ class Telescope
         );
 
         try {
-            if (Auth::hasUser()) {
+            if (Auth::hasResolvedGuards() && Auth::hasUser()) {
                 $entry->user(Auth::user());
             }
         } catch (Throwable $e) {
