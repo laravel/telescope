@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.3...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.4...master)
+
+
+## [v2.1.4 (2020-01-21)](https://github.com/laravel/telescope/compare/v2.1.3...v2.1.4)
+
+### Fixed
+- Avoiding to create guard ([#810](https://github.com/laravel/telescope/pull/810))
 
 
 ## [v2.1.3 (2019-12-19)](https://github.com/laravel/telescope/compare/v2.1.2...v2.1.3)
