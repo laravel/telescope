@@ -35,7 +35,6 @@ class ExceptionWatcher extends Watcher
             return;
         }
 
-        /** @var \Throwable $exception */
         $exception = $event->context['exception'];
 
         $trace = collect($exception->getTrace())->map(function ($item) {
