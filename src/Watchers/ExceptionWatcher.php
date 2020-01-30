@@ -38,7 +38,7 @@ class ExceptionWatcher extends Watcher
         /** @var \Throwable $exception */
         $exception = $event->context['exception'];
 
-        $trace = collect($exception->getTrace())->map(function($item) {
+        $trace = collect($exception->getTrace())->map(function ($item) {
             return Arr::only($item, ['file', 'line']);
         })->toArray();
 
