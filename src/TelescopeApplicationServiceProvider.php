@@ -8,6 +8,13 @@ use Illuminate\Support\ServiceProvider;
 class TelescopeApplicationServiceProvider extends ServiceProvider
 {
     /**
+     * The application instance.
+     *
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
+
+    /**
      * Bootstrap any application services.
      *
      * @return void
