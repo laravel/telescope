@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.4...2.0)
+## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.5...2.0)
+
+
+## [v2.1.5 (2020-02-04)](https://github.com/laravel/telescope/compare/v2.1.4...v2.1.5)
+
+### Fixed
+- Only log file/line for exception trace ([#817](https://github.com/laravel/telescope/pull/817))
 
 
 ## [v2.1.4 (2020-01-21)](https://github.com/laravel/telescope/compare/v2.1.3...v2.1.4)
