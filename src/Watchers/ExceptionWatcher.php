@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Watchers;
 
 use Exception;
 use Illuminate\Log\Events\MessageLogged;
+use Illuminate\Support\Arr;
 use Laravel\Telescope\ExceptionContext;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingExceptionEntry;
@@ -36,13 +37,17 @@ class ExceptionWatcher extends Watcher
 
         $exception = $event->context['exception'];
 
+        $trace = collect($exception->getTrace())->map(function ($item) {
+            return Arr::only($item, ['file', 'line']);
+        })->toArray();
+
         Telescope::recordException(
             IncomingExceptionEntry::make($exception, [
                 'class' => get_class($exception),
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
                 'message' => $exception->getMessage(),
-                'trace' => $exception->getTrace(),
+                'trace' => $trace,
                 'line_preview' => ExceptionContext::get($exception),
             ])->tags($this->tags($event))
         );
