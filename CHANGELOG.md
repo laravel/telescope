@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.5...2.0)
+## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.6...2.0)
+
+
+## [v2.1.6 (2020-02-12)](https://github.com/laravel/telescope/compare/v2.1.5...v2.1.6)
+
+### Fixed
+- ReflectionException when used with debugbar ([#825](https://github.com/laravel/telescope/pull/825))
 
 
 ## [v2.1.5 (2020-02-04)](https://github.com/laravel/telescope/compare/v2.1.4...v2.1.5)
