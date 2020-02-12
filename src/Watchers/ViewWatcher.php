@@ -121,6 +121,10 @@ class ViewWatcher extends Watcher
 
                 return ! $variables['listener'] instanceof Closure;
             })->map(function ($variables) {
+                if (is_array($variables['listener'])) {
+                    return;
+                }
+
                 $closure = new ReflectionFunction($listener = $variables['listener']);
 
                 if ($this->isWildcardViewComposer($variables, $closure)) {
