@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.6...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.7...master)
+
+
+## [v2.1.7 (2020-02-18)](https://github.com/laravel/telescope/compare/v2.1.6...v2.1.7)
+
+### Fixed
+- Handle all `eval()` failures from Laravel Tinker ([#829](https://github.com/laravel/telescope/pull/829))
 
 
 ## [v2.1.6 (2020-02-12)](https://github.com/laravel/telescope/compare/v2.1.5...v2.1.6)
