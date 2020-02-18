@@ -3,6 +3,16 @@
 ## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.7...master)
 
 
+## [v3.0.0 (2020-02-18)](https://github.com/laravel/telescope/compare/v2.1.7...v3.0.0)
+
+### Changed
+- Change `Telescope::$tagUsing` to an array ([#694](https://github.com/laravel/telescope/pull/694))
+- Make ignoring Laravel Nova paths configurable ([#799](https://github.com/laravel/telescope/pull/799))
+
+### Removed
+- Dropped support for Laravel 5.8
+
+
 ## [v2.1.7 (2020-02-18)](https://github.com/laravel/telescope/compare/v2.1.6...v2.1.7)
 
 ### Fixed
