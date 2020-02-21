@@ -2,9 +2,11 @@
 
 namespace Laravel\Telescope\Tests;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Foundation\Testing\TestResponse as LegacyTestResponse;
 use Illuminate\Queue\Queue;
+use Illuminate\Testing\TestResponse;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 use Laravel\Telescope\Storage\EntryModel;
@@ -20,7 +22,11 @@ class FeatureTestCase extends TestCase
     {
         parent::setUp();
 
-        TestResponse::macro('terminateTelescope', [$this, 'terminateTelescope']);
+        if (Application::VERSION === '7.x-dev' || version_compare(Application::VERSION, '7.0', '>=')) {
+            TestResponse::macro('terminateTelescope', [$this, 'terminateTelescope']);
+        } else {
+            LegacyTestResponse::macro('terminateTelescope', [$this, 'terminateTelescope']);
+        }
 
         Telescope::flushEntries();
     }
