@@ -3,13 +3,10 @@
 namespace Laravel\Telescope\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Console\DetectsApplicationNamespace;
 use Illuminate\Support\Str;
 
 class InstallCommand extends Command
 {
-    use DetectsApplicationNamespace;
-
     /**
      * The name and signature of the console command.
      *
@@ -52,7 +49,7 @@ class InstallCommand extends Command
      */
     protected function registerTelescopeServiceProvider()
     {
-        $namespace = Str::replaceLast('\\', '', $this->getAppNamespace());
+        $namespace = Str::replaceLast('\\', '', $this->laravel->getNamespace());
 
         $appConfig = file_get_contents(config_path('app.php'));
 
