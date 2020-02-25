@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v2.1.7...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v3.1.0...3.x)
+
+
+## [v3.1.0 (2020-02-25)](https://github.com/laravel/telescope/compare/v3.0.0...v3.1.0)
+
+### Added
+- Laravel 7 support ([a26891d](https://github.com/laravel/telescope/commit/a26891d1bcf8947e25a32b1293f10584fd7d8cf3))
 
 
 ## [v3.0.0 (2020-02-18)](https://github.com/laravel/telescope/compare/v2.1.7...v3.0.0)
