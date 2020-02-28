@@ -6,6 +6,7 @@ use Closure;
 use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Log\Events\MessageLogged;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -250,9 +251,9 @@ class Telescope
             return;
         }
 
-        $entry->type($type)->tags(array_map(function ($tagCallback) use ($entry) {
+        $entry->type($type)->tags(Arr::collapse(array_map(function ($tagCallback) use ($entry) {
             return $tagCallback($entry);
-        }, static::$tagUsing));
+        }, static::$tagUsing)));
 
         try {
             if (Auth::hasResolvedGuards() && Auth::hasUser()) {
