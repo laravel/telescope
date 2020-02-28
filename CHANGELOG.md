@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v3.1.0...3.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v3.1.1...3.x)
+
+
+## [v3.1.1 (2020-02-27)](https://github.com/laravel/telescope/compare/v3.1.0...v3.1.1)
+
+### Fixed
+- Fix array to string conversion ([#839](https://github.com/laravel/telescope/pull/839))
 
 
 ## [v3.1.0 (2020-02-25)](https://github.com/laravel/telescope/compare/v3.0.0...v3.1.0)
