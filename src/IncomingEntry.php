@@ -243,6 +243,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a query.
+     *
+     * @return bool
+     */
+    public function isQuery()
+    {
+        return $this->type === EntryType::QUERY;
+    }
+
+    /**
      * Get the family look-up hash for the incoming entry.
      *
      * @return string|null
