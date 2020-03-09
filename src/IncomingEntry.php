@@ -199,7 +199,7 @@ class IncomingEntry
     public function isQuery()
     {
         return $this->type === EntryType::QUERY;
-    }    
+    }
 
     /**
      * Determine if the incoming entry is a failed job.
