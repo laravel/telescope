@@ -1,6 +1,15 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v3.1.1...3.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v3.2.0...3.x)
+
+
+## [v3.2.0 (2020-03-17)](https://github.com/laravel/telescope/compare/v3.1.1...v3.2.0)
+
+### Added
+- Added `isQuery` in `IncomingEntry` ([#842](https://github.com/laravel/telescope/pull/842))
+
+### Fixed
+- Preserving the alphabetical order of providers ([#841](https://github.com/laravel/telescope/pull/841))
 
 
 ## [v3.1.1 (2020-02-27)](https://github.com/laravel/telescope/compare/v3.1.0...v3.1.1)
