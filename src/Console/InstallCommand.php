@@ -66,8 +66,8 @@ class InstallCommand extends Command
         $eol = array_keys($lineEndingCount, max($lineEndingCount))[0];
 
         file_put_contents(config_path('app.php'), str_replace(
-            "{$namespace}\\Providers\EventServiceProvider::class,".$eol,
-            "{$namespace}\\Providers\EventServiceProvider::class,".$eol."        {$namespace}\Providers\TelescopeServiceProvider::class,".$eol,
+            "{$namespace}\\Providers\RouteServiceProvider::class,".$eol,
+            "{$namespace}\\Providers\RouteServiceProvider::class,".$eol."        {$namespace}\Providers\TelescopeServiceProvider::class,".$eol,
             $appConfig
         ));
 

@@ -192,6 +192,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a query.
+     *
+     * @return bool
+     */
+    public function isQuery()
+    {
+        return $this->type === EntryType::QUERY;
+    }
+
+    /**
      * Determine if the incoming entry is a failed job.
      *
      * @return bool
