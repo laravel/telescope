@@ -17,7 +17,7 @@
         "php": "^7.2",
         "ext-json": "*",
         "laravel/framework": "^6.0|^7.0",
-        "moontoast/math": "^1.1",
+        "ramsey/uuid": "^4.0",
         "symfony/var-dumper": "^4.4|^5.0"
     },
     "require-dev": {
