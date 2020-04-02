@@ -17,7 +17,7 @@ export default {
                 relativeTime: {
                     future: 'in %s',
                     past: '%s ago',
-                    s: number => number + 's ago',
+                    s: (number) => number + 's ago',
                     ss: '%ds ago',
                     m: '1m ago',
                     mm: '%dm ago',
@@ -68,7 +68,7 @@ export default {
         /**
          * Creates a debounced function that delays invoking a callback.
          */
-        debouncer: _.debounce(callback => callback(), 500),
+        debouncer: _.debounce((callback) => callback(), 500),
 
         /**
          * Show an error message.
