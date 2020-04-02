@@ -16,8 +16,8 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
+        "brick/math": "^0.8.14",
         "laravel/framework": "^7.0",
-        "moontoast/math": "^1.1",
         "symfony/var-dumper": "^5.0"
     },
     "require-dev": {
