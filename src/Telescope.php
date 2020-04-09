@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Testing\Fakes\EventFake;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
 use RuntimeException;
@@ -235,7 +236,7 @@ class Telescope
      */
     public static function isRecording()
     {
-        return static::$shouldRecord;
+        return static::$shouldRecord && ! app('events') instanceof EventFake;
     }
 
     /**
