@@ -5,6 +5,7 @@ namespace Laravel\Telescope\Tests\Telescope;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Laravel\Telescope\Contracts\EntriesRepository;
+use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\QueryWatcher;
@@ -37,7 +38,7 @@ class TelescopeTest extends FeatureTestCase
      */
     public function run_after_recording_callback()
     {
-        Telescope::afterRecording(function () {
+        Telescope::afterRecording(function (IncomingEntry $entry) {
             $this->count++;
         });
 
@@ -53,10 +54,10 @@ class TelescopeTest extends FeatureTestCase
      */
     public function after_recording_callback_can_store_and_flush()
     {
-        Telescope::afterRecording(function (Telescope $telescope) {
-            if (count($telescope::$entriesQueue) > 1) {
+        Telescope::afterRecording(function (IncomingEntry $entry) {
+            if (count(Telescope::$entriesQueue) > 1) {
                 $repository = $this->app->make(EntriesRepository::class);
-                $telescope->store($repository);
+                Telescope::store($repository);
             }
         });
 
