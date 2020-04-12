@@ -35,7 +35,7 @@
                 {{slotProps.entry.content.middleware.join(", ")}}
             </td>
         </tr>
-        
+
         <tr>
             <td class="table-fit font-weight-bold">Path</td>
             <td>
@@ -82,6 +82,7 @@
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
+                    <copy-to-clipboard :data="slotProps.entry.content[currentTab]"></copy-to-clipboard>
                     <vue-json-pretty :data="slotProps.entry.content.payload" v-if="currentTab=='payload'"></vue-json-pretty>
                     <vue-json-pretty :data="slotProps.entry.content.headers" v-if="currentTab=='headers'"></vue-json-pretty>
                     <vue-json-pretty :data="slotProps.entry.content.session" v-if="currentTab=='session'"></vue-json-pretty>

@@ -40,6 +40,7 @@ Vue.component('related-entries', require('./components/RelatedEntries.vue').defa
 Vue.component('index-screen', require('./components/IndexScreen.vue').default);
 Vue.component('preview-screen', require('./components/PreviewScreen.vue').default);
 Vue.component('alert', require('./components/Alert.vue').default);
+Vue.component('copy-to-clipboard', require('./components/CopyToClipboard.vue').default);
 
 Vue.mixin(Base);
 
