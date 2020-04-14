@@ -56,6 +56,10 @@ class RedisWatcher extends Watcher
         $parameters = collect($parameters)->map(function ($parameter) {
             if (is_array($parameter)) {
                 return collect($parameter)->map(function ($value, $key) {
+                    if (is_array($value)) {
+                        return json_encode($value);
+                    }
+
                     return is_int($key) ? $value : "{$key} {$value}";
                 })->implode(' ');
             }
