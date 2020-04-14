@@ -33,9 +33,7 @@ export default {
             });
 
             let secondsElapsed = moment().diff(time, 'seconds');
-            let dayStart = moment('2018-01-01')
-                .startOf('day')
-                .seconds(secondsElapsed);
+            let dayStart = moment('2018-01-01').startOf('day').seconds(secondsElapsed);
 
             if (secondsElapsed > 300) {
                 return moment(time).fromNow(true);
@@ -50,9 +48,7 @@ export default {
          * Show the time in local time.
          */
         localTime(time) {
-            return moment(time)
-                .local()
-                .format('MMMM Do YYYY, h:mm:ss A');
+            return moment(time).local().format('MMMM Do YYYY, h:mm:ss A');
         },
 
         /**
