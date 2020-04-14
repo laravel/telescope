@@ -91,6 +91,7 @@
                 </ul>
                 <div>
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='data'">
+                        <copy-to-clipboard :data="slotProps.entry.content.data"></copy-to-clipboard>
                         <vue-json-pretty :data="slotProps.entry.content.data"></vue-json-pretty>
                     </div>
                     <pre class="code-bg p-4 mb-0 text-white" v-if="slotProps.entry.content.exception" v-show="currentTab=='exception'">{{slotProps.entry.content.exception.message}}</pre>
