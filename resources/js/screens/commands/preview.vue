@@ -41,7 +41,7 @@
                     </li>
                 </ul>
                 <div>
-                    <div class="code-bg p-4 mb-0 text-white">
+                    <div class="code-bg p-4 mb-0 text-white position-relative">
                         <copy-to-clipboard :data="slotProps.entry.content[currentTab]"></copy-to-clipboard>
                         <vue-json-pretty :data="slotProps.entry.content[currentTab]"></vue-json-pretty>
                     </div>
