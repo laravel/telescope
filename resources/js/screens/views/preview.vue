@@ -48,7 +48,7 @@
                 </ul>
                 <div>
                     <!-- View Payload -->
-                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='data'">
+                    <div class="code-bg p-4 mb-0 text-white position-relative" v-show="currentTab=='data'">
                         <copy-to-clipboard :data="slotProps.entry.content.data"></copy-to-clipboard>
                         <vue-json-pretty :data="slotProps.entry.content.data"></vue-json-pretty>
                     </div>

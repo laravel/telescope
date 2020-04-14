@@ -37,7 +37,7 @@
                 </ul>
                 <div>
                     <!-- Event Payload -->
-                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='data'">
+                    <div class="code-bg p-4 mb-0 text-white position-relative" v-show="currentTab=='data'">
                         <copy-to-clipboard :data="slotProps.entry.content.payload"></copy-to-clipboard>
                         <vue-json-pretty :data="slotProps.entry.content.payload"></vue-json-pretty>
                     </div>

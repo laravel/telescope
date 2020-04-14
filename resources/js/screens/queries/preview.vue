@@ -64,7 +64,10 @@
             <div class="card mt-5">
                 <div class="card-header"><h5>Query</h5></div>
 
-                <pre class="code-bg p-4 mb-0 text-white" ref="sqlcode">{{formatSQL(slotProps.entry.content.sql, slotProps.entry.content.bindings)}}</pre>
+                <div class="position-relative">
+                    <copy-to-clipboard :data="formatSQL(slotProps.entry.content.sql, slotProps.entry.content.bindings)"></copy-to-clipboard>
+                    <pre class="code-bg p-4 mb-0 text-white" ref="sqlcode">{{formatSQL(slotProps.entry.content.sql, slotProps.entry.content.bindings)}}</pre>
+                </div>
             </div>
         </div>
     </preview-screen>

@@ -41,7 +41,7 @@
             <div class="card mt-5" v-if="slotProps.entry.content.action != 'deleted' && slotProps.entry.content.changes">
                 <div class="card-header"><h5>Changes</h5></div>
 
-                <div class="code-bg p-4 mb-0 text-white">
+                <div class="code-bg p-4 mb-0 text-white position-relative">
                     <copy-to-clipboard :data="slotProps.entry.content.changes"></copy-to-clipboard>
                     <vue-json-pretty :data="slotProps.entry.content.changes"></vue-json-pretty>
                 </div>

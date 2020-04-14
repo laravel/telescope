@@ -47,7 +47,7 @@
             <div class="card mt-5">
                 <div class="card-header"><h5>Arguments</h5></div>
 
-                <div class="code-bg p-4 mb-0 text-white">
+                <div class="code-bg p-4 mb-0 text-white position-relative">
                     <copy-to-clipboard :data="slotProps.entry.content.arguments"></copy-to-clipboard>
                     <vue-json-pretty :data="slotProps.entry.content.arguments"></vue-json-pretty>
                 </div>

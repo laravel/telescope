@@ -81,7 +81,7 @@
                         <a class="nav-link" :class="{active: currentTab=='response'}" href="#" v-on:click.prevent="currentTab='response'">Response</a>
                     </li>
                 </ul>
-                <div class="code-bg p-4 mb-0 text-white">
+                <div class="code-bg p-4 mb-0 text-white position-relative">
                     <copy-to-clipboard :data="slotProps.entry.content[currentTab]"></copy-to-clipboard>
                     <vue-json-pretty :data="slotProps.entry.content[currentTab]"></vue-json-pretty>
                 </div>
