@@ -40,7 +40,7 @@ class RedisWatcher extends Watcher
         Telescope::recordRedis(IncomingEntry::make([
             'connection' => $event->connectionName,
             'command' => $this->formatCommand($event->command, $event->parameters),
-            'time' => number_format($event->time, 2),
+            'time' => number_format($event->time, 2, '.', ''),
         ]));
     }
 
