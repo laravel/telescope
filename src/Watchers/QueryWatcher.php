@@ -40,7 +40,7 @@ class QueryWatcher extends Watcher
                 'connection' => $event->connectionName,
                 'bindings' => [],
                 'sql' => $this->replaceBindings($event),
-                'time' => number_format($time, 2),
+                'time' => number_format($time, 2, '.', ''),
                 'slow' => isset($this->options['slow']) && $time >= $this->options['slow'],
                 'file' => $caller['file'],
                 'line' => $caller['line'],
