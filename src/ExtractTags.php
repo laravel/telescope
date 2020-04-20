@@ -3,12 +3,11 @@
 namespace Laravel\Telescope;
 
 use Illuminate\Broadcasting\BroadcastEvent;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Events\CallQueuedListener;
 use Illuminate\Mail\SendQueuedMailable;
 use Illuminate\Notifications\SendQueuedNotifications;
-use Illuminate\Support\Arr;
 use ReflectionClass;
 use stdClass;
 
@@ -49,6 +48,22 @@ class ExtractTags
     }
 
     /**
+     * Resolve the value.
+     *
+     * @param  mixed  $value
+     * @return \Illuminate\Support\Collection|null
+     */
+    protected static function resolveValue($value)
+    {
+        switch (true) {
+            case $value instanceof Model:
+                return collect([$value]);
+            case $value instanceof Collection:
+                return $value->flatten();
+        }
+    }
+
+    /**
      * Determine the tags for the given array.
      *
      * @param  array  $data
@@ -56,15 +71,9 @@ class ExtractTags
      */
     public static function fromArray(array $data)
     {
-        $models = collect($data)->map(function ($value) {
-            if ($value instanceof Model) {
-                return [$value];
-            } elseif ($value instanceof EloquentCollection) {
-                return $value->flatten();
-            }
-        })->collapse()->filter();
-
-        return $models->map(function ($model) {
+        return collect($data)->map(function ($value) {
+            return static::resolveValue($value);
+        })->collapse()->filter()->map(function ($model) {
             return FormatModel::given($model);
         })->all();
     }
@@ -101,7 +110,7 @@ class ExtractTags
      * Determine tags for the given job.
      *
      * @param  array  $targets
-     * @return mixed
+     * @return array
      */
     protected static function explicitTags(array $targets)
     {
@@ -140,25 +149,15 @@ class ExtractTags
      */
     protected static function modelsFor(array $targets)
     {
-        $models = [];
-
-        foreach ($targets as $target) {
-            $models[] = collect(
-                (new ReflectionClass($target))->getProperties()
-            )->map(function ($property) use ($target) {
+        return collect($targets)->map(function ($target) {
+            return collect((new ReflectionClass($target))->getProperties())->map(function ($property) use ($target) {
                 $property->setAccessible(true);
 
-                $value = $property->getValue($target);
-
-                if ($value instanceof Model) {
-                    return [$value];
-                } elseif ($value instanceof EloquentCollection) {
-                    return $value->flatten();
+                if (PHP_VERSION_ID < 70400 || ! is_object($target) || $property->isInitialized($target)) {
+                    return static::resolveValue($property->getValue($target));
                 }
-            })->collapse()->filter()->all();
-        }
-
-        return collect(Arr::collapse($models))->unique();
+            })->collapse()->filter();
+        })->collapse()->unique();
     }
 
     /**
