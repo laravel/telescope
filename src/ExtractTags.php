@@ -48,22 +48,6 @@ class ExtractTags
     }
 
     /**
-     * Resolve the value.
-     *
-     * @param  mixed  $value
-     * @return \Illuminate\Support\Collection|null
-     */
-    protected static function resolveValue($value)
-    {
-        switch (true) {
-            case $value instanceof Model:
-                return collect([$value]);
-            case $value instanceof Collection:
-                return $value->flatten();
-        }
-    }
-
-    /**
      * Determine the tags for the given array.
      *
      * @param  array  $data
@@ -184,5 +168,21 @@ class ExtractTags
         return isset($job->data[0]) && is_object($job->data[0])
                         ? $job->data[0]
                         : new stdClass;
+    }
+
+    /**
+     * Resolve the given value.
+     *
+     * @param  mixed  $value
+     * @return \Illuminate\Support\Collection|null
+     */
+    protected static function resolveValue($value)
+    {
+        switch (true) {
+            case $value instanceof Model:
+                return collect([$value]);
+            case $value instanceof Collection:
+                return $value->flatten();
+        }
     }
 }
