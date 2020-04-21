@@ -35,18 +35,18 @@ class QueryWatcher extends Watcher
 
         $time = $event->time;
 
-        $caller = $this->getCallerFromStackTrace();
-
-        Telescope::recordQuery(IncomingEntry::make([
-            'connection' => $event->connectionName,
-            'bindings' => [],
-            'sql' => $this->replaceBindings($event),
-            'time' => number_format($time, 2),
-            'slow' => isset($this->options['slow']) && $time >= $this->options['slow'],
-            'file' => $caller['file'],
-            'line' => $caller['line'],
-            'hash' => $this->familyHash($event),
-        ])->tags($this->tags($event)));
+        if ($caller = $this->getCallerFromStackTrace()) {
+            Telescope::recordQuery(IncomingEntry::make([
+                'connection' => $event->connectionName,
+                'bindings' => [],
+                'sql' => $this->replaceBindings($event),
+                'time' => number_format($time, 2, '.', ''),
+                'slow' => isset($this->options['slow']) && $time >= $this->options['slow'],
+                'file' => $caller['file'],
+                'line' => $caller['line'],
+                'hash' => $this->familyHash($event),
+            ])->tags($this->tags($event)));
+        }
     }
 
     /**

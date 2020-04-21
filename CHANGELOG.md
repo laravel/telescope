@@ -1,6 +1,20 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v3.2.0...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v3.2.2...master)
+
+
+## [v3.2.2 (2020-04-21)](https://github.com/laravel/telescope/compare/v3.2.1...v3.2.2)
+
+### Fixed
+- Fix typed properties issues ([#879](https://github.com/laravel/telescope/pull/879))
+- Remove thousands separator in time records ([#877](https://github.com/laravel/telescope/pull/877))
+
+
+## [v3.2.1 (2020-04-14)](https://github.com/laravel/telescope/compare/v3.2.0...v3.2.1)
+
+### Fixed
+- Testing fixes ([#866](https://github.com/laravel/telescope/pull/866))
+- Encode array for logging ([#873](https://github.com/laravel/telescope/pull/873))
 
 
 ## [v3.2.0 (2020-03-17)](https://github.com/laravel/telescope/compare/v3.1.1...v3.2.0)
