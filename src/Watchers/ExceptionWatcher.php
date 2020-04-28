@@ -49,7 +49,9 @@ class ExceptionWatcher extends Watcher
                 'message' => $exception->getMessage(),
                 'trace' => $trace,
                 'line_preview' => ExceptionContext::get($exception),
-                'context' => Arr::except($event->context, ['exception', 'telescope']),
+                'context' => transform(Arr::except($event->context, ['exception', 'telescope']), function ($context) {
+                    return ! empty($context) ? $context : null;
+                }),
             ])->tags($this->tags($event))
         );
     }
