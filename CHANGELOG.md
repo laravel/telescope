@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v3.2.2...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v3.3.0...master)
+
+
+## [v3.3.0 (2020-04-28)](https://github.com/laravel/telescope/compare/v3.2.2...v3.3.0)
+
+### Added
+- Ability to review Exception context data ([#882](https://github.com/laravel/telescope/pull/882))
 
 
 ## [v3.2.2 (2020-04-21)](https://github.com/laravel/telescope/compare/v3.2.1...v3.2.2)

@@ -16,6 +16,11 @@
         },
 
         methods: {
+            hasContext() {
+                return this.entry.content.hasOwnProperty('context')
+                    && this.entry.content.context !== null;
+            },
+
             resolveException(entry) {
                 this.alertConfirm('Are you sure you want to resolve this exception?', () => {
 
@@ -58,6 +63,7 @@
 
             <tr>
                 <td class="table-fit font-weight-bold">Resolved at</td>
+
                 <td>
                     <span v-if="entry.content.resolved_at">
                         {{localTime(entry.content.resolved_at)}} ({{timeAgo(entry.content.resolved_at)}})
@@ -75,9 +81,15 @@
                     <li class="nav-item">
                         <a class="nav-link" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Message</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" :class="{active: currentTab=='location'}" href="#" v-on:click.prevent="currentTab='location'">Location</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='context'}" href="#" v-show="hasContext()" v-on:click.prevent="currentTab='context'">Context</a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" :class="{active: currentTab=='trace'}" href="#" v-on:click.prevent="currentTab='trace'">Stacktrace</a>
                     </li>
@@ -91,6 +103,10 @@
                             :lines="slotProps.entry.content.line_preview"
                             :highlighted-line="slotProps.entry.content.line">
                     </code-preview>
+
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='context'">
+                        <vue-json-pretty :data="slotProps.entry.content.context"></vue-json-pretty>
+                    </div>
 
                     <stack-trace :trace="slotProps.entry.content.trace" v-show="currentTab=='trace'"></stack-trace>
                 </div>
