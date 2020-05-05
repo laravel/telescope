@@ -48,7 +48,7 @@ class CreateTelescopeEntriesTable extends Migration
             $table->boolean('should_display_on_index')->default(true);
             $table->string('type', 20);
             $table->longText('content');
-            $table->dateTime('created_at')->nullable();
+            $table->dateTime('created_at')->nullable()->index();
 
             $table->unique('uuid');
             $table->index('batch_id');
