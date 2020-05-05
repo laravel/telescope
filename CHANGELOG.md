@@ -1,6 +1,13 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v3.3.0...3.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v3.3.1...3.x)
+
+
+## [v3.3.1 (2020-05-05)](https://github.com/laravel/telescope/compare/v3.3.0...v3.3.1)
+
+### Fixed
+- Changed truncate from 75 chars to 50 ([#887](https://github.com/laravel/telescope/pull/887))
+- Add index to created_at ([#885](https://github.com/laravel/telescope/pull/885))
 
 
 ## [v3.3.0 (2020-04-28)](https://github.com/laravel/telescope/compare/v3.2.2...v3.3.0)
