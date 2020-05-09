@@ -82,6 +82,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Avatar Service
+    |--------------------------------------------------------------------------
+    |
+    | This option may be used to control how to show an avatar for authorized
+    | users. 'gravatar' will lookup an avatar by the user's email address.
+    | 'custom' requires registering a callback via Telescope::avatar().
+    |
+    */
+
+    'avatar_driver' => 'gravatar',
+
+    /*
+    |--------------------------------------------------------------------------
     | Ignored Paths & Commands
     |--------------------------------------------------------------------------
     |

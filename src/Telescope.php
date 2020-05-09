@@ -685,6 +685,18 @@ class Telescope
     }
 
     /**
+     * Register the Telescope user avatar callback.
+     *
+     * @param  \Closure  $callback
+     */
+    public static function avatar(Closure $callback)
+    {
+        if (config('telescope.avatar_driver') === 'custom') {
+            Avatar::register($callback);
+        }
+    }
+
+    /**
      * Get the default JavaScript variables for Telescope.
      *
      * @return array
