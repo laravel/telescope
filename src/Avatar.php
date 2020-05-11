@@ -30,7 +30,7 @@ class Avatar
             return static::resolve($user);
         }
 
-        return "https://www.gravatar.com/avatar/".md5(Str::lower($user['email']))."?s=200";
+        return 'https://www.gravatar.com/avatar/'.md5(Str::lower($user['email'])).'?s=200';
     }
 
     /**
