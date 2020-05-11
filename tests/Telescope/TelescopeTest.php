@@ -81,7 +81,7 @@ class TelescopeTest extends FeatureTestCase
     {
         $storedEntries = null;
         $storedBatchId = null;
-        Telescope::afterStore(function (array $entries, $batchId) use (&$storedEntries, &$storedBatchId) {
+        Telescope::afterStoring(function (array $entries, $batchId) use (&$storedEntries, &$storedBatchId) {
             $storedEntries = $entries;
             $storedBatchId = $batchId;
 

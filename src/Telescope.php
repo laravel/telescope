@@ -50,7 +50,7 @@ class Telescope
      *
      * @var \Closure
      */
-    public static $afterStoreHooks = [];
+    public static $afterStoringHooks = [];
 
     /**
      * The callbacks that add tags to the record.
@@ -547,9 +547,9 @@ class Telescope
      * @param  \Closure  $callback
      * @return static
      */
-    public static function afterStore(Closure $callback)
+    public static function afterStoring(Closure $callback)
     {
-        static::$afterStoreHooks[] = $callback;
+        static::$afterStoringHooks[] = $callback;
 
         return new static;
     }
@@ -594,7 +594,7 @@ class Telescope
                     $storage->terminate();
                 }
 
-                collect(static::$afterStoreHooks)->every->__invoke(static::$entriesQueue, $batchId);
+                collect(static::$afterStoringHooks)->every->__invoke(static::$entriesQueue, $batchId);
             } catch (Exception $e) {
                 app(ExceptionHandler::class)->report($e);
             }
