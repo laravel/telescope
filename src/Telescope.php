@@ -46,6 +46,13 @@ class Telescope
     public static $afterRecordingHook;
 
     /**
+     * The callbacks executed after storing the entries.
+     *
+     * @var \Closure
+     */
+    public static $afterStoreHooks = [];
+    
+    /**
      * The callbacks that add tags to the record.
      *
      * @var \Closure[]
@@ -535,6 +542,19 @@ class Telescope
     }
 
     /**
+     * Set the callback that will be executed after an entry is stored.
+     *
+     * @param  \Closure  $callback
+     * @return static
+     */
+    public static function afterStore(Closure $callback)
+    {
+        static::$afterStoreHooks[] = $callback;
+
+        return new static;
+    }
+
+    /**
      * Add a callback that adds tags to the record.
      *
      * @param  \Closure  $callback
@@ -572,6 +592,10 @@ class Telescope
             if ($storage instanceof TerminableRepository) {
                 $storage->terminate();
             }
+            
+            static::withoutRecording(function () use ($batchId) {
+                collect(static::$afterStoreHooks)->every->__invoke(new static, $batchId);
+            });
         } catch (Exception $e) {
             app(ExceptionHandler::class)->report($e);
         }
