@@ -51,7 +51,7 @@ class Telescope
      * @var \Closure
      */
     public static $afterStoreHooks = [];
-    
+
     /**
      * The callbacks that add tags to the record.
      *
@@ -579,26 +579,26 @@ class Telescope
             return;
         }
 
-        if (! collect(static::$filterBatchUsing)->every->__invoke(collect(static::$entriesQueue))) {
-            static::flushEntries();
-        }
-
-        try {
-            $batchId = Str::orderedUuid()->toString();
-
-            $storage->store(static::collectEntries($batchId));
-            $storage->update(static::collectUpdates($batchId));
-
-            if ($storage instanceof TerminableRepository) {
-                $storage->terminate();
+        static::withoutRecording(function () use ($storage) {
+            if (! collect(static::$filterBatchUsing)->every->__invoke(collect(static::$entriesQueue))) {
+                static::flushEntries();
             }
-            
-            static::withoutRecording(function () use ($batchId) {
-                collect(static::$afterStoreHooks)->every->__invoke(new static, $batchId);
-            });
-        } catch (Exception $e) {
-            app(ExceptionHandler::class)->report($e);
-        }
+
+            try {
+                $batchId = Str::orderedUuid()->toString();
+
+                $storage->store(static::collectEntries($batchId));
+                $storage->update(static::collectUpdates($batchId));
+
+                if ($storage instanceof TerminableRepository) {
+                    $storage->terminate();
+                }
+
+                collect(static::$afterStoreHooks)->every->__invoke(static::$entriesQueue, $batchId);
+            } catch (Exception $e) {
+                app(ExceptionHandler::class)->report($e);
+            }
+        });
 
         static::$entriesQueue = [];
         static::$updatesQueue = [];
