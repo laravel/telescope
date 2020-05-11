@@ -688,12 +688,13 @@ class Telescope
      * Register the Telescope user avatar callback.
      *
      * @param  \Closure  $callback
+     * @return static
      */
     public static function avatar(Closure $callback)
     {
-        if (config('telescope.avatar_driver') === 'custom') {
-            Avatar::register($callback);
-        }
+        Avatar::register($callback);
+
+        return new static;
     }
 
     /**

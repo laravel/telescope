@@ -17,7 +17,7 @@ class Avatar
     /**
      * Get an avatar URL for an entry user.
      *
-     * @param  array       $user User payload from the EntryResult.
+     * @param  array  $user
      * @return string|null
      */
     public static function url(array $user)
@@ -26,16 +26,11 @@ class Avatar
             return;
         }
 
-        switch (config('telescope.avatar_driver', 'gravatar')) {
-            case 'custom':
-                return static::resolve($user);
-            case 'gravatar':
-                $hash = md5(Str::lower($user['email']));
-
-                return "https://www.gravatar.com/avatar/{$hash}?s=200";
-            default:
-                break;
+        if (isset(static::$callback)) {
+            return static::resolve($user);
         }
+
+        return "https://www.gravatar.com/avatar/".md5(Str::lower($user['email']))."?s=200";
     }
 
     /**

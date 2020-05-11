@@ -31,10 +31,6 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
                    $entry->isScheduledTask() ||
                    $entry->hasMonitoredTag();
         });
-
-        Telescope::avatar(function ($id, $email) {
-            //
-        });
     }
 
     /**
