@@ -542,7 +542,7 @@ class Telescope
     }
 
     /**
-     * Set the callback that will be executed after an entry is stored.
+     * Add a callback that will be executed after an entry is stored.
      *
      * @param  \Closure  $callback
      * @return static
