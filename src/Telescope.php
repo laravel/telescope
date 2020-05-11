@@ -277,7 +277,7 @@ class Telescope
             }
 
             if (static::$afterRecordingHook) {
-                call_user_func(static::$afterRecordingHook, new static);
+                call_user_func(static::$afterRecordingHook, new static, $entry);
             }
         });
     }
