@@ -1,6 +1,14 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v3.3.1...3.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v3.4.0...3.x)
+
+
+## [v3.4.0 (2020-05-12)](https://github.com/laravel/telescope/compare/v3.3.1...v3.4.0)
+
+### Added
+- Allow avatar path customization ([#890](https://github.com/laravel/telescope/pull/890), [94a3952](https://github.com/laravel/telescope/commit/94a39526bf013c7f27df5c74de2f3e6711c01722))
+- Add entry to afterRecording hook ([#893](https://github.com/laravel/telescope/pull/893))
+- Add afterStore hooks ([#894](https://github.com/laravel/telescope/pull/894), ([600e462](https://github.com/laravel/telescope/commit/600e462ddad30a033567ccd06a162b522393eef7)))
 
 
 ## [v3.3.1 (2020-05-05)](https://github.com/laravel/telescope/compare/v3.3.0...v3.3.1)
