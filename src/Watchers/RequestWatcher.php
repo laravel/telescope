@@ -43,6 +43,7 @@ class RequestWatcher extends Watcher
         $startTime = defined('LARAVEL_START') ? LARAVEL_START : $event->request->server('REQUEST_TIME_FLOAT');
 
         Telescope::recordRequest(IncomingEntry::make([
+            'ip_address' => $event->request->ip(),
             'uri' => str_replace($event->request->root(), '', $event->request->fullUrl()) ?: '/',
             'method' => $event->request->method(),
             'controller_action' => optional($event->request->route())->getActionName(),
@@ -53,7 +54,6 @@ class RequestWatcher extends Watcher
             'response_status' => $event->response->getStatusCode(),
             'response' => $this->response($event->response),
             'duration' => $startTime ? floor((microtime(true) - $startTime) * 1000) : null,
-            'ip_address' => $event->request->ip(),
             'memory' => round(memory_get_peak_usage(true) / 1024 / 1025, 1),
         ]));
     }
