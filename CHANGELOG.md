@@ -1,6 +1,30 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v3.3.0...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v3.5.0...master)
+
+
+## [v3.5.0 (2020-05-14)](https://github.com/laravel/telescope/compare/v3.4.0...v3.5.0)
+
+### Added
+- Add request IP address to RequestWatcher ([#895](https://github.com/laravel/telescope/pull/895))
+
+### Fixed
+- Compile assets ([762e4ed](https://github.com/laravel/telescope/commit/762e4ed57b0bd11bbc60349d962f5f8435602509))
+
+
+## [v3.4.0 (2020-05-12)](https://github.com/laravel/telescope/compare/v3.3.1...v3.4.0)
+
+### Added
+- Allow avatar path customization ([#890](https://github.com/laravel/telescope/pull/890), [94a3952](https://github.com/laravel/telescope/commit/94a39526bf013c7f27df5c74de2f3e6711c01722))
+- Add entry to afterRecording hook ([#893](https://github.com/laravel/telescope/pull/893))
+- Add afterStore hooks ([#894](https://github.com/laravel/telescope/pull/894), ([600e462](https://github.com/laravel/telescope/commit/600e462ddad30a033567ccd06a162b522393eef7)))
+
+
+## [v3.3.1 (2020-05-05)](https://github.com/laravel/telescope/compare/v3.3.0...v3.3.1)
+
+### Fixed
+- Changed truncate from 75 chars to 50 ([#887](https://github.com/laravel/telescope/pull/887))
+- Add index to created_at ([#885](https://github.com/laravel/telescope/pull/885))
 
 
 ## [v3.3.0 (2020-04-28)](https://github.com/laravel/telescope/compare/v3.2.2...v3.3.0)

@@ -50,7 +50,7 @@ abstract class EntryController extends Controller
      */
     public function show(EntriesRepository $storage, $id)
     {
-        $entry = $storage->find($id);
+        $entry = $storage->find($id)->generateAvatar();
 
         return response()->json([
             'entry' => $entry,

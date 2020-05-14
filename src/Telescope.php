@@ -46,6 +46,13 @@ class Telescope
     public static $afterRecordingHook;
 
     /**
+     * The callbacks executed after storing the entries.
+     *
+     * @var \Closure
+     */
+    public static $afterStoringHooks = [];
+
+    /**
      * The callbacks that add tags to the record.
      *
      * @var \Closure[]
@@ -270,7 +277,7 @@ class Telescope
             }
 
             if (static::$afterRecordingHook) {
-                call_user_func(static::$afterRecordingHook, new static);
+                call_user_func(static::$afterRecordingHook, new static, $entry);
             }
         });
     }
@@ -535,6 +542,19 @@ class Telescope
     }
 
     /**
+     * Add a callback that will be executed after an entry is stored.
+     *
+     * @param  \Closure  $callback
+     * @return static
+     */
+    public static function afterStoring(Closure $callback)
+    {
+        static::$afterStoringHooks[] = $callback;
+
+        return new static;
+    }
+
+    /**
      * Add a callback that adds tags to the record.
      *
      * @param  \Closure  $callback
@@ -559,22 +579,26 @@ class Telescope
             return;
         }
 
-        if (! collect(static::$filterBatchUsing)->every->__invoke(collect(static::$entriesQueue))) {
-            static::flushEntries();
-        }
-
-        try {
-            $batchId = Str::orderedUuid()->toString();
-
-            $storage->store(static::collectEntries($batchId));
-            $storage->update(static::collectUpdates($batchId));
-
-            if ($storage instanceof TerminableRepository) {
-                $storage->terminate();
+        static::withoutRecording(function () use ($storage) {
+            if (! collect(static::$filterBatchUsing)->every->__invoke(collect(static::$entriesQueue))) {
+                static::flushEntries();
             }
-        } catch (Exception $e) {
-            app(ExceptionHandler::class)->report($e);
-        }
+
+            try {
+                $batchId = Str::orderedUuid()->toString();
+
+                $storage->store(static::collectEntries($batchId));
+                $storage->update(static::collectUpdates($batchId));
+
+                if ($storage instanceof TerminableRepository) {
+                    $storage->terminate();
+                }
+
+                collect(static::$afterStoringHooks)->every->__invoke(static::$entriesQueue, $batchId);
+            } catch (Exception $e) {
+                app(ExceptionHandler::class)->report($e);
+            }
+        });
 
         static::$entriesQueue = [];
         static::$updatesQueue = [];
@@ -680,6 +704,19 @@ class Telescope
     public static function night()
     {
         static::$useDarkTheme = true;
+
+        return new static;
+    }
+
+    /**
+     * Register the Telescope user avatar callback.
+     *
+     * @param  \Closure  $callback
+     * @return static
+     */
+    public static function avatar(Closure $callback)
+    {
+        Avatar::register($callback);
 
         return new static;
     }

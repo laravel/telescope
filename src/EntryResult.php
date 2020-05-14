@@ -63,6 +63,13 @@ class EntryResult implements JsonSerializable
     private $tags;
 
     /**
+     * The generated URL to the entry user's avatar.
+     *
+     * @var string
+     */
+    protected $avatar;
+
+    /**
      * Create a new entry result instance.
      *
      * @param  mixed  $id
@@ -87,13 +94,25 @@ class EntryResult implements JsonSerializable
     }
 
     /**
+     * Set the URL to the entry user's avatar.
+     *
+     * @return $this
+     */
+    public function generateAvatar()
+    {
+        $this->avatar = Avatar::url($this->content['user'] ?? []);
+
+        return $this;
+    }
+
+    /**
      * Get the array representation of the entry.
      *
      * @return array
      */
     public function jsonSerialize()
     {
-        return [
+        return collect([
             'id' => $this->id,
             'sequence' => $this->sequence,
             'batch_id' => $this->batchId,
@@ -102,6 +121,14 @@ class EntryResult implements JsonSerializable
             'tags' => $this->tags,
             'family_hash' => $this->familyHash,
             'created_at' => $this->createdAt->toDateTimeString(),
-        ];
+        ])->when($this->avatar, function ($items) {
+            return $items->mergeRecursive([
+                'content' => [
+                    'user' => [
+                        'avatar' => $this->avatar,
+                    ],
+                ],
+            ]);
+        })->all();
     }
 }

@@ -5,6 +5,7 @@ namespace Laravel\Telescope\Tests\Telescope;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Laravel\Telescope\Contracts\EntriesRepository;
+use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\QueryWatcher;
@@ -37,7 +38,7 @@ class TelescopeTest extends FeatureTestCase
      */
     public function run_after_recording_callback()
     {
-        Telescope::afterRecording(function () {
+        Telescope::afterRecording(function (Telescope $telescope, IncomingEntry $entry) {
             $this->count++;
         });
 
@@ -53,7 +54,7 @@ class TelescopeTest extends FeatureTestCase
      */
     public function after_recording_callback_can_store_and_flush()
     {
-        Telescope::afterRecording(function (Telescope $telescope) {
+        Telescope::afterRecording(function (Telescope $telescope, IncomingEntry $entry) {
             if (count($telescope::$entriesQueue) > 1) {
                 $repository = $this->app->make(EntriesRepository::class);
                 $telescope->store($repository);
@@ -71,6 +72,35 @@ class TelescopeTest extends FeatureTestCase
         $this->app->get('db')->table('telescope_entries')->count();
 
         $this->assertCount(1, Telescope::$entriesQueue);
+    }
+
+    /**
+     * @test
+     */
+    public function run_after_store_callback()
+    {
+        $storedEntries = null;
+        $storedBatchId = null;
+        Telescope::afterStoring(function (array $entries, $batchId) use (&$storedEntries, &$storedBatchId) {
+            $storedEntries = $entries;
+            $storedBatchId = $batchId;
+
+            $this->count += count($entries);
+        });
+
+        $this->app->get('db')->table('telescope_entries')->count();
+
+        $this->app->get('db')->table('telescope_entries')->count();
+
+        $this->assertSame(0, $this->count);
+
+        $repository = $this->app->make(EntriesRepository::class);
+        Telescope::store($repository);
+
+        $this->assertSame(2, $this->count);
+        $this->assertSame(2, count($storedEntries));
+        $this->assertSame(36, strlen($storedBatchId));
+        $this->assertInstanceOf(IncomingEntry::class, $storedEntries[0]);
     }
 
     /**
