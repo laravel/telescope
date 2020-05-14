@@ -1,6 +1,15 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v3.4.0...3.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v3.5.0...3.x)
+
+
+## [v3.5.0 (2020-05-14)](https://github.com/laravel/telescope/compare/v3.4.0...v3.5.0)
+
+### Added
+- Add request IP address to RequestWatcher ([#895](https://github.com/laravel/telescope/pull/895))
+
+### Fixed
+- Compile assets ([762e4ed](https://github.com/laravel/telescope/commit/762e4ed57b0bd11bbc60349d962f5f8435602509))
 
 
 ## [v3.4.0 (2020-05-12)](https://github.com/laravel/telescope/compare/v3.3.1...v3.4.0)
