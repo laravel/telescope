@@ -22,6 +22,10 @@
                 lastEntryIndex: '',
                 hasMoreEntries: true,
                 hasNewEntries: false,
+                range: {
+                    start: new Date(2018, 0, 16), // Jan 16th, 2018
+                    end: new Date(2018, 0, 19)    // Jan 19th, 2018
+                },
                 entriesPerRequest: 50,
                 loadingNewEntries: false,
                 loadingMoreEntries: false,

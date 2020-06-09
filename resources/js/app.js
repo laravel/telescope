@@ -5,6 +5,7 @@ import Routes from './routes';
 import VueRouter from 'vue-router';
 import VueJsonPretty from 'vue-json-pretty';
 import moment from 'moment-timezone';
+import VCalendar from 'v-calendar';
 
 require('bootstrap');
 
@@ -41,6 +42,8 @@ Vue.component('index-screen', require('./components/IndexScreen.vue').default);
 Vue.component('preview-screen', require('./components/PreviewScreen.vue').default);
 Vue.component('alert', require('./components/Alert.vue').default);
 
+Vue.use(VCalendar, {});
+
 Vue.mixin(Base);
 
 new Vue({
@@ -59,6 +62,7 @@ new Vue({
             },
 
             autoLoadsNewEntries: localStorage.autoLoadsNewEntries === '1',
+            filtersEntriesByDate: localStorage.filtersEntriesByDate === '1',
 
             recording: Telescope.recording,
         };
@@ -72,6 +76,16 @@ new Vue({
             } else {
                 this.autoLoadsNewEntries = false;
                 localStorage.autoLoadsNewEntries = 0;
+            }
+        },
+
+        filterEntriesByDate() {
+            if (!this.filtersEntriesByDate) {
+                this.filtersEntriesByDate = true;
+                localStorage.filtersEntriesByDate = 1;
+            } else {
+                this.filtersEntriesByDate = false;
+                localStorage.filtersEntriesByDate = 0;
             }
         },
 
