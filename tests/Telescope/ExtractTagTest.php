@@ -6,6 +6,7 @@ use Illuminate\Mail\Mailable;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\FormatModel;
 use Laravel\Telescope\Storage\EntryModel;
+use Laravel\Telescope\Tests\EntryModelFactory;
 use Laravel\Telescope\Tests\FeatureTestCase;
 
 class ExtractTagTest extends FeatureTestCase
@@ -15,8 +16,7 @@ class ExtractTagTest extends FeatureTestCase
      */
     public function test_extract_tag_from_array_containing_flat_collection()
     {
-        $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
-        $flat_collection = factory(EntryModel::class, 1)->create();
+        $flat_collection = EntryModelFactory::new()->create();;
 
         $tag = FormatModel::given($flat_collection->first());
         $extracted_tag = ExtractTags::fromArray([$flat_collection]);
@@ -29,8 +29,7 @@ class ExtractTagTest extends FeatureTestCase
      */
     public function test_extract_tag_from_array_containing_deep_collection()
     {
-        $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
-        $deep_collection = factory(EntryModel::class, 1)->create()->groupBy('type');
+        $deep_collection = EntryModelFactory::times(1)->create()->groupBy('type');
 
         $tag = FormatModel::given($deep_collection->first()->first());
         $extracted_tag = ExtractTags::fromArray([$deep_collection]);
@@ -43,8 +42,7 @@ class ExtractTagTest extends FeatureTestCase
      */
     public function test_extract_tag_from_mailable()
     {
-        $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
-        $deep_collection = factory(EntryModel::class, 1)->create()->groupBy('type');
+        $deep_collection = EntryModelFactory::times(1)->create()->groupBy('type');
         $mailable = new DummyMailableWithData($deep_collection);
 
         $tag = FormatModel::given($deep_collection->first()->first());

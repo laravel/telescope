@@ -8,6 +8,7 @@ use Illuminate\Testing\TestResponse;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Storage\EntryModel;
+use Laravel\Telescope\Tests\EntryModelFactory;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
 use PHPUnit\Framework\Assert as PHPUnit;
@@ -58,9 +59,7 @@ class RouteTest extends FeatureTestCase
      */
     public function test_simple_list_of_entries($endpoint, $entryType)
     {
-        $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
-
-        $entry = factory(EntryModel::class)->create(['type' => $entryType]);
+        $entry = EntryModelFactory::new()->create(['type' => $entryType]);
 
         $this->post($endpoint)
             ->assertSuccessful()
