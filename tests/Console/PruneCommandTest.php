@@ -2,7 +2,6 @@
 
 namespace Laravel\Telescope\Tests\Console;
 
-use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Tests\EntryModelFactory;
 use Laravel\Telescope\Tests\FeatureTestCase;
 

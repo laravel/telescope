@@ -7,7 +7,6 @@ use Illuminate\Foundation\Testing\TestResponse as LegacyTestResponse;
 use Illuminate\Testing\TestResponse;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Http\Middleware\Authorize;
-use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Tests\EntryModelFactory;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
