@@ -16,7 +16,7 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
-        "laravel/framework": "^7.0",
+        "laravel/framework": "^8.0",
         "symfony/var-dumper": "^5.0"
     },
     "require-dev": {

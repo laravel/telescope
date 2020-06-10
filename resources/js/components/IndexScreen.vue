@@ -5,7 +5,7 @@
 
     export default {
         props: [
-            'resource', 'title'
+            'resource', 'title', 'showAllFamily', 'hideSearch'
         ],
 
 
@@ -119,7 +119,7 @@
 
                     if (_.isFunction(after)) {
                         after(
-                                this.familyHash ? response.data.entries : _.uniqBy(response.data.entries, entry => entry.family_hash || _.uniqueId())
+                                this.familyHash || this.showAllFamily ? response.data.entries : _.uniqBy(response.data.entries, entry => entry.family_hash || _.uniqueId())
                         );
                     }
                 })
@@ -270,7 +270,7 @@
             <h5>{{this.title}}</h5>
 
             <input type="text" class="form-control w-25"
-                   v-if="tag || entries.length > 0"
+                   v-if="!hideSearch && (tag || entries.length > 0)"
                    id="searchInput"
                    placeholder="Search Tag" v-model="tag" @input.stop="search">
         </div>

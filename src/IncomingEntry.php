@@ -67,11 +67,12 @@ class IncomingEntry
      * Create a new incoming entry instance.
      *
      * @param  array  $content
+     * @param  string|null  $uuid
      * @return void
      */
-    public function __construct(array $content)
+    public function __construct(array $content, $uuid = null)
     {
-        $this->uuid = (string) Str::orderedUuid();
+        $this->uuid = $uuid ?: (string) Str::orderedUuid();
 
         $this->recordedAt = now();
 
@@ -120,10 +121,10 @@ class IncomingEntry
     /**
      * Assign the entry a family hash.
      *
-     * @param  string  $familyHash
+     * @param  null|string  $familyHash
      * @return $this
      */
-    public function withFamilyHash(string $familyHash)
+    public function withFamilyHash($familyHash)
     {
         $this->familyHash = $familyHash;
 

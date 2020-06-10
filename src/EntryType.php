@@ -4,6 +4,7 @@ namespace Laravel\Telescope;
 
 class EntryType
 {
+    public const BATCH = 'batch';
     public const CACHE = 'cache';
     public const COMMAND = 'command';
     public const DUMP = 'dump';
