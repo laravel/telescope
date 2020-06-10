@@ -3,7 +3,6 @@
 namespace Laravel\Telescope\Tests\Storage;
 
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
-use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Tests\EntryModelFactory;
 use Laravel\Telescope\Tests\FeatureTestCase;
 
