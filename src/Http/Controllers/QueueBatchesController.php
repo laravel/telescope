@@ -3,7 +3,6 @@
 namespace Laravel\Telescope\Http\Controllers;
 
 use Illuminate\Bus\BatchRepository;
-use Illuminate\Http\Request;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\EntryUpdate;
@@ -46,7 +45,7 @@ class QueueBatchesController extends EntryController
         $storage->update(collect([
             new EntryUpdate($id, EntryType::BATCH,
                 $batch->toArray()
-            )
+            ),
         ]));
 
         $entry = $storage->find($id)->generateAvatar();
