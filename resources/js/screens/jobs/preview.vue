@@ -71,6 +71,15 @@
                 </td>
             </tr>
 
+            <tr v-if="slotProps.entry.content.data.batchId">
+                <td class="table-fit font-weight-bold">Batch</td>
+                <td>
+                    <router-link :to="{name:'batch-preview', params:{id: slotProps.entry.content.data.batchId}}" class="control-action">
+                        {{slotProps.entry.content.data.batchId}}
+                    </router-link>
+                </td>
+            </tr>
+
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">

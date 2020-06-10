@@ -68,6 +68,18 @@ export default [
     },
 
     {
+        path: '/batches/:id',
+        name: 'batch-preview',
+        component: require('./screens/batches/preview').default,
+    },
+
+    {
+        path: '/batches',
+        name: 'batches',
+        component: require('./screens/batches/index').default,
+    },
+
+    {
         path: '/events/:id',
         name: 'event-preview',
         component: require('./screens/events/preview').default,

@@ -3,16 +3,14 @@
 namespace Laravel\Telescope\Tests\Storage;
 
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
-use Laravel\Telescope\Storage\EntryModel;
+use Laravel\Telescope\Tests\EntryModelFactory;
 use Laravel\Telescope\Tests\FeatureTestCase;
 
 class DatabaseEntriesRepositoryTest extends FeatureTestCase
 {
     public function test_find_entry_by_uuid()
     {
-        $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
-
-        $entry = factory(EntryModel::class)->create();
+        $entry = EntryModelFactory::new()->create();
 
         $repository = new DatabaseEntriesRepository('testbench');
 

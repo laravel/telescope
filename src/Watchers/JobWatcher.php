@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Bus\BatchRepository;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Queue;
@@ -51,6 +52,7 @@ class JobWatcher extends Watcher
 
         Telescope::recordJob(
             $entry = IncomingEntry::make($content)
+                        ->withFamilyHash($content['data']['batchId'] ?? null)
                         ->tags($this->tags($payload))
         );
 
@@ -78,6 +80,8 @@ class JobWatcher extends Watcher
         Telescope::recordUpdate(EntryUpdate::make(
             $uuid, EntryType::JOB, ['status' => 'processed']
         ));
+
+        $this->updateBatch($event->job->payload());
     }
 
     /**
@@ -109,6 +113,8 @@ class JobWatcher extends Watcher
                 ],
             ]
         )->addTags(['failed']));
+
+        $this->updateBatch($event->job->payload());
     }
 
     /**
@@ -164,5 +170,26 @@ class JobWatcher extends Watcher
         return ExtractTags::fromJob(
             $payload['data']['command']
         );
+    }
+
+    /**
+     * Update the batch.
+     *
+     * @param  array  $payload
+     * @return void
+     */
+    protected function updateBatch($payload)
+    {
+        $properties = ExtractProperties::from(
+            unserialize($payload['data']['command'])
+        );
+
+        if (isset($properties['batchId'])) {
+            $batch = app(BatchRepository::class)->find($properties['batchId']);
+
+            Telescope::recordUpdate(EntryUpdate::make(
+                $properties['batchId'], EntryType::BATCH, $batch->toArray()
+            ));
+        }
     }
 }

@@ -4,15 +4,14 @@ namespace Laravel\Telescope\Tests\Console;
 
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\Storage\EntryModel;
+use Laravel\Telescope\Tests\EntryModelFactory;
 use Laravel\Telescope\Tests\FeatureTestCase;
 
 class ClearCommandTest extends FeatureTestCase
 {
     public function test_clear_command_will_delete_all_entries()
     {
-        $this->loadFactoriesUsing($this->app, __DIR__.'/../../src/Storage/factories');
-
-        factory(EntryModel::class)->create();
+        EntryModelFactory::new()->create();
 
         DB::table('telescope_monitoring')->insert([
             ['tag' => 'one'],

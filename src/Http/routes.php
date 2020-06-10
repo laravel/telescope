@@ -28,6 +28,10 @@ Route::get('/telescope-api/notifications/{telescopeEntryId}', 'NotificationsCont
 Route::post('/telescope-api/jobs', 'QueueController@index');
 Route::get('/telescope-api/jobs/{telescopeEntryId}', 'QueueController@show');
 
+// Queue Batches entries...
+Route::post('/telescope-api/batches', 'QueueBatchesController@index');
+Route::get('/telescope-api/batches/{telescopeEntryId}', 'QueueBatchesController@show');
+
 // Events entries...
 Route::post('/telescope-api/events', 'EventsController@index');
 Route::get('/telescope-api/events/{telescopeEntryId}', 'EventsController@show');

@@ -301,6 +301,17 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
+    public static function recordBatch($entry)
+    {
+        static::record(EntryType::BATCH, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
     public static function recordCache(IncomingEntry $entry)
     {
         static::record(EntryType::CACHE, $entry);
