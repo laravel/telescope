@@ -63,7 +63,7 @@ new Vue({
             },
 
             autoLoadsNewEntries: localStorage.autoLoadsNewEntries === '1',
-            filtersApplied: localStorage.filtersApplied === '1',
+            filtersApplied: this.adjustFiltersApplied(),
             filterStartDateTime: this.$route.query.filterStartDateTime ?? null,
             filterEndDateTime: this.$route.query.filterEndDateTime ?? null,
 
@@ -97,11 +97,30 @@ new Vue({
             this.$router.push(this.$route.path)
         },
 
+        adjustFiltersApplied() {
+            this.filterStartDateTime = this.$route.query.filterStartDateTime || '';
+            this.filterEndDateTime = this.$route.query.filterEndDateTime || '';
+
+            if (this.filterStartDateTime.length || this.filterEndDateTime.length) {
+                this.filtersApplied = 1;
+            } else {
+                this.filtersApplied = 0;
+            }
+        },
+
         toggleRecording() {
             axios.post(Telescope.basePath + '/telescope-api/toggle-recording');
 
             window.Telescope.recording = !Telescope.recording;
             this.recording = !this.recording;
         },
+    },
+    mounted() {
+        this.adjustFiltersApplied()
+    },
+    watch: {
+        $route() {
+            this.adjustFiltersApplied()
+        }
     },
 });
