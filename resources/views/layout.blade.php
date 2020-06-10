@@ -60,27 +60,19 @@
             <div class="col-2 sidebar">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <router-link active-class="active" to="/commands" class="nav-link d-flex align-items-center pt-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M7 17H2a2 2 0 0 1-2-2V2C0 .9.9 0 2 0h16a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2h-5l4 2v1H3v-1l4-2zM2 2v11h16V2H2z"></path>
-                            </svg>
-                            <span>Commands</span>
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link active-class="active" to="/jobs" class="nav-link d-flex align-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M0 2h20v4H0V2zm0 8h20v2H0v-2zm0 6h20v2H0v-2z"></path>
-                            </svg>
-                            <span>Jobs</span>
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link active-class="active" to="/requests" class="nav-link d-flex align-items-center">
+                        <router-link active-class="active" to="/requests" class="nav-link d-flex align-items-center pt-0">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path d="M0 3c0-1.1.9-2 2-2h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm2 2v12h16V5H2zm8 3l4 5H6l4-5z"></path>
                             </svg>
                             <span>Requests</span>
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link active-class="active" to="/commands" class="nav-link d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M7 17H2a2 2 0 0 1-2-2V2C0 .9.9 0 2 0h16a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2h-5l4 2v1H3v-1l4-2zM2 2v11h16V2H2z"></path>
+                            </svg>
+                            <span>Commands</span>
                         </router-link>
                     </li>
                     <li class="nav-item">
@@ -91,7 +83,14 @@
                             <span>Schedule</span>
                         </router-link>
                     </li>
-
+                    <li class="nav-item">
+                        <router-link active-class="active" to="/jobs" class="nav-link d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M0 2h20v4H0V2zm0 8h20v2H0v-2zm0 6h20v2H0v-2z"></path>
+                            </svg>
+                            <span>Jobs</span>
+                        </router-link>
+                    </li>
 
 
                     <li class="nav-item mt-3">
