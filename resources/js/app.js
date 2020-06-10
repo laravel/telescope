@@ -5,8 +5,6 @@ import Routes from './routes';
 import VueRouter from 'vue-router';
 import VueJsonPretty from 'vue-json-pretty';
 import moment from 'moment-timezone';
-import VCalendar from 'v-calendar';
-import _ from "lodash";
 
 require('bootstrap');
 
@@ -42,8 +40,6 @@ Vue.component('related-entries', require('./components/RelatedEntries.vue').defa
 Vue.component('index-screen', require('./components/IndexScreen.vue').default);
 Vue.component('preview-screen', require('./components/PreviewScreen.vue').default);
 Vue.component('alert', require('./components/Alert.vue').default);
-
-Vue.use(VCalendar, {});
 
 Vue.mixin(Base);
 
