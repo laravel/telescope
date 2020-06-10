@@ -12,6 +12,7 @@
     <index-screen title="Batches" resource="batches" hide-search="true">
         <tr slot="table-header">
             <th scope="col">Batch</th>
+            <th scope="col">Status</th>
             <th scope="col">Size</th>
             <th scope="col">Completion</th>
             <th scope="col">Happened</th>
@@ -27,6 +28,17 @@
                 </small>
             </td>
 
+            <td>
+                <small class="badge badge-danger badge-sm" v-if="slotProps.entry.content.failedJobs > 0 && slotProps.entry.content.progress < 100">
+                    Failures
+                </small>
+                <small class="badge badge-success badge-sm" v-if="slotProps.entry.content.progress == 100">
+                    Finished
+                </small>
+                <small class="badge badge-secondary badge-sm" v-if="slotProps.entry.content.totalJobs == 0 || (slotProps.entry.content.pendingJobs > 0 && !slotProps.entry.content.failedJobs)">
+                    Pending
+                </small>
+            </td>
             <td>{{slotProps.entry.content.totalJobs}}</td>
             <td>{{slotProps.entry.content.progress}}%</td>
 
