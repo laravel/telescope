@@ -125,6 +125,6 @@ new Vue({
     watch: {
         $route() {
             this.adjustFiltersApplied();
-        }
+        },
     },
 });
