@@ -2,9 +2,7 @@
 
 namespace Laravel\Telescope\Storage;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class EntryQueryOptions
 {

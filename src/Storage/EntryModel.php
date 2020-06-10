@@ -4,7 +4,6 @@ namespace Laravel\Telescope\Storage;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 
 class EntryModel extends Model
 {

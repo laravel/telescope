@@ -85,8 +85,12 @@ new Vue({
                 this.filtersApplied = 0;
             }
 
-            this.$router.push({query: _.assign({}, this.$route.query, {filterStartDateTime: this.filterStartDateTime})}).catch(err => {});
-            this.$router.push({query: _.assign({}, this.$route.query, {filterEndDateTime: this.filterEndDateTime})}).catch(err => {});
+            this.$router
+                .push({ query: _.assign({}, this.$route.query, { filterStartDateTime: this.filterStartDateTime }) })
+                .catch((err) => {});
+            this.$router
+                .push({ query: _.assign({}, this.$route.query, { filterEndDateTime: this.filterEndDateTime }) })
+                .catch((err) => {});
         },
 
         clearFilters() {
@@ -116,11 +120,11 @@ new Vue({
         },
     },
     mounted() {
-        this.adjustFiltersApplied()
+        this.adjustFiltersApplied();
     },
     watch: {
         $route() {
-            this.adjustFiltersApplied()
+            this.adjustFiltersApplied();
         }
     },
 });
