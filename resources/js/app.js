@@ -83,18 +83,22 @@ new Vue({
         },
 
         applyFilters() {
-            this.filtersApplied = 1;
+            if (this.filterStartDateTime.length || this.filterEndDateTime.length) {
+                this.filtersApplied = 1;
+            } else {
+                this.filtersApplied = 0;
+            }
 
-            this.$router.push({query: _.assign({}, this.$route.query, {filterStartDateTime: this.filterStartDateTime})});
-            this.$router.push({query: _.assign({}, this.$route.query, {filterEndDateTime: this.filterEndDateTime})});
+            this.$router.push({query: _.assign({}, this.$route.query, {filterStartDateTime: this.filterStartDateTime})}).catch(err => {});
+            this.$router.push({query: _.assign({}, this.$route.query, {filterEndDateTime: this.filterEndDateTime})}).catch(err => {});
         },
 
         clearFilters() {
             this.filtersApplied = 0;
-            this.filterStartDateTime = null;
-            this.filterEndDateTime = null;
+            this.filterStartDateTime = '';
+            this.filterEndDateTime = '';
 
-            this.$router.push(this.$route.path)
+            this.applyFilters();
         },
 
         adjustFiltersApplied() {
