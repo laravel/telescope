@@ -3,14 +3,6 @@
 namespace Laravel\Telescope\Watchers;
 
 use Illuminate\Bus\Events\BatchDispatched;
-use Illuminate\Queue\Events\JobFailed;
-use Illuminate\Queue\Events\JobProcessed;
-use Illuminate\Queue\Queue;
-use Laravel\Telescope\EntryType;
-use Laravel\Telescope\EntryUpdate;
-use Laravel\Telescope\ExceptionContext;
-use Laravel\Telescope\ExtractProperties;
-use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 
