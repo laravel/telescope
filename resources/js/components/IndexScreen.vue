@@ -14,6 +14,8 @@
          */
         data() {
             return {
+                startDateTime: '',
+                endDateTime: '',
                 tag: '',
                 familyHash: '',
                 entries: [],
@@ -22,10 +24,6 @@
                 lastEntryIndex: '',
                 hasMoreEntries: true,
                 hasNewEntries: false,
-                range: {
-                    start: new Date(2018, 0, 16), // Jan 16th, 2018
-                    end: new Date(2018, 0, 19)    // Jan 19th, 2018
-                },
                 entriesPerRequest: 50,
                 loadingNewEntries: false,
                 loadingMoreEntries: false,
@@ -50,6 +48,9 @@
             this.familyHash = this.$route.query.family_hash || '';
 
             this.tag = this.$route.query.tag || '';
+
+            this.filterStartDateTime = this.$route.query.filterStartDateTime || '';
+            this.filterEndDateTime = this.$route.query.filterEndDateTime || '';
 
             this.loadEntries((entries) => {
                 this.entries = entries;
@@ -90,6 +91,9 @@
                     this.familyHash = '';
                 }
 
+                this.filterStartDateTime = this.$route.query.filterStartDateTime;
+                this.filterEndDateTime = this.$route.query.filterEndDateTime;
+
                 if (!this.$route.query.tag) {
                     this.tag = '';
                 }
@@ -111,6 +115,8 @@
             loadEntries(after){
                 axios.post(Telescope.basePath + '/telescope-api/' + this.resource +
                         '?tag=' + this.tag +
+                        '&filterStartDateTime=' + this.filterStartDateTime +
+                        '&filterEndDateTime=' + this.filterEndDateTime +
                         '&before=' + this.lastEntryIndex +
                         '&take=' + this.entriesPerRequest +
                         '&family_hash=' + this.familyHash
@@ -137,6 +143,8 @@
                 this.newEntriesTimeout = setTimeout(() => {
                     axios.post(Telescope.basePath + '/telescope-api/' + this.resource +
                             '?tag=' + this.tag +
+                            '&filterStartDateTime=' + this.filterStartDateTime +
+                            '&filterEndDateTime=' + this.filterEndDateTime +
                             '&take=1' +
                             '&family_hash=' + this.familyHash
                     ).then(response => {

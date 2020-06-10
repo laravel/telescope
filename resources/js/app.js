@@ -6,6 +6,7 @@ import VueRouter from 'vue-router';
 import VueJsonPretty from 'vue-json-pretty';
 import moment from 'moment-timezone';
 import VCalendar from 'v-calendar';
+import _ from "lodash";
 
 require('bootstrap');
 
@@ -62,7 +63,9 @@ new Vue({
             },
 
             autoLoadsNewEntries: localStorage.autoLoadsNewEntries === '1',
-            filtersEntriesByDate: localStorage.filtersEntriesByDate === '1',
+            filtersApplied: localStorage.filtersApplied === '1',
+            filterStartDateTime: this.$route.query.filterStartDateTime ?? null,
+            filterEndDateTime: this.$route.query.filterEndDateTime ?? null,
 
             recording: Telescope.recording,
         };
@@ -79,14 +82,19 @@ new Vue({
             }
         },
 
-        filterEntriesByDate() {
-            if (!this.filtersEntriesByDate) {
-                this.filtersEntriesByDate = true;
-                localStorage.filtersEntriesByDate = 1;
-            } else {
-                this.filtersEntriesByDate = false;
-                localStorage.filtersEntriesByDate = 0;
-            }
+        applyFilters() {
+            this.filtersApplied = 1;
+
+            this.$router.push({query: _.assign({}, this.$route.query, {filterStartDateTime: this.filterStartDateTime})});
+            this.$router.push({query: _.assign({}, this.$route.query, {filterEndDateTime: this.filterEndDateTime})});
+        },
+
+        clearFilters() {
+            this.filtersApplied = 0;
+            this.filterStartDateTime = null;
+            this.filterEndDateTime = null;
+
+            this.$router.push(this.$route.path)
         },
 
         toggleRecording() {

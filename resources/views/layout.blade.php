@@ -41,31 +41,48 @@
                 </svg>
             </button>
 
-            <v-date-picker
-                mode='range'
-                v-model="range"
-                :popover="{ placement: 'bottom', visibility: 'click' }">
-                <button class="btn btn-outline-primary mr-3" :class="{active: filtersEntriesByDate}" v-on:click.prevent="filterEntriesByDate" title="Filter entries by date range">
-                    <svg class="bi bi-calendar3" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
-                        <path fill-rule="evenodd" d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-                    </svg>
-                </button>
-            </v-date-picker>
-
             <button class="btn btn-outline-primary mr-3" :class="{active: autoLoadsNewEntries}" v-on:click.prevent="autoLoadNewEntries" title="Auto Load Entries">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon fill-primary">
                     <path d="M10 3v2a5 5 0 0 0-3.54 8.54l-1.41 1.41A7 7 0 0 1 10 3zm4.95 2.05A7 7 0 0 1 10 17v-2a5 5 0 0 0 3.54-8.54l1.41-1.41zM10 20l-4-4 4-4v8zm0-12V0l4 4-4 4z"></path>
                 </svg>
             </button>
 
-            <div class="btn-group" role="group" aria-label="Basic example">
+            <div class="btn-group mr-3" role="group" aria-label="Basic example">
                 <router-link tag="button" to="/monitored-tags" class="btn btn-outline-primary" active-class="active" title="Monitoring">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon fill-primary">
                         <path d="M12 10a2 2 0 0 1-3.41 1.41A2 2 0 0 1 10 8V0a9.97 9.97 0 0 1 10 10h-8zm7.9 1.41A10 10 0 1 1 8.59.1v2.03a8 8 0 1 0 9.29 9.29h2.02zm-4.07 0a6 6 0 1 1-7.25-7.25v2.1a3.99 3.99 0 0 0-1.4 6.57 4 4 0 0 0 6.56-1.42h2.1z"></path>
                     </svg>
                 </router-link>
             </div>
+
+            <div class="btn-group" role="group">
+                <button style="border-radius:0.25rem;" class="btn btn-outline-primary ml-auto" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :class="{active: filtersApplied}" title="Filter results">
+                    <svg class="bi bi-funnel icon fil-primary"  viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"/>
+                    </svg>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right mt-2">
+                    <div class="pt-1 pl-3 pr-3">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="filter-start-datetime">Starting at</label>
+                                    <input id="filter-start-datetime" type="datetime-local" class="form-control" v-model="filterStartDateTime" />
+                                </div>
+                                <div class="col-sm-12 mt-2">
+                                    <label for="filter-end-datetime">Ending at</label>
+                                    <input id="filter-end-datetime" type="datetime-local" class="form-control" v-model="filterEndDateTime" />
+                                </div>
+                                <div class="col-sm-12 mt-3">
+                                    <button class="btn btn-primary float-right" v-on:click.prevent="applyFilters">Apply</button>
+                                    <button class="btn float-right mr-2" v-on:click.prevent="clearFilters">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="row mt-4">

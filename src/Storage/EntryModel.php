@@ -2,7 +2,9 @@
 
 namespace Laravel\Telescope\Storage;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class EntryModel extends Model
 {
@@ -63,6 +65,7 @@ class EntryModel extends Model
         $this->whereType($query, $type)
                 ->whereBatchId($query, $options)
                 ->whereTag($query, $options)
+                ->whereFilterDates($query, $options)
                 ->whereFamilyHash($query, $options)
                 ->whereBeforeSequence($query, $options)
                 ->filter($query, $options);
@@ -116,6 +119,30 @@ class EntryModel extends Model
                 $query->select('entry_uuid')->from('telescope_entries_tags')->whereTag($tag);
             });
         });
+
+        return $this;
+    }
+
+    /**
+     * Scope the query for start and end dates.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return $this
+     */
+    protected function whereFilterDates($query, EntryQueryOptions $options)
+    {
+        if ($options->filterStartDateTime) {
+            $query->when($options->filterStartDateTime, function ($query) use ($options) {
+                return $query->where('created_at', '>', Carbon::parse($options->filterStartDateTime)->toDateTimeString());
+            });
+        }
+
+        if ($options->filterEndDateTime) {
+            $query->when($options->filterEndDateTime, function ($query) use ($options) {
+                return $query->where('created_at', '<', Carbon::parse($options->filterEndDateTime)->toDateTimeString());
+            });
+        }
 
         return $this;
     }

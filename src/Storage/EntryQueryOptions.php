@@ -2,7 +2,9 @@
 
 namespace Laravel\Telescope\Storage;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EntryQueryOptions
 {
@@ -19,6 +21,20 @@ class EntryQueryOptions
      * @var string
      */
     public $tag;
+
+    /**
+     * The start date time to retrieved entries.
+     *
+     * @var string
+     */
+    public $filterStartDateTime;
+
+    /**
+     * The end date time to filter retrieved entries.
+     *
+     * @var string
+     */
+    public $filterEndDateTime;
 
     /**
      * The family hash that must belong to retrieved entries.
@@ -61,6 +77,8 @@ class EntryQueryOptions
                 ->uuids($request->uuids)
                 ->beforeSequence($request->before)
                 ->tag($request->tag)
+                ->start($request->filterStartDateTime)
+                ->end($request->filterEndDateTime)
                 ->familyHash($request->family_hash)
                 ->limit($request->take ?? 50);
     }
@@ -124,6 +142,32 @@ class EntryQueryOptions
     public function tag(?string $tag)
     {
         $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Set start time to filter retrieved entries.
+     *
+     * @param  string  $start
+     * @return $this
+     */
+    public function start($start)
+    {
+        $this->filterStartDateTime = $start;
+
+        return $this;
+    }
+
+    /**
+     * Set start time to filter retrieved entries.
+     *
+     * @param  string  $end
+     * @return $this
+     */
+    public function end($end)
+    {
+        $this->filterEndDateTime = $end;
 
         return $this;
     }
