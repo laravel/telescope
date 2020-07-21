@@ -69,7 +69,7 @@
                         {{localTime(entry.content.resolved_at)}} ({{timeAgo(entry.content.resolved_at)}})
                     </span>
                     <span v-if="!entry.content.resolved_at">
-                        <a href="#" class="badge badge-success mr-1 font-weight-light" v-on:click.prevent="markExceptionAsResolved(entry)">Mark As Resolved</a>
+                        <a href="#" class="badge badge-success mr-1 font-weight-light" v-on:click.prevent="markExceptionAsResolved(entry)">Mark as resolved</a>
                     </span>
                 </td>
             </tr>
