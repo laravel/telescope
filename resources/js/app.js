@@ -20,7 +20,7 @@ window.Popper = require('popper.js').default;
 
 moment.tz.setDefault(Telescope.timezone);
 
-window.Telescope.basePath = '/' + window.Telescope.path;
+window.Telescope.basePath = window.Telescope.path;
 
 let routerBasePath = window.Telescope.basePath + '/';
 

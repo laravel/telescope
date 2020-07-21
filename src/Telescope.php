@@ -729,7 +729,7 @@ class Telescope
     public static function scriptVariables()
     {
         return [
-            'path' => config('telescope.path'),
+            'path' => parse_url(route('telescope'), PHP_URL_PATH) ?? '/',
             'timezone' => config('app.timezone'),
             'recording' => ! cache('telescope:pause-recording'),
         ];
