@@ -21,8 +21,8 @@
                     && this.entry.content.context !== null;
             },
 
-            resolveException(entry) {
-                this.alertConfirm('Are you sure you want to resolve this exception?', () => {
+            markExceptionAsResolved(entry) {
+                this.alertConfirm('Are you sure you want to mark this exception as resolved?', () => {
 
                     axios.put(Telescope.basePath + '/telescope-api/exceptions/' + entry.id, {
                         'resolved_at': 'now',
@@ -69,7 +69,7 @@
                         {{localTime(entry.content.resolved_at)}} ({{timeAgo(entry.content.resolved_at)}})
                     </span>
                     <span v-if="!entry.content.resolved_at">
-                        <a href="#" class="badge badge-success mr-1 font-weight-light" v-on:click.prevent="resolveException(entry)">Resolve now</a>
+                        <a href="#" class="badge badge-success mr-1 font-weight-light" v-on:click.prevent="markExceptionAsResolved(entry)">Mark As Resolved</a>
                     </span>
                 </td>
             </tr>
