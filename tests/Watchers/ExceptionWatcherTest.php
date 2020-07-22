@@ -5,10 +5,13 @@ namespace Laravel\Telescope\Tests\Watchers;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
+use Laravel\Telescope\TelescopeException;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\ExceptionWatcher;
 use ParseError;
+use Throwable;
 
 class ExceptionWatcherTest extends FeatureTestCase
 {
@@ -36,7 +39,7 @@ class ExceptionWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::EXCEPTION, $entry->type);
         $this->assertSame(BananaException::class, $entry->content['class']);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(30, $entry->content['line']);
+        $this->assertSame(33, $entry->content['line']);
         $this->assertSame('Something went bananas.', $entry->content['message']);
         $this->assertArrayHasKey('trace', $entry->content);
     }
@@ -67,9 +70,43 @@ class ExceptionWatcherTest extends FeatureTestCase
         $this->assertSame('syntax error, unexpected end of file', $entry->content['message']);
         $this->assertArrayHasKey('trace', $entry->content);
     }
+
+    public function test_telescope_exception_implementation()
+    {
+        $handler = $this->app->get(ExceptionHandler::class);
+
+        $context = [
+            'data' => Str::random(),
+        ];
+
+        $exception = new CustomException('Exception with context.', 1, null, $context);
+
+        $handler->report($exception);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::EXCEPTION, $entry->type);
+        $this->assertSame(CustomException::class, $entry->content['class']);
+        $this->assertSame(__FILE__, $entry->content['file']);
+        $this->assertSame(82, $entry->content['line']);
+        $this->assertSame('Exception with context.', $entry->content['message']);
+        $this->assertArrayHasKey('trace', $entry->content);
+        $this->assertArrayHasKey('data', $entry->content['context']);
+        $this->assertSame($context['data'], $entry->content['context']['data']);
+    }
 }
 
 class BananaException extends Exception
 {
     //
+}
+
+class CustomException extends TelescopeException
+{
+    public function __construct($message = '', $code = 0, Throwable $previous = null, $context = [])
+    {
+        $this->context = $context;
+
+        parent::__construct($message, $code, $previous);
+    }
 }

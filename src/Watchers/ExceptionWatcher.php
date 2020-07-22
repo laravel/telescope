@@ -5,6 +5,7 @@ namespace Laravel\Telescope\Watchers;
 use Exception;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
+use Laravel\Telescope\Contracts\TelescopeException;
 use Laravel\Telescope\ExceptionContext;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingExceptionEntry;
@@ -34,6 +35,8 @@ class ExceptionWatcher extends Watcher
         if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
+
+        static::mergeExceptionContext($event);
 
         $exception = $event->context['exception'];
 
@@ -79,5 +82,22 @@ class ExceptionWatcher extends Watcher
     {
         return ! isset($event->context['exception']) ||
             ! $event->context['exception'] instanceof Exception;
+    }
+
+    /**
+     * Merge event context with exception context.
+     *
+     * @param \Illuminate\Log\Events\MessageLogged $event
+     */
+    private static function mergeExceptionContext(MessageLogged $event)
+    {
+        $exception = $event->context['exception'];
+
+        if ($exception instanceof TelescopeException) {
+            $event->context = array_merge(
+                $event->context,
+                $exception->getContext()
+            );
+        }
     }
 }
