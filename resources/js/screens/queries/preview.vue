@@ -14,9 +14,15 @@
 
         methods:{
             formatSQL(sql, params) {
-                return sqlFormatter.format(sql, {
-                    params: _.map(params, param => _.isString(param) ? '"'+param+'"' : param)
-                });
+                return sqlFormatter.format(sql, this.prepareParams(params));
+            },
+
+            prepareParams(params) {
+                if (!_.isEmpty(params)) {
+                    return {
+                        params: _.map(params, param => _.isString(param) ? '"'+param+'"' : param)
+                    };
+                }
             },
 
             highlightSQL() {
