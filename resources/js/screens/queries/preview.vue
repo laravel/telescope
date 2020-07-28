@@ -1,24 +1,16 @@
 <script type="text/ecmascript-6">
-    import _ from 'lodash';
-    import sqlFormatter from "sql-formatter";
     import hljs from 'highlight.js/lib/highlight';
     import sql from 'highlight.js/lib/languages/sql';
+    import StandardSqlFormatter from 'sql-formatter/src/languages/StandardSqlFormatter';
 
     export default {
         data(){
             return {
-                entry: null,
-                batch: [],
+                sqlFormatter: new StandardSqlFormatter({}),
             };
         },
 
         methods:{
-            formatSQL(sql, params) {
-                return sqlFormatter.format(sql, {
-                    params: _.map(params, param => _.isString(param) ? '"'+param+'"' : param)
-                });
-            },
-
             highlightSQL() {
                 this.$nextTick(() => {
                     hljs.registerLanguage('sql', sql);
@@ -64,7 +56,7 @@
             <div class="card mt-5">
                 <div class="card-header"><h5>Query</h5></div>
 
-                <pre class="code-bg p-4 mb-0 text-white" ref="sqlcode">{{formatSQL(slotProps.entry.content.sql, slotProps.entry.content.bindings)}}</pre>
+                <pre class="code-bg p-4 mb-0 text-white" ref="sqlcode">{{sqlFormatter.format(slotProps.entry.content.sql)}}</pre>
             </div>
         </div>
     </preview-screen>
