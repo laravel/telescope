@@ -34,7 +34,7 @@ class MailWatcherTest extends FeatureTestCase
 
         $this->assertSame(EntryType::MAIL, $entry->type);
         $this->assertEmpty($entry->content['mailable']);
-        $this->assertSame(false, $entry->content['queued']);
+        $this->assertFalse($entry->content['queued']);
         $this->assertSame(['from@laravel.com'], array_keys($entry->content['from']));
         $this->assertSame(['to@laravel.com'], array_keys($entry->content['to']));
         $this->assertSame(['cc1@laravel.com', 'cc2@laravel.com'], array_keys($entry->content['cc']));

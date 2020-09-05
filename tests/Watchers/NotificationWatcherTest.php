@@ -41,7 +41,7 @@ class NotificationWatcherTest extends FeatureTestCase
 
         $this->assertSame(EntryType::NOTIFICATION, $entry->type);
         $this->assertSame(BoomerangNotification::class, $entry->content['notification']);
-        $this->assertSame(false, $entry->content['queued']);
+        $this->assertFalse($entry->content['queued']);
         $this->assertStringContainsString(is_array($route) ? implode(',', $route) : $route, $entry->content['notifiable']);
         $this->assertSame($channel, $entry->content['channel']);
         $this->assertNull($entry->content['response']);
