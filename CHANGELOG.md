@@ -1,6 +1,14 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v3.5.0...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v3.5.1...master)
+
+
+## [v3.5.1 (2020-07-28)](https://github.com/laravel/telescope/compare/v3.5.0...v3.5.1)
+
+### Fixed
+- Change text for Marking Exceptions as Resolved ([#916](https://github.com/laravel/telescope/pull/916))
+- Add explicit base font family fallback ([#920](https://github.com/laravel/telescope/pull/920))
+- Remove problematic unused code when formatting SQL ([#924](https://github.com/laravel/telescope/pull/924))
 
 
 ## [v3.5.0 (2020-05-14)](https://github.com/laravel/telescope/compare/v3.4.0...v3.5.0)

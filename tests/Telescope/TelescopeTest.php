@@ -98,7 +98,7 @@ class TelescopeTest extends FeatureTestCase
         Telescope::store($repository);
 
         $this->assertSame(2, $this->count);
-        $this->assertSame(2, count($storedEntries));
+        $this->assertCount(2, $storedEntries);
         $this->assertSame(36, strlen($storedBatchId));
         $this->assertInstanceOf(IncomingEntry::class, $storedEntries[0]);
     }
