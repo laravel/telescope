@@ -1,6 +1,19 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v3.5.1...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.0.0...master)
+
+
+## [v4.0.0 (2020-09-08)](https://github.com/laravel/telescope/compare/v3.5.1...v4.0.0)
+
+### Added
+- Laravel 8 support & Batches support ([#903](https://github.com/laravel/telescope/pull/903))
+
+### Fixed
+- May be written to an empty log ([#930](https://github.com/laravel/telescope/pull/930))
+
+### Removed 
+- Laravel 6 support ([#860](https://github.com/laravel/telescope/pull/860))
+- PHP 7.2 support ([3c3883d](https://github.com/laravel/telescope/commit/3c3883d5bf64fd9f960ffeb1557d5f8ce370bbde))
 
 
 ## [v3.5.1 (2020-07-28)](https://github.com/laravel/telescope/compare/v3.5.0...v3.5.1)
