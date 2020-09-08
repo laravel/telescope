@@ -12,7 +12,7 @@
 - May be written to an empty log ([#930](https://github.com/laravel/telescope/pull/930))
 
 ### Removed 
-- Laravel 6 support ([#860](https://github.com/laravel/telescope/pull/860))
+- Laravel 6 & 7 support ([#860](https://github.com/laravel/telescope/pull/860))
 - PHP 7.2 support ([3c3883d](https://github.com/laravel/telescope/commit/3c3883d5bf64fd9f960ffeb1557d5f8ce370bbde))
 
 
