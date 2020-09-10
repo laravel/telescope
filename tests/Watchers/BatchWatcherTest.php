@@ -3,15 +3,15 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Exception;
+use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Bus\QueueingDispatcher;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Bus\Batchable;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
-use Laravel\Telescope\Watchers\JobWatcher;
 use Laravel\Telescope\Watchers\BatchWatcher;
+use Laravel\Telescope\Watchers\JobWatcher;
 
 class BatchWatcherTest extends FeatureTestCase
 {
@@ -50,7 +50,7 @@ class BatchWatcherTest extends FeatureTestCase
         ]);
 
         $entries = $this->loadTelescopeEntries()->all();
-        
+
         $this->assertSame(3, count($entries));
 
         $this->assertSame(EntryType::JOB, $entries[0]->type);
