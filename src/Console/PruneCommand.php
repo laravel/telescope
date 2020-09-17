@@ -12,7 +12,7 @@ class PruneCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'telescope:prune {--hours=24 : The number of hours to retain Telescope data} {--keep-exceptions : Retain exceptions data}';
+    protected $signature = 'telescope:prune {--hours=24 : The number of hours to retain Telescope data} {--keep-exceptions : Retain exception data}';
 
     /**
      * The console command description.
