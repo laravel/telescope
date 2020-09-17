@@ -342,7 +342,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                 ->where('created_at', '<', $before);
 
         if ($keepExceptions) {
-            $query->where('type', '!=' ,'exception');
+            $query->where('type', '!=', 'exception');
         }
 
         $totalDeleted = 0;
