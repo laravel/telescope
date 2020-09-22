@@ -55,7 +55,6 @@ class EventWatcherTest extends FeatureTestCase
         $this->assertContains('PHP', $entry->content['payload']['data']);
     }
 
-
     public function test_event_watcher_registers_events_and_stores_payloads_with_subscriber_methods()
     {
         Event::listen(DummyEvent::class, DummyEventSubscriber::class.'@handleDummyEvent');
@@ -71,7 +70,7 @@ class EventWatcherTest extends FeatureTestCase
         $this->assertContains('Laravel', $entry->content['payload']['data']);
         $this->assertContains('PHP', $entry->content['payload']['data']);
     }
-    
+
     public function test_event_watcher_registers_events_and_stores_payloads_with_subscriber_classes()
     {
         Event::listen(DummyEvent::class, [DummyEventSubscriber::class, 'handleDummyEvent']);
