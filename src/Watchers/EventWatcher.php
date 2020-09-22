@@ -88,7 +88,9 @@ class EventWatcher extends Watcher
                 if (is_string($listener)) {
                     return Str::contains($listener, '@') ? $listener : $listener.'@handle';
                 } elseif (is_array($listener)) {
-                    return get_class($listener[0]).'@'.$listener[1];
+                    $class = is_object($listener[0]) ? get_class($listener[0]) : $listener[0];
+
+                    return $class.'@'.$listener[1];
                 }
 
                 return $this->formatClosureListener($listener);
