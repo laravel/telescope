@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.0.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.0.1...4.x)
+
+
+## [v4.0.1 (2020-09-22)](https://github.com/laravel/telescope/compare/v4.0.0...v4.0.1)
+
+### Fixed
+- Support new listeners syntax ([a69fc6f](https://github.com/laravel/telescope/commit/a69fc6f4f5fd5b0ac5a242981e162774cbb69e17))
 
 
 ## [v4.0.0 (2020-09-08)](https://github.com/laravel/telescope/compare/v3.5.1...v4.0.0)
