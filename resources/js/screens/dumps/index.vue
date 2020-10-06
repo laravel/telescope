@@ -1,5 +1,6 @@
 <script type="text/ecmascript-6">
     import axios from 'axios';
+    import sfdump from './sfdump';
 
     export default {
         /**
@@ -12,7 +13,9 @@
                 ready: false,
                 newEntriesTimeout: null,
                 newEntriesTimer: 2000,
-                recordingStatus: 'enabled'
+                recordingStatus: 'enabled',
+                sfDump: null,
+                triggered: [],
             };
         },
 
@@ -22,6 +25,8 @@
          */
         mounted() {
             document.title = "Dumps - Telescope";
+
+            this.initDumperJs();
 
             this.loadEntries();
 
@@ -43,6 +48,8 @@
                     this.dump = response.data.dump;
                     this.entries = response.data.entries;
                     this.recordingStatus = response.data.status;
+
+                    this.$nextTick(() => this.triggerDumps());
 
                     this.checkForNewEntries();
                 });
@@ -67,6 +74,33 @@
                     })
                 }, this.newEntriesTimer);
             },
+
+
+            /**
+             * Initialize the VarDumper JS functions.
+             */
+            initDumperJs() {
+                this.sfDump = sfdump(document);
+            },
+
+
+            /**
+             * Trigger the Sfdump() for every newly dumped <pre> tag.
+             */
+            triggerDumps() {
+                const divs = this.$refs.dumps;
+
+                if (! divs) return;
+
+                divs.forEach(el => {
+                    const id = el.children[0].id;
+
+                    if (this.triggered.includes(id)) return;
+
+                    this.sfDump(id);
+                    this.triggered.push(id);
+                });
+            }
         }
     }
 </script>
@@ -126,7 +160,7 @@
                         <span class="text-white text-monospace" style="font-size: 12px;">{{timeAgo(entry.created_at)}}</span>
                     </div>
 
-                    <div v-html="entry.content.dump"></div>
+                    <div v-html="entry.content.dump" ref="dumps"></div>
                 </div>
             </transition-group>
         </div>
