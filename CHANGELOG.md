@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.0.1...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.1.0...4.x)
+
+
+## [v4.1.0 (2020-10-06)](https://github.com/laravel/telescope/compare/v4.0.1...v4.1.0)
+
+### Added
+- Dump visibility toggling, search, etc ([#959](https://github.com/laravel/telescope/pull/959))
 
 
 ## [v4.0.1 (2020-09-22)](https://github.com/laravel/telescope/compare/v4.0.0...v4.0.1)
