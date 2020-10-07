@@ -186,7 +186,17 @@ class Telescope
      */
     protected static function handlingApprovedRequest($app)
     {
-        return ! $app->runningInConsole() && ! $app['request']->is(
+        if ($app->runningInConsole()) {
+            return false;
+        }
+
+        // Prioritize only_allow_paths if any are specified
+        $onlyAllowed = config('telescope.only_allow_paths', []);
+        if (! empty($onlyAllowed)) {
+            return $app['request']->is($onlyAllowed);
+        }
+
+        return ! $app['request']->is(
             array_merge([
                 config('telescope.path').'*',
                 'telescope-api*',

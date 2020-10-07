@@ -82,6 +82,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Allowed Paths
+    |--------------------------------------------------------------------------
+    |
+    | The following array lists the URI paths be watched by Telescope.
+    | NOTE: Specifying any paths in this list
+    |       ignores all paths specified in 'ignore_paths' below.
+    |
+    */
+
+    'only_allow_paths' => [
+        // 'api/*'
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Ignored Paths & Commands
     |--------------------------------------------------------------------------
     |
