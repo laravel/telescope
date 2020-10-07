@@ -190,10 +190,8 @@ class Telescope
             return false;
         }
 
-        // Prioritize only_allow_paths if any are specified
-        $onlyAllowed = config('telescope.only_allow_paths', []);
-        if (! empty($onlyAllowed)) {
-            return $app['request']->is($onlyAllowed);
+        if (! empty($only = config('telescope.only_paths', []))) {
+            return $app['request']->is($only);
         }
 
         return ! $app['request']->is(
