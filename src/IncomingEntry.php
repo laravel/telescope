@@ -264,6 +264,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is of type gate.
+     *
+     * @return bool
+     */
+    public function isGate()
+    {
+        return $this->type === EntryType::GATE;
+    }
+
+    /**
      * Get an array representation of the entry for storage.
      *
      * @return array
