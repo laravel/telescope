@@ -203,6 +203,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is an authorization gate check.
+     *
+     * @return bool
+     */
+    public function isGate()
+    {
+        return $this->type === EntryType::GATE;
+    }
+
+    /**
      * Determine if the incoming entry is a failed job.
      *
      * @return bool
@@ -261,16 +271,6 @@ class IncomingEntry
     public function familyHash()
     {
         return $this->familyHash;
-    }
-
-    /**
-     * Determine if the incoming entry is of type gate.
-     *
-     * @return bool
-     */
-    public function isGate()
-    {
-        return $this->type === EntryType::GATE;
     }
 
     /**
