@@ -193,6 +193,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a request.
+     *
+     * @return bool
+     */
+    public function isRequest()
+    {
+        return $this->type === EntryType::REQUEST;
+    }
+
+    /**
      * Determine if the incoming entry is a query.
      *
      * @return bool
