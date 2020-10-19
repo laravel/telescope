@@ -203,6 +203,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a mailable.
+     *
+     * @return bool
+     */
+    public function isMail()
+    {
+        return $this->type === EntryType::MAIL;
+    }
+
+    /**
      * Determine if the incoming entry is a query.
      *
      * @return bool
