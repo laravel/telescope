@@ -182,6 +182,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is an artisan command.
+     *
+     * @return bool
+     */
+    public function isCommand()
+    {
+        return $this->type === EntryType::COMMAND;
+    }
+
+    /**
      * Determine if the incoming entry is a request.
      *
      * @return bool
