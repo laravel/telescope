@@ -223,6 +223,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a view.
+     *
+     * @return bool
+     */
+    public function isView()
+    {
+        return $this->type === EntryType::VIEW;
+    }
+
+    /**
      * Determine if the incoming entry is a failed job.
      *
      * @return bool
