@@ -1,6 +1,26 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.0.0...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.2.0...master)
+
+
+## [v4.2.0 (2020-10-20)](https://github.com/laravel/telescope/compare/v4.1.0...v4.2.0)
+
+### Added
+- Be able to specify only allowed paths ([#963](https://github.com/laravel/telescope/pull/963), ([18c475f](https://github.com/laravel/telescope/commit/18c475f858ad1473585a1a715f61d32227d6742a)))
+- Added `isGate()` filter ([#967](https://github.com/laravel/telescope/pull/967))
+- Added `isRequest()` filter ([#966](https://github.com/laravel/telescope/pull/966))
+
+
+## [v4.1.0 (2020-10-06)](https://github.com/laravel/telescope/compare/v4.0.1...v4.1.0)
+
+### Added
+- Dump visibility toggling, search, etc ([#959](https://github.com/laravel/telescope/pull/959))
+
+
+## [v4.0.1 (2020-09-22)](https://github.com/laravel/telescope/compare/v4.0.0...v4.0.1)
+
+### Fixed
+- Support new listeners syntax ([a69fc6f](https://github.com/laravel/telescope/commit/a69fc6f4f5fd5b0ac5a242981e162774cbb69e17))
 
 
 ## [v4.0.0 (2020-09-08)](https://github.com/laravel/telescope/compare/v3.5.1...v4.0.0)

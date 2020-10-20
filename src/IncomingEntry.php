@@ -182,6 +182,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a request.
+     *
+     * @return bool
+     */
+    public function isRequest()
+    {
+        return $this->type === EntryType::REQUEST;
+    }
+
+    /**
      * Determine if the incoming entry is a failed request.
      *
      * @return bool
@@ -200,6 +210,16 @@ class IncomingEntry
     public function isQuery()
     {
         return $this->type === EntryType::QUERY;
+    }
+
+    /**
+     * Determine if the incoming entry is an authorization gate check.
+     *
+     * @return bool
+     */
+    public function isGate()
+    {
+        return $this->type === EntryType::GATE;
     }
 
     /**

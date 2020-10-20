@@ -15,7 +15,7 @@
         "cross-env": "^5.1",
         "highlight.js": "^9.12.0",
         "jquery": "^3.5",
-        "laravel-mix": "^5.0.4",
+        "laravel-mix": "^5.0.5",
         "lodash": "^4.17.19",
         "moment": "^2.10.6",
         "moment-timezone": "^0.5.21",

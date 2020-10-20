@@ -82,7 +82,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Ignored Paths & Commands
+    | Allowed / Ignored Paths & Commands
     |--------------------------------------------------------------------------
     |
     | The following array lists the URI paths and Artisan commands that will
@@ -90,6 +90,10 @@ return [
     | commands, like migrations and queue commands, are always ignored.
     |
     */
+
+    'only_paths' => [
+        // 'api/*'
+    ],
 
     'ignore_paths' => [
         'nova-api*',
