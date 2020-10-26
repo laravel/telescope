@@ -4,7 +4,7 @@ namespace Laravel\Telescope\Tests\Console;
 
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\Storage\EntryModel;
-use Laravel\Telescope\Tests\EntryModelFactory;
+use Laravel\Telescope\Database\Factories\EntryModelFactory;
 use Laravel\Telescope\Tests\FeatureTestCase;
 
 class ClearCommandTest extends FeatureTestCase

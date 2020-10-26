@@ -71,7 +71,7 @@ class TelescopeServiceProvider extends ServiceProvider
     private function registerMigrations()
     {
         if ($this->app->runningInConsole() && $this->shouldMigrate()) {
-            $this->loadMigrationsFrom(__DIR__.'/Storage/migrations');
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         }
     }
 

@@ -2,7 +2,7 @@
 
 namespace Laravel\Telescope\Tests\Console;
 
-use Laravel\Telescope\Tests\EntryModelFactory;
+use Laravel\Telescope\Database\Factories\EntryModelFactory;
 use Laravel\Telescope\Tests\FeatureTestCase;
 
 class PruneCommandTest extends FeatureTestCase
