@@ -14,9 +14,9 @@
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.3|^8.0",
         "ext-json": "*",
-        "laravel/framework": "^8.0",
+        "laravel/framework": "^8.2",
         "symfony/var-dumper": "^5.0"
     },
     "require-dev": {
@@ -25,7 +25,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Laravel\\Telescope\\": "src/"
+            "Laravel\\Telescope\\": "src/",
+            "Laravel\\Telescope\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {

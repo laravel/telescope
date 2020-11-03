@@ -3,9 +3,9 @@
 namespace Laravel\Telescope\Tests\Telescope;
 
 use Illuminate\Mail\Mailable;
+use Laravel\Telescope\Database\Factories\EntryModelFactory;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\FormatModel;
-use Laravel\Telescope\Tests\EntryModelFactory;
 use Laravel\Telescope\Tests\FeatureTestCase;
 
 class ExtractTagTest extends FeatureTestCase

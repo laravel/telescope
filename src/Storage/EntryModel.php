@@ -2,10 +2,14 @@
 
 namespace Laravel\Telescope\Storage;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Telescope\Database\Factories\EntryModelFactory;
 
 class EntryModel extends Model
 {
+    use HasFactory;
+
     /**
      * The table associated with the model.
      *
@@ -178,5 +182,15 @@ class EntryModel extends Model
     public function getConnectionName()
     {
         return config('telescope.storage.database.connection');
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public static function newFactory()
+    {
+        return EntryModelFactory::new();
     }
 }
