@@ -1,6 +1,15 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.2.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.3.0...4.x)
+
+
+## [v4.3.0 (2020-11-03)](https://github.com/laravel/telescope/compare/v4.2.0...v4.3.0)
+
+### Added
+- PHP 8 Support ([#977](https://github.com/laravel/telescope/pull/977))
+
+### Changed
+- Consolidate database directory ([#975](https://github.com/laravel/telescope/pull/975))
 
 
 ## [v4.2.0 (2020-10-20)](https://github.com/laravel/telescope/compare/v4.1.0...v4.2.0)
