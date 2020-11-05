@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.3.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.3.1...4.x)
+
+
+## [v4.3.1 (2020-11-05)](https://github.com/laravel/telescope/compare/v4.3.0...v4.3.1)
+
+### Fixed
+- Fix for database migrations publishing path ([#979](https://github.com/laravel/telescope/pull/979))
 
 
 ## [v4.3.0 (2020-11-03)](https://github.com/laravel/telescope/compare/v4.2.0...v4.3.0)
