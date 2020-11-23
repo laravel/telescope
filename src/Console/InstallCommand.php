@@ -74,7 +74,7 @@ class InstallCommand extends Command
         file_put_contents(app_path('Providers/TelescopeServiceProvider.php'), str_replace(
             "namespace App\Providers;",
             "namespace {$namespace}\Providers;",
-            file_get_contents(app_path('Providers/TelescopeServiceProvider.php'))
+            file_get_contents(base_path('vendor/laravel/telescope/src/TelescopeServiceProvider.php'))
         ));
     }
 }
