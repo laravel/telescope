@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.3.2...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.3.3...4.x)
+
+
+## [v4.3.3 (2020-12-08)](https://github.com/laravel/telescope/compare/v4.3.2...v4.3.3)
+
+### Fixed
+- Revert "[4.x] Updated db command for clearing tables" ([#993](https://github.com/laravel/telescope/pull/993))
 
 
 ## [v4.3.2 (2020-12-08)](https://github.com/laravel/telescope/compare/v4.3.1...v4.3.2)
