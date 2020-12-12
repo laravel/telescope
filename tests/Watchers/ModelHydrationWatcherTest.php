@@ -57,4 +57,3 @@ class TestUser extends Model
 
     protected $guarded = [];
 }
-
