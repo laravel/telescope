@@ -74,7 +74,7 @@ class ModelWatcher extends Watcher
             return;
         }
 
-       if (! isset($this->hydrationEntries[$modelClass])) {
+        if (! isset($this->hydrationEntries[$modelClass])) {
             $this->hydrationEntries[$modelClass] = IncomingEntry::make([
                 'action' => 'retrieved',
                 'model' => $modelClass,
