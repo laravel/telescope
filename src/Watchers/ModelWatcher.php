@@ -45,7 +45,7 @@ class ModelWatcher extends Watcher
             return;
         }
 
-        if (Str::is('*retrieved*', $event) && ($this->options['hydrations'] ?? false)) {
+        if (Str::is('*retrieved*', $event)) {
             $this->recordHydrations($data);
 
             return;
@@ -70,7 +70,8 @@ class ModelWatcher extends Watcher
      */
     public function recordHydrations($data)
     {
-        if (! $this->shouldRecordHydration($modelClass = get_class($data[0]))) {
+        if (! ($this->options['hydrations'] ?? false)
+            || ! $this->shouldRecordHydration($modelClass = get_class($data[0]))) {
             return;
         }
 
