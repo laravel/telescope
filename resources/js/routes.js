@@ -128,6 +128,18 @@ export default [
     },
 
     {
+        path: '/hydrations/:id',
+        name: 'hydration-preview',
+        component: require('./screens/hydrations/preview').default,
+    },
+
+    {
+        path: '/hydrations',
+        name: 'hydrations',
+        component: require('./screens/hydrations/index').default,
+    },
+
+    {
         path: '/requests/:id',
         name: 'request-preview',
         component: require('./screens/requests/preview').default,
