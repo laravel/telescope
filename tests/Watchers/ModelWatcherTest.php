@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
@@ -17,7 +18,8 @@ class ModelWatcherTest extends FeatureTestCase
         $app->get('config')->set('telescope.watchers', [
             ModelWatcher::class => [
                 'enabled' => true,
-                'events' => ['eloquent.created*', 'eloquent.updated*'],
+                'events' => ['eloquent.created*', 'eloquent.updated*', 'eloquent.retrieved*'],
+                'hydrations' => true,
             ],
         ]);
     }
@@ -64,6 +66,38 @@ class ModelWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::MODEL, $entry->type);
         $this->assertSame('created', $entry->content['action']);
         $this->assertSame(UserEloquent::class.':1', $entry->content['model']);
+    }
+
+    public function test_model_watcher_registers_hydration_entry()
+    {
+        Telescope::withoutRecording(function () {
+            $this->loadLaravelMigrations();
+        });
+
+        Telescope::stopRecording();
+        $this->createUser();
+        $this->createUser();
+        $this->createUser();
+
+        Telescope::startRecording();
+        UserEloquent::all();
+        Telescope::stopRecording();
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::MODEL, $entry->type);
+        $this->assertSame(3, $entry->content['count']);
+        $this->assertSame(UserEloquent::class, $entry->content['model']);
+        $this->assertCount(1, $this->loadTelescopeEntries());
+    }
+
+    protected function createUser()
+    {
+        UserEloquent::create([
+            'name' => 'Telescope',
+            'email' => Str::random(),
+            'password' => 1,
+        ]);
     }
 }
 
