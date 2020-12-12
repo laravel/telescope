@@ -1,6 +1,7 @@
 <?php
 
 use Laravel\Telescope\Http\Middleware\Authorize;
+use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Watchers;
 
 return [
@@ -138,6 +139,11 @@ return [
         Watchers\ModelWatcher::class => [
             'enabled' => env('TELESCOPE_MODEL_WATCHER', true),
             'events' => ['eloquent.*'],
+        ],
+
+        Watchers\ModelHydrationWatcher::class => [
+            'enabled' => env('TELESCOPE_MODEL_HYDRATION_WATCHER', true),
+            'ignore' => [EntryModel::class],
         ],
 
         Watchers\NotificationWatcher::class => env('TELESCOPE_NOTIFICATION_WATCHER', true),

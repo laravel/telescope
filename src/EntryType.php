@@ -14,6 +14,7 @@ class EntryType
     public const LOG = 'log';
     public const MAIL = 'mail';
     public const MODEL = 'model';
+    public const HYDRATION = 'hydration';
     public const NOTIFICATION = 'notification';
     public const QUERY = 'query';
     public const REDIS = 'redis';

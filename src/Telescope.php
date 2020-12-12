@@ -441,6 +441,17 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
+    public static function recordHydrationEvent(IncomingEntry $entry)
+    {
+        static::record(EntryType::HYDRATION, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
     public static function recordModelEvent(IncomingEntry $entry)
     {
         static::record(EntryType::MODEL, $entry);
