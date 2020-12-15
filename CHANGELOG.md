@@ -1,6 +1,15 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.3.3...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.0...4.x)
+
+
+## [v4.4.0 (2020-12-15)](https://github.com/laravel/telescope/compare/v4.3.3...v4.4.0)
+
+### Added
+- Add model hydrations to model watcher ([#1000](https://github.com/laravel/telescope/pull/1000))
+
+### Fixed
+- Fix typo in memory calculation ([#997](https://github.com/laravel/telescope/pull/997))
 
 
 ## [v4.3.3 (2020-12-08)](https://github.com/laravel/telescope/compare/v4.3.2...v4.3.3)
