@@ -29,11 +29,13 @@ class FeatureTestCase extends TestCase
         }
 
         Telescope::flushEntries();
+        Telescope::$afterStoringHooks = [];
     }
 
     protected function tearDown(): void
     {
         Telescope::flushEntries();
+        Telescope::$afterStoringHooks = [];
 
         Queue::createPayloadUsing(null);
 

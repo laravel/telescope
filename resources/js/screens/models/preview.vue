@@ -35,6 +35,13 @@
                     </span>
                 </td>
             </tr>
+
+            <tr v-if="slotProps.entry.content.count">
+                <td class="table-fit font-weight-bold">Hydrated</td>
+                <td>
+                    {{slotProps.entry.content.count}}
+                </td>
+            </tr>
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">

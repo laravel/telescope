@@ -37,6 +37,7 @@ export default {
         modelActionClass(action) {
             if (action == 'created') return 'success';
             if (action == 'updated') return 'info';
+            if (action == 'retrieved') return 'secondary';
             if (action == 'deleted' || action == 'forceDeleted') return 'danger';
         },
 
