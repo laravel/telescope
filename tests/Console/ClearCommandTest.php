@@ -20,7 +20,7 @@ class ClearCommandTest extends FeatureTestCase
 
         $this->artisan('telescope:clear');
 
-        $this->assertSame(0, EntryModel::query()->count());
+        $this->assertSame(0, EntryModel::getModelClass()::query()->count());
         $this->assertSame(0, DB::table('telescope_monitoring')->count());
     }
 }
