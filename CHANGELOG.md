@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.1...4.x)
+
+
+## [v4.4.1 (2021-01-26)](https://github.com/laravel/telescope/compare/v4.4.0...v4.4.1)
+
+### Fixed
+- Prevent access to uninitialized typed properties ([#1005](https://github.com/laravel/telescope/pull/1005))
 
 
 ## [v4.4.0 (2020-12-15)](https://github.com/laravel/telescope/compare/v4.3.3...v4.4.0)
