@@ -85,7 +85,7 @@ class FeatureTestCase extends TestCase
     {
         $this->terminateTelescope();
 
-        return EntryModel::all();
+        return EntryModel::getModelClass()::all();
     }
 
     public function terminateTelescope()

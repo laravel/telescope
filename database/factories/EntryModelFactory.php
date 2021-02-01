@@ -15,7 +15,7 @@ class EntryModelFactory extends Factory
      */
     public function modelName()
     {
-        return EntryModel::class;
+        return EntryModel::getModelClass();
     }
 
     /**
