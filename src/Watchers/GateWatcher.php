@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Auth\Access\Response;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
@@ -44,7 +45,7 @@ class GateWatcher extends Watcher
 
         Telescope::recordGate(IncomingEntry::make([
             'ability' => $ability,
-            'result' => $result ? 'allowed' : 'denied',
+            'result' => $this->gateResult($result),
             'arguments' => $this->formatArguments($arguments),
             'file' => $caller['file'],
             'line' => $caller['line'],
@@ -62,6 +63,21 @@ class GateWatcher extends Watcher
     private function shouldIgnore($ability)
     {
         return Str::is($this->options['ignore_abilities'] ?? [], $ability);
+    }
+
+    /**
+     * Determine if the gate result is denied or allowed.
+     *
+     * @param  bool|\Illuminate\Auth\Access\Response  $result
+     * @return string
+     */
+    private function gateResult($result)
+    {
+        if ($result instanceof Response) {
+            return $result->allowed() ? 'allowed' : 'denied';
+        }
+
+        return $result ? 'allowed' : 'denied';
     }
 
     /**
