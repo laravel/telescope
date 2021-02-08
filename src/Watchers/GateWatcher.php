@@ -55,9 +55,20 @@ class GateWatcher extends Watcher
     }
 
     /**
-     * Determine if the result is denied or allowed.
+     * Determine if the ability should be ignored.
      *
-     * @param bool|\Illuminate\Auth\Access\Response $result
+     * @param  string  $ability
+     * @return bool
+     */
+    private function shouldIgnore($ability)
+    {
+        return Str::is($this->options['ignore_abilities'] ?? [], $ability);
+    }
+
+    /**
+     * Determine if the gate result is denied or allowed.
+     *
+     * @param  bool|\Illuminate\Auth\Access\Response  $result
      * @return string
      */
     private function gateResult($result)
@@ -67,17 +78,6 @@ class GateWatcher extends Watcher
         }
 
         return $result ? 'allowed' : 'denied';
-    }
-
-    /**
-     * Determine if the ability should be ignored.
-     *
-     * @param  string  $ability
-     * @return bool
-     */
-    private function shouldIgnore($ability)
-    {
-        return Str::is($this->options['ignore_abilities'] ?? [], $ability);
     }
 
     /**
