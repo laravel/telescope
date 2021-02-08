@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Auth\Access\Response;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
@@ -61,7 +62,7 @@ class GateWatcher extends Watcher
      */
     private function gateResult($result)
     {
-        if ($result instanceof \Illuminate\Auth\Access\Response) {
+        if ($result instanceof Response) {
             return $result->allowed() ? 'allowed' : 'denied';
         }
 
