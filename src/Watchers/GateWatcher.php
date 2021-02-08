@@ -44,13 +44,28 @@ class GateWatcher extends Watcher
 
         Telescope::recordGate(IncomingEntry::make([
             'ability' => $ability,
-            'result' => $result ? 'allowed' : 'denied',
+            'result' => $this->gateResult($result),
             'arguments' => $this->formatArguments($arguments),
             'file' => $caller['file'],
             'line' => $caller['line'],
         ]));
 
         return $result;
+    }
+
+    /**
+     * Determine if the result is denied or allowed.
+     *
+     * @param bool|\Illuminate\Auth\Access\Response $result
+     * @return string
+     */
+    private function gateResult($result)
+    {
+        if ($result instanceof \Illuminate\Auth\Access\Response) {
+            return $result->allowed() ? 'allowed' : 'denied';
+        }
+
+        return $result ? 'allowed' : 'denied';
     }
 
     /**
