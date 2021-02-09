@@ -2,8 +2,6 @@
 
 namespace Laravel\Telescope\Tests\Http;
 
-use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Testing\TestResponse as LegacyTestResponse;
 use Illuminate\Testing\TestResponse;
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
 use Laravel\Telescope\EntryType;
@@ -83,11 +81,7 @@ class RouteTest extends FeatureTestCase
             return $this;
         };
 
-        if (Application::VERSION === '7.x-dev' || version_compare(Application::VERSION, '7.0', '>=')) {
-            TestResponse::macro('assertJsonExactFragment', $assertion);
-        } else {
-            LegacyTestResponse::macro('assertJsonExactFragment', $assertion);
-        }
+        TestResponse::macro('assertJsonExactFragment', $assertion);
     }
 
     public function test_named_route()
