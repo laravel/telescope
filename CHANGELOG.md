@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.1...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.2...4.x)
+
+
+## [v4.4.2 (2021-02-09)](https://github.com/laravel/telescope/compare/v4.4.1...v4.4.2)
+
+### Fixed
+- GateWatcher shows allowed when it is denied via Response class ([#1010](https://github.com/laravel/telescope/pull/1010))
 
 
 ## [v4.4.1 (2021-01-26)](https://github.com/laravel/telescope/compare/v4.4.0...v4.4.1)
