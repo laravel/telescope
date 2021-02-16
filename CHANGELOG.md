@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.2...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.3...4.x)
+
+
+## [v4.4.3 (2021-02-16)](https://github.com/laravel/telescope/compare/v4.4.2...v4.4.3)
+
+### Fixed
+- Handle when `$batch` is `null` ([#1013](https://github.com/laravel/telescope/pull/1013))
 
 
 ## [v4.4.2 (2021-02-09)](https://github.com/laravel/telescope/compare/v4.4.1...v4.4.2)
