@@ -187,6 +187,10 @@ class JobWatcher extends Watcher
         if (isset($properties['batchId'])) {
             $batch = app(BatchRepository::class)->find($properties['batchId']);
 
+            if (is_null($batch)) {
+                return;
+            }
+
             Telescope::recordUpdate(EntryUpdate::make(
                 $properties['batchId'], EntryType::BATCH, $batch->toArray()
             ));
