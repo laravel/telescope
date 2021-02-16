@@ -7,6 +7,7 @@ use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\JobWatcher;
@@ -41,7 +42,7 @@ class JobWatcherTest extends FeatureTestCase
             'connection' => 'database',
             '--once' => true,
             '--queue' => 'on-demand',
-        ]);
+        ])->run();
 
         $entry = $this->loadTelescopeEntries()->first();
 
@@ -53,6 +54,26 @@ class JobWatcherTest extends FeatureTestCase
         $this->assertSame('Awesome Laravel', $entry->content['data']['payload']);
     }
 
+    public function test_job_registers_entry_with_batchId_in_payload()
+    {
+        $this->app->get(Dispatcher::class)->dispatch(new MockedBatchableJob($batchId = (string) Str::orderedUuid()));
+
+        $this->artisan('queue:work', [
+            'connection' => 'database',
+            '--once' => true,
+            '--queue' => 'on-demand',
+        ])->run();
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::JOB, $entry->type);
+        $this->assertSame('processed', $entry->content['status']);
+        $this->assertSame('database', $entry->content['connection']);
+        $this->assertSame(MockedBatchableJob::class, $entry->content['name']);
+        $this->assertSame('on-demand', $entry->content['queue']);
+        $this->assertSame($batchId, $entry->content['data']['batchId']);
+    }
+
     public function test_failed_jobs_register_entry()
     {
         $this->app->get(Dispatcher::class)->dispatch(
@@ -62,7 +83,7 @@ class JobWatcherTest extends FeatureTestCase
         $this->artisan('queue:work', [
             'connection' => 'database',
             '--once' => true,
-        ]);
+        ])->run();
 
         $entry = $this->loadTelescopeEntries()->first();
 
@@ -95,6 +116,25 @@ class JobWatcherTest extends FeatureTestCase
             $table->longText('exception');
             $table->timestamp('failed_at')->useCurrent();
         });
+    }
+}
+
+class MockedBatchableJob implements ShouldQueue
+{
+    public $connection = 'database';
+
+    public $queue = 'on-demand';
+
+    public $batchId;
+
+    public function __construct($batchId)
+    {
+        $this->batchId = $batchId;
+    }
+
+    public function handle()
+    {
+        //
     }
 }
 
