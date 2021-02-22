@@ -2,10 +2,10 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Auth\Access\Events\GateEvaluated;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Laravel\Telescope\FormatModel;
 use Laravel\Telescope\IncomingEntry;
@@ -23,7 +23,18 @@ class GateWatcher extends Watcher
      */
     public function register($app)
     {
-        Gate::after([$this, 'recordGateCheck']);
+        $app['events']->listen(GateEvaluated::class, [$this, 'handleGateEvaluated']);
+    }
+
+    /**
+     * Handle the GateEvaluated event.
+     *
+     * @param  \Illuminate\Auth\Access\Events\GateEvaluated  $event
+     * @return void
+     */
+    public function handleGateEvaluated(GateEvaluated $event)
+    {
+        $this->recordGateCheck($event->user, $event->ability, $event->result, $event->arguments);
     }
 
     /**
@@ -41,7 +52,7 @@ class GateWatcher extends Watcher
             return;
         }
 
-        $caller = $this->getCallerFromStackTrace();
+        $caller = $this->getCallerFromStackTrace([0, 1]);
 
         Telescope::recordGate(IncomingEntry::make([
             'ability' => $ability,

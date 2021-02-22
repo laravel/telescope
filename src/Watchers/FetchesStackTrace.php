@@ -9,11 +9,12 @@ trait FetchesStackTrace
     /**
      * Find the first frame in the stack trace outside of Telescope/Laravel.
      *
+     * @param  string|array  $forgetLines
      * @return array
      */
-    protected function getCallerFromStackTrace()
+    protected function getCallerFromStackTrace($forgetLines = 0)
     {
-        $trace = collect(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS))->forget(0);
+        $trace = collect(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS))->forget($forgetLines);
 
         return $trace->first(function ($frame) {
             if (! isset($frame['file'])) {
