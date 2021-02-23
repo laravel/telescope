@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.3...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.4...4.x)
+
+
+## [v4.4.4 (2021-02-23)](https://github.com/laravel/telescope/compare/v4.4.3...v4.4.4)
+
+### Fixed
+- Implement new `GateEvaluated` event ([#1018](https://github.com/laravel/telescope/pull/1018))
 
 
 ## [v4.4.3 (2021-02-16)](https://github.com/laravel/telescope/compare/v4.4.2...v4.4.3)
