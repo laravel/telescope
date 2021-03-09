@@ -40,14 +40,14 @@ class DumpWatcher extends Watcher
      */
     public function register($app)
     {
-        if (! $this->cache->get('telescope:dump-watcher')) {
-            return;
-        }
-
         $htmlDumper = new HtmlDumper();
         $htmlDumper->setDumpHeader('');
 
         VarDumper::setHandler(function ($var) use ($htmlDumper) {
+            if (! $this->cache->get('telescope:dump-watcher')) {
+                return;
+            }
+
             $this->recordDump($htmlDumper->dump(
                 (new VarCloner)->cloneVar($var), true
             ));
