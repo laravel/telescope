@@ -118,7 +118,7 @@ class EntryModel extends Model
         $query->when($options->tag, function ($query, $tag) {
             return $query->whereIn('uuid', function ($query) use ($tag) {
                 $tags = preg_split('/(\s*,*\s*)+,+(\s*,*\s*)+/', trim($tag));
-                
+
                 $query->select('entry_uuid')->from('telescope_entries_tags')
                 ->whereIn('tag', $tags)
                 ->when(count($tags) > 1, function ($query) use ($tags) {
