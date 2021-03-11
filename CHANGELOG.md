@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.5...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.6...4.x)
+
+
+## [v4.4.6 (2021-03-11)](https://github.com/laravel/telescope/compare/v4.4.5...v4.4.6)
+
+### Fixed
+- Revert "[4.x] Move cache read inside handler to avoid early cache call" ([#1030](https://github.com/laravel/telescope/pull/1030))
 
 
 ## [v4.4.5 (2021-03-09)](https://github.com/laravel/telescope/compare/v4.4.4...v4.4.5)
