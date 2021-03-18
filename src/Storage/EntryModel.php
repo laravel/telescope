@@ -120,7 +120,7 @@ class EntryModel extends Model
             // Adding code for Searching by Content
             [$key,$values] = explode(':', $tag, 2);
 
-            if (strtolower($key) == "content") {
+            if (strtolower($key) == 'content') {
                 return $query->where('content', 'like', '%'.$values.'%');
             } else {
                 return $query->whereIn('uuid', function ($query) use ($tag) {
