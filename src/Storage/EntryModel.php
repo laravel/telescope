@@ -65,11 +65,11 @@ class EntryModel extends Model
     public function scopeWithTelescopeOptions($query, $type, EntryQueryOptions $options)
     {
         $this->whereType($query, $type)
-            ->whereBatchId($query, $options)
-            ->whereTag($query, $options)
-            ->whereFamilyHash($query, $options)
-            ->whereBeforeSequence($query, $options)
-            ->filter($query, $options);
+                ->whereBatchId($query, $options)
+                ->whereTag($query, $options)
+                ->whereFamilyHash($query, $options)
+                ->whereBeforeSequence($query, $options)
+                ->filter($query, $options);
 
         return $query;
     }
@@ -118,10 +118,10 @@ class EntryModel extends Model
         $query->when($options->tag, function ($query, $tag) {
 
             // Adding code for Searching by Content
-            list($key,$values) = explode(':', $tag, 2);
+            [$key,$values] = explode(':', $tag, 2);
 
-            if (strtolower($key) == "content") {
-                return $query->where('content', 'like', "%" . $values . "%");
+            if (strtolower($key) == 'content') {
+                return $query->where('content', 'like', '%'.$values.'%');
             } else {
                 return $query->whereIn('uuid', function ($query) use ($tag) {
                     $query->select('entry_uuid')->from('telescope_entries_tags')->whereTag($tag);
