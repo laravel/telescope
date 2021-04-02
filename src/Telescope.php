@@ -144,11 +144,23 @@ class Telescope
 
         static::registerMailableTagExtractor();
 
-        if (static::runningApprovedArtisanCommand($app) ||
-            static::handlingApprovedRequest($app)
+        if (! static::runningWithinOctane($app) &&
+            (static::runningApprovedArtisanCommand($app) ||
+            static::handlingApprovedRequest($app))
         ) {
             static::startRecording();
         }
+    }
+
+    /**
+     * Determine if Telescope is running within Octane.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return bool
+     */
+    protected static function runningWithinOctane($app)
+    {
+        return isset($_SERVER['LARAVEL_OCTANE']);
     }
 
     /**
@@ -190,11 +202,22 @@ class Telescope
             return false;
         }
 
+        return static::requestIsToApprovedUri($app['request']);
+    }
+
+    /**
+     * Determine if the request is to an approved URI.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected static function requestIsToApprovedUri($request)
+    {
         if (! empty($only = config('telescope.only_paths', []))) {
-            return $app['request']->is($only);
+            return $request->is($only);
         }
 
-        return ! $app['request']->is(
+        return ! $request->is(
             array_merge([
                 config('telescope.path').'*',
                 'telescope-api*',

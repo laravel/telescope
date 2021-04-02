@@ -129,7 +129,7 @@ class EventWatcher extends Watcher
     protected function eventIsFiredByTheFramework($eventName)
     {
         return Str::is(
-            ['Illuminate\*', 'eloquent*', 'bootstrapped*', 'bootstrapping*', 'creating*', 'composing*'],
+            ['Illuminate\*', 'Laravel\Octane\*', 'eloquent*', 'bootstrapped*', 'bootstrapping*', 'creating*', 'composing*'],
             $eventName
         );
     }
