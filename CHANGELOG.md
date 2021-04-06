@@ -1,6 +1,19 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.5...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.7...master)
+
+
+## [v4.4.7 (2021-04-06)](https://github.com/laravel/telescope/compare/v4.4.6...v4.4.7)
+
+### Changed
+- Move booting of commands ([#1034](https://github.com/laravel/telescope/pull/1034))
+- Prep For Octane ([#1040](https://github.com/laravel/telescope/pull/1040))
+
+
+## [v4.4.6 (2021-03-11)](https://github.com/laravel/telescope/compare/v4.4.5...v4.4.6)
+
+### Fixed
+- Revert "[4.x] Move cache read inside handler to avoid early cache call" ([#1030](https://github.com/laravel/telescope/pull/1030))
 
 
 ## [v4.4.5 (2021-03-09)](https://github.com/laravel/telescope/compare/v4.4.4...v4.4.5)
