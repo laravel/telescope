@@ -1,6 +1,13 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.6...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.7...4.x)
+
+
+## [v4.4.7 (2021-04-06)](https://github.com/laravel/telescope/compare/v4.4.6...v4.4.7)
+
+### Changed
+- Move booting of commands ([#1034](https://github.com/laravel/telescope/pull/1034))
+- Prep For Octane ([#1040](https://github.com/laravel/telescope/pull/1040))
 
 
 ## [v4.4.6 (2021-03-11)](https://github.com/laravel/telescope/compare/v4.4.5...v4.4.6)
