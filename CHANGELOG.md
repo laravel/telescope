@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.7...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.8...master)
+
+
+## [v4.4.8 (2021-04-06)](https://github.com/laravel/telescope/compare/v4.4.7...v4.4.8)
+
+### Fixed
+- Fix query preview ([#1044](https://github.com/laravel/telescope/pull/1044))
 
 
 ## [v4.4.7 (2021-04-06)](https://github.com/laravel/telescope/compare/v4.4.6...v4.4.7)
