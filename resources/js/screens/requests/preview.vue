@@ -1,6 +1,4 @@
 <script type="text/ecmascript-6">
-    import axios from 'axios';
-
     export default {
         data() {
             return {
@@ -35,7 +33,7 @@
                 {{slotProps.entry.content.middleware.join(", ")}}
             </td>
         </tr>
-        
+
         <tr>
             <td class="table-fit font-weight-bold">Path</td>
             <td>

@@ -18,6 +18,8 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerCommands();
+
         if (! config('telescope.enabled')) {
             return;
         }
@@ -27,7 +29,6 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->registerRoutes();
         $this->registerMigrations();
         $this->registerPublishing();
-        $this->registerCommands();
 
         Telescope::start($this->app);
         Telescope::listenForStorageOpportunities($this->app);
