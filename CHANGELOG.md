@@ -1,6 +1,14 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.8...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.9...4.x)
+
+
+## [v4.4.9 (2021-04-06)](https://github.com/laravel/telescope/compare/v4.4.8...v4.4.9)
+
+### Fixed
+- Always boot commands ([#1045](https://github.com/laravel/telescope/pull/1045))
+- Fix JSON indenting ([#1049](https://github.com/laravel/telescope/pull/1049))
+- Fix query formatting in preview ([#1050](https://github.com/laravel/telescope/pull/1050))
 
 
 ## [v4.4.8 (2021-04-06)](https://github.com/laravel/telescope/compare/v4.4.7...v4.4.8)
