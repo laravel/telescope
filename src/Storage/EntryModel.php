@@ -117,7 +117,7 @@ class EntryModel extends Model
     {
         $query->when($options->tag, function ($query, $tag) {
             if(strpos($tag, ',') !== false) {
-                $tags = collect(explode(',', $tag))->filter(function($tag){
+                $tags = collect(explode(',', $tag))->filter(function ($tag) {
                     return strlen($tag) > 0; 
                 });
                 $query->select('entry_uuid')->from('telescope_entries_tags')->whereIn('tag', $tags);
