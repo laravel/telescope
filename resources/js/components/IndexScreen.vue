@@ -272,7 +272,7 @@
             <input type="text" class="form-control w-25"
                    v-if="!hideSearch && (tag || entries.length > 0)"
                    id="searchInput"
-                   placeholder="Search Tag" v-model="tag" @input.stop="search">
+                   placeholder="Search Tags" v-model="tag" @input.stop="search">
         </div>
 
         <p v-if="recordingStatus !== 'enabled'" class="mt-0 mb-0 disabled-watcher d-flex align-items-center">

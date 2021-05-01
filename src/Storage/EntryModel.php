@@ -116,9 +116,14 @@ class EntryModel extends Model
     protected function whereTag($query, EntryQueryOptions $options)
     {
         $query->when($options->tag, function ($query, $tag) {
-            return $query->whereIn('uuid', function ($query) use ($tag) {
+            if(strpos($tag, ",") !== false) {
+                $tags = collect(explode(",", $tag))->filter(function($tag){
+                    return strlen($tag) > 0; 
+                });
+                $query->select('entry_uuid')->from('telescope_entries_tags')->whereIn('tag', $tags);
+            } else {
                 $query->select('entry_uuid')->from('telescope_entries_tags')->whereTag($tag);
-            });
+            }
         });
 
         return $this;
