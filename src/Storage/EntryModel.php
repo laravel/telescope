@@ -31,6 +31,7 @@ class EntryModel extends Model
      */
     protected $casts = [
         'content' => 'json',
+        'should_display_on_index' => 'boolean',
     ];
 
     /**
