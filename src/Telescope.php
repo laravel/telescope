@@ -8,12 +8,10 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Testing\Fakes\EventFake;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
-use RuntimeException;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Throwable;
 
@@ -787,23 +785,5 @@ class Telescope
         static::$runsMigrations = false;
 
         return new static;
-    }
-
-    /**
-     * Check if assets are up-to-date.
-     *
-     * @return bool
-     *
-     * @throws \RuntimeException
-     */
-    public static function assetsAreCurrent()
-    {
-        $publishedPath = public_path('vendor/telescope/mix-manifest.json');
-
-        if (! File::exists($publishedPath)) {
-            throw new RuntimeException('The Telescope assets are not published. Please run: php artisan telescope:publish');
-        }
-
-        return File::get($publishedPath) === File::get(__DIR__.'/../public/mix-manifest.json');
     }
 }
