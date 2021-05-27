@@ -118,8 +118,8 @@ class QueryWatcher extends Watcher
      * @param string $binding
      * @return string
      */
-    protected function quoteStringBinding($event, $binding) {
-
+    protected function quoteStringBinding($event, $binding) 
+    {
         try {
             return $event->connection->getPdo()->quote($binding);
         } catch (\PDOException $e) {
@@ -128,13 +128,13 @@ class QueryWatcher extends Watcher
 
         // Fallback in case that PDO::quote function is missing.
         $binding = \strtr($binding, [
-            chr(26) => "\\Z",   // Substitute
-            chr(8) => "\\b",    // Backspace
+            chr(26) => '\\Z',   // Substitute
+            chr(8) => '\\b',    // Backspace
             '"' => '\"',
             "'" => "\'",
             '\\' => '\\\\'
         ]);
 
-        return "'" . $binding . "'";
+        return "'".$binding."'";
     }
 }
