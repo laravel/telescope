@@ -100,7 +100,7 @@ class QueryWatcher extends Watcher
             if ($binding === null) {
                 $binding = 'null';
             } elseif (! is_int($binding) && ! is_float($binding)) {
-                $binding = $event->quoteStringBinding($event, $binding);
+                $binding = $this->quoteStringBinding($event, $binding);
             }
 
             $sql = preg_replace($regex, $binding, $sql, 1);
