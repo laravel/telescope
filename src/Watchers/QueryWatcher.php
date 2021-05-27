@@ -10,6 +10,7 @@ class QueryWatcher extends Watcher
 {
     use FetchesStackTrace;
 
+
     /**
      * Register the watcher.
      *
@@ -100,12 +101,40 @@ class QueryWatcher extends Watcher
             if ($binding === null) {
                 $binding = 'null';
             } elseif (! is_int($binding) && ! is_float($binding)) {
-                $binding = $event->connection->getPdo()->quote($binding);
+                $binding = $event->quoteStringBinding($event, $binding);
             }
 
             $sql = preg_replace($regex, $binding, $sql, 1);
         }
 
         return $sql;
+    }
+
+
+    /**
+     * Add quotes to string bindings.
+     *
+     * @param  \Illuminate\Database\Events\QueryExecuted  $event
+     * @param string $binding
+     * @return string
+     */
+    protected function quoteStringBinding($event, $binding) {
+
+        try {
+            return $event->connection->getPdo()->quote($binding);
+        } catch (\PDOException $e) {
+            throw_if('IM001' !== $e->getCode(), $e);
+        }
+
+        // Fallback in case that PDO::quote function is missing.
+        $binding = \strtr($binding, [
+            chr(26) => "\\Z",   // Substitute
+            chr(8) => "\\b",    // Backspace
+            '"' => '\"',
+            "'" => "\'",
+            '\\' => '\\\\'
+        ]);
+
+        return "'" . $binding . "'";
     }
 }
