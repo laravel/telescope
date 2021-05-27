@@ -10,7 +10,6 @@ class QueryWatcher extends Watcher
 {
     use FetchesStackTrace;
 
-
     /**
      * Register the watcher.
      *
@@ -110,7 +109,6 @@ class QueryWatcher extends Watcher
         return $sql;
     }
 
-
     /**
      * Add quotes to string bindings.
      *
@@ -118,7 +116,7 @@ class QueryWatcher extends Watcher
      * @param string $binding
      * @return string
      */
-    protected function quoteStringBinding($event, $binding) 
+    protected function quoteStringBinding($event, $binding)
     {
         try {
             return $event->connection->getPdo()->quote($binding);
@@ -132,7 +130,7 @@ class QueryWatcher extends Watcher
             chr(8) => '\\b',    // Backspace
             '"' => '\"',
             "'" => "\'",
-            '\\' => '\\\\'
+            '\\' => '\\\\',
         ]);
 
         return "'".$binding."'";
