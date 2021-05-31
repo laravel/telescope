@@ -124,10 +124,10 @@ class QueryWatcher extends Watcher
             throw_if('IM001' !== $e->getCode(), $e);
         }
 
-        // Fallback in case that PDO::quote function is missing.
+        // Fallback when PDO::quote function is missing...
         $binding = \strtr($binding, [
-            chr(26) => '\\Z',   // Substitute
-            chr(8) => '\\b',    // Backspace
+            chr(26) => '\\Z',
+            chr(8) => '\\b',
             '"' => '\"',
             "'" => "\'",
             '\\' => '\\\\',
