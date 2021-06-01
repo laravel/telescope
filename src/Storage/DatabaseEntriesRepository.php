@@ -40,7 +40,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      * Create a new database repository.
      *
      * @param  string  $connection
-     * @param  int     $chunkSize
+     * @param  int  $chunkSize
      * @return void
      */
     public function __construct(string $connection, int $chunkSize = null)

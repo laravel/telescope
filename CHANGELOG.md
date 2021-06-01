@@ -1,6 +1,15 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.9...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.10...4.x)
+
+
+## [v4.4.10 (2021-06-01)](https://github.com/laravel/telescope/compare/v4.4.9...v4.4.10)
+
+### Changed
+- Remove asset manifest check and warning ([#1063](https://github.com/laravel/telescope/pull/1063))
+
+### Fixed
+- Implemented fallback for `PDO::quote` method on `QueryWatcher` ([#1066](https://github.com/laravel/telescope/pull/1066))
 
 
 ## [v4.4.9 (2021-04-06)](https://github.com/laravel/telescope/compare/v4.4.8...v4.4.9)
