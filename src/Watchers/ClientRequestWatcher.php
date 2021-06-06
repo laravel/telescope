@@ -41,6 +41,7 @@ class ClientRequestWatcher extends Watcher
             'headers' => $this->headers($event->request->headers()),
             'payload' => $this->payload($this->input($event->request)),
             'response_status' => $event->response->status(),
+            'response_headers' => $this->headers($event->response->headers()),
             'response' => $this->response($event->response),
         ]));
     }
