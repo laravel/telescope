@@ -16,6 +16,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.3",
         "laravel/framework": "^8.29",
         "symfony/var-dumper": "^5.0"
     },
