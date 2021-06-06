@@ -30,7 +30,7 @@ class EntryModelFactory extends Factory
             'type' => $this->faker->randomElement([
                 EntryType::CACHE, EntryType::COMMAND, EntryType::DUMP, EntryType::EVENT, EntryType::EXCEPTION,
                 EntryType::JOB, EntryType::LOG, EntryType::MAIL, EntryType::MODEL, EntryType::NOTIFICATION,
-                EntryType::QUERY, EntryType::REDIS, EntryType::REQUEST, EntryType::SCHEDULED_TASK,
+                EntryType::QUERY, EntryType::REDIS, EntryType::REQUEST, EntryType::SCHEDULED_TASK, EntryType::CLIENT_REQUEST,
             ]),
             'content' => [$this->faker->word => $this->faker->word],
         ];

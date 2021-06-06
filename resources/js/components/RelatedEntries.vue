@@ -64,6 +64,8 @@
                     this.currentTab = 'gates'
                 } else if (this.redis.length) {
                     this.currentTab = 'redis'
+                } else if (this.clientRequests.length) {
+                    this.currentTab = 'client_requests';
                 }
             },
 
@@ -135,6 +137,10 @@
                 return _.filter(this.batch, {type: 'view'});
             },
 
+            clientRequests() {
+                return _.filter(this.batch, {type: 'client_request'});
+            },
+
             queriesSummary() {
                 return {
                     time: _.reduce(this.queries, (time, q) => { return time + parseFloat(q.content.time) }, 0.00).toFixed(2),
@@ -156,6 +162,7 @@
                     {title: "Events", type: "events", count: this.events.length},
                     {title: "Cache", type: "cache", count: this.cache.length},
                     {title: "Redis", type: "redis", count: this.redis.length},
+                    {title: "Http Client", type: "client_requests", count: this.clientRequests.length},
                 ], tab => tab.count > 0);
             },
 
@@ -570,6 +577,49 @@
 
                     <td class="table-fit">
                         <router-link :to="{name:'view-preview', params:{id: entry.id}}" class="control-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
+                                <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Related Http Client Requests -->
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='client_requests' && clientRequests.length">
+                <thead>
+                <tr>
+                    <th>Verb</th>
+                    <th>Uri</th>
+                    <th>Status</th>
+                    <th>Happened</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr v-for="entry in clientRequests">
+                    <td class="table-fit pr-0">
+                        <span class="badge font-weight-light" :class="'badge-'+requestMethodClass(entry.content.method)">
+                            {{entry.content.method}}
+                        </span>
+                    </td>
+
+                    <td :title="entry.content.uri">{{truncate(entry.content.uri, 60)}}</td>
+
+                    <td class="table-fit">
+                        <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(entry.content.response_status)">
+                            {{entry.content.response_status}}
+                        </span>
+                    </td>
+
+                    <td class="table-fit" :data-timeago="entry.created_at" :title="entry.created_at">
+                        {{timeAgo(entry.created_at)}}
+                    </td>
+
+                    <td class="table-fit">
+                        <router-link :to="{name:'client-request-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>

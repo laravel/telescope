@@ -38,6 +38,7 @@ class RouteTest extends FeatureTestCase
             'Commands' => ['/telescope/telescope-api/commands', EntryType::COMMAND],
             'Schedule' => ['/telescope/telescope-api/schedule', EntryType::SCHEDULED_TASK],
             'Redis' => ['/telescope/telescope-api/redis', EntryType::REDIS],
+            'Client Requests' => ['/telescope/telescope-api/client-requests', EntryType::CLIENT_REQUEST],
         ];
     }
 
