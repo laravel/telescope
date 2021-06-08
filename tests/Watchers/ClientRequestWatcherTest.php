@@ -2,9 +2,9 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Laravel\Telescope\EntryType;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\ClientRequestWatcher;
 
@@ -193,7 +193,7 @@ class ClientRequestWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::CLIENT_REQUEST, $entry->type);
         $this->assertSame('POST', $entry->content['method']);
         $this->assertSame('photo.jpg', $entry->content['payload']['image']['name']);
-        $this->assertSame(($image->getSize() / 1000) .'KB', $entry->content['payload']['image']['size']);
+        $this->assertSame(($image->getSize() / 1000).'KB', $entry->content['payload']['image']['size']);
         $this->assertSame(['foo' => 'bar'], $entry->content['payload']['image']['headers']);
     }
 }

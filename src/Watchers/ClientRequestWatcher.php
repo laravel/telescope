@@ -2,13 +2,13 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Http\Client\Events\ResponseReceived;
+use Illuminate\Http\Client\Request;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Http\Client\Request;
-use Laravel\Telescope\Telescope;
-use Illuminate\Http\Client\Response;
 use Laravel\Telescope\IncomingEntry;
-use Illuminate\Http\Client\Events\ResponseReceived;
+use Laravel\Telescope\Telescope;
 
 class ClientRequestWatcher extends Watcher
 {
