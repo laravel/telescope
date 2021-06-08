@@ -66,7 +66,6 @@ class ClientRequestWatcherTest extends FeatureTestCase
 
         Http::get('https://laravel.com/fake-plain-text');
 
-
         $entry = $this->loadTelescopeEntries()->first();
 
         $this->assertSame(EntryType::CLIENT_REQUEST, $entry->type);
