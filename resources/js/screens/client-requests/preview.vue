@@ -4,7 +4,8 @@
             return {
                 entry: null,
                 batch: [],
-                currentTab: 'payload'
+                currentRequestTab: 'payload',
+                currentResponseTab: 'response',
             };
         }
     }
@@ -39,23 +40,29 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='payload'}" href="#" v-on:click.prevent="currentTab='payload'">Payload</a>
+                        <a class="nav-link" :class="{active: currentRequestTab=='payload'}" href="#" v-on:click.prevent="currentRequestTab='payload'">Payload</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='headers'}" href="#" v-on:click.prevent="currentTab='headers'">Headers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='response-headers'}" href="#" v-on:click.prevent="currentTab='response-headers'">Response Headers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='response-body'}" href="#" v-on:click.prevent="currentTab='response-body'">Response Body</a>
+                        <a class="nav-link" :class="{active: currentRequestTab=='headers'}" href="#" v-on:click.prevent="currentRequestTab='headers'">Headers</a>
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
-                    <vue-json-pretty :data="slotProps.entry.content.payload" v-if="currentTab=='payload'"></vue-json-pretty>
-                    <vue-json-pretty :data="slotProps.entry.content.headers" v-if="currentTab=='headers'"></vue-json-pretty>
-                    <vue-json-pretty :data="slotProps.entry.content.response_headers" v-if="currentTab=='response-headers'"></vue-json-pretty>
-                    <vue-json-pretty :data="slotProps.entry.content.response" v-if="currentTab=='response-body'"></vue-json-pretty>
+                    <vue-json-pretty :data="slotProps.entry.content.payload" v-if="currentRequestTab=='payload'"></vue-json-pretty>
+                    <vue-json-pretty :data="slotProps.entry.content.headers" v-if="currentRequestTab=='headers'"></vue-json-pretty>
+                </div>
+            </div>
+            <div class="card mt-5">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentResponseTab=='response'}" href="#" v-on:click.prevent="currentResponseTab='response'">Response</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentResponseTab=='headers'}" href="#" v-on:click.prevent="currentResponseTab='headers'">Headers</a>
+                    </li>
+                </ul>
+                <div class="code-bg p-4 mb-0 text-white">
+                    <vue-json-pretty :data="slotProps.entry.content.response" v-if="currentResponseTab=='response'"></vue-json-pretty>
+                    <vue-json-pretty :data="slotProps.entry.content.response_headers" v-if="currentResponseTab=='headers'"></vue-json-pretty>
                 </div>
             </div>
         </div>
