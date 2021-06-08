@@ -14,6 +14,10 @@ class ClientRequestWatcherTest extends FeatureTestCase
     {
         parent::getEnvironmentSetUp($app);
 
+        if (! class_exists(\GuzzleHttp\Client::class)) {
+            $this->markTestSkipped('The "guzzlehttp/guzzle" composer package is required for this test.');
+        }
+
         $app->get('config')->set('telescope.watchers', [
             ClientRequestWatcher::class => true,
         ]);
@@ -22,7 +26,7 @@ class ClientRequestWatcherTest extends FeatureTestCase
     public function test_client_request_watcher_registers_succesful_client_request_and_response()
     {
         Http::fake([
-            '*' => Http::response(['foo' => 'bar'], 201),
+            '*' => Http::response(['foo' => 'bar'], 201, ['Content-Type' => 'application/json', 'Cache-Control' => 'no-cache,private']),
         ]);
 
         Http::withHeaders(['Accept-Language' => 'nl_BE'])->get('https://laravel.com/foo/bar');
@@ -36,6 +40,7 @@ class ClientRequestWatcherTest extends FeatureTestCase
         $this->assertNotNull($entry->content['headers']);
         $this->assertSame('nl_BE', $entry->content['headers']['accept-language']);
         $this->assertSame(201, $entry->content['response_status']);
+        $this->assertSame(['content-type' => 'application/json', 'cache-control' => 'no-cache,private'], $entry->content['response_headers']);
         $this->assertSame(['foo' => 'bar'], $entry->content['response']);
     }
 
