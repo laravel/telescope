@@ -12,7 +12,7 @@
     <index-screen title="Http Client" resource="client-requests">
         <tr slot="table-header">
             <th scope="col">Verb</th>
-            <th scope="col">Uri</th>
+            <th scope="col">URI</th>
             <th scope="col">Status</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>

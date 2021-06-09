@@ -22,7 +22,7 @@
         </tr>
 
         <tr>
-            <td class="table-fit font-weight-bold">Uri</td>
+            <td class="table-fit font-weight-bold">URI</td>
             <td>
                 {{slotProps.entry.content.uri}}
             </td>
