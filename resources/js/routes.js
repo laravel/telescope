@@ -204,4 +204,16 @@ export default [
         name: 'views',
         component: require('./screens/views/index').default,
     },
+
+    {
+        path: '/client-request/:id',
+        name: 'client-request-preview',
+        component: require('./screens/client-requests/preview').default,
+    },
+
+    {
+        path: '/client-requests',
+        name: 'client-requests',
+        component: require('./screens/client-requests/index').default,
+    },
 ];

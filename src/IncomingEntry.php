@@ -274,6 +274,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is an client request.
+     *
+     * @return bool
+     */
+    public function isClientRequest()
+    {
+        return $this->type === EntryType::CLIENT_REQUEST;
+    }
+
+    /**
      * Get the family look-up hash for the incoming entry.
      *
      * @return string|null
