@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.4.10...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.5.0...4.x)
+
+
+## [v4.5.0 (2021-06-01)](https://github.com/laravel/telescope/compare/v4.4.10...v4.5.0)
+
+### Added
+- Add http client request watcher ([#1073](https://github.com/laravel/telescope/pull/1073))
 
 
 ## [v4.4.10 (2021-06-01)](https://github.com/laravel/telescope/compare/v4.4.9...v4.4.10)
