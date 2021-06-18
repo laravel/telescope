@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
+use Symfony\Component\HttpFoundation\File\File;
 
 class ClientRequestWatcher extends Watcher
 {
@@ -156,7 +157,19 @@ class ClientRequestWatcher extends Watcher
         }
 
         return collect($request->data())->mapWithKeys(function ($data) {
-            if (! empty($data['filename']) || ! empty($data['headers'])) {
+            if ($data['contents'] instanceof File) {
+                $value = [
+                    'name' => $data['filename'] ?? $data['contents']->getClientOriginalName(),
+                    'size' => ($data['contents']->getSize() / 1000).'KB',
+                    'headers' => $data['headers'] ?? [],
+                ];
+            } elseif (is_resource($data['contents'])) {
+                $value = [
+                    'name' => $data['filename'] ?? null,
+                    'size' => (filesize(stream_get_meta_data($data['contents'])['uri']) / 1000).'KB',
+                    'headers' => $data['headers'] ?? [],
+                ];
+            } elseif (json_encode($data['contents']) === false) {
                 $value = [
                     'name' => $data['filename'] ?? null,
                     'size' => (strlen($data['contents']) / 1000).'KB',
