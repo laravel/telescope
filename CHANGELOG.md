@@ -1,6 +1,13 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.5.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.5.1...4.x)
+
+
+## [v4.5.1 (2021-06-22)](https://github.com/laravel/telescope/compare/v4.5.0...v4.5.1)
+
+### Fixed
+- Http Client Link State ([#1078](https://github.com/laravel/telescope/pull/1078))
+- Improve file handling in client request watcher ([#1080](https://github.com/laravel/telescope/pull/1080))
 
 
 ## [v4.5.0 (2021-06-01)](https://github.com/laravel/telescope/compare/v4.4.10...v4.5.0)
