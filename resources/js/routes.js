@@ -206,7 +206,7 @@ export default [
     },
 
     {
-        path: '/client-request/:id',
+        path: '/client-requests/:id',
         name: 'client-request-preview',
         component: require('./screens/client-requests/preview').default,
     },

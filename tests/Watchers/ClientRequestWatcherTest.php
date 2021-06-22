@@ -175,7 +175,7 @@ class ClientRequestWatcherTest extends FeatureTestCase
         $this->assertSame(['firstname' => 'Taylor', 'lastname' => 'Otwell'], $entry->content['payload']);
     }
 
-    public function test_client_request_watcher_handles_file_uploads()
+    public function test_client_request_watcher_handles_file_contents_upload()
     {
         Http::fake([
             '*' => Http::response(null, 204),
@@ -183,9 +183,64 @@ class ClientRequestWatcherTest extends FeatureTestCase
 
         $image = UploadedFile::fake()->image('avatar.jpg');
 
-        Http::attach(
-            'image', file_get_contents($image), 'photo.jpg', ['foo' => 'bar']
-        )->post('https://laravel.com/fake-upload-file-route');
+        Http::attach('image', file_get_contents($image), 'photo.jpg', ['foo' => 'bar'])->post('https://laravel.com/fake-upload-file-route');
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::CLIENT_REQUEST, $entry->type);
+        $this->assertSame('POST', $entry->content['method']);
+        $this->assertSame('photo.jpg', $entry->content['payload']['image']['name']);
+        $this->assertSame(($image->getSize() / 1000).'KB', $entry->content['payload']['image']['size']);
+        $this->assertSame(['foo' => 'bar'], $entry->content['payload']['image']['headers']);
+    }
+
+    public function test_client_request_watcher_handles_file_contents_upload_without_explicit_filename_or_headers()
+    {
+        Http::fake([
+            '*' => Http::response(null, 204),
+        ]);
+
+        $image = UploadedFile::fake()->image('avatar.jpg');
+
+        Http::attach('image', file_get_contents($image))->post('https://laravel.com/fake-upload-file-route');
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::CLIENT_REQUEST, $entry->type);
+        $this->assertSame('POST', $entry->content['method']);
+        $this->assertNull($entry->content['payload']['image']['name']);
+        $this->assertSame(($image->getSize() / 1000).'KB', $entry->content['payload']['image']['size']);
+        $this->assertSame([], $entry->content['payload']['image']['headers']);
+    }
+
+    public function test_client_request_watcher_handles_resource_file_upload()
+    {
+        Http::fake([
+            '*' => Http::response(null, 204),
+        ]);
+
+        $image = UploadedFile::fake()->image('avatar.jpg');
+
+        Http::attach('image', $image->tempFile)->post('https://laravel.com/fake-upload-file-route');
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::CLIENT_REQUEST, $entry->type);
+        $this->assertSame('POST', $entry->content['method']);
+        $this->assertNull($entry->content['payload']['image']['name']);
+        $this->assertSame(($image->getSize() / 1000).'KB', $entry->content['payload']['image']['size']);
+        $this->assertSame([], $entry->content['payload']['image']['headers']);
+    }
+
+    public function test_client_request_watcher_handles_resource_file_upload_with_filename_and_headers()
+    {
+        Http::fake([
+            '*' => Http::response(null, 204),
+        ]);
+
+        $image = UploadedFile::fake()->image('avatar.jpg');
+
+        Http::attach('image', $image->tempFile, 'photo.jpg', ['foo' => 'bar'])->post('https://laravel.com/fake-upload-file-route');
 
         $entry = $this->loadTelescopeEntries()->first();
 
