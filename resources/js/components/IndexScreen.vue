@@ -136,18 +136,20 @@
                             '&take=1' +
                             '&family_hash=' + this.familyHash
                     ).then(response => {
-                        this.recordingStatus = response.data.status;
+                        if (! this._isDestroyed) {
+                            this.recordingStatus = response.data.status;
 
-                        if (response.data.entries.length && !this.entries.length) {
-                            this.loadNewEntries();
-                        } else if (response.data.entries.length && _.first(response.data.entries).id !== _.first(this.entries).id) {
-                            if (this.$root.autoLoadsNewEntries) {
+                            if (response.data.entries.length && !this.entries.length) {
                                 this.loadNewEntries();
+                            } else if (response.data.entries.length && _.first(response.data.entries).id !== _.first(this.entries).id) {
+                                if (this.$root.autoLoadsNewEntries) {
+                                    this.loadNewEntries();
+                                } else {
+                                    this.hasNewEntries = true;
+                                }
                             } else {
-                                this.hasNewEntries = true;
+                                this.checkForNewEntries();
                             }
-                        } else {
-                            this.checkForNewEntries();
                         }
                     })
                 }, this.newEntriesTimer);
