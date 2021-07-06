@@ -136,7 +136,7 @@
                             '&take=1' +
                             '&family_hash=' + this.familyHash
                     ).then(response => {
-                        if( ! this._isDestroyed) {
+                        if (! this._isDestroyed) {
                             this.recordingStatus = response.data.status;
 
                             if (response.data.entries.length && !this.entries.length) {
