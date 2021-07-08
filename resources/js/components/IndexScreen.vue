@@ -47,6 +47,17 @@
 
             this.tag = this.$route.query.tag || '';
 
+            this.$root.$on('clear-entries', () => {
+                this.entries = [];
+                this.hasMoreEntries = false;
+                this.hasNewEntries = false;
+                this.lastEntryIndex = '';
+                
+                this.checkForNewEntries();
+
+                this.ready = true;                
+            })            
+
             this.loadEntries((entries) => {
                 this.entries = entries;
 

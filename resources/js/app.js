@@ -82,5 +82,11 @@ new Vue({
             window.Telescope.recording = !Telescope.recording;
             this.recording = !this.recording;
         },
+
+        clearEntries() {
+            axios.post(Telescope.basePath + '/telescope-api/clear-entries');
+
+            this.$emit('clear-entries');
+        },        
     },
 });
