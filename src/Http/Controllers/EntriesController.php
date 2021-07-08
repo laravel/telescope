@@ -8,11 +8,12 @@ use Laravel\Telescope\Contracts\ClearableRepository;
 class EntriesController extends Controller
 {
     /**
-     * Clear entries.
+     * Delete all of the entries from storage.
      *
+     * @param  \Laravel\Telescope\Contracts\ClearableRepository  $storage
      * @return void
      */
-    public function clear(ClearableRepository $storage)
+    public function destroy(ClearableRepository $storage)
     {
         $storage->clear();
     }
