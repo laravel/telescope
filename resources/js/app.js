@@ -87,6 +87,6 @@ new Vue({
             axios.post(Telescope.basePath + '/telescope-api/clear-entries');
 
             this.$emit('clear-entries');
-        },        
+        },
     },
 });

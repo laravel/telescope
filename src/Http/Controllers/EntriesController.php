@@ -6,7 +6,7 @@ use Illuminate\Routing\Controller;
 use Laravel\Telescope\Contracts\ClearableRepository;
 
 class EntriesController extends Controller
-{    
+{
     /**
      * Clear entries.
      *
