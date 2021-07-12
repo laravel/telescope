@@ -10,7 +10,7 @@ interface PrunableRepository
      * Prune all of the entries older than the given date.
      *
      * @param  \DateTimeInterface  $before
-     * @return void
+     * @return int
      */
     public function prune(DateTimeInterface $before);
 }
