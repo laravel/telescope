@@ -260,9 +260,11 @@ class Telescope
 
         static::$shouldRecord = false;
 
-        call_user_func($callback);
-
-        static::$shouldRecord = $shouldRecord;
+        try {
+            call_user_func($callback);
+        } finally {
+            static::$shouldRecord = $shouldRecord;
+        }
     }
 
     /**
