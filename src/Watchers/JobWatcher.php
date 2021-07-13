@@ -3,9 +3,11 @@
 namespace Laravel\Telescope\Watchers;
 
 use Illuminate\Bus\BatchRepository;
+use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Queue;
+use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\EntryUpdate;
 use Laravel\Telescope\ExceptionContext;
@@ -13,6 +15,7 @@ use Laravel\Telescope\ExtractProperties;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
+use RuntimeException;
 
 class JobWatcher extends Watcher
 {
@@ -180,8 +183,10 @@ class JobWatcher extends Watcher
      */
     protected function updateBatch($payload)
     {
+        $command = $this->getCommand($payload['data']);
+
         $properties = ExtractProperties::from(
-            unserialize($payload['data']['command'])
+            $command
         );
 
         if (isset($properties['batchId'])) {
@@ -195,5 +200,26 @@ class JobWatcher extends Watcher
                 $properties['batchId'], EntryType::BATCH, $batch->toArray()
             ));
         }
+    }
+
+    /**
+     * Get the command from the given payload.
+     *
+     * @param  array  $data
+     * @return mixed
+     *
+     * @throws \RuntimeException
+     */
+    protected function getCommand(array $data)
+    {
+        if (Str::startsWith($data['command'], 'O:')) {
+            return unserialize($data['command']);
+        }
+
+        if (app()->bound(Encrypter::class)) {
+            return unserialize(app(Encrypter::class)->decrypt($data['command']));
+        }
+
+        throw new RuntimeException('Unable to extract job payload.');
     }
 }

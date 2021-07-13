@@ -11,7 +11,7 @@ interface PrunableRepository
      *
      * @param  \DateTimeInterface  $before
      * @param  bool  $keepExceptions
-     * @return void
+     * @return int
      */
     public function prune(DateTimeInterface $before, $keepExceptions);
 }
