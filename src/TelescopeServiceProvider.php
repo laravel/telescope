@@ -33,9 +33,7 @@ class TelescopeServiceProvider extends ServiceProvider
         Telescope::start($this->app);
         Telescope::listenForStorageOpportunities($this->app);
 
-        $this->loadViewsFrom(
-            __DIR__.'/../resources/views', 'telescope'
-        );
+        $this->registerResources();
     }
 
     /**
@@ -43,26 +41,16 @@ class TelescopeServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    private function registerRoutes()
+    protected function registerRoutes()
     {
-        Route::group($this->routeConfiguration(), function () {
-            $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
-        });
-    }
-
-    /**
-     * Get the Telescope route group configuration array.
-     *
-     * @return array
-     */
-    private function routeConfiguration()
-    {
-        return [
+        Route::group([
             'domain' => config('telescope.domain', null),
             'namespace' => 'Laravel\Telescope\Http\Controllers',
             'prefix' => config('telescope.path'),
             'middleware' => 'telescope',
-        ];
+        ], function () {
+            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        });
     }
 
     /**
@@ -70,7 +58,7 @@ class TelescopeServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    private function registerMigrations()
+    protected function registerMigrations()
     {
         if ($this->app->runningInConsole() && $this->shouldMigrate()) {
             $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -82,7 +70,7 @@ class TelescopeServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    private function registerPublishing()
+    protected function registerPublishing()
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -118,6 +106,16 @@ class TelescopeServiceProvider extends ServiceProvider
                 Console\PublishCommand::class,
             ]);
         }
+    }
+
+    /**
+     * Register the Telescope resources.
+     *
+     * @return void
+     */
+    protected function registerResources()
+    {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'telescope');
     }
 
     /**
