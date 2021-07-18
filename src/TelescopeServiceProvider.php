@@ -27,13 +27,12 @@ class TelescopeServiceProvider extends ServiceProvider
         Route::middlewareGroup('telescope', config('telescope.middleware', []));
 
         $this->registerRoutes();
+        $this->registerResources();
         $this->registerMigrations();
         $this->registerPublishing();
 
         Telescope::start($this->app);
         Telescope::listenForStorageOpportunities($this->app);
-
-        $this->registerResources();
     }
 
     /**
@@ -51,6 +50,16 @@ class TelescopeServiceProvider extends ServiceProvider
         ], function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         });
+    }
+
+    /**
+     * Register the Telescope resources.
+     *
+     * @return void
+     */
+    protected function registerResources()
+    {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'telescope');
     }
 
     /**
@@ -106,16 +115,6 @@ class TelescopeServiceProvider extends ServiceProvider
                 Console\PublishCommand::class,
             ]);
         }
-    }
-
-    /**
-     * Register the Telescope resources.
-     *
-     * @return void
-     */
-    protected function registerResources()
-    {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'telescope');
     }
 
     /**
