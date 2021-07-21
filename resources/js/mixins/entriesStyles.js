@@ -45,7 +45,7 @@ export default {
             if (status < 300) return 'secondary';
             if (status < 400) return 'info';
             if (status < 500) return 'warning';
-            if (status >= 500 || ! $status) return 'danger';
+            if (status >= 500 || !$status) return 'danger';
         },
 
         requestMethodClass(method) {
