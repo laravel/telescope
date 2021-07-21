@@ -609,8 +609,8 @@
                     <td :title="entry.content.uri">{{truncate(entry.content.uri, 60)}}</td>
 
                     <td class="table-fit">
-                        <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(entry.content.response_status)">
-                            {{entry.content.response_status}}
+                        <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(entry.content.response_status !== undefined ? entry.content.response_status : null)">
+                            {{entry.content.response_status !== undefined ? entry.content.response_status : 'N/A'}}
                         </span>
                     </td>
 
