@@ -164,9 +164,11 @@ class ClientRequestWatcher extends Watcher
                     'headers' => $data['headers'] ?? [],
                 ];
             } elseif (is_resource($data['contents'])) {
+                $filesize = @filesize(stream_get_meta_data($data['contents'])['uri']);
+
                 $value = [
                     'name' => $data['filename'] ?? null,
-                    'size' => (filesize(stream_get_meta_data($data['contents'])['uri']) / 1000).'KB',
+                    'size' => $filesize ? ($filesize / 1000).'KB' : null,
                     'headers' => $data['headers'] ?? [],
                 ];
             } elseif (json_encode($data['contents']) === false) {
