@@ -22,17 +22,17 @@ class ClientRequestWatcher extends Watcher
      */
     public function register($app)
     {
-        $app['events']->listen(ConnectionFailed::class, [$this, 'recordRequest']);
+        $app['events']->listen(ConnectionFailed::class, [$this, 'recordFailedRequest']);
         $app['events']->listen(ResponseReceived::class, [$this, 'recordResponse']);
     }
 
     /**
-     * Record a HTTP Client request.
+     * Record a HTTP Client connection failed request event.
      *
      * @param  \Illuminate\Http\Client\Events\ConnectionFailed  $event
      * @return void
      */
-    public function recordRequest(ConnectionFailed $event)
+    public function recordFailedRequest(ConnectionFailed $event)
     {
         if (! Telescope::isRecording()) {
             return;
