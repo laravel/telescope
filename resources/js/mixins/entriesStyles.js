@@ -42,10 +42,11 @@ export default {
         },
 
         requestStatusClass(status) {
+            if (!status) return 'danger';
             if (status < 300) return 'secondary';
             if (status < 400) return 'info';
             if (status < 500) return 'warning';
-            if (status >= 500 || !status) return 'danger';
+            if (status >= 500) return 'danger';
         },
 
         requestMethodClass(method) {
