@@ -5,6 +5,7 @@ namespace Laravel\Telescope\Storage;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Laravel\Telescope\Contracts\ClearableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 use Laravel\Telescope\Contracts\PrunableRepository;
@@ -161,6 +162,16 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     {
         $exceptions->chunk($this->chunkSize)->each(function ($chunked) {
             $this->table('telescope_entries')->insert($chunked->map(function ($exception) {
+                try {
+                    Log::channel('slack')->error(
+                        $exception->content['message'],
+                        [
+                            "File" => $exception->content['file'] . ":" . $exception->content['line'],
+                            "Telescope URL" => env('APP_URL') . "/telescope/exceptions/" . $exception->uuid
+                        ]
+                    );
+                } catch (\Throwable $th) { }
+
                 $occurrences = $this->countExceptionOccurences($exception);
 
                 $this->table('telescope_entries')
