@@ -60,7 +60,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function find($id): EntryResult
     {
-        $entry = EntryModel::on($this->connection)->whereUuid($id)->firstOrFail();
+        $entry = EntryModel::on($this->connection)->withCount('queries')->whereUuid($id)->firstOrFail();
 
         $tags = $this->table('telescope_entries_tags')
                         ->where('entry_uuid', $id)
@@ -75,7 +75,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             $entry->family_hash,
             $entry->content,
             $entry->created_at,
-            $tags
+            $tags,
+            $entry->queries_count
         );
     }
 
@@ -92,6 +93,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             ->withTelescopeOptions($type, $options)
             ->take($options->limit)
             ->orderByDesc('sequence')
+            ->withCount('queries')
             ->get()->reject(function ($entry) {
                 return ! is_array($entry->content);
             })->map(function ($entry) {
@@ -103,7 +105,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                     $entry->family_hash,
                     $entry->content,
                     $entry->created_at,
-                    []
+                    [],
+                    $entry->queries_count
                 );
             })->values();
     }

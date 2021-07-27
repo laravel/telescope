@@ -70,6 +70,14 @@ class EntryResult implements JsonSerializable
     protected $avatar;
 
     /**
+     * The queries count assigned to the entry.
+     *
+     * @var array
+     */
+    protected $queries_count;
+
+
+    /**
      * Create a new entry result instance.
      *
      * @param  mixed  $id
@@ -81,7 +89,7 @@ class EntryResult implements JsonSerializable
      * @param  \Carbon\CarbonInterface|\Carbon\Carbon  $createdAt
      * @param  array  $tags
      */
-    public function __construct($id, $sequence, string $batchId, string $type, ?string $familyHash, array $content, $createdAt, $tags = [])
+    public function __construct($id, $sequence, string $batchId, string $type, ?string $familyHash, array $content, $createdAt, $tags = [], $queries_count = null)
     {
         $this->id = $id;
         $this->type = $type;
@@ -91,6 +99,7 @@ class EntryResult implements JsonSerializable
         $this->sequence = $sequence;
         $this->createdAt = $createdAt;
         $this->familyHash = $familyHash;
+        $this->queries_count = $queries_count;
     }
 
     /**
@@ -126,8 +135,14 @@ class EntryResult implements JsonSerializable
                 'content' => [
                     'user' => [
                         'avatar' => $this->avatar,
-                    ],
+                    ]
                 ],
+            ]);
+        })->when($this->queries_count !== null, function ($items) {
+            return $items->mergeRecursive([
+                'content' => [
+                    'queires_count' => $this->queries_count
+                ]
             ]);
         })->all();
     }

@@ -15,12 +15,14 @@
             <th scope="col">Path</th>
             <th scope="col">Status</th>
             <th scope="col">Duration</th>
+            <th scope="col">Queries</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
 
 
         <template slot="row" slot-scope="slotProps">
+            <!-- {{JSON.stringify(slotProps.entry.content)}} -->
             <td class="table-fit pr-0">
                 <span class="badge font-weight-light" :class="'badge-'+requestMethodClass(slotProps.entry.content.method)">
                     {{slotProps.entry.content.method}}
@@ -38,6 +40,10 @@
             <td class="table-fit">
                 <span v-if="slotProps.entry.content.duration">{{slotProps.entry.content.duration}}ms</span>
                 <span v-else>-</span>
+            </td>
+            <td class="table-fit">
+                <span v-if="slotProps.entry.content.queires_count">{{slotProps.entry.content.queires_count}} </span>
+                <span v-else>0</span>
             </td>
 
             <td class="table-fit" :data-timeago="slotProps.entry.created_at" :title="slotProps.entry.created_at">
