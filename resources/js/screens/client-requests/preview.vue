@@ -31,7 +31,7 @@
         <tr>
             <td class="table-fit font-weight-bold">Status</td>
             <td>
-                {{slotProps.entry.content.response_status}}
+                {{slotProps.entry.content.response_status !== undefined ? slotProps.entry.content.response_status : 'N/A'}}
             </td>
         </tr>
         </template>
@@ -51,7 +51,7 @@
                     <vue-json-pretty :data="slotProps.entry.content.headers" v-if="currentRequestTab=='headers'"></vue-json-pretty>
                 </div>
             </div>
-            <div class="card mt-5">
+            <div class="card mt-5" v-if="slotProps.entry.content.response_status">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
                         <a class="nav-link" :class="{active: currentResponseTab=='response'}" href="#" v-on:click.prevent="currentResponseTab='response'">Response</a>

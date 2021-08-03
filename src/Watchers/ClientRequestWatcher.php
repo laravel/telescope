@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Watchers;
 
+use Illuminate\Http\Client\Events\ConnectionFailed;
 use Illuminate\Http\Client\Events\ResponseReceived;
 use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\Response;
@@ -21,7 +22,28 @@ class ClientRequestWatcher extends Watcher
      */
     public function register($app)
     {
-        $app['events']->listen(ResponseReceived::class, [$this, 'recordRequest']);
+        $app['events']->listen(ConnectionFailed::class, [$this, 'recordFailedRequest']);
+        $app['events']->listen(ResponseReceived::class, [$this, 'recordResponse']);
+    }
+
+    /**
+     * Record a HTTP Client connection failed request event.
+     *
+     * @param  \Illuminate\Http\Client\Events\ConnectionFailed  $event
+     * @return void
+     */
+    public function recordFailedRequest(ConnectionFailed $event)
+    {
+        if (! Telescope::isRecording()) {
+            return;
+        }
+
+        Telescope::recordClientRequest(IncomingEntry::make([
+            'method' => $event->request->method(),
+            'uri' => $event->request->url(),
+            'headers' => $this->headers($event->request->headers()),
+            'payload' => $this->payload($this->input($event->request)),
+        ]));
     }
 
     /**
@@ -30,7 +52,7 @@ class ClientRequestWatcher extends Watcher
      * @param  \Illuminate\Http\Client\Events\ResponseReceived  $event
      * @return void
      */
-    public function recordRequest(ResponseReceived $event)
+    public function recordResponse(ResponseReceived $event)
     {
         if (! Telescope::isRecording()) {
             return;
@@ -164,9 +186,11 @@ class ClientRequestWatcher extends Watcher
                     'headers' => $data['headers'] ?? [],
                 ];
             } elseif (is_resource($data['contents'])) {
+                $filesize = @filesize(stream_get_meta_data($data['contents'])['uri']);
+
                 $value = [
                     'name' => $data['filename'] ?? null,
-                    'size' => (filesize(stream_get_meta_data($data['contents'])['uri']) / 1000).'KB',
+                    'size' => $filesize ? ($filesize / 1000).'KB' : null,
                     'headers' => $data['headers'] ?? [],
                 ];
             } elseif (json_encode($data['contents']) === false) {
