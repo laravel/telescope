@@ -1,6 +1,18 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.1...4.x)
+
+
+## [v4.6.1 (2021-08-03)](https://github.com/laravel/telescope/compare/v4.6.0...v4.6.1)
+
+### Changed
+- Record 'connection failed' http client event ([#1097](https://github.com/laravel/telescope/pull/1097))
+- Unified asset publishing ([#1105](https://github.com/laravel/telescope/pull/1105))
+
+### Fixes
+- Suppress filesize errors in client request watcher ([#1096](https://github.com/laravel/telescope/pull/1096))
+- Use `intdiv` where appropriate to prevent unexpected conversion to float ([#1100](https://github.com/laravel/telescope/pull/1100))
+- Fix publishing for disabled module ([#1104](https://github.com/laravel/telescope/pull/1104))
 
 
 ## [v4.6.0 (2021-07-13)](https://github.com/laravel/telescope/compare/v4.5.1...v4.6.0)
