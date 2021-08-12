@@ -91,7 +91,7 @@ class ClientRequestWatcher extends Watcher
     protected function response(Response $response)
     {
         $content = $response->body();
-        
+
         $stream = $response->toPsrResponse()->getBody();
 
         if ($stream->isSeekable()) {
