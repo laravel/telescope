@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.1...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.2...4.x)
+
+
+## [v4.6.2 (2021-08-17)](https://github.com/laravel/telescope/compare/v4.6.1...v4.6.2)
+
+### Fixed
+- Rewind http client response after recording ([#1114](https://github.com/laravel/telescope/pull/1114))
 
 
 ## [v4.6.1 (2021-08-03)](https://github.com/laravel/telescope/compare/v4.6.0...v4.6.1)
