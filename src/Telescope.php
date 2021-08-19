@@ -251,7 +251,7 @@ class Telescope
 
         return ! $request->is(
             array_merge([
-                config('telescope.path') . '*',
+                config('telescope.path').'*',
                 'telescope-api*',
                 'vendor/telescope*',
                 'horizon*',
