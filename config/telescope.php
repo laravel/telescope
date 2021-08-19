@@ -53,6 +53,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Cache Driver
+    |--------------------------------------------------------------------------
+    |
+    | This configuration options determines the cache driver that will be
+    | used throughout Telescope.
+    | Hmmmm...
+    |
+    */
+
+    'cache_driver' => env('TELESCOPE_CACHE_DRIVER', 'default'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Master Switch
     |--------------------------------------------------------------------------
     |

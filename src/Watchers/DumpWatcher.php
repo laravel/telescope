@@ -2,7 +2,6 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Laravel\Telescope\IncomingDumpEntry;
 use Laravel\Telescope\Telescope;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
@@ -12,24 +11,23 @@ use Symfony\Component\VarDumper\VarDumper;
 class DumpWatcher extends Watcher
 {
     /**
-     * The cache factory implementation.
+     * The cache repository implementation.
      *
-     * @var \Illuminate\Contracts\Cache\Factory
+     * @var \Illuminate\Contracts\Cache\Repository
      */
     protected $cache;
 
     /**
      * Create a new watcher instance.
      *
-     * @param  \Illuminate\Contracts\Cache\Factory  $cache
      * @param  array  $options
      * @return void
      */
-    public function __construct(CacheFactory $cache, array $options = [])
+    public function __construct(array $options = [])
     {
         parent::__construct($options);
 
-        $this->cache = $cache;
+        $this->cache = Telescope::cacheStore();
     }
 
     /**

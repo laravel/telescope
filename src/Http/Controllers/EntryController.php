@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\EntryQueryOptions;
+use Laravel\Telescope\Telescope;
 
 abstract class EntryController extends Controller
 {
@@ -69,7 +70,7 @@ abstract class EntryController extends Controller
             return 'disabled';
         }
 
-        if (cache('telescope:pause-recording', false)) {
+        if (Telescope::cacheStore()->get('telescope:pause-recording', false)) {
             return 'paused';
         }
 

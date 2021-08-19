@@ -2,8 +2,8 @@
 
 namespace Laravel\Telescope\Http\Controllers;
 
-use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Routing\Controller;
+use Laravel\Telescope\Telescope;
 
 class RecordingController extends Controller
 {
@@ -17,12 +17,11 @@ class RecordingController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param  \Illuminate\Contracts\Cache\Repository  $cache
      * @return void
      */
-    public function __construct(CacheRepository $cache)
+    public function __construct()
     {
-        $this->cache = $cache;
+        $this->cache = Telescope::cacheStore();
     }
 
     /**

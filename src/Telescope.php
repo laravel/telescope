@@ -4,6 +4,7 @@ namespace Laravel\Telescope;
 
 use Closure;
 use Exception;
+use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
@@ -127,6 +128,13 @@ class Telescope
     public static $runsMigrations = true;
 
     /**
+     * The cache store to be used throughout Telescope
+     *
+     * @var \Illuminate\Contracts\Cache\Repository
+     */
+    protected static $cacheStore;
+
+    /**
      * Register the Telescope watchers and start recording if necessary.
      *
      * @param  \Illuminate\Foundation\Application  $app
@@ -138,6 +146,8 @@ class Telescope
             return;
         }
 
+        static::setCacheStore($app);
+
         static::registerWatchers($app);
 
         static::registerMailableTagExtractor();
@@ -148,6 +158,30 @@ class Telescope
         ) {
             static::startRecording();
         }
+    }
+
+    /**
+     * Set the cache store to be used throughout Telescope
+     *
+     * @param \Illuminate\Foundation\Application  $app
+     * @return void
+     */
+    protected static function setCacheStore($app)
+    {
+        $driver = config('telescope.cache_driver');
+        $driver = $driver === 'default' ? null : $driver;
+
+        static::$cacheStore = $app->get(CacheFactory::class)->store($driver);
+    }
+
+    /**
+     * Get the cache store to be used throughout Telescope
+     *
+     * @return \Illuminate\Contracts\Cache\Repository
+     */
+    public static function cacheStore()
+    {
+        return static::$cacheStore;
     }
 
     /**
@@ -235,7 +269,7 @@ class Telescope
     {
         app(EntriesRepository::class)->loadMonitoredTags();
 
-        static::$shouldRecord = ! cache('telescope:pause-recording');
+        static::$shouldRecord = ! static::cacheStore()->get('telescope:pause-recording');
     }
 
     /**
@@ -784,7 +818,7 @@ class Telescope
         return [
             'path' => config('telescope.path'),
             'timezone' => config('app.timezone'),
-            'recording' => ! cache('telescope:pause-recording'),
+            'recording' => ! static::cacheStore()->get('telescope:pause-recording'),
         ];
     }
 
