@@ -128,7 +128,7 @@ class Telescope
     public static $runsMigrations = true;
 
     /**
-     * The cache store to be used throughout Telescope
+     * The cache store to be used throughout Telescope.
      *
      * @var \Illuminate\Contracts\Cache\Repository
      */
@@ -161,7 +161,7 @@ class Telescope
     }
 
     /**
-     * Set the cache store to be used throughout Telescope
+     * Set the cache store to be used throughout Telescope.
      *
      * @param \Illuminate\Foundation\Application  $app
      * @return void
@@ -175,7 +175,7 @@ class Telescope
     }
 
     /**
-     * Get the cache store to be used throughout Telescope
+     * Get the cache store to be used throughout Telescope.
      *
      * @return \Illuminate\Contracts\Cache\Repository
      */
@@ -251,7 +251,7 @@ class Telescope
 
         return ! $request->is(
             array_merge([
-                config('telescope.path').'*',
+                config('telescope.path') . '*',
                 'telescope-api*',
                 'vendor/telescope*',
                 'horizon*',
