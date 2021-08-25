@@ -762,7 +762,8 @@ class Telescope
     }
 
     /**
-     * Specifies that Telescope should use the dark theme.
+     * Specifies that Telescope should automatically
+     * detect if the user has requested a light or dark theme.
      *
      * @return static
      */
