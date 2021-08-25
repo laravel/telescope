@@ -762,6 +762,18 @@ class Telescope
     }
 
     /**
+     * Specifies that Telescope should use the dark theme.
+     *
+     * @return static
+     */
+    public static function autoNightTheme()
+    {
+        static::$useDarkTheme = 'auto';
+
+        return new static;
+    }
+
+    /**
      * Register the Telescope user avatar callback.
      *
      * @param  \Closure  $callback

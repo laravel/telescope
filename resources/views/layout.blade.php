@@ -13,7 +13,14 @@
 
     <!-- Style sheets-->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link href="{{ asset(mix($cssFile, 'vendor/telescope')) }}" rel="stylesheet" type="text/css">
+
+    @if($darkTheme !== 'auto')
+        <link href="{{ asset(mix($darkTheme, 'vendor/telescope')) }}" rel="stylesheet" type="text/css">
+    @else
+        <link href="{{ asset(mix('app.css', 'vendor/telescope')) }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset(mix('app-dark.css', 'vendor/telescope')) }}" media="(prefers-color-scheme: dark)"  rel="stylesheet" type="text/css">
+    @endif
+
 </head>
 <body>
 <div id="telescope" v-cloak>
