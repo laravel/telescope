@@ -18,6 +18,7 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerMigrations();
         $this->registerCommands();
         $this->registerPublishing();
 
@@ -29,7 +30,6 @@ class TelescopeServiceProvider extends ServiceProvider
 
         $this->registerRoutes();
         $this->registerResources();
-        $this->registerMigrations();
 
         Telescope::start($this->app);
         Telescope::listenForStorageOpportunities($this->app);
