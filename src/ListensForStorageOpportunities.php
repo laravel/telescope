@@ -98,7 +98,7 @@ trait ListensForStorageOpportunities
     /**
      * Store the recorded entries if totally done processing the current job.
      *
-     * @param  \Illuminate\Queue\Events\JobProcessed $event
+     * @param  \Illuminate\Queue\Events\JobProcessed  $event
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
