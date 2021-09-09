@@ -186,7 +186,36 @@ class Telescope
      */
     protected static function handlingApprovedRequest($app)
     {
-        return ! $app->runningInConsole() && ! $app['request']->is(
+        if ($app->runningInConsole()) {
+            return false;
+        }
+
+        return static::requestIsToApprovedDomain($app['request'])
+            || static::requestIsToApprovedUri($app['request']);
+    }
+
+    /**
+     * Determine if the request is to an approved domain.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected static function requestIsToApprovedDomain($request): bool
+    {
+        $currentHost = $request->getHost();
+
+        return config('telescope.domain', $currentHost) !== $currentHost;
+    }
+
+    /**
+     * Determine if the request is to an approved URI.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected static function requestIsToApprovedUri($request): bool
+    {
+        return ! $request->is(
             array_merge([
                 config('telescope.path').'*',
                 'telescope-api*',
