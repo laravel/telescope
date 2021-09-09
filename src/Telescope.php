@@ -200,7 +200,21 @@ class Telescope
             return false;
         }
 
-        return static::requestIsToApprovedUri($app['request']);
+        return static::requestIsToApprovedDomain($app['request'])
+            || static::requestIsToApprovedUri($app['request']);
+    }
+
+    /**
+     * Determine if the request is to an approved domain.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected static function requestIsToApprovedDomain($request): bool
+    {
+        $currentHost = $request->getHost();
+
+        return config('telescope.domain', $currentHost) !== $currentHost;
     }
 
     /**
