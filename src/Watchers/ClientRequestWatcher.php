@@ -185,6 +185,11 @@ class ClientRequestWatcher extends Watcher
     protected function input(Request $request)
     {
         if (! $request->isMultipart()) {
+            
+            if(!$request->data()){
+                return $request->body();
+            }
+            
             return $request->data();
         }
 
