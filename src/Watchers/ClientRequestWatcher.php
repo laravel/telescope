@@ -109,6 +109,10 @@ class ClientRequestWatcher extends Watcher
             if (Str::startsWith(strtolower($response->header('Content-Type')), 'text/plain')) {
                 return $this->contentWithinLimits($content) ? $content : 'Purged By Telescope';
             }
+            
+            if (Str::contains(strtolower($response->header('Content-Type')), 'xml')){
+                return $content;
+            }
         }
 
         if ($response->redirect()) {
