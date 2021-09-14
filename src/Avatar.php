@@ -46,7 +46,7 @@ class Avatar
     /**
      * Find the custom avatar for a user.
      *
-     * @param  array       $user
+     * @param  array  $user
      * @return string|null
      */
     protected static function resolve($user)
