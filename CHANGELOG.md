@@ -3,6 +3,12 @@
 ## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.2...4.x)
 
 
+## [v4.6.3 (2021-09-14)](https://github.com/laravel/telescope/compare/v4.6.2...v4.6.3)
+
+### Fixed
+- Fix `telescope.domain` usage ([#1124](https://github.com/laravel/telescope/pull/1124))
+
+
 ## [v4.6.2 (2021-08-17)](https://github.com/laravel/telescope/compare/v4.6.1...v4.6.2)
 
 ### Fixed
