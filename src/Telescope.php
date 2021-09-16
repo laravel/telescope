@@ -200,8 +200,8 @@ class Telescope
             return false;
         }
 
-        return static::requestIsToApprovedDomain($app['request'])
-            || static::requestIsToApprovedUri($app['request']);
+        return static::requestIsToApprovedDomain($app['request']) &&
+            static::requestIsToApprovedUri($app['request']);
     }
 
     /**
@@ -212,9 +212,8 @@ class Telescope
      */
     protected static function requestIsToApprovedDomain($request): bool
     {
-        $currentHost = $request->getHost();
-
-        return config('telescope.domain', $currentHost) !== $currentHost;
+        return is_null(config('telescope.domain')) ||
+            config('telescope.domain') !== $request->getHost();
     }
 
     /**
@@ -230,13 +229,17 @@ class Telescope
         }
 
         return ! $request->is(
-            array_merge([
-                config('telescope.path').'*',
+            collect([
                 'telescope-api*',
                 'vendor/telescope*',
                 'horizon*',
                 'vendor/horizon*',
-            ], config('telescope.ignore_paths', []))
+            ])
+            ->merge(config('telescope.ignore_paths', []))
+            ->unless(is_null(config('telescope.path')), function ($paths) {
+                return $paths->prepend(config('telescope.path').'*');
+            })
+            ->all()
         );
     }
 
