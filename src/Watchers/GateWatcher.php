@@ -58,8 +58,8 @@ class GateWatcher extends Watcher
             'ability' => $ability,
             'result' => $this->gateResult($result),
             'arguments' => $this->formatArguments($arguments),
-            'file' => $caller['file'],
-            'line' => $caller['line'],
+            'file' => $caller['file'] ?? null,
+            'line' => $caller['line'] ?? null,
         ]));
 
         return $result;

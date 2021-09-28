@@ -1,6 +1,13 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.3...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.4...master)
+
+
+## [v4.6.4 (2021-09-16)](https://github.com/laravel/telescope/compare/v4.6.3...v4.6.4)
+
+### Fixed
+- Don't log HTTP requests to Telescope endpoints ([#1127](https://github.com/laravel/telescope/pull/1127))
+- Laravel Octane fix: GateWatcher handles stack trace caller not found ([#1128](https://github.com/laravel/telescope/pull/1128))
 
 
 ## [v4.6.3 (2021-09-14)](https://github.com/laravel/telescope/compare/v4.6.2...v4.6.3)

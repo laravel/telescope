@@ -10,7 +10,7 @@ trait FetchesStackTrace
      * Find the first frame in the stack trace outside of Telescope/Laravel.
      *
      * @param  string|array  $forgetLines
-     * @return array
+     * @return array|null
      */
     protected function getCallerFromStackTrace($forgetLines = 0)
     {
