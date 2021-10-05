@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.4...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.5...4.x)
+
+
+## [v4.6.5 (2021-10-05)](https://github.com/laravel/telescope/compare/v4.6.4...v4.6.5)
+
+### Fixed
+- Fix mail to check to allow for null to fields ([#1133](https://github.com/laravel/telescope/pull/1133))
 
 
 ## [v4.6.4 (2021-09-16)](https://github.com/laravel/telescope/compare/v4.6.3...v4.6.4)
