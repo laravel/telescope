@@ -86,7 +86,7 @@ new Vue({
         clearEntries() {
             if (confirm('Are you sure you want to delete all Telescope data?')) {
                 axios.delete(Telescope.basePath + '/telescope-api/entries').then((response) => {
-                    window.location = Telescope.basePath
+                    window.location = Telescope.basePath;
                 });
             }
         },
