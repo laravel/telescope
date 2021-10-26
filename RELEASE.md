@@ -9,5 +9,5 @@ npm install && npm run prod
 ```
 
 4. Tag a new version of the package
-5. Push all commits and and the new tag to GitHub
+5. Push all commits and the new tag to GitHub
 6. Create a new GitHub release with the same release notes from CHANGELOG.md
