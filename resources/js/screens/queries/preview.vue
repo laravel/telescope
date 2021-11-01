@@ -1,14 +1,15 @@
 <script type="text/ecmascript-6">
-    import hljs from 'highlight.js/lib/highlight';
+    import hljs from 'highlight.js/lib/core';
     import sql from 'highlight.js/lib/languages/sql';
     import { format } from 'sql-formatter';
+
+    hljs.registerLanguage('sql', sql);
 
     export default {
         methods: {
             highlightSQL() {
                 this.$nextTick(() => {
-                    hljs.registerLanguage('sql', sql);
-                    hljs.highlightBlock(this.$refs.sqlcode);
+                    hljs.highlightElement(this.$refs.sqlcode);
                 });
             },
             formatSql(sql) {
