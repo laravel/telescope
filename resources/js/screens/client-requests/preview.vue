@@ -12,7 +12,7 @@
 </script>
 
 <template>
-    <preview-screen title="Http Client Request Details" resource="client-requests" :id="$route.params.id">
+    <preview-screen title="HTTP Client Request Details" resource="client-requests" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
         <tr>
             <td class="table-fit font-weight-bold">Method</td>
