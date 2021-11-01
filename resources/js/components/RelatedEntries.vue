@@ -162,7 +162,7 @@
                     {title: "Events", type: "events", count: this.events.length},
                     {title: "Cache", type: "cache", count: this.cache.length},
                     {title: "Redis", type: "redis", count: this.redis.length},
-                    {title: "Http Client", type: "client_requests", count: this.clientRequests.length},
+                    {title: "HTTP Client", type: "client_requests", count: this.clientRequests.length},
                 ], tab => tab.count > 0);
             },
 
@@ -591,7 +591,7 @@
                 <thead>
                 <tr>
                     <th>Verb</th>
-                    <th>Uri</th>
+                    <th>URI</th>
                     <th>Status</th>
                     <th>Happened</th>
                     <th></th>
