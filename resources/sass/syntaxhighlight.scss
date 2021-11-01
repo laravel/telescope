@@ -1,6 +1,5 @@
 .vjs-tree {
-    // Fallback for missing fonts from vue-json-pretty on Ubuntu
-    font-family: Monaco, Menlo, Consolas, Bitstream Vera Sans Mono, monospace !important;
+    font-family: $font-family-monospace;
 
     .vjs-tree__content {
         border-left: 1px dotted rgba(204, 204, 204, 0.28) !important;
@@ -15,9 +14,7 @@
         position: absolute;
         left: -30px;
     }
-    .vjs-value__null {
-        color: #a291f5 !important;
-    }
+    .vjs-value__null,
     .vjs-value__number,
     .vjs-value__boolean {
         color: #a291f5 !important;
@@ -29,17 +26,30 @@
 
 .hljs-keyword,
 .hljs-selector-tag,
-.hljs-addition {
-    color: #8bd72f;
+.hljs-addition,
+.hljs-attr {
+    color: #13ce66;
 }
 
 .hljs-string,
-.hljs-meta .hljs-meta-string,
-.hljs-doctag,
-.hljs-regexp {
+.hljs-meta,
+.hljs-name,
+.hljs-type,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-variable,
+.hljs-template-tag,
+.hljs-template-variable {
     color: #dacb4d;
 }
 
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion {
+    color: #bfcbd9;
+}
+
+.hljs-title,
 .hljs-number,
 .hljs-literal {
     color: #a291f5 !important;

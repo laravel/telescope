@@ -35,5 +35,8 @@ mix.options({
                 '@': path.resolve(__dirname, 'resources/js/'),
             },
         },
-        plugins: [new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)],
+        plugins: [new webpack.IgnorePlugin({
+            resourceRegExp: /^\.\/locale$/,
+            contextRegExp: /moment$/,
+        })],
     });
