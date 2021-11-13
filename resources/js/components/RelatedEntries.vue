@@ -48,6 +48,8 @@
                     this.currentTab = 'views'
                 } else if (this.queries.length) {
                     this.currentTab = 'queries'
+                } else if (this.dumps.length) {
+                    this.currentTab = 'dumps'
                 } else if (this.models.length) {
                     this.currentTab = 'models'
                 } else if (this.jobs.length) {
@@ -105,6 +107,10 @@
                 return _.filter(this.batch, {type: 'query'});
             },
 
+            dumps() {
+                return _.filter(this.batch, {type: 'dump'});
+            },
+
             models() {
                 return _.filter(this.batch, {type: 'model'});
             },
@@ -154,6 +160,7 @@
                     {title: "Logs", type: "logs", count: this.logs.length},
                     {title: "Views", type: "views", count: this.views.length},
                     {title: "Queries", type: "queries", count: this.queries.length},
+                    {title: "Dumps", type: "dumps", count: this.dumps.length},
                     {title: "Models", type: "models", count: this.models.length},
                     {title: "Gates", type: "gates", count: this.gates.length},
                     {title: "Jobs", type: "jobs", count: this.jobs.length},
@@ -281,6 +288,29 @@
 
                     <td class="table-fit">
                         <router-link :to="{name:'query-preview', params:{id: entry.id}}" class="control-action">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
+                                <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Related Dumps -->
+            <table class="table table-hover table-sm mb-0" v-show="currentTab=='dumps' && dumps.length">
+                <thead>
+                <tr>
+                    <th>Dump<br/><small>{{ dumps.length }} dumps</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="entry in dumps">
+                    <td v-html="entry.content.dump"></td>
+
+                    <td class="table-fit">
+                        <router-link :to="{name:'dump-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
