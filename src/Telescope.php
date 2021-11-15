@@ -213,7 +213,7 @@ class Telescope
     protected static function requestIsToApprovedDomain($request): bool
     {
         return is_null(config('telescope.domain')) ||
-            config('telescope.domain') !== $request->getHost();
+            config('telescope.domain') === $request->getHost();
     }
 
     /**
