@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.6...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.7...4.x)
+
+
+## [v4.6.7 (2021-11-16)](https://github.com/laravel/telescope/compare/v4.6.6...v4.6.7)
+
+### Changed
+- Slow query filter method added ([#1146](https://github.com/laravel/telescope/pull/1146))
 
 
 ## [v4.6.6 (2021-11-04)](https://github.com/laravel/telescope/compare/v4.6.5...v4.6.6)
