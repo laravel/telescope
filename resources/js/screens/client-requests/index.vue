@@ -9,7 +9,7 @@
 </script>
 
 <template>
-    <index-screen title="Http Client" resource="client-requests">
+    <index-screen title="HTTP Client" resource="client-requests">
         <tr slot="table-header">
             <th scope="col">Verb</th>
             <th scope="col">URI</th>

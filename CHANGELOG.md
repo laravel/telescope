@@ -1,6 +1,21 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.5...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.7...master)
+
+
+## [v4.6.7 (2021-11-16)](https://github.com/laravel/telescope/compare/v4.6.6...v4.6.7)
+
+### Changed
+- Slow query filter method added ([#1146](https://github.com/laravel/telescope/pull/1146))
+
+
+## [v4.6.6 (2021-11-04)](https://github.com/laravel/telescope/compare/v4.6.5...v4.6.6)
+
+### Changed
+- Replace Http/Uri with HTTP/URI  ([#1141](https://github.com/laravel/telescope/pull/1141))
+
+### Fixed
+- Fix syntax highlighting ([#1142](https://github.com/laravel/telescope/pull/1142))
 
 
 ## [v4.6.5 (2021-10-05)](https://github.com/laravel/telescope/compare/v4.6.4...v4.6.5)
