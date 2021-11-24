@@ -36,7 +36,7 @@ class RequestWatcher extends Watcher
      */
     public function recordRequest(RequestHandled $event)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 
@@ -207,5 +207,16 @@ class RequestWatcher extends Watcher
                 return json_decode(json_encode($value), true);
             }
         })->toArray();
+    }
+
+    /**
+     * Determine if the request should be ignored.
+     *
+     * @param  mixed  $event
+     * @return bool
+     */
+    private function shouldIgnore($event)
+    {
+        return in_array($event->response->getStatusCode(), $this->options['ignore_status_code'] ?? []);
     }
 }
