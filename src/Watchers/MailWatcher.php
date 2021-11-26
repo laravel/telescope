@@ -82,17 +82,21 @@ class MailWatcher extends Watcher
     /**
      * Convert the given addresses into a readable format.
      *
-     * @param  array  $addresses
-     * @return array
+     * @param  array|null  $addresses
+     * @return array|null
      */
-    protected function formatAddresses(array $addresses)
+    protected function formatAddresses(?array $addresses)
     {
-        return collect($addresses)->flatMap(function ($address) {
+        if (is_null($addresses)) {
+            return null;
+        }
+
+        return collect($addresses)->flatMap(function ($address, $key) {
             if ($address instanceof Address) {
                 return [$address->getAddress() => $address->getName()];
             }
 
-            return $address;
+            return [$key => $address];
         })->all();
     }
 
