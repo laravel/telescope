@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Schema;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\EntryQueryOptions;
 
@@ -32,6 +33,13 @@ abstract class EntryController extends Controller
      */
     public function index(Request $request, EntriesRepository $storage)
     {
+        if(! Schema::hasTable('telescope_entries')) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Run migrations first',
+            ], 500);
+        };
+
         return response()->json([
             'entries' => $storage->get(
                 $this->entryType(),
