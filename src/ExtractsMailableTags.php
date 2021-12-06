@@ -17,7 +17,7 @@ trait ExtractsMailableTags
         $existingCallback = Mailable::$viewDataCallback;
 
         Mailable::buildViewDataUsing(function ($mailable) use ($existingCallback) {
-            $existingData = $existingCallback ? call_user_func( $existingCallback, $mailable ) : [];
+            $existingData = $existingCallback ? call_user_func($existingCallback, $mailable) : [];
 
             return array_merge($existingData, [
                 '__telescope' => ExtractTags::from($mailable),
