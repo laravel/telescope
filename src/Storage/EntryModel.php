@@ -4,6 +4,8 @@ namespace Laravel\Telescope\Storage;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Log;
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
 
 class EntryModel extends Model
@@ -65,11 +67,11 @@ class EntryModel extends Model
     public function scopeWithTelescopeOptions($query, $type, EntryQueryOptions $options)
     {
         $this->whereType($query, $type)
-                ->whereBatchId($query, $options)
-                ->whereTag($query, $options)
-                ->whereFamilyHash($query, $options)
-                ->whereBeforeSequence($query, $options)
-                ->filter($query, $options);
+            ->whereBatchId($query, $options)
+            ->whereTag($query, $options)
+            ->whereFamilyHash($query, $options)
+            ->whereBeforeSequence($query, $options)
+            ->filter($query, $options);
 
         return $query;
     }
@@ -106,6 +108,7 @@ class EntryModel extends Model
         return $this;
     }
 
+
     /**
      * Scope the query for the given type.
      *
@@ -116,12 +119,22 @@ class EntryModel extends Model
     protected function whereTag($query, EntryQueryOptions $options)
     {
         $query->when($options->tag, function ($query, $tag) {
-            return $query->whereIn('uuid', function ($query) use ($tag) {
-                $query->select('entry_uuid')->from('telescope_entries_tags')->whereTag($tag);
-            });
+            foreach (array_filter(explode(',',$tag)) as $tag){
+                $query = $query->whereHas('tags',fn($q)=>$q->where('tag',$tag));
+            }
+            return $query;
         });
 
         return $this;
+    }
+
+    /**
+     * Create tags relationship.
+     *
+     * @return HasMany
+     */
+    public function tags(){
+        return $this->hasMany(EntryTagModel::class,'entry_uuid','uuid');
     }
 
     /**
