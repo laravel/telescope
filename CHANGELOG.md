@@ -1,6 +1,22 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.7...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.9...master)
+
+
+## [v4.6.9 (2021-12-07)](https://github.com/laravel/telescope/compare/v4.6.8...v4.6.9)
+
+### Changed
+- Merge previously defined view data when building the view mailable data ([#1157](https://github.com/laravel/telescope/pull/1157))
+
+### Fixed
+- Add key attribute ([#1154](https://github.com/laravel/telescope/pull/1154))
+- Fix PHP 8.1 issues ([#1156](https://github.com/laravel/telescope/pull/1156))
+
+
+## [v4.6.8 (2021-11-30)](https://github.com/laravel/telescope/compare/v4.6.7...v4.6.8)
+
+### Changed
+- Add support ignore request when status code specified ([abc9660](https://github.com/laravel/telescope/commit/abc96609553badb8907f749c95a408e6a72aab73), [#1150](https://github.com/laravel/telescope/pull/1150))
 
 
 ## [v4.6.7 (2021-11-16)](https://github.com/laravel/telescope/compare/v4.6.6...v4.6.7)
