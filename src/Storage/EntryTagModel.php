@@ -2,7 +2,6 @@
 
 namespace Laravel\Telescope\Storage;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class EntryTagModel extends Model
