@@ -119,7 +119,9 @@ class EntryModel extends Model
     {
         $query->when($options->tag, function ($query, $tag) {
             foreach (array_filter(explode(',', $tag)) as $tag) {
-                $query = $query->whereHas('tags', fn($q) => $q->where('tag', $tag));
+                $query = $query->whereHas('tags', function ($q) use ($tag) {
+                    return $q->where('tag', $tag);
+                });
             }
             return $query;
         });
