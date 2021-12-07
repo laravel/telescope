@@ -1,6 +1,16 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.8...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.9...4.x)
+
+
+## [v4.6.9 (2021-12-07)](https://github.com/laravel/telescope/compare/v4.6.8...v4.6.9)
+
+### Changed
+- Merge previously defined view data when building the view mailable data ([#1157](https://github.com/laravel/telescope/pull/1157))
+
+### Fixed
+- Add key attribute ([#1154](https://github.com/laravel/telescope/pull/1154))
+- Fix PHP 8.1 issues ([#1156](https://github.com/laravel/telescope/pull/1156))
 
 
 ## [v4.6.8 (2021-11-30)](https://github.com/laravel/telescope/compare/v4.6.7...v4.6.8)
