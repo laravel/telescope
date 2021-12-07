@@ -5,7 +5,6 @@ namespace Laravel\Telescope\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Log;
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
 
 class EntryModel extends Model
@@ -59,9 +58,9 @@ class EntryModel extends Model
     /**
      * Scope the query for the given query options.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $type
-     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $type
+     * @param \Laravel\Telescope\Storage\EntryQueryOptions $options
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithTelescopeOptions($query, $type, EntryQueryOptions $options)
@@ -79,8 +78,8 @@ class EntryModel extends Model
     /**
      * Scope the query for the given type.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $type
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $type
      * @return $this
      */
     protected function whereType($query, $type)
@@ -95,8 +94,8 @@ class EntryModel extends Model
     /**
      * Scope the query for the given batch ID.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Laravel\Telescope\Storage\EntryQueryOptions $options
      * @return $this
      */
     protected function whereBatchId($query, EntryQueryOptions $options)
@@ -112,15 +111,15 @@ class EntryModel extends Model
     /**
      * Scope the query for the given type.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Laravel\Telescope\Storage\EntryQueryOptions $options
      * @return $this
      */
     protected function whereTag($query, EntryQueryOptions $options)
     {
         $query->when($options->tag, function ($query, $tag) {
-            foreach (array_filter(explode(',',$tag)) as $tag){
-                $query = $query->whereHas('tags',fn($q)=>$q->where('tag',$tag));
+            foreach (array_filter(explode(',', $tag)) as $tag) {
+                $query = $query->whereHas('tags', fn($q) => $q->where('tag', $tag));
             }
             return $query;
         });
@@ -133,15 +132,16 @@ class EntryModel extends Model
      *
      * @return HasMany
      */
-    public function tags(){
-        return $this->hasMany(EntryTagModel::class,'entry_uuid','uuid');
+    public function tags()
+    {
+        return $this->hasMany(EntryTagModel::class, 'entry_uuid', 'uuid');
     }
 
     /**
      * Scope the query for the given type.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Laravel\Telescope\Storage\EntryQueryOptions $options
      * @return $this
      */
     protected function whereFamilyHash($query, EntryQueryOptions $options)
@@ -156,8 +156,8 @@ class EntryModel extends Model
     /**
      * Scope the query for the given pagination options.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Laravel\Telescope\Storage\EntryQueryOptions $options
      * @return $this
      */
     protected function whereBeforeSequence($query, EntryQueryOptions $options)
@@ -172,8 +172,8 @@ class EntryModel extends Model
     /**
      * Scope the query for the given display options.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Laravel\Telescope\Storage\EntryQueryOptions $options
      * @return $this
      */
     protected function filter($query, EntryQueryOptions $options)
