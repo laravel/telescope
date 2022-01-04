@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.9...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.10...4.x)
+
+
+## [v4.6.10 (2022-01-04)](https://github.com/laravel/telescope/compare/v4.6.9...v4.6.10)
+
+### Fixed
+* Fix issue with array hydration ([#1165](https://github.com/laravel/telescope/pull/1165))
 
 
 ## [v4.6.9 (2021-12-07)](https://github.com/laravel/telescope/compare/v4.6.8...v4.6.9)
