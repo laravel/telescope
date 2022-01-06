@@ -5,6 +5,7 @@ namespace Laravel\Telescope\Storage;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Laravel\Telescope\Contracts\ClearableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 use Laravel\Telescope\Contracts\PrunableRepository;
@@ -358,8 +359,10 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function clear()
     {
-        $this->table('telescope_entries')->delete();
-        $this->table('telescope_monitoring')->delete();
+        Schema::disableForeignKeyConstraints();
+        $this->table('telescope_entries')->truncate();
+        $this->table('telescope_monitoring')->truncate();
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
