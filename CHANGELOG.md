@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.6.10...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.7.0...4.x)
+
+
+## [v4.7.0 (2022-01-12)](https://github.com/laravel/telescope/compare/v4.6.10...v4.7.0)
+
+### Changed
+- Laravel 9 Support ([#1170](https://github.com/laravel/telescope/pull/1170))
 
 
 ## [v4.6.10 (2022-01-04)](https://github.com/laravel/telescope/compare/v4.6.9...v4.6.10)
