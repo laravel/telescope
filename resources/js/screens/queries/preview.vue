@@ -2,10 +2,12 @@
     import hljs from 'highlight.js/lib/core';
     import sql from 'highlight.js/lib/languages/sql';
     import { format } from 'sql-formatter';
+    import CopyBtn from "../../components/CopyBtn";
 
     hljs.registerLanguage('sql', sql);
 
     export default {
+        components: {CopyBtn},
         methods: {
             highlightSQL() {
                 this.$nextTick(() => {
@@ -52,7 +54,10 @@
 
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5">
-                <div class="card-header"><h5>Query</h5></div>
+                <div class="card-header">
+                    <h5 class="d-inline">Query</h5>
+                    <copy-btn class="float-right" :text="slotProps.entry.content.sql"></copy-btn>
+                </div>
 
                 <pre class="code-bg p-4 mb-0 text-white" ref="sqlcode">{{ formatSql(slotProps.entry.content.sql) }}</pre>
             </div>
