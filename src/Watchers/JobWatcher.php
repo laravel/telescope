@@ -113,6 +113,9 @@ class JobWatcher extends Watcher
                     'trace' => $event->exception->getTrace(),
                     'line' => $event->exception->getLine(),
                     'line_preview' => ExceptionContext::get($event->exception),
+                    'context' => method_exists($event->exception, 'context')
+                        ? $event->exception->context()
+                        : [],
                 ],
             ]
         )->addTags(['failed']));

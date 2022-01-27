@@ -95,6 +95,9 @@
                         <a class="nav-link" :class="{active: currentTab=='preview'}" href="#" v-on:click.prevent="currentTab='preview'" v-if="slotProps.entry.content.exception">Exception Location</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='context'}" href="#" v-on:click.prevent="currentTab='context'" v-if="slotProps.entry.content.exception">Context</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" :class="{active: currentTab=='trace'}" href="#" v-on:click.prevent="currentTab='trace'" v-if="slotProps.entry.content.exception">Stacktrace</a>
                     </li>
                 </ul>
@@ -103,6 +106,9 @@
                         <vue-json-pretty :data="slotProps.entry.content.data"></vue-json-pretty>
                     </div>
                     <pre class="code-bg p-4 mb-0 text-white" v-if="slotProps.entry.content.exception" v-show="currentTab=='exception'">{{slotProps.entry.content.exception.message}}</pre>
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='context'">
+                        <vue-json-pretty :data="slotProps.entry.content.exception.context"></vue-json-pretty>
+                    </div>
                     <stack-trace :trace="slotProps.entry.content.exception.trace" v-if="slotProps.entry.content.exception" v-show="currentTab=='trace'"></stack-trace>
                     <code-preview
                             v-if="slotProps.entry.content.exception"
