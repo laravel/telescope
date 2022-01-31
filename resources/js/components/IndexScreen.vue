@@ -1,5 +1,4 @@
 <script type="text/ecmascript-6">
-    import $ from 'jquery';
     import _ from 'lodash';
     import axios from 'axios';
 
@@ -161,9 +160,9 @@
              */
             updateTimeAgo(){
                 this.updateTimeAgoTimeout = setTimeout(() => {
-                    _.each($('[data-timeago]'), time => {
-                        $(time).html(this.timeAgo($(time).data('timeago')));
-                    });
+                    document.querySelectorAll('[data-timeago]').forEach((element) => {
+                        element.innerHTML = this.timeAgo(element.dataset.timeago);
+                    }, this);
 
                     this.updateTimeAgo();
                 }, 60000)

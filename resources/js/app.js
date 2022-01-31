@@ -7,8 +7,6 @@ import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
 import moment from 'moment-timezone';
 
-require('bootstrap');
-
 let token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
@@ -16,8 +14,6 @@ if (token) {
 }
 
 Vue.use(VueRouter);
-
-window.Popper = require('popper.js').default;
 
 moment.tz.setDefault(Telescope.timezone);
 

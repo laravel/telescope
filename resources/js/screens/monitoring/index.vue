@@ -1,6 +1,6 @@
 <script type="text/ecmascript-6">
-    import $ from 'jquery';
     import axios from 'axios';
+    import { Modal } from 'bootstrap';
 
     export default {
         /**
@@ -10,7 +10,8 @@
             return {
                 tags: [],
                 ready: false,
-                newTag: ''
+                newTag: '',
+                addTagModal: null,
             };
         },
 
@@ -43,11 +44,15 @@
              * Opens the modal for adding new monitored tag.
              */
             openNewTagModal(){
-                $('#addTagModel').modal({
+                this.addTagModal = Modal.getOrCreateInstance(document.getElementById('addTagModel'), {
                     backdrop: 'static',
                 });
+                this.addTagModal.show();
 
-                $('#newTagInput').focus();
+                const newTagInput = document.getElementById('newTagInput');
+                if (newTagInput) {
+                    newTagInput.focus();
+                }
             },
 
 
@@ -61,9 +66,7 @@
                     this.tags.push(this.newTag);
                 }
 
-                $('#addTagModel').modal('hide');
-
-                this.newTag = '';
+                this.cancelNewTag();
             },
 
 
@@ -71,7 +74,11 @@
              * Cancel adding a new tag.
              */
             cancelNewTag(){
-                $('#addTagModel').modal('hide');
+                if (this.addTagModal) {
+                    this.addTagModal.hide();
+                    this.addTagModal.dispose();
+                    this.addTagModal = null;
+                }
 
                 this.newTag = '';
             }
