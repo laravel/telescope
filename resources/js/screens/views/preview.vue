@@ -65,7 +65,7 @@
                         <tr v-for="(composer, key) in slotProps.entry.content.composers" :key="key">
                             <td :title="composer.name">{{composer.name}}</td>
                             <td class="table-fit">
-                                <span class="badge font-weight-light" :class="'badge-'+composerTypeClass(composer.type)">
+                                <span class="badge font-weight-light" :class="'bg-'+composerTypeClass(composer.type)">
                                     {{composer.type}}
                                 </span>
                             </td>

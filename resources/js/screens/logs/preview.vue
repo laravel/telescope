@@ -29,7 +29,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Level</td>
                 <td>
-                    <span class="badge font-weight-light" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">
+                    <span class="badge font-weight-light" :class="'bg-'+logLevelClass(slotProps.entry.content.level)">
                         {{slotProps.entry.content.level}}
                     </span>
                 </td>

@@ -27,7 +27,7 @@
             </td>
 
             <td class="table-fit">
-                <span class="badge font-weight-light" :class="'badge-'+jobStatusClass(slotProps.entry.content.status)">
+                <span class="badge font-weight-light" :class="'bg-'+jobStatusClass(slotProps.entry.content.status)">
                     {{slotProps.entry.content.status}}
                 </span>
             </td>

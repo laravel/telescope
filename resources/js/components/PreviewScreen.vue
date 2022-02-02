@@ -203,7 +203,7 @@
                                     v-for="tag in entry.tags"
                                     :key="tag"
                                     :to="{name:resource, query: {tag: tag}}"
-                                    class="badge badge-info me-1 font-weight-light">
+                                    class="badge bg-info me-1 font-weight-light text-decoration-none">
                                 {{tag}}
                             </router-link>
                         </td>

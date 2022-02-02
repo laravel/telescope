@@ -29,7 +29,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Result</td>
                 <td>
-                    <span class="badge font-weight-light" :class="'badge-'+gateResultClass(slotProps.entry.content.result)">
+                    <span class="badge font-weight-light" :class="'bg-'+gateResultClass(slotProps.entry.content.result)">
                         {{slotProps.entry.content.result}}
                     </span>
                 </td>

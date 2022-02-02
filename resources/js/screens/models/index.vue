@@ -22,7 +22,7 @@
             <td>{{truncate(slotProps.entry.content.model, 70)}}</td>
 
             <td class="table-fit">
-                <span class="badge font-weight-light" :class="'badge-'+modelActionClass(slotProps.entry.content.action)">
+                <span class="badge font-weight-light" :class="'bg-'+modelActionClass(slotProps.entry.content.action)">
                     {{slotProps.entry.content.action}}
                 </span>
             </td>

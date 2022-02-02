@@ -22,7 +22,7 @@
 
         <template slot="row" slot-scope="slotProps">
             <td class="table-fit pe-0">
-                <span class="badge font-weight-light" :class="'badge-'+requestMethodClass(slotProps.entry.content.method)">
+                <span class="badge font-weight-light" :class="'bg-'+requestMethodClass(slotProps.entry.content.method)">
                     {{slotProps.entry.content.method}}
                 </span>
             </td>
@@ -30,7 +30,7 @@
             <td :title="slotProps.entry.content.uri">{{truncate(slotProps.entry.content.uri, 60)}}</td>
 
             <td class="table-fit">
-                <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(slotProps.entry.content.response_status)">
+                <span class="badge font-weight-light" :class="'bg-'+requestStatusClass(slotProps.entry.content.response_status)">
                     {{slotProps.entry.content.response_status}}
                 </span>
             </td>

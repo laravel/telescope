@@ -16,7 +16,7 @@
             <td :title="slotProps.entry.content.name">
                 {{truncate(slotProps.entry.content.name, 80)}}
 
-                <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.broadcast">
+                <span class="badge bg-secondary font-weight-light ms-2" v-if="slotProps.entry.content.broadcast">
                     Broadcast
                 </span>
             </td>
