@@ -28,7 +28,7 @@
                 <td>
                     {{slotProps.entry.content.mailable}}
 
-                    <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.queued">
+                    <span class="badge bg-secondary font-weight-light ms-2" v-if="slotProps.entry.content.queued">
                         Queued
                     </span>
                 </td>

@@ -18,7 +18,7 @@
                 <td>
                     {{slotProps.entry.content.name}}
 
-                    <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.broadcast">
+                    <span class="badge bg-secondary font-weight-light ms-2" v-if="slotProps.entry.content.broadcast">
                         Broadcast
                     </span>
                 </td>
@@ -48,7 +48,7 @@
                             <td class="card-bg-secondary">
                                 {{ listener.name }}
 
-                                <span class="badge badge-secondary font-weight-light ml-2" v-if="listener.queued">
+                                <span class="badge bg-secondary font-weight-light ml-2" v-if="listener.queued">
                                     Queued
                                 </span>
                             </td>

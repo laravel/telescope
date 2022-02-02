@@ -401,7 +401,7 @@
                     <td :title="entry.content.name">
                         {{truncate(entry.content.name, 80)}}
 
-                        <span class="badge badge-info font-weight-light ml-2" v-if="entry.content.broadcast">
+                        <span class="badge bg-info font-weight-light ms-2" v-if="entry.content.broadcast">
                             Broadcast
                         </span>
                     </td>
@@ -600,7 +600,7 @@
 
                 <tbody>
                 <tr v-for="entry in clientRequests">
-                    <td class="table-fit pr-0">
+                    <td class="table-fit pe-0">
                         <span class="badge font-weight-light" :class="'badge-'+requestMethodClass(entry.content.method)">
                             {{entry.content.method}}
                         </span>

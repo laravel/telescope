@@ -24,7 +24,7 @@
         <p v-for="(line, number) in lines"
            :key="number"
            class="mb-0"
-           :class="{'highlight': number == highlightedLine}"><span class="mr-4">{{number}}</span> <span v-html="highlight(line, number)" /></p>
+           :class="{'highlight': number == highlightedLine}"><span class="me-4">{{number}}</span> <span v-html="highlight(line, number)" /></p>
     </pre>
 </template>
 

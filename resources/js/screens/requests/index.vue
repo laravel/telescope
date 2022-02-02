@@ -21,7 +21,7 @@
 
 
         <template slot="row" slot-scope="slotProps">
-            <td class="table-fit pr-0">
+            <td class="table-fit pe-0">
                 <span class="badge font-weight-light" :class="'badge-'+requestMethodClass(slotProps.entry.content.method)">
                     {{slotProps.entry.content.method}}
                 </span>
