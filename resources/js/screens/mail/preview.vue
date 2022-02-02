@@ -79,7 +79,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Download</td>
                 <td>
-                    <a :href="Telescope.basePath + '/telescope-api/mail/'+$route.params.id+'/download'">Download .eml file</a>
+                    <a :href="Telescope.basePath + '/telescope-api/mail/'+$route.params.id+'/download'" class="text-decoration-none">Download .eml file</a>
                 </td>
             </tr>
         </template>

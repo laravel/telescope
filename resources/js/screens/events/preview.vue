@@ -29,10 +29,10 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Event Data</a>
+                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Event Data</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='listeners'}" href="#" v-on:click.prevent="currentTab='listeners'">Listeners</a>
+                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='listeners'}" href="#" v-on:click.prevent="currentTab='listeners'">Listeners</a>
                     </li>
                 </ul>
                 <div>

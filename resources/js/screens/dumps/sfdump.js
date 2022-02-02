@@ -524,10 +524,10 @@ export default function (doc) {
                     elt.innerHTML =
                         '<span class=sf-dump-str-collapse>' +
                         h +
-                        '<a class="sf-dump-ref sf-dump-str-toggle" title="Collapse"> ◀</a></span>' +
+                        '<a class="sf-dump-ref sf-dump-str-toggle text-decoration-none" title="Collapse"> ◀</a></span>' +
                         '<span class=sf-dump-str-expand>' +
                         elt.innerHTML +
-                        '<a class="sf-dump-ref sf-dump-str-toggle" title="' +
+                        '<a class="sf-dump-ref sf-dump-str-toggle text-decoration-none" title="' +
                         x +
                         ' remaining characters"> ▶</a></span>';
                 }

@@ -40,10 +40,10 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Log Message</a>
+                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Log Message</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='context'}" href="#" v-on:click.prevent="currentTab='context'">Context</a>
+                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='context'}" href="#" v-on:click.prevent="currentTab='context'">Context</a>
                     </li>
                 </ul>
                 <div>

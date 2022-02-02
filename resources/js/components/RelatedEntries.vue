@@ -185,14 +185,14 @@
     <div class="card mt-5" v-if="hasRelatedEntries">
         <ul class="nav nav-pills">
             <li class="nav-item" v-for="tab in separateTabs">
-                <a class="nav-link" :class="{active: currentTab==tab.type}" href="#" v-on:click.prevent="activateTab(tab.type)" v-if="tab.count">
+                <a class="nav-link text-decoration-none" :class="{active: currentTab==tab.type}" href="#" v-on:click.prevent="activateTab(tab.type)" v-if="tab.count">
                     {{tab.title}} ({{tab.count}})
                 </a>
             </li>
             <li class="nav-item dropdown" v-if="dropdownTabs.length">
-                <a class="nav-link dropdown-toggle" :class="{active: dropdownTabSelected}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
+                <a class="nav-link dropdown-toggle text-decoration-none" :class="{active: dropdownTabSelected}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" :class="{active: currentTab==tab.type}" href="#" v-for="tab in dropdownTabs" v-on:click.prevent="activateTab(tab.type)">{{tab.title}} ({{tab.count}})</a>
+                    <a class="dropdown-item text-decoration-none" :class="{active: currentTab==tab.type}" href="#" v-for="tab in dropdownTabs" v-on:click.prevent="activateTab(tab.type)">{{tab.title}} ({{tab.count}})</a>
                 </div>
             </li>
         </ul>
@@ -214,7 +214,7 @@
                         </td>
 
                         <td class="table-fit">
-                            <router-link :to="{name:'exception-preview', params:{id: entry.id}}" class="control-action">
+                            <router-link :to="{name:'exception-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                     <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                                 </svg>
@@ -245,7 +245,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'log-preview', params:{id: entry.id}}" class="control-action">
+                        <router-link :to="{name:'log-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -280,7 +280,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'query-preview', params:{id: entry.id}}" class="control-action">
+                        <router-link :to="{name:'query-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -310,7 +310,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'model-preview', params:{id: entry.id}}" class="control-action">
+                        <router-link :to="{name:'model-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -340,7 +340,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'gate-preview', params:{id: entry.id}}" class="control-action">
+                        <router-link :to="{name:'gate-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -376,7 +376,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'job-preview', params:{id: entry.id}}" class="control-action">
+                        <router-link :to="{name:'job-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -409,7 +409,7 @@
                     <td class="table-fit">{{entry.content.listeners.length}}</td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'event-preview', params:{id: entry.id}}" class="control-action">
+                        <router-link :to="{name:'event-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -440,7 +440,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'cache-preview', params:{id: entry.id}}" class="control-action">
+                        <router-link :to="{name:'cache-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -467,7 +467,7 @@
                     <td class="table-fit">{{entry.content.time}}ms</td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'redis-preview', params:{id: entry.id}}" class="control-action">
+                        <router-link :to="{name:'redis-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -504,7 +504,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'mail-preview', params:{id: entry.id}}" class="control-action">
+                        <router-link :to="{name:'mail-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -544,7 +544,7 @@
                     <td class="table-fit">{{truncate(entry.content.channel, 20)}}</td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'notification-preview', params:{id: entry.id}}" class="control-action">
+                        <router-link :to="{name:'notification-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -576,7 +576,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'view-preview', params:{id: entry.id}}" class="control-action">
+                        <router-link :to="{name:'view-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -619,7 +619,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'client-request-preview', params:{id: entry.id}}" class="control-action">
+                        <router-link :to="{name:'client-request-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>

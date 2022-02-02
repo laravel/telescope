@@ -147,13 +147,13 @@
 
                 <div v-for="entry in entries" :key="entry.id" class="mb-4">
                     <div class="entryPointDescription d-flex justify-content-between align-items-center">
-                        <router-link :to="{name:'request-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'request'">
+                        <router-link :to="{name:'request-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action text-decoration-none" v-if="entry.content.entry_point_type == 'request'">
                             Request: {{entry.content.entry_point_description}}
                         </router-link>
-                        <router-link :to="{name:'job-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'job'">
+                        <router-link :to="{name:'job-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action text-decoration-none" v-if="entry.content.entry_point_type == 'job'">
                             Job: {{entry.content.entry_point_description}}
                         </router-link>
-                        <router-link :to="{name:'command-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'command'">
+                        <router-link :to="{name:'command-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action text-decoration-none" v-if="entry.content.entry_point_type == 'command'">
                             Command: {{entry.content.entry_point_description}}
                         </router-link>
 

@@ -172,7 +172,7 @@
                     <tr v-if="!entryPoint && job">
                         <td class="table-fit font-weight-bold">Job</td>
                         <td>
-                            <router-link :to="{name:'job-preview', params:{id: job.id}}" class="control-action">
+                            <router-link :to="{name:'job-preview', params:{id: job.id}}" class="control-action text-decoration-none">
                                 View Job
                             </router-link>
                         </td>
@@ -181,7 +181,7 @@
                     <tr v-if="!entryPoint && request">
                         <td class="table-fit font-weight-bold">Request</td>
                         <td>
-                            <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action">
+                            <router-link :to="{name:'request-preview', params:{id: request.id}}" class="control-action text-decoration-none">
                                 View Request
                             </router-link>
                         </td>
@@ -190,7 +190,7 @@
                     <tr v-if="!entryPoint && command">
                         <td class="table-fit font-weight-bold">Command</td>
                         <td>
-                            <router-link :to="{name:'command-preview', params:{id: command.id}}" class="control-action">
+                            <router-link :to="{name:'command-preview', params:{id: command.id}}" class="control-action text-decoration-none">
                                 View Command
                             </router-link>
                         </td>

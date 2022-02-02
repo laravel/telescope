@@ -40,10 +40,10 @@
             <div class="card mt-5" v-if="slotProps.entry.content.data">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Data</a>
+                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Data</a>
                     </li>
                     <li class="nav-item" v-if="slotProps.entry.content.composers">
-                        <a class="nav-link" :class="{active: currentTab=='composers'}" href="#" v-on:click.prevent="currentTab='composers'">Composers</a>
+                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='composers'}" href="#" v-on:click.prevent="currentTab='composers'">Composers</a>
                     </li>
                 </ul>
                 <div>

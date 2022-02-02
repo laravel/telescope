@@ -77,7 +77,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Size</td>
                 <td>
-                    <router-link :to="{name:'jobs', query: {family_hash: slotProps.entry.family_hash}}" class="control-action">
+                    <router-link :to="{name:'jobs', query: {family_hash: slotProps.entry.family_hash}}" class="control-action text-decoration-none">
                         {{slotProps.entry.content.totalJobs}} Jobs
                     </router-link>
                 </td>
