@@ -51,9 +51,9 @@ class ModelWatcher extends Watcher
             return;
         }
 
-        $modelClass = FormatModel::given($data[0]);
+        $modelClass = FormatModel::given($data['model'] ?? $data[0]);
 
-        $changes = $data[0]->getChanges();
+        $changes = ($data['model'] ?? $data[0])->getChanges();
 
         Telescope::recordModelEvent(IncomingEntry::make(array_filter([
             'action' => $this->action($event),
@@ -71,7 +71,7 @@ class ModelWatcher extends Watcher
     public function recordHydrations($data)
     {
         if (! ($this->options['hydrations'] ?? false)
-            || ! $this->shouldRecordHydration($modelClass = get_class($data[0]))) {
+            || ! $this->shouldRecordHydration($modelClass = get_class($data['model'] ?? $data[0]))) {
             return;
         }
 
