@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.7.1...HEAD)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.7.2...4.x)
+
+## [v4.7.2](https://github.com/laravel/telescope/compare/v4.7.1...v4.7.2) - 2022-02-04
+
+### Fixed
+
+- Fix key handling for ModelWatcher ([#1180](https://github.com/laravel/telescope/pull/1180))
 
 ## [v4.7.1](https://github.com/laravel/telescope/compare/v4.7.0...v4.7.1) - 2022-02-01
 
