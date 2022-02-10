@@ -48,7 +48,7 @@
                             <td class="card-bg-secondary">
                                 {{ listener.name }}
 
-                                <span class="badge bg-secondary font-weight-light ml-2" v-if="listener.queued">
+                                <span class="badge bg-secondary font-weight-light ms-2" v-if="listener.queued">
                                     Queued
                                 </span>
                             </td>
