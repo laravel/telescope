@@ -1,13 +1,13 @@
 .vjs-tree {
     font-family: $font-family-monospace;
 
-    .vjs-tree__content {
-        border-left: 1px dotted rgba(204, 204, 204, 0.28) !important;
-    }
     .vjs-tree__node {
         cursor: pointer;
         &:hover {
             color: #20a0ff;
+        }
+        > .vjs-tree__indent.has-line {
+            border-left: 1px dotted rgba(204, 204, 204, 0.28) !important;
         }
     }
     .vjs-checkbox {
