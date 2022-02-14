@@ -22,7 +22,7 @@ class MailWatcherTest extends FeatureTestCase
 
     public function test_mail_watcher_registers_entry()
     {
-        Mail::raw('Telescope is amazing!', function ($message) {
+        Mail::html('Telescope is amazing!', function ($message) {
             $message->from('from@laravel.com')
                 ->to('to@laravel.com')
                 ->cc(['cc1@laravel.com', 'cc2@laravel.com'])
