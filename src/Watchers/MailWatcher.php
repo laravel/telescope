@@ -44,7 +44,7 @@ class MailWatcher extends Watcher
             'cc' => $this->formatAddresses($event->message->getCc()),
             'bcc' => $this->formatAddresses($event->message->getBcc()),
             'subject' => $event->message->getSubject(),
-            'html' => $body instanceof AbstractPart ? $body->bodyToString() : $body,
+            'html' => $body instanceof AbstractPart ? ($event->message->getHtmlBody() ?? $event->message->getTextBody()) : $body,
             'raw' => $event->message->toString(),
         ])->tags($this->tags($event->message, $event->data)));
     }
