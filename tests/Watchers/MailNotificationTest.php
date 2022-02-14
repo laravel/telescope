@@ -25,7 +25,6 @@ class MailNotificationTest extends FeatureTestCase
         $app->get('config')->set('mail.driver', 'array');
     }
 
-    /** @test */
     public function test_mail_watcher_registers_valid_html()
     {
         Notification::route('mail', 'to@laravel.com')
@@ -34,9 +33,7 @@ class MailNotificationTest extends FeatureTestCase
         $entry = $this->loadTelescopeEntries()->firstWhere('type', EntryType::MAIL);
 
         $this->assertSame(EntryType::MAIL, $entry->type);
-
-        $doc = new \DOMDocument();
-        $doc->loadHTML($entry->content['html']);
+        $this->assertStringStartsWith('<!DOCTYPE html', $entry->content['html']);
     }
 }
 
