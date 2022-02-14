@@ -39,7 +39,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Duration</td>
                 <td>
-                    <span class="badge badge-danger font-weight-light" v-if="slotProps.entry.content.slow">
+                    <span class="badge bg-danger font-weight-light" v-if="slotProps.entry.content.slow">
                         {{slotProps.entry.content.time}}ms
                     </span>
 

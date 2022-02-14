@@ -1,5 +1,4 @@
 <script type="text/ecmascript-6">
-    import $ from 'jquery';
     import _ from 'lodash';
     import axios from 'axios';
 
@@ -161,9 +160,9 @@
              */
             updateTimeAgo(){
                 this.updateTimeAgoTimeout = setTimeout(() => {
-                    _.each($('[data-timeago]'), time => {
-                        $(time).html(this.timeAgo($(time).data('timeago')));
-                    });
+                    document.querySelectorAll('[data-timeago]').forEach((element) => {
+                        element.innerHTML = this.timeAgo(element.dataset.timeago);
+                    }, this);
 
                     this.updateTimeAgo();
                 }, 60000)
@@ -278,16 +277,16 @@
         </div>
 
         <p v-if="recordingStatus !== 'enabled'" class="mt-0 mb-0 disabled-watcher d-flex align-items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 90 90" class="mr-2">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 90 90" class="me-2">
                 <path fill="#FFFFFF" d="M45 0C20.1 0 0 20.1 0 45s20.1 45 45 45 45-20.1 45-45S69.9 0 45 0zM45 74.5c-3.6 0-6.5-2.9-6.5-6.5s2.9-6.5 6.5-6.5 6.5 2.9 6.5 6.5S48.6 74.5 45 74.5zM52.1 23.9l-2.5 29.6c0 2.5-2.1 4.6-4.6 4.6 -2.5 0-4.6-2.1-4.6-4.6l-2.5-29.6c-0.1-0.4-0.1-0.7-0.1-1.1 0-4 3.2-7.2 7.2-7.2 4 0 7.2 3.2 7.2 7.2C52.2 23.1 52.2 23.5 52.1 23.9z"></path>
             </svg>
-            <span class="ml-1" v-if="recordingStatus == 'disabled'">Telescope is currently disabled.</span>
-            <span class="ml-1" v-if="recordingStatus == 'paused'">Telescope recording is paused.</span>
-            <span class="ml-1" v-if="recordingStatus == 'off'">This watcher is turned off.</span>
+            <span class="ms-1" v-if="recordingStatus == 'disabled'">Telescope is currently disabled.</span>
+            <span class="ms-1" v-if="recordingStatus == 'paused'">Telescope recording is paused.</span>
+            <span class="ms-1" v-if="recordingStatus == 'off'">This watcher is turned off.</span>
         </p>
 
         <div v-if="!ready" class="d-flex align-items-center justify-content-center card-bg-secondary p-5 bottom-radius">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon spin mr-2 fill-text-color">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon spin me-2 fill-text-color">
                 <path d="M12 10a2 2 0 0 1-3.41 1.41A2 2 0 0 1 10 8V0a9.97 9.97 0 0 1 10 10h-8zm7.9 1.41A10 10 0 1 1 8.59.1v2.03a8 8 0 1 0 9.29 9.29h2.02zm-4.07 0a6 6 0 1 1-7.25-7.25v2.1a3.99 3.99 0 0 0-1.4 6.57 4 4 0 0 0 6.56-1.42h2.1z"></path>
             </svg>
 
@@ -313,7 +312,7 @@
             <transition-group tag="tbody" name="list">
                 <tr v-if="hasNewEntries" key="newEntries" class="dontanimate">
                     <td colspan="100" class="text-center card-bg-secondary py-1">
-                        <small><a href="#" v-on:click.prevent="loadNewEntries" v-if="!loadingNewEntries">Load New Entries</a></small>
+                        <small><a href="#" v-on:click.prevent="loadNewEntries" v-if="!loadingNewEntries" class="text-decoration-none">Load New Entries</a></small>
 
                         <small v-if="loadingNewEntries">Loading...</small>
                     </td>
@@ -327,7 +326,7 @@
 
                 <tr v-if="hasMoreEntries" key="olderEntries" class="dontanimate">
                     <td colspan="100" class="text-center card-bg-secondary py-1">
-                        <small><a href="#" v-on:click.prevent="loadOlderEntries" v-if="!loadingMoreEntries">Load Older Entries</a></small>
+                        <small><a href="#" v-on:click.prevent="loadOlderEntries" v-if="!loadingMoreEntries" class="text-decoration-none">Load Older Entries</a></small>
 
                         <small v-if="loadingMoreEntries">Loading...</small>
                     </td>

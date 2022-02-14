@@ -29,7 +29,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Level</td>
                 <td>
-                    <span class="badge font-weight-light" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">
+                    <span class="badge font-weight-light" :class="'bg-'+logLevelClass(slotProps.entry.content.level)">
                         {{slotProps.entry.content.level}}
                     </span>
                 </td>
@@ -40,10 +40,10 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Log Message</a>
+                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Log Message</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='context'}" href="#" v-on:click.prevent="currentTab='context'">Context</a>
+                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='context'}" href="#" v-on:click.prevent="currentTab='context'">Context</a>
                     </li>
                 </ul>
                 <div>

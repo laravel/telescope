@@ -28,7 +28,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Action</td>
                 <td>
-                    <span class="badge font-weight-light" :class="'badge-'+cacheActionTypeClass(slotProps.entry.content.type)">
+                    <span class="badge font-weight-light" :class="'bg-'+cacheActionTypeClass(slotProps.entry.content.type)">
                         {{slotProps.entry.content.type}}
                     </span>
                 </td>

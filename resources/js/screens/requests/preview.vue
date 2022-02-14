@@ -74,16 +74,16 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='payload'}" href="#" v-on:click.prevent="currentTab='payload'">Payload</a>
+                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='payload'}" href="#" v-on:click.prevent="currentTab='payload'">Payload</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='headers'}" href="#" v-on:click.prevent="currentTab='headers'">Headers</a>
+                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='headers'}" href="#" v-on:click.prevent="currentTab='headers'">Headers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='session'}" href="#" v-on:click.prevent="currentTab='session'">Session</a>
+                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='session'}" href="#" v-on:click.prevent="currentTab='session'">Session</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='response'}" href="#" v-on:click.prevent="currentTab='response'">Response</a>
+                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='response'}" href="#" v-on:click.prevent="currentTab='response'">Response</a>
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
