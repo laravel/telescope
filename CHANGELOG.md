@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.7.2...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.7.3...4.x)
+
+## [v4.7.3](https://github.com/laravel/telescope/compare/v4.7.2...v4.7.3) - 2022-02-15
+
+### Fixed
+
+- Mails sent through Notifications preview invalid HTML by @guushuizen in https://github.com/laravel/telescope/pull/1188
 
 ## [v4.7.2](https://github.com/laravel/telescope/compare/v4.7.1...v4.7.2) - 2022-02-04
 
