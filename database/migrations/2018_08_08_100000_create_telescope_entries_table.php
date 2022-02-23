@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTelescopeEntriesTable extends Migration
+return new class extends Migration
 {
     /**
      * The database schema.
@@ -86,4 +86,4 @@ class CreateTelescopeEntriesTable extends Migration
         $this->schema->dropIfExists('telescope_entries');
         $this->schema->dropIfExists('telescope_monitoring');
     }
-}
+};

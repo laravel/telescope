@@ -16,7 +16,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "ext-json": "*",
-        "laravel/framework": "^8.29|^9.0",
+        "laravel/framework": "^8.37|^9.0",
         "symfony/var-dumper": "^5.0|^6.0"
     },
     "require-dev": {
