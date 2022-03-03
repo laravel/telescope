@@ -1,6 +1,16 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.7.3...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.7.4...4.x)
+
+## [v4.7.4](https://github.com/laravel/telescope/compare/v4.7.3...v4.7.4) - 2022-03-03
+
+### Changed
+
+- Use new anonymous classes by @mmachatschek in https://github.com/laravel/telescope/pull/1194
+
+### Fixed
+
+- Truncate request url more by @driesvints in https://github.com/laravel/telescope/pull/1195
 
 ## [v4.7.3](https://github.com/laravel/telescope/compare/v4.7.2...v4.7.3) - 2022-02-15
 
