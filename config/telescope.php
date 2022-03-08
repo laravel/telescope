@@ -124,7 +124,10 @@ return [
             'ignore' => [],
         ],
 
-        Watchers\DumpWatcher::class => env('TELESCOPE_DUMP_WATCHER', true),
+        Watchers\DumpWatcher::class => [
+            'enabled' => env('TELESCOPE_DUMP_WATCHER', true),
+            'always' => env('TELESCOPE_DUMP_WATCHER_ALWAYS', false),
+        ],
 
         Watchers\EventWatcher::class => [
             'enabled' => env('TELESCOPE_EVENT_WATCHER', true),
