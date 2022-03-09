@@ -47,7 +47,7 @@ class PauseCommand extends Command
      */
     public function handle()
     {
-        if (!$this->cache->get('telescope:pause-recording')) {
+        if (! $this->cache->get('telescope:pause-recording')) {
             $this->cache->put('telescope:pause-recording', true, now()->addDays(30));
         }
     
