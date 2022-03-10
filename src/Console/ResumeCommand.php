@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Laravel\Telescope\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
