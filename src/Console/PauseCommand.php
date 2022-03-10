@@ -52,6 +52,6 @@ class PauseCommand extends Command
             $this->cache->put('telescope:pause-recording', true, now()->addDays(30));
         }
     
-        $this->info('Telescope was paused successfully.');
+        $this->info('Telescope watchers paused successfully.');
     }
 }
