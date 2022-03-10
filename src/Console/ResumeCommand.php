@@ -19,25 +19,26 @@ class ResumeCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Resume all telescope watchers';
+    protected $description = 'Unpause all Telescope watchers';
 
     /**
      * The cache repository implementation.
      *
      * @var \Illuminate\Contracts\Cache\Repository
      */
-    protected CacheRepository $cache;
+    protected $cache;
 
     /**
      * Create a new command instance.
      *
+     * @param  \Illuminate\Contracts\Cache\Repository  $cache
      * @return void
      */
     public function __construct(CacheRepository $cache)
     {
-        $this->cache = $cache;
-
         parent::__construct();
+
+        $this->cache = $cache;
     }
 
     /**
@@ -51,6 +52,6 @@ class ResumeCommand extends Command
             $this->cache->forget('telescope:pause-recording');
         }
 
-        $this->info('Telescope was resumed successfully.');
+        $this->info('Telescope watchers resumed successfully.');
     }
 }

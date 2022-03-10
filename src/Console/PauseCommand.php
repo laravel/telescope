@@ -19,25 +19,26 @@ class PauseCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Pause all telescope watchers';
+    protected $description = 'Pause all Telescope watchers';
     
     /**
      * The cache repository implementation.
      *
      * @var \Illuminate\Contracts\Cache\Repository
      */
-    protected CacheRepository $cache;
+    protected $cache;
     
     /**
      * Create a new command instance.
      *
+     * @param  \Illuminate\Contracts\Cache\Repository  $cache
      * @return void
      */
     public function __construct(CacheRepository $cache)
     {
-        $this->cache = $cache;
-    
         parent::__construct();
+
+        $this->cache = $cache;
     }
     
     /**
