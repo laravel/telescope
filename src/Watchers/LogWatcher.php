@@ -2,11 +2,11 @@
 
 namespace Laravel\Telescope\Watchers;
 
-use Exception;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
+use Throwable;
 
 class LogWatcher extends Watcher
 {
@@ -62,6 +62,6 @@ class LogWatcher extends Watcher
     private function shouldIgnore($event)
     {
         return isset($event->context['exception']) &&
-            $event->context['exception'] instanceof Exception;
+            $event->context['exception'] instanceof Throwable;
     }
 }
