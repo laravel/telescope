@@ -1,6 +1,17 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.7.4...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.8.0...4.x)
+
+## [v4.8.0](https://github.com/laravel/telescope/compare/v4.7.4...v4.8.0) - 2022-03-15
+
+### Added
+
+- Add option to record dumps even though the dump watcher tab is not open by @superDuperCyberTechno in https://github.com/laravel/telescope/pull/1199
+- Add pause and resume commands by @jamespavett in https://github.com/laravel/telescope/pull/1200
+
+### Changed
+
+- Use Throwable instead of Exception by @adriaanzon in https://github.com/laravel/telescope/pull/1201
 
 ## [v4.7.4](https://github.com/laravel/telescope/compare/v4.7.3...v4.7.4) - 2022-03-03
 
