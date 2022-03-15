@@ -66,6 +66,7 @@ class ClientRequestWatcher extends Watcher
             'response_status' => $event->response->status(),
             'response_headers' => $this->headers($event->response->headers()),
             'response' => $this->response($event->response),
+            'transfer_time' => $event->response->transferStats->getTransferTime(),
         ]));
     }
 

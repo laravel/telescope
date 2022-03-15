@@ -34,6 +34,13 @@
                 {{slotProps.entry.content.response_status !== undefined ? slotProps.entry.content.response_status : 'N/A'}}
             </td>
         </tr>
+
+        <tr>
+            <td class="table-fit font-weight-bold">Transfer Time</td>
+            <td>
+                {{slotProps.entry.content.transfer_time}} s
+            </td>
+        </tr>
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">
