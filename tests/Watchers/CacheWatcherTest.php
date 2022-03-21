@@ -20,7 +20,7 @@ class CacheWatcherTest extends FeatureTestCase
                 'hideValues' => [
                     'my-hidden-value-key',
                 ],
-            ]
+            ],
         ]);
     }
 
