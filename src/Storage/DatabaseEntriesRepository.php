@@ -333,12 +333,19 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      * Prune all of the entries older than the given date.
      *
      * @param  \DateTimeInterface  $before
+     * @param  boolean  $skipException
      * @return int
      */
-    public function prune(DateTimeInterface $before)
+    public function prune(DateTimeInterface $before, $skipException)
     {
         $query = $this->table('telescope_entries')
                 ->where('created_at', '<', $before);
+
+        if ($skipException) {
+            $exceptions = $this->table('telescope_entries')->where('type', EntryType::EXCEPTION)->get(['uuid', 'batch_id']);
+            $exceptionsUuid = $exceptions->pluck('uuid')->merge($exceptions->pluck('batch_id'));
+            $query->whereNotIn('uuid', $exceptionsUuid);
+        }
 
         $totalDeleted = 0;
 
