@@ -333,7 +333,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      * Prune all of the entries older than the given date.
      *
      * @param  \DateTimeInterface  $before
-     * @param  boolean  $skipException
+     * @param  bool  $skipException
      * @return int
      */
     public function prune(DateTimeInterface $before, $skipException)

@@ -29,6 +29,6 @@ class PruneCommand extends Command
      */
     public function handle(PrunableRepository $repository)
     {
-        $this->info($repository->prune(now()->subHours($this->option('hours')), $this->option('skipException')) . ' entries pruned.');
+        $this->info($repository->prune(now()->subHours($this->option('hours')), $this->option('skipException')).' entries pruned.');
     }
 }
