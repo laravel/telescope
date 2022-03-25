@@ -42,7 +42,7 @@ class CacheWatcher extends Watcher
         Telescope::recordCache(IncomingEntry::make([
             'type' => 'hit',
             'key' => $event->key,
-            'value' => $event->value,
+            'value' => $this->formatValue($event),
         ]));
     }
 
@@ -79,7 +79,7 @@ class CacheWatcher extends Watcher
         Telescope::recordCache(IncomingEntry::make([
             'type' => 'set',
             'key' => $event->key,
-            'value' => $event->value,
+            'value' => $this->formatValue($event),
             'expiration' => $this->formatExpiration($event),
         ]));
     }
@@ -100,6 +100,33 @@ class CacheWatcher extends Watcher
             'type' => 'forget',
             'key' => $event->key,
         ]));
+    }
+
+    /**
+     * Determine the value of an event.
+     *
+     * @param  mixed  $event
+     * @return mixed
+     */
+    private function formatValue($event)
+    {
+        return (! $this->shouldHideValue($event))
+                    ? $event->value
+                    : '********';
+    }
+
+    /**
+     * Determine if the event value should be ignored.
+     *
+     * @param  mixed  $event
+     * @return bool
+     */
+    private function shouldHideValue($event)
+    {
+        return Str::is(
+            $this->options['hidden'] ?? [],
+            $event->key
+        );
     }
 
     /**
