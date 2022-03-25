@@ -17,7 +17,7 @@ class CacheWatcherTest extends FeatureTestCase
         $app->get('config')->set('telescope.watchers', [
             CacheWatcher::class => [
                 'enabled' => true,
-                'hideValues' => [
+                'hidden' => [
                     'my-hidden-value-key',
                 ],
             ],

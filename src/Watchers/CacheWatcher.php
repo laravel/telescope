@@ -103,6 +103,33 @@ class CacheWatcher extends Watcher
     }
 
     /**
+     * Determine the value of an event.
+     *
+     * @param  mixed  $event
+     * @return mixed
+     */
+    private function formatValue($event)
+    {
+        return (! $this->shouldHideValue($event))
+                    ? $event->value
+                    : '********';
+    }
+
+    /**
+     * Determine if the event value should be ignored.
+     *
+     * @param  mixed  $event
+     * @return bool
+     */
+    private function shouldHideValue($event)
+    {
+        return Str::is(
+            $this->options['hidden'] ?? [],
+            $event->key
+        );
+    }
+
+    /**
      * @param  \Illuminate\Cache\Events\KeyWritten  $event
      * @return mixed
      */
@@ -125,31 +152,5 @@ class CacheWatcher extends Watcher
             'framework/schedule*',
             'telescope:*',
         ], $event->key);
-    }
-
-    /**
-     * Determine the value of an event.
-     *
-     * @param  mixed  $event
-     * @return mixed
-     */
-    private function formatValue($event)
-    {
-        return (! $this->shouldHideValue($event))
-            ? $event->value : '********';
-    }
-
-    /**
-     * Determine if the event value should be ignored.
-     *
-     * @param  mixed  $event
-     * @return bool
-     */
-    private function shouldHideValue($event)
-    {
-        return Str::is(
-            $this->options['hideValues'] ?? [],
-            $event->key
-        );
     }
 }
