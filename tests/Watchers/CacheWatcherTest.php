@@ -15,7 +15,12 @@ class CacheWatcherTest extends FeatureTestCase
         parent::getEnvironmentSetUp($app);
 
         $app->get('config')->set('telescope.watchers', [
-            CacheWatcher::class => true,
+            CacheWatcher::class => [
+                'enabled' => true,
+                'hidden' => [
+                    'my-hidden-value-key',
+                ],
+            ],
         ]);
     }
 
@@ -75,5 +80,35 @@ class CacheWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::CACHE, $entry->type);
         $this->assertSame('forget', $entry->content['type']);
         $this->assertSame('outdated', $entry->content['key']);
+    }
+
+    public function test_cache_watcher_hides_hidden_values_when_set()
+    {
+        $this->app->get(Repository::class)->put('my-hidden-value-key', 'laravel', 1);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::CACHE, $entry->type);
+        $this->assertSame('set', $entry->content['type']);
+        $this->assertSame('my-hidden-value-key', $entry->content['key']);
+        $this->assertSame('********', $entry->content['value']);
+    }
+
+    public function test_cache_watcher_hides_hidden_values_when_retrieved()
+    {
+        $repository = $this->app->get(Repository::class);
+
+        Telescope::withoutRecording(function () use ($repository) {
+            $repository->put('my-hidden-value-key', 'laravel', 1);
+        });
+
+        $repository->get('my-hidden-value-key');
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::CACHE, $entry->type);
+        $this->assertSame('hit', $entry->content['type']);
+        $this->assertSame('my-hidden-value-key', $entry->content['key']);
+        $this->assertSame('********', $entry->content['value']);
     }
 }
