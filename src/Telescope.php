@@ -232,7 +232,7 @@ class Telescope
             collect([
                 'telescope-api*',
                 'vendor/telescope*',
-                (config('horizon.path') ?? 'horizon') . '*',
+                (config('horizon.path') ?? 'horizon').'*',
                 'vendor/horizon*',
             ])
             ->merge(config('telescope.ignore_paths', []))
