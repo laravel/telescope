@@ -1,6 +1,13 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.8.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.8.1...4.x)
+
+## [v4.8.1](https://github.com/laravel/telescope/compare/v4.8.0...v4.8.1) - 2022-03-26
+
+### Changed
+
+- CacheWatcher hide values by @dododedodonl in https://github.com/laravel/telescope/pull/1206
+- Read from Horizon config when ignoring requests by @lightbulblighter in https://github.com/laravel/telescope/pull/1211
 
 ## [v4.8.0](https://github.com/laravel/telescope/compare/v4.7.4...v4.8.0) - 2022-03-15
 
