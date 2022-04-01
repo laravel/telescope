@@ -146,7 +146,7 @@ class Telescope
             (static::runningApprovedArtisanCommand($app) ||
             static::handlingApprovedRequest($app))
         ) {
-            static::startRecording();
+            static::startRecording($loadMonitoredTags = false);
         }
     }
 
@@ -246,11 +246,14 @@ class Telescope
     /**
      * Start recording entries.
      *
+     * @param  bool  $loadMonitoredTags
      * @return void
      */
-    public static function startRecording()
+    public static function startRecording($loadMonitoredTags = true)
     {
-        app(EntriesRepository::class)->loadMonitoredTags();
+        if ($loadMonitoredTags) {
+            app(EntriesRepository::class)->loadMonitoredTags();
+        }
 
         static::$shouldRecord = ! cache('telescope:pause-recording');
     }
