@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.8.1...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.8.2...4.x)
+
+## [v4.8.2](https://github.com/laravel/telescope/compare/v4.8.1...v4.8.2) - 2022-04-01
+
+### Fixed
+
+- Defer loading monitored tags by @taylorotwell in https://github.com/laravel/telescope/pull/1215
 
 ## [v4.8.1](https://github.com/laravel/telescope/compare/v4.8.0...v4.8.1) - 2022-03-26
 
