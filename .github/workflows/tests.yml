@@ -39,6 +39,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: curl, dom, gd, json, libxml, mbstring, zip
+          ini-values: error_reporting=E_ALL
           tools: composer:v2
           coverage: none
 
