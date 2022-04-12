@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.8.2...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.8.3...4.x)
+
+## [v4.8.3](https://github.com/laravel/telescope/compare/v4.8.2...v4.8.3) - 2022-04-11
+
+### Changed
+
+- Relax user type in GateWatcher to match Laravel base framework. by @CImrie in https://github.com/laravel/telescope/pull/1221
 
 ## [v4.8.2](https://github.com/laravel/telescope/compare/v4.8.1...v4.8.2) - 2022-04-01
 
