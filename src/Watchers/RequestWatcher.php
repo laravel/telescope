@@ -61,7 +61,7 @@ class RequestWatcher extends Watcher
     }
 
     /**
-     * Determine if the request should be ignored based on its verb.
+     * Determine if the request should be ignored based on its method.
      *
      * @param  mixed  $event
      * @return bool
