@@ -36,8 +36,7 @@ class RequestWatcher extends Watcher
      */
     public function recordRequest(RequestHandled $event)
     {
-        if (! Telescope::isRecording() ||
-            $this->shouldIgnoreStatusCode($event)) {
+        if (! Telescope::isRecording() || $this->shouldIgnoreStatusCode($event) || $this->shouldIgnoreVerb($event)) {
             return;
         }
 
@@ -70,6 +69,20 @@ class RequestWatcher extends Watcher
         return in_array(
             $event->response->getStatusCode(),
             $this->options['ignore_status_codes'] ?? []
+        );
+    }
+
+    /**
+     * Determine if the request should be ignored based on its verb.
+     *
+     * @param  mixed  $event
+     * @return bool
+     */
+    protected function shouldIgnoreVerb($event)
+    {
+        return in_array(
+            $event->request->method(),
+            $this->options['ignore_verbs'] ?? []
         );
     }
 
