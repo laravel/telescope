@@ -36,7 +36,9 @@ class RequestWatcher extends Watcher
      */
     public function recordRequest(RequestHandled $event)
     {
-        if (! Telescope::isRecording() || $this->shouldIgnoreStatusCode($event) || $this->shouldIgnoreVerb($event)) {
+        if (! Telescope::isRecording() ||
+            $this->shouldIgnoreHttpMethod($event) ||
+            $this->shouldIgnoreStatusCode($event)) {
             return;
         }
 
@@ -59,6 +61,22 @@ class RequestWatcher extends Watcher
     }
 
     /**
+     * Determine if the request should be ignored based on its verb.
+     *
+     * @param  mixed  $event
+     * @return bool
+     */
+    protected function shouldIgnoreHttpMethod($event)
+    {
+        return in_array(
+            strtolower($event->request->method()),
+            collect($this->options['ignore_http_methods'] ?? [])->map(function ($method) {
+                return strtolower($method);
+            })->all()
+        );
+    }
+
+    /**
      * Determine if the request should be ignored based on its status code.
      *
      * @param  mixed  $event
@@ -69,20 +87,6 @@ class RequestWatcher extends Watcher
         return in_array(
             $event->response->getStatusCode(),
             $this->options['ignore_status_codes'] ?? []
-        );
-    }
-
-    /**
-     * Determine if the request should be ignored based on its verb.
-     *
-     * @param  mixed  $event
-     * @return bool
-     */
-    protected function shouldIgnoreVerb($event)
-    {
-        return in_array(
-            $event->request->method(),
-            $this->options['ignore_verbs'] ?? []
         );
     }
 
