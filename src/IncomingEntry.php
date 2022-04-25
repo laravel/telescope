@@ -233,6 +233,27 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a denied authorization gate check.
+     *
+     * @return bool
+     */
+    public function isDeniedGate()
+    {
+        return $this->type === EntryType::GATE &&
+            ($this->content['result'] ?? null) === 'denied';
+    }
+
+    /**
+     * Determine if the incoming entry is a job.
+     *
+     * @return bool
+     */
+    public function isJob()
+    {
+        return $this->type === EntryType::JOB;
+    }
+
+    /**
      * Determine if the incoming entry is a failed job.
      *
      * @return bool
@@ -291,6 +312,109 @@ class IncomingEntry
     public function isClientRequest()
     {
         return $this->type === EntryType::CLIENT_REQUEST;
+    }
+
+    /**
+     * Determine if the incoming entry is a command.
+     *
+     * @return bool
+     */
+    public function isCommand()
+    {
+        return $this->type === EntryType::COMMAND;
+    }
+
+    /**
+     * Determine if the incoming entry is a failed command.
+     *
+     * @return bool
+     */
+    public function isFailedCommand()
+    {
+        return $this->type === EntryType::COMMAND &&
+            ($this->content['exit_code'] ?? null) !== 0;
+    }
+
+    /**
+     * Determine if the incoming entry is an event.
+     *
+     * @return bool
+     */
+    public function isEvent()
+    {
+        return $this->type === EntryType::EVENT;
+    }
+
+    /**
+     * Determine if the incoming entry is a log.
+     *
+     * @return bool
+     */
+    public function isLog()
+    {
+        return $this->type === EntryType::LOG;
+    }
+
+    /**
+     * Determine if the incoming entry is a log with a specified level.
+     *
+     * @return bool
+     */
+    public function isLogLevel($level)
+    {
+        return $this->type === EntryType::LOG &&
+            ($this->content['level'] ?? null) === $level;
+    }
+
+    /**
+     * Determine if the incoming entry is a mail.
+     *
+     * @return bool
+     */
+    public function isMail()
+    {
+        return $this->type === EntryType::MAIL;
+    }
+
+    /**
+     * Determine if the incoming entry is a model.
+     *
+     * @return bool
+     */
+    public function isModel()
+    {
+        return $this->type === EntryType::MODEL;
+    }
+
+    /**
+     * Determine if the incoming entry is a model with a specific action.
+     *
+     * @return bool
+     */
+    public function isModelAction($action)
+    {
+        return $this->type === EntryType::MODEL &&
+            Str::is($action, $this->content['action'] ?? null);
+    }
+
+    /**
+     * Determine if the incoming entry is a notification.
+     *
+     * @return bool
+     */
+    public function isNotification()
+    {
+        return $this->type === EntryType::NOTIFICATION;
+    }
+
+    /**
+     * Determine if the incoming entry is a view.
+     *
+     * @return bool
+     */
+    public function isView()
+    {
+        return $this->type === EntryType::VIEW;
     }
 
     /**
