@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.8.3...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.0...4.x)
+
+## [v4.9.0](https://github.com/laravel/telescope/compare/v4.8.3...v4.9.0) - 2022-04-19
+
+### Added
+
+- Add support for ignoring by HTTP Verb by @ArthurPatriot in https://github.com/laravel/telescope/pull/1222
 
 ## [v4.8.3](https://github.com/laravel/telescope/compare/v4.8.2...v4.8.3) - 2022-04-11
 
