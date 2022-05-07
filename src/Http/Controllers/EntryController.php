@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\EntryQueryOptions;
 
@@ -50,6 +51,14 @@ abstract class EntryController extends Controller
      */
     public function show(EntriesRepository $storage, $id)
     {
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|uuid',
+        ]);
+
+        if ($validator->fails()) {
+            return;
+        }
+
         $entry = $storage->find($id)->generateAvatar();
 
         return response()->json([
