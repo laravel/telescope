@@ -33,7 +33,7 @@ trait AuthorizesRequests
     public static function check($request)
     {
         return (static::$authUsing ?: function () {
-            return app()->environment('local');
+            return app()->environment(config('telescope.environments', ['local']));
         })($request);
     }
 }

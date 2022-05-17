@@ -20,6 +20,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Environments
+    |--------------------------------------------------------------------------
+    |
+    | These are the environments which can be set in .env where telescope can
+    | be accessed in. If accessing in environment which is not in this array
+    | you will get an HTTP 403 error.
+    |
+     */
+    'environments' => [
+        'local',
+        // e.g. 'staging', 'production'
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Path
     |--------------------------------------------------------------------------
     |
