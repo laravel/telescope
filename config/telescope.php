@@ -28,6 +28,7 @@ return [
     | you will get an HTTP 403 error.
     |
      */
+
     'environments' => [
         'local',
         // e.g. 'staging', 'production'
