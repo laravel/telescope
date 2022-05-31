@@ -1,0 +1,7 @@
+name: Compile Assets
+
+on: [push]
+
+jobs:
+  compile:
+    uses: laravel/.github/.github/workflows/compile-assets.yml@main
