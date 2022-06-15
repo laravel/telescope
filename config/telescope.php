@@ -46,7 +46,7 @@ return [
 
     'storage' => [
         'database' => [
-            'connection' => env('DB_CONNECTION', 'mysql'),
+            'connection' => env('DB_CONNECTION', 'mongodb'),
             'chunk' => 1000,
         ],
     ],
@@ -116,7 +116,12 @@ return [
 
     'watchers' => [
         Watchers\BatchWatcher::class => env('TELESCOPE_BATCH_WATCHER', true),
-        Watchers\CacheWatcher::class => env('TELESCOPE_CACHE_WATCHER', true),
+
+        Watchers\CacheWatcher::class => [
+            'enabled' => env('TELESCOPE_CACHE_WATCHER', true),
+            'hidden' => [],
+        ],
+
         Watchers\ClientRequestWatcher::class => env('TELESCOPE_CLIENT_REQUEST_WATCHER', true),
 
         Watchers\CommandWatcher::class => [
@@ -124,7 +129,10 @@ return [
             'ignore' => [],
         ],
 
-        Watchers\DumpWatcher::class => env('TELESCOPE_DUMP_WATCHER', true),
+        Watchers\DumpWatcher::class => [
+            'enabled' => env('TELESCOPE_DUMP_WATCHER', true),
+            'always' => env('TELESCOPE_DUMP_WATCHER_ALWAYS', false),
+        ],
 
         Watchers\EventWatcher::class => [
             'enabled' => env('TELESCOPE_EVENT_WATCHER', true),
@@ -162,6 +170,7 @@ return [
         Watchers\RequestWatcher::class => [
             'enabled' => env('TELESCOPE_REQUEST_WATCHER', true),
             'size_limit' => env('TELESCOPE_RESPONSE_SIZE_LIMIT', 64),
+            'ignore_http_methods' => [],
             'ignore_status_codes' => [],
         ],
 

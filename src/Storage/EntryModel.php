@@ -3,11 +3,14 @@
 namespace Laravel\Telescope\Storage;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+
+use Jenssegers\Mongodb\Eloquent\Model;
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
 
 class EntryModel extends Model
 {
+    protected $connection = "mongodb";
+
     use HasFactory;
 
     /**
@@ -62,14 +65,15 @@ class EntryModel extends Model
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return \Illuminate\Database\Eloquent\Builder
      */
+
+
     public function scopeWithTelescopeOptions($query, $type, EntryQueryOptions $options)
     {
         $this->whereType($query, $type)
-                ->whereBatchId($query, $options)
-                ->whereTag($query, $options)
-                ->whereFamilyHash($query, $options)
-                ->whereBeforeSequence($query, $options)
-                ->filter($query, $options);
+            ->whereBatchId($query, $options)
+            ->whereTag($query, $options)
+            ->whereFamilyHash($query, $options)
+            ->whereBeforeSequence($query, $options);
 
         return $query;
     }

@@ -1,26 +1,24 @@
 {
-    "name": "laravel/telescope",
-    "description": "An elegant debug assistant for the Laravel framework.",
+    "name": "cyaxaress/telescope",
+    "description": "Laravel Telescope integrated with MongoDB",
     "keywords": ["laravel", "monitoring", "debugging"],
     "license": "MIT",
     "authors": [
         {
-            "name": "Taylor Otwell",
-            "email": "taylor@laravel.com"
-        },
-        {
-            "name": "Mohamed Said",
-            "email": "mohamed@laravel.com"
+            "name": "Hemn Movafeghi",
+            "email": "hemn791@gmail.com"
         }
     ],
     "require": {
         "php": "^7.3|^8.0",
         "ext-json": "*",
-        "laravel/framework": "^8.29|^9.0",
-        "symfony/var-dumper": "^5.0|^6.0"
+        "laravel/framework": "^8.37|^9.0",
+        "symfony/var-dumper": "^5.0|^6.0",
+        "jenssegers/mongodb": "^3.9"
     },
     "require-dev": {
         "ext-gd": "*",
+        "guzzlehttp/guzzle": "^6.0|^7.0",
         "orchestra/testbench": "^6.0|^7.0"
     },
     "autoload": {
@@ -36,7 +34,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.x-dev"
+            "dev-master": "4.x-dev"
         },
         "laravel": {
             "providers": [
