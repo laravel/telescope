@@ -149,7 +149,7 @@ class IncomingEntry
             ],
         ]);
 
-        $this->tags(['Auth:'.$user->getAuthIdentifier()]);
+        $this->tags([class_basename($user).':'.$user->getAuthIdentifier()]);
 
         return $this;
     }
