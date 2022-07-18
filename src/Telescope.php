@@ -318,9 +318,9 @@ class Telescope
             // Do nothing.
         }
 
-		$entry->type($type)->tags(Arr::collapse(array_map(function ($tagCallback) use ($entry) {
-			return $tagCallback($entry);
-		}, static::$tagUsing)));
+        $entry->type($type)->tags(Arr::collapse(array_map(function ($tagCallback) use ($entry) {
+            return $tagCallback($entry);
+        }, static::$tagUsing)));
 
         static::withoutRecording(function () use ($entry) {
             if (collect(static::$filterUsing)->every->__invoke($entry)) {
