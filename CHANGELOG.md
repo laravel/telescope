@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.1...4.x)
+
+## [v4.9.1](https://github.com/laravel/telescope/compare/v4.9.0...v4.9.1) - 2022-07-18
+
+### Fixed
+
+- Check tags after set $this->user() by @trin4ik in https://github.com/laravel/telescope/pull/1236
 
 ## [v4.9.0](https://github.com/laravel/telescope/compare/v4.8.3...v4.9.0) - 2022-04-19
 
