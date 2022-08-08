@@ -115,6 +115,10 @@ class ClientRequestWatcher extends Watcher
             return 'Redirected to '.$response->header('Location');
         }
 
+        if (empty($content)) {
+            return 'Empty Response';
+        }
+
         return 'HTML Response';
     }
 
