@@ -203,6 +203,10 @@ class RequestWatcher extends Watcher
             ];
         }
 
+        if (is_string($content) && empty($content)) {
+            return 'Empty Response';
+        }
+
         return 'HTML Response';
     }
 
