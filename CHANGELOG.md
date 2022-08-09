@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.1...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.2...4.x)
+
+## [v4.9.2](https://github.com/laravel/telescope/compare/v4.9.1...v4.9.2) - 2022-08-08
+
+### Changed
+
+- HTML Response vs Empty Response by @bdenizar in https://github.com/laravel/telescope/pull/1242
 
 ## [v4.9.1](https://github.com/laravel/telescope/compare/v4.9.0...v4.9.1) - 2022-07-18
 
