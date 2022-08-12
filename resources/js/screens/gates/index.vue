@@ -9,11 +9,11 @@
 </script>
 
 <template>
-    <index-screen title="Gates" resource="gates">
+    <index-screen :title="__('Gates')" resource="gates">
         <tr slot="table-header">
-            <th scope="col">Ability</th>
-            <th scope="col">Result</th>
-            <th scope="col">Happened</th>
+            <th scope="col">{{__('Ability')}}</th>
+            <th scope="col">{{__('Result')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
             <th scope="col"></th>
         </tr>
 

@@ -3,13 +3,13 @@
 </script>
 
 <template>
-    <index-screen title="Exceptions" resource="exceptions">
+    <index-screen :title="__('Exceptions')" resource="exceptions">
         <tr slot="table-header">
-            <th scope="col" v-if="!$route.query.family_hash">Type</th>
+            <th scope="col" v-if="!$route.query.family_hash">{{__('Type')}}</th>
             <th scope="col" v-if="!$route.query.family_hash && !$route.query.tag">#</th>
-            <th scope="col" v-if="$route.query.family_hash">Message</th>
-            <th scope="col">Happened</th>
-            <th scope="col">Resolved</th>
+            <th scope="col" v-if="$route.query.family_hash">{{__('Message')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
+            <th scope="col">{{__('Resolved')}}</th>
             <th scope="col"></th>
         </tr>
 
@@ -29,11 +29,11 @@
 
                 <small class="text-muted">
                     <span v-if="slotProps.entry.content.user && slotProps.entry.content.user.email">
-                        User: {{ slotProps.entry.content.user.email }} ({{ slotProps.entry.content.user.id }})
+                        {{__('User')}}: {{ slotProps.entry.content.user.email }} ({{ slotProps.entry.content.user.id }})
                     </span>
 
                     <span v-else>
-                        User: N/A
+                        {{__('User')}}: {{__('N/A')}}
                     </span>
                 </small>
             </td>

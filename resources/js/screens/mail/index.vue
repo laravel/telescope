@@ -12,11 +12,11 @@
 </script>
 
 <template>
-    <index-screen title="Mail" resource="mail">
+    <index-screen :title="__('Mail')" resource="mail">
         <tr slot="table-header">
-            <th scope="col">Mailable</th>
-            <th scope="col">Recipients</th>
-            <th scope="col">Happened</th>
+            <th scope="col">{{__('Mailable')}}</th>
+            <th scope="col">{{__('Recipients')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
             <th scope="col"></th>
         </tr>
 
@@ -26,13 +26,13 @@
                 <span :title="slotProps.entry.content.mailable">{{truncate(slotProps.entry.content.mailable || '-', 70)}}</span>
 
                 <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.queued">
-                    Queued
+                    {{__('Queued')}}
                 </span>
 
                 <br>
 
                 <small class="text-muted" :title="slotProps.entry.content.subject">
-                    Subject: {{truncate(slotProps.entry.content.subject, 90)}}
+                    {{__('Subject')}}: {{truncate(slotProps.entry.content.subject, 90)}}
                 </small>
             </td>
 

@@ -11,7 +11,7 @@
 </script>
 
 <template>
-    <preview-screen title="Event Details" resource="events" :id="$route.params.id">
+    <preview-screen :title="__('Event Details')" resource="events" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit font-weight-bold">Event</td>
@@ -19,7 +19,7 @@
                     {{slotProps.entry.content.name}}
 
                     <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.broadcast">
-                        Broadcast
+                        {{__('Broadcast')}}
                     </span>
                 </td>
             </tr>
@@ -29,10 +29,14 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Event Data</a>
+                        <a class="nav-link" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">
+                            {{__('Event Data')}}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='listeners'}" href="#" v-on:click.prevent="currentTab='listeners'">Listeners</a>
+                        <a class="nav-link" :class="{active: currentTab=='listeners'}" href="#" v-on:click.prevent="currentTab='listeners'">
+                            {{__('Listeners')}}
+                        </a>
                     </li>
                 </ul>
                 <div>
@@ -49,7 +53,7 @@
                                 {{ listener.name }}
 
                                 <span class="badge badge-secondary font-weight-light ml-2" v-if="listener.queued">
-                                    Queued
+                                    {{__('Queued')}}
                                 </span>
                             </td>
                         </tr>

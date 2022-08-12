@@ -3,11 +3,11 @@
 </script>
 
 <template>
-    <index-screen title="Commands" resource="commands">
+    <index-screen :title="__('Commands')" resource="commands">
         <tr slot="table-header">
-            <th scope="col">Command</th>
-            <th scope="col" class="table-fit">Exit Code</th>
-            <th scope="col">Happened</th>
+            <th scope="col">{{__('Command')}}</th>
+            <th scope="col" class="table-fit">{{__('Exit Code')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
             <th scope="col"></th>
         </tr>
 

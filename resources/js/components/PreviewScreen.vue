@@ -68,7 +68,7 @@
 
         methods: {
             prepareEntry() {
-                document.title = this.title + " - Telescope";
+                document.title = this.__(this.title) + " - Telescope";
                 this.ready = false;
 
                 let unwatch = this.$watch('ready', newVal => {

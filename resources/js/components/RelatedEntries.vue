@@ -150,19 +150,19 @@
 
             tabs(){
                 return _.filter([
-                    {title: "Exceptions", type: "exceptions", count: this.exceptions.length},
-                    {title: "Logs", type: "logs", count: this.logs.length},
-                    {title: "Views", type: "views", count: this.views.length},
-                    {title: "Queries", type: "queries", count: this.queries.length},
-                    {title: "Models", type: "models", count: this.models.length},
-                    {title: "Gates", type: "gates", count: this.gates.length},
-                    {title: "Jobs", type: "jobs", count: this.jobs.length},
-                    {title: "Mail", type: "mails", count: this.mails.length},
-                    {title: "Notifications", type: "notifications", count: this.notifications.length},
-                    {title: "Events", type: "events", count: this.events.length},
-                    {title: "Cache", type: "cache", count: this.cache.length},
-                    {title: "Redis", type: "redis", count: this.redis.length},
-                    {title: "HTTP Client", type: "client_requests", count: this.clientRequests.length},
+                    {title: this.__('Exceptions'), type: "exceptions", count: this.exceptions.length},
+                    {title: this.__('Logs'), type: "logs", count: this.logs.length},
+                    {title: this.__('Views'), type: "views", count: this.views.length},
+                    {title: this.__('Queries'), type: "queries", count: this.queries.length},
+                    {title: this.__('Models'), type: "models", count: this.models.length},
+                    {title: this.__('Gates'), type: "gates", count: this.gates.length},
+                    {title: this.__('Jobs'), type: "jobs", count: this.jobs.length},
+                    {title: this.__('Mail'), type: "mails", count: this.mails.length},
+                    {title: this.__('Notifications'), type: "notifications", count: this.notifications.length},
+                    {title: this.__('Events'), type: "events", count: this.events.length},
+                    {title: this.__('Cache'), type: "cache", count: this.cache.length},
+                    {title: this.__('Redis'), type: "redis", count: this.redis.length},
+                    {title: this.__('HTTP Client'), type: "client_requests", count: this.clientRequests.length},
                 ], tab => tab.count > 0);
             },
 
@@ -190,7 +190,7 @@
                 </a>
             </li>
             <li class="nav-item dropdown" v-if="dropdownTabs.length">
-                <a class="nav-link dropdown-toggle" :class="{active: dropdownTabSelected}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
+                <a class="nav-link dropdown-toggle" :class="{active: dropdownTabSelected}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{__('More')}}</a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" :class="{active: currentTab==tab.type}" href="#" v-for="tab in dropdownTabs" v-on:click.prevent="activateTab(tab.type)">{{tab.title}} ({{tab.count}})</a>
                 </div>
@@ -201,7 +201,7 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='exceptions' && exceptions.length">
                 <thead>
                 <tr>
-                    <th>Message</th>
+                    <th>{{__('Message')}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -229,8 +229,8 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='logs' && logs.length">
                 <thead>
                 <tr>
-                    <th>Message</th>
-                    <th scope="col">Level</th>
+                    <th>{{__('Message')}}</th>
+                    <th scope="col">{{__('Level')}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -260,8 +260,8 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='queries' && queries.length">
                 <thead>
                 <tr>
-                    <th>Query<br/><small>{{ queries.length }} queries, {{ queriesSummary.duplicated }} of which are duplicated.</small></th>
-                    <th>Duration<br/><small>{{ queriesSummary.time }}ms</small></th>
+                    <th>{{__('Query')}}<br/><small>{{__(':count queries, :duplicated of which are duplicated.', {count: queries.length, duplicated: queriesSummary.duplicated})}}</small></th>
+                    <th>{{__('Duration')}}<br/><small>{{__(':timems', {time: queriesSummary.time})}}</small></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -271,11 +271,11 @@
 
                     <td class="table-fit">
                         <span class="badge badge-danger font-weight-light" v-if="entry.content.slow">
-                            {{entry.content.time}}ms
+                            {{__(':timems', {time: entry.content.time})}}
                         </span>
 
                         <span v-else>
-                            {{entry.content.time}}ms
+                            {{__(':timems', {time: entry.content.time})}}
                         </span>
                     </td>
 
@@ -294,8 +294,8 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='models' && models.length">
                 <thead>
                 <tr>
-                    <th>Model</th>
-                    <th>Action</th>
+                    <th>{{__('Model')}}</th>
+                    <th>{{__('Action')}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -324,8 +324,8 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='gates' && gates.length">
                 <thead>
                 <tr>
-                    <th>Ability</th>
-                    <th>Result</th>
+                    <th>{{__('Ability')}}</th>
+                    <th>{{__('Result')}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -354,8 +354,8 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='jobs' && jobs.length">
                 <thead>
                 <tr>
-                    <th>Job</th>
-                    <th scope="col">Status</th>
+                    <th>{{__('Job')}}</th>
+                    <th scope="col">{{__('Status')}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -365,7 +365,7 @@
                     <td>
                         <span :title="entry.content.name">{{truncate(entry.content.name, 68)}}</span><br>
                         <small class="text-muted">
-                            Connection: {{entry.content.connection}} | Queue: {{entry.content.queue}}
+                            {{__('Connection')}}: {{entry.content.connection}} | {{__('Queue')}}: {{entry.content.queue}}
                         </small>
                     </td>
 
@@ -390,8 +390,8 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='events' && events.length">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Listeners</th>
+                    <th>{{__('Name')}}</th>
+                    <th>{{__('Listeners')}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -402,7 +402,7 @@
                         {{truncate(entry.content.name, 80)}}
 
                         <span class="badge badge-info font-weight-light ml-2" v-if="entry.content.broadcast">
-                            Broadcast
+                            {{__('Broadcast')}}
                         </span>
                     </td>
 
@@ -424,8 +424,8 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='cache' && cache.length">
                 <thead>
                 <tr>
-                    <th>Key</th>
-                    <th>Action</th>
+                    <th>{{__('Key')}}</th>
+                    <th>{{__('Action')}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -455,8 +455,8 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='redis' && redis.length">
                 <thead>
                 <tr>
-                    <th>Command</th>
-                    <th>Duration</th>
+                    <th>{{__('Command')}}</th>
+                    <th>{{__('Duration')}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -464,7 +464,7 @@
                 <tbody>
                 <tr v-for="entry in redis">
                     <td :title="entry.content.command">{{truncate(entry.content.command, 100)}}</td>
-                    <td class="table-fit">{{entry.content.time}}ms</td>
+                    <td class="table-fit">{{__(':timems', {time: entry.content.time})}}</td>
 
                     <td class="table-fit">
                         <router-link :to="{name:'redis-preview', params:{id: entry.id}}" class="control-action">
@@ -482,7 +482,7 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='mails' && mails.length">
                 <thead>
                 <tr>
-                    <th>Mailable</th>
+                    <th>{{__('Mailable')}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -493,13 +493,13 @@
                         <span :title="entry.content.mailable">{{truncate(entry.content.mailable || '-', 70)}}</span>
 
                         <span class="badge badge-secondary font-weight-light ml-2" v-if="entry.content.queued">
-                            Queued
+                            {{__('Queued')}}
                         </span>
 
                         <br>
 
                         <small class="text-muted" :title="entry.content.subject">
-                            Subject: {{truncate(entry.content.subject, 90)}}
+                            {{__('Subject')}}: {{truncate(entry.content.subject, 90)}}
                         </small>
                     </td>
 
@@ -519,8 +519,8 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='notifications' && notifications.length">
                 <thead>
                 <tr>
-                    <th>Notification</th>
-                    <th>Channel</th>
+                    <th>{{__('Notification')}}</th>
+                    <th>{{__('Channel')}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -531,13 +531,13 @@
                         <span :title="entry.content.notification">{{truncate(entry.content.notification || '-', 70)}}</span>
 
                         <span class="badge badge-secondary font-weight-light ml-2" v-if="entry.content.queued">
-                            Queued
+                            {{__('Queued')}}
                         </span>
 
                         <br>
 
                         <small class="text-muted" :title="entry.content.notifiable">
-                            Recipient: {{truncate(entry.content.notifiable, 90)}}
+                            {{__('Recipient')}}: {{truncate(entry.content.notifiable, 90)}}
                         </small>
                     </td>
 
@@ -558,8 +558,8 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='views' && views.length">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Composers</th>
+                    <th>{{__('Name')}}</th>
+                    <th>{{__('Composers')}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -590,10 +590,10 @@
             <table class="table table-hover table-sm mb-0" v-show="currentTab=='client_requests' && clientRequests.length">
                 <thead>
                 <tr>
-                    <th>Verb</th>
-                    <th>URI</th>
-                    <th>Status</th>
-                    <th>Happened</th>
+                    <th>{{__('Verb')}}</th>
+                    <th>{{__('URI')}}</th>
+                    <th>{{__('Status')}}</th>
+                    <th>{{__('Happened')}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -610,7 +610,7 @@
 
                     <td class="table-fit">
                         <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(entry.content.response_status !== undefined ? entry.content.response_status : null)">
-                            {{entry.content.response_status !== undefined ? entry.content.response_status : 'N/A'}}
+                            {{entry.content.response_status !== undefined ? entry.content.response_status : __('N/A')}}
                         </span>
                     </td>
 

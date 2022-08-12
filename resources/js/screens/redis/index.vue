@@ -3,11 +3,11 @@
 </script>
 
 <template>
-    <index-screen title="Redis" resource="redis">
+    <index-screen :title="__('Redis')" resource="redis">
         <tr slot="table-header">
-            <th scope="col">Command</th>
-            <th scope="col">Duration</th>
-            <th scope="col">Happened</th>
+            <th scope="col">{{__('Command')}}</th>
+            <th scope="col">{{__('Duration')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
             <th scope="col"></th>
         </tr>
 
@@ -15,7 +15,7 @@
         <template slot="row" slot-scope="slotProps">
             <td>{{truncate(slotProps.entry.content.command, 80)}}</td>
 
-            <td class="table-fit">{{slotProps.entry.content.time}}ms</td>
+            <td class="table-fit">{{__(':timems', {time: slotProps.entry.content.time})}}</td>
 
             <td class="table-fit" :data-timeago="slotProps.entry.created_at" :title="slotProps.entry.created_at">
                 {{timeAgo(slotProps.entry.created_at)}}

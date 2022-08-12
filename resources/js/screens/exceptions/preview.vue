@@ -22,7 +22,7 @@
             },
 
             markExceptionAsResolved(entry) {
-                this.alertConfirm('Are you sure you want to mark this exception as resolved?', () => {
+                this.alertConfirm(__('Are you sure you want to mark this exception as resolved?'), () => {
 
                     axios.put(Telescope.basePath + '/telescope-api/exceptions/' + entry.id, {
                         'resolved_at': 'now',
@@ -36,40 +36,50 @@
 </script>
 
 <template>
-    <preview-screen title="Exception Details" resource="exceptions" :id="$route.params.id">
+    <preview-screen :title="__('Exception Details')" resource="exceptions" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">Type</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Type')}}
+                </td>
                 <td>
                     {{slotProps.entry.content.class}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Location</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Location')}}
+                </td>
                 <td>
                     {{slotProps.entry.content.file}}:{{slotProps.entry.content.line}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Occurrences</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Occurrences')}}
+                </td>
                 <td>
                     <router-link :to="{name:'exceptions', query: {family_hash: slotProps.entry.family_hash}}" class="control-action">
-                        View Other Occurrences
+                        {{__('View Other Occurrences')}}
                     </router-link>
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Resolved at</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Resolved at')}}
+                </td>
 
                 <td>
                     <span v-if="entry.content.resolved_at">
                         {{localTime(entry.content.resolved_at)}} ({{timeAgo(entry.content.resolved_at)}})
                     </span>
                     <span v-if="!entry.content.resolved_at">
-                        <a href="#" class="badge badge-success mr-1 font-weight-light" v-on:click.prevent="markExceptionAsResolved(entry)">Mark as resolved</a>
+                        <a href="#" class="badge badge-success mr-1 font-weight-light" v-on:click.prevent="markExceptionAsResolved(entry)">
+                            {{__('Mark as resolved')}}
+                        </a>
                     </span>
                 </td>
             </tr>
@@ -79,19 +89,27 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Message</a>
+                        <a class="nav-link" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">
+                            {{__('Message')}}
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='location'}" href="#" v-on:click.prevent="currentTab='location'">Location</a>
+                        <a class="nav-link" :class="{active: currentTab=='location'}" href="#" v-on:click.prevent="currentTab='location'">
+                            {{__('Location')}}
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='context'}" href="#" v-show="hasContext()" v-on:click.prevent="currentTab='context'">Context</a>
+                        <a class="nav-link" :class="{active: currentTab=='context'}" href="#" v-show="hasContext()" v-on:click.prevent="currentTab='context'">
+                            {{__('Context')}}
+                        </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='trace'}" href="#" v-on:click.prevent="currentTab='trace'">Stacktrace</a>
+                        <a class="nav-link" :class="{active: currentTab=='trace'}" href="#" v-on:click.prevent="currentTab='trace'">
+                            {{__('Stacktrace')}}
+                        </a>
                     </li>
                 </ul>
 

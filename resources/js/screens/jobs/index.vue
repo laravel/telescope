@@ -9,11 +9,11 @@
 </script>
 
 <template>
-    <index-screen title="Jobs" resource="jobs" show-all-family="true">
+    <index-screen :title="__('Jobs')" resource="jobs" show-all-family="true">
         <tr slot="table-header">
-            <th scope="col">Job</th>
-            <th scope="col">Status</th>
-            <th scope="col">Happened</th>
+            <th scope="col">{{__('Job')}}</th>
+            <th scope="col">{{__('Status')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
             <th scope="col"></th>
         </tr>
 
@@ -22,7 +22,7 @@
             <td>
                 <span :title="slotProps.entry.content.name">{{truncate(slotProps.entry.content.name, 68)}}</span><br>
                 <small class="text-muted">
-                    Connection: {{slotProps.entry.content.connection}} | Queue: {{slotProps.entry.content.queue}}
+                    {{__('Connection')}}: {{slotProps.entry.content.connection}} | Queue: {{slotProps.entry.content.queue}}
                 </small>
             </td>
 
@@ -33,7 +33,7 @@
             </td>
 
             <td class="table-fit" :data-timeago="slotProps.entry.created_at" :title="slotProps.entry.created_at">
-                {{ timeAgo(slotProps.entry.created_at) }}
+                {{timeAgo(slotProps.entry.created_at)}}
             </td>
 
             <td class="table-fit">

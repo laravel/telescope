@@ -3,11 +3,11 @@
 </script>
 
 <template>
-    <index-screen title="Notifications" resource="notifications">
+    <index-screen :title="__('Notifications')" resource="notifications">
         <tr slot="table-header">
-            <th scope="col">Notification</th>
-            <th scope="col">Channel</th>
-            <th scope="col">Happened</th>
+            <th scope="col">{{__('Notification')}}</th>
+            <th scope="col">{{__('Channel')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
             <th scope="col"></th>
         </tr>
 
@@ -17,13 +17,13 @@
                 <span :title="slotProps.entry.content.notification">{{truncate(slotProps.entry.content.notification || '-', 70)}}</span>
 
                 <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.queued">
-                    Queued
+                    {{__('Queued')}}
                 </span>
 
                 <br>
 
                 <small class="text-muted" :title="slotProps.entry.content.notifiable">
-                    Recipient: {{truncate(slotProps.entry.content.notifiable, 90)}}
+                    {{__('Recipient')}}: {{truncate(slotProps.entry.content.notifiable, 90)}}
                 </small>
             </td>
 

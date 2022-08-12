@@ -17,17 +17,21 @@
 </script>
 
 <template>
-    <preview-screen title="Gate Details" resource="gates" :id="$route.params.id">
+    <preview-screen :title="__('Gate Details')" resource="gates" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">Ability</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Ability')}}
+                </td>
                 <td>
                     {{slotProps.entry.content.ability}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Result</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Result')}}
+                </td>
                 <td>
                     <span class="badge font-weight-light" :class="'badge-'+gateResultClass(slotProps.entry.content.result)">
                         {{slotProps.entry.content.result}}
@@ -36,7 +40,9 @@
             </tr>
 
             <tr  v-if="slotProps.entry.content.file">
-                <td class="table-fit font-weight-bold">Location</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Location')}}
+                </td>
                 <td>
                     {{slotProps.entry.content.file}}:{{slotProps.entry.content.line}}
                 </td>
@@ -45,7 +51,9 @@
 
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5">
-                <div class="card-header"><h5>Arguments</h5></div>
+                <div class="card-header">
+                    <h5>{{__('Arguments')}}</h5>
+                </div>
 
                 <div class="code-bg p-4 mb-0 text-white">
                     <vue-json-pretty :data="slotProps.entry.content.arguments"></vue-json-pretty>

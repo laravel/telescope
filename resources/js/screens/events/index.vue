@@ -3,11 +3,11 @@
 </script>
 
 <template>
-    <index-screen title="Events" resource="events">
+    <index-screen :title="__('Events')" resource="events">
         <tr slot="table-header">
-            <th scope="col">Name</th>
-            <th scope="col">Listeners</th>
-            <th scope="col">Happened</th>
+            <th scope="col">{{__('Name')}}</th>
+            <th scope="col">{{__('Listeners')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
             <th scope="col"></th>
         </tr>
 
@@ -17,7 +17,7 @@
                 {{truncate(slotProps.entry.content.name, 80)}}
 
                 <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.broadcast">
-                    Broadcast
+                    {{__('Broadcast')}}
                 </span>
             </td>
 

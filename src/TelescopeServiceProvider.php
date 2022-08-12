@@ -29,6 +29,7 @@ class TelescopeServiceProvider extends ServiceProvider
 
         $this->registerRoutes();
         $this->registerMigrations();
+        $this->registerTranslations();
 
         Telescope::start($this->app);
         Telescope::listenForStorageOpportunities($this->app);
@@ -100,7 +101,20 @@ class TelescopeServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../stubs/TelescopeServiceProvider.stub' => app_path('Providers/TelescopeServiceProvider.php'),
             ], 'telescope-provider');
+
+            $this->publishes([
+                __DIR__.'/../lang' => lang_path('vendor/telescope'),
+            ], 'telescope-locale');
         }
+    }
+
+    private function registerTranslations()
+    {
+        $this->loadJsonTranslationsFrom(lang_path('vendor/telescope'));
+
+        Telescope::translations(
+            lang_path('vendor/telescope/'.app()->getLocale().'.json')
+        );
     }
 
     /**

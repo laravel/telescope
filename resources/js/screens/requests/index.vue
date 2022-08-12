@@ -9,13 +9,13 @@
 </script>
 
 <template>
-    <index-screen title="Requests" resource="requests">
+    <index-screen :title="__('Requests')" resource="requests">
         <tr slot="table-header">
-            <th scope="col">Verb</th>
-            <th scope="col">Path</th>
-            <th scope="col">Status</th>
-            <th scope="col">Duration</th>
-            <th scope="col">Happened</th>
+            <th scope="col">{{__('Verb')}}</th>
+            <th scope="col">{{__('Path')}}</th>
+            <th scope="col">{{__('Status')}}</th>
+            <th scope="col">{{__('Duration')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
             <th scope="col"></th>
         </tr>
 
@@ -36,7 +36,7 @@
             </td>
 
             <td class="table-fit">
-                <span v-if="slotProps.entry.content.duration">{{slotProps.entry.content.duration}}ms</span>
+                <span v-if="slotProps.entry.content.duration">{{__(':timems', {time: slotProps.entry.content.duration})}}</span>
                 <span v-else>-</span>
             </td>
 

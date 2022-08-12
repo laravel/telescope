@@ -9,12 +9,12 @@
 </script>
 
 <template>
-    <index-screen title="HTTP Client" resource="client-requests">
+    <index-screen :title="__('HTTP Client')" resource="client-requests">
         <tr slot="table-header">
-            <th scope="col">Verb</th>
-            <th scope="col">URI</th>
-            <th scope="col">Status</th>
-            <th scope="col">Happened</th>
+            <th scope="col">{{__('Verb')}}</th>
+            <th scope="col">{{__('URI')}}</th>
+            <th scope="col">{{__('Status')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
             <th scope="col"></th>
         </tr>
 
@@ -30,7 +30,7 @@
 
             <td class="table-fit">
                 <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(slotProps.entry.content.response_status !== undefined ? slotProps.entry.content.response_status : null)">
-                    {{slotProps.entry.content.response_status !== undefined ? slotProps.entry.content.response_status : 'N/A'}}
+                    {{slotProps.entry.content.response_status !== undefined ? slotProps.entry.content.response_status : __('N/A')}}
                 </span>
             </td>
 

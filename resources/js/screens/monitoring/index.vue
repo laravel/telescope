@@ -18,7 +18,7 @@
          * Prepare the component.
          */
         mounted(){
-            document.title = "Monitoring - Telescope";
+            document.title = this.__('Monitoring') + " - Telescope";
 
 
             axios.get(Telescope.basePath + '/telescope-api/monitored-tags').then(response => {
@@ -31,7 +31,7 @@
 
         methods: {
             removeTag(tag){
-                this.alertConfirm('Are you sure you want to remove this tag?', ()=> {
+                this.alertConfirm(__('Are you sure you want to remove this tag?'), ()=> {
                     this.tags = _.reject(this.tags, t => t === tag);
 
                     axios.post(Telescope.basePath + '/telescope-api/monitored-tags/delete', {tag: tag});
@@ -82,9 +82,11 @@
 <template>
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <h5>Monitoring</h5>
+            <h5>{{__('Monitoring')}}</h5>
 
-            <button class="btn btn-primary" v-on:click.prevent="openNewTagModal">Monitor</button>
+            <button class="btn btn-primary" v-on:click.prevent="openNewTagModal">
+                {{__('Monitor')}}
+            </button>
         </div>
 
 
@@ -93,18 +95,18 @@
                 <path d="M12 10a2 2 0 0 1-3.41 1.41A2 2 0 0 1 10 8V0a9.97 9.97 0 0 1 10 10h-8zm7.9 1.41A10 10 0 1 1 8.59.1v2.03a8 8 0 1 0 9.29 9.29h2.02zm-4.07 0a6 6 0 1 1-7.25-7.25v2.1a3.99 3.99 0 0 0-1.4 6.57 4 4 0 0 0 6.56-1.42h2.1z"></path>
             </svg>
 
-            <span>Scanning...</span>
+            <span>{{__('Scanning...')}}</span>
         </div>
 
 
         <div v-if="ready && tags.length == 0" class="d-flex align-items-center justify-content-center card-bg-secondary p-5 bottom-radius">
-            <span>No tags are currently being monitored.</span>
+            <span>{{__('No tags are currently being monitored.')}}</span>
         </div>
 
 
         <table v-if="ready && tags.length > 0" class="table table-hover table-sm mb-0">
             <thead>
-            <th>Tag</th>
+            <th>{{__('Tag')}}</th>
             <th></th>
             </thead>
 
@@ -126,7 +128,7 @@
         <div class="modal" id="addTagModel" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">Monitor New Tag</div>
+                    <div class="modal-header">{{__('Monitor New Tag')}}</div>
 
                     <div class="modal-body">
                         <input type="text" class="form-control" placeholder="Project:6352"
@@ -138,11 +140,11 @@
 
                     <div class="modal-footer justify-content-center">
                         <button class="btn btn-primary" @click="monitorNewTag">
-                            Monitor
+                            {{__('Monitor')}}
                         </button>
 
                         <button class="btn" @click="cancelNewTag">
-                            Cancel
+                            {{__('Cancel')}}
                         </button>
                     </div>
                 </div>

@@ -20,10 +20,12 @@
 </script>
 
 <template>
-    <preview-screen title="Query Details" resource="queries" :id="$route.params.id" v-on:ready="highlightSQL()">
+    <preview-screen :title="__('Query Details')" resource="queries" :id="$route.params.id" v-on:ready="highlightSQL()">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">Connection</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Connection')}}
+                </td>
                 <td>
                     {{slotProps.entry.content.connection}}
                 </td>
@@ -40,11 +42,11 @@
                 <td class="table-fit font-weight-bold">Duration</td>
                 <td>
                     <span class="badge badge-danger font-weight-light" v-if="slotProps.entry.content.slow">
-                        {{slotProps.entry.content.time}}ms
+                        {{__(':timems', {time: slotProps.entry.content.time})}}
                     </span>
 
                     <span v-else>
-                        {{slotProps.entry.content.time}}ms
+                        {{__(':timems', {time: slotProps.entry.content.time})}}
                     </span>
                 </td>
             </tr>
@@ -52,7 +54,9 @@
 
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5">
-                <div class="card-header"><h5>Query</h5></div>
+                <div class="card-header">
+                    <h5>{{__('Query')}}</h5>
+                </div>
 
                 <pre class="code-bg p-4 mb-0 text-white" ref="sqlcode">{{ formatSql(slotProps.entry.content.sql) }}</pre>
             </div>

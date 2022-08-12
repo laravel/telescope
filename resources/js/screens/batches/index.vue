@@ -9,13 +9,13 @@
 </script>
 
 <template>
-    <index-screen title="Batches" resource="batches" hide-search="true">
+    <index-screen :title="__('Batches')" resource="batches" hide-search="true">
         <tr slot="table-header">
-            <th scope="col">Batch</th>
-            <th scope="col">Status</th>
-            <th scope="col">Size</th>
-            <th scope="col">Completion</th>
-            <th scope="col">Happened</th>
+            <th scope="col">{{__('Batch')}}</th>
+            <th scope="col">{{__('Status')}}</th>
+            <th scope="col">{{__('Size')}}</th>
+            <th scope="col">{{__('Completion')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
             <th scope="col"></th>
         </tr>
 
@@ -24,19 +24,19 @@
             <td>
                 <span :title="slotProps.entry.content.name">{{truncate(slotProps.entry.content.name || slotProps.entry.content.id, 68)}}</span><br>
                 <small class="text-muted">
-                    Connection: {{slotProps.entry.content.connection}} | Queue: {{slotProps.entry.content.queue}}
+                    {{__('Connection')}}: {{slotProps.entry.content.connection}} | {{__('Queue')}}: {{slotProps.entry.content.queue}}
                 </small>
             </td>
 
             <td>
                 <small class="badge badge-danger badge-sm" v-if="slotProps.entry.content.failedJobs > 0 && slotProps.entry.content.progress < 100">
-                    Failures
+                    {{__('Failures')}}
                 </small>
                 <small class="badge badge-success badge-sm" v-if="slotProps.entry.content.progress == 100">
-                    Finished
+                    {{__('Finished')}}
                 </small>
                 <small class="badge badge-secondary badge-sm" v-if="slotProps.entry.content.totalJobs == 0 || (slotProps.entry.content.pendingJobs > 0 && !slotProps.entry.content.failedJobs)">
-                    Pending
+                    {{__('Pending')}}
                 </small>
             </td>
             <td>{{slotProps.entry.content.totalJobs}}</td>

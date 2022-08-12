@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Base from './base';
+import Localization from './mixins/localization';
 import axios from 'axios';
 import Routes from './routes';
 import VueRouter from 'vue-router';
@@ -43,6 +44,7 @@ Vue.component('preview-screen', require('./components/PreviewScreen.vue').defaul
 Vue.component('alert', require('./components/Alert.vue').default);
 
 Vue.mixin(Base);
+Vue.mixin(Localization);
 
 new Vue({
     el: '#telescope',
@@ -84,7 +86,7 @@ new Vue({
         },
 
         clearEntries() {
-            if (confirm('Are you sure you want to delete all Telescope data?')) {
+            if (confirm(Localization.methods.__('Are you sure you want to delete all Telescope data?'))) {
                 axios.delete(Telescope.basePath + '/telescope-api/entries').then((response) => location.reload());
             }
         },

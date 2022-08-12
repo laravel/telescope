@@ -24,10 +24,12 @@
 </script>
 
 <template>
-    <preview-screen title="Log Details" resource="logs" :id="$route.params.id">
+    <preview-screen :title="__('Log Details')" resource="logs" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">Level</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Level')}}
+                </td>
                 <td>
                     <span class="badge font-weight-light" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">
                         {{slotProps.entry.content.level}}
@@ -40,10 +42,14 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Log Message</a>
+                        <a class="nav-link" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">
+                            {{__('Log Message')}}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='context'}" href="#" v-on:click.prevent="currentTab='context'">Context</a>
+                        <a class="nav-link" :class="{active: currentTab=='context'}" href="#" v-on:click.prevent="currentTab='context'">
+                            {{__('Context')}}
+                        </a>
                     </li>
                 </ul>
                 <div>

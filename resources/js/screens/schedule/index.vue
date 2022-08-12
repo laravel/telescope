@@ -5,9 +5,9 @@
 <template>
     <index-screen title="Schedule" resource="schedule">
         <tr slot="table-header">
-            <th scope="col">Command</th>
-            <th scope="col">Expression</th>
-            <th scope="col">Happened</th>
+            <th scope="col">{{__('Command')}}</th>
+            <th scope="col">{{__('Expression')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
             <th scope="col"></th>
         </tr>
 

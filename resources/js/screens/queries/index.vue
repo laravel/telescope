@@ -3,11 +3,11 @@
 </script>
 
 <template>
-    <index-screen title="Queries" resource="queries">
+    <index-screen :title="__('Queries')" resource="queries">
         <tr slot="table-header">
-            <th scope="col">Query</th>
-            <th scope="col">Duration</th>
-            <th scope="col">Happened</th>
+            <th scope="col">{{__('Query')}}</th>
+            <th scope="col">{{__('Duration')}}</th>
+            <th scope="col">{{__('Happened')}}</th>
             <th scope="col"></th>
         </tr>
 
@@ -17,11 +17,11 @@
 
             <td class="table-fit">
                 <span class="badge badge-danger font-weight-light" v-if="slotProps.entry.content.slow">
-                    {{slotProps.entry.content.time}}ms
+                    {{__(':timems', {time: slotProps.entry.content.time})}}
                 </span>
 
                 <span v-else>
-                    {{slotProps.entry.content.time}}ms
+                    {{__(':timems', {time: slotProps.entry.content.time})}}
                 </span>
             </td>
 

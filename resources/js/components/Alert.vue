@@ -84,19 +84,19 @@
                 <div class="modal-footer justify-content-center">
 
                     <button v-if="type == 'error'" class="btn btn-secondary btn-sm" @click="close">
-                        CLOSE
+                        {{__('CLOSE')}}
                     </button>
 
                     <button v-if="type == 'success'" class="btn btn-secondary btn-sm" @click="close">
-                        OK
+                        {{__('OK')}}
                     </button>
 
 
                     <button v-if="type == 'confirmation'" class="btn btn-danger btn-sm" @click="confirm">
-                        YES
+                        {{__('YES')}}
                     </button>
                     <button v-if="type == 'confirmation'" class="btn btn-secondary btn-sm" @click="cancel">
-                        NO, CANCEL
+                        {{__('NO, CANCEL')}}
                     </button>
 
                 </div>

@@ -13,17 +13,21 @@
 </script>
 
 <template>
-    <preview-screen title="Command Details" resource="commands" :id="$route.params.id" entry-point="true">
+    <preview-screen :title="__('Command Details')" resource="commands" :id="$route.params.id" entry-point="true">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">Command</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Command')}}
+                </td>
                 <td>
                     {{slotProps.entry.content.command}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Exit Code</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Exit Code')}}
+                </td>
                 <td>
                     {{slotProps.entry.content.exit_code}}
                 </td>
@@ -34,10 +38,14 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='arguments'}" href="#" v-on:click.prevent="currentTab='arguments'">Arguments</a>
+                        <a class="nav-link" :class="{active: currentTab=='arguments'}" href="#" v-on:click.prevent="currentTab='arguments'">
+                            {{__('Arguments')}}
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='options'}" href="#" v-on:click.prevent="currentTab='options'">Options</a>
+                        <a class="nav-link" :class="{active: currentTab=='options'}" href="#" v-on:click.prevent="currentTab='options'">
+                            {{__('Options')}}
+                        </a>
                     </li>
                 </ul>
                 <div>

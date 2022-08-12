@@ -19,17 +19,21 @@
 </script>
 
 <template>
-    <preview-screen title="View Action" resource="views" :id="$route.params.id">
+    <preview-screen :title="__('View Action')" resource="views" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">View</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('View')}}
+                </td>
                 <td>
                     {{slotProps.entry.content.name}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Path</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Path')}}
+                </td>
                 <td>
                     {{slotProps.entry.content.path}}
                 </td>
@@ -40,10 +44,14 @@
             <div class="card mt-5" v-if="slotProps.entry.content.data">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Data</a>
+                        <a class="nav-link" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">
+                            {{__('Data')}}
+                        </a>
                     </li>
                     <li class="nav-item" v-if="slotProps.entry.content.composers">
-                        <a class="nav-link" :class="{active: currentTab=='composers'}" href="#" v-on:click.prevent="currentTab='composers'">Composers</a>
+                        <a class="nav-link" :class="{active: currentTab=='composers'}" href="#" v-on:click.prevent="currentTab='composers'">
+                            {{__('Composers')}}
+                        </a>
                     </li>
                 </ul>
                 <div>
@@ -56,8 +64,8 @@
                     <table class="table table-hover table-sm mb-0" v-show="currentTab=='composers'">
                         <thead>
                         <tr>
-                            <th>Composer</th>
-                            <th>Type</th>
+                            <th>{{__('Composer')}}</th>
+                            <th>{{__('Type')}}</th>
                         </tr>
                         </thead>
 

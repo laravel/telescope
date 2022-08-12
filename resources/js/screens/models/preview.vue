@@ -18,17 +18,21 @@
 </script>
 
 <template>
-    <preview-screen title="Model Action" resource="models" :id="$route.params.id">
+    <preview-screen :title="__('Model Action')" resource="models" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">Model</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Model')}}
+                </td>
                 <td>
                     {{slotProps.entry.content.model}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Action</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Action')}}
+                </td>
                 <td>
                     <span class="badge font-weight-light" :class="'badge-'+modelActionClass(slotProps.entry.content.action)">
                         {{slotProps.entry.content.action}}
@@ -37,7 +41,9 @@
             </tr>
 
             <tr v-if="slotProps.entry.content.count">
-                <td class="table-fit font-weight-bold">Hydrated</td>
+                <td class="table-fit font-weight-bold">
+                    {{__('Hydrated')}}
+                </td>
                 <td>
                     {{slotProps.entry.content.count}}
                 </td>
@@ -46,7 +52,9 @@
 
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5" v-if="slotProps.entry.content.action != 'deleted' && slotProps.entry.content.changes">
-                <div class="card-header"><h5>Changes</h5></div>
+                <div class="card-header">
+                    <h5>{{__('Changes')}}</h5>
+                </div>
 
                 <div class="code-bg p-4 mb-0 text-white">
                     <vue-json-pretty :data="slotProps.entry.content.changes"></vue-json-pretty>

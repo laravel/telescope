@@ -13,22 +13,22 @@ export default {
          * Show the time ago format for the given time.
          */
         timeAgo(time) {
-            moment.updateLocale('en', {
+            moment.updateLocale(window.Telescope.locale, {
                 relativeTime: {
-                    future: 'in %s',
-                    past: '%s ago',
-                    s: (number) => number + 's ago',
-                    ss: '%ds ago',
-                    m: '1m ago',
-                    mm: '%dm ago',
-                    h: '1h ago',
-                    hh: '%dh ago',
-                    d: '1d ago',
-                    dd: '%dd ago',
-                    M: 'a month ago',
-                    MM: '%d months ago',
-                    y: 'a year ago',
-                    yy: '%d years ago',
+                    future: this.__('in :time', { time: '%s' }),
+                    past: this.__(':time ago', { time: '%s' }),
+                    s: (number) => this.__(":time's ago", { time: number }),
+                    ss: this.__(':seconds ago', { second: '%d' }),
+                    m: this.__(':countm ago', { count: '1' }),
+                    mm: this.__(':countm ago', { count: '%d' }),
+                    h: this.__(':counth ago', { count: '1' }),
+                    hh: this.__(':counth ago', { count: '%d' }),
+                    d: this.__(':countd ago', { count: '1' }),
+                    dd: this.__(':countd ago', { count: '%d' }),
+                    M: this.__('a month ago'),
+                    MM: this.__(':count months ago', { count: '%d' }),
+                    y: this.__('a year ago'),
+                    yy: this.__(':count years ago', { count: '%d' }),
                 },
             });
 
