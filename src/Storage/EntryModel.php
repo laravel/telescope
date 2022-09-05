@@ -11,13 +11,6 @@ class EntryModel extends Model
     use HasFactory;
 
     /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'telescope_entries';
-
-    /**
      * The name of the "updated at" column.
      *
      * @var string
@@ -117,7 +110,7 @@ class EntryModel extends Model
     {
         $query->when($options->tag, function ($query, $tag) {
             return $query->whereIn('uuid', function ($query) use ($tag) {
-                $query->select('entry_uuid')->from('telescope_entries_tags')->whereTag($tag);
+                $query->select('entry_uuid')->from(config('telescope.table_name.telescope_entries_tags'))->whereTag($tag);
             });
         });
 
@@ -182,6 +175,16 @@ class EntryModel extends Model
     public function getConnectionName()
     {
         return config('telescope.storage.database.connection');
+    }
+
+    /**
+     * Get the current connection name for the model.
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return config('telescope.table_name.telescope_entries');
     }
 
     /**

@@ -53,6 +53,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Custom Table Name
+    |--------------------------------------------------------------------------
+    | This configues custom name for table
+    |
+    */
+
+    'table_name' => [
+        'telescope_entries'      => 'telescope_entries',
+        'telescope_entries_tags' => 'telescope_entries_tags',
+        'telescope_monitoring'   => 'telescope_monitoring',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Master Switch
     |--------------------------------------------------------------------------
     |

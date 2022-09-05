@@ -13,6 +13,10 @@ return new class extends Migration
      */
     protected $schema;
 
+    protected $telescope_entries;
+    protected $telescope_entries_tags;
+    protected $telescope_monitoring;
+
     /**
      * Create a new migration instance.
      *
@@ -21,6 +25,10 @@ return new class extends Migration
     public function __construct()
     {
         $this->schema = Schema::connection($this->getConnection());
+
+        $this->telescope_entries      = config('telescope.table_name.telescope_entries');
+        $this->telescope_entries_tags = config('telescope.table_name.telescope_entries_tags');
+        $this->telescope_monitoring   = config('telescope.table_name.telescope_monitoring');
     }
 
     /**
@@ -40,7 +48,7 @@ return new class extends Migration
      */
     public function up()
     {
-        $this->schema->create('telescope_entries', function (Blueprint $table) {
+        $this->schema->create($this->telescope_entries, function (Blueprint $table) {
             $table->bigIncrements('sequence');
             $table->uuid('uuid');
             $table->uuid('batch_id');
@@ -57,7 +65,7 @@ return new class extends Migration
             $table->index(['type', 'should_display_on_index']);
         });
 
-        $this->schema->create('telescope_entries_tags', function (Blueprint $table) {
+        $this->schema->create($this->telescope_entries_tags, function (Blueprint $table) {
             $table->uuid('entry_uuid');
             $table->string('tag');
 
@@ -66,11 +74,11 @@ return new class extends Migration
 
             $table->foreign('entry_uuid')
                   ->references('uuid')
-                  ->on('telescope_entries')
+                  ->on($this->telescope_entries)
                   ->onDelete('cascade');
         });
 
-        $this->schema->create('telescope_monitoring', function (Blueprint $table) {
+        $this->schema->create($this->telescope_monitoring, function (Blueprint $table) {
             $table->string('tag');
         });
     }
@@ -82,8 +90,8 @@ return new class extends Migration
      */
     public function down()
     {
-        $this->schema->dropIfExists('telescope_entries_tags');
-        $this->schema->dropIfExists('telescope_entries');
-        $this->schema->dropIfExists('telescope_monitoring');
+        $this->schema->dropIfExists($this->telescope_entries_tags);
+        $this->schema->dropIfExists($this->telescope_entries);
+        $this->schema->dropIfExists($this->telescope_monitoring);
     }
 };
