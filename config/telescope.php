@@ -55,7 +55,9 @@ return [
     |--------------------------------------------------------------------------
     | Telescope Custom Table Name
     |--------------------------------------------------------------------------
-    | This configues custom name for table
+    | This configures custom name for table. The name can include schema. 
+    | Your default schema will be used instead if you didn't specify.
+    | eg: 'telescope_entries'      => 'your_schema.telescope_entries',
     |
     */
 

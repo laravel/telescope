@@ -178,7 +178,7 @@ class EntryModel extends Model
     }
 
     /**
-     * Get the current connection name for the model.
+     * Get the current table name for the model.
      *
      * @return string
      */
