@@ -93,7 +93,7 @@ class EventWatcher extends Watcher
                 } elseif (is_array($listener) && is_object($listener[0])) {
                     return get_class($listener[0]).'@'.$listener[1];
                 } elseif (is_object($listener) && is_callable($listener) && ! $listener instanceof Closure) {
-                    return get_class($listener) . '@__invoke';
+                    return get_class($listener).'@__invoke';
                 }
 
                 return $this->formatClosureListener($listener);

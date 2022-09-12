@@ -121,7 +121,7 @@ class EventWatcherTest extends FeatureTestCase
         return [
             'class string' => [
                 DummyEventListener::class,
-                DummyEventListener::class . '@handle',
+                DummyEventListener::class.'@handle',
             ],
             'class string with method' => [
                 DummyEventListener::class.'@handle',
@@ -140,13 +140,14 @@ class EventWatcherTest extends FeatureTestCase
                 DummyInvokableEventListener::class.'@__invoke',
             ],
             'anonymous callable object' => [
-                $class = new class {
+                $class = new class
+                {
                     public function __invoke()
                     {
                         //
                     }
                 },
-                get_class($class) . '@__invoke',
+                get_class($class).'@__invoke',
             ],
             'closure' => [
                 function () {
