@@ -108,8 +108,6 @@ class EventWatcherTest extends FeatureTestCase
     {
         Event::listen(DummyEvent::class, $listener);
 
-        event(new DummyEvent('Telescope', 'Laravel', 'PHP'));
-
         $method = new \ReflectionMethod(EventWatcher::class, 'formatListeners');
         $method->setAccessible(true);
 
