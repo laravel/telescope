@@ -2,6 +2,11 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
+use Dummies\DummyEvent;
+use Dummies\DummyEventListener;
+use Dummies\DummyEventSubscriber;
+use Dummies\DummyInvokableEventListener;
+use Dummies\IgnoredEvent;
 use Illuminate\Support\Facades\Event;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
@@ -95,7 +100,64 @@ class EventWatcherTest extends FeatureTestCase
 
         $this->assertNull($entry);
     }
+
+    /**
+     * @dataProvider formatListenersProvider
+     */
+    public function test_format_listeners($listener, $formatted)
+    {
+        Event::listen(DummyEvent::class, $listener);
+
+        $method = new \ReflectionMethod(EventWatcher::class, 'formatListeners');
+        $method->setAccessible(true);
+
+        $this->assertSame($formatted, $method->invoke(new EventWatcher, DummyEvent::class)[0]['name']);
+    }
+
+    public function formatListenersProvider()
+    {
+        return [
+            'class string' => [
+                DummyEventListener::class,
+                DummyEventListener::class.'@handle',
+            ],
+            'class string with method' => [
+                DummyEventListener::class.'@handle',
+                DummyEventListener::class.'@handle',
+            ],
+            'array class string and method' => [
+                [DummyEventListener::class, 'handle'],
+                DummyEventListener::class.'@handle',
+            ],
+            'array object and method' => [
+                [new DummyEventListener, 'handle'],
+                DummyEventListener::class.'@handle',
+            ],
+            'callable object' => [
+                new DummyInvokableEventListener,
+                DummyInvokableEventListener::class.'@__invoke',
+            ],
+            'anonymous callable object' => [
+                $class = new class
+                {
+                    public function __invoke()
+                    {
+                        //
+                    }
+                },
+                get_class($class).'@__invoke',
+            ],
+            'closure' => [
+                function () {
+                    //
+                },
+                sprintf('Closure at %s[%s:%s]', __FILE__, __LINE__ - 3, __LINE__ - 1),
+            ],
+        ];
+    }
 }
+
+namespace Dummies;
 
 class DummyEvent
 {
@@ -123,6 +185,22 @@ class DummyEventSubscriber
 class IgnoredEvent
 {
     public function handle()
+    {
+        //
+    }
+}
+
+class DummyEventListener
+{
+    public function handle($event)
+    {
+        //
+    }
+}
+
+class DummyInvokableEventListener
+{
+    public function __invoke($event)
     {
         //
     }
