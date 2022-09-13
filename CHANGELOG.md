@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.2...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.3...4.x)
+
+## [v4.9.3](https://github.com/laravel/telescope/compare/v4.9.2...v4.9.3) - 2022-09-12
+
+### Fixed
+
+- Fix bug watching invokeable object events by @ziadoz in https://github.com/laravel/telescope/pull/1250
 
 ## [v4.9.2](https://github.com/laravel/telescope/compare/v4.9.1...v4.9.2) - 2022-08-08
 
