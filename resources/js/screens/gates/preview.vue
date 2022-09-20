@@ -11,6 +11,7 @@
             return {
                 entry: null,
                 batch: [],
+                currentTab: 'arguments'
             };
         }
     }
@@ -45,10 +46,17 @@
 
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div class="card mt-5">
-                <div class="card-header"><h5>Arguments</h5></div>
-
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='arguments'}" href="#" v-on:click.prevent="currentTab='arguments'">Arguments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='response'}" href="#" v-on:click.prevent="currentTab='response'">Response</a>
+                    </li>
+                </ul>
                 <div class="code-bg p-4 mb-0 text-white">
-                    <vue-json-pretty :data="slotProps.entry.content.arguments"></vue-json-pretty>
+                    <vue-json-pretty :data="slotProps.entry.content.arguments" v-if="currentTab=='arguments'"></vue-json-pretty>
+                    <vue-json-pretty :data="slotProps.entry.content.response" v-if="currentTab=='response'"></vue-json-pretty>
                 </div>
             </div>
         </div>

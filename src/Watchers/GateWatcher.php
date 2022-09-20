@@ -59,6 +59,7 @@ class GateWatcher extends Watcher
             'arguments' => $this->formatArguments($arguments),
             'file' => $caller['file'] ?? null,
             'line' => $caller['line'] ?? null,
+            'response' => $result instanceof Response ? $result->toArray() : null,
         ]));
 
         return $result;
