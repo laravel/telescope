@@ -65,11 +65,13 @@ class EntryModel extends Model
     public function scopeWithTelescopeOptions($query, $type, EntryQueryOptions $options)
     {
         $this->whereType($query, $type)
-                ->whereBatchId($query, $options)
-                ->whereTag($query, $options)
-                ->whereFamilyHash($query, $options)
-                ->whereBeforeSequence($query, $options)
-                ->filter($query, $options);
+            ->whereBatchId($query, $options)
+            ->whereTag($query, $options)
+            ->whereFamilyHash($query, $options)
+            ->whereBeforeSequence($query, $options)
+            ->whereUri($query, $options)
+            ->whereStatus($query, $options)
+            ->filter($query, $options);
 
         return $query;
     }
@@ -151,6 +153,38 @@ class EntryModel extends Model
     {
         $query->when($options->beforeSequence, function ($query, $beforeSequence) {
             return $query->where('sequence', '<', $beforeSequence);
+        });
+
+        return $this;
+    }
+
+    /**
+     * Scope the query for the given uri options.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return $this
+     */
+    protected function whereUri($query, EntryQueryOptions $options)
+    {
+        $query->when($options->uri, function ($query, $uri) {
+            return $query->where('content->uri', 'like', '%'.$uri.'%');
+        });
+
+        return $this;
+    }
+
+    /**
+     * Scope the query for the given status options.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return $this
+     */
+    protected function whereStatus($query, EntryQueryOptions $options)
+    {
+        $query->when($options->status, function ($query, $status) {
+            return $query->where('content->response_status', '=', $status);
         });
 
         return $this;

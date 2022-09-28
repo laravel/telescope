@@ -28,6 +28,20 @@ class EntryQueryOptions
     public $familyHash;
 
     /**
+     * The uri that must belong to retrieved entries.
+     *
+     * @var string
+     */
+    public $uri;
+
+    /**
+     * The status that must belong to retrieved entries.
+     *
+     * @var string
+     */
+    public $status;
+
+    /**
      * The ID that all retrieved entries should be less than.
      *
      * @var mixed
@@ -57,12 +71,14 @@ class EntryQueryOptions
     public static function fromRequest(Request $request)
     {
         return (new static)
-                ->batchId($request->batch_id)
-                ->uuids($request->uuids)
-                ->beforeSequence($request->before)
-                ->tag($request->tag)
-                ->familyHash($request->family_hash)
-                ->limit($request->take ?? 50);
+            ->batchId($request->batch_id)
+            ->uuids($request->uuids)
+            ->beforeSequence($request->before)
+            ->tag($request->tag)
+            ->familyHash($request->family_hash)
+            ->uri($request->uri)
+            ->status($request->status)
+            ->limit($request->take ?? 50);
     }
 
     /**
@@ -111,6 +127,32 @@ class EntryQueryOptions
     public function beforeSequence($id)
     {
         $this->beforeSequence = $id;
+
+        return $this;
+    }
+
+    /**
+     * Set the uri of the request.
+     *
+     * @param  mixed  $uri
+     * @return $this
+     */
+    public function uri($uri)
+    {
+        $this->uri = $uri;
+
+        return $this;
+    }
+
+    /**
+     * Set the status code of the request.
+     *
+     * @param  mixed  $status
+     * @return $this
+     */
+    public function status($status)
+    {
+        $this->status = $status;
 
         return $this;
     }

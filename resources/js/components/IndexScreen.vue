@@ -15,6 +15,8 @@
         data() {
             return {
                 tag: '',
+                status: '',
+                uri: '',
                 familyHash: '',
                 entries: [],
                 ready: false,
@@ -107,6 +109,8 @@
             loadEntries(after){
                 axios.post(Telescope.basePath + '/telescope-api/' + this.resource +
                         '?tag=' + this.tag +
+                        '&status=' + this.status +
+                        '&uri=' + this.uri +
                         '&before=' + this.lastEntryIndex +
                         '&take=' + this.entriesPerRequest +
                         '&family_hash=' + this.familyHash
@@ -180,7 +184,11 @@
 
                     clearTimeout(this.newEntriesTimeout);
 
-                    this.$router.push({query: _.assign({}, this.$route.query, {tag: this.tag})});
+                    this.$router.push({query: _.assign({}, this.$route.query, {
+                        tag: this.tag,
+                        uri: this.uri,
+                        status: this.status
+                    })});
                 });
             },
 
@@ -270,6 +278,14 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h5>{{this.title}}</h5>
+
+            <input type="text" class="form-control w-25"
+                   id="searchUri"
+                   placeholder="Uri" v-model="uri" @input.stop="search">
+
+            <input type="text" class="form-control w-25"
+                   id="searchStatus"
+                   placeholder="Status" v-model="status" @input.stop="search">
 
             <input type="text" class="form-control w-25"
                    v-if="!hideSearch && (tag || entries.length > 0)"
