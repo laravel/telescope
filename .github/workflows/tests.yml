@@ -8,7 +8,7 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     services:
       redis:
@@ -20,13 +20,13 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.0, 8.1]
+        php: [7.3, 7.4, 8.0, 8.1]
         laravel: [8.*, 9.*]
-        include:
+        exclude:
           - php: 7.3
-            laravel: 8.*
+            laravel: 9.*
           - php: 7.4
-            laravel: 8.*
+            laravel: 9.*
 
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
 
