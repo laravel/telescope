@@ -183,11 +183,15 @@ class JobWatcher extends Watcher
      */
     protected function updateBatch($payload)
     {
+        $wasRecordingEnabled = Telescope::$shouldRecord;
+
         Telescope::$shouldRecord = false;
 
         $command = $this->getCommand($payload['data']);
 
-        Telescope::$shouldRecord = true;
+        if ($wasRecordingEnabled) {
+            Telescope::$shouldRecord = true;
+        }
 
         $properties = ExtractProperties::from(
             $command
