@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.3...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.4...4.x)
+
+## [v4.9.4](https://github.com/laravel/telescope/compare/v4.9.3...v4.9.4) - 2022-10-03
+
+### Fixed
+
+- Do not record when unserializing command by @driesvints in https://github.com/laravel/telescope/pull/1257 & https://github.com/laravel/telescope/pull/1258
 
 ## [v4.9.3](https://github.com/laravel/telescope/compare/v4.9.2...v4.9.3) - 2022-09-12
 
