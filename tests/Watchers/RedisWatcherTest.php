@@ -2,10 +2,12 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Redis;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\RedisWatcher;
+use Mockery;
 
 class RedisWatcherTest extends FeatureTestCase
 {
@@ -35,5 +37,23 @@ class RedisWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::REDIS, $entry->type);
         $this->assertSame('get telescope:test', $entry->content['command']);
         $this->assertSame('default', $entry->content['connection']);
+    }
+
+    public function test_does_not_register_when_redis_unbound()
+    {
+        $app = Mockery::mock(Application::class);
+
+        $app->makePartial();
+
+        $app->expects('bound')
+            ->with('redis')
+            ->andReturn(false);
+
+        $app->shouldNotReceive('make')
+            ->with('redis');
+
+        $watcher = new RedisWatcher([]);
+
+        $watcher->register($app);
     }
 }
