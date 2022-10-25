@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.4...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.5...4.x)
+
+## [v4.9.5](https://github.com/laravel/telescope/compare/v4.9.4...v4.9.5) - 2022-10-06
+
+### Fixed
+
+- Dont register redis watcher if the redis service is not bound into the container. by @mad-briller in https://github.com/laravel/telescope/pull/1259
 
 ## [v4.9.4](https://github.com/laravel/telescope/compare/v4.9.3...v4.9.4) - 2022-10-03
 
