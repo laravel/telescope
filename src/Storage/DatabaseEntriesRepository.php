@@ -142,7 +142,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
 
         $entries->chunk($this->chunkSize)->each(function ($chunked) use ($table) {
             $table->insert($chunked->map(function ($entry) {
-                $entry->content = json_encode($entry->content);
+                $entry->content = json_encode($entry->content, JSON_INVALID_UTF8_SUBSTITUTE);
 
                 return $entry->toArray();
             })->toArray());
