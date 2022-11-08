@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.5...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.6...4.x)
+
+## [v4.9.6](https://github.com/laravel/telescope/compare/v4.9.5...v4.9.6) - 2022-11-08
+
+### Fixed
+
+- Fix issue where json_encode quietly fails due to binary data inside telescope entry by @Hexide in https://github.com/laravel/telescope/pull/1266
 
 ## [v4.9.5](https://github.com/laravel/telescope/compare/v4.9.4...v4.9.5) - 2022-10-06
 
