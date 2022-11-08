@@ -19,7 +19,7 @@
         "moment": "^2.29.4",
         "moment-timezone": "^0.5.35",
         "popper.js": "^1.12",
-        "resolve-url-loader": "^3.1.2",
+        "resolve-url-loader": "^5.0.0",
         "sass": "^1.15.2",
         "sass-loader": "^11.0.1",
         "sql-formatter": "^3.1.0",
