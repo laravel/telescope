@@ -21,9 +21,7 @@ trait FetchesStackTrace
                 return false;
             }
 
-            return ! Str::contains($frame['file'],
-                base_path('vendor'.DIRECTORY_SEPARATOR.$this->ignoredVendorPath())
-            );
+            return ! Str::contains($frame['file'], $this->ignoredPaths());
         });
     }
 
@@ -37,5 +35,15 @@ trait FetchesStackTrace
         if (! ($this->options['ignore_packages'] ?? true)) {
             return 'laravel';
         }
+    }
+
+    /**
+     * Backtrace files containing any of these strings won't be used.
+     */
+    protected function ignoredPaths(): array {
+        return array_merge(
+            [base_path('vendor'.DIRECTORY_SEPARATOR.$this->ignoredVendorPath())],
+            $this->options['ignore_paths'] ?? []
+        );
     }
 }
