@@ -145,6 +145,7 @@ return [
             'enabled' => env('TELESCOPE_GATE_WATCHER', true),
             'ignore_abilities' => [],
             'ignore_packages' => true,
+            'ignore_paths' => [],
         ],
 
         Watchers\JobWatcher::class => env('TELESCOPE_JOB_WATCHER', true),
@@ -162,6 +163,7 @@ return [
         Watchers\QueryWatcher::class => [
             'enabled' => env('TELESCOPE_QUERY_WATCHER', true),
             'ignore_packages' => true,
+            'ignore_paths' => [],
             'slow' => 100,
         ],
 
