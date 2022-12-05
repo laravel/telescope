@@ -26,6 +26,17 @@ trait FetchesStackTrace
     }
 
     /**
+     * Get the file paths that should not be used by backtraces.
+     */
+    protected function ignoredPaths(): array
+    {
+        return array_merge(
+            [base_path('vendor'.DIRECTORY_SEPARATOR.$this->ignoredVendorPath())],
+            $this->options['ignore_paths'] ?? []
+        );
+    }
+
+    /**
      * Choose the frame outside of either Telescope/Laravel or all packages.
      *
      * @return string|null
@@ -35,16 +46,5 @@ trait FetchesStackTrace
         if (! ($this->options['ignore_packages'] ?? true)) {
             return 'laravel';
         }
-    }
-
-    /**
-     * Backtrace files containing any of these strings won't be used.
-     */
-    protected function ignoredPaths(): array
-    {
-        return array_merge(
-            [base_path('vendor'.DIRECTORY_SEPARATOR.$this->ignoredVendorPath())],
-            $this->options['ignore_paths'] ?? []
-        );
     }
 }
