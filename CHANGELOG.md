@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.9.6...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.10.0...4.x)
+
+## [v4.10.0](https://github.com/laravel/telescope/compare/v4.9.6...v4.10.0) - 2022-12-05
+
+### Added
+
+- Add the Ability to Pass Custom `ignore_paths` To Query Watcher by @Watercycle in https://github.com/laravel/telescope/pull/1276
 
 ## [v4.9.6](https://github.com/laravel/telescope/compare/v4.9.5...v4.9.6) - 2022-11-08
 
