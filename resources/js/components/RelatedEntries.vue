@@ -210,7 +210,7 @@
                     <tr v-for="entry in exceptions">
                         <td :title="entry.content.class">
                             {{truncate(entry.content.class, 70)}}<br>
-                            <small class="text-muted">{{truncate(entry.content.message, 100)}}</small>
+                            <small class="text-muted text-break">{{truncate(entry.content.message, 200)}}</small>
                         </td>
 
                         <td class="table-fit">
