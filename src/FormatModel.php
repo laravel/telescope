@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope;
 
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Arr;
 
 class FormatModel
@@ -14,6 +15,15 @@ class FormatModel
      */
     public static function given($model)
     {
-        return get_class($model).':'.implode('_', Arr::wrap($model->getKey()));
+        if ($model instanceof Pivot && ! $model->incrementing) {
+            $keys = [
+                $model->getAttribute($model->getForeignKey()),
+                $model->getAttribute($model->getRelatedKey()),
+            ];
+        } else {
+            $keys = $model->getKey();
+        }
+
+        return get_class($model).':'.implode('_', Arr::wrap($keys));
     }
 }
