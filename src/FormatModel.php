@@ -15,7 +15,7 @@ class FormatModel
      */
     public static function given($model)
     {
-        if ($model instanceof Pivot && !$model->incrementing) {
+        if ($model instanceof Pivot && ! $model->incrementing) {
             $keys = [
                 $model->getAttribute($model->getForeignKey()),
                 $model->getAttribute($model->getRelatedKey()),
