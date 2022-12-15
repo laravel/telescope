@@ -1,6 +1,13 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.10.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.10.1...4.x)
+
+## [v4.10.1](https://github.com/laravel/telescope/compare/v4.10.0...v4.10.1) - 2022-12-14
+
+### Fixed
+
+- Adjust text-break layout with text-break class by @thomas-goncalves-83 in https://github.com/laravel/telescope/pull/1281
+- Fix FormatModel class to work with keyless Pivot models by @Cellard in https://github.com/laravel/telescope/pull/1282
 
 ## [v4.10.0](https://github.com/laravel/telescope/compare/v4.9.6...v4.10.0) - 2022-12-05
 
