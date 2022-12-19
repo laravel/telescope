@@ -25,15 +25,15 @@ class EntryModelFactory extends Factory
     {
         return [
             'sequence' => random_int(1, 10000),
-            'uuid' => $this->faker->uuid,
-            'batch_id' => $this->faker->uuid,
+            'uuid' => $this->faker->uuid(),
+            'batch_id' => $this->faker->uuid(),
             'type' => $this->faker->randomElement([
                 EntryType::CACHE, EntryType::CLIENT_REQUEST, EntryType::COMMAND, EntryType::DUMP, EntryType::EVENT,
                 EntryType::EXCEPTION, EntryType::JOB, EntryType::LOG, EntryType::MAIL, EntryType::MODEL,
                 EntryType::NOTIFICATION, EntryType::QUERY, EntryType::REDIS, EntryType::REQUEST,
                 EntryType::SCHEDULED_TASK,
             ]),
-            'content' => [$this->faker->word => $this->faker->word],
+            'content' => [$this->faker->word() => $this->faker->word()],
         ];
     }
 }
