@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.10.1...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.10.2...4.x)
+
+## [v4.10.2](https://github.com/laravel/telescope/compare/v4.10.1...v4.10.2) - 2022-12-19
+
+### Fixed
+
+- Fix deprecations by @driesvints in https://github.com/laravel/telescope/pull/1284
 
 ## [v4.10.1](https://github.com/laravel/telescope/compare/v4.10.0...v4.10.1) - 2022-12-14
 
