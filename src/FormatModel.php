@@ -25,8 +25,9 @@ class FormatModel
             $keys = $model->getKey();
         }
 
-        if ($keys instanceof BackedEnum)
-		    $keys = $keys->value;
+        if ($keys instanceof BackedEnum) {
+            $keys = $keys->value;
+        }
 
         return get_class($model).':'.implode('_', Arr::wrap($keys));
     }
