@@ -25,7 +25,7 @@ class FormatModel
             $keys = $model->getKey();
         }
 
-        if ($keys instanceof BackedEnum) {
+        if (interface_exists('BackedEnum') && ($keys instanceof BackedEnum)) {
             $keys = $keys->value;
         }
 
