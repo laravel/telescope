@@ -24,10 +24,14 @@ class FormatModel
             $keys = $model->getKey();
         }
 
-        if (interface_exists('BackedEnum') && ($keys instanceof \BackedEnum)) {
-            $keys = $keys->value;
+        $keys = Arr::wrap($keys);
+
+        if (interface_exists('BackedEnum')) {
+            $keys = array_map(function ($value) {
+                return ($value instanceof \BackedEnum) ? $value->value : $value;
+            }, $keys);
         }
 
-        return get_class($model).':'.implode('_', Arr::wrap($keys));
+        return get_class($model).':'.implode('_', $keys);
     }
 }
