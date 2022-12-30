@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope;
 
+use BackedEnum;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Arr;
 
@@ -24,14 +25,8 @@ class FormatModel
             $keys = $model->getKey();
         }
 
-        $keys = Arr::wrap($keys);
-
-        if (interface_exists('BackedEnum')) {
-            $keys = array_map(function ($value) {
-                return ($value instanceof \BackedEnum) ? $value->value : $value;
-            }, $keys);
-        }
-
-        return get_class($model).':'.implode('_', $keys);
+        return get_class($model).':'.implode('_', array_map(function ($value) {
+            return $value instanceof BackedEnum ? $value->value : $value;
+        }, Arr::wrap($keys)));
     }
 }
