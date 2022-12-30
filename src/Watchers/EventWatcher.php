@@ -3,7 +3,6 @@
 namespace Laravel\Telescope\Watchers;
 
 use Closure;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Str;
