@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Watchers;
 
 use Closure;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Str;
@@ -119,8 +120,22 @@ class EventWatcher extends Watcher
      */
     protected function shouldIgnore($eventName)
     {
-        return $this->eventIsIgnored($eventName) ||
-            (Telescope::$ignoreFrameworkEvents && $this->eventIsFiredByTheFramework($eventName));
+        return $this->eventIsIgnored($eventName) || (
+            Telescope::$ignoreFrameworkEvents &&
+            $this->eventIsFiredByTheFramework($eventName) &&
+            $this->isUnAllowedFrameworkEvent($eventName)
+        );
+    }
+
+    /**
+     * Determine if the event is ignored manually.
+     *
+     * @param  string  $eventName
+     * @return bool
+     */
+    protected function eventIsIgnored($eventName)
+    {
+        return Str::is($this->options['ignore'] ?? [], $eventName);
     }
 
     /**
@@ -138,13 +153,13 @@ class EventWatcher extends Watcher
     }
 
     /**
-     * Determine if the event is ignored manually.
+     * Determine if the event was fired internally by Laravel.
      *
      * @param  string  $eventName
      * @return bool
      */
-    protected function eventIsIgnored($eventName)
+    protected function isUnAllowedFrameworkEvent($eventName)
     {
-        return Str::is($this->options['ignore'] ?? [], $eventName);
+        return ! Str::is($this->options['allow'] ?? [], $eventName);
     }
 }
