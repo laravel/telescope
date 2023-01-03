@@ -1,6 +1,16 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.10.2...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.11.0...4.x)
+
+## [v4.11.0](https://github.com/laravel/telescope/compare/v4.10.2...v4.11.0) - 2023-01-03
+
+### Added
+
+- Add support for model keys cast to backed enums in FormatModel by @sidquisaad in https://github.com/laravel/telescope/pull/1286
+
+### Changed
+
+- Uses PHP Native Type Declarations 🐘  by @nunomaduro in https://github.com/laravel/telescope/pull/1267
 
 ## [v4.10.2](https://github.com/laravel/telescope/compare/v4.10.1...v4.10.2) - 2022-12-19
 
