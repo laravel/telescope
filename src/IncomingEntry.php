@@ -284,13 +284,24 @@ class IncomingEntry
     }
 
     /**
-     * Determine if the incoming entry is an client request.
+     * Determine if the incoming entry is a client request.
      *
      * @return bool
      */
     public function isClientRequest()
     {
         return $this->type === EntryType::CLIENT_REQUEST;
+    }
+
+    /**
+     * Determine if the incoming entry is a failed client request.
+     *
+     * @return bool
+     */
+    public function isFailedClientRequest()
+    {
+        return $this->type === EntryType::CLIENT_REQUEST &&
+            ($this->content['response_status'] ?? 200) >= 500;
     }
 
     /**
