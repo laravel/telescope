@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.11.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.12.0...4.x)
+
+## [v4.12.0](https://github.com/laravel/telescope/compare/v4.11.0...v4.12.0) - 2023-01-13
+
+### Added
+
+- Laravel v10 Support by @driesvints in https://github.com/laravel/telescope/pull/1292
 
 ## [v4.11.0](https://github.com/laravel/telescope/compare/v4.10.2...v4.11.0) - 2023-01-03
 
