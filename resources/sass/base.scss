@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    width: 1140px;
+    max-width: 1440px;
 }
 
 html {
@@ -34,7 +34,8 @@ svg.icon {
 .sidebar .nav-item {
     a {
         color: $sidebar-nav-color;
-        padding: 0.5rem 0rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: $border-radius-lg;
 
         svg {
             width: 1rem;
@@ -43,7 +44,13 @@ svg.icon {
             fill: $sidebar-icon-color;
         }
 
+        &:hover {
+            background-color: $gray-200;
+            color: $primary;
+        }
+
         &.active {
+            background-color: $gray-200;
             color: $primary;
 
             svg {
@@ -54,7 +61,7 @@ svg.icon {
 }
 
 .card {
-    box-shadow: 0 2px 3px $card-shadow-color;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     border: none;
 
     .bottom-radius {
@@ -67,6 +74,7 @@ svg.icon {
         padding-bottom: 0.7rem;
         background-color: $card-cap-bg;
         border-bottom: none;
+        min-height: 60px;
 
         .btn-group {
             .btn {
@@ -74,8 +82,28 @@ svg.icon {
             }
         }
 
-        h5 {
-            margin: 0;
+        .form-control-with-icon {
+            position: relative;
+
+            .icon-wrapper {
+                display: flex;
+                align-items: center;
+                jusify-content: center;
+                position: absolute;
+                top: 0;
+                left: 0.75rem;
+                bottom: 0;
+
+                .icon {
+                    color: $secondary;
+                }
+            }
+
+            .form-control {
+                padding-left: 2.25rem;
+                font-size: 0.875rem;
+                border-radius: 9999px;
+            }
         }
     }
 
@@ -94,7 +122,7 @@ svg.icon {
 
         th {
             background-color: $table-headers-color;
-            font-weight: 400;
+            font-size: 0.875rem;
             padding: 0.5rem 1.25rem;
             border-bottom: 0;
         }
@@ -158,6 +186,47 @@ button:hover {
 
 .btn-outline-primary:not(:disabled):not(.disabled).active:focus {
     box-shadow: none !important;
+}
+
+.btn-subtle {
+    color: $gray-600;
+    background: $gray-200;
+
+    &:hover,
+    &:focus {
+        color: $gray-900;
+        background: $gray-300;
+    }
+
+    &.active {
+        color: $white;
+        background: $primary;
+    }
+}
+
+.badge-secondary {
+    background: $gray-200;
+    color: $gray-700;
+}
+
+.badge-success {
+    background: lighten($success, 35%);
+    color: darken($success, 30%);
+}
+
+.badge-info {
+    background: lighten($info, 5%);
+    color: darken($info, 40%);
+}
+
+.badge-warning {
+    background: lighten($warning, 10%);
+    color: darken($warning, 50%);
+}
+
+.badge-danger {
+    background: lighten($danger, 30%);
+    color: darken($danger, 20%);
 }
 
 .control-action {

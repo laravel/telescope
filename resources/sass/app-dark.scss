@@ -1,7 +1,7 @@
-$font-family-base: Nunito, sans-serif;
+$font-family-base: Inter, sans-serif;
 
-$font-size-base: 0.95rem;
-$badge-font-size: 0.95rem;
+$font-size-base: 1rem;
+$badge-font-size: 1rem;
 
 $primary: #adadff;
 $secondary: #494444;
@@ -34,6 +34,7 @@ $card-cap-bg: #120f12;
 $card-bg-secondary: #262525;
 $card-bg: $card-cap-bg;
 $card-shadow-color: $body-bg;
+$card-border-radius: 6px;
 
 $code-bg: $card-bg-secondary;
 

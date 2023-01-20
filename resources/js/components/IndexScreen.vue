@@ -267,14 +267,21 @@
 </script>
 
 <template>
-    <div class="card">
+    <div class="card overflow-hidden">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <h5>{{this.title}}</h5>
+            <h2 class="h6 m-0">{{this.title}}</h2>
 
-            <input type="text" class="form-control w-25"
-                   v-if="!hideSearch && (tag || entries.length > 0)"
-                   id="searchInput"
-                   placeholder="Search Tag" v-model="tag" @input.stop="search">
+            <div class="form-control-with-icon w-25">
+                <div class="icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon">
+                        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <input type="text" class="form-control w-100"
+                       v-if="!hideSearch && (tag || entries.length > 0)"
+                       id="searchInput"
+                       placeholder="Search Tag" v-model="tag" @input.stop="search">
+            </div>
         </div>
 
         <p v-if="recordingStatus !== 'enabled'" class="mt-0 mb-0 disabled-watcher d-flex align-items-center">
@@ -304,7 +311,7 @@
         </div>
 
 
-        <table id="indexScreen" class="table table-hover table-sm mb-0 penultimate-column-right" v-if="ready && entries.length > 0">
+        <table id="indexScreen" class="table table-hover mb-0 penultimate-column-right" v-if="ready && entries.length > 0">
             <thead>
             <slot name="table-header"></slot>
             </thead>

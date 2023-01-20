@@ -26,7 +26,7 @@
     <table class="table mb-0">
         <tbody>
         <tr v-for="line in lines">
-            <td class="card-bg-secondary">{{line.file}}:{{line.line}}</td>
+            <td class="card-bg-secondary"><code>{{line.file}}:{{line.line}}</code></td>
         </tr>
 
         <tr v-if="! showAll">

@@ -27,9 +27,9 @@
     <preview-screen title="Log Details" resource="logs" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">Level</td>
+                <td class="table-fit text-muted">Level</td>
                 <td>
-                    <span class="badge font-weight-light" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">
+                    <span class="badge" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">
                         {{slotProps.entry.content.level}}
                     </span>
                 </td>
@@ -37,7 +37,7 @@
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
-            <div class="card mt-5">
+            <div class="card mt-5 overflow-hidden">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
                         <a class="nav-link" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Log Message</a>

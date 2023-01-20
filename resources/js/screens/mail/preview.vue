@@ -24,60 +24,60 @@
     <preview-screen title="Mail Details" resource="mail" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">Mailable</td>
+                <td class="table-fit text-muted">Mailable</td>
                 <td>
                     {{slotProps.entry.content.mailable}}
 
-                    <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.queued">
+                    <span class="badge badge-secondary ml-2" v-if="slotProps.entry.content.queued">
                         Queued
                     </span>
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">From</td>
+                <td class="table-fit text-muted">From</td>
                 <td>
                     {{formatAddresses(slotProps.entry.content.from)}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">To</td>
+                <td class="table-fit text-muted">To</td>
                 <td>
                     {{formatAddresses(slotProps.entry.content.to)}}
                 </td>
             </tr>
 
             <tr v-if="slotProps.entry.replyTo">
-                <td class="table-fit font-weight-bold">Reply-To</td>
+                <td class="table-fit text-muted">Reply-To</td>
                 <td>
                     {{formatAddresses(slotProps.entry.content.replyTo)}}
                 </td>
             </tr>
 
             <tr v-if="slotProps.entry.cc">
-                <td class="table-fit font-weight-bold">CC</td>
+                <td class="table-fit text-muted">CC</td>
                 <td>
                     {{formatAddresses(slotProps.entry.content.cc)}}
                 </td>
             </tr>
 
             <tr v-if="slotProps.entry.bcc">
-                <td class="table-fit font-weight-bold">BCC</td>
+                <td class="table-fit text-muted">BCC</td>
                 <td>
                     {{formatAddresses(slotProps.entry.content.bcc)}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Subject</td>
+                <td class="table-fit text-muted">Subject</td>
                 <td>
                     {{slotProps.entry.content.subject}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Download</td>
+                <td class="table-fit text-muted">Download</td>
                 <td>
                     <a :href="Telescope.basePath + '/telescope-api/mail/'+$route.params.id+'/download'">Download .eml file</a>
                 </td>

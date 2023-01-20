@@ -1,7 +1,7 @@
-$font-family-base: Nunito, sans-serif;
+$font-family-base: Inter, sans-serif;
 
-$font-size-base: 0.95rem;
-$badge-font-size: 0.95rem;
+$font-size-base: 1rem;
+$badge-font-size: 0.875rem;
 
 $primary: #4040c8;
 $secondary: #dae1e7;
@@ -10,12 +10,14 @@ $info: #bcdefa;
 $warning: #fff382;
 $danger: #ef5753;
 
-$body-bg: #edf1f3;
+$body-bg: #f0f3f5;
+
+$border-radius-lg: 6px;
 
 $btn-focus-width: 0;
 
 $sidebar-nav-color: #2a5164;
-$sidebar-icon-color: #c3cbd3;
+$sidebar-icon-color: #afb6bd;
 
 $pill-link-active: $primary;
 
@@ -27,10 +29,10 @@ $table-hover-bg: #f1f7fa;
 $header-border-color: #d5dfe9;
 
 $card-cap-bg: #fff;
-$card-bg-secondary: #f1f7fa;
-$card-shadow-color: #cdd8df;
+$card-bg-secondary: #f8f9fa;
+$card-border-radius: $border-radius-lg;
 
-$code-bg: #120f12;
+$code-bg: #292D3E;
 
 $paginator-button-color: #9ea7ac;
 
