@@ -182,7 +182,7 @@
 </script>
 
 <template>
-    <div class="card mt-5" v-if="hasRelatedEntries">
+    <div class="card overflow-hidden mt-5" v-if="hasRelatedEntries">
         <ul class="nav nav-pills">
             <li class="nav-item" v-for="tab in separateTabs">
                 <a class="nav-link" :class="{active: currentTab==tab.type}" href="#" v-on:click.prevent="activateTab(tab.type)" v-if="tab.count">

@@ -25,9 +25,14 @@ svg.icon {
 .header {
     border-bottom: solid 1px $header-border-color;
 
-    svg.logo {
-        width: 1.7rem;
-        height: 1.7rem;
+    .logo {
+        text-decoration: none;
+        color: $logo-color;
+
+        svg {
+            width: 1.7rem;
+            height: 1.7rem;
+        }
     }
 }
 
@@ -35,26 +40,27 @@ svg.icon {
     a {
         color: $sidebar-nav-color;
         padding: 0.5rem 0.75rem;
+        margin-bottom: 1px;
         border-radius: $border-radius-lg;
 
         svg {
             width: 1rem;
             height: 1rem;
             margin-right: 15px;
-            fill: $sidebar-icon-color;
+            fill: $sidebar-nav-icon-color;
         }
 
         &:hover {
-            background-color: $gray-200;
-            color: $primary;
+            background-color: $sidebar-nav-hover-bg;
+            color: $sidebar-nav-hover-color;
         }
 
         &.active {
-            background-color: $gray-200;
-            color: $primary;
+            background-color: $sidebar-nav-active-bg;
+            color: $sidebar-nav-active-color;
 
             svg {
-                fill: $primary;
+                fill: $sidebar-nav-active-icon-color;
             }
         }
     }
@@ -95,7 +101,7 @@ svg.icon {
                 bottom: 0;
 
                 .icon {
-                    color: $secondary;
+                    fill: $text-muted;
                 }
             }
 
@@ -188,45 +194,45 @@ button:hover {
     box-shadow: none !important;
 }
 
-.btn-subtle {
-    color: $gray-600;
-    background: $gray-200;
+.btn-muted {
+    color: $btn-muted-color;
+    background: $btn-muted-bg;
 
     &:hover,
     &:focus {
-        color: $gray-900;
-        background: $gray-300;
+        color: $btn-muted-hover-color;
+        background: $btn-muted-hover-bg;
     }
 
     &.active {
-        color: $white;
-        background: $primary;
+        color: $btn-muted-active-color;
+        background: $btn-muted-active-bg;
     }
 }
 
 .badge-secondary {
-    background: $gray-200;
-    color: $gray-700;
+    background: $badge-secondary-bg;
+    color: $badge-secondary-color;
 }
 
 .badge-success {
-    background: lighten($success, 35%);
-    color: darken($success, 30%);
+    background: $badge-success-bg;
+    color: $badge-success-color;
 }
 
 .badge-info {
-    background: lighten($info, 5%);
-    color: darken($info, 40%);
+    background: $badge-info-bg;
+    color: $badge-info-color;
 }
 
 .badge-warning {
-    background: lighten($warning, 10%);
-    color: darken($warning, 50%);
+    background: $badge-warning-bg;
+    color: $badge-warning-color;
 }
 
 .badge-danger {
-    background: lighten($danger, 30%);
-    color: darken($danger, 20%);
+    background: $badge-danger-bg;
+    color: $badge-danger-color;
 }
 
 .control-action {
@@ -236,7 +242,7 @@ button:hover {
         height: 1.2rem;
 
         &:hover {
-            fill: $primary;
+            fill: $control-action-icon-hover;
         }
     }
 }
@@ -295,17 +301,26 @@ button:hover {
 }
 
 .card {
-    .nav-pills .nav-link.active {
-        background: none;
-        color: $pill-link-active;
-        border-bottom: solid 2px $primary;
-    }
+    .nav-pills {
+        background: $card-cap-bg;
 
-    .nav-pills .nav-link {
-        font-size: 0.9rem;
-        border-radius: 0;
-        padding: 0.75rem 1.25rem;
-        color: $body-color;
+        .nav-link {
+            font-size: 0.9rem;
+            border-radius: 0;
+            padding: 0.75rem 1.25rem;
+            color: $pill-link;
+
+            &:hover,
+            &:focus {
+                color: $pill-link-hover;
+            }
+
+            &.active {
+                background: none;
+                color: $pill-link-active;
+                border-bottom: solid 2px $pill-link-active;
+            }
+        }
     }
 }
 
