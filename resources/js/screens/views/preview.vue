@@ -22,14 +22,14 @@
     <preview-screen title="View Action" resource="views" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">View</td>
+                <td class="table-fit text-muted">View</td>
                 <td>
                     {{slotProps.entry.content.name}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Path</td>
+                <td class="table-fit text-muted">Path</td>
                 <td>
                     {{slotProps.entry.content.path}}
                 </td>
@@ -53,7 +53,7 @@
                     </div>
 
                     <!-- View Composers -->
-                    <table class="table table-hover table-sm mb-0" v-show="currentTab=='composers'">
+                    <table class="table table-hover mb-0" v-show="currentTab=='composers'">
                         <thead>
                         <tr>
                             <th>Composer</th>
@@ -65,7 +65,7 @@
                         <tr v-for="(composer, key) in slotProps.entry.content.composers" :key="key">
                             <td :title="composer.name">{{composer.name}}</td>
                             <td class="table-fit">
-                                <span class="badge font-weight-light" :class="'badge-'+composerTypeClass(composer.type)">
+                                <span class="badge" :class="'badge-'+composerTypeClass(composer.type)">
                                     {{composer.type}}
                                 </span>
                             </td>

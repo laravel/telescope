@@ -6,17 +6,17 @@
     <index-screen title="Queries" resource="queries">
         <tr slot="table-header">
             <th scope="col">Query</th>
-            <th scope="col">Duration</th>
+            <th scope="col" class="text-right">Duration</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
 
 
         <template slot="row" slot-scope="slotProps">
-            <td :title="slotProps.entry.content.sql">{{truncate(slotProps.entry.content.sql, 90)}}</td>
+            <td :title="slotProps.entry.content.sql"><code>{{truncate(slotProps.entry.content.sql, 90)}}</code></td>
 
-            <td class="table-fit">
-                <span class="badge badge-danger font-weight-light" v-if="slotProps.entry.content.slow">
+            <td class="table-fit text-right text-muted">
+                <span class="badge badge-danger" v-if="slotProps.entry.content.slow">
                     {{slotProps.entry.content.time}}ms
                 </span>
 
@@ -25,14 +25,14 @@
                 </span>
             </td>
 
-            <td class="table-fit" :data-timeago="slotProps.entry.created_at" :title="slotProps.entry.created_at">
+            <td class="table-fit text-muted" :data-timeago="slotProps.entry.created_at" :title="slotProps.entry.created_at">
                 {{timeAgo(slotProps.entry.created_at)}}
             </td>
 
             <td class="table-fit">
                 <router-link :to="{name:'query-preview', params:{id: slotProps.entry.id}}" class="control-action">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
-                        <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z" clip-rule="evenodd" />
                     </svg>
                 </router-link>
             </td>

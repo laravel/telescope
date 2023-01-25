@@ -1,69 +1,111 @@
-$font-family-base: Nunito, sans-serif;
+@import 'colors';
 
-$font-size-base: 0.95rem;
-$badge-font-size: 0.95rem;
+$font-family-base: Figtree, sans-serif;
+$font-weight-bold: 600;
 
-$primary: #adadff;
-$secondary: #494444;
-$success: #1f9d55;
-$info: #1c3d5a;
-$warning: #684f1d;
-$danger: #621b18;
-$gray-800: $secondary;
+$font-size-base: 1rem;
+$badge-font-size: 0.875rem;
 
-$body-bg: #1c1c1c;
-$body-color: #e2edf4;
+$primary: #4040c8;
+$secondary: $gray-600;
+$success: $emerald-600;
+$info: $blue-600;
+$warning: $amber-600;
+$danger: $red-600;
 
-$sidebar-nav-color: #6e6b6b;
-$sidebar-icon-color: #9f9898;
+$body-bg: $gray-900;
+$body-color: $gray-100;
 
-$pill-link-active: $primary;
+$text-muted: $gray-400;
 
-$border-color: #efefef;
-$table-border-color: #343434;
-$table-headers-color: #181818;
-$table-hover-bg: #343434;
+$border-radius-lg: 6px;
+
+$logo-color: $gray-200;
+
+$link-color: $indigo-400;
+$link-hover-color: $indigo-300;
+
+$sidebar-nav-color: $gray-400;
+$sidebar-nav-hover-color: $gray-300;
+$sidebar-nav-hover-bg: $gray-800;
+$sidebar-nav-icon-color: $gray-500;
+$sidebar-nav-active-bg: $gray-800;
+$sidebar-nav-active-color: $indigo-400;
+$sidebar-nav-active-icon-color: $indigo-500;
+
+$pill-link: $gray-400;
+$pill-link-active: $indigo-300;
+$pill-link-hover: $gray-200;
+
+$border-color: $gray-600;
+$table-border-color: $gray-700;
+$table-headers-color: $gray-800;
+$table-hover-bg: $gray-700;
 
 $header-border-color: $table-border-color;
 
-$input-bg: #242424;
-$input-color: #e2edf4;
-$input-border-color: $table-border-color;
+$input-bg: $gray-800;
+$input-color: $gray-200;
+$input-border-color: $border-color;
 
-$card-cap-bg: #120f12;
-$card-bg-secondary: #262525;
-$card-bg: $card-cap-bg;
-$card-shadow-color: $body-bg;
+$card-cap-bg: $gray-700;
+$card-bg-secondary: $gray-800;
+$card-bg: $gray-800;
+$card-border-radius: $border-radius-lg;
 
-$code-bg: $card-bg-secondary;
-
-$paginator-button-color: #9ea7ac;
+$code-bg: #292d3e;
 
 $modal-content-bg: $table-headers-color;
-$modal-backdrop-bg: #7e7e7e;
+$modal-backdrop-bg: $gray-600;
 $modal-footer-border-color: $input-border-color;
 $modal-header-border-color: $input-border-color;
 
-$new-entries-bg: #505e4a;
+$new-entries-bg: $indigo-900;
+$new-code-entries-bg: $gray-600;
 
-$control-action-icon-color: #ccd2df;
+$control-action-icon-color: $gray-500;
+$control-action-icon-hover: $indigo-400;
 
-$dropdown-bg: $table-headers-color;
-$dropdown-link-color: #fff;
+$nav-pills-link-active-bg: $gray-800;
+
+$dropdown-bg: $gray-700;
+$dropdown-link-color: $white;
+
+$btn-muted-color: $gray-400;
+$btn-muted-bg: $gray-800;
+$btn-muted-hover-color: $gray-300;
+$btn-muted-hover-bg: $gray-700;
+$btn-muted-active-color: $white;
+$btn-muted-active-bg: $primary;
+
+$badge-secondary-bg: $gray-300;
+$badge-secondary-color: $gray-700;
+$badge-success-bg: $emerald-500;
+$badge-success-color: $white;
+$badge-info-bg: $blue-500;
+$badge-info-color: $white;
+$badge-warning-bg: $amber-500;
+$badge-warning-color: $white;
+$badge-danger-bg: $red-500;
+$badge-danger-color: $white;
 
 $grid-breakpoints: (
     xs: 0,
     sm: 2px,
     md: 8px,
     lg: 9px,
-    xl: 10px
+    xl: 10px,
 ) !default;
 
 $container-max-widths: (
     sm: 1137px,
     md: 1138px,
     lg: 1139px,
-    xl: 1140px
+    xl: 1140px,
 ) !default;
+
+.form-control:-moz-focusring {
+    text-shadow: none !important;
+}
 
 @import 'base';
