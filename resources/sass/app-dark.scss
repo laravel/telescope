@@ -53,7 +53,7 @@ $card-bg-secondary: $gray-800;
 $card-bg: $gray-800;
 $card-border-radius: $border-radius-lg;
 
-$code-bg: #292D3E;
+$code-bg: #292d3e;
 
 $modal-content-bg: $table-headers-color;
 $modal-backdrop-bg: $gray-600;
@@ -94,18 +94,18 @@ $grid-breakpoints: (
     sm: 2px,
     md: 8px,
     lg: 9px,
-    xl: 10px
+    xl: 10px,
 ) !default;
 
 $container-max-widths: (
     sm: 1137px,
     md: 1138px,
     lg: 1139px,
-    xl: 1140px
+    xl: 1140px,
 ) !default;
 
 .form-control:-moz-focusring {
-  text-shadow: none !important;
+    text-shadow: none !important;
 }
 
 @import 'base';
