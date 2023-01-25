@@ -6,8 +6,8 @@ $font-weight-bold: 600;
 $font-size-base: 1rem;
 $badge-font-size: 0.875rem;
 
-$primary: $indigo-600;
-$secondary: #494444;
+$primary: #4040c8;
+$secondary: $gray-600;
 $success: $emerald-600;
 $info: $blue-600;
 $warning: $amber-600;
@@ -40,7 +40,7 @@ $pill-link-hover: $gray-200;
 $border-color: $gray-600;
 $table-border-color: $gray-700;
 $table-headers-color: $gray-800;
-$table-hover-bg: $gray-800;
+$table-hover-bg: $gray-700;
 
 $header-border-color: $table-border-color;
 
@@ -51,25 +51,25 @@ $input-border-color: $border-color;
 $card-cap-bg: $gray-700;
 $card-bg-secondary: $gray-800;
 $card-bg: $gray-800;
-$card-shadow-color: $body-bg;
 $card-border-radius: $border-radius-lg;
 
-$code-bg: $card-bg-secondary;
-
-$paginator-button-color: #9ea7ac;
+$code-bg: #292D3E;
 
 $modal-content-bg: $table-headers-color;
-$modal-backdrop-bg: #7e7e7e;
+$modal-backdrop-bg: $gray-600;
 $modal-footer-border-color: $input-border-color;
 $modal-header-border-color: $input-border-color;
 
-$new-entries-bg: #505e4a;
+$new-entries-bg: $indigo-900;
+$new-code-entries-bg: $gray-600;
 
 $control-action-icon-color: $gray-500;
 $control-action-icon-hover: $indigo-400;
 
-$dropdown-bg: $table-headers-color;
-$dropdown-link-color: #fff;
+$nav-pills-link-active-bg: $gray-800;
+
+$dropdown-bg: $gray-700;
+$dropdown-link-color: $white;
 
 $btn-muted-color: $gray-400;
 $btn-muted-bg: $gray-800;
@@ -103,5 +103,9 @@ $container-max-widths: (
     lg: 1139px,
     xl: 1140px
 ) !default;
+
+.form-control:-moz-focusring {
+  text-shadow: none !important;
+}
 
 @import 'base';

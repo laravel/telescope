@@ -142,10 +142,10 @@
             <div v-html="dump"></div>
         </div>
 
-        <div v-if="ready && entries.length > 0" class="code-bg px-3 pt-3">
+        <div v-if="ready && entries.length > 0" class="code-bg">
             <transition-group tag="div" name="list">
                 
-                <div v-for="entry in entries" :key="entry.id" class="mb-4">
+                <div v-for="entry in entries" :key="entry.id" class="p-3">
                     <div class="entryPointDescription d-flex justify-content-between align-items-center">
                         <router-link :to="{name:'request-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'request'">
                             Request: {{entry.content.entry_point_description}}
@@ -174,6 +174,7 @@
 
     pre.sf-dump {
         padding-left: 0 !important;
+        margin-bottom: 0 !important;
     }
 
     .entryPointDescription a {

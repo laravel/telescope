@@ -318,7 +318,7 @@
 
             <transition-group tag="tbody" name="list">
                 <tr v-if="hasNewEntries" key="newEntries" class="dontanimate">
-                    <td colspan="100" class="text-center card-bg-secondary py-1">
+                    <td colspan="100" class="text-center card-bg-secondary py-2">
                         <small><a href="#" v-on:click.prevent="loadNewEntries" v-if="!loadingNewEntries">Load New Entries</a></small>
 
                         <small v-if="loadingNewEntries">Loading...</small>
@@ -332,7 +332,7 @@
 
 
                 <tr v-if="hasMoreEntries" key="olderEntries" class="dontanimate">
-                    <td colspan="100" class="text-center card-bg-secondary py-1">
+                    <td colspan="100" class="text-center card-bg-secondary py-2">
                         <small><a href="#" v-on:click.prevent="loadOlderEntries" v-if="!loadingMoreEntries">Load Older Entries</a></small>
 
                         <small v-if="loadingMoreEntries">Loading...</small>

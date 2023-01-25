@@ -247,17 +247,6 @@ button:hover {
     }
 }
 
-.paginator {
-    .btn {
-        text-decoration: none;
-        color: $paginator-button-color;
-
-        &:hover {
-            color: $primary;
-        }
-    }
-}
-
 @-webkit-keyframes spin {
     from {
         -ms-transform: rotate(0deg);
@@ -331,6 +320,11 @@ button:hover {
 .list-enter:not(.dontanimate),
 .list-leave-to:not(.dontanimate) {
     background: $new-entries-bg;
+}
+
+.code-bg .list-enter:not(.dontanimate),
+.code-bg .list-leave-to:not(.dontanimate) {
+    background: $new-code-entries-bg;
 }
 
 #indexScreen {

@@ -24,8 +24,8 @@ $btn-focus-width: 0;
 
 $logo-color: $gray-700;
 
-$sidebar-nav-color: #2a5164;
-$sidebar-icon-color: #afb6bd;
+$link-color: $indigo-500;
+$link-hover-color: $indigo-600;
 
 $sidebar-nav-color: $gray-600;
 $sidebar-nav-hover-color: $primary;
@@ -44,24 +44,29 @@ $table-headers-color: $gray-100;
 $table-border-color: $gray-200;
 $table-hover-bg: $gray-100;
 
-$header-border-color: $gray-200;
+$header-border-color: $table-border-color;
 
 $input-bg: $white;
 $input-color: $gray-800;
 $input-border-color: $border-color;
 
-$card-cap-bg: #fff;
-$card-bg-secondary: #f8f9fa;
+$card-cap-bg: $white;
+$card-bg-secondary: $gray-100;
+$card-bg: $white;
 $card-border-radius: $border-radius-lg;
 
 $code-bg: #292D3E;
 
-$paginator-button-color: #9ea7ac;
-
-$new-entries-bg: #fffee9;
+$new-entries-bg: $indigo-50;
+$new-code-entries-bg: $gray-600;
 
 $control-action-icon-color: $gray-300;
 $control-action-icon-hover: $indigo-600;
+
+$nav-pills-link-active-bg: $gray-200;
+
+$dropdown-bg: $white;
+$dropdown-link-color: $gray-700;
 
 $btn-muted-color: $gray-600;
 $btn-muted-bg: $gray-200;
