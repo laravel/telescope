@@ -102,7 +102,7 @@
         </div>
 
 
-        <table v-if="ready && tags.length > 0" class="table table-hover table-sm mb-0">
+        <table v-if="ready && tags.length > 0" class="table table-hover mb-0">
             <thead>
             <th>Tag</th>
             <th></th>

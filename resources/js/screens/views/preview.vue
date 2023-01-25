@@ -53,7 +53,7 @@
                     </div>
 
                     <!-- View Composers -->
-                    <table class="table table-hover table-sm mb-0" v-show="currentTab=='composers'">
+                    <table class="table table-hover mb-0" v-show="currentTab=='composers'">
                         <thead>
                         <tr>
                             <th>Composer</th>

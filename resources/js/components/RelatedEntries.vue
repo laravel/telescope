@@ -198,7 +198,7 @@
         </ul>
         <div>
             <!-- Related Exceptions -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='exceptions' && exceptions.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='exceptions' && exceptions.length">
                 <thead>
                 <tr>
                     <th>Message</th>
@@ -226,7 +226,7 @@
 
 
             <!-- Related Logs -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='logs' && logs.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='logs' && logs.length">
                 <thead>
                 <tr>
                     <th>Message</th>
@@ -257,7 +257,7 @@
 
 
             <!-- Related Queries -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='queries' && queries.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='queries' && queries.length">
                 <thead>
                 <tr>
                     <th>Query<br/><small>{{ queries.length }} queries, {{ queriesSummary.duplicated }} of which are duplicated.</small></th>
@@ -291,7 +291,7 @@
             </table>
 
             <!-- Related Model Actions -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='models' && models.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='models' && models.length">
                 <thead>
                 <tr>
                     <th>Model</th>
@@ -321,7 +321,7 @@
             </table>
 
             <!-- Related Gates -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='gates' && gates.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='gates' && gates.length">
                 <thead>
                 <tr>
                     <th>Ability</th>
@@ -351,7 +351,7 @@
             </table>
 
             <!-- Related Jobs -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='jobs' && jobs.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='jobs' && jobs.length">
                 <thead>
                 <tr>
                     <th>Job</th>
@@ -387,7 +387,7 @@
             </table>
 
             <!-- Related Events -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='events' && events.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='events' && events.length">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -421,7 +421,7 @@
 
 
             <!-- Related Cache -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='cache' && cache.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='cache' && cache.length">
                 <thead>
                 <tr>
                     <th>Key</th>
@@ -452,7 +452,7 @@
 
 
             <!-- Related Redis Commands -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='redis' && redis.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='redis' && redis.length">
                 <thead>
                 <tr>
                     <th>Command</th>
@@ -479,7 +479,7 @@
 
 
             <!-- Related Mail -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='mails' && mails.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='mails' && mails.length">
                 <thead>
                 <tr>
                     <th>Mailable</th>
@@ -516,7 +516,7 @@
 
 
             <!-- Related Notifications -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='notifications' && notifications.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='notifications' && notifications.length">
                 <thead>
                 <tr>
                     <th>Notification</th>
@@ -555,7 +555,7 @@
             </table>
 
             <!-- Related Views -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='views' && views.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='views' && views.length">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -587,7 +587,7 @@
             </table>
 
             <!-- Related Http Client Requests -->
-            <table class="table table-hover table-sm mb-0" v-show="currentTab=='client_requests' && clientRequests.length">
+            <table class="table table-hover mb-0" v-show="currentTab=='client_requests' && clientRequests.length">
                 <thead>
                 <tr>
                     <th>Verb</th>

@@ -83,11 +83,12 @@
 
                 <div class="modal-footer justify-content-start flex-row-reverse">
 
+                    <button v-if="type == 'error'" class="btn btn-primary" @click="close">
+                        Close
+                    </button>
+
                     <button v-if="type == 'success'" class="btn btn-primary" @click="close">
                         Okay
-                    </button>
-                    <button v-if="type == 'error'" class="btn" @click="close">
-                        Close
                     </button>
 
 

@@ -40,12 +40,12 @@ svg.icon {
     a {
         color: $sidebar-nav-color;
         padding: 0.5rem 0.75rem;
-        margin-bottom: 1px;
+        margin-bottom: 4px;
         border-radius: $border-radius-lg;
 
         svg {
-            width: 1rem;
-            height: 1rem;
+            width: 1.25rem;
+            height: 1.25rem;
             margin-right: 15px;
             fill: $sidebar-nav-icon-color;
         }
@@ -117,13 +117,6 @@ svg.icon {
         th,
         td {
             padding: 0.75rem 1.25rem;
-        }
-
-        &.table-sm {
-            th,
-            td {
-                padding: 1rem 1.25rem;
-            }
         }
 
         th {
