@@ -47,7 +47,7 @@ class DumpWatcher extends Watcher
             //
         }
 
-        if (! ($this->options['always'] ?? false) && $dumpWatcherCache) {
+        if (! ($this->options['always'] ?? false) && ! $dumpWatcherCache) {
             return;
         }
 
