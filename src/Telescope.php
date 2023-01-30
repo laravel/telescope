@@ -259,7 +259,7 @@ class Telescope
 
         try {
             $recordingPaused = cache('telescope:pause-recording');
-        } catch (\Exception) {
+        } catch (Exception) {
             //
         }
 
