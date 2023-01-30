@@ -256,6 +256,7 @@ class Telescope
         }
 
         $recordingPaused = false;
+
         try {
             $recordingPaused = cache('telescope:pause-recording');
         } catch (\Exception) {
