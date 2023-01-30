@@ -41,9 +41,7 @@ class DumpWatcher extends Watcher
     public function register($app)
     {
         try {
-            $dumpWatcherCache = $this->cache->get('telescope:dump-watcher');
-
-            if (! ($this->options['always'] ?? false) && ! $dumpWatcherCache) {
+            if (! ($this->options['always'] ?? false) && ! $this->cache->get('telescope:dump-watcher')) {
                 return;
             }
         } catch (\Exception) {
