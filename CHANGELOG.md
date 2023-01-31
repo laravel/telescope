@@ -1,6 +1,16 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.12.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.13.0...4.x)
+
+## [v4.13.0](https://github.com/laravel/telescope/compare/v4.12.0...v4.13.0) - 2023-01-30
+
+### Changed
+
+- A fresh coat of paint by @jessarcher in https://github.com/laravel/telescope/pull/1295
+
+### Fixed
+
+- Handle redis connection exception on DumpWatcher register by @aidanthewiz in https://github.com/laravel/telescope/pull/1296
 
 ## [v4.12.0](https://github.com/laravel/telescope/compare/v4.11.0...v4.12.0) - 2023-01-13
 
