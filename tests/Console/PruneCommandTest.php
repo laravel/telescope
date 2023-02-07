@@ -3,10 +3,13 @@
 namespace Laravel\Telescope\Tests\Console;
 
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
+use Laravel\Telescope\Storage\EntryTable;
 use Laravel\Telescope\Tests\FeatureTestCase;
 
 class PruneCommandTest extends FeatureTestCase
 {
+    use EntryTable;
+
     public function test_prune_command_will_clear_old_records()
     {
         $recent = EntryModelFactory::new()->create(['created_at' => now()]);
@@ -15,9 +18,9 @@ class PruneCommandTest extends FeatureTestCase
 
         $this->artisan('telescope:prune')->expectsOutput('1 entries pruned.');
 
-        $this->assertDatabaseHas('telescope_entries', ['uuid' => $recent->uuid]);
+        $this->assertDatabaseHas($this->getEntriesTableName(), ['uuid' => $recent->uuid]);
 
-        $this->assertDatabaseMissing('telescope_entries', ['uuid' => $old->uuid]);
+        $this->assertDatabaseMissing($this->getEntriesTableName(), ['uuid' => $old->uuid]);
     }
 
     public function test_prune_command_can_vary_hours()
@@ -28,6 +31,6 @@ class PruneCommandTest extends FeatureTestCase
 
         $this->artisan('telescope:prune', ['--hours' => 4])->expectsOutput('1 entries pruned.');
 
-        $this->assertDatabaseMissing('telescope_entries', ['uuid' => $recent->uuid]);
+        $this->assertDatabaseMissing($this->getEntriesTableName(), ['uuid' => $recent->uuid]);
     }
 }

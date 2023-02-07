@@ -8,14 +8,7 @@ use Laravel\Telescope\Database\Factories\EntryModelFactory;
 
 class EntryModel extends Model
 {
-    use HasFactory;
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'telescope_entries';
+    use HasFactory, EntryTable;
 
     /**
      * The name of the "updated at" column.
@@ -117,7 +110,7 @@ class EntryModel extends Model
     {
         $query->when($options->tag, function ($query, $tag) {
             return $query->whereIn('uuid', function ($query) use ($tag) {
-                $query->select('entry_uuid')->from('telescope_entries_tags')->whereTag($tag);
+                $query->select('entry_uuid')->from($this->getTagsTableName())->whereTag($tag);
             });
         });
 
@@ -182,6 +175,16 @@ class EntryModel extends Model
     public function getConnectionName()
     {
         return config('telescope.storage.database.connection');
+    }
+
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return $this->getEntriesTableName();
     }
 
     /**

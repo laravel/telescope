@@ -15,6 +15,8 @@ use Laravel\Telescope\IncomingEntry;
 
 class DatabaseEntriesRepository implements Contract, ClearableRepository, PrunableRepository, TerminableRepository
 {
+    use EntryTable;
+
     /**
      * The database connection name that should be used.
      *
@@ -62,7 +64,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     {
         $entry = EntryModel::on($this->connection)->whereUuid($id)->firstOrFail();
 
-        $tags = $this->table('telescope_entries_tags')
+        $tags = $this->table($this->getTagsTableName())
                         ->where('entry_uuid', $id)
                         ->pluck('tag')
                         ->all();
@@ -116,7 +118,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     protected function countExceptionOccurences(IncomingEntry $exception)
     {
-        return $this->table('telescope_entries')
+        return $this->table($this->getEntriesTableName())
                     ->where('type', EntryType::EXCEPTION)
                     ->where('family_hash', $exception->familyHash())
                     ->count();
@@ -138,7 +140,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
 
         $this->storeExceptions($exceptions);
 
-        $table = $this->table('telescope_entries');
+        $table = $this->table($this->getEntriesTableName());
 
         $entries->chunk($this->chunkSize)->each(function ($chunked) use ($table) {
             $table->insert($chunked->map(function ($entry) {
@@ -160,10 +162,10 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     protected function storeExceptions(Collection $exceptions)
     {
         $exceptions->chunk($this->chunkSize)->each(function ($chunked) {
-            $this->table('telescope_entries')->insert($chunked->map(function ($exception) {
+            $this->table($this->getEntriesTableName())->insert($chunked->map(function ($exception) {
                 $occurrences = $this->countExceptionOccurences($exception);
 
-                $this->table('telescope_entries')
+                $this->table($this->getEntriesTableName())
                         ->where('type', EntryType::EXCEPTION)
                         ->where('family_hash', $exception->familyHash())
                         ->update(['should_display_on_index' => false]);
@@ -189,7 +191,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     protected function storeTags(Collection $results)
     {
         $results->chunk($this->chunkSize)->each(function ($chunked) {
-            $this->table('telescope_entries_tags')->insert($chunked->flatMap(function ($tags, $uuid) {
+            $this->table($this->getTagsTableName())->insert($chunked->flatMap(function ($tags, $uuid) {
                 return collect($tags)->map(function ($tag) use ($uuid) {
                     return [
                         'entry_uuid' => $uuid,
@@ -209,7 +211,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     public function update(Collection $updates)
     {
         foreach ($updates as $update) {
-            $entry = $this->table('telescope_entries')
+            $entry = $this->table($this->getEntriesTableName())
                             ->where('uuid', $update->uuid)
                             ->where('type', $update->type)
                             ->first();
@@ -222,7 +224,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                 json_decode($entry->content ?? $entry['content'] ?? [], true) ?: [], $update->changes
             ));
 
-            $this->table('telescope_entries')
+            $this->table($this->getEntriesTableName())
                             ->where('uuid', $update->uuid)
                             ->where('type', $update->type)
                             ->update(['content' => $content]);
@@ -240,7 +242,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     protected function updateTags($entry)
     {
         if (! empty($entry->tagsChanges['added'])) {
-            $this->table('telescope_entries_tags')->insert(
+            $this->table($this->getTagsTableName())->insert(
                 collect($entry->tagsChanges['added'])->map(function ($tag) use ($entry) {
                     return [
                         'entry_uuid' => $entry->uuid,
@@ -251,7 +253,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
         }
 
         collect($entry->tagsChanges['removed'])->each(function ($tag) use ($entry) {
-            $this->table('telescope_entries_tags')->where([
+            $this->table($this->getTagsTableName())->where([
                 'entry_uuid' => $entry->uuid,
                 'tag' => $tag,
             ])->delete();
@@ -294,7 +296,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function monitoring()
     {
-        return $this->table('telescope_monitoring')->pluck('tag')->all();
+        return $this->table($this->getMonitoringTableName())->pluck('tag')->all();
     }
 
     /**
@@ -311,7 +313,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             return;
         }
 
-        $this->table('telescope_monitoring')
+        $this->table($this->getMonitoringTableName())
                     ->insert(collect($tags)
                     ->mapWithKeys(function ($tag) {
                         return ['tag' => $tag];
@@ -326,7 +328,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function stopMonitoring(array $tags)
     {
-        $this->table('telescope_monitoring')->whereIn('tag', $tags)->delete();
+        $this->table($this->getMonitoringTableName())->whereIn('tag', $tags)->delete();
     }
 
     /**
@@ -337,7 +339,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function prune(DateTimeInterface $before)
     {
-        $query = $this->table('telescope_entries')
+        $query = $this->table($this->getEntriesTableName())
                 ->where('created_at', '<', $before);
 
         $totalDeleted = 0;
@@ -358,8 +360,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function clear()
     {
-        $this->table('telescope_entries')->delete();
-        $this->table('telescope_monitoring')->delete();
+        $this->table($this->getEntriesTableName())->delete();
+        $this->table($this->getMonitoringTableName())->delete();
     }
 
     /**

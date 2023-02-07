@@ -6,11 +6,14 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Storage\EntryTable;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\QueryWatcher;
 
 class QueryWatcherTest extends FeatureTestCase
 {
+    use EntryTable;
+
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
@@ -25,12 +28,12 @@ class QueryWatcherTest extends FeatureTestCase
 
     public function test_query_watcher_registers_database_queries()
     {
-        $this->app->get('db')->table('telescope_entries')->count();
+        $this->app->get('db')->table($this->getEntriesTableName())->count();
 
         $entry = $this->loadTelescopeEntries()->first();
 
         $this->assertSame(EntryType::QUERY, $entry->type);
-        $this->assertSame('select count(*) as aggregate from "telescope_entries"', $entry->content['sql']);
+        $this->assertSame('select count(*) as aggregate from "'.$this->getEntriesTableName().'"', $entry->content['sql']);
         $this->assertSame('testbench', $entry->content['connection']);
         $this->assertFalse($entry->content['slow']);
     }
@@ -43,7 +46,7 @@ class QueryWatcherTest extends FeatureTestCase
             ];
         });
 
-        $this->app->get('db')->table('telescope_monitoring')->insert($records->toArray());
+        $this->app->get('db')->table($this->getMonitoringTableName())->insert($records->toArray());
 
         $entry = $this->loadTelescopeEntries()->first();
 
@@ -55,7 +58,7 @@ class QueryWatcherTest extends FeatureTestCase
 
     public function test_query_watcher_can_prepare_bindings()
     {
-        $this->app->get('db')->table('telescope_entries')
+        $this->app->get('db')->table($this->getEntriesTableName())
             ->where('type', 'query')
             ->where('should_display_on_index', true)
             ->whereNull('family_hash')
@@ -68,21 +71,17 @@ class QueryWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
+        $sql = 'update "'.$this->getEntriesTableName().'" set "content" = null, "should_display_on_index" = 0 where "type" = \'query\' and "should_display_on_index" = 1 and "family_hash" is null and "sequence" > 100 and "created_at" < \'2019-01-01 00:00:00\'';
         $this->assertSame(EntryType::QUERY, $entry->type);
-        $this->assertSame(<<<'SQL'
-update "telescope_entries" set "content" = null, "should_display_on_index" = 0 where "type" = 'query' and "should_display_on_index" = 1 and "family_hash" is null and "sequence" > 100 and "created_at" < '2019-01-01 00:00:00'
-SQL
-            , $entry->content['sql']);
+        $this->assertSame($sql, $entry->content['sql']);
 
         $this->assertSame('testbench', $entry->content['connection']);
     }
 
     public function test_query_watcher_can_prepare_named_bindings()
     {
-        $this->app->get('db')->statement(<<<'SQL'
-update "telescope_entries" set "content" = :content, "should_display_on_index" = :index_new where "type" = :type and "should_display_on_index" = :index_old and "family_hash" is null and "sequence" > :sequence and "created_at" < :created_at
-SQL
-            , [
+        $sql = 'update "'.$this->getEntriesTableName().'" set "content" = :content, "should_display_on_index" = :index_new where "type" = :type and "should_display_on_index" = :index_old and "family_hash" is null and "sequence" > :sequence and "created_at" < :created_at';
+        $this->app->get('db')->statement($sql, [
                 'sequence' => 100,
                 'index_old' => 1,
                 'type' => 'query',
@@ -93,11 +92,9 @@ SQL
 
         $entry = $this->loadTelescopeEntries()->first();
 
+        $sql = 'update "'.$this->getEntriesTableName().'" set "content" = null, "should_display_on_index" = 0 where "type" = \'query\' and "should_display_on_index" = 1 and "family_hash" is null and "sequence" > 100 and "created_at" < \'2019-01-01 00:00:00\'';
         $this->assertSame(EntryType::QUERY, $entry->type);
-        $this->assertSame(<<<'SQL'
-update "telescope_entries" set "content" = null, "should_display_on_index" = 0 where "type" = 'query' and "should_display_on_index" = 1 and "family_hash" is null and "sequence" > 100 and "created_at" < '2019-01-01 00:00:00'
-SQL
-            , $entry->content['sql']);
+        $this->assertSame($sql, $entry->content['sql']);
 
         $this->assertSame('testbench', $entry->content['connection']);
     }

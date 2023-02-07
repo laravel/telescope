@@ -3,9 +3,12 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Laravel\Telescope\Storage\EntryTable;
 
 return new class extends Migration
 {
+    use EntryTable;
+
     /**
      * The database schema.
      *
@@ -34,7 +37,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $this->schema->create('telescope_entries', function (Blueprint $table) {
+        $this->schema->create($this->getEntriesTableName(), function (Blueprint $table) {
             $table->bigIncrements('sequence');
             $table->uuid('uuid');
             $table->uuid('batch_id');
@@ -51,7 +54,7 @@ return new class extends Migration
             $table->index(['type', 'should_display_on_index']);
         });
 
-        $this->schema->create('telescope_entries_tags', function (Blueprint $table) {
+        $this->schema->create($this->getTagsTableName(), function (Blueprint $table) {
             $table->uuid('entry_uuid');
             $table->string('tag');
 
@@ -60,11 +63,11 @@ return new class extends Migration
 
             $table->foreign('entry_uuid')
                   ->references('uuid')
-                  ->on('telescope_entries')
+                  ->on($this->getEntriesTableName())
                   ->onDelete('cascade');
         });
 
-        $this->schema->create('telescope_monitoring', function (Blueprint $table) {
+        $this->schema->create($this->getMonitoringTableName(), function (Blueprint $table) {
             $table->string('tag');
         });
     }
@@ -74,8 +77,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $this->schema->dropIfExists('telescope_entries_tags');
-        $this->schema->dropIfExists('telescope_entries');
-        $this->schema->dropIfExists('telescope_monitoring');
+        $this->schema->dropIfExists($this->getTagsTableName());
+        $this->schema->dropIfExists($this->getEntriesTableName());
+        $this->schema->dropIfExists($this->getMonitoringTableName());
     }
 };

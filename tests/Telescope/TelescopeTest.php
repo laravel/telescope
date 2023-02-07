@@ -6,12 +6,15 @@ use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\IncomingEntry;
+use Laravel\Telescope\Storage\EntryTable;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\QueryWatcher;
 
 class TelescopeTest extends FeatureTestCase
 {
+    use EntryTable;
+
     private $count = 0;
 
     protected function getEnvironmentSetUp($app)
@@ -42,9 +45,9 @@ class TelescopeTest extends FeatureTestCase
             $this->count++;
         });
 
-        $this->app->get('db')->table('telescope_entries')->count();
+        $this->app->get('db')->table($this->getEntriesTableName())->count();
 
-        $this->app->get('db')->table('telescope_entries')->count();
+        $this->app->get('db')->table($this->getEntriesTableName())->count();
 
         $this->assertSame(2, $this->count);
     }
@@ -61,15 +64,15 @@ class TelescopeTest extends FeatureTestCase
             }
         });
 
-        $this->app->get('db')->table('telescope_entries')->count();
+        $this->app->get('db')->table($this->getEntriesTableName())->count();
 
         $this->assertCount(1, Telescope::$entriesQueue);
 
-        $this->app->get('db')->table('telescope_entries')->count();
+        $this->app->get('db')->table($this->getEntriesTableName())->count();
 
         $this->assertCount(0, Telescope::$entriesQueue);
 
-        $this->app->get('db')->table('telescope_entries')->count();
+        $this->app->get('db')->table($this->getEntriesTableName())->count();
 
         $this->assertCount(1, Telescope::$entriesQueue);
     }
@@ -88,9 +91,9 @@ class TelescopeTest extends FeatureTestCase
             $this->count += count($entries);
         });
 
-        $this->app->get('db')->table('telescope_entries')->count();
+        $this->app->get('db')->table($this->getEntriesTableName())->count();
 
-        $this->app->get('db')->table('telescope_entries')->count();
+        $this->app->get('db')->table($this->getEntriesTableName())->count();
 
         $this->assertSame(0, $this->count);
 
