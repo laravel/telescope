@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.13.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.13.1...4.x)
+
+## [v4.13.1](https://github.com/laravel/telescope/compare/v4.13.0...v4.13.1) - 2023-02-06
+
+### Changed
+
+- Center header button icons by @timacdonald in https://github.com/laravel/telescope/pull/1299
 
 ## [v4.13.0](https://github.com/laravel/telescope/compare/v4.12.0...v4.13.0) - 2023-01-30
 
