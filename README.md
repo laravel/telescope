@@ -33,4 +33,4 @@ Please review [our security policy](https://github.com/laravel/telescope/securit
 
 ## License
 
-Laravel Telescope is open-sourced software licensed under the [MIT license](LICENSE.md).
+Laravel Telescope is an open-source software licensed under the [MIT license](LICENSE.md).
