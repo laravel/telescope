@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.13.1...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.13.2...4.x)
+
+## [v4.13.2](https://github.com/laravel/telescope/compare/v4.13.1...v4.13.2) - 2023-02-16
+
+- Create a fresh instance of schema for each migration by @nunomaduro in https://github.com/laravel/telescope/pull/1305
 
 ## [v4.13.1](https://github.com/laravel/telescope/compare/v4.13.0...v4.13.1) - 2023-02-06
 
