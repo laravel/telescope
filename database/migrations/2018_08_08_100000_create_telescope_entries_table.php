@@ -7,21 +7,6 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * The database schema.
-     *
-     * @var \Illuminate\Database\Schema\Builder
-     */
-    protected $schema;
-
-    /**
-     * Create a new migration instance.
-     */
-    public function __construct()
-    {
-        $this->schema = Schema::connection($this->getConnection());
-    }
-
-    /**
      * Get the migration connection name.
      */
     public function getConnection(): string|null
@@ -34,7 +19,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $this->schema->create('telescope_entries', function (Blueprint $table) {
+        $schema = Schema::connection($this->getConnection());
+
+        $schema->create('telescope_entries', function (Blueprint $table) {
             $table->bigIncrements('sequence');
             $table->uuid('uuid');
             $table->uuid('batch_id');
@@ -51,7 +38,7 @@ return new class extends Migration
             $table->index(['type', 'should_display_on_index']);
         });
 
-        $this->schema->create('telescope_entries_tags', function (Blueprint $table) {
+        $schema->create('telescope_entries_tags', function (Blueprint $table) {
             $table->uuid('entry_uuid');
             $table->string('tag');
 
@@ -64,7 +51,7 @@ return new class extends Migration
                   ->onDelete('cascade');
         });
 
-        $this->schema->create('telescope_monitoring', function (Blueprint $table) {
+        $schema->create('telescope_monitoring', function (Blueprint $table) {
             $table->string('tag');
         });
     }
@@ -74,8 +61,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $this->schema->dropIfExists('telescope_entries_tags');
-        $this->schema->dropIfExists('telescope_entries');
-        $this->schema->dropIfExists('telescope_monitoring');
+        $schema = Schema::connection($this->getConnection());
+
+        $schema->dropIfExists('telescope_entries_tags');
+        $schema->dropIfExists('telescope_entries');
+        $schema->dropIfExists('telescope_monitoring');
     }
 };
