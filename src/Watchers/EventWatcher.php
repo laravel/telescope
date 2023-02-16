@@ -140,7 +140,7 @@ class EventWatcher extends Watcher
                 'bootstrapped*',
                 'bootstrapping*',
                 'creating*',
-                'composing*'
+                'composing*',
             ],
             $eventName
         );
