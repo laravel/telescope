@@ -49,6 +49,7 @@ class JobWatcher extends Watcher
             return;
         }
 
+        // Logging this job can cause extensive memory usage...
         if (get_class($payload['data']['command']) === 'Laravel\Scout\Jobs\MakeSearchable') {
             return;
         }
