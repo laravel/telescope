@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
@@ -141,20 +142,36 @@ class IncomingEntry
     {
         $this->user = $user;
 
+        $guards = $this->getConfigAuthGuards(get_class($user));
+
         $this->content = array_merge($this->content, [
             'user' => [
                 'id' => $user->getAuthIdentifier(),
                 'name' => $user->name ?? null,
                 'email' => $user->email ?? null,
+                'guards' => $guards->isNotEmpty() ? $guards : [config('auth.defaults.guard')],
             ],
         ]);
-
         $this->tags([
             'Auth:'.$user->getAuthIdentifier(),
             get_class($user).':'.$user->getAuthIdentifier()
         ]);
 
         return $this;
+    }
+
+    protected function getConfigAuthGuards(string $class): Collection
+    {
+        return collect(config('auth.guards'))
+            ->map(function ($guard) {
+                if (! isset($guard['provider'])) {
+                    return null;
+                }
+
+                return config("auth.providers.{$guard['provider']}.model");
+            })
+            ->filter(fn($model) => $class === $model)
+            ->keys();
     }
 
     /**
