@@ -19,6 +19,10 @@
                 <span class="badge badge-secondary ml-2" v-if="slotProps.entry.content.broadcast">
                     Broadcast
                 </span>
+                <br>
+                <small class="text-muted text-break" v-if="slotProps.entry.tags && slotProps.entry.tags.length">
+                    Tags: {{ slotProps.entry.tags && slotProps.entry.tags.length ? slotProps.entry.tags.slice(0,3).join(', ') : '' }}<span v-if="slotProps.entry.tags.length > 3"> ({{ slotProps.entry.tags.length - 3 }} more)</span>
+                </small>
             </td>
 
             <td class="table-fit text-right text-muted">{{slotProps.entry.content.listeners.length}}</td>

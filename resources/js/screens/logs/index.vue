@@ -18,7 +18,13 @@
         </tr>
 
         <template slot="row" slot-scope="slotProps">
-            <td :title="slotProps.entry.content.message">{{truncate(slotProps.entry.content.message, 50)}}</td>
+            <td :title="slotProps.entry.content.message">
+                {{truncate(slotProps.entry.content.message, 50)}}
+                <br>
+                <small class="text-muted text-break" v-if="slotProps.entry.tags && slotProps.entry.tags.length">
+                    Tags: {{ slotProps.entry.tags && slotProps.entry.tags.length ? slotProps.entry.tags.slice(0,3).join(', ') : '' }}<span v-if="slotProps.entry.tags.length > 3"> ({{ slotProps.entry.tags.length - 3 }} more)</span>
+                </small>
+            </td>
 
             <td class="table-fit">
                 <span class="badge" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">

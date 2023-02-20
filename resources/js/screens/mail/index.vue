@@ -15,6 +15,7 @@
     <index-screen title="Mail" resource="mail">
         <tr slot="table-header">
             <th scope="col">Mailable</th>
+            <th scope="col">Subject</th>
             <th scope="col" class="text-right">Recipients</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
@@ -30,10 +31,12 @@
                 </span>
 
                 <br>
-
-                <small class="text-muted" :title="slotProps.entry.content.subject">
-                    Subject: {{truncate(slotProps.entry.content.subject, 90)}}
+                <small class="text-muted text-break" v-if="slotProps.entry.tags && slotProps.entry.tags.length">
+                    Tags: {{ slotProps.entry.tags && slotProps.entry.tags.length ? slotProps.entry.tags.slice(0,3).join(', ') : '' }}<span v-if="slotProps.entry.tags.length > 3"> ({{ slotProps.entry.tags.length - 3 }} more)</span>
                 </small>
+            </td>
+            <td :title="slotProps.entry.content.subject">
+                {{truncate(slotProps.entry.content.subject, 90)}}
             </td>
 
             <td class="table-fit text-right text-muted">{{recipientsCount(slotProps.entry)}}</td>

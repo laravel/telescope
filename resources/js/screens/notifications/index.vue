@@ -25,8 +25,11 @@
                 <small class="text-muted" :title="slotProps.entry.content.notifiable">
                     Recipient: {{truncate(slotProps.entry.content.notifiable, 90)}}
                 </small>
+                <br>
+                <small class="text-muted text-break" v-if="slotProps.entry.tags && slotProps.entry.tags.length">
+                    Tags: {{ slotProps.entry.tags && slotProps.entry.tags.length ? slotProps.entry.tags.slice(0,3).join(', ') : '' }}<span v-if="slotProps.entry.tags.length > 3"> ({{ slotProps.entry.tags.length - 3 }} more)</span>
+                </small>
             </td>
-
             <td class="table-fit text-muted">{{truncate(slotProps.entry.content.channel, 20)}}</td>
 
             <td class="table-fit text-muted" :data-timeago="slotProps.entry.created_at" :title="slotProps.entry.created_at">
