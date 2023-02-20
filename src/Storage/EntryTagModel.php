@@ -3,7 +3,6 @@
 namespace Laravel\Telescope\Storage;
 
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Telescope\Database\Factories\EntryModelFactory;
 
 class EntryTagModel extends Model
 {
