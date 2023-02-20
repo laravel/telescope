@@ -60,12 +60,10 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function find($id): EntryResult
     {
-        $entry = EntryModel::on($this->connection)->whereUuid($id)->firstOrFail();
-
-        $tags = $this->table('telescope_entries_tags')
-                        ->where('entry_uuid', $id)
-                        ->pluck('tag')
-                        ->all();
+        $entry = EntryModel::on($this->connection)
+            ->whereUuid($id)
+            ->with('tags')
+            ->firstOrFail();
 
         return new EntryResult(
             $entry->uuid,
@@ -75,7 +73,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             $entry->family_hash,
             $entry->content,
             $entry->created_at,
-            $tags
+            $entry->tags->pluck('tag')->all()
         );
     }
 
