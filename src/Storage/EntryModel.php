@@ -55,6 +55,16 @@ class EntryModel extends Model
     public $incrementing = false;
 
     /**
+     * Define the tag relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tags()
+    {
+        return $this->hasMany(EntryTagModel::class, 'entry_uuid');
+    }
+
+    /**
      * Scope the query for the given query options.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
