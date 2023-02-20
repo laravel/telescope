@@ -88,6 +88,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     {
         return EntryModel::on($this->connection)
             ->withTelescopeOptions($type, $options)
+            ->with('tags')
             ->take($options->limit)
             ->orderByDesc('sequence')
             ->get()->reject(function ($entry) {
@@ -101,7 +102,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                     $entry->family_hash,
                     $entry->content,
                     $entry->created_at,
-                    []
+                    $entry->tags->pluck('tag')->all()
                 );
             })->values();
     }
