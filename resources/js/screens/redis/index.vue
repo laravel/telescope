@@ -13,7 +13,13 @@
 
 
         <template slot="row" slot-scope="slotProps">
-            <td><code>{{truncate(slotProps.entry.content.command, 80)}}</code></td>
+            <td>
+                <code>{{truncate(slotProps.entry.content.command, 80)}}</code>
+                <br>
+                <small class="text-muted text-break" v-if="slotProps.entry.tags && slotProps.entry.tags.length">
+                    Tags: {{ slotProps.entry.tags && slotProps.entry.tags.length ? slotProps.entry.tags.slice(0,3).join(', ') : '' }}<span v-if="slotProps.entry.tags.length > 3"> ({{ slotProps.entry.tags.length - 3 }} more)</span>
+                </small>
+            </td>
 
             <td class="table-fit text-right text-muted">{{slotProps.entry.content.time}}ms</td>
 
