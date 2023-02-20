@@ -154,7 +154,7 @@ class IncomingEntry
         ]);
         $this->tags([
             'Auth:'.$user->getAuthIdentifier(),
-            get_class($user).':'.$user->getAuthIdentifier()
+            get_class($user).':'.$user->getAuthIdentifier(),
         ]);
 
         return $this;
@@ -170,7 +170,7 @@ class IncomingEntry
 
                 return config("auth.providers.{$guard['provider']}.model");
             })
-            ->filter(fn($model) => $class === $model)
+            ->filter(fn ($model) => $class === $model)
             ->keys();
     }
 
