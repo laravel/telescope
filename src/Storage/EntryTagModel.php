@@ -41,4 +41,14 @@ class EntryTagModel extends Model
      * @var bool
      */
     public $incrementing = false;
+
+    /**
+     * Get the current connection name for the model.
+     *
+     * @return string
+     */
+    public function getConnectionName()
+    {
+        return config('telescope.storage.database.connection');
+    }
 }
