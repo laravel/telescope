@@ -18,6 +18,10 @@
                 {{truncate(slotProps.entry.content.class, 70)}}<br>
 
                 <small class="text-muted">{{truncate(slotProps.entry.content.message, 100)}}</small>
+                <br>
+                <small class="text-muted text-break" v-if="slotProps.entry.tags && slotProps.entry.tags.length">
+                    Tags: {{ slotProps.entry.tags && slotProps.entry.tags.length ? slotProps.entry.tags.slice(0,3).join(', ') : '' }}<span v-if="slotProps.entry.tags.length > 3"> ({{ slotProps.entry.tags.length - 3 }} more)</span>
+                </small>
             </td>
 
             <td class="table-fit text-right text-muted" v-if="!$route.query.family_hash && !$route.query.tag">
