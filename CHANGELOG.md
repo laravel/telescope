@@ -1,6 +1,11 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.13.2...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.0...4.x)
+
+## [v4.14.0](https://github.com/laravel/telescope/compare/v4.13.2...v4.14.0) - 2023-02-21
+
+- Prevent `Laravel\Scout\Jobs\MakeSearchable` job from being recorded to avoid memory leak by @nicoverbruggen in https://github.com/laravel/telescope/pull/1306
+- Allows to specify the log level by @nunomaduro in https://github.com/laravel/telescope/pull/1312
 
 ## [v4.13.2](https://github.com/laravel/telescope/compare/v4.13.1...v4.13.2) - 2023-02-16
 
