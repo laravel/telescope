@@ -136,7 +136,6 @@ class LogWatcherTest extends FeatureTestCase
         $this->assertNull($entry);
     }
 
-
     /**
      * @dataProvider logLevelProvider
      */
