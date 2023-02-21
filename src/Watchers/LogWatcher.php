@@ -12,7 +12,7 @@ use Throwable;
 class LogWatcher extends Watcher
 {
     /**
-     * The list of log level priorities.
+     * The available log level priorities.
      */
     private const PRIORITIES = [
         LogLevel::DEBUG => 100,
