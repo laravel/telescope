@@ -6,10 +6,25 @@ use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
+use Psr\Log\LogLevel;
 use Throwable;
 
 class LogWatcher extends Watcher
 {
+    /**
+     * The list of log level priorities.
+     */
+    private const PRIORITIES = [
+        LogLevel::DEBUG => 100,
+        LogLevel::INFO => 200,
+        LogLevel::NOTICE => 250,
+        LogLevel::WARNING => 300,
+        LogLevel::ERROR => 400,
+        LogLevel::CRITICAL => 500,
+        LogLevel::ALERT => 550,
+        LogLevel::EMERGENCY => 600,
+    ];
+
     /**
      * Register the watcher.
      *
@@ -61,7 +76,16 @@ class LogWatcher extends Watcher
      */
     private function shouldIgnore($event)
     {
-        return isset($event->context['exception']) &&
-            $event->context['exception'] instanceof Throwable;
+        if (isset($event->context['exception']) && $event->context['exception'] instanceof Throwable) {
+            return true;
+        }
+
+        $telescopeLevel = $this->options['level'] ?? 'debug';
+        $eventLevel = $event->level;
+
+        $telescopePriority = static::PRIORITIES[$telescopeLevel] ?? 100;
+        $eventPriority = static::PRIORITIES[$eventLevel] ?? 100;
+
+        return $eventPriority < $telescopePriority;
     }
 }
