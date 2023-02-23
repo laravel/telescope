@@ -573,10 +573,6 @@ class Telescope
      */
     public static function catch($e, $tags = [])
     {
-        if ($e instanceof Throwable && ! $e instanceof Exception) {
-            $e = new FatalThrowableError($e);
-        }
-
         event(new MessageLogged('error', $e->getMessage(), [
             'exception' => $e,
             'telescope' => $tags,
