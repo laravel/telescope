@@ -12,7 +12,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Testing\Fakes\EventFake;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Throwable;
 
 class Telescope
@@ -573,10 +572,6 @@ class Telescope
      */
     public static function catch($e, $tags = [])
     {
-        if ($e instanceof Throwable && ! $e instanceof Exception) {
-            $e = new FatalThrowableError($e);
-        }
-
         event(new MessageLogged('error', $e->getMessage(), [
             'exception' => $e,
             'telescope' => $tags,
