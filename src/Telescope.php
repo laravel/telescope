@@ -12,7 +12,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Testing\Fakes\EventFake;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Throwable;
 
 class Telescope
