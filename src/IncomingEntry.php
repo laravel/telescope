@@ -146,7 +146,7 @@ class IncomingEntry
                 'id' => $user->getAuthIdentifier(),
                 'name' => $user->name ?? null,
                 'email' => $user->email ?? null,
-                'guards' => $this->getConfigAuthGuards()
+                'guards' => $this->getConfigAuthGuards(),
             ],
         ]);
 
@@ -331,7 +331,7 @@ class IncomingEntry
 
                 return config("auth.providers.{$guard['provider']}.model");
             })
-            ->filter(fn($model) => get_class($this->user) === $model)
+            ->filter(fn ($model) => get_class($this->user) === $model)
             ->keys();
 
         if ($guards->isNotEmpty()) {
