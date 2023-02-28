@@ -2,7 +2,6 @@
 
 namespace Laravel\Telescope;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
