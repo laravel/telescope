@@ -224,6 +224,13 @@
 
             <table class="table mb-0 card-bg-secondary table-borderless">
                 <tr>
+                    <td class="table-fit text-muted">Guard</td>
+
+                    <td>
+                        {{entry.content.user.guards.join(", ")}}
+                    </td>
+                </tr>
+                <tr>
                     <td class="table-fit text-muted">ID</td>
 
                     <td>

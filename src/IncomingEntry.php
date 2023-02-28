@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Contracts\EntriesRepository;
 
@@ -146,6 +147,7 @@ class IncomingEntry
                 'id' => $user->getAuthIdentifier(),
                 'name' => $user->name ?? null,
                 'email' => $user->email ?? null,
+                'guards' => $this->getConfigAuthGuards()
             ],
         ]);
 
@@ -318,5 +320,25 @@ class IncomingEntry
             'content' => $this->content,
             'created_at' => $this->recordedAt->toDateTimeString(),
         ];
+    }
+
+    protected function getConfigAuthGuards(): array
+    {
+        $guards = collect(config('auth.guards'))
+            ->map(function ($guard) {
+                if (! isset($guard['provider'])) {
+                    return null;
+                }
+
+                return config("auth.providers.{$guard['provider']}.model");
+            })
+            ->filter(fn($model) => get_class($this->user) === $model)
+            ->keys();
+
+        if ($guards->isNotEmpty()) {
+            return $guards->all();
+        }
+
+        return [config('auth.defaults.guard')];
     }
 }
