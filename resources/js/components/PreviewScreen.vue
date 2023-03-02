@@ -225,9 +225,8 @@
             <table class="table mb-0 card-bg-secondary table-borderless">
                 <tr>
                     <td class="table-fit text-muted">Guard</td>
-
                     <td>
-                        {{entry.content.user.guards.join(", ")}}
+                        {{ entry.content.user.guards ? entry.content.user.guards.join(", ") : 'N/A'}}
                     </td>
                 </tr>
                 <tr>
