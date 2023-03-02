@@ -223,10 +223,10 @@
 
 
             <table class="table mb-0 card-bg-secondary table-borderless">
-                <tr>
+                <tr v-if="entry.content.user.guards">
                     <td class="table-fit text-muted">Guard</td>
                     <td>
-                        {{ entry.content.user.guards ? entry.content.user.guards.join(", ") : 'N/A'}}
+                        {{entry.content.user.guards}}
                     </td>
                 </tr>
                 <tr>
