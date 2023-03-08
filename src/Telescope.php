@@ -279,7 +279,7 @@ class Telescope
      * Execute the given callback without recording Telescope entries.
      *
      * @param  callable  $callback
-     * @return void
+     * @return mixed
      */
     public static function withoutRecording($callback)
     {
@@ -288,7 +288,7 @@ class Telescope
         static::$shouldRecord = false;
 
         try {
-            call_user_func($callback);
+            return call_user_func($callback);
         } finally {
             static::$shouldRecord = $shouldRecord;
         }
