@@ -172,7 +172,9 @@ class TelescopeServiceProvider extends ServiceProvider
     protected function registerTerminator(): void
     {
         if (config('telescope.enabled')) {
-            register_shutdown_function(fn () => Telescope::store($this->app[EntriesRepository::class]));
+            register_shutdown_function(function () {
+                Telescope::store(app(EntriesRepository::class));
+            });
         }
     }
 
