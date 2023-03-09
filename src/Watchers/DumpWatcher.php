@@ -5,12 +5,12 @@ namespace Laravel\Telescope\Watchers;
 use Exception;
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Foundation\Console\CliDumper as BaseCliDumper;
-use Illuminate\Foundation\Http\HtmlDumper as BaseHtmlDumper;
 use Laravel\Telescope\IncomingDumpEntry;
 use Laravel\Telescope\Telescope;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\AbstractDumper;
+use Symfony\Component\VarDumper\Dumper\CliDumper;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -73,13 +73,31 @@ class DumpWatcher extends Watcher
     /**
      * Get the base dumper instance.
      */
-    protected static function getBaseDumper(Application $app): BaseCliDumper|BaseHtmlDumper
+    protected static function getBaseDumper(Application $app): AbstractDumper
     {
         $baseDumperArgs = [$app->basePath(), $app['config']->get('view.compiled')];
 
         return in_array(PHP_SAPI, ['cli', 'phpdbg'])
-            ? new BaseCliDumper(new ConsoleOutput, ...$baseDumperArgs)
-            : new BaseHtmlDumper(...$baseDumperArgs);
+            ? static::getCliDumper(...$baseDumperArgs)
+            : static::getHtmlDumper(...$baseDumperArgs);
+    }
+
+    protected static function getCliDumper(string $basePath, string $compiledViewPath)
+    {
+        $foundation = \Illuminate\Foundation\Console\CliDumper::class;
+
+        return class_exists($foundation)
+            ? new $foundation(new ConsoleOutput, $basePath, $compiledViewPath)
+            : new CliDumper;
+    }
+
+    protected static function getHtmlDumper(string $basePath, string $compiledViewPath)
+    {
+        $foundation = \Illuminate\Foundation\Http\HtmlDumper::class;
+
+        return class_exists($foundation)
+            ? new $foundation(new ConsoleOutput, $basePath, $compiledViewPath)
+            : new HtmlDumper;
     }
 
     /**
