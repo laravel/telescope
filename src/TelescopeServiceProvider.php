@@ -171,7 +171,7 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     protected function registerTerminator(): void
     {
-        if (config('telescope.enabled')) {
+        if (config('telescope.enabled') && ! $this->app->runningUnitTests()) {
             register_shutdown_function(function () {
                 Telescope::store(app(EntriesRepository::class));
             });
