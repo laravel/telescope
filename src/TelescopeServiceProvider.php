@@ -13,8 +13,10 @@ class TelescopeServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any package services.
+     *
+     * @return void
      */
-    public function boot(): void
+    public function boot()
     {
         $this->registerCommands();
         $this->registerPublishing();
@@ -38,8 +40,10 @@ class TelescopeServiceProvider extends ServiceProvider
 
     /**
      * Register the package routes.
+     *
+     * @return void
      */
-    private function registerRoutes(): void
+    private function registerRoutes()
     {
         Route::group($this->routeConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__.'/Http/routes.php');
@@ -48,11 +52,13 @@ class TelescopeServiceProvider extends ServiceProvider
 
     /**
      * Get the Telescope route group configuration array.
+     *
+     * @return array
      */
-    private function routeConfiguration(): array
+    private function routeConfiguration()
     {
         return [
-            'domain' => config('telescope.domain'),
+            'domain' => config('telescope.domain', null),
             'namespace' => 'Laravel\Telescope\Http\Controllers',
             'prefix' => config('telescope.path'),
             'middleware' => 'telescope',
@@ -61,8 +67,10 @@ class TelescopeServiceProvider extends ServiceProvider
 
     /**
      * Register the package's migrations.
+     *
+     * @return void
      */
-    private function registerMigrations(): void
+    private function registerMigrations()
     {
         if ($this->app->runningInConsole() && $this->shouldMigrate()) {
             $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
@@ -71,8 +79,10 @@ class TelescopeServiceProvider extends ServiceProvider
 
     /**
      * Register the package's publishable resources.
+     *
+     * @return void
      */
-    private function registerPublishing(): void
+    private function registerPublishing()
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -95,8 +105,10 @@ class TelescopeServiceProvider extends ServiceProvider
 
     /**
      * Register the package's commands.
+     *
+     * @return void
      */
-    protected function registerCommands(): void
+    protected function registerCommands()
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -122,16 +134,14 @@ class TelescopeServiceProvider extends ServiceProvider
         );
 
         $this->registerStorageDriver();
-
-        $this->registerTerminator();
     }
 
     /**
      * Register the package storage driver.
      *
-     * @uses \Laravel\Telescope\TelescopeServiceProvider::registerDatabaseDriver
+     * @return void
      */
-    protected function registerStorageDriver(): void
+    protected function registerStorageDriver()
     {
         $driver = config('telescope.driver');
 
@@ -142,8 +152,10 @@ class TelescopeServiceProvider extends ServiceProvider
 
     /**
      * Register the package database storage driver.
+     *
+     * @return void
      */
-    protected function registerDatabaseDriver(): void
+    protected function registerDatabaseDriver()
     {
         $this->app->singleton(
             EntriesRepository::class, DatabaseEntriesRepository::class
@@ -167,21 +179,11 @@ class TelescopeServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register a terminating callback with the application.
-     */
-    protected function registerTerminator(): void
-    {
-        if (config('telescope.enabled') && ! $this->app->runningUnitTests()) {
-            register_shutdown_function(function () {
-                Telescope::store(app(EntriesRepository::class));
-            });
-        }
-    }
-
-    /**
      * Determine if we should register the migrations.
+     *
+     * @return bool
      */
-    protected function shouldMigrate(): bool
+    protected function shouldMigrate()
     {
         return Telescope::$runsMigrations && config('telescope.driver') === 'database';
     }

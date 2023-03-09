@@ -64,6 +64,8 @@ return [
 
     'enabled' => env('TELESCOPE_ENABLED', true),
 
+    'self_termination' => env('TELESCOPE_SELF_TERMINATION', false),
+
     /*
     |--------------------------------------------------------------------------
     | Telescope Route Middleware
