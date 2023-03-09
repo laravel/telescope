@@ -18,12 +18,16 @@ class DumpWatcher extends Watcher
 {
     /**
      * The cache factory implementation.
+     *
+     * @var \Illuminate\Contracts\Cache\Factory
      */
-    protected CacheFactory $cache;
+    protected $cache;
 
     /**
      * Create a new watcher instance.
      *
+     * @param  \Illuminate\Contracts\Cache\Factory  $cache
+     * @param  array  $options
      * @return void
      */
     public function __construct(CacheFactory $cache, array $options = [])
@@ -113,8 +117,11 @@ class DumpWatcher extends Watcher
 
     /**
      * Record a dumped variable.
+     *
+     * @param  string  $dump
+     * @return void
      */
-    public function recordDump(string $dump): void
+    public function recordDump($dump)
     {
         Telescope::recordDump(
             IncomingDumpEntry::make(['dump' => $dump])
