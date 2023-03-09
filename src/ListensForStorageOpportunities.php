@@ -61,7 +61,7 @@ trait ListensForStorageOpportunities
      */
     protected static function storeEntriesBeforeTermination($app)
     {
-        $terminating = $app['config']->get('telescope.terminator')
+        $terminating = $app['config']->get('telescope.self_termination')
             ? 'register_shutdown_function'
             : [$app, 'terminating'];
 

@@ -84,7 +84,7 @@ class DumpWatcher extends Watcher
 
     protected static function getCliDumper(string $basePath, string $compiledViewPath)
     {
-        $foundation = \Illuminate\Foundation\Console\CliDumper::class;
+        $foundation = 'Illuminate\Foundation\Console\CliDumper';
 
         return class_exists($foundation)
             ? new $foundation(new ConsoleOutput, $basePath, $compiledViewPath)
@@ -93,7 +93,7 @@ class DumpWatcher extends Watcher
 
     protected static function getHtmlDumper(string $basePath, string $compiledViewPath)
     {
-        $foundation = \Illuminate\Foundation\Http\HtmlDumper::class;
+        $foundation = 'Illuminate\Foundation\Http\HtmlDumper';
 
         return class_exists($foundation)
             ? new $foundation(new ConsoleOutput, $basePath, $compiledViewPath)
