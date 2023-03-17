@@ -22,34 +22,15 @@ class PauseCommand extends Command
     protected $description = 'Pause all Telescope watchers';
 
     /**
-     * The cache repository implementation.
-     *
-     * @var \Illuminate\Contracts\Cache\Repository
-     */
-    protected $cache;
-
-    /**
-     * Create a new command instance.
+     * Execute the console command.
      *
      * @param  \Illuminate\Contracts\Cache\Repository  $cache
      * @return void
      */
-    public function __construct(CacheRepository $cache)
+    public function handle(CacheRepository $cache)
     {
-        parent::__construct();
-
-        $this->cache = $cache;
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @return void
-     */
-    public function handle()
-    {
-        if (! $this->cache->get('telescope:pause-recording')) {
-            $this->cache->put('telescope:pause-recording', true, now()->addDays(30));
+        if (! $cache->get('telescope:pause-recording')) {
+            $cache->put('telescope:pause-recording', true, now()->addDays(30));
         }
 
         $this->info('Telescope watchers paused successfully.');
