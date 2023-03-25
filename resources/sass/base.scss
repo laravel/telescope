@@ -339,3 +339,11 @@ button:hover {
     color: #fff;
     background: $danger;
 }
+
+.duplicate-queries {
+    background-color: $duplicates-bg;
+
+    &:hover {
+        background-color: $duplicates-hover-bg !important;
+    }
+}
