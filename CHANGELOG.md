@@ -1,6 +1,12 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.1...4.x)
+
+## [v4.14.1](https://github.com/laravel/telescope/compare/v4.14.0...v4.14.1) - 2023-03-17
+
+- Return callable output on Telescope::withoutRecording by @adamczykpiotr in https://github.com/laravel/telescope/pull/1317
+- Removed redundant default value from config file by @siarheipashkevich in https://github.com/laravel/telescope/pull/1323
+- Don't use constructor injection in console commands, and inject into handle() instead by @mad-briller in https://github.com/laravel/telescope/pull/1327
 
 ## [v4.14.0](https://github.com/laravel/telescope/compare/v4.13.2...v4.14.0) - 2023-02-21
 
