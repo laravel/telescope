@@ -66,6 +66,8 @@ class FeatureTestCase extends TestCase
 
         $config->set('telescope.storage.database.connection', 'testbench');
 
+        $config->set('queue.batching.database', 'testbench');
+
         $config->set('database.connections.testbench', [
             'driver' => 'sqlite',
             'database' => ':memory:',
