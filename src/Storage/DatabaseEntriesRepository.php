@@ -208,6 +208,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function update(Collection $updates)
     {
+        $failUpdates = [];
+
         foreach ($updates as $update) {
             $entry = $this->table('telescope_entries')
                             ->where('uuid', $update->uuid)
@@ -215,6 +217,11 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                             ->first();
 
             if (! $entry) {
+                //  Record the number of errors and retry up to 5 times
+                $update->error_times = (int)$update->error_times + 1;
+                if ($update->error_times <= 5) {
+                    $failUpdates[] = $updates;
+                }
                 continue;
             }
 
@@ -228,6 +235,13 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                             ->update(['content' => $content]);
 
             $this->updateTags($update);
+        }
+
+        //  if
+        if (!empty($failUpdates)) {
+            dispatch(function () use ($failUpdates) {
+                $this->update(collect($failUpdates));
+            })->delay(now()->addSeconds(pow($failUpdates[0]->error_times, 2)));
         }
     }
 
