@@ -646,16 +646,17 @@ class Telescope
     /**
      * Store the queued entries and flush the queue.
      *
-     * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
+     * @param EntriesRepository $storage
+     * @param bool $updateFailedEntries
      * @return void
      */
-    public static function store(EntriesRepository $storage)
+    public static function store(EntriesRepository $storage, bool $updateFailedEntries = false)
     {
         if (empty(static::$entriesQueue) && empty(static::$updatesQueue)) {
             return;
         }
 
-        static::withoutRecording(function () use ($storage) {
+        static::withoutRecording(function () use ($storage,$updateFailedEntries) {
             if (! collect(static::$filterBatchUsing)->every->__invoke(collect(static::$entriesQueue))) {
                 static::flushEntries();
             }
@@ -664,6 +665,11 @@ class Telescope
                 $batchId = Str::orderedUuid()->toString();
 
                 $storage->store(static::collectEntries($batchId));
+
+                if ($updateFailedEntries) {
+                    collect($storage->getFailedEntries(static::$entriesQueue))->each(fn($update) => static::$updatesQueue[] = $update);
+                }
+
                 $storage->update(static::collectUpdates($batchId));
 
                 if ($storage instanceof TerminableRepository) {

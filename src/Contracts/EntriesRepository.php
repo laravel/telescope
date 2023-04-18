@@ -42,6 +42,14 @@ interface EntriesRepository
     public function update(Collection $updates);
 
     /**
+     * return update failed entries.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry[]  $entries
+     * @return \Laravel\Telescope\EntryUpdate[]  $updates
+     */
+    public function getFailedEntries(array $entries);
+
+    /**
      * Load the monitored tags from storage.
      *
      * @return void

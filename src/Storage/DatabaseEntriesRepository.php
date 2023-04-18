@@ -208,6 +208,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function update(Collection $updates)
     {
+        $failUpdates = [];
         foreach ($updates as $update) {
             $entry = $this->table('telescope_entries')
                             ->where('uuid', $update->uuid)
@@ -215,6 +216,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                             ->first();
 
             if (! $entry) {
+                $failUpdates[$update->uuid] = $update;
                 continue;
             }
 
@@ -229,6 +231,45 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
 
             $this->updateTags($update);
         }
+
+        if (!empty($failUpdates)) {
+            cache()->lock('telescope-jobs-locks', 5)->get(function () use ($failUpdates) {
+                $data = cache('telescope-failUpdates', []);
+                cache(['telescope-failUpdates' => array_merge($data, $failUpdates)], 86400);
+            });
+        }
+    }
+
+    /**
+     * return update failed entries.
+     *
+     * @param \Laravel\Telescope\IncomingEntry[] $entries
+     * @return \Laravel\Telescope\EntryUpdate[]  $updates
+     */
+    public function getFailedEntries(array $entries)
+    {
+        if (empty($entries)) return [];
+
+        $uuids = collect($entries)->pluck('uuid')->all();
+
+        return cache()->lock('telescope-jobs-locks', 5)->get(function () use ($uuids) {
+
+            $updates = [];
+
+            $data = cache('telescope-failUpdates');
+            if (empty($data)) return $updates;
+
+            $newData = [];
+            foreach ($data as $uuid => $item) {
+                if (in_array($uuid, $uuids)) {
+                    $updates[] = $item;
+                } else {
+                    $newData[$uuid] = $item;
+                }
+            }
+            cache(['telescope-failUpdates' => $newData], 86400);
+            return $updates;
+        });
     }
 
     /**

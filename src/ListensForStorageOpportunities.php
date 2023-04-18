@@ -62,7 +62,7 @@ trait ListensForStorageOpportunities
     protected static function storeEntriesBeforeTermination($app)
     {
         $app->terminating(function () use ($app) {
-            static::store($app[EntriesRepository::class]);
+            static::store($app[EntriesRepository::class],true);
         });
     }
 
