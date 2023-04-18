@@ -231,11 +231,13 @@ class Telescope
             collect([
                 'telescope-api*',
                 'vendor/telescope*',
-                (config('horizon.path') ?? 'horizon').'*',
                 'vendor/horizon*',
             ])
             ->merge(config('telescope.ignore_paths', []))
-            ->unless(is_null(config('telescope.path')), function ($paths) {
+            ->unless(blank(config('horizon.path')), function ($paths) {
+                return $paths->prepend(config('horizon.path').'*');
+            })
+            ->unless(blank(config('telescope.path')), function ($paths) {
                 return $paths->prepend(config('telescope.path').'*');
             })
             ->all()
