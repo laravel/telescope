@@ -110,9 +110,9 @@ class MailWatcher extends Watcher
     private function tags($message, $data)
     {
         return array_merge(
-            array_keys($message->getTo() ?: []),
-            array_keys($message->getCc() ?: []),
-            array_keys($message->getBcc() ?: []),
+            array_keys($this->formatAddresses($message->getTo()) ?: []),
+            array_keys($this->formatAddresses($message->getCc()) ?: []),
+            array_keys($this->formatAddresses($message->getBcc()) ?: []),
             $data['__telescope'] ?? []
         );
     }
