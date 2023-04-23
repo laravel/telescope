@@ -148,6 +148,9 @@ class QueryWatcher extends Watcher
      */
     protected function isSqlStatementExcluded(string $sql): bool
     {
+        if (!array_key_exists('ignore_queries', $this->options)) {
+            return false;
+        }
         $regex = "/^(" . implode("|", $this->options['ignore_queries']) . ")/i";
         return preg_match($regex, trim($sql));
     }
