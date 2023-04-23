@@ -169,6 +169,7 @@ return [
             'enabled' => env('TELESCOPE_QUERY_WATCHER', true),
             'ignore_packages' => true,
             'ignore_paths' => [],
+            'ignore_queries' => ['SELECT'],
             'slow' => 100,
         ],
 

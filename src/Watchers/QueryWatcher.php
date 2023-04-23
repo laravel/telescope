@@ -33,6 +33,10 @@ class QueryWatcher extends Watcher
             return;
         }
 
+        if ($this->isSqlStatementExcluded($event->sql)) {
+            return;
+        }
+
         $time = $event->time;
 
         if ($caller = $this->getCallerFromStackTrace()) {
@@ -134,5 +138,17 @@ class QueryWatcher extends Watcher
         ]);
 
         return "'".$binding."'";
+    }
+
+    /**
+     * Checks if the SQL statement was excluded
+     *
+     * @param  string  $sql
+     * @return bool
+     */
+    protected function isSqlStatementExcluded(string $sql): bool
+    {
+        $regex = "/^(" . implode("|", $this->options['ignore_queries']) . ")/i";
+        return preg_match($regex, trim($sql));
     }
 }
