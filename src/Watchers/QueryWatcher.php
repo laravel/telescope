@@ -152,6 +152,7 @@ class QueryWatcher extends Watcher
             return false;
         }
         $regex = '/^('.implode('|', $this->options['ignore_queries']).')/i';
+
         return preg_match($regex, trim($sql));
     }
 }
