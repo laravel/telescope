@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.1...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.2...4.x)
+
+## [v4.14.2](https://github.com/laravel/telescope/compare/v4.14.1...v4.14.2) - 2023-04-19
+
+- Fix MailWatcher tags by @Rezrazi in https://github.com/laravel/telescope/pull/1340
 
 ## [v4.14.1](https://github.com/laravel/telescope/compare/v4.14.0...v4.14.1) - 2023-03-17
 
