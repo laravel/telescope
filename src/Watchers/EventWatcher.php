@@ -68,7 +68,9 @@ class EventWatcher extends Watcher
         return collect($payload)->map(function ($value) {
             return is_object($value) ? [
                 'class' => get_class($value),
-                'properties' => json_decode(json_encode($value), true),
+                'properties' => $value instanceof \JsonSerializable
+                    ? $value
+                    : json_decode(json_encode($value), true),
             ] : $value;
         })->toArray();
     }
