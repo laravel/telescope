@@ -184,4 +184,14 @@ return [
         Watchers\ScheduleWatcher::class => env('TELESCOPE_SCHEDULE_WATCHER', true),
         Watchers\ViewWatcher::class => env('TELESCOPE_VIEW_WATCHER', true),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Telescope Sort
+    |--------------------------------------------------------------------------
+    |
+    | Determines what column will be used for sorting by default.
+    |
+    */
+    'sort' => env('TELESCOPE_SORT', 'sequence')
 ];
