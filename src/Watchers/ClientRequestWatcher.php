@@ -66,6 +66,7 @@ class ClientRequestWatcher extends Watcher
             'response_status' => $event->response->status(),
             'response_headers' => $this->headers($event->response->headers()),
             'response' => $this->response($event->response),
+            'duration' => $this->duration($event->response),
         ]));
     }
 
@@ -215,5 +216,18 @@ class ClientRequestWatcher extends Watcher
 
             return [$data['name'] => $value];
         })->toArray();
+    }
+
+    /**
+     * Get the request duration in milliseconds.
+     *
+     * @param  \Illuminate\Http\Client\Response  $response
+     * @return int|null
+     */
+    protected function duration(Response $response)
+    {
+        if ($response->transferStats && $response->transferStats->getTransferTime()) {
+            return floor($response->transferStats->getTransferTime() * 1000);
+        }
     }
 }

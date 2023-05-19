@@ -44,6 +44,13 @@
                 </span>
             </td>
         </tr>
+
+        <tr>
+            <td class="table-fit text-muted">Duration</td>
+            <td>
+                {{slotProps.entry.content.duration || '-'}}ms
+            </td>
+        </tr>
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">
