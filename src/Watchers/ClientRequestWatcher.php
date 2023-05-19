@@ -219,17 +219,15 @@ class ClientRequestWatcher extends Watcher
     }
 
     /**
-     * Get the duration in milliseconds from the given response.
+     * Get the request duration in milliseconds.
      *
      * @param  \Illuminate\Http\Client\Response  $response
      * @return int|null
      */
     protected function duration(Response $response)
     {
-        if (! $response->transferStats || ! $response->transferStats->getTransferTime()) {
-            return null;
+        if ($response->transferStats && $response->transferStats->getTransferTime()) {
+            return floor($response->transferStats->getTransferTime() * 1000);
         }
-
-        return floor($response->transferStats->getTransferTime() * 1000);
     }
 }
