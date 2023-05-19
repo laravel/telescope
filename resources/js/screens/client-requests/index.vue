@@ -14,6 +14,7 @@
             <th scope="col">Verb</th>
             <th scope="col">URI</th>
             <th scope="col">Status</th>
+            <th scope="col" class="text-right">Duration</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
@@ -32,6 +33,11 @@
                 <span class="badge" :class="'badge-'+requestStatusClass(slotProps.entry.content.response_status !== undefined ? slotProps.entry.content.response_status : null)">
                     {{slotProps.entry.content.response_status !== undefined ? slotProps.entry.content.response_status : 'N/A'}}
                 </span>
+            </td>
+
+            <td class="table-fit text-right text-muted">
+                <span v-if="slotProps.entry.content.duration">{{slotProps.entry.content.duration}}ms</span>
+                <span v-else>-</span>
             </td>
 
             <td class="table-fit text-muted" :data-timeago="slotProps.entry.created_at" :title="slotProps.entry.created_at">
