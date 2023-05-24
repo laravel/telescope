@@ -28,7 +28,7 @@ class ProcessPendingUpdates implements ShouldQueue
     public $attempt;
 
     /**
-     * Creates a new job instance.
+     * Create a new job instance.
      *
      * @param  \Illuminate\Support\Collection<int, \Laravel\Telescope\EntryUpdate>
      * @param  int  $attempt
