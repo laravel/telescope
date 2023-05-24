@@ -20,6 +20,16 @@ use RuntimeException;
 class JobWatcher extends Watcher
 {
     /**
+     * The list of ignored jobs classes.
+     *
+     * @var array<int, class-string>
+     */
+    protected $ignoredJobClasses = [
+        \Laravel\Scout\Jobs\MakeSearchable::class, // @phpstan-ignore-line
+        \Laravel\Telescope\Jobs\ProcessPendingUpdates::class,
+    ];
+
+    /**
      * Register the watcher.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
@@ -49,8 +59,7 @@ class JobWatcher extends Watcher
             return;
         }
 
-        // Logging this job can cause extensive memory usage...
-        if (get_class($payload['data']['command']) === 'Laravel\Scout\Jobs\MakeSearchable') {
+        if (in_array(get_class($payload['data']['command']), $this->ignoredJobClasses)) {
             return;
         }
 
