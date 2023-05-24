@@ -21,7 +21,7 @@ class ProcessPendingUpdates implements ShouldQueue
     protected $attempt;
 
     /**
-     * The pending updates list.
+     * The pending entry updates.
      *
      * @var \Illuminate\Support\Collection<int, \Laravel\Telescope\EntryUpdate>
      */
@@ -43,6 +43,7 @@ class ProcessPendingUpdates implements ShouldQueue
     /**
      * Execute the job.
      *
+     * @param  \Laravel\Telescope\Contracts\EntriesRepository  $repository
      * @return void
      */
     public function handle(EntriesRepository $repository)
@@ -50,8 +51,8 @@ class ProcessPendingUpdates implements ShouldQueue
         $this->attempt++;
 
         $repository->update($this->updates)->whenNotEmpty(
-            fn ($pendingUpdates) => static::dispatchIf(
-                $this->attempt < 3, $pendingUpdates, $this->attempt
+            fn ($pending) => static::dispatchIf(
+                $this->attempt < 3, $pending, $this->attempt
             )->delay(now()->addSeconds(10)),
         );
     }
