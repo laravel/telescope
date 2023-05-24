@@ -30,7 +30,7 @@ class ProcessPendingUpdates implements ShouldQueue
     /**
      * Creates a new process pending entry updates instance.
      *
-     * @param  \Illuminate\Support\Collection  $pendingUpdates
+     * @param  \Illuminate\Support\Collection<int, \Laravel\Telescope\EntryUpdate>
      * @param  int  $attempt
      * @return void
      */
