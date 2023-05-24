@@ -37,7 +37,7 @@ interface EntriesRepository
      * Store the given entry updates, and return the failed updates.
      *
      * @param  \Illuminate\Support\Collection|\Laravel\Telescope\EntryUpdate[]  $updates
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection|null
      */
     public function update(Collection $updates);
 
