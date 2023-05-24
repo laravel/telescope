@@ -7,11 +7,13 @@ use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Testing\Fakes\EventFake;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
+use Laravel\Telescope\Jobs\ProcessPendingUpdates;
 use Throwable;
 
 class Telescope
@@ -664,7 +666,10 @@ class Telescope
                 $batchId = Str::orderedUuid()->toString();
 
                 $storage->store(static::collectEntries($batchId));
-                $storage->update(static::collectUpdates($batchId));
+                ($storage->update(static::collectUpdates($batchId)) ?: Collection::make())
+                    ->whenNotEmpty(fn ($pendingUpdates) => ProcessPendingUpdates::dispatch(
+                        $pendingUpdates,
+                    )->delay(now()->addSeconds(10)));
 
                 if ($storage instanceof TerminableRepository) {
                     $storage->terminate();
