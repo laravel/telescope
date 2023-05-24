@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.2...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.3...4.x)
+
+## [v4.14.3](https://github.com/laravel/telescope/compare/v4.14.2...v4.14.3) - 2023-05-19
+
+- Add duration to HTTP Client watcher by @DougSisk in https://github.com/laravel/telescope/pull/1348
 
 ## [v4.14.2](https://github.com/laravel/telescope/compare/v4.14.1...v4.14.2) - 2023-04-19
 
