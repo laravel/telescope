@@ -14,13 +14,6 @@ class ProcessPendingUpdates implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $attempt;
-
-    /**
      * The pending entry updates.
      *
      * @var \Illuminate\Support\Collection<int, \Laravel\Telescope\EntryUpdate>
@@ -28,7 +21,14 @@ class ProcessPendingUpdates implements ShouldQueue
     public $pendingUpdates;
 
     /**
-     * Creates a new process pending entry updates instance.
+     * The number of times the job has been attempted.
+     *
+     * @var int
+     */
+    public $attempt;
+
+    /**
+     * Creates a new job instance.
      *
      * @param  \Illuminate\Support\Collection<int, \Laravel\Telescope\EntryUpdate>
      * @param  int  $attempt

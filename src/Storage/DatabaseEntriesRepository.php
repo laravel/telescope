@@ -201,10 +201,10 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     }
 
     /**
-     * Store the given entry updates.
+     * Store the given entry updates and return the failed updates.
      *
      * @param  \Illuminate\Support\Collection|\Laravel\Telescope\EntryUpdate[]  $updates
-     * @return void
+     * @return \Illuminate\Support\Collection|null
      */
     public function update(Collection $updates)
     {

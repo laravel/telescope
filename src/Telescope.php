@@ -666,10 +666,11 @@ class Telescope
                 $batchId = Str::orderedUuid()->toString();
 
                 $storage->store(static::collectEntries($batchId));
+
                 ($storage->update(static::collectUpdates($batchId)) ?: Collection::make())
-                    ->whenNotEmpty(fn ($pendingUpdates) => ProcessPendingUpdates::dispatch(
+                    ->whenNotEmpty(fn ($pendingUpdates) => rescue(fn () => ProcessPendingUpdates::dispatch(
                         $pendingUpdates,
-                    )->delay(now()->addSeconds(10)));
+                    )->delay(now()->addSeconds(10))));
 
                 if ($storage instanceof TerminableRepository) {
                     $storage->terminate();

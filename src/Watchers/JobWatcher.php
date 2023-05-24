@@ -25,8 +25,8 @@ class JobWatcher extends Watcher
      * @var array<int, class-string>
      */
     protected $ignoredJobClasses = [
-        \Laravel\Telescope\Jobs\ProcessPendingUpdates::class,
         \Laravel\Scout\Jobs\MakeSearchable::class, // @phpstan-ignore-line
+        \Laravel\Telescope\Jobs\ProcessPendingUpdates::class,
     ];
 
     /**
