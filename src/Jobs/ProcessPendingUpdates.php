@@ -25,18 +25,18 @@ class ProcessPendingUpdates implements ShouldQueue
      *
      * @var \Illuminate\Support\Collection<int, \Laravel\Telescope\EntryUpdate>
      */
-    protected $updates;
+    protected $pendingUpdates;
 
     /**
      * Creates a new process pending entry updates instance.
      *
-     * @param  \Illuminate\Support\Collection  $updates
+     * @param  \Illuminate\Support\Collection  $pendingUpdates
      * @param  int  $attempt
      * @return void
      */
-    public function __construct($updates, $attempt = 0)
+    public function __construct($pendingUpdates, $attempt = 0)
     {
-        $this->updates = $updates;
+        $this->pendingUpdates = $pendingUpdates;
         $this->attempt = $attempt;
     }
 
@@ -50,9 +50,9 @@ class ProcessPendingUpdates implements ShouldQueue
     {
         $this->attempt++;
 
-        $repository->update($this->updates)->whenNotEmpty(
-            fn ($pending) => static::dispatchIf(
-                $this->attempt < 3, $pending, $this->attempt
+        $repository->update($this->pendingUpdates)->whenNotEmpty(
+            fn ($pendingUpdates) => static::dispatchIf(
+                $this->attempt < 3, $pendingUpdates, $this->attempt
             )->delay(now()->addSeconds(10)),
         );
     }
