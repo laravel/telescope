@@ -56,7 +56,7 @@ class ProcessPendingUpdatesTest extends FeatureTestCase
         (new ProcessPendingUpdates($pendingUpdates))->handle($repository);
 
         Bus::assertDispatched(ProcessPendingUpdates::class, function ($job) {
-            return $job->attemp = 1 && $job->pendingUpdates->toArray() == [['id' => 2, 'content' => 'bar']];
+            return $job->attempt == 1 && $job->pendingUpdates->toArray() == [['id' => 2, 'content' => 'bar']];
         });
     }
 
