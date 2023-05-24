@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Tests\Storage;
 
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
+use Laravel\Telescope\EntryUpdate;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 use Laravel\Telescope\Tests\FeatureTestCase;
 
@@ -23,5 +24,22 @@ class DatabaseEntriesRepositoryTest extends FeatureTestCase
 
         // Why is sequence always null? DatabaseEntriesRepository::class#L60
         $this->assertNull($result['sequence']);
+    }
+
+    public function test_update()
+    {
+        $entry = EntryModelFactory::new()->create();
+
+        $repository = new DatabaseEntriesRepository('testbench');
+
+        $result = $repository->find($entry->uuid)->jsonSerialize();
+
+        $failedUpdates = $repository->update(collect([
+            new EntryUpdate($result['id'], $result['type'], ['content' => ['foo' => 'bar']]),
+            new EntryUpdate('missing-id', $result['type'], ['content' => ['foo' => 'bar']]),
+        ]));
+
+        $this->assertCount(1, $failedUpdates);
+        $this->assertSame('missing-id', $failedUpdates->first()->uuid);
     }
 }
