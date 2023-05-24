@@ -18,14 +18,14 @@ class ProcessPendingUpdates implements ShouldQueue
      *
      * @var int
      */
-    protected $attempt;
+    public $attempt;
 
     /**
      * The pending entry updates.
      *
      * @var \Illuminate\Support\Collection<int, \Laravel\Telescope\EntryUpdate>
      */
-    protected $pendingUpdates;
+    public $pendingUpdates;
 
     /**
      * Creates a new process pending entry updates instance.
