@@ -726,10 +726,10 @@ class Telescope
      */
     public static function hideRequestHeaders(array $headers)
     {
-        static::$hiddenRequestHeaders = array_merge(
+        static::$hiddenRequestHeaders = array_unique(array_merge(
             static::$hiddenRequestHeaders,
             $headers
-        );
+        ));
 
         return new static;
     }
