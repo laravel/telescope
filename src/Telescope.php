@@ -758,10 +758,10 @@ class Telescope
      */
     public static function hideResponseParameters(array $attributes)
     {
-        static::$hiddenResponseParameters = array_merge(
+        static::$hiddenResponseParameters = array_unique(array_merge(
             static::$hiddenResponseParameters,
             $attributes
-        );
+        ));
 
         return new static;
     }
