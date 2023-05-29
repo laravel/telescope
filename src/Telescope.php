@@ -726,10 +726,10 @@ class Telescope
      */
     public static function hideRequestHeaders(array $headers)
     {
-        static::$hiddenRequestHeaders = array_unique(array_merge(
+        static::$hiddenRequestHeaders = array_values(array_unique(array_merge(
             static::$hiddenRequestHeaders,
             $headers
-        ));
+        )));
 
         return new static;
     }
@@ -758,10 +758,10 @@ class Telescope
      */
     public static function hideResponseParameters(array $attributes)
     {
-        static::$hiddenResponseParameters = array_unique(array_merge(
+        static::$hiddenResponseParameters = array_values(array_unique(array_merge(
             static::$hiddenResponseParameters,
             $attributes
-        ));
+        )));
 
         return new static;
     }
