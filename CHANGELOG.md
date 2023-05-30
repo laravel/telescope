@@ -1,6 +1,11 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.3...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.4...4.x)
+
+## [v4.14.4](https://github.com/laravel/telescope/compare/v4.14.3...v4.14.4) - 2023-05-29
+
+- Fixes jobs saying "pending" forever by @nunomaduro in https://github.com/laravel/telescope/pull/1349
+- Prevent Memory Leak when using hideRequestParameters and hideRequestHeaders by @danilopinotti in https://github.com/laravel/telescope/pull/1350
 
 ## [v4.14.3](https://github.com/laravel/telescope/compare/v4.14.2...v4.14.3) - 2023-05-19
 
