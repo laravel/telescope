@@ -36,7 +36,7 @@ export default {
     <div class="position-relative">
         <div class="copy-to-clipboard">
             <span v-if="copying">Copied...</span>
-            <copy-to-clipboard :text="copyText" @copy="handleCopy">
+            <copy-to-clipboard v-else :text="copyText" @copy="handleCopy">
                 <a href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
                          style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
