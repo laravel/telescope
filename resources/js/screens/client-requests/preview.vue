@@ -64,8 +64,8 @@
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
-                    <vue-json-pretty :data="slotProps.entry.content.payload" v-if="currentRequestTab=='payload'"></vue-json-pretty>
-                    <vue-json-pretty :data="slotProps.entry.content.headers" v-if="currentRequestTab=='headers'"></vue-json-pretty>
+                    <custom-vue-json-pretty :data="slotProps.entry.content.payload" v-if="currentRequestTab=='payload'"></custom-vue-json-pretty>
+                    <custom-vue-json-pretty :data="slotProps.entry.content.headers" v-if="currentRequestTab=='headers'"></custom-vue-json-pretty>
                 </div>
             </div>
             <div class="card mt-5 overflow-hidden" v-if="slotProps.entry.content.response_status">
@@ -78,8 +78,8 @@
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
-                    <vue-json-pretty :data="slotProps.entry.content.response" v-if="currentResponseTab=='response'"></vue-json-pretty>
-                    <vue-json-pretty :data="slotProps.entry.content.response_headers" v-if="currentResponseTab=='headers'"></vue-json-pretty>
+                    <custom-vue-json-pretty :data="slotProps.entry.content.response" v-if="currentResponseTab=='response'"></custom-vue-json-pretty>
+                    <custom-vue-json-pretty :data="slotProps.entry.content.response_headers" v-if="currentResponseTab=='headers'"></custom-vue-json-pretty>
                 </div>
             </div>
         </div>

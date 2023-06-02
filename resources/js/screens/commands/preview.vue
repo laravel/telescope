@@ -42,10 +42,10 @@
                 </ul>
                 <div>
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='arguments'">
-                        <vue-json-pretty :data="slotProps.entry.content.arguments"></vue-json-pretty>
+                        <custom-vue-json-pretty :data="slotProps.entry.content.arguments"></custom-vue-json-pretty>
                     </div>
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='options'">
-                        <vue-json-pretty :data="slotProps.entry.content.options"></vue-json-pretty>
+                        <custom-vue-json-pretty :data="slotProps.entry.content.options"></custom-vue-json-pretty>
                     </div>
                 </div>
             </div>

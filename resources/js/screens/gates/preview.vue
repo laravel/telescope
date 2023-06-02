@@ -52,7 +52,7 @@
                 </ul>
 
                 <div class="code-bg p-4 mb-0 text-white">
-                    <vue-json-pretty :data="slotProps.entry.content.arguments"></vue-json-pretty>
+                    <custom-vue-json-pretty :data="slotProps.entry.content.arguments"></custom-vue-json-pretty>
                 </div>
             </div>
         </div>

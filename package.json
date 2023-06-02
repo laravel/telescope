@@ -28,5 +28,8 @@
         "vue-loader": "^15.9.6",
         "vue-router": "^3.0.1",
         "vue-template-compiler": "^2.5.21"
+    },
+    "dependencies": {
+        "vue-copy-to-clipboard": "^1.0.3"
     }
 }

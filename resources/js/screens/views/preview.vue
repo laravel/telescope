@@ -49,7 +49,7 @@
                 <div>
                     <!-- View Payload -->
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='data'">
-                        <vue-json-pretty :data="slotProps.entry.content.data"></vue-json-pretty>
+                        <custom-vue-json-pretty :data="slotProps.entry.content.data"></custom-vue-json-pretty>
                     </div>
 
                     <!-- View Composers -->

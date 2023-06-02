@@ -97,10 +97,10 @@
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
-                    <vue-json-pretty :data="slotProps.entry.content.payload" v-if="currentTab=='payload'"></vue-json-pretty>
-                    <vue-json-pretty :data="slotProps.entry.content.headers" v-if="currentTab=='headers'"></vue-json-pretty>
-                    <vue-json-pretty :data="slotProps.entry.content.session" v-if="currentTab=='session'"></vue-json-pretty>
-                    <vue-json-pretty :data="slotProps.entry.content.response" v-if="currentTab=='response'"></vue-json-pretty>
+                    <custom-vue-json-pretty :data="slotProps.entry.content.payload" v-if="currentTab=='payload'"></custom-vue-json-pretty>
+                    <custom-vue-json-pretty :data="slotProps.entry.content.headers" v-if="currentTab=='headers'"></custom-vue-json-pretty>
+                    <custom-vue-json-pretty :data="slotProps.entry.content.session" v-if="currentTab=='session'"></custom-vue-json-pretty>
+                    <custom-vue-json-pretty :data="slotProps.entry.content.response" v-if="currentTab=='response'"></custom-vue-json-pretty>
                 </div>
             </div>
 
