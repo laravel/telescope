@@ -52,11 +52,9 @@
                 </ul>
 
                 <div class="code-bg p-4 mb-0 text-white">
-                    <div class="code-bg p-4 mb-0 text-white">
-                        <copy-clipboard :data="slotProps.entry.content.arguments">
-                            <vue-json-pretty :data="slotProps.entry.content.arguments"></vue-json-pretty>
-                        </copy-clipboard>
-                    </div>
+                    <copy-clipboard :data="slotProps.entry.content.arguments">
+                        <vue-json-pretty :data="slotProps.entry.content.arguments"></vue-json-pretty>
+                    </copy-clipboard>
                 </div>
             </div>
         </div>

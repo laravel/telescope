@@ -63,9 +63,10 @@
                         <a class="nav-link" :class="{active: currentRequestTab=='headers'}" href="#" v-on:click.prevent="currentRequestTab='headers'">Headers</a>
                     </li>
                 </ul>
-                <div class="code-bg p-4 mb-0 text-white position-relative">
-                    <copy-clipboard :data="slotProps.entry.content[currentRequestTab]"></copy-clipboard>
-                    <vue-json-pretty :data="slotProps.entry.content[currentRequestTab]"></vue-json-pretty>
+                <div class="code-bg p-4 mb-0 text-white">
+                    <copy-clipboard :data="slotProps.entry.content[currentRequestTab]">
+                        <vue-json-pretty :data="slotProps.entry.content[currentRequestTab]"></vue-json-pretty>
+                    </copy-clipboard>
                 </div>
             </div>
             <div class="card mt-5 overflow-hidden" v-if="slotProps.entry.content.response_status">
