@@ -50,6 +50,4 @@ export default {
         </div>
         <slot></slot>
     </div>
-
 </template>
-
