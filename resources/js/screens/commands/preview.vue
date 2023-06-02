@@ -41,11 +41,9 @@
                     </li>
                 </ul>
                 <div>
-                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='arguments'">
-                        <custom-vue-json-pretty :data="slotProps.entry.content.arguments"></custom-vue-json-pretty>
-                    </div>
-                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='options'">
-                        <custom-vue-json-pretty :data="slotProps.entry.content.options"></custom-vue-json-pretty>
+                    <div class="code-bg p-4 mb-0 text-white position-relative">
+                        <copy-clipboard :data="slotProps.entry.content[currentTab]"></copy-clipboard>
+                        <vue-json-pretty :data="slotProps.entry.content[currentTab]"></vue-json-pretty>
                     </div>
                 </div>
             </div>

@@ -52,8 +52,9 @@
                     </li>
                 </ul>
 
-                <div class="code-bg p-4 mb-0 text-white">
-                    <custom-vue-json-pretty :data="slotProps.entry.content.changes"></custom-vue-json-pretty>
+                <div class="code-bg p-4 mb-0 text-white position-relative">
+                    <copy-clipboard :data="slotProps.entry.content.changes"></copy-clipboard>
+                    <vue-json-pretty :data="slotProps.entry.content.changes"></vue-json-pretty>
                 </div>
             </div>
         </div>

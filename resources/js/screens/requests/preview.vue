@@ -96,11 +96,9 @@
                         <a class="nav-link" :class="{active: currentTab=='response'}" href="#" v-on:click.prevent="currentTab='response'">Response</a>
                     </li>
                 </ul>
-                <div class="code-bg p-4 mb-0 text-white">
-                    <custom-vue-json-pretty :data="slotProps.entry.content.payload" v-if="currentTab=='payload'"></custom-vue-json-pretty>
-                    <custom-vue-json-pretty :data="slotProps.entry.content.headers" v-if="currentTab=='headers'"></custom-vue-json-pretty>
-                    <custom-vue-json-pretty :data="slotProps.entry.content.session" v-if="currentTab=='session'"></custom-vue-json-pretty>
-                    <custom-vue-json-pretty :data="slotProps.entry.content.response" v-if="currentTab=='response'"></custom-vue-json-pretty>
+                <div class="code-bg p-4 mb-0 text-white position-relative">
+                    <copy-clipboard :data="slotProps.entry.content[currentTab]"></copy-clipboard>
+                    <vue-json-pretty :data="slotProps.entry.content[currentTab]"></vue-json-pretty>
                 </div>
             </div>
 

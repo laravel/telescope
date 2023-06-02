@@ -41,7 +41,7 @@ Vue.component('related-entries', require('./components/RelatedEntries.vue').defa
 Vue.component('index-screen', require('./components/IndexScreen.vue').default);
 Vue.component('preview-screen', require('./components/PreviewScreen.vue').default);
 Vue.component('alert', require('./components/Alert.vue').default);
-Vue.component('custom-vue-json-pretty', require('./components/CustomVueJsonPretty.vue').default);
+Vue.component('copy-clipboard', require('./components/CustomCopyToClipboard.vue').default);
 
 Vue.mixin(Base);
 

@@ -100,7 +100,10 @@
                 </ul>
                 <div>
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='data'">
-                        <custom-vue-json-pretty :data="slotProps.entry.content.data"></custom-vue-json-pretty>
+                        <div class="code-bg p-4 mb-0 text-white position-relative" v-show="currentTab=='data'">
+                            <copy-clipboard :data="slotProps.entry.content.data"></copy-clipboard>
+                            <vue-json-pretty :data="slotProps.entry.content.data"></vue-json-pretty>
+                        </div>
                     </div>
                     <pre class="code-bg p-4 mb-0 text-white" v-if="slotProps.entry.content.exception" v-show="currentTab=='exception'">{{slotProps.entry.content.exception.message}}</pre>
                     <stack-trace :trace="slotProps.entry.content.exception.trace" v-if="slotProps.entry.content.exception" v-show="currentTab=='trace'"></stack-trace>

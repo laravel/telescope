@@ -104,8 +104,9 @@
                             :highlighted-line="slotProps.entry.content.line">
                     </code-preview>
 
-                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='context'">
-                        <custom-vue-json-pretty :data="slotProps.entry.content.context"></custom-vue-json-pretty>
+                    <div class="code-bg p-4 mb-0 text-white position-relative" v-show="currentTab=='context'">
+                        <copy-clipboard :data="slotProps.entry.content.context"></copy-clipboard>
+                        <vue-json-pretty :data="slotProps.entry.content.context"></vue-json-pretty>
                     </div>
 
                     <stack-trace :trace="slotProps.entry.content.trace" v-show="currentTab=='trace'"></stack-trace>

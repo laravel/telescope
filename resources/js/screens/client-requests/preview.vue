@@ -63,9 +63,9 @@
                         <a class="nav-link" :class="{active: currentRequestTab=='headers'}" href="#" v-on:click.prevent="currentRequestTab='headers'">Headers</a>
                     </li>
                 </ul>
-                <div class="code-bg p-4 mb-0 text-white">
-                    <custom-vue-json-pretty :data="slotProps.entry.content.payload" v-if="currentRequestTab=='payload'"></custom-vue-json-pretty>
-                    <custom-vue-json-pretty :data="slotProps.entry.content.headers" v-if="currentRequestTab=='headers'"></custom-vue-json-pretty>
+                <div class="code-bg p-4 mb-0 text-white position-relative">
+                    <copy-clipboard :data="slotProps.entry.content[currentRequestTab]"></copy-clipboard>
+                    <vue-json-pretty :data="slotProps.entry.content[currentRequestTab]"></vue-json-pretty>
                 </div>
             </div>
             <div class="card mt-5 overflow-hidden" v-if="slotProps.entry.content.response_status">
@@ -77,9 +77,15 @@
                         <a class="nav-link" :class="{active: currentResponseTab=='headers'}" href="#" v-on:click.prevent="currentResponseTab='headers'">Headers</a>
                     </li>
                 </ul>
-                <div class="code-bg p-4 mb-0 text-white">
-                    <custom-vue-json-pretty :data="slotProps.entry.content.response" v-if="currentResponseTab=='response'"></custom-vue-json-pretty>
-                    <custom-vue-json-pretty :data="slotProps.entry.content.response_headers" v-if="currentResponseTab=='headers'"></custom-vue-json-pretty>
+                <div class="code-bg p-4 mb-0 text-white position-relative">
+                    <template v-if="currentResponseTab=='response'">
+                        <copy-clipboard :data="slotProps.entry.content.response"></copy-clipboard>
+                        <vue-json-pretty :data="slotProps.entry.content.response"></vue-json-pretty>
+                    </template>
+                    <template v-if="currentResponseTab=='headers'">
+                        <copy-clipboard :data="slotProps.entry.content.response_headers"></copy-clipboard>
+                        <vue-json-pretty :data="slotProps.entry.content.response_headers"></vue-json-pretty>
+                    </template>
                 </div>
             </div>
         </div>
