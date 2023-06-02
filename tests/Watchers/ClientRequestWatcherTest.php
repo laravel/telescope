@@ -250,4 +250,19 @@ class ClientRequestWatcherTest extends FeatureTestCase
         $this->assertSame(($image->getSize() / 1000).'KB', $entry->content['payload']['image']['size']);
         $this->assertSame(['foo' => 'bar'], $entry->content['payload']['image']['headers']);
     }
+
+    public function test_it_stores_and_displays_array_of_request_headers()
+    {
+        Http::fake(['*' => '']);
+
+        Http::withHeaders(['X-Foo' => 'first'])
+            ->withHeaders(['X-Foo' => 'second'])
+            ->withHeaders(['X-Bar' => 'single'])
+            ->get('https://laravel.com');
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame('first, second', $entry->content['headers']['x-foo']);
+        $this->assertSame('single', $entry->content['headers']['x-bar']);
+    }
 }
