@@ -77,14 +77,16 @@
                         <a class="nav-link" :class="{active: currentResponseTab=='headers'}" href="#" v-on:click.prevent="currentResponseTab='headers'">Headers</a>
                     </li>
                 </ul>
-                <div class="code-bg p-4 mb-0 text-white position-relative">
+                <div class="code-bg p-4 mb-0 text-white">
                     <template v-if="currentResponseTab=='response'">
-                        <copy-clipboard :data="slotProps.entry.content.response"></copy-clipboard>
-                        <vue-json-pretty :data="slotProps.entry.content.response"></vue-json-pretty>
+                        <copy-clipboard :data="slotProps.entry.content.response">
+                            <vue-json-pretty :data="slotProps.entry.content.response"></vue-json-pretty>
+                        </copy-clipboard>
                     </template>
                     <template v-if="currentResponseTab=='headers'">
-                        <copy-clipboard :data="slotProps.entry.content.response_headers"></copy-clipboard>
-                        <vue-json-pretty :data="slotProps.entry.content.response_headers"></vue-json-pretty>
+                        <copy-clipboard :data="slotProps.entry.content.response_headers">
+                            <vue-json-pretty :data="slotProps.entry.content.response_headers"></vue-json-pretty>
+                        </copy-clipboard>
                     </template>
                 </div>
             </div>

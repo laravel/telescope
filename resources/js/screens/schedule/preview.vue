@@ -56,10 +56,9 @@
                     </li>
                 </ul>
 
-                <div class="position-relative">
-                    <copy-clipboard :data="slotProps.entry.content.output"></copy-clipboard>
+                <copy-clipboard :data="slotProps.entry.content.output">
                     <pre class="code-bg p-4 mb-0 text-white">{{ slotProps.entry.content.output }}</pre>
-                </div>
+                </copy-clipboard>
             </div>
         </div>
     </preview-screen>

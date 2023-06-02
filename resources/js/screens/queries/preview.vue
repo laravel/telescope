@@ -58,9 +58,10 @@
                     </li>
                 </ul>
 
-                <div class="position-relative">
-                    <copy-clipboard :data="formatSql(slotProps.entry.content.sql)"></copy-clipboard>
-                    <pre class="code-bg p-4 mb-0 text-white" ref="sqlcode">{{ formatSql(slotProps.entry.content.sql) }}</pre>
+                <div>
+                    <copy-clipboard :data="formatSql(slotProps.entry.content.sql)">
+                        <pre class="code-bg p-4 mb-0 text-white" ref="sqlcode">{{ formatSql(slotProps.entry.content.sql) }}</pre>
+                    </copy-clipboard>
                 </div>
             </div>
         </div>
