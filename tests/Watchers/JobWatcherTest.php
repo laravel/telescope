@@ -94,6 +94,10 @@ class JobWatcherTest extends FeatureTestCase
         $this->assertSame('default', $entry->content['queue']);
         $this->assertSame('I never watched Star Wars.', $entry->content['data']['message']);
         $this->assertArrayHasKey('exception', $entry->content);
+
+        $this->assertArrayNotHasKey('args', $entry->content['exception']['trace'][0]);
+        $this->assertSame(MyFailedDatabaseJob::class, $entry->content['exception']['trace'][0]['class']);
+        $this->assertSame('handle', $entry->content['exception']['trace'][0]['function']);
     }
 
     private function createJobsTable(): void
