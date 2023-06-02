@@ -339,3 +339,15 @@ button:hover {
     color: #fff;
     background: $danger;
 }
+
+.copy-to-clipboard {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 2px;
+    z-index: 100;
+    color: $card-cap-bg;
+    svg {
+        fill: $card-cap-bg;
+    }
+}
