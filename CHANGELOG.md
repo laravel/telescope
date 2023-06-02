@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.4...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.5...4.x)
+
+## [v4.14.5](https://github.com/laravel/telescope/compare/v4.14.4...v4.14.5) - 2023-06-02
+
+- Avoids serialialisation of exception traces by @nunomaduro in https://github.com/laravel/telescope/pull/1354
 
 ## [v4.14.4](https://github.com/laravel/telescope/compare/v4.14.3...v4.14.4) - 2023-05-29
 
