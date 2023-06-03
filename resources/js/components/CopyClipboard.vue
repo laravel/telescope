@@ -17,7 +17,8 @@ export default {
     methods: {
         async handleCopy() {
             this.copying = true;
-            setTimeout(() => this.copying = false, 1000);
+
+            setTimeout(() => this.copying = false, 2500);
         }
     },
 
@@ -36,7 +37,8 @@ export default {
 <template>
     <div class="position-relative">
         <div class="copy-to-clipboard">
-            <span v-if="copying">Copied...</span>
+            <span v-if="copying">Copied</span>
+
             <copy-to-clipboard v-else :text="copyText" @copy="handleCopy">
                 <a href="#">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
