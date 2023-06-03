@@ -135,9 +135,9 @@ class ClientRequestWatcher extends Watcher
             return strtolower($headerName);
         })->toArray();
 
-        $headerValues = collect($headers)->map(function ($value) {
-            return $value[0];
-        })->toArray();
+        $headerValues = collect($headers)
+            ->map(fn ($header) => implode(', ', $header))
+            ->all();
 
         $headers = array_combine($headerNames, $headerValues);
 

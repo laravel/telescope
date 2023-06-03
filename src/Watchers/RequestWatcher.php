@@ -98,9 +98,9 @@ class RequestWatcher extends Watcher
      */
     protected function headers($headers)
     {
-        $headers = collect($headers)->map(function ($header) {
-            return $header[0];
-        })->toArray();
+        $headers = collect($headers)
+            ->map(fn ($header) => implode(', ', $header))
+            ->all();
 
         return $this->hideParameters($headers,
             Telescope::$hiddenRequestHeaders
