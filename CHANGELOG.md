@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.5...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.6...4.x)
+
+## [v4.14.6](https://github.com/laravel/telescope/compare/v4.14.5...v4.14.6) - 2023-06-03
+
+- Show list of headers when present by @timacdonald in https://github.com/laravel/telescope/pull/1355
 
 ## [v4.14.5](https://github.com/laravel/telescope/compare/v4.14.4...v4.14.5) - 2023-06-02
 
