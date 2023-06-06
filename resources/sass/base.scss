@@ -342,12 +342,12 @@ button:hover {
 
 .copy-to-clipboard {
     position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0.2rem;
-    z-index: 100;
-    color: $card-cap-bg;
-    svg {
-        fill: $card-cap-bg;
-    }
+    right: 0.5rem;
+    top: 0.5rem;
+    --tw-text-opacity: 1;
+    color: rgb(231 232 242 / var(--tw-text-opacity));
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    opacity: 0.7;
+    z-index: 10;
 }
