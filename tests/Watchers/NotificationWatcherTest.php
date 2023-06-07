@@ -44,7 +44,7 @@ class NotificationWatcherTest extends FeatureTestCase
         $this->assertFalse($entry->content['queued']);
         $this->assertStringContainsString(is_array($route) ? implode(',', $route) : $route, $entry->content['notifiable']);
         $this->assertSame($channel, $entry->content['channel']);
-        $this->assertNull($entry->content['response']);
+        $this->assertEmpty($entry->content['response']);
     }
 }
 
