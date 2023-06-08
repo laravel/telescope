@@ -41,11 +41,10 @@
                     </li>
                 </ul>
                 <div>
-                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='arguments'">
-                        <vue-json-pretty :data="slotProps.entry.content.arguments"></vue-json-pretty>
-                    </div>
-                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='options'">
-                        <vue-json-pretty :data="slotProps.entry.content.options"></vue-json-pretty>
+                    <div class="code-bg p-4 mb-0 text-white">
+                        <copy-clipboard :data="slotProps.entry.content[currentTab]">
+                            <vue-json-pretty :data="slotProps.entry.content[currentTab]"></vue-json-pretty>
+                        </copy-clipboard>
                     </div>
                 </div>
             </div>

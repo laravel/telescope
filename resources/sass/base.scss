@@ -339,3 +339,15 @@ button:hover {
     color: #fff;
     background: $danger;
 }
+
+.copy-to-clipboard {
+    position: absolute;
+    right: 0.0rem;
+    top: 0.0rem;
+    --tw-text-opacity: 1;
+    color: rgb(231 232 242 / var(--tw-text-opacity));
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    opacity: 0.7;
+    z-index: 10;
+}

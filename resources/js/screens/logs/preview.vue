@@ -48,11 +48,17 @@
                 </ul>
                 <div>
                     <!-- Log Message -->
-                    <pre class="code-bg p-4 mb-0 text-white" v-show="currentTab=='message'">{{slotProps.entry.content.message}}</pre>
+                    <div v-show="currentTab=='message'">
+                        <copy-clipboard :data="slotProps.entry.content.message">
+                            <pre class="code-bg p-4 mb-0 text-white">{{ slotProps.entry.content.message }}</pre>
+                        </copy-clipboard>
+                    </div>
 
                     <!-- Context -->
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='context'">
-                        <vue-json-pretty :data="slotProps.entry.content.context"></vue-json-pretty>
+                        <copy-clipboard :data="slotProps.entry.content.context">
+                            <vue-json-pretty :data="slotProps.entry.content.context"></vue-json-pretty>
+                        </copy-clipboard>
                     </div>
                 </div>
             </div>
