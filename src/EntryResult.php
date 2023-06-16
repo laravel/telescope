@@ -105,20 +105,48 @@ class EntryResult implements JsonSerializable
         return $this;
     }
 
+    protected function getContent(): array
+    {
+        if($this->type == 'request') {
+            if ($action = $this->content['controller_action'] ?? null) {
+                [$class, $method] = explode('@', $action);
+
+                if (isset($class, $method)) {
+                    try {
+                        $method = new \ReflectionMethod($class, $method);
+
+                        $this->content['controller_action_ide_link'] = sprintf('phpstorm://open?url=%s&line=%d',
+                            $method->getFileName(), $method->getStartLine());
+
+                        logger(__METHOD__.":".__LINE__, [
+                            $action,
+                            $this->content['controller_action_ide_link']
+                        ]);
+                    } catch (\Throwable $e) {
+                        logger(__METHOD__.":".__LINE__. ' ' . $e->getMessage());
+                    }
+                }
+            }
+        }
+
+        return $this->content;
+    }
+
     /**
      * Get the array representation of the entry.
      *
      * @return array
      */
     #[\ReturnTypeWillChange]
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
+        logger(__METHOD__.":".__LINE__);
         return collect([
             'id' => $this->id,
             'sequence' => $this->sequence,
             'batch_id' => $this->batchId,
             'type' => $this->type,
-            'content' => $this->content,
+            'content' => $this->getContent(),
             'tags' => $this->tags,
             'family_hash' => $this->familyHash,
             'created_at' => $this->createdAt->toDateTimeString(),
