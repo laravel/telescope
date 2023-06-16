@@ -31,7 +31,14 @@
         <tr>
             <td class="table-fit text-muted">Controller Action</td>
             <td>
-                {{slotProps.entry.content.controller_action}}
+                <template v-if="slotProps.entry.content.controller_action_ide_link">
+                    <a :href="slotProps.entry.content.controller_action_ide_link">
+                        {{slotProps.entry.content.controller_action}}
+                    </a>
+                </template>
+                <template v-else>
+                    {{slotProps.entry.content.controller_action}}
+                </template>
             </td>
         </tr>
 
