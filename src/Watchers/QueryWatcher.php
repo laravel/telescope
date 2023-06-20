@@ -103,7 +103,10 @@ class QueryWatcher extends Watcher
                 $binding = $this->quoteStringBinding($event, $binding);
             }
 
-            $sql = preg_replace($regex, $binding, $sql, 1);
+            // To support named binding with multiple occurrences
+            $limit = is_numeric($key) ? 1 : -1;
+
+            $sql = preg_replace($regex, $binding, $sql, $limit);
         }
 
         return $sql;
