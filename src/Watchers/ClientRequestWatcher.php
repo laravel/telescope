@@ -226,7 +226,9 @@ class ClientRequestWatcher extends Watcher
      */
     protected function duration(Response $response)
     {
-        if ($response->transferStats && $response->transferStats->getTransferTime()) {
+        if (property_exists($response, 'transferStats') &&
+            $response->transferStats &&
+            $response->transferStats->getTransferTime()) {
             return floor($response->transferStats->getTransferTime() * 1000);
         }
     }
