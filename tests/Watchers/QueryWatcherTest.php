@@ -80,7 +80,7 @@ SQL
     public function test_query_watcher_can_prepare_named_bindings()
     {
         $this->app->get('db')->statement(<<<'SQL'
-update "telescope_entries" set "content" = :content, "should_display_on_index" = :index_new where "type" = :type and "should_display_on_index" = :index_old and "family_hash" is null and "sequence" > :sequence and "created_at" < :created_at  and "created_at" <> :created_at
+update "telescope_entries" set "content" = :content, "should_display_on_index" = :index_new where "type" = :type and "should_display_on_index" = :index_old and "family_hash" is null and "sequence" > :sequence and "created_at" < :created_at and "created_at" <> :created_at
 SQL
             , [
                 'sequence' => 100,
