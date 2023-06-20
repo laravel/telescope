@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.14.6...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.15.0...4.x)
+
+## [v4.15.0](https://github.com/laravel/telescope/compare/v4.14.6...v4.15.0) - 2023-06-08
+
+- Feature/copy to clipboard by @diogogomeswww in https://github.com/laravel/telescope/pull/1356
 
 ## [v4.14.6](https://github.com/laravel/telescope/compare/v4.14.5...v4.14.6) - 2023-06-03
 
