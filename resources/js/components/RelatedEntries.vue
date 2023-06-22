@@ -25,6 +25,7 @@
          * Prepare the component.
          */
         mounted(){
+            console.log(this.entry)
             this.activateFirstTab();
         },
 
@@ -102,7 +103,19 @@
             },
 
             queries() {
-                return _.filter(this.batch, {type: 'query'});
+                const uniqueQueries = [];
+                const queries = _.filter(this.batch, {type: 'query'});
+
+                _.each(queries, (query) => {
+                    if (!_.find(uniqueQueries, {content: {hash: query.content.hash}})) {
+                        query['duplicated'] = false;
+                        uniqueQueries.push(query);
+                    } else {
+                        query['duplicated'] = true;
+                    }
+                });
+
+                return queries;
             },
 
             models() {
@@ -266,8 +279,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="entry in queries">
-                    <td :title="entry.content.sql"><code>{{truncate(entry.content.sql, 110)}}</code></td>
+                <tr v-for="entry in queries" :class="entry['duplicated']? 'background-warning': ''">
+                    <td :title="entry.content.sql" ><code>{{truncate(entry.content.sql, 110)}}</code></td>
 
                     <td class="table-fit text-right">
                         <span class="badge badge-danger" v-if="entry.content.slow">
@@ -637,4 +650,10 @@
     td {
         vertical-align: middle !important;
     }
+
+    .background-warning{
+        background-color: rgba(111,98,0, .2);
+    }
+
+
 </style>
