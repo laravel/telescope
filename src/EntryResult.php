@@ -2,7 +2,9 @@
 
 namespace Laravel\Telescope;
 
+use Illuminate\Support\Arr;
 use JsonSerializable;
+use Laravel\Telescope\Helpers\GenerateLinkToIDE;
 
 class EntryResult implements JsonSerializable
 {
@@ -107,25 +109,9 @@ class EntryResult implements JsonSerializable
 
     protected function getContent(): array
     {
-        if($this->type == 'request') {
-            if ($action = $this->content['controller_action'] ?? null) {
-                [$class, $method] = explode('@', $action);
-
-                if (isset($class, $method)) {
-                    try {
-                        $method = new \ReflectionMethod($class, $method);
-
-                        $this->content['controller_action_ide_link'] = sprintf('phpstorm://open?url=%s&line=%d',
-                            $method->getFileName(), $method->getStartLine());
-
-                        logger(__METHOD__.":".__LINE__, [
-                            $action,
-                            $this->content['controller_action_ide_link']
-                        ]);
-                    } catch (\Throwable $e) {
-                        logger(__METHOD__.":".__LINE__. ' ' . $e->getMessage());
-                    }
-                }
+        if ($this->type == 'request') {
+            if ($link = GenerateLinkToIDE::make(Arr::get($this->content, 'controller_action'))) {
+                $this->content['controller_action_ide_link'] = $link;
             }
         }
 
@@ -140,7 +126,6 @@ class EntryResult implements JsonSerializable
     #[\ReturnTypeWillChange]
     public function jsonSerialize(): array
     {
-        logger(__METHOD__.":".__LINE__);
         return collect([
             'id' => $this->id,
             'sequence' => $this->sequence,
