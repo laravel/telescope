@@ -4,7 +4,6 @@
 namespace Laravel\Telescope\Helpers;
 
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use ReflectionMethod;
 
@@ -38,9 +37,7 @@ class GenerateLinkToIDE
                 return Str::of($editor)
                     ->replace('%path', $method->getFileName())
                     ->replace('%line', $method->getStartLine());
-            } catch (\Throwable $e) {
-                dd($e->getMessage());
-            }
+            } catch (\Throwable $e) {}
         }
 
         return null;
