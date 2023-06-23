@@ -184,4 +184,17 @@ return [
         Watchers\ScheduleWatcher::class => env('TELESCOPE_SCHEDULE_WATCHER', true),
         Watchers\ViewWatcher::class => env('TELESCOPE_VIEW_WATCHER', true),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Editor
+    |--------------------------------------------------------------------------
+    |
+    | You can define your code editor here and telescope will try to convert
+    | actions to direct links to your code editor. Supported editors are:
+    | "atom", "emacs", "idea", "macvim", "netbeans", "nova", "phpstorm",
+    | "sublime", "textmate", "vscode", "vscodium", "xdebug"
+    |
+    */
+    'editor' =>  env('TELESCOPE_EDITOR', 'phpstorm')
 ];
