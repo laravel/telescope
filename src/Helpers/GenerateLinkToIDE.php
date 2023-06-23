@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Laravel\Telescope\Helpers;
-
 
 use Illuminate\Support\Str;
 use ReflectionMethod;
@@ -37,7 +35,8 @@ class GenerateLinkToIDE
                 return Str::of($editor)
                     ->replace('%path', $method->getFileName())
                     ->replace('%line', $method->getStartLine());
-            } catch (\Throwable $e) {}
+            } catch (\Throwable $e) {
+            }
         }
 
         return null;

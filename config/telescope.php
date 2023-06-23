@@ -197,5 +197,5 @@ return [
     |
     */
 
-    'editor' =>  env('TELESCOPE_EDITOR', 'phpstorm')
+    'editor' =>  env('TELESCOPE_EDITOR', 'phpstorm'),
 ];
