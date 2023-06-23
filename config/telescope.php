@@ -196,5 +196,6 @@ return [
     | "sublime", "textmate", "vscode", "vscodium", "xdebug"
     |
     */
+
     'editor' =>  env('TELESCOPE_EDITOR', 'phpstorm')
 ];

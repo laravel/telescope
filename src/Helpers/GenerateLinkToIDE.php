@@ -4,6 +4,8 @@
 namespace Laravel\Telescope\Helpers;
 
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use ReflectionMethod;
 
 class GenerateLinkToIDE
@@ -15,7 +17,7 @@ class GenerateLinkToIDE
         'macvim' => 'mvim://open/?url=file://%path&line=%line',
         'netbeans' => 'netbeans://open/?f=%path:%line',
         'nova' => 'nova://open?path=%path&line=%line',
-        'phpstorm' => 'open?url=file://%path&line=%line',
+        'phpstorm' => 'phpstorm://open?url=file://%path&line=%line',
         'sublime' => 'subl://open?url=file://%path&line=%line',
         'textmate' => 'txmt://open?url=file://%path&line=%line',
         'vscode' => 'vscode://file/%path:%line',
@@ -31,8 +33,13 @@ class GenerateLinkToIDE
             try {
                 $method = new ReflectionMethod(...$parts);
 
-                return sprintf('phpstorm://open?url=file://%s&line=%d', $method->getFileName(), $method->getStartLine());
+                $editor = self::EDITORS[config('telescope.editor', 'phpstorm')];
+
+                return Str::of($editor)
+                    ->replace('%path', $method->getFileName())
+                    ->replace('%line', $method->getStartLine());
             } catch (\Throwable $e) {
+                dd($e->getMessage());
             }
         }
 
