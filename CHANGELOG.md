@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.15.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.15.1...4.x)
+
+## [v4.15.1](https://github.com/laravel/telescope/compare/v4.15.0...v4.15.1) - 2023-06-21
+
+- Fix non existing property by [@driesvints](https://github.com/driesvints) in https://github.com/laravel/telescope/pull/1360
 
 ## [v4.15.0](https://github.com/laravel/telescope/compare/v4.14.6...v4.15.0) - 2023-06-08
 
