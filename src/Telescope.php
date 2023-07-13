@@ -667,10 +667,10 @@ class Telescope
 
                 $storage->store(static::collectEntries($batchId));
 
-                $pendingUpdates = $storage->update(static::collectUpdates($batchId)) ?: Collection::make();
+                $updateResult = $storage->update(static::collectUpdates($batchId)) ?: Collection::make();
 
                 if (! isset($_ENV['VAPOR_SSM_PATH'])) {
-                    $pendingUpdates->whenNotEmpty(fn ($pendingUpdates) => rescue(fn () => ProcessPendingUpdates::dispatch(
+                    $updateResult->whenNotEmpty(fn ($pendingUpdates) => rescue(fn () => ProcessPendingUpdates::dispatch(
                         $pendingUpdates,
                     )->delay(now()->addSeconds(10))));
                 }
