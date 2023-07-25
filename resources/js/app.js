@@ -66,6 +66,14 @@ new Vue({
         };
     },
 
+    created() {
+        window.addEventListener("keydown", this.keydownListener);
+    },
+
+    destroyed() {
+        window.removeEventListener("keydown", this.keydownListener);
+    },
+
     methods: {
         autoLoadNewEntries() {
             if (!this.autoLoadsNewEntries) {
@@ -84,10 +92,18 @@ new Vue({
             this.recording = !this.recording;
         },
 
-        clearEntries() {
-            if (confirm('Are you sure you want to delete all Telescope data?')) {
-                axios.delete(Telescope.basePath + '/telescope-api/entries').then((response) => location.reload());
+        clearEntries(shouldConfirm = true) {
+            if (shouldConfirm && !confirm('Are you sure you want to delete all Telescope data?')) {
+                return;
             }
+
+            axios.delete(Telescope.basePath + '/telescope-api/entries').then((response) => location.reload());
         },
+
+        keydownListener(event) {
+            if (event.metaKey && event.key === "k") {
+                this.clearEntries(false);
+            }
+        }
     },
 });
