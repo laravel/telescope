@@ -67,11 +67,11 @@ new Vue({
     },
 
     created() {
-        window.addEventListener("keydown", this.keydownListener);
+        window.addEventListener('keydown', this.keydownListener);
     },
 
     destroyed() {
-        window.removeEventListener("keydown", this.keydownListener);
+        window.removeEventListener('keydown', this.keydownListener);
     },
 
     methods: {
@@ -101,9 +101,9 @@ new Vue({
         },
 
         keydownListener(event) {
-            if (event.metaKey && event.key === "k") {
+            if (event.metaKey && event.key === 'k') {
                 this.clearEntries(false);
             }
-        }
+        },
     },
 });
