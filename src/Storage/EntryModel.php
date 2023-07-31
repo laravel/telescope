@@ -120,6 +120,7 @@ class EntryModel extends Model
             if (empty($tags)) {
                 return $this;
             }
+
             return $query->whereIn('uuid', function ($query) use ($tags) {
                 $query->select('entry_uuid')->from('telescope_entries_tags');
                 foreach ($tags as $tag) {
