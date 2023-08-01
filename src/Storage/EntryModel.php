@@ -118,7 +118,7 @@ class EntryModel extends Model
         $query->when($options->tag, function ($query, $tag) {
             $tags = explode(',', $tag);
             if (empty($tags)) {
-                return $this;
+                return $query;
             }
 
             return $query->whereIn('uuid', function ($query) use ($tags) {
