@@ -116,8 +116,9 @@ class EntryModel extends Model
     protected function whereTag($query, EntryQueryOptions $options)
     {
         $query->when($options->tag, function ($query, $tag) {
-            $tags = explode(',', $tag);
-            if (empty($tags)) {
+            $tags = collect(explode(',', $tag))->map(fn ($tag) => trim($tag));
+
+            if ($tags->isEmpty()) {
                 return $query;
             }
 
