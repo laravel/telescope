@@ -79,6 +79,9 @@ return [
         'web',
         Authorize::class,
     ],
+    'environments' => [
+        'local', 'canary', 'staging',
+    ],
 
     /*
     |--------------------------------------------------------------------------
