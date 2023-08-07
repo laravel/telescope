@@ -1,0 +1,11 @@
+providers:
+  - Laravel\Telescope\TelescopeServiceProvider
+  - Workbench\App\Providers\TelescopeServiceProvider
+
+migrations: true
+seeders:
+  - Workbench\Database\Seeders\DatabaseSeeder
+
+workbench:
+  start: '/telescope'
+  user: 1

@@ -23,7 +23,7 @@
         "ext-gd": "*",
         "guzzlehttp/guzzle": "^6.0|^7.0",
         "laravel/octane": "^1.4",
-        "orchestra/testbench": "^6.0|^7.0|^8.0",
+        "orchestra/testbench": "^6.0|^7.0|^8.6",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^9.0"
     },
@@ -35,7 +35,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Laravel\\Telescope\\Tests\\": "tests/"
+            "Laravel\\Telescope\\Tests\\": "tests/",
+            "Workbench\\App\\": "./workbench/app",
+            "Workbench\\Database\\": "./workbench/database"
         }
     },
     "extra": {
@@ -50,6 +52,17 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "scripts": {
+        "prepare": [
+            "@php ./vendor/bin/testbench package:create-sqlite-db",
+            "@php ./vendor/bin/testbench telescope:publish --force",
+            "@php ./vendor/bin/testbench migrate:refresh"
+        ],
+        "start": [
+            "@composer run prepare",
+            "@php ./vendor/bin/testbench serve"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true
