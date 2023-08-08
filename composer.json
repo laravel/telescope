@@ -36,8 +36,8 @@
     "autoload-dev": {
         "psr-4": {
             "Laravel\\Telescope\\Tests\\": "tests/",
-            "Workbench\\App\\": "./workbench/app",
-            "Workbench\\Database\\": "./workbench/database"
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\": "workbench/database/"
         }
     },
     "extra": {
