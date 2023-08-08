@@ -4,11 +4,7 @@
 
 ## [v4.15.2](https://github.com/laravel/telescope/compare/v4.15.1...v4.15.2) - 2023-07-13
 
-### What's Changed
-
 - [4.x] Fixes unexpected jobs on Vapor by [@nunomaduro](https://github.com/nunomaduro) in https://github.com/laravel/telescope/pull/1363
-
-**Full Changelog**: https://github.com/laravel/telescope/compare/v4.15.1...v4.15.2
 
 ## [v4.15.1](https://github.com/laravel/telescope/compare/v4.15.0...v4.15.1) - 2023-06-21
 
