@@ -1,6 +1,11 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.15.2...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.16.0...4.x)
+
+## [v4.16.0](https://github.com/laravel/telescope/compare/v4.15.2...v4.16.0) - 2023-08-08
+
+- [4.x] Add hotkey to clear entries without confirmation: CMD+K  by [@bradleybernard](https://github.com/bradleybernard) in https://github.com/laravel/telescope/pull/1364
+- Enhancement: Multi-Tag Filtering and Search Functionality by [@Algeneralo](https://github.com/Algeneralo) in https://github.com/laravel/telescope/pull/1367
 
 ## [v4.15.2](https://github.com/laravel/telescope/compare/v4.15.1...v4.15.2) - 2023-07-13
 
