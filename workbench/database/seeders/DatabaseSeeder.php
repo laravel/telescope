@@ -2,9 +2,9 @@
 
 namespace Workbench\Database\Seeders;
 
-use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Auth\User;
+use Orchestra\Testbench\Factories\UserFactory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,5 +20,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'taylor@laravel.com',
             'password' => $password,
         ]);
+
+        UserFactory::new()->times(9)->create();
     }
 }
