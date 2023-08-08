@@ -43,6 +43,11 @@ class FeatureTestCase extends TestCase
         ];
     }
 
+    public function ignorePackageDiscoveriesFrom()
+    {
+        return ['spatie/laravel-ray'];
+    }
+
     protected function resolveApplicationCore($app)
     {
         parent::resolveApplicationCore($app);

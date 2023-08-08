@@ -35,7 +35,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Laravel\\Telescope\\Tests\\": "tests/"
+            "Laravel\\Telescope\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\": "workbench/database/"
         }
     },
     "extra": {
@@ -50,6 +52,19 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "scripts": {
+        "post-autoload-dump": "@composer run prepare",
+        "prepare": "@php ./vendor/bin/testbench package:discover --ansi",
+        "build": [
+            "@php ./vendor/bin/testbench package:create-sqlite-db",
+            "@php ./vendor/bin/testbench telescope:publish --force",
+            "@php ./vendor/bin/testbench migrate:refresh"
+        ],
+        "start": [
+            "@composer run build",
+            "@php ./vendor/bin/testbench serve"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true
