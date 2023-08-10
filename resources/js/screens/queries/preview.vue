@@ -57,10 +57,11 @@
                         <a class="nav-link active">Query</a>
                     </li>
                 </ul>
-
-                <copy-clipboard :data="formatSql(slotProps.entry.content.sql)">
-                    <pre class="code-bg p-4 mb-0 text-white" ref="sqlcode">{{ formatSql(slotProps.entry.content.sql) }}</pre>
-                </copy-clipboard>
+                <div class="code-bg p-4 mb-0 text-white">
+                    <copy-clipboard :data="formatSql(slotProps.entry.content.sql)">
+                      <pre class="code-bg text-white" ref="sqlcode">{{ formatSql(slotProps.entry.content.sql) }}</pre>
+                    </copy-clipboard>
+                </div>
             </div>
         </div>
     </preview-screen>
