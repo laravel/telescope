@@ -31,6 +31,21 @@ return [
 
     'path' => env('TELESCOPE_PATH', 'telescope'),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Telescope Back to system URL
+    |--------------------------------------------------------------------------
+    | This is the URI path redirect on click "back" button. You
+    | can set value to `null` for hide button on header.
+    | also label shown on hover.
+    |
+    */
+
+    'back_button_url' => config('app.url', null),
+
+    'back_button_label' => 'Back to system',
+
     /*
     |--------------------------------------------------------------------------
     | Telescope Storage Driver
