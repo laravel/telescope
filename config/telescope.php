@@ -31,7 +31,6 @@ return [
 
     'path' => env('TELESCOPE_PATH', 'telescope'),
 
-
     /*
     |--------------------------------------------------------------------------
     | Telescope Back to system URL
