@@ -27,7 +27,7 @@
 
     <div class="container mb-5">
         <div class="d-flex align-items-stretch py-4 header">
-            <a href="{{ config('telescope.back_to_system_url') }}"  v-if="{{ config('telescope.back_to_system_url') ? 1 : 0 }}" class="btn btn-muted mr-3 d-flex align-items-center py-2" title="{{ config('telescope.back_to_system_label') }}">
+            <a href="{{ config('telescope.back_button_url') }}" v-if="{{ config('telescope.back_button_url') ? 1 : 0 }}" class="btn btn-muted mr-3 d-flex align-items-center py-2" title="{{ config('telescope.back_button_label') }}">
                 <svg viewBox="0 0 20 20" fill="currentColor"  class="icon">
                     <path class="fill-primary" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"></path>
                 </svg>
