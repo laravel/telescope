@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.16.0...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.16.1...4.x)
+
+## [v4.16.1](https://github.com/laravel/telescope/compare/v4.16.0...v4.16.1) - 2023-08-11
+
+- Fix copy to clipboard button position on query preview by [@alissn](https://github.com/alissn) in https://github.com/laravel/telescope/pull/1373
 
 ## [v4.16.0](https://github.com/laravel/telescope/compare/v4.15.2...v4.16.0) - 2023-08-08
 
