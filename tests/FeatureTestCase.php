@@ -45,7 +45,7 @@ class FeatureTestCase extends TestCase
 
     public function ignorePackageDiscoveriesFrom()
     {
-        return ['spatie/laravel-ray'];
+        return ['*', 'spatie/laravel-ray'];
     }
 
     protected function resolveApplicationCore($app)
