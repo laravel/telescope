@@ -4,13 +4,19 @@ namespace Laravel\Telescope\Tests\Watchers;
 
 use Exception;
 use Illuminate\Contracts\Bus\Dispatcher;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Contracts\Queue\Queue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Queue\Jobs\Job;
+use Illuminate\Queue\QueueManager;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\JobWatcher;
+use Throwable;
 
 class JobWatcherTest extends FeatureTestCase
 {
@@ -100,6 +106,32 @@ class JobWatcherTest extends FeatureTestCase
         $this->assertSame('handle', $entry->content['exception']['trace'][0]['function']);
     }
 
+    public function test_it_handles_pushed_jobs()
+    {
+        $queueExceptions = [];
+        $this->app[ExceptionHandler::class]->reportable(function (Throwable $e) use (&$queueExceptions) {
+            $queueExceptions[] = $e;
+        });
+
+        $this->app[QueueManager::class]
+            ->connection('database')
+            ->push(MyPushedJobClass::class, ['framework' => 'Laravel']);
+        $this->artisan('queue:work', [
+            'connection' => 'database',
+            '--once' => true,
+        ]);
+
+        $entry = $this->loadTelescopeEntries()->first();
+        $this->assertCount(1, $queueExceptions);
+        $this->assertInstanceOf(PushedJobFailedException::class, $queueExceptions[0]);
+        $this->assertSame(EntryType::JOB, $entry->type);
+        $this->assertSame('failed', $entry->content['status']);
+        $this->assertSame('database', $entry->content['connection']);
+        $this->assertSame(MyPushedJobClass::class, $entry->content['name']);
+        $this->assertSame('default', $entry->content['queue']);
+        $this->assertSame(['framework' => 'Laravel'], $entry->content['data']);
+    }
+
     private function createJobsTable(): void
     {
         Schema::create('jobs', function (Blueprint $table) {
@@ -113,6 +145,7 @@ class JobWatcherTest extends FeatureTestCase
         });
 
         Schema::create('failed_jobs', function (Blueprint $table) {
+            $table->uuid('uuid');
             $table->bigIncrements('id');
             $table->text('connection');
             $table->text('queue');
@@ -178,4 +211,19 @@ class MyFailedDatabaseJob implements ShouldQueue
     {
         throw new Exception($this->message);
     }
+}
+
+class MyPushedJobClass
+{
+    public $tries = 1;
+
+    public function fire(Job $job, array $data)
+    {
+        throw new PushedJobFailedException();
+    }
+}
+
+class PushedJobFailedException extends Exception
+{
+    //
 }

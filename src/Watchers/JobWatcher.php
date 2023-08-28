@@ -60,7 +60,11 @@ class JobWatcher extends Watcher
             return;
         }
 
-        if (in_array(get_class($payload['data']['command']), $this->ignoredJobClasses)) {
+        $job = isset($payload['data']['command'])
+            ? get_class($payload['data']['command'])
+            : $payload['job'];
+
+        if (in_array($job, $this->ignoredJobClasses)) {
             return;
         }
 
@@ -198,6 +202,10 @@ class JobWatcher extends Watcher
      */
     protected function updateBatch($payload)
     {
+        if (! isset($payload['data']['command'])) {
+            return;
+        }
+
         $wasRecordingEnabled = Telescope::$shouldRecord;
 
         Telescope::$shouldRecord = false;
