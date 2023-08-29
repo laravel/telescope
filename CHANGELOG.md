@@ -1,6 +1,11 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.16.1...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.16.2...4.x)
+
+## [v4.16.2](https://github.com/laravel/telescope/compare/v4.16.1...v4.16.2) - 2023-08-28
+
+- Test Improvements by [@crynobone](https://github.com/crynobone) in https://github.com/laravel/telescope/pull/1378
+- Handle pushed jobs by [@timacdonald](https://github.com/timacdonald) in https://github.com/laravel/telescope/pull/1379
 
 ## [v4.16.1](https://github.com/laravel/telescope/compare/v4.16.0...v4.16.1) - 2023-08-11
 
