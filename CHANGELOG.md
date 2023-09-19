@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.16.2...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.16.3...4.x)
+
+## [v4.16.3](https://github.com/laravel/telescope/compare/v4.16.2...v4.16.3) - 2023-09-19
+
+- modified moment-timezone package version in package.json by [@yoonustehrani](https://github.com/yoonustehrani) in https://github.com/laravel/telescope/pull/1382
 
 ## [v4.16.2](https://github.com/laravel/telescope/compare/v4.16.1...v4.16.2) - 2023-08-28
 
