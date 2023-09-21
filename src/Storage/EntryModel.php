@@ -127,7 +127,7 @@ class EntryModel extends Model
                     ->whereIn('entry_uuid', function ($query) use ($tags) {
                         $query->select('entry_uuid')->from('telescope_entries_tags')->where(function ($q) use ($tags) {
                             foreach ($tags as $tag) {
-                                $q->where('tag', 'like',  '%' .$tag.'%');
+                                $q->where('tag', 'like', '%'.$tag.'%');
                             }
                         });
                     });
