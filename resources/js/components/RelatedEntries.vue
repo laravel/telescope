@@ -144,7 +144,7 @@
             queriesSummary() {
                 return {
                     time: _.reduce(this.queries, (time, q) => { return time + parseFloat(q.content.time) }, 0.00).toFixed(2),
-                    duplicated: this.queries.length - _.size(_.groupBy(this.queries, (q) => { return q.content.hash })),
+                    duplicated: this.queries.length - _.size(_.groupBy(this.queries, (q) => { return `${q.content.hash}-${q.content.connection}` })),
                 };
             },
 
