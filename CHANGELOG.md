@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.16.3...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.16.4...4.x)
+
+## [v4.16.4](https://github.com/laravel/telescope/compare/v4.16.3...v4.16.4) - 2023-09-25
+
+- Fix duplicated queries on multiple connections by [@February30th](https://github.com/February30th) in https://github.com/laravel/telescope/pull/1385
 
 ## [v4.16.3](https://github.com/laravel/telescope/compare/v4.16.2...v4.16.3) - 2023-09-19
 
