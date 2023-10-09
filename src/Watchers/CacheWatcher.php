@@ -147,10 +147,10 @@ class CacheWatcher extends Watcher
      */
     protected function shouldIgnore($event)
     {
-        return Str::is([
+        return Str::is(array_merge($this->options['ignore'] ?? [], [
             'illuminate:queue:restart',
             'framework/schedule*',
             'telescope:*',
-        ], $event->key);
+        ]), $event->key);
     }
 }
