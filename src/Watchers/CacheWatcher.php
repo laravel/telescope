@@ -145,7 +145,7 @@ class CacheWatcher extends Watcher
      * @param  mixed  $event
      * @return bool
      */
-    private function shouldIgnore($event)
+    protected function shouldIgnore($event)
     {
         return Str::is([
             'illuminate:queue:restart',

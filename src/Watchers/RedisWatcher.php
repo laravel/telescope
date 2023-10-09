@@ -80,7 +80,7 @@ class RedisWatcher extends Watcher
      * @param  mixed  $event
      * @return bool
      */
-    private function shouldIgnore($event)
+    protected function shouldIgnore($event)
     {
         return in_array($event->command, [
             'pipeline', 'transaction',

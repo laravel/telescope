@@ -29,4 +29,15 @@ abstract class Watcher
      * @return void
      */
     abstract public function register($app);
+
+    /**
+     * Determine if the event should be ignored.
+     *
+     * @param  mixed  $event
+     * @return bool
+     */
+    protected function shouldIgnore($event)
+    {
+        return false ;
+    }
 }

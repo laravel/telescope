@@ -56,7 +56,7 @@ class JobWatcher extends Watcher
      */
     public function recordJob($connection, $queue, array $payload)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording() || $this->shouldIgnore([$connection, $queue, $payload])) {
             return;
         }
 
@@ -89,7 +89,7 @@ class JobWatcher extends Watcher
      */
     public function recordProcessedJob(JobProcessed $event)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 
@@ -114,7 +114,7 @@ class JobWatcher extends Watcher
      */
     public function recordFailedJob(JobFailed $event)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 

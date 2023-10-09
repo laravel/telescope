@@ -29,7 +29,7 @@ class QueryWatcher extends Watcher
      */
     public function recordQuery(QueryExecuted $event)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 

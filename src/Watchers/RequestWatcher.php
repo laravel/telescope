@@ -38,7 +38,8 @@ class RequestWatcher extends Watcher
     {
         if (! Telescope::isRecording() ||
             $this->shouldIgnoreHttpMethod($event) ||
-            $this->shouldIgnoreStatusCode($event)) {
+            $this->shouldIgnoreStatusCode($event) || 
+            $this->shouldIgnore($event)) {
             return;
         }
 

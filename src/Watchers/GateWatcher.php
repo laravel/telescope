@@ -70,7 +70,7 @@ class GateWatcher extends Watcher
      * @param  string  $ability
      * @return bool
      */
-    private function shouldIgnore($ability)
+    protected function shouldIgnore($ability)
     {
         return Str::is($this->options['ignore_abilities'] ?? [], $ability);
     }

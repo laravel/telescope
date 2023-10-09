@@ -74,7 +74,7 @@ class LogWatcher extends Watcher
      * @param  mixed  $event
      * @return bool
      */
-    private function shouldIgnore($event)
+    protected function shouldIgnore($event)
     {
         if (isset($event->context['exception']) && $event->context['exception'] instanceof Throwable) {
             return true;

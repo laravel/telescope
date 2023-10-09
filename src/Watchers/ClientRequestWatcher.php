@@ -34,7 +34,7 @@ class ClientRequestWatcher extends Watcher
      */
     public function recordFailedRequest(ConnectionFailed $event)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 
@@ -54,7 +54,7 @@ class ClientRequestWatcher extends Watcher
      */
     public function recordResponse(ResponseReceived $event)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 

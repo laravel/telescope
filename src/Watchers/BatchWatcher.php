@@ -29,7 +29,7 @@ class BatchWatcher extends Watcher
      */
     public function recordBatch(BatchDispatched $event)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 

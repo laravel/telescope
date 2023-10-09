@@ -41,7 +41,7 @@ class ModelWatcher extends Watcher
      */
     public function recordAction($event, $data)
     {
-        if (! Telescope::isRecording() || ! $this->shouldRecord($event)) {
+        if (! Telescope::isRecording() || ! $this->shouldRecord($event) || $this->shouldIgnore($event)) {
             return;
         }
 

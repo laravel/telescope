@@ -30,9 +30,7 @@ class ScheduleWatcher extends Watcher
      */
     public function recordCommand(CommandStarting $event)
     {
-        if (! Telescope::isRecording() ||
-            $event->command !== 'schedule:run' &&
-            $event->command !== 'schedule:finish') {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 
@@ -66,5 +64,16 @@ class ScheduleWatcher extends Watcher
         }
 
         return trim(file_get_contents($event->output));
+    }
+
+    /**
+     * Determine if the event should be ignored.
+     *
+     * @param  mixed  $event
+     * @return bool
+     */
+    protected function shouldIgnore($event)
+    {
+        return $event->command !== 'schedule:run' && $event->command !== 'schedule:finish' ;
     }
 }

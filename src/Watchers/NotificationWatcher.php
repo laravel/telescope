@@ -32,7 +32,7 @@ class NotificationWatcher extends Watcher
      */
     public function recordNotification(NotificationSent $event)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 

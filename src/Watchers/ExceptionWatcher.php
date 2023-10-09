@@ -75,7 +75,7 @@ class ExceptionWatcher extends Watcher
      * @param  mixed  $event
      * @return bool
      */
-    private function shouldIgnore($event)
+    protected function shouldIgnore($event)
     {
         return ! isset($event->context['exception']) ||
             ! $event->context['exception'] instanceof Throwable;

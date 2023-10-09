@@ -34,7 +34,7 @@ class ViewWatcher extends Watcher
      */
     public function recordAction($event, $data)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 

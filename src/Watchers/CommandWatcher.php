@@ -45,7 +45,7 @@ class CommandWatcher extends Watcher
      * @param  mixed  $event
      * @return bool
      */
-    private function shouldIgnore($event)
+    protected function shouldIgnore($event)
     {
         return in_array($event->command, array_merge($this->options['ignore'] ?? [], [
             'schedule:run',

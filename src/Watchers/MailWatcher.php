@@ -29,7 +29,7 @@ class MailWatcher extends Watcher
      */
     public function recordMail(MessageSent $event)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording() || $this->shouldIgnore($event)) {
             return;
         }
 
