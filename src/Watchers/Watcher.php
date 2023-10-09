@@ -38,6 +38,6 @@ abstract class Watcher
      */
     protected function shouldIgnore($event)
     {
-        return false ;
+        return false;
     }
 }

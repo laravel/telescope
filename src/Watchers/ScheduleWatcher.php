@@ -74,6 +74,6 @@ class ScheduleWatcher extends Watcher
      */
     protected function shouldIgnore($event)
     {
-        return $event->command !== 'schedule:run' && $event->command !== 'schedule:finish' ;
+        return $event->command !== 'schedule:run' && $event->command !== 'schedule:finish';
     }
 }
