@@ -18,10 +18,10 @@ use Throwable;
 
 class Telescope
 {
-    use AuthorizesRequests,
-        ExtractsMailableTags,
-        ListensForStorageOpportunities,
-        RegistersWatchers;
+    use AuthorizesRequests;
+    use ExtractsMailableTags;
+    use ListensForStorageOpportunities;
+    use RegistersWatchers;
 
     /**
      * The callbacks that filter the entries that should be recorded.
@@ -337,7 +337,7 @@ class Telescope
             }
 
             if (static::$afterRecordingHook) {
-                call_user_func(static::$afterRecordingHook, new static, $entry);
+                call_user_func(static::$afterRecordingHook, new static(), $entry);
             }
         });
     }
@@ -562,7 +562,7 @@ class Telescope
     {
         static::$entriesQueue = [];
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -590,7 +590,7 @@ class Telescope
     {
         static::$filterUsing[] = $callback;
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -603,7 +603,7 @@ class Telescope
     {
         static::$filterBatchUsing[] = $callback;
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -616,7 +616,7 @@ class Telescope
     {
         static::$afterRecordingHook = $callback;
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -629,7 +629,7 @@ class Telescope
     {
         static::$afterStoringHooks[] = $callback;
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -642,7 +642,7 @@ class Telescope
     {
         static::$tagUsing[] = $callback;
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -672,7 +672,7 @@ class Telescope
                 if (! isset($_ENV['VAPOR_SSM_PATH'])) {
                     $updateResult->whenNotEmpty(fn ($pendingUpdates) => rescue(fn () => ProcessPendingUpdates::dispatch(
                         $pendingUpdates,
-                    )->delay(now()->addSeconds(10))));
+                    )->onQueue(config('telescope.queue.queue', 'default'))->onConnection(config('telescope.queue.connection', 'database'))->delay(now()->addSeconds(10))));
                 }
 
                 if ($storage instanceof TerminableRepository) {
@@ -734,7 +734,7 @@ class Telescope
             $headers
         )));
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -750,7 +750,7 @@ class Telescope
             $attributes
         );
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -766,7 +766,7 @@ class Telescope
             $attributes
         )));
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -778,7 +778,7 @@ class Telescope
     {
         static::$ignoreFrameworkEvents = false;
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -790,7 +790,7 @@ class Telescope
     {
         static::$useDarkTheme = true;
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -803,7 +803,7 @@ class Telescope
     {
         Avatar::register($callback);
 
-        return new static;
+        return new static();
     }
 
     /**
@@ -829,6 +829,6 @@ class Telescope
     {
         static::$runsMigrations = false;
 
-        return new static;
+        return new static();
     }
 }

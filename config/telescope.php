@@ -53,6 +53,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Queue ProcessPendingUpdates
+    |--------------------------------------------------------------------------
+    |
+    | This option allows you to customize the queue used for ProcessPendingUpdates
+    |
+    */
+    'queue' => [
+        'connection' => env('TELESCOPE_QUEUE_CONNECTION', 'database'),
+        'queue' => env('TELESCOPE_QUEUE_QUEUE', 'default'),
+    ],
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Master Switch
     |--------------------------------------------------------------------------
     |
