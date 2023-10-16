@@ -64,7 +64,6 @@ return [
         'queue' => env('TELESCOPE_QUEUE_QUEUE', 'default'),
     ],
 
-
     /*
     |--------------------------------------------------------------------------
     | Telescope Master Switch
