@@ -1,11 +1,13 @@
 <script type="text/ecmascript-6">
     import axios from 'axios';
     import StylesMixin from './../../mixins/entriesStyles';
+    import exceptionCodePreview from "../../components/ExceptionCodePreview.vue";
+    import stacktrace from "../../components/Stacktrace.vue";
 
     export default {
         components: {
-            'code-preview': require('./../../components/ExceptionCodePreview').default,
-            'stack-trace': require('./../../components/Stacktrace').default
+            'code-preview': exceptionCodePreview,
+            'stack-trace': stacktrace
         },
 
 
