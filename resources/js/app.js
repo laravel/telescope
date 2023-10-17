@@ -6,11 +6,11 @@ import VueRouter from 'vue-router';
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
 import moment from 'moment-timezone';
-import relatedEntries from "./components/RelatedEntries.vue";
-import indexScreen from "./components/IndexScreen.vue";
-import previewScreen from "./components/PreviewScreen.vue";
-import alertComponent from "./components/Alert.vue";
-import copyClipboard from "./components/CopyClipboard.vue";
+import relatedEntries from './components/RelatedEntries.vue';
+import indexScreen from './components/IndexScreen.vue';
+import previewScreen from './components/PreviewScreen.vue';
+import alertComponent from './components/Alert.vue';
+import copyClipboard from './components/CopyClipboard.vue';
 
 import 'bootstrap';
 
