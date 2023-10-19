@@ -1,39 +1,39 @@
-import mailPreview from './screens/mail/preview.vue';
-import mailIndex from './screens/mail/index.vue';
-import exceptionsPreview from './screens/exceptions/preview.vue';
-import exceptionsIndex from './screens/exceptions/index.vue';
-import dumpsIndex from './screens/dumps/index.vue';
-import logsPreview from './screens/logs/preview.vue';
-import logsIndex from './screens/logs/index.vue';
-import notificationsPreview from './screens/notifications/preview.vue';
-import notificationsIndex from './screens/notifications/index.vue';
-import jobsPreview from './screens/jobs/preview.vue';
-import jobsIndex from './screens/jobs/index.vue';
-import batchesPreview from './screens/batches/preview.vue';
-import batchesIndex from './screens/batches/index.vue';
-import eventsPreview from './screens/events/preview.vue';
-import eventsIndex from './screens/events/index.vue';
-import cachePreview from './screens/cache/preview.vue';
-import cacheIndex from './screens/cache/index.vue';
-import queriesPreview from './screens/queries/preview.vue';
-import queriesIndex from './screens/queries/index.vue';
-import modelsPreview from './screens/models/preview.vue';
-import modelsIndex from './screens/models/index.vue';
-import requestsPreview from './screens/requests/preview.vue';
-import requestsIndex from './screens/requests/index.vue';
-import commandsPreview from './screens/commands/preview.vue';
-import commandsIndex from './screens/commands/index.vue';
-import schedulePreview from './screens/schedule/preview.vue';
-import scheduleIndex from './screens/schedule/index.vue';
-import redisPreview from './screens/redis/preview.vue';
-import redisIndex from './screens/redis/index.vue';
-import monitoringIndex from './screens/monitoring/index.vue';
-import gatesPreview from './screens/gates/preview.vue';
-import gatesIndex from './screens/gates/index.vue';
-import viewsPreview from './screens/views/preview.vue';
-import viewsIndex from './screens/views/index.vue';
-import clientRequestsPreview from './screens/client-requests/preview.vue';
-import clientRequestsIndex from './screens/client-requests/index.vue';
+import MailPreview from './screens/mail/preview.vue';
+import MailIndex from './screens/mail/index.vue';
+import ExceptionsPreview from './screens/exceptions/preview.vue';
+import ExceptionsIndex from './screens/exceptions/index.vue';
+import DumpsIndex from './screens/dumps/index.vue';
+import LogsPreview from './screens/logs/preview.vue';
+import LogsIndex from './screens/logs/index.vue';
+import NotificationsPreview from './screens/notifications/preview.vue';
+import NotificationsIndex from './screens/notifications/index.vue';
+import JobsPreview from './screens/jobs/preview.vue';
+import JobsIndex from './screens/jobs/index.vue';
+import BatchesPreview from './screens/batches/preview.vue';
+import BatchesIndex from './screens/batches/index.vue';
+import EventsPreview from './screens/events/preview.vue';
+import EventsIndex from './screens/events/index.vue';
+import CachePreview from './screens/cache/preview.vue';
+import CacheIndex from './screens/cache/index.vue';
+import QueriesPreview from './screens/queries/preview.vue';
+import QueriesIndex from './screens/queries/index.vue';
+import ModelsPreview from './screens/models/preview.vue';
+import ModelsIndex from './screens/models/index.vue';
+import RequestsPreview from './screens/requests/preview.vue';
+import RequestsIndex from './screens/requests/index.vue';
+import CommandsPreview from './screens/commands/preview.vue';
+import CommandsIndex from './screens/commands/index.vue';
+import SchedulePreview from './screens/schedule/preview.vue';
+import ScheduleIndex from './screens/schedule/index.vue';
+import RedisPreview from './screens/redis/preview.vue';
+import RedisIndex from './screens/redis/index.vue';
+import MonitoringIndex from './screens/monitoring/index.vue';
+import GatesPreview from './screens/gates/preview.vue';
+import GatesIndex from './screens/gates/index.vue';
+import ViewsPreview from './screens/views/preview.vue';
+import ViewsIndex from './screens/views/index.vue';
+import ClientRequestsPreview from './screens/client-requests/preview.vue';
+import ClientRequestsIndex from './screens/client-requests/index.vue';
 
 export default [
     { path: '/', redirect: '/requests' },
@@ -41,216 +41,216 @@ export default [
     {
         path: '/mail/:id',
         name: 'mail-preview',
-        component: mailPreview,
+        component: MailPreview,
     },
 
     {
         path: '/mail',
         name: 'mail',
-        component: mailIndex,
+        component: MailIndex,
     },
 
     {
         path: '/exceptions/:id',
         name: 'exception-preview',
-        component: exceptionsPreview,
+        component: ExceptionsPreview,
     },
 
     {
         path: '/exceptions',
         name: 'exceptions',
-        component: exceptionsIndex,
+        component: ExceptionsIndex,
     },
 
     {
         path: '/dumps',
         name: 'dumps',
-        component: dumpsIndex,
+        component: DumpsIndex,
     },
 
     {
         path: '/logs/:id',
         name: 'log-preview',
-        component: logsPreview,
+        component: LogsPreview,
     },
 
     {
         path: '/logs',
         name: 'logs',
-        component: logsIndex,
+        component: LogsIndex,
     },
 
     {
         path: '/notifications/:id',
         name: 'notification-preview',
-        component: notificationsPreview,
+        component: NotificationsPreview,
     },
 
     {
         path: '/notifications',
         name: 'notifications',
-        component: notificationsIndex,
+        component: NotificationsIndex,
     },
 
     {
         path: '/jobs/:id',
         name: 'job-preview',
-        component: jobsPreview,
+        component: JobsPreview,
     },
 
     {
         path: '/jobs',
         name: 'jobs',
-        component: jobsIndex,
+        component: JobsIndex,
     },
 
     {
         path: '/batches/:id',
         name: 'batch-preview',
-        component: batchesPreview,
+        component: BatchesPreview,
     },
 
     {
         path: '/batches',
         name: 'batches',
-        component: batchesIndex,
+        component: BatchesIndex,
     },
 
     {
         path: '/events/:id',
         name: 'event-preview',
-        component: eventsPreview,
+        component: EventsPreview,
     },
 
     {
         path: '/events',
         name: 'events',
-        component: eventsIndex,
+        component: EventsIndex,
     },
 
     {
         path: '/cache/:id',
         name: 'cache-preview',
-        component: cachePreview,
+        component: CachePreview,
     },
 
     {
         path: '/cache',
         name: 'cache',
-        component: cacheIndex,
+        component: CacheIndex,
     },
 
     {
         path: '/queries/:id',
         name: 'query-preview',
-        component: queriesPreview,
+        component: QueriesPreview,
     },
 
     {
         path: '/queries',
         name: 'queries',
-        component: queriesIndex,
+        component: QueriesIndex,
     },
 
     {
         path: '/models/:id',
         name: 'model-preview',
-        component: modelsPreview,
+        component: ModelsPreview,
     },
 
     {
         path: '/models',
         name: 'models',
-        component: modelsIndex,
+        component: ModelsIndex,
     },
 
     {
         path: '/requests/:id',
         name: 'request-preview',
-        component: requestsPreview,
+        component: RequestsPreview,
     },
 
     {
         path: '/requests',
         name: 'requests',
-        component: requestsIndex,
+        component: RequestsIndex,
     },
 
     {
         path: '/commands/:id',
         name: 'command-preview',
-        component: commandsPreview,
+        component: CommandsPreview,
     },
 
     {
         path: '/commands',
         name: 'commands',
-        component: commandsIndex,
+        component: CommandsIndex,
     },
 
     {
         path: '/schedule/:id',
         name: 'schedule-preview',
-        component: schedulePreview,
+        component: SchedulePreview,
     },
 
     {
         path: '/schedule',
         name: 'schedule',
-        component: scheduleIndex,
+        component: ScheduleIndex,
     },
 
     {
         path: '/redis/:id',
         name: 'redis-preview',
-        component: redisPreview,
+        component: RedisPreview,
     },
 
     {
         path: '/redis',
         name: 'redis',
-        component: redisIndex,
+        component: RedisIndex,
     },
 
     {
         path: '/monitored-tags',
         name: 'monitored-tags',
-        component: monitoringIndex,
+        component: MonitoringIndex,
     },
 
     {
         path: '/gates/:id',
         name: 'gate-preview',
-        component: gatesPreview,
+        component: GatesPreview,
     },
 
     {
         path: '/gates',
         name: 'gates',
-        component: gatesIndex,
+        component: GatesIndex,
     },
 
     {
         path: '/views/:id',
         name: 'view-preview',
-        component: viewsPreview,
+        component: ViewsPreview,
     },
 
     {
         path: '/views',
         name: 'views',
-        component: viewsIndex,
+        component: ViewsIndex,
     },
 
     {
         path: '/client-requests/:id',
         name: 'client-request-preview',
-        component: clientRequestsPreview,
+        component: ClientRequestsPreview,
     },
 
     {
         path: '/client-requests',
         name: 'client-requests',
-        component: clientRequestsIndex,
+        component: ClientRequestsIndex,
     },
 ];
