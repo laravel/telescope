@@ -1,7 +1,7 @@
 <script type="text/ecmascript-6">
     import axios from 'axios';
-    import exceptionCodePreview from "../../components/ExceptionCodePreview.vue";
-    import stacktrace from "../../components/Stacktrace.vue";
+    import ExceptionCodePreview from "@/components/ExceptionCodePreview.vue";
+    import Stacktrace from "@/components/Stacktrace.vue";
 
     export default {
         components: {
