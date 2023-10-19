@@ -6,8 +6,8 @@
 
     export default {
         components: {
-            'code-preview': exceptionCodePreview,
-            'stack-trace': stacktrace
+            'code-preview': ExceptionCodePreview,
+            'stack-trace': Stacktrace
         },
 
 
