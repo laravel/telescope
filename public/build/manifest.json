@@ -7,17 +7,17 @@
     "css": [
       "assets/app-078b96bc.css"
     ],
-    "file": "assets/app-533c2021.js",
+    "file": "assets/app-b182eb7e.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
   "resources/sass/app-dark.scss": {
-    "file": "assets/app-dark-244cdf1c.css",
+    "file": "assets/app-dark-54427812.css",
     "isEntry": true,
     "src": "resources/sass/app-dark.scss"
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-da89c695.css",
+    "file": "assets/app-7fe7ae9e.css",
     "isEntry": true,
     "src": "resources/sass/app.scss"
   }
