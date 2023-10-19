@@ -43,11 +43,11 @@ const router = new VueRouter({
 });
 
 Vue.component('vue-json-pretty', VueJsonPretty);
-Vue.component('related-entries', relatedEntries);
-Vue.component('index-screen', indexScreen);
-Vue.component('preview-screen', previewScreen);
-Vue.component('alert', alertComponent);
-Vue.component('copy-clipboard', copyClipboard);
+Vue.component('related-entries', RelatedEntries);
+Vue.component('index-screen', IndexScreen);
+Vue.component('preview-screen', PreviewScreen);
+Vue.component('alert', AlertComponent);
+Vue.component('copy-clipboard', CopyClipboard);
 
 Vue.mixin(Base);
 
