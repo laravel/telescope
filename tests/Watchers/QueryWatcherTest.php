@@ -105,23 +105,23 @@ SQL
     public function test_query_watcher_considers_identical_queries_as_duplicates()
     {
         $query = 'select * from telescope_entries where type = ?';
-        
+
         $bindings = ['query'];
         $differentBindings = ['request'];
 
         $this->app->get('db')->select($query, $bindings);
         $this->app->get('db')->select($query, $bindings);
         $this->app->get('db')->select($query, $differentBindings);
-        
+
         $entries = $this->loadTelescopeEntries();
-        
+
         $this->assertCount(3, $entries);
-        
+
         $hashes = $entries->pluck('content.hash')->toArray();
-        
+
         // Ensure the hashes are the same for the queries with the same bindings.
         $this->assertEquals($hashes[0], $hashes[1]);
-        
+
         // Ensure the hashes are different for the queries with different bindings.
         $this->assertNotEquals($hashes[0], $hashes[2]);
         $this->assertNotEquals($hashes[1], $hashes[2]);
