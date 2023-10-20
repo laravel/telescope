@@ -68,7 +68,7 @@ class QueryWatcher extends Watcher
      */
     public function familyHash($event)
     {
-        return md5($event->sql);
+        return md5($this->replaceBindings($event));
     }
 
     /**
