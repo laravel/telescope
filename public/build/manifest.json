@@ -1,0 +1,24 @@
+{
+  "resources/js/app.css": {
+    "file": "assets/app-078b96bc.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.js": {
+    "css": [
+      "assets/app-078b96bc.css"
+    ],
+    "file": "assets/app-f966f027.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/sass/app-dark.scss": {
+    "file": "assets/app-dark-54427812.css",
+    "isEntry": true,
+    "src": "resources/sass/app-dark.scss"
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-7fe7ae9e.css",
+    "isEntry": true,
+    "src": "resources/sass/app.scss"
+  }
+}

@@ -1,219 +1,256 @@
+import MailPreview from './screens/mail/preview.vue';
+import MailIndex from './screens/mail/index.vue';
+import ExceptionsPreview from './screens/exceptions/preview.vue';
+import ExceptionsIndex from './screens/exceptions/index.vue';
+import DumpsIndex from './screens/dumps/index.vue';
+import LogsPreview from './screens/logs/preview.vue';
+import LogsIndex from './screens/logs/index.vue';
+import NotificationsPreview from './screens/notifications/preview.vue';
+import NotificationsIndex from './screens/notifications/index.vue';
+import JobsPreview from './screens/jobs/preview.vue';
+import JobsIndex from './screens/jobs/index.vue';
+import BatchesPreview from './screens/batches/preview.vue';
+import BatchesIndex from './screens/batches/index.vue';
+import EventsPreview from './screens/events/preview.vue';
+import EventsIndex from './screens/events/index.vue';
+import CachePreview from './screens/cache/preview.vue';
+import CacheIndex from './screens/cache/index.vue';
+import QueriesPreview from './screens/queries/preview.vue';
+import QueriesIndex from './screens/queries/index.vue';
+import ModelsPreview from './screens/models/preview.vue';
+import ModelsIndex from './screens/models/index.vue';
+import RequestsPreview from './screens/requests/preview.vue';
+import RequestsIndex from './screens/requests/index.vue';
+import CommandsPreview from './screens/commands/preview.vue';
+import CommandsIndex from './screens/commands/index.vue';
+import SchedulePreview from './screens/schedule/preview.vue';
+import ScheduleIndex from './screens/schedule/index.vue';
+import RedisPreview from './screens/redis/preview.vue';
+import RedisIndex from './screens/redis/index.vue';
+import MonitoringIndex from './screens/monitoring/index.vue';
+import GatesPreview from './screens/gates/preview.vue';
+import GatesIndex from './screens/gates/index.vue';
+import ViewsPreview from './screens/views/preview.vue';
+import ViewsIndex from './screens/views/index.vue';
+import ClientRequestsPreview from './screens/client-requests/preview.vue';
+import ClientRequestsIndex from './screens/client-requests/index.vue';
+
 export default [
     { path: '/', redirect: '/requests' },
 
     {
         path: '/mail/:id',
         name: 'mail-preview',
-        component: require('./screens/mail/preview').default,
+        component: MailPreview,
     },
 
     {
         path: '/mail',
         name: 'mail',
-        component: require('./screens/mail/index').default,
+        component: MailIndex,
     },
 
     {
         path: '/exceptions/:id',
         name: 'exception-preview',
-        component: require('./screens/exceptions/preview').default,
+        component: ExceptionsPreview,
     },
 
     {
         path: '/exceptions',
         name: 'exceptions',
-        component: require('./screens/exceptions/index').default,
+        component: ExceptionsIndex,
     },
 
     {
         path: '/dumps',
         name: 'dumps',
-        component: require('./screens/dumps/index').default,
+        component: DumpsIndex,
     },
 
     {
         path: '/logs/:id',
         name: 'log-preview',
-        component: require('./screens/logs/preview').default,
+        component: LogsPreview,
     },
 
     {
         path: '/logs',
         name: 'logs',
-        component: require('./screens/logs/index').default,
+        component: LogsIndex,
     },
 
     {
         path: '/notifications/:id',
         name: 'notification-preview',
-        component: require('./screens/notifications/preview').default,
+        component: NotificationsPreview,
     },
 
     {
         path: '/notifications',
         name: 'notifications',
-        component: require('./screens/notifications/index').default,
+        component: NotificationsIndex,
     },
 
     {
         path: '/jobs/:id',
         name: 'job-preview',
-        component: require('./screens/jobs/preview').default,
+        component: JobsPreview,
     },
 
     {
         path: '/jobs',
         name: 'jobs',
-        component: require('./screens/jobs/index').default,
+        component: JobsIndex,
     },
 
     {
         path: '/batches/:id',
         name: 'batch-preview',
-        component: require('./screens/batches/preview').default,
+        component: BatchesPreview,
     },
 
     {
         path: '/batches',
         name: 'batches',
-        component: require('./screens/batches/index').default,
+        component: BatchesIndex,
     },
 
     {
         path: '/events/:id',
         name: 'event-preview',
-        component: require('./screens/events/preview').default,
+        component: EventsPreview,
     },
 
     {
         path: '/events',
         name: 'events',
-        component: require('./screens/events/index').default,
+        component: EventsIndex,
     },
 
     {
         path: '/cache/:id',
         name: 'cache-preview',
-        component: require('./screens/cache/preview').default,
+        component: CachePreview,
     },
 
     {
         path: '/cache',
         name: 'cache',
-        component: require('./screens/cache/index').default,
+        component: CacheIndex,
     },
 
     {
         path: '/queries/:id',
         name: 'query-preview',
-        component: require('./screens/queries/preview').default,
+        component: QueriesPreview,
     },
 
     {
         path: '/queries',
         name: 'queries',
-        component: require('./screens/queries/index').default,
+        component: QueriesIndex,
     },
 
     {
         path: '/models/:id',
         name: 'model-preview',
-        component: require('./screens/models/preview').default,
+        component: ModelsPreview,
     },
 
     {
         path: '/models',
         name: 'models',
-        component: require('./screens/models/index').default,
+        component: ModelsIndex,
     },
 
     {
         path: '/requests/:id',
         name: 'request-preview',
-        component: require('./screens/requests/preview').default,
+        component: RequestsPreview,
     },
 
     {
         path: '/requests',
         name: 'requests',
-        component: require('./screens/requests/index').default,
+        component: RequestsIndex,
     },
 
     {
         path: '/commands/:id',
         name: 'command-preview',
-        component: require('./screens/commands/preview').default,
+        component: CommandsPreview,
     },
 
     {
         path: '/commands',
         name: 'commands',
-        component: require('./screens/commands/index').default,
+        component: CommandsIndex,
     },
 
     {
         path: '/schedule/:id',
         name: 'schedule-preview',
-        component: require('./screens/schedule/preview').default,
+        component: SchedulePreview,
     },
 
     {
         path: '/schedule',
         name: 'schedule',
-        component: require('./screens/schedule/index').default,
+        component: ScheduleIndex,
     },
 
     {
         path: '/redis/:id',
         name: 'redis-preview',
-        component: require('./screens/redis/preview').default,
+        component: RedisPreview,
     },
 
     {
         path: '/redis',
         name: 'redis',
-        component: require('./screens/redis/index').default,
+        component: RedisIndex,
     },
 
     {
         path: '/monitored-tags',
         name: 'monitored-tags',
-        component: require('./screens/monitoring/index').default,
+        component: MonitoringIndex,
     },
 
     {
         path: '/gates/:id',
         name: 'gate-preview',
-        component: require('./screens/gates/preview').default,
+        component: GatesPreview,
     },
 
     {
         path: '/gates',
         name: 'gates',
-        component: require('./screens/gates/index').default,
+        component: GatesIndex,
     },
 
     {
         path: '/views/:id',
         name: 'view-preview',
-        component: require('./screens/views/preview').default,
+        component: ViewsPreview,
     },
 
     {
         path: '/views',
         name: 'views',
-        component: require('./screens/views/index').default,
+        component: ViewsIndex,
     },
 
     {
         path: '/client-requests/:id',
         name: 'client-request-preview',
-        component: require('./screens/client-requests/preview').default,
+        component: ClientRequestsPreview,
     },
 
     {
         path: '/client-requests',
         name: 'client-requests',
-        component: require('./screens/client-requests/index').default,
+        component: ClientRequestsIndex,
     },
 ];
