@@ -5,3 +5,5 @@ on: [push]
 jobs:
   compile:
     uses: laravel/.github/.github/workflows/compile-assets.yml@main
+    with:
+      cmd: build
