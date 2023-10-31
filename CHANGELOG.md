@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.16.4...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.0...4.x)
+
+## [v4.17.0](https://github.com/laravel/telescope/compare/v4.16.4...v4.17.0) - 2023-10-31
+
+- Mix to Vite migration by [@esurov](https://github.com/esurov) in https://github.com/laravel/telescope/pull/1391
 
 ## [v4.16.4](https://github.com/laravel/telescope/compare/v4.16.3...v4.16.4) - 2023-09-25
 
