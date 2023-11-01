@@ -1,6 +1,15 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.1...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.2...4.x)
+
+## [v4.17.2](https://github.com/laravel/telescope/compare/v4.17.1...v4.17.2) - 2023-11-01
+
+### What's Changed
+
+- Revert "Fixes RelatedEntries is not loaded after migrating from mix to vite" by [@taylorotwell](https://github.com/taylorotwell) in https://github.com/laravel/telescope/pull/1402
+- Revert "[4.x] Mix to Vite migration" by [@taylorotwell](https://github.com/taylorotwell) in https://github.com/laravel/telescope/pull/1403
+
+**Full Changelog**: https://github.com/laravel/telescope/compare/v4.16.5...v4.17.2
 
 ## [v4.17.1](https://github.com/laravel/telescope/compare/v4.17.0...v4.17.1) - 2023-11-01
 
