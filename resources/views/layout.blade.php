@@ -14,7 +14,7 @@
     <!-- Style sheets-->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600" rel="stylesheet" />
-    @vite('resources/sass/' . $cssFile, '/vendor/telescope/build')
+    <link href="{{ asset(mix($cssFile, 'vendor/telescope')) }}" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="telescope" v-cloak>
@@ -232,6 +232,6 @@
     window.Telescope = @json($telescopeScriptVariables);
 </script>
 
-@vite('resources/js/app.js', '/vendor/telescope/build')
+<script src="{{ asset(mix('app.js', 'vendor/telescope')) }}"></script>
 </body>
 </html>
