@@ -1,4 +1,5 @@
 <script type="text/ecmascript-6">
+    import _ from 'lodash';
     import StylesMixin from './../mixins/entriesStyles';
 
 
