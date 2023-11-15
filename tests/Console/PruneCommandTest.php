@@ -30,4 +30,13 @@ class PruneCommandTest extends FeatureTestCase
 
         $this->assertDatabaseMissing('telescope_entries', ['uuid' => $recent->uuid]);
     }
+
+    public function test_prune_command_can_suppress_output()
+    {
+        $recent = EntryModelFactory::new()->create(['created_at' => now()->subHours(5)]);
+
+        $this->artisan('telescope:prune', ['-q' => ''])->doesntExpectOutput('0 entries pruned.');
+
+        $this->artisan('telescope:prune', ['--hours' => 4, '--quiet' => ''])->doesntExpectOutput('1 entries pruned.');
+    }
 }

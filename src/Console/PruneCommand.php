@@ -12,7 +12,7 @@ class PruneCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'telescope:prune {--hours=24 : The number of hours to retain Telescope data}';
+    protected $signature = 'telescope:prune {--hours=24 : The number of hours to retain Telescope data} {--q|quiet : Suppress output}';
 
     /**
      * The console command description.
@@ -29,6 +29,9 @@ class PruneCommand extends Command
      */
     public function handle(PrunableRepository $repository)
     {
-        $this->info($repository->prune(now()->subHours($this->option('hours'))).' entries pruned.');
+        $prunedCount = $repository->prune(now()->subHours($this->option('hours')));
+        if (! $this->option('quiet')) {
+            $this->info($prunedCount.' entries pruned.');
+        }
     }
 }
