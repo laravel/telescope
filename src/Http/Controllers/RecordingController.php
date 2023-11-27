@@ -35,7 +35,8 @@ class RecordingController extends Controller
         if ($this->cache->get('telescope:pause-recording')) {
             $this->cache->forget('telescope:pause-recording');
         } else {
-            $this->cache->put('telescope:pause-recording', true, now()->addDays(30));
+            $ttl = config('telescope.resume_after_pause') ? now()->addDays(30) : null;
+            $this->cache->put('telescope:pause-recording', true, $ttl);
         }
     }
 }

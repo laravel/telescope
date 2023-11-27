@@ -30,7 +30,8 @@ class PauseCommand extends Command
     public function handle(CacheRepository $cache)
     {
         if (! $cache->get('telescope:pause-recording')) {
-            $cache->put('telescope:pause-recording', true, now()->addDays(30));
+            $ttl = config('telescope.resume_after_pause') ? now()->addDays(30) : null;
+            $cache->put('telescope:pause-recording', true, $ttl);
         }
 
         $this->info('Telescope watchers paused successfully.');

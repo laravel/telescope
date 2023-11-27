@@ -66,6 +66,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Resume After Pause
+    |--------------------------------------------------------------------------
+    |
+    | This option may be used to configure whether Telescope should be
+    | automatically resumed when paused for more than 30 days.
+    |
+    */
+
+    'resume_after_pause' => env('TELESCOPE_RESUME_AFTER_PAUSE', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Route Middleware
     |--------------------------------------------------------------------------
     |
