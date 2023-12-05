@@ -364,8 +364,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function clear()
     {
-        $this->clearAllEntriesUsingChunk("telescope_entries");
-        $this->clearAllEntriesUsingChunk("telescope_monitoring");
+        $this->clearAllEntriesUsingChunk('telescope_entries');
+        $this->clearAllEntriesUsingChunk('telescope_monitoring');
     }
 
     /**
@@ -389,16 +389,16 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
         return DB::connection($this->connection)->table($table);
     }
 
-   /**
+    /**
      * Clear all the entries usning chunks.
      *
      * @param  string  $table
      * @return void
      */
-    private function clearAllEntriesUsingChunk($table) {
+    private function clearAllEntriesUsingChunk($table)
+    {
         do {
             $deleted =$this->table($table)->take($this->chunkSize)->delete();
-
         } while ($deleted !== 0);
     }
 }
