@@ -398,7 +398,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     private function clearAllEntriesUsingChunk($table)
     {
         do {
-            $deleted =$this->table($table)->take($this->chunkSize)->delete();
+            $deleted = $this->table($table)->take($this->chunkSize)->delete();
         } while ($deleted !== 0);
     }
 }
