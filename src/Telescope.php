@@ -75,7 +75,7 @@ class Telescope
     /**
      * The list of hidden request headers.
      *
-     * @var array<int|string, string|callable>
+     * @var array<int|string, string|Closure>
      */
     public static $hiddenRequestHeaders = [
         'authorization',
@@ -85,7 +85,7 @@ class Telescope
     /**
      * The list of hidden request parameters.
      *
-     * @var array<int|string, string|callable>
+     * @var array<int|string, string|Closure>
      */
     public static $hiddenRequestParameters = [
         'password',
@@ -95,7 +95,7 @@ class Telescope
     /**
      * The list of hidden response parameters.
      *
-     * @var array<int|string, string|callable>
+     * @var array<int|string, string|Closure>
      */
     public static $hiddenResponseParameters = [];
 
@@ -729,10 +729,18 @@ class Telescope
      */
     public static function hideRequestHeaders(array $headers)
     {
-        static::$hiddenRequestHeaders = array_values(array_unique(array_merge(
-            static::$hiddenRequestHeaders,
-            $headers
-        )));
+        /**
+         * @var Collection<int, string> $regular
+         * @var Collection<string, Closure> $closures
+         */
+        [$closures, $regular] = Collection::wrap($headers)
+            ->merge(static::$hiddenRequestHeaders)
+            ->partition(fn($item) => $item instanceof Closure);
+
+        static::$hiddenRequestHeaders = $regular
+            ->unique()
+            ->merge($closures)
+            ->toArray();
 
         return new static;
     }
@@ -761,10 +769,18 @@ class Telescope
      */
     public static function hideResponseParameters(array $attributes)
     {
-        static::$hiddenResponseParameters = array_values(array_unique(array_merge(
-            static::$hiddenResponseParameters,
-            $attributes
-        )));
+        /**
+         * @var Collection<int, string> $regular
+         * @var Collection<string, Closure> $closures
+         */
+        [$closures, $regular] = Collection::wrap($attributes)
+            ->merge(static::$hiddenResponseParameters)
+            ->partition(fn($item) => $item instanceof Closure);
+
+        static::$hiddenResponseParameters = $regular
+            ->unique()
+            ->merge($closures)
+            ->toArray();
 
         return new static;
     }
