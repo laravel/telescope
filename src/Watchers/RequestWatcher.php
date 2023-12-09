@@ -123,15 +123,24 @@ class RequestWatcher extends Watcher
     /**
      * Hide the given parameters.
      *
-     * @param  array  $data
-     * @param  array  $hidden
-     * @return mixed
+     * @param  array<string,mixed>  $data
+     * @param  array<int|string, string|callable>  $hidden
+     * @return array<string, mixed>
      */
     protected function hideParameters($data, $hidden)
     {
-        foreach ($hidden as $parameter) {
-            if (Arr::get($data, $parameter)) {
-                Arr::set($data, $parameter, '********');
+        foreach ($hidden as $key => $value) {
+            $hasCallback = is_callable($value);
+            $key = $hasCallback ? $key : $value;
+            $callback = $hasCallback ? $value : null;
+
+            $value = Arr::get($data, $key);
+            if ($value !== null) {
+                $replacement = ($callback !== null)
+                    ? $callback($value, $key)
+                    : '********';
+
+                Arr::set($data, $key, $replacement);
             }
         }
 

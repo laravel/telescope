@@ -75,7 +75,7 @@ class Telescope
     /**
      * The list of hidden request headers.
      *
-     * @var array
+     * @var array<int|string, string|callable>
      */
     public static $hiddenRequestHeaders = [
         'authorization',
@@ -85,7 +85,7 @@ class Telescope
     /**
      * The list of hidden request parameters.
      *
-     * @var array
+     * @var array<int|string, string|callable>
      */
     public static $hiddenRequestParameters = [
         'password',
@@ -95,7 +95,7 @@ class Telescope
     /**
      * The list of hidden response parameters.
      *
-     * @var array
+     * @var array<int|string, string|callable>
      */
     public static $hiddenResponseParameters = [];
 
