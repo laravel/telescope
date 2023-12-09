@@ -735,7 +735,7 @@ class Telescope
          */
         [$closures, $regular] = Collection::wrap($headers)
             ->merge(static::$hiddenRequestHeaders)
-            ->partition(fn($item) => $item instanceof Closure);
+            ->partition(fn ($item) => $item instanceof Closure);
 
         static::$hiddenRequestHeaders = $regular
             ->unique()
@@ -775,7 +775,7 @@ class Telescope
          */
         [$closures, $regular] = Collection::wrap($attributes)
             ->merge(static::$hiddenResponseParameters)
-            ->partition(fn($item) => $item instanceof Closure);
+            ->partition(fn ($item) => $item instanceof Closure);
 
         static::$hiddenResponseParameters = $regular
             ->unique()
