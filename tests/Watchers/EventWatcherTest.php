@@ -114,7 +114,7 @@ class EventWatcherTest extends FeatureTestCase
         $this->assertSame($formatted, $method->invoke(new EventWatcher, DummyEvent::class)[0]['name']);
     }
 
-    public function formatListenersProvider()
+    public static function formatListenersProvider()
     {
         return [
             'class string' => [

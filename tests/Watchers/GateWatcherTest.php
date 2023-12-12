@@ -20,8 +20,6 @@ class GateWatcherTest extends FeatureTestCase
             GateWatcher::class => true,
         ]);
 
-        $app->setBasePath(dirname(__FILE__, 3));
-
         Gate::define('potato', function (User $user) {
             return $user->email === 'allow';
         });
@@ -37,6 +35,8 @@ class GateWatcherTest extends FeatureTestCase
 
     public function test_gate_watcher_registers_allowed_entries()
     {
+        $this->app->setBasePath(dirname(__FILE__, 3));
+
         $check = Gate::forUser(new User('allow'))->check('potato');
 
         $entry = $this->loadTelescopeEntries()->first();
@@ -52,6 +52,8 @@ class GateWatcherTest extends FeatureTestCase
 
     public function test_gate_watcher_registers_denied_entries()
     {
+        $this->app->setBasePath(dirname(__FILE__, 3));
+
         $check = Gate::forUser(new User('deny'))->check('potato', ['banana']);
 
         $entry = $this->loadTelescopeEntries()->first();
@@ -59,7 +61,7 @@ class GateWatcherTest extends FeatureTestCase
         $this->assertFalse($check);
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(55, $entry->content['line']);
+        $this->assertSame(57, $entry->content['line']);
         $this->assertSame('potato', $entry->content['ability']);
         $this->assertSame('denied', $entry->content['result']);
         $this->assertSame(['banana'], $entry->content['arguments']);
@@ -67,6 +69,8 @@ class GateWatcherTest extends FeatureTestCase
 
     public function test_gate_watcher_registers_allowed_guest_entries()
     {
+        $this->app->setBasePath(dirname(__FILE__, 3));
+
         $check = Gate::check('guest potato');
 
         $entry = $this->loadTelescopeEntries()->first();
@@ -74,7 +78,7 @@ class GateWatcherTest extends FeatureTestCase
         $this->assertTrue($check);
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(70, $entry->content['line']);
+        $this->assertSame(74, $entry->content['line']);
         $this->assertSame('guest potato', $entry->content['ability']);
         $this->assertSame('allowed', $entry->content['result']);
         $this->assertEmpty($entry->content['arguments']);
@@ -82,6 +86,8 @@ class GateWatcherTest extends FeatureTestCase
 
     public function test_gate_watcher_registers_denied_guest_entries()
     {
+        $this->app->setBasePath(dirname(__FILE__, 3));
+
         $check = Gate::check('deny potato', ['gelato']);
 
         $entry = $this->loadTelescopeEntries()->first();
@@ -89,7 +95,7 @@ class GateWatcherTest extends FeatureTestCase
         $this->assertFalse($check);
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(85, $entry->content['line']);
+        $this->assertSame(91, $entry->content['line']);
         $this->assertSame('deny potato', $entry->content['ability']);
         $this->assertSame('denied', $entry->content['result']);
         $this->assertSame(['gelato'], $entry->content['arguments']);
@@ -97,6 +103,8 @@ class GateWatcherTest extends FeatureTestCase
 
     public function test_gate_watcher_registers_allowed_policy_entries()
     {
+        $this->app->setBasePath(dirname(__FILE__, 3));
+
         Gate::policy(TestResource::class, TestPolicy::class);
 
         (new TestController())->create(new TestResource());
@@ -105,7 +113,7 @@ class GateWatcherTest extends FeatureTestCase
 
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(250, $entry->content['line']);
+        $this->assertSame(271, $entry->content['line']);
         $this->assertSame('create', $entry->content['ability']);
         $this->assertSame('allowed', $entry->content['result']);
         $this->assertSame([[]], $entry->content['arguments']);
@@ -113,6 +121,8 @@ class GateWatcherTest extends FeatureTestCase
 
     public function test_gate_watcher_registers_after_checks()
     {
+        $this->app->setBasePath(dirname(__FILE__, 3));
+
         Gate::after(function (?User $user) {
             return true;
         });
@@ -124,7 +134,7 @@ class GateWatcherTest extends FeatureTestCase
         $this->assertTrue($check);
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(120, $entry->content['line']);
+        $this->assertSame(130, $entry->content['line']);
         $this->assertSame('foo-bar', $entry->content['ability']);
         $this->assertSame('allowed', $entry->content['result']);
         $this->assertEmpty($entry->content['arguments']);
@@ -132,6 +142,8 @@ class GateWatcherTest extends FeatureTestCase
 
     public function test_gate_watcher_registers_denied_policy_entries()
     {
+        $this->app->setBasePath(dirname(__FILE__, 3));
+
         Gate::policy(TestResource::class, TestPolicy::class);
 
         try {
@@ -144,7 +156,7 @@ class GateWatcherTest extends FeatureTestCase
 
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(255, $entry->content['line']);
+        $this->assertSame(276, $entry->content['line']);
         $this->assertSame('update', $entry->content['ability']);
         $this->assertSame('denied', $entry->content['result']);
         $this->assertSame([[]], $entry->content['arguments']);
@@ -152,6 +164,8 @@ class GateWatcherTest extends FeatureTestCase
 
     public function test_gate_watcher_registers_allowed_response_policy_entries()
     {
+        $this->app->setBasePath(dirname(__FILE__, 3));
+
         Gate::policy(TestResource::class, TestPolicy::class);
 
         try {
@@ -164,7 +178,7 @@ class GateWatcherTest extends FeatureTestCase
 
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(245, $entry->content['line']);
+        $this->assertSame(266, $entry->content['line']);
         $this->assertSame('view', $entry->content['ability']);
         $this->assertSame('allowed', $entry->content['result']);
         $this->assertSame([[]], $entry->content['arguments']);
@@ -172,6 +186,8 @@ class GateWatcherTest extends FeatureTestCase
 
     public function test_gate_watcher_registers_denied_response_policy_entries()
     {
+        $this->app->setBasePath(dirname(__FILE__, 3));
+
         Gate::policy(TestResource::class, TestPolicy::class);
 
         try {
@@ -184,7 +200,7 @@ class GateWatcherTest extends FeatureTestCase
 
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(260, $entry->content['line']);
+        $this->assertSame(281, $entry->content['line']);
         $this->assertSame('delete', $entry->content['ability']);
         $this->assertSame('denied', $entry->content['result']);
         $this->assertSame([[]], $entry->content['arguments']);
@@ -213,6 +229,11 @@ class User implements Authenticatable
     public function getAuthPassword()
     {
         return 'secret';
+    }
+
+    public function getAuthPasswordName()
+    {
+        return 'passord name';
     }
 
     public function getRememberToken()

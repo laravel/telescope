@@ -95,6 +95,11 @@ class UserEloquent extends Model implements Authenticatable
         return $this->password;
     }
 
+    public function getAuthPasswordName()
+    {
+        return 'passord name';
+    }
+
     public function getRememberToken()
     {
         return 'i-am-telescope';

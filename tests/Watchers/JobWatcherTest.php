@@ -142,15 +142,17 @@ class JobWatcherTest extends FeatureTestCase
             $table->unsignedInteger('created_at');
         });
 
-        Schema::create('failed_jobs', function (Blueprint $table) {
-            $table->uuid('uuid');
-            $table->bigIncrements('id');
-            $table->text('connection');
-            $table->text('queue');
-            $table->longText('payload');
-            $table->longText('exception');
-            $table->timestamp('failed_at')->useCurrent();
-        });
+        if (! Schema::hasTable('failed_jobs')) {
+            Schema::create('failed_jobs', function (Blueprint $table) {
+                $table->uuid('uuid');
+                $table->bigIncrements('id');
+                $table->text('connection');
+                $table->text('queue');
+                $table->longText('payload');
+                $table->longText('exception');
+                $table->timestamp('failed_at')->useCurrent();
+            });
+        }
     }
 }
 

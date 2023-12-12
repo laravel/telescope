@@ -21,7 +21,7 @@ class RouteTest extends FeatureTestCase
         $this->registerAssertJsonExactFragmentMacro();
     }
 
-    public function telescopeIndexRoutesProvider()
+    public static function telescopeIndexRoutesProvider()
     {
         return [
             'Mail' => ['/telescope/telescope-api/mail', EntryType::MAIL],

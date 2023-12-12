@@ -132,6 +132,11 @@ class Authenticated implements Authenticatable
         return 'secret';
     }
 
+    public function getAuthPasswordName()
+    {
+        return 'passord name';
+    }
+
     public function getRememberToken()
     {
         return 'i-am-telescope';

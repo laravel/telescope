@@ -16,7 +16,7 @@ class LogWatcherTest extends FeatureTestCase
 
         $app->get('config')->set('logging.default', 'syslog');
 
-        $config = match ($this->getName(false)) {
+        $config = match (method_exists($this, 'name') ? $this->name() : $this->getName(false)) {
             'test_log_watcher_registers_entry_for_any_level_by_default' => true,
             'test_log_watcher_only_registers_entries_for_the_specified_error_level_priority' => [
                 'enabled' => true,
@@ -38,7 +38,7 @@ class LogWatcherTest extends FeatureTestCase
         ]);
     }
 
-    public function logLevelProvider()
+    public static function logLevelProvider()
     {
         return [
             [LogLevel::EMERGENCY],
