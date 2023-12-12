@@ -142,7 +142,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
 
         $entries->chunk($this->chunkSize)->each(function ($chunked) use ($table) {
             $table->insert($chunked->map(function ($entry) {
-                $entry->content = json_encode($entry->content);
+                $entry->content = json_encode($entry->content, JSON_INVALID_UTF8_SUBSTITUTE);
 
                 return $entry->toArray();
             })->toArray());
@@ -201,13 +201,15 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     }
 
     /**
-     * Store the given entry updates.
+     * Store the given entry updates and return the failed updates.
      *
      * @param  \Illuminate\Support\Collection|\Laravel\Telescope\EntryUpdate[]  $updates
-     * @return void
+     * @return \Illuminate\Support\Collection|null
      */
     public function update(Collection $updates)
     {
+        $failedUpdates = [];
+
         foreach ($updates as $update) {
             $entry = $this->table('telescope_entries')
                             ->where('uuid', $update->uuid)
@@ -215,6 +217,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                             ->first();
 
             if (! $entry) {
+                $failedUpdates[] = $update;
+
                 continue;
             }
 
@@ -229,6 +233,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
 
             $this->updateTags($update);
         }
+
+        return collect($failedUpdates);
     }
 
     /**
@@ -363,8 +369,13 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function clear()
     {
-        $this->table('telescope_entries')->delete();
-        $this->table('telescope_monitoring')->delete();
+        do {
+            $deleted = $this->table('telescope_entries')->take($this->chunkSize)->delete();
+        } while ($deleted !== 0);
+
+        do {
+            $deleted = $this->table('telescope_monitoring')->take($this->chunkSize)->delete();
+        } while ($deleted !== 0);
     }
 
     /**

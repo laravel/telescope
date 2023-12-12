@@ -1,8 +1,9 @@
 # Upgrade Guide
 
-With every upgrade, make sure to publish Telescope's assets:
+With every upgrade, make sure to publish Telescope's assets and clear the view cache:
 
     php artisan telescope:publish
+
     php artisan view:clear
 
 ## Upgrading To 4.0 From 3.x

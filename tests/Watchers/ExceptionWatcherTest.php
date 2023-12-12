@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
+use Error;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
@@ -36,7 +37,25 @@ class ExceptionWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::EXCEPTION, $entry->type);
         $this->assertSame(BananaException::class, $entry->content['class']);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(30, $entry->content['line']);
+        $this->assertSame(31, $entry->content['line']);
+        $this->assertSame('Something went bananas.', $entry->content['message']);
+        $this->assertArrayHasKey('trace', $entry->content);
+    }
+
+    public function test_exception_watcher_register_throwable_entries()
+    {
+        $handler = $this->app->get(ExceptionHandler::class);
+
+        $exception = new BananaError('Something went bananas.');
+
+        $handler->report($exception);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::EXCEPTION, $entry->type);
+        $this->assertSame(BananaError::class, $entry->content['class']);
+        $this->assertSame(__FILE__, $entry->content['file']);
+        $this->assertSame(49, $entry->content['line']);
         $this->assertSame('Something went bananas.', $entry->content['message']);
         $this->assertArrayHasKey('trace', $entry->content);
     }
@@ -76,6 +95,11 @@ class ExceptionWatcherTest extends FeatureTestCase
 }
 
 class BananaException extends Exception
+{
+    //
+}
+
+class BananaError extends Error
 {
     //
 }

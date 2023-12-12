@@ -14,14 +14,18 @@
         }
     ],
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^8.0",
         "ext-json": "*",
-        "laravel/framework": "^8.29|^9.0",
+        "laravel/framework": "^8.37|^9.0|^10.0",
         "symfony/var-dumper": "^5.0|^6.0"
     },
     "require-dev": {
         "ext-gd": "*",
-        "orchestra/testbench": "^6.0|^7.0"
+        "guzzlehttp/guzzle": "^6.0|^7.0",
+        "laravel/octane": "^1.4",
+        "orchestra/testbench": "^6.0|^7.0|^8.0",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^9.0"
     },
     "autoload": {
         "psr-4": {
@@ -31,7 +35,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Laravel\\Telescope\\Tests\\": "tests/"
+            "Laravel\\Telescope\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\": "workbench/database/"
         }
     },
     "extra": {
@@ -46,6 +52,19 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "scripts": {
+        "post-autoload-dump": "@composer run prepare",
+        "prepare": "@php ./vendor/bin/testbench package:discover --ansi",
+        "build": [
+            "@php ./vendor/bin/testbench package:create-sqlite-db",
+            "@php ./vendor/bin/testbench telescope:publish --force",
+            "@php ./vendor/bin/testbench migrate:refresh"
+        ],
+        "start": [
+            "@composer run build",
+            "@php ./vendor/bin/testbench serve"
+        ]
     },
     "minimum-stability": "dev",
     "prefer-stable": true

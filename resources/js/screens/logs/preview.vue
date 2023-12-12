@@ -27,9 +27,9 @@
     <preview-screen title="Log Details" resource="logs" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">Level</td>
+                <td class="table-fit text-muted">Level</td>
                 <td>
-                    <span class="badge font-weight-light" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">
+                    <span class="badge" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">
                         {{slotProps.entry.content.level}}
                     </span>
                 </td>
@@ -37,7 +37,7 @@
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
-            <div class="card mt-5">
+            <div class="card mt-5 overflow-hidden">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
                         <a class="nav-link" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Log Message</a>
@@ -48,11 +48,17 @@
                 </ul>
                 <div>
                     <!-- Log Message -->
-                    <pre class="code-bg p-4 mb-0 text-white" v-show="currentTab=='message'">{{slotProps.entry.content.message}}</pre>
+                    <div v-show="currentTab=='message'">
+                        <copy-clipboard :data="slotProps.entry.content.message">
+                            <pre class="code-bg p-4 mb-0 text-white">{{ slotProps.entry.content.message }}</pre>
+                        </copy-clipboard>
+                    </div>
 
                     <!-- Context -->
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='context'">
-                        <vue-json-pretty :data="slotProps.entry.content.context"></vue-json-pretty>
+                        <copy-clipboard :data="slotProps.entry.content.context">
+                            <vue-json-pretty :data="slotProps.entry.content.context"></vue-json-pretty>
+                        </copy-clipboard>
                     </div>
                 </div>
             </div>

@@ -1,42 +1,90 @@
-$font-family-base: Nunito, sans-serif;
+@import 'colors';
 
-$font-size-base: 0.95rem;
-$badge-font-size: 0.95rem;
+$font-family-base: Figtree, sans-serif;
+$font-weight-bold: 600;
+
+$font-size-base: 1rem;
+$badge-font-size: 0.875rem;
 
 $primary: #4040c8;
-$secondary: #dae1e7;
-$success: #51d88a;
-$info: #bcdefa;
-$warning: #fff382;
-$danger: #ef5753;
+$secondary: $gray-600;
+$success: $emerald-600;
+$info: $blue-600;
+$warning: $amber-600;
+$danger: $red-600;
 
-$body-bg: #edf1f3;
+$body-bg: $gray-100;
+$body-color: $gray-900;
+
+$text-muted: $gray-500;
+
+$border-radius-lg: 6px;
 
 $btn-focus-width: 0;
 
-$sidebar-nav-color: #2a5164;
-$sidebar-icon-color: #c3cbd3;
+$logo-color: $gray-700;
 
-$pill-link-active: $primary;
+$link-color: $indigo-500;
+$link-hover-color: $indigo-600;
 
-$border-color: #efefef;
-$table-headers-color: #f3f4f6;
-$table-border-color: #efefef;
-$table-hover-bg: #f1f7fa;
+$sidebar-nav-color: $gray-600;
+$sidebar-nav-hover-color: $primary;
+$sidebar-nav-hover-bg: $gray-200;
+$sidebar-nav-icon-color: $gray-400;
+$sidebar-nav-active-bg: $gray-200;
+$sidebar-nav-active-color: $primary;
+$sidebar-nav-active-icon-color: $primary;
 
-$header-border-color: #d5dfe9;
+$pill-link: $gray-600;
+$pill-link-active: $indigo-600;
+$pill-link-hover: $gray-800;
 
-$card-cap-bg: #fff;
-$card-bg-secondary: #f1f7fa;
-$card-shadow-color: #cdd8df;
+$border-color: $gray-300;
+$table-headers-color: $gray-100;
+$table-border-color: $gray-200;
+$table-hover-bg: $gray-100;
 
-$code-bg: #120f12;
+$header-border-color: $table-border-color;
 
-$paginator-button-color: #9ea7ac;
+$input-bg: $white;
+$input-color: $gray-800;
+$input-border-color: $border-color;
 
-$new-entries-bg: #fffee9;
+$card-cap-bg: $white;
+$card-bg-secondary: $gray-100;
+$card-bg: $white;
+$card-border-radius: $border-radius-lg;
 
-$control-action-icon-color: #ccd2df;
+$code-bg: #292d3e;
+
+$new-entries-bg: $indigo-50;
+$new-code-entries-bg: $gray-600;
+
+$control-action-icon-color: $gray-300;
+$control-action-icon-hover: $indigo-600;
+
+$nav-pills-link-active-bg: $gray-200;
+
+$dropdown-bg: $white;
+$dropdown-link-color: $gray-700;
+
+$btn-muted-color: $gray-600;
+$btn-muted-bg: $gray-200;
+$btn-muted-hover-color: $gray-900;
+$btn-muted-hover-bg: $gray-300;
+$btn-muted-active-color: $white;
+$btn-muted-active-bg: $primary;
+
+$badge-secondary-bg: $gray-200;
+$badge-secondary-color: $gray-600;
+$badge-success-bg: $emerald-100;
+$badge-success-color: $emerald-600;
+$badge-info-bg: $blue-100;
+$badge-info-color: $blue-600;
+$badge-warning-bg: $amber-100;
+$badge-warning-color: $amber-600;
+$badge-danger-bg: $red-100;
+$badge-danger-color: $red-600;
 
 $grid-breakpoints: (
     xs: 0,

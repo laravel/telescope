@@ -43,6 +43,11 @@ class FeatureTestCase extends TestCase
         ];
     }
 
+    public function ignorePackageDiscoveriesFrom()
+    {
+        return ['*', 'spatie/laravel-ray'];
+    }
+
     protected function resolveApplicationCore($app)
     {
         parent::resolveApplicationCore($app);
@@ -65,6 +70,8 @@ class FeatureTestCase extends TestCase
         $config->set('database.default', 'testbench');
 
         $config->set('telescope.storage.database.connection', 'testbench');
+
+        $config->set('queue.batching.database', 'testbench');
 
         $config->set('database.connections.testbench', [
             'driver' => 'sqlite',

@@ -51,15 +51,15 @@ class ModelWatcher extends Watcher
             return;
         }
 
-        $model = FormatModel::given($data[0]);
+        $modelClass = FormatModel::given($data['model'] ?? $data[0]);
 
-        $changes = $data[0]->getChanges();
+        $changes = ($data['model'] ?? $data[0])->getChanges();
 
         Telescope::recordModelEvent(IncomingEntry::make(array_filter([
             'action' => $this->action($event),
-            'model' => $model,
+            'model' => $modelClass,
             'changes' => empty($changes) ? null : $changes,
-        ]))->tags([$model]));
+        ]))->tags([$modelClass]));
     }
 
     /**
@@ -71,7 +71,7 @@ class ModelWatcher extends Watcher
     public function recordHydrations($data)
     {
         if (! ($this->options['hydrations'] ?? false)
-            || ! $this->shouldRecordHydration($modelClass = get_class($data[0]))) {
+            || ! $this->shouldRecordHydration($modelClass = get_class($data['model'] ?? $data[0]))) {
             return;
         }
 
@@ -84,7 +84,13 @@ class ModelWatcher extends Watcher
 
             Telescope::recordModelEvent($this->hydrationEntries[$modelClass]);
         } else {
-            $this->hydrationEntries[$modelClass]->content['count']++;
+            $entry = $this->hydrationEntries[$modelClass];
+
+            if (is_string($this->hydrationEntries[$modelClass]->content)) {
+                $entry->content = json_decode($entry->content, true);
+            }
+
+            $entry->content['count']++;
         }
     }
 

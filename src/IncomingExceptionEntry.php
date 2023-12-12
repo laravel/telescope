@@ -9,14 +9,14 @@ class IncomingExceptionEntry extends IncomingEntry
     /**
      * The underlying exception instance.
      *
-     * @var \Exception
+     * @var \Throwable
      */
     public $exception;
 
     /**
      * Create a new incoming entry instance.
      *
-     * @param  \Exception  $exception
+     * @param  \Throwable  $exception
      * @param  array  $content
      * @return void
      */

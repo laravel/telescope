@@ -106,9 +106,9 @@
 </script>
 
 <template>
-    <div class="card">
+    <div class="card overflow-hidden">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <h5>Dumps</h5>
+            <h2 class="h6 m-0">Dumps</h2>
         </div>
 
         <p v-if="recordingStatus !== 'enabled'" class="mt-0 mb-0 disabled-watcher">
@@ -142,10 +142,10 @@
             <div v-html="dump"></div>
         </div>
 
-        <div v-if="ready && entries.length > 0" class="code-bg px-3 pt-3">
+        <div v-if="ready && entries.length > 0" class="code-bg">
             <transition-group tag="div" name="list">
                 
-                <div v-for="entry in entries" :key="entry.id" class="mb-4">
+                <div v-for="entry in entries" :key="entry.id" class="p-3">
                     <div class="entryPointDescription d-flex justify-content-between align-items-center">
                         <router-link :to="{name:'request-preview', params:{id: entry.content.entry_point_uuid}}" class="control-action" v-if="entry.content.entry_point_type == 'request'">
                             Request: {{entry.content.entry_point_description}}
@@ -160,7 +160,7 @@
                         <span class="text-white text-monospace" style="font-size: 12px;">{{timeAgo(entry.created_at)}}</span>
                     </div>
 
-                    <div v-html="entry.content.dump" ref="dumps"></div>
+                    <div class="mt-2" v-html="entry.content.dump" ref="dumps"></div>
                 </div>
             </transition-group>
         </div>
@@ -174,12 +174,7 @@
 
     pre.sf-dump {
         padding-left: 0 !important;
-    }
-
-    .entryPointDescription {
-        background: black;
-        padding-left: 5px;
-        padding-right: 5px;
+        margin-bottom: 0 !important;
     }
 
     .entryPointDescription a {

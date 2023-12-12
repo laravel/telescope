@@ -28,51 +28,51 @@
     <preview-screen title="Job Details" resource="jobs" :id="$route.params.id" entry-point="true">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
-                <td class="table-fit font-weight-bold">Status</td>
+                <td class="table-fit text-muted">Status</td>
                 <td>
-                    <span class="badge font-weight-light" :class="'badge-'+jobStatusClass(slotProps.entry.content.status)">
+                    <span class="badge" :class="'badge-'+jobStatusClass(slotProps.entry.content.status)">
                         {{slotProps.entry.content.status}}
                     </span>
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Job</td>
+                <td class="table-fit text-muted">Job</td>
                 <td>
                     {{slotProps.entry.content.name}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Connection</td>
+                <td class="table-fit text-muted">Connection</td>
                 <td>
                     {{slotProps.entry.content.connection}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Queue</td>
+                <td class="table-fit text-muted">Queue</td>
                 <td>
                     {{slotProps.entry.content.queue}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Tries</td>
+                <td class="table-fit text-muted">Tries</td>
                 <td>
                     {{slotProps.entry.content.tries || '-'}}
                 </td>
             </tr>
 
             <tr>
-                <td class="table-fit font-weight-bold">Timeout</td>
+                <td class="table-fit text-muted">Timeout</td>
                 <td>
                     {{slotProps.entry.content.timeout || '-'}}
                 </td>
             </tr>
 
             <tr v-if="slotProps.entry.content.data.batchId">
-                <td class="table-fit font-weight-bold">Batch</td>
+                <td class="table-fit text-muted">Batch</td>
                 <td>
                     <router-link :to="{name:'batch-preview', params:{id: slotProps.entry.content.data.batchId}}" class="control-action">
                         {{slotProps.entry.content.data.batchId}}
@@ -100,7 +100,9 @@
                 </ul>
                 <div>
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='data'">
-                        <vue-json-pretty :data="slotProps.entry.content.data"></vue-json-pretty>
+                        <copy-clipboard :data="slotProps.entry.content.data">
+                            <vue-json-pretty :data="slotProps.entry.content.data"></vue-json-pretty>
+                        </copy-clipboard>
                     </div>
                     <pre class="code-bg p-4 mb-0 text-white" v-if="slotProps.entry.content.exception" v-show="currentTab=='exception'">{{slotProps.entry.content.exception.message}}</pre>
                     <stack-trace :trace="slotProps.entry.content.exception.trace" v-if="slotProps.entry.content.exception" v-show="currentTab=='trace'"></stack-trace>

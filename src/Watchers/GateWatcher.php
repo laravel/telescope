@@ -4,7 +4,6 @@ namespace Laravel\Telescope\Watchers;
 
 use Illuminate\Auth\Access\Events\GateEvaluated;
 use Illuminate\Auth\Access\Response;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Laravel\Telescope\FormatModel;
@@ -40,13 +39,13 @@ class GateWatcher extends Watcher
     /**
      * Record a gate check.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable|null  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable|mixed|null  $user
      * @param  string  $ability
      * @param  bool  $result
      * @param  array  $arguments
      * @return bool
      */
-    public function recordGateCheck(?Authenticatable $user, $ability, $result, $arguments)
+    public function recordGateCheck($user, $ability, $result, $arguments)
     {
         if (! Telescope::isRecording() || $this->shouldIgnore($ability)) {
             return;

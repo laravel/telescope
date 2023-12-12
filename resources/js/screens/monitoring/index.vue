@@ -82,7 +82,7 @@
 <template>
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <h5>Monitoring</h5>
+            <h2 class="h6 m-0">Monitoring</h2>
 
             <button class="btn btn-primary" v-on:click.prevent="openNewTagModal">Monitor</button>
         </div>
@@ -102,7 +102,7 @@
         </div>
 
 
-        <table v-if="ready && tags.length > 0" class="table table-hover table-sm mb-0">
+        <table v-if="ready && tags.length > 0" class="table table-hover mb-0">
             <thead>
             <th>Tag</th>
             <th></th>
@@ -136,7 +136,7 @@
                     </div>
 
 
-                    <div class="modal-footer justify-content-center">
+                    <div class="modal-footer justify-content-start flex-row-reverse">
                         <button class="btn btn-primary" @click="monitorNewTag">
                             Monitor
                         </button>

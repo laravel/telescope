@@ -16,6 +16,10 @@ class RedisWatcher extends Watcher
      */
     public function register($app)
     {
+        if (! $app->bound('redis')) {
+            return;
+        }
+
         $app['events']->listen(CommandExecuted::class, [$this, 'recordCommand']);
 
         foreach ((array) $app['redis']->connections() as $connection) {

@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    width: 1140px;
+    max-width: 1440px;
 }
 
 html {
@@ -25,36 +25,49 @@ svg.icon {
 .header {
     border-bottom: solid 1px $header-border-color;
 
-    svg.logo {
-        width: 1.7rem;
-        height: 1.7rem;
+    .logo {
+        text-decoration: none;
+        color: $logo-color;
+
+        svg {
+            width: 1.7rem;
+            height: 1.7rem;
+        }
     }
 }
 
 .sidebar .nav-item {
     a {
         color: $sidebar-nav-color;
-        padding: 0.5rem 0rem;
+        padding: 0.5rem 0.75rem;
+        margin-bottom: 4px;
+        border-radius: $border-radius-lg;
 
         svg {
-            width: 1rem;
-            height: 1rem;
+            width: 1.25rem;
+            height: 1.25rem;
             margin-right: 15px;
-            fill: $sidebar-icon-color;
+            fill: $sidebar-nav-icon-color;
+        }
+
+        &:hover {
+            background-color: $sidebar-nav-hover-bg;
+            color: $sidebar-nav-hover-color;
         }
 
         &.active {
-            color: $primary;
+            background-color: $sidebar-nav-active-bg;
+            color: $sidebar-nav-active-color;
 
             svg {
-                fill: $primary;
+                fill: $sidebar-nav-active-icon-color;
             }
         }
     }
 }
 
 .card {
-    box-shadow: 0 2px 3px $card-shadow-color;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     border: none;
 
     .bottom-radius {
@@ -67,6 +80,7 @@ svg.icon {
         padding-bottom: 0.7rem;
         background-color: $card-cap-bg;
         border-bottom: none;
+        min-height: 60px;
 
         .btn-group {
             .btn {
@@ -74,8 +88,28 @@ svg.icon {
             }
         }
 
-        h5 {
-            margin: 0;
+        .form-control-with-icon {
+            position: relative;
+
+            .icon-wrapper {
+                display: flex;
+                align-items: center;
+                jusify-content: center;
+                position: absolute;
+                top: 0;
+                left: 0.75rem;
+                bottom: 0;
+
+                .icon {
+                    fill: $text-muted;
+                }
+            }
+
+            .form-control {
+                padding-left: 2.25rem;
+                font-size: 0.875rem;
+                border-radius: 9999px;
+            }
         }
     }
 
@@ -85,16 +119,9 @@ svg.icon {
             padding: 0.75rem 1.25rem;
         }
 
-        &.table-sm {
-            th,
-            td {
-                padding: 1rem 1.25rem;
-            }
-        }
-
         th {
             background-color: $table-headers-color;
-            font-weight: 400;
+            font-size: 0.875rem;
             padding: 0.5rem 1.25rem;
             border-bottom: 0;
         }
@@ -160,6 +187,47 @@ button:hover {
     box-shadow: none !important;
 }
 
+.btn-muted {
+    color: $btn-muted-color;
+    background: $btn-muted-bg;
+
+    &:hover,
+    &:focus {
+        color: $btn-muted-hover-color;
+        background: $btn-muted-hover-bg;
+    }
+
+    &.active {
+        color: $btn-muted-active-color;
+        background: $btn-muted-active-bg;
+    }
+}
+
+.badge-secondary {
+    background: $badge-secondary-bg;
+    color: $badge-secondary-color;
+}
+
+.badge-success {
+    background: $badge-success-bg;
+    color: $badge-success-color;
+}
+
+.badge-info {
+    background: $badge-info-bg;
+    color: $badge-info-color;
+}
+
+.badge-warning {
+    background: $badge-warning-bg;
+    color: $badge-warning-color;
+}
+
+.badge-danger {
+    background: $badge-danger-bg;
+    color: $badge-danger-color;
+}
+
 .control-action {
     svg {
         fill: $control-action-icon-color;
@@ -167,18 +235,7 @@ button:hover {
         height: 1.2rem;
 
         &:hover {
-            fill: $primary;
-        }
-    }
-}
-
-.paginator {
-    .btn {
-        text-decoration: none;
-        color: $paginator-button-color;
-
-        &:hover {
-            color: $primary;
+            fill: $control-action-icon-hover;
         }
     }
 }
@@ -226,17 +283,26 @@ button:hover {
 }
 
 .card {
-    .nav-pills .nav-link.active {
-        background: none;
-        color: $pill-link-active;
-        border-bottom: solid 2px $primary;
-    }
+    .nav-pills {
+        background: $card-cap-bg;
 
-    .nav-pills .nav-link {
-        font-size: 0.9rem;
-        border-radius: 0;
-        padding: 0.75rem 1.25rem;
-        color: $body-color;
+        .nav-link {
+            font-size: 0.9rem;
+            border-radius: 0;
+            padding: 0.75rem 1.25rem;
+            color: $pill-link;
+
+            &:hover,
+            &:focus {
+                color: $pill-link-hover;
+            }
+
+            &.active {
+                background: none;
+                color: $pill-link-active;
+                border-bottom: solid 2px $pill-link-active;
+            }
+        }
     }
 }
 
@@ -247,6 +313,11 @@ button:hover {
 .list-enter:not(.dontanimate),
 .list-leave-to:not(.dontanimate) {
     background: $new-entries-bg;
+}
+
+.code-bg .list-enter:not(.dontanimate),
+.code-bg .list-leave-to:not(.dontanimate) {
+    background: $new-code-entries-bg;
 }
 
 #indexScreen {
@@ -267,4 +338,16 @@ button:hover {
     padding: 0.75rem;
     color: #fff;
     background: $danger;
+}
+
+.copy-to-clipboard {
+    position: absolute;
+    right: 0rem;
+    top: 0rem;
+    --tw-text-opacity: 1;
+    color: rgb(231 232 242 / var(--tw-text-opacity));
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    opacity: 0.7;
+    z-index: 10;
 }

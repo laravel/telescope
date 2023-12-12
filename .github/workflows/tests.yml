@@ -2,13 +2,16 @@ name: tests
 
 on:
   push:
+    branches:
+      - master
+      - '*.x'
   pull_request:
   schedule:
     - cron: '0 0 * * *'
 
 jobs:
   tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     services:
       redis:
@@ -20,32 +23,37 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [7.3, 7.4, 8.0, 8.1]
-        laravel: [^8.0, ^9.0]
+        php: [8.0, 8.1, 8.2, 8.3]
+        laravel: [8, 9, 10]
         exclude:
-          - php: 7.3
-            laravel: ^9.0
-          - php: 7.4
-            laravel: ^9.0
+          - php: '8.0'
+            laravel: 10
+          - php: 8.2
+            laravel: 8
+          - php: 8.3
+            laravel: 8
+          - php: 8.3
+            laravel: 9
 
     name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: curl, dom, gd, json, libxml, mbstring, zip
+          ini-values: error_reporting=E_ALL
           tools: composer:v2
           coverage: none
 
       - name: Install dependencies
         run: |
-           composer require "illuminate/contracts=${{ matrix.laravel }}" "guzzlehttp/guzzle" --no-update
+           composer require "illuminate/contracts=^${{ matrix.laravel }}" --dev --no-update
            composer update --prefer-dist --no-interaction --no-progress
 
       - name: Execute tests
-        run: vendor/bin/phpunit --verbose
+        run: vendor/bin/phpunit

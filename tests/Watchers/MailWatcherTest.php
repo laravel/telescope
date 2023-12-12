@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
@@ -32,6 +33,11 @@ class MailWatcherTest extends FeatureTestCase
 
         $entry = $this->loadTelescopeEntries()->first();
 
+        $tags = DB::table('telescope_entries_tags')
+            ->where('entry_uuid', $entry->getKey())
+            ->pluck('tag')
+            ->all();
+
         $this->assertSame(EntryType::MAIL, $entry->type);
         $this->assertEmpty($entry->content['mailable']);
         $this->assertFalse($entry->content['queued']);
@@ -43,5 +49,9 @@ class MailWatcherTest extends FeatureTestCase
         $this->assertSame('Telescope is amazing!', $entry->content['html']);
         $this->assertStringContainsString('Telescope is amazing!', $entry->content['raw']);
         $this->assertEmpty($entry->content['replyTo']);
+        $this->assertContains('to@laravel.com', $tags);
+        $this->assertContains('bcc@laravel.com', $tags);
+        $this->assertContains('cc1@laravel.com', $tags);
+        $this->assertContains('cc2@laravel.com', $tags);
     }
 }
