@@ -1,6 +1,11 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.2...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.3...4.x)
+
+## [v4.17.3](https://github.com/laravel/telescope/compare/v4.17.2...v4.17.3) - 2023-12-11
+
+* fix: clear all entries using chunks by [@skrskr](https://github.com/skrskr) in https://github.com/laravel/telescope/pull/1415
+* Ignore pulse and livewire by [@tomswinkels](https://github.com/tomswinkels) in https://github.com/laravel/telescope/pull/1418
 
 ## [v4.17.2](https://github.com/laravel/telescope/compare/v4.17.1...v4.17.2) - 2023-11-01
 
