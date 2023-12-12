@@ -1,5 +1,5 @@
 <script type="text/ecmascript-6">
-    import { Modal } from 'bootstrap';
+    import $ from 'jquery';
 
     export default {
         props: ['type', 'message', 'autoClose', 'confirmationProceed', 'confirmationCancel'],
@@ -7,19 +7,17 @@
         data(){
             return {
                 timeout: null,
-                alertModal: null,
-                anotherModalOpened: document.body.classList.contains('modal-open')
+                anotherModalOpened: $('body').hasClass('modal-open')
             }
         },
 
-        mounted() {
-            const alertModalElement = document.getElementById('alertModal');
-            this.alertModal = Modal.getOrCreateInstance(alertModalElement, {
-                backdrop: 'static',
-            })
-            this.alertModal.show();
 
-            alertModalElement.addEventListener('hidden.bs.modal', e => {
+        mounted() {
+            $('#alertModal').modal({
+                backdrop: 'static',
+            });
+
+            $('#alertModal').on('hidden.bs.modal', e => {
                 this.$root.alert.type = null;
                 this.$root.alert.autoClose = false;
                 this.$root.alert.message = '';
@@ -27,9 +25,9 @@
                 this.$root.alert.confirmationCancel = null;
 
                 if (this.anotherModalOpened) {
-                    document.body.classList.add('modal-open');
+                    $('body').addClass('modal-open');
                 }
-            }, this);
+            });
 
             if (this.autoClose) {
                 this.timeout = setTimeout(() => {
@@ -46,7 +44,7 @@
             close(){
                 clearTimeout(this.timeout);
 
-                this.alertModal.hide();
+                $('#alertModal').modal('hide');
             },
 
 

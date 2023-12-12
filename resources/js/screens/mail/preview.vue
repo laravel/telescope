@@ -28,7 +28,7 @@
                 <td>
                     {{slotProps.entry.content.mailable}}
 
-                    <span class="badge bg-secondary font-weight-light ms-2" v-if="slotProps.entry.content.queued">
+                    <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.queued">
                         Queued
                     </span>
                 </td>
@@ -79,7 +79,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Download</td>
                 <td>
-                    <a :href="Telescope.basePath + '/telescope-api/mail/'+$route.params.id+'/download'" class="text-decoration-none">Download .eml file</a>
+                    <a :href="Telescope.basePath + '/telescope-api/mail/'+$route.params.id+'/download'">Download .eml file</a>
                 </td>
             </tr>
         </template>
