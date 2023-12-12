@@ -30,7 +30,7 @@ class ModelWatcherTest extends FeatureTestCase
             $this->loadLaravelMigrations();
         });
 
-        UserEloquent::query()
+        $user = UserEloquent::query()
             ->create([
                 'name' => 'Telescope',
                 'email' => 'telescope@laravel.com',
@@ -41,7 +41,7 @@ class ModelWatcherTest extends FeatureTestCase
 
         $this->assertSame(EntryType::MODEL, $entry->type);
         $this->assertSame('created', $entry->content['action']);
-        $this->assertSame(UserEloquent::class.':1', $entry->content['model']);
+        $this->assertSame(UserEloquent::class.':'.$user->id, $entry->content['model']);
     }
 
     public function test_model_watcher_can_restrict_events()
@@ -65,7 +65,7 @@ class ModelWatcherTest extends FeatureTestCase
         $this->assertCount(1, $entries);
         $this->assertSame(EntryType::MODEL, $entry->type);
         $this->assertSame('created', $entry->content['action']);
-        $this->assertSame(UserEloquent::class.':1', $entry->content['model']);
+        $this->assertSame(UserEloquent::class.':'.$user->id, $entry->content['model']);
     }
 
     public function test_model_watcher_registers_hydration_entry()

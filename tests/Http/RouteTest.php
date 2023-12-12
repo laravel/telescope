@@ -8,6 +8,7 @@ use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use PHPUnit\Framework\Assert as PHPUnit;
 
 class RouteTest extends FeatureTestCase
@@ -16,7 +17,7 @@ class RouteTest extends FeatureTestCase
     {
         parent::setUp();
 
-        $this->withoutMiddleware([Authorize::class, VerifyCsrfToken::class]);
+        $this->withoutMiddleware([Authorize::class, VerifyCsrfToken::class, ValidateCsrfToken::class]);
 
         $this->registerAssertJsonExactFragmentMacro();
     }

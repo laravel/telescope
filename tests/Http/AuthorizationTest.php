@@ -9,6 +9,7 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 
 class AuthorizationTest extends FeatureTestCase
 {
@@ -25,6 +26,7 @@ class AuthorizationTest extends FeatureTestCase
         parent::setUp();
 
         $this->withoutMiddleware([VerifyCsrfToken::class]);
+        $this->withoutMiddleware([ValidateCsrfToken::class]);
     }
 
     protected function tearDown(): void

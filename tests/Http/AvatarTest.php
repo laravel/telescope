@@ -41,7 +41,6 @@ class AvatarTest extends FeatureTestCase
             $this->loadLaravelMigrations();
 
             $user = UserEloquent::create([
-                'id' => 1,
                 'name' => 'Telescope',
                 'email' => 'telescope@laravel.com',
                 'password' => 'secret',
@@ -66,7 +65,7 @@ class AvatarTest extends FeatureTestCase
                 'entry' => [
                     'content' => [
                         'user' => [
-                            'avatar' => '/images/1.jpg',
+                            'avatar' => '/images/'.$user->id.'.jpg',
                         ],
                     ],
                 ],
