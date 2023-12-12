@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
 class InstallCommand extends Command
@@ -37,6 +38,9 @@ class InstallCommand extends Command
         $this->comment('Publishing Telescope Configuration...');
         $this->callSilent('vendor:publish', ['--tag' => 'telescope-config']);
 
+        $this->comment('Publishing Telescope Migrations...');
+        $this->callSilent('vendor:publish', ['--tag' => 'telescope-migrations']);
+
         $this->registerTelescopeServiceProvider();
 
         $this->info('Telescope scaffolding installed successfully.');
@@ -49,6 +53,11 @@ class InstallCommand extends Command
      */
     protected function registerTelescopeServiceProvider()
     {
+        if (method_exists(ServiceProvider::class, 'addProviderToBootstrapFile') &&
+            ServiceProvider::addProviderToBootstrapFile(\App\Providers\TelescopeServiceProvider::class)) { // @phpstan-ignore-line
+            return;
+        }
+
         $namespace = Str::replaceLast('\\', '', $this->laravel->getNamespace());
 
         $appConfig = file_get_contents(config_path('app.php'));
