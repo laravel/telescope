@@ -8,6 +8,14 @@ With every upgrade, make sure to publish Telescope's assets and clear the view c
 
 ## Upgrading To 5.0 From 4.x
 
+### Migration Changes
+
+Telescope 5.0 no longer automatically loads migrations from its own migrations directory. Instead, you should run the following command to publish Telescope's migrations to your application:
+
+```bash
+php artisan vendor:publish --tag=telescope-migrations
+```
+
 ### Minimum PHP Version
 
 PHP 8.0 is now the minimum required version.
