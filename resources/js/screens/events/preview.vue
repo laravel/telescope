@@ -18,7 +18,7 @@
                 <td>
                     {{slotProps.entry.content.name}}
 
-                    <span class="badge bg-secondary font-weight-light ms-2" v-if="slotProps.entry.content.broadcast">
+                    <span class="badge badge-secondary font-weight-light ml-2" v-if="slotProps.entry.content.broadcast">
                         Broadcast
                     </span>
                 </td>
@@ -29,10 +29,10 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Event Data</a>
+                        <a class="nav-link" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Event Data</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='listeners'}" href="#" v-on:click.prevent="currentTab='listeners'">Listeners</a>
+                        <a class="nav-link" :class="{active: currentTab=='listeners'}" href="#" v-on:click.prevent="currentTab='listeners'">Listeners</a>
                     </li>
                 </ul>
                 <div>
@@ -48,7 +48,7 @@
                             <td class="card-bg-secondary">
                                 {{ listener.name }}
 
-                                <span class="badge bg-secondary font-weight-light ms-2" v-if="listener.queued">
+                                <span class="badge badge-secondary font-weight-light ml-2" v-if="listener.queued">
                                     Queued
                                 </span>
                             </td>

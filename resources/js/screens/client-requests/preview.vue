@@ -40,10 +40,10 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentRequestTab=='payload'}" href="#" v-on:click.prevent="currentRequestTab='payload'">Payload</a>
+                        <a class="nav-link" :class="{active: currentRequestTab=='payload'}" href="#" v-on:click.prevent="currentRequestTab='payload'">Payload</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentRequestTab=='headers'}" href="#" v-on:click.prevent="currentRequestTab='headers'">Headers</a>
+                        <a class="nav-link" :class="{active: currentRequestTab=='headers'}" href="#" v-on:click.prevent="currentRequestTab='headers'">Headers</a>
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
@@ -54,10 +54,10 @@
             <div class="card mt-5" v-if="slotProps.entry.content.response_status">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentResponseTab=='response'}" href="#" v-on:click.prevent="currentResponseTab='response'">Response</a>
+                        <a class="nav-link" :class="{active: currentResponseTab=='response'}" href="#" v-on:click.prevent="currentResponseTab='response'">Response</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentResponseTab=='headers'}" href="#" v-on:click.prevent="currentResponseTab='headers'">Headers</a>
+                        <a class="nav-link" :class="{active: currentResponseTab=='headers'}" href="#" v-on:click.prevent="currentResponseTab='headers'">Headers</a>
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">

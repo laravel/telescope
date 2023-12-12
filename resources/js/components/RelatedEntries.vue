@@ -185,14 +185,14 @@
     <div class="card mt-5" v-if="hasRelatedEntries">
         <ul class="nav nav-pills">
             <li class="nav-item" v-for="tab in separateTabs">
-                <a class="nav-link text-decoration-none" :class="{active: currentTab==tab.type}" href="#" v-on:click.prevent="activateTab(tab.type)" v-if="tab.count">
+                <a class="nav-link" :class="{active: currentTab==tab.type}" href="#" v-on:click.prevent="activateTab(tab.type)" v-if="tab.count">
                     {{tab.title}} ({{tab.count}})
                 </a>
             </li>
             <li class="nav-item dropdown" v-if="dropdownTabs.length">
-                <a class="nav-link dropdown-toggle text-decoration-none" :class="{active: dropdownTabSelected}" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
+                <a class="nav-link dropdown-toggle" :class="{active: dropdownTabSelected}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item text-decoration-none" :class="{active: currentTab==tab.type}" href="#" v-for="tab in dropdownTabs" v-on:click.prevent="activateTab(tab.type)">{{tab.title}} ({{tab.count}})</a>
+                    <a class="dropdown-item" :class="{active: currentTab==tab.type}" href="#" v-for="tab in dropdownTabs" v-on:click.prevent="activateTab(tab.type)">{{tab.title}} ({{tab.count}})</a>
                 </div>
             </li>
         </ul>
@@ -214,7 +214,7 @@
                         </td>
 
                         <td class="table-fit">
-                            <router-link :to="{name:'exception-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                            <router-link :to="{name:'exception-preview', params:{id: entry.id}}" class="control-action">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                     <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                                 </svg>
@@ -239,13 +239,13 @@
                 <tr v-for="entry in logs">
                     <td :title="entry.content.message">{{truncate(entry.content.message, 90)}}</td>
                     <td class="table-fit">
-                        <span class="badge font-weight-light" :class="'bg-'+logLevelClass(entry.content.level)">
+                        <span class="badge font-weight-light" :class="'badge-'+logLevelClass(entry.content.level)">
                             {{entry.content.level}}
                         </span>
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'log-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                        <router-link :to="{name:'log-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -270,7 +270,7 @@
                     <td :title="entry.content.sql">{{truncate(entry.content.sql, 110)}}</td>
 
                     <td class="table-fit">
-                        <span class="badge bg-danger font-weight-light" v-if="entry.content.slow">
+                        <span class="badge badge-danger font-weight-light" v-if="entry.content.slow">
                             {{entry.content.time}}ms
                         </span>
 
@@ -280,7 +280,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'query-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                        <router-link :to="{name:'query-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -304,13 +304,13 @@
                 <tr v-for="entry in models">
                     <td :title="entry.content.model">{{truncate(entry.content.model, 100)}}</td>
                     <td class="table-fit">
-                        <span class="badge font-weight-light" :class="'bg-'+modelActionClass(entry.content.action)">
+                        <span class="badge font-weight-light" :class="'badge-'+modelActionClass(entry.content.action)">
                             {{entry.content.action}}
                         </span>
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'model-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                        <router-link :to="{name:'model-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -334,13 +334,13 @@
                 <tr v-for="entry in gates">
                     <td :title="entry.content.ability">{{truncate(entry.content.ability, 80)}}</td>
                     <td class="table-fit">
-                        <span class="badge font-weight-light" :class="'bg-'+gateResultClass(entry.content.result)">
+                        <span class="badge font-weight-light" :class="'badge-'+gateResultClass(entry.content.result)">
                             {{entry.content.result}}
                         </span>
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'gate-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                        <router-link :to="{name:'gate-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -370,13 +370,13 @@
                     </td>
 
                     <td class="table-fit">
-                        <span class="badge font-weight-light" :class="'bg-'+jobStatusClass(entry.content.status)">
+                        <span class="badge font-weight-light" :class="'badge-'+jobStatusClass(entry.content.status)">
                             {{entry.content.status}}
                         </span>
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'job-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                        <router-link :to="{name:'job-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -401,7 +401,7 @@
                     <td :title="entry.content.name">
                         {{truncate(entry.content.name, 80)}}
 
-                        <span class="badge bg-info font-weight-light ms-2" v-if="entry.content.broadcast">
+                        <span class="badge badge-info font-weight-light ml-2" v-if="entry.content.broadcast">
                             Broadcast
                         </span>
                     </td>
@@ -409,7 +409,7 @@
                     <td class="table-fit">{{entry.content.listeners.length}}</td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'event-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                        <router-link :to="{name:'event-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -434,13 +434,13 @@
                 <tr v-for="entry in cache">
                     <td :title="entry.content.key">{{truncate(entry.content.key, 100)}}</td>
                     <td class="table-fit">
-                        <span class="badge font-weight-light" :class="'bg-'+cacheActionTypeClass(entry.content.type)">
+                        <span class="badge font-weight-light" :class="'badge-'+cacheActionTypeClass(entry.content.type)">
                             {{entry.content.type}}
                         </span>
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'cache-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                        <router-link :to="{name:'cache-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -467,7 +467,7 @@
                     <td class="table-fit">{{entry.content.time}}ms</td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'redis-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                        <router-link :to="{name:'redis-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -492,7 +492,7 @@
                     <td>
                         <span :title="entry.content.mailable">{{truncate(entry.content.mailable || '-', 70)}}</span>
 
-                        <span class="badge bg-secondary font-weight-light ms-2" v-if="entry.content.queued">
+                        <span class="badge badge-secondary font-weight-light ml-2" v-if="entry.content.queued">
                             Queued
                         </span>
 
@@ -504,7 +504,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'mail-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                        <router-link :to="{name:'mail-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -530,7 +530,7 @@
                     <td>
                         <span :title="entry.content.notification">{{truncate(entry.content.notification || '-', 70)}}</span>
 
-                        <span class="badge bg-secondary font-weight-light ms-2" v-if="entry.content.queued">
+                        <span class="badge badge-secondary font-weight-light ml-2" v-if="entry.content.queued">
                             Queued
                         </span>
 
@@ -544,7 +544,7 @@
                     <td class="table-fit">{{truncate(entry.content.channel, 20)}}</td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'notification-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                        <router-link :to="{name:'notification-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -576,7 +576,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'view-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                        <router-link :to="{name:'view-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>
@@ -600,8 +600,8 @@
 
                 <tbody>
                 <tr v-for="entry in clientRequests">
-                    <td class="table-fit pe-0">
-                        <span class="badge font-weight-light" :class="'bg-'+requestMethodClass(entry.content.method)">
+                    <td class="table-fit pr-0">
+                        <span class="badge font-weight-light" :class="'badge-'+requestMethodClass(entry.content.method)">
                             {{entry.content.method}}
                         </span>
                     </td>
@@ -609,7 +609,7 @@
                     <td :title="entry.content.uri">{{truncate(entry.content.uri, 60)}}</td>
 
                     <td class="table-fit">
-                        <span class="badge font-weight-light" :class="'bg-'+requestStatusClass(entry.content.response_status !== undefined ? entry.content.response_status : null)">
+                        <span class="badge font-weight-light" :class="'badge-'+requestStatusClass(entry.content.response_status !== undefined ? entry.content.response_status : null)">
                             {{entry.content.response_status !== undefined ? entry.content.response_status : 'N/A'}}
                         </span>
                     </td>
@@ -619,7 +619,7 @@
                     </td>
 
                     <td class="table-fit">
-                        <router-link :to="{name:'client-request-preview', params:{id: entry.id}}" class="control-action text-decoration-none">
+                        <router-link :to="{name:'client-request-preview', params:{id: entry.id}}" class="control-action">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 16">
                                 <path d="M16.56 13.66a8 8 0 0 1-11.32 0L.3 8.7a1 1 0 0 1 0-1.42l4.95-4.95a8 8 0 0 1 11.32 0l4.95 4.95a1 1 0 0 1 0 1.42l-4.95 4.95-.01.01zm-9.9-1.42a6 6 0 0 0 8.48 0L19.38 8l-4.24-4.24a6 6 0 0 0-8.48 0L2.4 8l4.25 4.24h.01zM10.9 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
                             </svg>

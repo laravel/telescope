@@ -55,7 +55,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Occurrences</td>
                 <td>
-                    <router-link :to="{name:'exceptions', query: {family_hash: slotProps.entry.family_hash}}" class="control-action text-decoration-none">
+                    <router-link :to="{name:'exceptions', query: {family_hash: slotProps.entry.family_hash}}" class="control-action">
                         View Other Occurrences
                     </router-link>
                 </td>
@@ -69,7 +69,7 @@
                         {{localTime(entry.content.resolved_at)}} ({{timeAgo(entry.content.resolved_at)}})
                     </span>
                     <span v-if="!entry.content.resolved_at">
-                        <a href="#" class="badge bg-success me-1 font-weight-light text-decoration-none" v-on:click.prevent="markExceptionAsResolved(entry)">Mark as resolved</a>
+                        <a href="#" class="badge badge-success mr-1 font-weight-light" v-on:click.prevent="markExceptionAsResolved(entry)">Mark as resolved</a>
                     </span>
                 </td>
             </tr>
@@ -79,19 +79,19 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Message</a>
+                        <a class="nav-link" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Message</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='location'}" href="#" v-on:click.prevent="currentTab='location'">Location</a>
+                        <a class="nav-link" :class="{active: currentTab=='location'}" href="#" v-on:click.prevent="currentTab='location'">Location</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='context'}" href="#" v-show="hasContext()" v-on:click.prevent="currentTab='context'">Context</a>
+                        <a class="nav-link" :class="{active: currentTab=='context'}" href="#" v-show="hasContext()" v-on:click.prevent="currentTab='context'">Context</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='trace'}" href="#" v-on:click.prevent="currentTab='trace'">Stacktrace</a>
+                        <a class="nav-link" :class="{active: currentTab=='trace'}" href="#" v-on:click.prevent="currentTab='trace'">Stacktrace</a>
                     </li>
                 </ul>
 

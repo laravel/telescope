@@ -1,6 +1,6 @@
 <script type="text/ecmascript-6">
+    import $ from 'jquery';
     import axios from 'axios';
-    import { Modal } from 'bootstrap';
 
     export default {
         /**
@@ -10,8 +10,7 @@
             return {
                 tags: [],
                 ready: false,
-                newTag: '',
-                addTagModal: null,
+                newTag: ''
             };
         },
 
@@ -44,15 +43,11 @@
              * Opens the modal for adding new monitored tag.
              */
             openNewTagModal(){
-                this.addTagModal = Modal.getOrCreateInstance(document.getElementById('addTagModel'), {
+                $('#addTagModel').modal({
                     backdrop: 'static',
                 });
-                this.addTagModal.show();
 
-                const newTagInput = document.getElementById('newTagInput');
-                if (newTagInput) {
-                    newTagInput.focus();
-                }
+                $('#newTagInput').focus();
             },
 
 
@@ -66,7 +61,9 @@
                     this.tags.push(this.newTag);
                 }
 
-                this.cancelNewTag();
+                $('#addTagModel').modal('hide');
+
+                this.newTag = '';
             },
 
 
@@ -74,11 +71,7 @@
              * Cancel adding a new tag.
              */
             cancelNewTag(){
-                if (this.addTagModal) {
-                    this.addTagModal.hide();
-                    this.addTagModal.dispose();
-                    this.addTagModal = null;
-                }
+                $('#addTagModel').modal('hide');
 
                 this.newTag = '';
             }
@@ -96,7 +89,7 @@
 
 
         <div v-if="!ready" class="d-flex align-items-center justify-content-center card-bg-secondary p-5 bottom-radius">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon spin me-2 fill-text-color">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon spin mr-2 fill-text-color">
                 <path d="M12 10a2 2 0 0 1-3.41 1.41A2 2 0 0 1 10 8V0a9.97 9.97 0 0 1 10 10h-8zm7.9 1.41A10 10 0 1 1 8.59.1v2.03a8 8 0 1 0 9.29 9.29h2.02zm-4.07 0a6 6 0 1 1-7.25-7.25v2.1a3.99 3.99 0 0 0-1.4 6.57 4 4 0 0 0 6.56-1.42h2.1z"></path>
             </svg>
 
@@ -120,7 +113,7 @@
                 <td>{{truncate(tag, 140)}}</td>
 
                 <td class="table-fit">
-                    <a href="#" class="control-action text-decoration-none" v-on:click.prevent="removeTag(tag)">
+                    <a href="#" class="control-action" v-on:click.prevent="removeTag(tag)">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path d="M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"></path>
                         </svg>

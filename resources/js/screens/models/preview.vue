@@ -30,7 +30,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Action</td>
                 <td>
-                    <span class="badge font-weight-light" :class="'bg-'+modelActionClass(slotProps.entry.content.action)">
+                    <span class="badge font-weight-light" :class="'badge-'+modelActionClass(slotProps.entry.content.action)">
                         {{slotProps.entry.content.action}}
                     </span>
                 </td>

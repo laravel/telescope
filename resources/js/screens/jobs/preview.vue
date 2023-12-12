@@ -30,7 +30,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Status</td>
                 <td>
-                    <span class="badge font-weight-light" :class="'bg-'+jobStatusClass(slotProps.entry.content.status)">
+                    <span class="badge font-weight-light" :class="'badge-'+jobStatusClass(slotProps.entry.content.status)">
                         {{slotProps.entry.content.status}}
                     </span>
                 </td>
@@ -74,7 +74,7 @@
             <tr v-if="slotProps.entry.content.data.batchId">
                 <td class="table-fit font-weight-bold">Batch</td>
                 <td>
-                    <router-link :to="{name:'batch-preview', params:{id: slotProps.entry.content.data.batchId}}" class="control-action text-decoration-none">
+                    <router-link :to="{name:'batch-preview', params:{id: slotProps.entry.content.data.batchId}}" class="control-action">
                         {{slotProps.entry.content.data.batchId}}
                     </router-link>
                 </td>
@@ -86,16 +86,16 @@
             <div class="card mt-5">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Data</a>
+                        <a class="nav-link" :class="{active: currentTab=='data'}" href="#" v-on:click.prevent="currentTab='data'">Data</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='exception'}" href="#" v-on:click.prevent="currentTab='exception'" v-if="slotProps.entry.content.exception">Exception Message</a>
+                        <a class="nav-link" :class="{active: currentTab=='exception'}" href="#" v-on:click.prevent="currentTab='exception'" v-if="slotProps.entry.content.exception">Exception Message</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='preview'}" href="#" v-on:click.prevent="currentTab='preview'" v-if="slotProps.entry.content.exception">Exception Location</a>
+                        <a class="nav-link" :class="{active: currentTab=='preview'}" href="#" v-on:click.prevent="currentTab='preview'" v-if="slotProps.entry.content.exception">Exception Location</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-decoration-none" :class="{active: currentTab=='trace'}" href="#" v-on:click.prevent="currentTab='trace'" v-if="slotProps.entry.content.exception">Stacktrace</a>
+                        <a class="nav-link" :class="{active: currentTab=='trace'}" href="#" v-on:click.prevent="currentTab='trace'" v-if="slotProps.entry.content.exception">Stacktrace</a>
                     </li>
                 </ul>
                 <div>

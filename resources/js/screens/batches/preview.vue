@@ -27,13 +27,13 @@
             <tr>
                 <td class="table-fit font-weight-bold">Status</td>
                 <td>
-                    <small class="badge bg-danger badge-sm" v-if="slotProps.entry.content.failedJobs > 0 && slotProps.entry.content.progress < 100">
+                    <small class="badge badge-danger badge-sm" v-if="slotProps.entry.content.failedJobs > 0 && slotProps.entry.content.progress < 100">
                         Failures
                     </small>
-                    <small class="badge bg-success badge-sm" v-if="slotProps.entry.content.progress == 100">
+                    <small class="badge badge-success badge-sm" v-if="slotProps.entry.content.progress == 100">
                         Finished
                     </small>
-                    <small class="badge bg-secondary badge-sm" v-if="slotProps.entry.content.totalJobs == 0 || (slotProps.entry.content.pendingJobs > 0 && !slotProps.entry.content.failedJobs)">
+                    <small class="badge badge-secondary badge-sm" v-if="slotProps.entry.content.totalJobs == 0 || (slotProps.entry.content.pendingJobs > 0 && !slotProps.entry.content.failedJobs)">
                         Pending
                     </small>
                 </td>
@@ -77,7 +77,7 @@
             <tr>
                 <td class="table-fit font-weight-bold">Size</td>
                 <td>
-                    <router-link :to="{name:'jobs', query: {family_hash: slotProps.entry.family_hash}}" class="control-action text-decoration-none">
+                    <router-link :to="{name:'jobs', query: {family_hash: slotProps.entry.family_hash}}" class="control-action">
                         {{slotProps.entry.content.totalJobs}} Jobs
                     </router-link>
                 </td>
