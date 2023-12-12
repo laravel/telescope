@@ -18,7 +18,6 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerMigrations();
         $this->registerCommands();
         $this->registerPublishing();
 
@@ -60,18 +59,6 @@ class TelescopeServiceProvider extends ServiceProvider
     protected function registerResources()
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'telescope');
-    }
-
-    /**
-     * Register the package's migrations.
-     *
-     * @return void
-     */
-    protected function registerMigrations()
-    {
-        if ($this->app->runningInConsole() && $this->shouldMigrate()) {
-            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        }
     }
 
     /**
@@ -173,15 +160,5 @@ class TelescopeServiceProvider extends ServiceProvider
         $this->app->when(DatabaseEntriesRepository::class)
             ->needs('$chunkSize')
             ->give(config('telescope.storage.database.chunk'));
-    }
-
-    /**
-     * Determine if we should register the migrations.
-     *
-     * @return bool
-     */
-    protected function shouldMigrate()
-    {
-        return Telescope::$runsMigrations && config('telescope.driver') === 'database';
     }
 }
