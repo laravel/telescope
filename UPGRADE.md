@@ -15,3 +15,13 @@ Telescope 5.0 no longer automatically loads migrations from its own migrations d
 ```bash
 php artisan vendor:publish --tag=telescope-migrations
 ```
+
+## Upgrading To 4.0 From 3.x
+
+### Minimum PHP Version
+
+PHP 7.3 is now the minimum required version.
+
+### Minimum Laravel Version
+
+Laravel 8.0 is now the minimum required version.
