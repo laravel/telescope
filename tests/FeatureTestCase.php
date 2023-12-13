@@ -10,11 +10,13 @@ use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeServiceProvider;
+use Orchestra\Testbench\Concerns\WithLaravelMigrations;
+use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase;
 
 class FeatureTestCase extends TestCase
 {
-    use RefreshDatabase;
+    use WithWorkbench, RefreshDatabase, WithLaravelMigrations;
 
     protected function setUp(): void
     {

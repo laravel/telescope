@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Tests\Http;
 
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Testing\TestResponse;
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
 use Laravel\Telescope\EntryType;
@@ -16,12 +17,12 @@ class RouteTest extends FeatureTestCase
     {
         parent::setUp();
 
-        $this->withoutMiddleware([Authorize::class, VerifyCsrfToken::class]);
+        $this->withoutMiddleware([Authorize::class, VerifyCsrfToken::class, ValidateCsrfToken::class]);
 
         $this->registerAssertJsonExactFragmentMacro();
     }
 
-    public function telescopeIndexRoutesProvider()
+    public static function telescopeIndexRoutesProvider()
     {
         return [
             'Mail' => ['/telescope/telescope-api/mail', EntryType::MAIL],

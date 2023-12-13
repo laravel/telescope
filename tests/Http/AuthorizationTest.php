@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Tests\Http;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\Telescope;
@@ -25,6 +26,7 @@ class AuthorizationTest extends FeatureTestCase
         parent::setUp();
 
         $this->withoutMiddleware([VerifyCsrfToken::class]);
+        $this->withoutMiddleware([ValidateCsrfToken::class]);
     }
 
     protected function tearDown(): void
@@ -130,6 +132,11 @@ class Authenticated implements Authenticatable
     public function getAuthPassword()
     {
         return 'secret';
+    }
+
+    public function getAuthPasswordName()
+    {
+        return 'passord name';
     }
 
     public function getRememberToken()

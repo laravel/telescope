@@ -2,7 +2,9 @@ providers:
   - Laravel\Telescope\TelescopeServiceProvider
   - Workbench\App\Providers\TelescopeServiceProvider
 
-migrations: true
+migrations:
+  - database/migrations
+
 seeders:
   - Workbench\Database\Seeders\DatabaseSeeder
 
