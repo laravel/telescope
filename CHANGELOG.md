@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.3...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.4...4.x)
+
+## [v4.17.4](https://github.com/laravel/telescope/compare/v4.17.3...v4.17.4) - 2024-01-22
+
+* [4.x] Add primary keys to database tables by [@driesvints](https://github.com/driesvints) in https://github.com/laravel/telescope/pull/1425
 
 ## [v4.17.3](https://github.com/laravel/telescope/compare/v4.17.2...v4.17.3) - 2023-12-11
 
