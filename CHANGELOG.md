@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.4...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.5...4.x)
+
+## [v4.17.5](https://github.com/laravel/telescope/compare/v4.17.4...v4.17.5) - 2024-01-30
+
+* [4.x] Ignore duplicate tags by [@driesvints](https://github.com/driesvints) in https://github.com/laravel/telescope/pull/1431
 
 ## [v4.17.4](https://github.com/laravel/telescope/compare/v4.17.3...v4.17.4) - 2024-01-22
 
