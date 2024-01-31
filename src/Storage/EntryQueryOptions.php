@@ -42,6 +42,13 @@ class EntryQueryOptions
     public $uuids;
 
     /**
+     * The search string.
+     *
+     * @var mixed
+     */
+    public $search;
+
+    /**
      * The number of entries to retrieve.
      *
      * @var int
@@ -62,6 +69,7 @@ class EntryQueryOptions
                 ->beforeSequence($request->before)
                 ->tag($request->tag)
                 ->familyHash($request->family_hash)
+                ->search($request->search)
                 ->limit($request->take ?? 50);
     }
 
@@ -137,6 +145,19 @@ class EntryQueryOptions
     public function familyHash(?string $familyHash)
     {
         $this->familyHash = $familyHash;
+
+        return $this;
+    }
+
+    /**
+     * Set the search string to retrieved entries.
+     *
+     * @param  string  $search
+     * @return $this
+     */
+    public function search(?string $search)
+    {
+        $this->search = $search;
 
         return $this;
     }

@@ -69,6 +69,7 @@ class EntryModel extends Model
                 ->whereTag($query, $options)
                 ->whereFamilyHash($query, $options)
                 ->whereBeforeSequence($query, $options)
+                ->whereSearch($query, $options)
                 ->filter($query, $options);
 
         return $query;
@@ -116,16 +117,17 @@ class EntryModel extends Model
     protected function whereTag($query, EntryQueryOptions $options)
     {
         $query->when($options->tag, function ($query, $tag) {
-            $tags = collect(explode(',', $tag))->map(fn ($tag) => trim($tag));
+            $tags = trim(preg_replace('/content=([^\s$]+)/', '', $tag));
+            $tags = array_filter(array_map('trim', explode(',', $tags)));
 
-            if ($tags->isEmpty()) {
+            if (empty($tags)) {
                 return $query;
             }
 
             return $query->whereIn('uuid', function ($query) use ($tags) {
                 $query->select('entry_uuid')->from('telescope_entries_tags')
                     ->whereIn('entry_uuid', function ($query) use ($tags) {
-                        $query->select('entry_uuid')->from('telescope_entries_tags')->whereIn('tag', $tags->all());
+                        $query->select('entry_uuid')->from('telescope_entries_tags')->whereIn('tag', $tags);
                     });
             });
         });
@@ -160,6 +162,26 @@ class EntryModel extends Model
     {
         $query->when($options->beforeSequence, function ($query, $beforeSequence) {
             return $query->where('sequence', '<', $beforeSequence);
+        });
+
+        return $this;
+    }
+
+    /**
+     * Scope the query for the given search.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return $this
+     */
+    protected function whereSearch($query, EntryQueryOptions $options)
+    {
+        $query->when($options->tag, function ($query, $tag) {
+            if (! preg_match('/content=([^\s$]+)/', $tag, $search)) {
+                return $query;
+            }
+
+            return $query->where('content', 'LIKE', '%'.str_replace(' ', '%', $search[1]).'%');
         });
 
         return $this;
