@@ -117,7 +117,7 @@ class EntryModel extends Model
     protected function whereTag($query, EntryQueryOptions $options)
     {
         $query->when($options->tag, function ($query, $tag) {
-            $tags = trim(preg_replace('/content=([^\s$]+)/', '', $tag));
+            $tags = trim(preg_replace('/"[^"]+"/', '', $tag));
             $tags = array_filter(array_map('trim', explode(',', $tags)));
 
             if (empty($tags)) {
@@ -177,11 +177,13 @@ class EntryModel extends Model
     protected function whereSearch($query, EntryQueryOptions $options)
     {
         $query->when($options->tag, function ($query, $tag) {
-            if (! preg_match('/content=([^\s$]+)/', $tag, $search)) {
+            if (! preg_match('/"([^"]+)"/', $tag, $search)) {
                 return $query;
             }
 
-            return $query->where('content', 'LIKE', '%'.str_replace(' ', '%', $search[1]).'%');
+            $search = str_replace([' ', '/', '\\'], '%', $search[1]);
+
+            return $query->where('content', 'LIKE', '%'.$search.'%');
         });
 
         return $this;

@@ -279,7 +279,7 @@
                 </div>
                 <input type="text" class="form-control w-100"
                        id="searchInput"
-                       placeholder="Search Tag or content (with content=)" v-model="tag" @input.stop="search">
+                       placeholder="Search Tag or content (using quotes)" v-model="tag" @input.stop="search">
             </div>
         </div>
 
