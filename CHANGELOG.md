@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.5...4.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.6...4.x)
+
+## [v4.17.6](https://github.com/laravel/telescope/compare/v4.17.5...v4.17.6) - 2024-02-08
+
+* [4.x] Add `use` to closure to pass in environment condition by [@LaurenceRawlings](https://github.com/LaurenceRawlings) in https://github.com/laravel/telescope/pull/1434
 
 ## [v4.17.5](https://github.com/laravel/telescope/compare/v4.17.4...v4.17.5) - 2024-01-30
 
