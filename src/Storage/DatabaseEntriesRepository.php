@@ -13,6 +13,7 @@ use Laravel\Telescope\Contracts\TerminableRepository;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\IncomingEntry;
+use Illuminate\Support\Sleep;
 
 class DatabaseEntriesRepository implements Contract, ClearableRepository, PrunableRepository, TerminableRepository
 {
@@ -360,6 +361,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
         do {
             $deleted = $query->take($this->chunkSize)->delete();
 
+            Sleep::for(1)->second();
+
             $totalDeleted += $deleted;
         } while ($deleted !== 0);
 
@@ -375,10 +378,14 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     {
         do {
             $deleted = $this->table('telescope_entries')->take($this->chunkSize)->delete();
+
+            Sleep::for(1)->second();
         } while ($deleted !== 0);
 
         do {
             $deleted = $this->table('telescope_monitoring')->take($this->chunkSize)->delete();
+
+            Sleep::for(1)->second();
         } while ($deleted !== 0);
     }
 
