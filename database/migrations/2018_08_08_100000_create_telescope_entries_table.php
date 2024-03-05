@@ -42,7 +42,7 @@ return new class extends Migration
             $table->uuid('entry_uuid');
             $table->string('tag');
 
-            $table->index(['entry_uuid', 'tag']);
+            $table->primary(['entry_uuid', 'tag']);
             $table->index('tag');
 
             $table->foreign('entry_uuid')
@@ -52,7 +52,7 @@ return new class extends Migration
         });
 
         $schema->create('telescope_monitoring', function (Blueprint $table) {
-            $table->string('tag');
+            $table->string('tag')->primary();
         });
     }
 

@@ -1,6 +1,23 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.2...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.6...master)
+
+## [v4.17.6](https://github.com/laravel/telescope/compare/v4.17.5...v4.17.6) - 2024-02-08
+
+* [4.x] Add `use` to closure to pass in environment condition by [@LaurenceRawlings](https://github.com/LaurenceRawlings) in https://github.com/laravel/telescope/pull/1434
+
+## [v4.17.5](https://github.com/laravel/telescope/compare/v4.17.4...v4.17.5) - 2024-01-30
+
+* [4.x] Ignore duplicate tags by [@driesvints](https://github.com/driesvints) in https://github.com/laravel/telescope/pull/1431
+
+## [v4.17.4](https://github.com/laravel/telescope/compare/v4.17.3...v4.17.4) - 2024-01-22
+
+* [4.x] Add primary keys to database tables by [@driesvints](https://github.com/driesvints) in https://github.com/laravel/telescope/pull/1425
+
+## [v4.17.3](https://github.com/laravel/telescope/compare/v4.17.2...v4.17.3) - 2023-12-11
+
+* fix: clear all entries using chunks by [@skrskr](https://github.com/skrskr) in https://github.com/laravel/telescope/pull/1415
+* Ignore pulse and livewire by [@tomswinkels](https://github.com/tomswinkels) in https://github.com/laravel/telescope/pull/1418
 
 ## [v4.17.2](https://github.com/laravel/telescope/compare/v4.17.1...v4.17.2) - 2023-11-01
 

@@ -19,7 +19,7 @@ class ClearCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Clear all entries from Telescope';
+    protected $description = 'Delete all Telescope data from storage';
 
     /**
      * Execute the console command.

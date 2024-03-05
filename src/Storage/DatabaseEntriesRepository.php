@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Storage;
 
 use DateTimeInterface;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Telescope\Contracts\ClearableRepository;
@@ -189,14 +190,18 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     protected function storeTags(Collection $results)
     {
         $results->chunk($this->chunkSize)->each(function ($chunked) {
-            $this->table('telescope_entries_tags')->insert($chunked->flatMap(function ($tags, $uuid) {
-                return collect($tags)->map(function ($tag) use ($uuid) {
-                    return [
-                        'entry_uuid' => $uuid,
-                        'tag' => $tag,
-                    ];
-                });
-            })->all());
+            try {
+                $this->table('telescope_entries_tags')->insert($chunked->flatMap(function ($tags, $uuid) {
+                    return collect($tags)->map(function ($tag) use ($uuid) {
+                        return [
+                            'entry_uuid' => $uuid,
+                            'tag' => $tag,
+                        ];
+                    });
+                })->all());
+            } catch (UniqueConstraintViolationException $e) {
+                // Ignore tags that already exist...
+            }
         });
     }
 
@@ -246,14 +251,18 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     protected function updateTags($entry)
     {
         if (! empty($entry->tagsChanges['added'])) {
-            $this->table('telescope_entries_tags')->insert(
-                collect($entry->tagsChanges['added'])->map(function ($tag) use ($entry) {
-                    return [
-                        'entry_uuid' => $entry->uuid,
-                        'tag' => $tag,
-                    ];
-                })->toArray()
-            );
+            try {
+                $this->table('telescope_entries_tags')->insert(
+                    collect($entry->tagsChanges['added'])->map(function ($tag) use ($entry) {
+                        return [
+                            'entry_uuid' => $entry->uuid,
+                            'tag' => $tag,
+                        ];
+                    })->toArray()
+                );
+            } catch (UniqueConstraintViolationException $e) {
+                // Ignore tags that already exist...
+            }
         }
 
         collect($entry->tagsChanges['removed'])->each(function ($tag) use ($entry) {
