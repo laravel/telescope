@@ -1,6 +1,6 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.6...master)
+## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.6...5.x)
 
 ## [v4.17.6](https://github.com/laravel/telescope/compare/v4.17.5...v4.17.6) - 2024-02-08
 
