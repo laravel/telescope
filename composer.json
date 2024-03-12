@@ -25,7 +25,7 @@
         "laravel/octane": "^1.4|^2.0|dev-develop",
         "orchestra/testbench": "^6.40|^7.37|^8.17|^9.0",
         "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^9.0|^10.4"
+        "phpunit/phpunit": "^9.0|^10.5"
     },
     "autoload": {
         "psr-4": {
