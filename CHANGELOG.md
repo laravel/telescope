@@ -1,6 +1,14 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v4.17.6...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.0.0...5.x)
+
+## [v5.0.0](https://github.com/laravel/telescope/compare/v4.17.6...v5.0.0) - 2024-03-12
+
+* Retain exceptions data by [@senthilvelpro](https://github.com/senthilvelpro) in https://github.com/laravel/telescope/pull/950
+* Add a new "Clear Entries" button at the top of Telescope by [@AlexDanault](https://github.com/AlexDanault) in https://github.com/laravel/telescope/pull/1087
+* [5.x] Refactor routes by [@driesvints](https://github.com/driesvints) in https://github.com/laravel/telescope/pull/1095
+* Always register migrations by [@MasterRO94](https://github.com/MasterRO94) in https://github.com/laravel/telescope/pull/1119
+* [5.x] Adds Laravel 11 support by [@nunomaduro](https://github.com/nunomaduro) in https://github.com/laravel/telescope/pull/1420
 
 ## [v4.17.6](https://github.com/laravel/telescope/compare/v4.17.5...v4.17.6) - 2024-02-08
 
