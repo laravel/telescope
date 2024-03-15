@@ -42,7 +42,6 @@ return [
     |
     */
 
-
     'storage' => [
         'driver' => env('TELESCOPE_STORAGE_DRIVER', 'database'),
 
