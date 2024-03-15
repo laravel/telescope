@@ -131,7 +131,7 @@ class TelescopeServiceProvider extends ServiceProvider
      */
     protected function registerStorageDriver()
     {
-        $driver = config('telescope.driver');
+        $driver = config('telescope.storage.driver');
 
         if (method_exists($this, $method = 'register'.ucfirst($driver).'Driver')) {
             $this->$method();

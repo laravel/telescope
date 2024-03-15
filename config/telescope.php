@@ -36,17 +36,18 @@ return [
     | Telescope Storage Driver
     |--------------------------------------------------------------------------
     |
-    | This configuration options determines the storage driver that will
-    | be used to store Telescope's data. In addition, you may set any
-    | custom options as needed by the particular driver you choose.
+    | This configuration option determines which storage driver will be used
+    | while storing entries from Telescope's recorders. In addition, you also
+    | may provide any options to configure the selected storage driver.
     |
     */
 
-    'driver' => env('TELESCOPE_DRIVER', 'database'),
 
     'storage' => [
+        'driver' => env('TELESCOPE_STORAGE_DRIVER', 'database'),
+
         'database' => [
-            'connection' => env('DB_CONNECTION', 'mysql'),
+            'connection' => env('TELESCOPE_DB_CONNECTION', 'mysql'),
             'chunk' => 1000,
         ],
     ],
