@@ -4,7 +4,9 @@ namespace Laravel\Telescope\Console;
 
 use Illuminate\Console\Command;
 use Laravel\Telescope\Contracts\ClearableRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'telescope:clear')]
 class ClearCommand extends Command
 {
     /**

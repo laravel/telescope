@@ -17,6 +17,7 @@
         "php": "^8.0",
         "ext-json": "*",
         "laravel/framework": "^8.37|^9.0|^10.0|^11.0",
+        "symfony/console": "^5.3|^6.0|^7.0",
         "symfony/var-dumper": "^5.0|^6.0|^7.0"
     },
     "require-dev": {
