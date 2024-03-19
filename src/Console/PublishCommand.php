@@ -3,7 +3,9 @@
 namespace Laravel\Telescope\Console;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'telescope:publish')]
 class PublishCommand extends Command
 {
     /**

@@ -4,7 +4,9 @@ namespace Laravel\Telescope\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'telescope:resume')]
 class ResumeCommand extends Command
 {
     /**

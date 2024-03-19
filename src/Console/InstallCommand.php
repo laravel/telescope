@@ -5,7 +5,9 @@ namespace Laravel\Telescope\Console;
 use Illuminate\Console\Command;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'telescope:install')]
 class InstallCommand extends Command
 {
     /**
