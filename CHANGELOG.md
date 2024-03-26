@@ -1,6 +1,11 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.0.0...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.0.1...5.x)
+
+## [v5.0.1](https://github.com/laravel/telescope/compare/v5.0.0...v5.0.1) - 2024-03-23
+
+* Fix misspelled property in base.scss by [@vanderb](https://github.com/vanderb) in https://github.com/laravel/telescope/pull/1447
+* [5.x] Make commands lazy by [@timacdonald](https://github.com/timacdonald) in https://github.com/laravel/telescope/pull/1448
 
 ## [v5.0.0](https://github.com/laravel/telescope/compare/v4.17.6...v5.0.0) - 2024-03-12
 
