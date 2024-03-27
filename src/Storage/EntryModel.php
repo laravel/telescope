@@ -147,7 +147,7 @@ class EntryModel extends Model
             if (empty($content)) {
                 return $query;
             }
-            
+
             return $query->where('content', 'LIKE', '%'.$content.'%');
         });
 
