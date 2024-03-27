@@ -144,12 +144,11 @@ class EntryModel extends Model
     protected function whereContent($query, EntryQueryOptions $options)
     {
         $query->when($options->content, function ($query, $content) {
-            
-            if (empty ($content)) {
+            if (empty($content)) {
                 return $query;
             }
             
-            return $query->where('content', 'LIKE', '%' . $content . '%');
+            return $query->where('content', 'LIKE', '%'.$content.'%');
         });
 
         return $this;

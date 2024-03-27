@@ -71,7 +71,6 @@ class EntryQueryOptions
                 ->familyHash($request->family_hash)
                 ->limit($request->take ?? 50)
                 ->content($request->content);
-
     }
 
     /**
