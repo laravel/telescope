@@ -64,13 +64,13 @@ class EntryQueryOptions
     public static function fromRequest(Request $request)
     {
         return (new static)
-            ->batchId($request->batch_id)
-            ->uuids($request->uuids)
-            ->beforeSequence($request->before)
-            ->tag($request->tag)
-            ->familyHash($request->family_hash)
-            ->limit($request->take ?? 50)
-            ->content($request->content);
+                ->batchId($request->batch_id)
+                ->uuids($request->uuids)
+                ->beforeSequence($request->before)
+                ->tag($request->tag)
+                ->familyHash($request->family_hash)
+                ->limit($request->take ?? 50)
+                ->content($request->content);
 
     }
 
