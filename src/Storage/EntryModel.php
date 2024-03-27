@@ -65,12 +65,12 @@ class EntryModel extends Model
     public function scopeWithTelescopeOptions($query, $type, EntryQueryOptions $options)
     {
         $this->whereType($query, $type)
-            ->whereBatchId($query, $options)
-            ->whereTag($query, $options)
-            ->whereContent($query, $options)
-            ->whereFamilyHash($query, $options)
-            ->whereBeforeSequence($query, $options)
-            ->filter($query, $options);
+                ->whereBatchId($query, $options)
+                ->whereTag($query, $options)
+                ->whereContent($query, $options)
+                ->whereFamilyHash($query, $options)
+                ->whereBeforeSequence($query, $options)
+                ->filter($query, $options);
 
         return $query;
     }
@@ -117,7 +117,7 @@ class EntryModel extends Model
     protected function whereTag($query, EntryQueryOptions $options)
     {
         $query->when($options->tag, function ($query, $tag) {
-            $tags = collect(explode(',', $tag))->map(fn($tag) => trim($tag));
+            $tags = collect(explode(',', $tag))->map(fn ($tag) => trim($tag));
 
             if ($tags->isEmpty()) {
                 return $query;
