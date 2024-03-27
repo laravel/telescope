@@ -33,6 +33,7 @@
 
                 updateEntriesTimeout: null,
                 updateEntriesTimer: 2500,
+                content: '',
             };
         },
 
@@ -46,6 +47,7 @@
             this.familyHash = this.$route.query.family_hash || '';
 
             this.tag = this.$route.query.tag || '';
+            this.content = this.$route.query.content || '';
 
             this.loadEntries((entries) => {
                 this.entries = entries;
@@ -89,6 +91,9 @@
                 if (!this.$route.query.tag) {
                     this.tag = '';
                 }
+                if (!this.$route.query.content) {
+                    this.content = '';
+                }
 
                 this.ready = false;
 
@@ -109,7 +114,8 @@
                         '?tag=' + this.tag +
                         '&before=' + this.lastEntryIndex +
                         '&take=' + this.entriesPerRequest +
-                        '&family_hash=' + this.familyHash
+                        '&family_hash=' + this.familyHash +
+                        '&content=' + this.content 
                 ).then(response => {
                     this.lastEntryIndex = response.data.entries.length ? _.last(response.data.entries).sequence : this.lastEntryIndex;
 
@@ -134,7 +140,9 @@
                     axios.post(Telescope.basePath + '/telescope-api/' + this.resource +
                             '?tag=' + this.tag +
                             '&take=1' +
-                            '&family_hash=' + this.familyHash
+                            '&family_hash=' + this.familyHash +
+                            '&content=' + this.content 
+                            
                     ).then(response => {
                         if (! this._isDestroyed) {
                             this.recordingStatus = response.data.status;
@@ -180,7 +188,7 @@
 
                     clearTimeout(this.newEntriesTimeout);
 
-                    this.$router.push({query: _.assign({}, this.$route.query, {tag: this.tag})});
+                    this.$router.push({query: _.assign({}, this.$route.query, {tag: this.tag,content:this.content})});
                 });
             },
 
@@ -270,6 +278,17 @@
     <div class="card overflow-hidden">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h2 class="h6 m-0">{{this.title}}</h2>
+
+            <div class="form-control-with-icon w-25" >
+                <div class="icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon">
+                        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <input type="text" class="form-control w-100"
+                       id="contentInput"
+                       placeholder="Search Content" v-model="content" @input.stop="search">
+            </div>
 
             <div class="form-control-with-icon w-25" v-if="!hideSearch && (tag || entries.length > 0)">
                 <div class="icon-wrapper">
