@@ -65,11 +65,12 @@ class EntryModel extends Model
     public function scopeWithTelescopeOptions($query, $type, EntryQueryOptions $options)
     {
         $this->whereType($query, $type)
-                ->whereBatchId($query, $options)
-                ->whereTag($query, $options)
-                ->whereFamilyHash($query, $options)
-                ->whereBeforeSequence($query, $options)
-                ->filter($query, $options);
+            ->whereBatchId($query, $options)
+            ->whereTag($query, $options)
+            ->whereContent($query, $options)
+            ->whereFamilyHash($query, $options)
+            ->whereBeforeSequence($query, $options)
+            ->filter($query, $options);
 
         return $query;
     }
@@ -116,7 +117,7 @@ class EntryModel extends Model
     protected function whereTag($query, EntryQueryOptions $options)
     {
         $query->when($options->tag, function ($query, $tag) {
-            $tags = collect(explode(',', $tag))->map(fn ($tag) => trim($tag));
+            $tags = collect(explode(',', $tag))->map(fn($tag) => trim($tag));
 
             if ($tags->isEmpty()) {
                 return $query;
@@ -128,6 +129,27 @@ class EntryModel extends Model
                         $query->select('entry_uuid')->from('telescope_entries_tags')->whereIn('tag', $tags->all());
                     });
             });
+        });
+
+        return $this;
+    }
+
+    /**
+     * Scope the query for the given type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return $this
+     */
+    protected function whereContent($query, EntryQueryOptions $options)
+    {
+        $query->when($options->content, function ($query, $content) {
+            
+            if (empty ($content)) {
+                return $query;
+            }
+            
+            return $query->where('content', 'LIKE', '%' . $content . '%');
         });
 
         return $this;

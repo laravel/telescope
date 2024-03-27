@@ -49,6 +49,13 @@ class EntryQueryOptions
     public $limit = 50;
 
     /**
+     * The number of entries to retrieve.
+     *
+     * @var string
+     */
+    public $content;
+
+    /**
      * Create new entry query options from the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -57,12 +64,14 @@ class EntryQueryOptions
     public static function fromRequest(Request $request)
     {
         return (new static)
-                ->batchId($request->batch_id)
-                ->uuids($request->uuids)
-                ->beforeSequence($request->before)
-                ->tag($request->tag)
-                ->familyHash($request->family_hash)
-                ->limit($request->take ?? 50);
+            ->batchId($request->batch_id)
+            ->uuids($request->uuids)
+            ->beforeSequence($request->before)
+            ->tag($request->tag)
+            ->familyHash($request->family_hash)
+            ->limit($request->take ?? 50)
+            ->content($request->content);
+
     }
 
     /**
@@ -150,6 +159,19 @@ class EntryQueryOptions
     public function limit(int $limit)
     {
         $this->limit = $limit;
+
+        return $this;
+    }
+
+    /**
+     * Set the number of entries that should be retrieved.
+     *
+     * @param  string  $content
+     * @return $this
+     */
+    public function content(?string $content)
+    {
+        $this->content = $content;
 
         return $this;
     }
