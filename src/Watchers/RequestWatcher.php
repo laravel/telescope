@@ -37,6 +37,7 @@ class RequestWatcher extends Watcher
     public function recordRequest(RequestHandled $event)
     {
         if (! Telescope::isRecording() ||
+            $this->shouldIgnoreRequestUri($event) ||
             $this->shouldIgnoreHttpMethod($event) ||
             $this->shouldIgnoreStatusCode($event)) {
             return;
@@ -58,6 +59,19 @@ class RequestWatcher extends Watcher
             'duration' => $startTime ? floor((microtime(true) - $startTime) * 1000) : null,
             'memory' => round(memory_get_peak_usage(true) / 1024 / 1024, 1),
         ]));
+    }
+
+    /**
+     * Determine if the request uri should be ignored based on ignored paths.
+     *
+     * @param  mixed  $event
+     * @return bool
+     */
+    protected function shouldIgnoreRequestUri($event)
+    {
+        return $event->request->is(
+            $this->options['ignore_paths'] ?? []
+        );
     }
 
     /**
