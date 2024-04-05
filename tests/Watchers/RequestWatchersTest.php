@@ -16,7 +16,12 @@ class RequestWatchersTest extends FeatureTestCase
         parent::getEnvironmentSetUp($app);
 
         $app->get('config')->set('telescope.watchers', [
-            RequestWatcher::class => true,
+            RequestWatcher::class => [
+                'enabled' => true,
+                'ignore_http_methods' => ['PATCH'],
+                'ignore_status_codes' => [204],
+                'ignore_paths' => ['ignore-uri'],
+            ],
         ]);
 
         if (! defined('LARAVEL_START')) {
@@ -174,5 +179,50 @@ class RequestWatchersTest extends FeatureTestCase
         $this->assertSame('GET', $entry->content['method']);
         $this->assertSame(200, $entry->content['response_status']);
         $this->assertSame('plain telescope response', $entry->content['response']);
+    }
+
+    public function test_request_watcher_ignores_specified_methods()
+    {
+        Route::patch('/ignore-method', function () {
+            return Response::make(
+                'ignored method response', 200, ['Content-Type' => 'text/plain']
+            );
+        });
+
+        $this->patch('/ignore-method')->assertSuccessful();
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertNull($entry);
+    }
+
+    public function test_request_watcher_ignores_specified_status_code()
+    {
+        Route::get('/ignore-status-code', function () {
+            return Response::make(
+                'ignored status code response', 204, ['Content-Type' => 'text/plain']
+            );
+        });
+
+        $this->get('/ignore-status-code')->assertStatus(204);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertNull($entry);
+    }
+
+    public function test_request_watcher_ignores_specified_uri()
+    {
+        Route::get('/ignore-uri', function () {
+            return Response::make(
+                'ignored uri response', 200, ['Content-Type' => 'text/plain']
+            );
+        });
+
+        $this->get('/ignore-uri')->assertSuccessful();
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertNull($entry);
     }
 }
