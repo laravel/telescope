@@ -65,13 +65,55 @@ class EntryModel extends Model
     public function scopeWithTelescopeOptions($query, $type, EntryQueryOptions $options)
     {
         $this->whereType($query, $type)
-                ->whereBatchId($query, $options)
-                ->whereTag($query, $options)
-                ->whereFamilyHash($query, $options)
-                ->whereBeforeSequence($query, $options)
-                ->filter($query, $options);
+            ->whereBatchId($query, $options)
+            ->whereTag($query, $options)
+            ->whereSearch($query, $options)
+            ->whereDate($query, $options)
+            ->whereFamilyHash($query, $options)
+            ->whereBeforeSequence($query, $options)
+            ->filter($query, $options);
 
         return $query;
+    }
+
+    public function getSqlWithBindings($query)
+    {
+        return vsprintf(str_replace('?', '%s', $query->toSql()), collect($query->getBindings())->map(function ($binding) {
+            return is_numeric($binding) ? $binding : "'{$binding}'";
+        })->toArray());
+    }
+
+    /**
+     * Scope the query for the given type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return $this
+     */
+    protected function whereSearch($query, EntryQueryOptions $options)
+    {
+        $query->where('content', 'like', '%' . $options->searchData . '%');
+
+        return $this;
+    }
+
+    /**
+     * Scope the query for the given type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return $this
+     */
+    protected function whereDate($query, EntryQueryOptions $options)
+    {
+        if ($options->fromDate != "" && $options->toDate != "") {
+            $fromDate = date($options->fromDate);
+            $toDate = date($options->toDate);
+            $query->whereBetween('created_at', [$fromDate, $toDate]);
+        }
+
+
+        return $this;
     }
 
     /**

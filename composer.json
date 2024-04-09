@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.0|^8.1|^8.2",
         "ext-json": "*",
         "laravel/framework": "^8.37|^9.0|^10.0|^11.0",
         "symfony/console": "^5.3|^6.0|^7.0",
@@ -42,6 +42,9 @@
         }
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "5.x-dev"
+        },
         "laravel": {
             "providers": [
                 "Laravel\\Telescope\\TelescopeServiceProvider"
