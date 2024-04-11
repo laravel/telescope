@@ -6,8 +6,16 @@ import VueRouter from 'vue-router';
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
 import moment from 'moment-timezone';
+import popper from 'popper.js';
+import relatedEntries from './components/RelatedEntries.vue';
+import indexScreen from './components/IndexScreen.vue';
+import previewScreen from './components/PreviewScreen.vue';
+import alert from './components/Alert.vue';
+import copyClipboard from './components/CopyClipboard.vue';
 
-require('bootstrap');
+import.meta.glob(['../img/**']);
+
+import 'bootstrap';
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
 
@@ -17,7 +25,7 @@ if (token) {
 
 Vue.use(VueRouter);
 
-window.Popper = require('popper.js').default;
+window.Popper = popper;
 
 moment.tz.setDefault(Telescope.timezone);
 
@@ -37,11 +45,11 @@ const router = new VueRouter({
 });
 
 Vue.component('vue-json-pretty', VueJsonPretty);
-Vue.component('related-entries', require('./components/RelatedEntries.vue').default);
-Vue.component('index-screen', require('./components/IndexScreen.vue').default);
-Vue.component('preview-screen', require('./components/PreviewScreen.vue').default);
-Vue.component('alert', require('./components/Alert.vue').default);
-Vue.component('copy-clipboard', require('./components/CopyClipboard.vue').default);
+Vue.component('related-entries', relatedEntries);
+Vue.component('index-screen', indexScreen);
+Vue.component('preview-screen', previewScreen);
+Vue.component('alert', alert);
+Vue.component('copy-clipboard', copyClipboard);
 
 Vue.mixin(Base);
 
