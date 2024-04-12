@@ -1,0 +1,25 @@
+{
+  "resources/img/favicon.ico": {
+    "file": "favicon.ico",
+    "src": "resources/img/favicon.ico"
+  },
+  "resources/js/app.js": {
+    "file": "app.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "css": [
+      "app.css"
+    ]
+  },
+  "resources/sass/styles-dark.scss": {
+    "file": "styles-dark.css",
+    "src": "resources/sass/styles-dark.scss",
+    "isEntry": true
+  },
+  "resources/sass/styles.scss": {
+    "file": "styles.css",
+    "src": "resources/sass/styles.scss",
+    "isEntry": true
+  }
+}
