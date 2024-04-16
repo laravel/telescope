@@ -1,6 +1,11 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.0.1...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.0.2...5.x)
+
+## [v5.0.2](https://github.com/laravel/telescope/compare/v5.0.1...v5.0.2) - 2024-04-15
+
+* [5.x] feature: move laravel mix setup to vite by [@mmachatschek](https://github.com/mmachatschek) in https://github.com/laravel/telescope/pull/1460
+* [5.x] feature: add vite integrity plugin by [@mmachatschek](https://github.com/mmachatschek) in https://github.com/laravel/telescope/pull/1461
 
 ## [v5.0.1](https://github.com/laravel/telescope/compare/v5.0.0...v5.0.1) - 2024-03-23
 
