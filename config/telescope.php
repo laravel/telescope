@@ -53,6 +53,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Queue Config
+    |--------------------------------------------------------------------------
+    |
+    | This configuration options determines the queue config that will be
+    | used for ProcessPendingUpdates job, by passing the null value
+    | we use the default queue or change it to a custom queue.
+    |
+    */
+    'queue'=>[
+        'connection' => env('TELESCOPE_QUEUE_CONNECTION', null),
+        'queue' => env('TELESCOPE_QUEUE', null),
+    ],
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Master Switch
     |--------------------------------------------------------------------------
     |
