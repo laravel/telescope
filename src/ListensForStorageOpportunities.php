@@ -27,7 +27,9 @@ trait ListensForStorageOpportunities
      */
     public static function listenForStorageOpportunities($app)
     {
-        static::manageRecordingStateForOctane($app);
+        if (Telescope::runningWithinOctane($app)) {
+            static::manageRecordingStateForOctane($app);
+        }
         static::storeEntriesBeforeTermination($app);
         static::storeEntriesAfterWorkerLoop($app);
     }
