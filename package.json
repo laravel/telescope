@@ -22,7 +22,6 @@
         "sass": "^1.74.1",
         "sql-formatter": "^4.0.2",
         "vite": "^5.2.8",
-        "vite-plugin-manifest-sri": "^0.2.0",
         "vue": "^2.7.16",
         "vue-json-pretty": "^1.9.5",
         "vue-router": "^3.6.5",
