@@ -1,7 +1,6 @@
 import vue2 from "@vitejs/plugin-vue2";
 import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
-import manifestSRI from "vite-plugin-manifest-sri";
 
 const config = defineConfig({
     plugins: [
@@ -11,7 +10,6 @@ const config = defineConfig({
             "resources/js/app.js",
         ]),
         vue2(),
-        manifestSRI(),
     ],
     resolve: {
         alias: {
