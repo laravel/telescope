@@ -114,6 +114,19 @@ class Telescope
     public static $useDarkTheme = false;
 
     /**
+     * Custom Queue for processing pending updates
+     *
+     * @var string|null
+     */
+    public static $queue = null;
+
+    /**
+     * Custom Connection for processing pending updates
+     *
+     * @var string|null
+     */
+    public static $connection = null;
+    /**
      * Indicates if Telescope should record entries.
      *
      * @var bool
@@ -665,7 +678,7 @@ class Telescope
                 if (! isset($_ENV['VAPOR_SSM_PATH'])) {
                     $updateResult->whenNotEmpty(fn ($pendingUpdates) => rescue(fn () => ProcessPendingUpdates::dispatch(
                         $pendingUpdates,
-                    )->delay(now()->addSeconds(10))));
+                    )->onQueue(static::$queue)->onConnection(static::$connection)->delay(now()->addSeconds(10))));
                 }
 
                 if ($storage instanceof TerminableRepository) {
@@ -773,7 +786,28 @@ class Telescope
 
         return new static;
     }
+    /**
+     * Specifies the Queue that telescope should use for process pending updates
+     *
+     * @return static
+     */
+    public static function useQueue(string $queue)
+    {
+        static::$queue = $queue;
 
+        return new static;
+    }
+    /**
+     * Specifies the Connection that telescope should use for process pending updates
+     *
+     * @return static
+     */
+    public static function useConnection(string $connection)
+    {
+        static::$connection = $connection;
+
+        return new static;
+    }
     /**
      * Specifies that Telescope should use the dark theme.
      *
