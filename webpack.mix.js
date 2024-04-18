@@ -41,4 +41,7 @@ mix.options({
                 contextRegExp: /moment$/,
             }),
         ],
+        output: {
+            crossOriginLoading: "anonymous"
+        }
     });
