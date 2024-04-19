@@ -7,6 +7,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Master Switch
+    |--------------------------------------------------------------------------
+    |
+    | This option may be used to disable all Telescope watchers regardless
+    | of their individual configuration, which simply provides a single
+    | and convenient way to enable or disable Telescope data storage.
+    |
+    */
+
+    'enabled' => env('TELESCOPE_ENABLED', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Domain
     |--------------------------------------------------------------------------
     |
@@ -53,30 +66,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Telescope Queue Config
+    | Telescope Queue
     |--------------------------------------------------------------------------
     |
-    | This configuration options determines the queue config that will be
-    | used for ProcessPendingUpdates job, by passing the null value
-    | we use the default queue or change it to a custom queue.
+    | This configuration options determines the queue connection and queue
+    | which will be used to process ProcessPendingUpdate jobs. This can
+    | be changed if you would prefer to use a non-default connection.
     |
     */
+
     'queue'=>[
         'connection' => env('TELESCOPE_QUEUE_CONNECTION', null),
         'queue' => env('TELESCOPE_QUEUE', null),
     ],
-    /*
-    |--------------------------------------------------------------------------
-    | Telescope Master Switch
-    |--------------------------------------------------------------------------
-    |
-    | This option may be used to disable all Telescope watchers regardless
-    | of their individual configuration, which simply provides a single
-    | and convenient way to enable or disable Telescope data storage.
-    |
-    */
-
-    'enabled' => env('TELESCOPE_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
