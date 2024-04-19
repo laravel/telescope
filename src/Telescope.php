@@ -665,6 +665,10 @@ class Telescope
                 if (! isset($_ENV['VAPOR_SSM_PATH'])) {
                     $updateResult->whenNotEmpty(fn ($pendingUpdates) => rescue(fn () => ProcessPendingUpdates::dispatch(
                         $pendingUpdates,
+                    )->onConnection(
+                        config('telescope.queue.connection')
+                    )->onQueue(
+                        config('telescope.queue.queue')
                     )->delay(now()->addSeconds(10))));
                 }
 
