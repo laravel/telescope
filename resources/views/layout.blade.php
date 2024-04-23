@@ -1,5 +1,10 @@
 @php
-use Illuminate\Support\Facades\Vite;
+use Illuminate\Foundation\Vite;
+
+$nonExistentFileName = '/vendor/horizon/nonExistentFile';
+
+$vite = new Vite();
+$vite->useHotFile($nonExistentFileName);
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +13,7 @@ use Illuminate\Support\Facades\Vite;
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ Vite::asset('resources/img/favicon.ico', 'vendor/telescope') }}">
+    <link rel="shortcut icon" href="{{ $vite->asset('resources/img/favicon.ico', 'vendor/telescope') }}">
 
     <meta name="robots" content="noindex, nofollow">
 
@@ -17,7 +22,7 @@ use Illuminate\Support\Facades\Vite;
     <!-- Style sheets-->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600" rel="stylesheet" />
-    @vite('resources/sass/styles.scss', 'vendor/telescope')
+    {{ $vite('resources/sass/styles.scss', 'vendor/telescope') }}
 </head>
 <body>
 <div id="telescope" v-cloak>
@@ -235,6 +240,6 @@ use Illuminate\Support\Facades\Vite;
     window.Telescope = @json($telescopeScriptVariables);
 </script>
 
-@vite('resources/js/app.js', 'vendor/telescope')
+{{ $vite('resources/js/app.js', 'vendor/telescope') }}
 </body>
 </html>
