@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.0.3...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.0.4...5.x)
+
+## [v5.0.4](https://github.com/laravel/telescope/compare/v5.0.3...v5.0.4) - 2024-04-22
+
+* add config option for queue by [@ariaieboy](https://github.com/ariaieboy) in https://github.com/laravel/telescope/pull/1469
 
 ## [v5.0.3](https://github.com/laravel/telescope/compare/v5.0.2...v5.0.3) - 2024-04-17
 
