@@ -53,9 +53,11 @@ class ProcessPendingUpdates implements ShouldQueue
         $repository->update($this->pendingUpdates)->whenNotEmpty(
             fn ($pendingUpdates) => static::dispatchIf(
                 $this->attempt < 3, $pendingUpdates, $this->attempt
-            )->onConnection(config('telescope.queue.connection'))
-                ->onQueue(config('telescope.queue.queue'))
-                ->delay(now()->addSeconds(10)),
+            )->onConnection(
+                config('telescope.queue.connection')
+            )->onQueue(
+                config('telescope.queue.queue')
+            )->delay(now()->addSeconds(10)),
         );
     }
 }
