@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.0.4...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.0.5...5.x)
+
+## [v5.0.5](https://github.com/laravel/telescope/compare/v5.0.4...v5.0.5) - 2024-05-09
+
+* add queue connection customization to the Job self dispatch by [@ariaieboy](https://github.com/ariaieboy) in https://github.com/laravel/telescope/pull/1478
 
 ## [v5.0.4](https://github.com/laravel/telescope/compare/v5.0.3...v5.0.4) - 2024-04-22
 
