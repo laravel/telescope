@@ -182,16 +182,6 @@ class IncomingEntry
     }
 
     /**
-     * Determine if the incoming entry is a log entry.
-     *
-     * @return bool
-     */
-    public function isLog()
-    {
-        return $this->type === EntryType::LOG;
-    }
-
-    /**
      * Determine if the incoming entry is a request.
      *
      * @return bool
@@ -281,6 +271,16 @@ class IncomingEntry
     public function isDump()
     {
         return false;
+    }
+
+    /**
+     * Determine if the incoming entry is a log entry.
+     *
+     * @return bool
+     */
+    public function isLog()
+    {
+        return $this->type === EntryType::LOG;
     }
 
     /**
