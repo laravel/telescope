@@ -190,7 +190,7 @@ class IncomingEntry
     {
         return $this->type === EntryType::LOG;
     }
-    
+
     /**
      * Determine if the incoming entry is a request.
      *
