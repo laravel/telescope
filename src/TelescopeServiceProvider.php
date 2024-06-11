@@ -78,7 +78,7 @@ class TelescopeServiceProvider extends ServiceProvider
             ], 'telescope-migrations');
 
             $this->publishes([
-                __DIR__.'/../public' => public_path('vendor/telescope'),
+                __DIR__.'/../public/build' => public_path('vendor/telescope'),
             ], ['telescope-assets', 'laravel-assets']);
 
             $this->publishes([

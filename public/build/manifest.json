@@ -1,0 +1,29 @@
+{
+  "resources/img/favicon.ico": {
+    "file": "favicon.ico",
+    "src": "resources/img/favicon.ico",
+    "integrity": "sha384-qq+rp+VctxiZdCG1H4EuMLbay0TmMKRw9/AMIToF+uoiexMCWbCmtPzrU6MeAHQz"
+  },
+  "resources/js/app.js": {
+    "file": "app.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "css": [
+      "app.css"
+    ],
+    "integrity": "sha384-6AywQ89qF1DHGgFQTE+7C9EL1dDfpzF3OMrLl+DZaBlaag+1Siuwbq/DiwDmRO6r"
+  },
+  "resources/sass/styles-dark.scss": {
+    "file": "styles-dark.css",
+    "src": "resources/sass/styles-dark.scss",
+    "isEntry": true,
+    "integrity": "sha384-M9RRJ/l5Ei2BaDikjqqhjnhhKxFLMdJVXGtsI5xxBPcdVjF7jg9RLEO2W4F4YyuT"
+  },
+  "resources/sass/styles.scss": {
+    "file": "styles.css",
+    "src": "resources/sass/styles.scss",
+    "isEntry": true,
+    "integrity": "sha384-fArREpvoBcln8Ka3MTaQaj1IPYRqVVC/Q0+Bqq1I++o5+Ub5mnh+pAfiifFE5RCI"
+  }
+}
