@@ -45,6 +45,7 @@ class QueryWatcher extends Watcher
                 'file' => $caller['file'],
                 'line' => $caller['line'],
                 'hash' => $this->familyHash($event),
+                'driver' => $event->connection->getDriverName()
             ])->tags($this->tags($event)));
         }
     }
