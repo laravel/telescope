@@ -33,15 +33,17 @@ export default {
 
             return "hljs " + this.detectedLanguage;
         },
+    
         highlighted() {
-            // no idea what language to use, return raw code
             if (!this.autoDetect && !hljs.getLanguage(this.language)) {
-                console.warn(`The language "${this.language}" you specified could not be found.`);
+                console.warn(`The language "${this.language}" you specified could not be found.`);    
                 this.unknownLanguage = true;
+
                 return escapeHTML(this.code);
             }
 
             let result = {};
+    
             if (this.autoDetect) {
                 result = hljs.highlightAuto(this.code);
                 this.detectedLanguage = result.language;
@@ -51,9 +53,11 @@ export default {
             }
             return result.value;
         },
+
         autoDetect() {
             return ! this.language || hasValueOrEmptyAttribute(this.autodetect);
         },
+
         ignoreIllegals() {
             return true;
         }
