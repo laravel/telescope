@@ -45,6 +45,7 @@ class QueryWatcher extends Watcher
                 'file' => $caller['file'],
                 'line' => $caller['line'],
                 'hash' => $this->familyHash($event),
+                'driver' => $event->connection->getDriverName(),
             ])->tags($this->tags($event)));
         }
     }
@@ -90,6 +91,10 @@ class QueryWatcher extends Watcher
      */
     public function replaceBindings($event)
     {
+        if (version_compare(app()->version(), '10.0.0', '>=')) {
+            return $event->connection->getQueryGrammar()->substituteBindingsIntoRawSql($event->sql, $event->bindings);
+        }
+
         $sql = $event->sql;
 
         foreach ($this->formatBindings($event) as $key => $binding) {

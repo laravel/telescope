@@ -1,26 +1,46 @@
 <script type="text/ecmascript-6">
-    import hljs from 'highlight.js/lib/core';
-    import sql from 'highlight.js/lib/languages/sql';
-    import { format } from 'sql-formatter';
-
-    hljs.registerLanguage('sql', sql);
+import { format } from 'sql-formatter';
 
     export default {
         methods: {
-            highlightSQL() {
-                this.$nextTick(() => {
-                    hljs.highlightElement(this.$refs.sqlcode);
-                });
+            formatSql(sql, language) {
+                return format(sql, { language: this.mapLanguage(language)});
             },
-            formatSql(sql) {
-                return format(sql);
+
+            mapLanguage(language) {
+                if (language === 'sql') {
+                    return language;
+                }
+
+                switch (language) {
+                    case 'pgsql':
+                        return 'postgresql';
+                    case 'mysql':
+                        return 'mysql';
+                    case 'mariadb':
+                        return 'mariadb'
+                    case 'sqlite':
+                        return 'sqlite'
+                    case 'sqlsrv':
+                        return 'transactsql'
+                }
+            },
+
+            mapHighlightingLanguage(language) {
+                if (language === 'sql') {
+                    return language;
+                } else if(language === 'sqlsrv') {
+                    return 'tsql';
+                }
+
+                return 'pgsql';
             }
         }
     }
 </script>
 
 <template>
-    <preview-screen title="Query Details" resource="queries" :id="$route.params.id" v-on:ready="highlightSQL()">
+    <preview-screen title="Query Details" resource="queries" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit text-muted">Connection</td>
@@ -58,8 +78,10 @@
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
-                    <copy-clipboard :data="formatSql(slotProps.entry.content.sql)">
-                      <pre class="code-bg text-white" ref="sqlcode">{{ formatSql(slotProps.entry.content.sql) }}</pre>
+                    <copy-clipboard  :data="formatSql(slotProps.entry.content.sql, slotProps?.entry?.content?.driver ?? 'sql')">
+                        <higlighter :code="formatSql(slotProps.entry.content.sql, slotProps.entry.content?.driver ?? 'sql')"
+                                    :language="mapHighlightingLanguage(slotProps.entry.content?.driver ?? 'sql')"
+                                    class="code-bg text-white class" />
                     </copy-clipboard>
                 </div>
             </div>
