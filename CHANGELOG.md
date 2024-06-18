@@ -1,6 +1,11 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.0.5...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.1.0...5.x)
+
+## [v5.1.0](https://github.com/laravel/telescope/compare/v5.0.5...v5.1.0) - 2024-06-17
+
+* [5.x] Add `isLog` to `IncomingEntry` by [@ngunyimacharia](https://github.com/ngunyimacharia) in https://github.com/laravel/telescope/pull/1485
+* [5.x] Enhance query preview when using the pgsql driver by [@morloderex](https://github.com/morloderex) in https://github.com/laravel/telescope/pull/1486
 
 ## [v5.0.5](https://github.com/laravel/telescope/compare/v5.0.4...v5.0.5) - 2024-05-09
 
