@@ -42,7 +42,6 @@ Vue.component('index-screen', require('./components/IndexScreen.vue').default);
 Vue.component('preview-screen', require('./components/PreviewScreen.vue').default);
 Vue.component('alert', require('./components/Alert.vue').default);
 Vue.component('copy-clipboard', require('./components/CopyClipboard.vue').default);
-Vue.component('higlighter', require('./components/Highligter.vue').default);
 
 Vue.mixin(Base);
 
