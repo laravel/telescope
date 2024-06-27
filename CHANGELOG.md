@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.1.0...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.1.1...5.x)
+
+## [v5.1.1](https://github.com/laravel/telescope/compare/v5.1.0...v5.1.1) - 2024-06-27
+
+* Revert "[5.x] Enhance query preview when using the pgsql driver" by [@driesvints](https://github.com/driesvints) in https://github.com/laravel/telescope/pull/1491
 
 ## [v5.1.0](https://github.com/laravel/telescope/compare/v5.0.5...v5.1.0) - 2024-06-17
 
