@@ -22,12 +22,12 @@
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.15.2",
         "sass-loader": "^11.0.1",
-        "sql-formatter": "^15.3.1",
+        "sql-formatter": "^3.1.0",
         "vue": "^2.5.7",
-        "vue-copy-to-clipboard": "^1.0.3",
         "vue-json-pretty": "^1.6.2",
         "vue-loader": "^15.9.6",
         "vue-router": "^3.0.1",
-        "vue-template-compiler": "^2.5.21"
+        "vue-template-compiler": "^2.5.21",
+        "vue-copy-to-clipboard": "^1.0.3"
     }
 }
