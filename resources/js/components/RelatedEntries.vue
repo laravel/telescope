@@ -16,7 +16,8 @@
          */
         data(){
             return {
-                currentTab: 'exceptions'
+                currentTab: 'exceptions',
+                highlightedEntry: null
             };
         },
 
@@ -73,6 +74,25 @@
                 this.currentTab = tab;
                 if(window.history.replaceState) {
                     window.history.replaceState(null, null, '#' + this.currentTab);
+                }
+            },
+            isDuplicated(entry) {
+                const duplicatedKey = `${entry.content.hash}-${entry.content.connection}`;
+                return duplicatedKey in this.duplicatedQueries && this.duplicatedQueries[duplicatedKey].initialQuery !== entry.id
+            },
+            getDuplicatedOrigin(entry) {
+                return this.duplicatedQueries[`${entry.content.hash}-${entry.content.connection}`].initialQuery;
+            },
+            isHighlighted(entry) {
+                return this.highlightedEntry === entry.id;
+            },
+            scrollToEntry(entryId) {
+                this.highlightedEntry = entryId
+
+                const entryElement = document.getElementById(entryId);
+
+                if(entryElement) {
+                    entryElement.scrollIntoView({ behavior: "smooth", block: "center", inline: "center"});
                 }
             }
         },
@@ -140,7 +160,27 @@
             clientRequests() {
                 return _.filter(this.batch, {type: 'client_request'});
             },
+            groupedQueries() {
+                return _.groupBy(this.queries, (q) => { return `${q.content.hash}-${q.content.connection}` });
+            },
+            duplicatedQueries() {
+                const results = {};
 
+                for(const hash in this.groupedQueries) {
+                    const currentGroup = this.groupedQueries[hash];
+                    if(_.size(currentGroup) > 1) {
+                        const firstQueryOfDuplicated = _.orderBy(currentGroup, ['sequence'], ['asc'])[0];
+
+                        results[hash] =  {
+                            queries: currentGroup,
+                            initialQuery: firstQueryOfDuplicated.id
+                        }
+                    }
+                }
+
+
+                return results;
+            },
             queriesSummary() {
                 return {
                     time: _.reduce(this.queries, (time, q) => { return time + parseFloat(q.content.time) }, 0.00).toFixed(2),
@@ -266,10 +306,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="entry in queries">
-                    <td :title="entry.content.sql"><code>{{truncate(entry.content.sql, 110)}}</code></td>
+                <tr v-for="entry in queries" :class="{'highlight': isHighlighted(entry)}">
+                    <td :title="entry.content.sql"><a :id="entry.id"></a><code>{{truncate(entry.content.sql, 110)}}</code></td>
 
                     <td class="table-fit text-right">
+                        <a @click="scrollToEntry(getDuplicatedOrigin(entry))" class="badge badge-warning mr-2"
+                           v-if="isDuplicated(entry)" role="button">
+                            duplicated
+                        </a>
+
                         <span class="badge badge-danger" v-if="entry.content.slow">
                             {{entry.content.time}}ms
                         </span>
@@ -636,5 +681,10 @@
 <style scoped>
     td {
         vertical-align: middle !important;
+    }
+
+    .table-hover tbody tr.highlight {
+        color: #111827;
+        background-color: #f3f4f6;
     }
 </style>
