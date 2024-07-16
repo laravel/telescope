@@ -27,8 +27,15 @@
          */
         mounted(){
             this.activateFirstTab();
+            this.registerDocumentClickListener();
         },
 
+        /**
+         * Remove the previously added listeners
+         */
+        beforeUnmount() {
+            this.unregisterDocumentClickListener()
+        },
 
         watch: {
             entry(){
@@ -94,6 +101,15 @@
                 if(entryElement) {
                     entryElement.scrollIntoView({ behavior: "smooth", block: "center", inline: "center"});
                 }
+            },
+            blurHighlightedEntry() {
+                this.highlightedEntry = null;
+            },
+            registerDocumentClickListener() {
+                document.addEventListener('click', this.blurHighlightedEntry)
+            },
+            unregisterDocumentClickListener() {
+                document.removeEventListener('click', this.blurHighlightedEntry)
             }
         },
 
@@ -310,7 +326,7 @@
                     <td :title="entry.content.sql"><a :id="entry.id"></a><code>{{truncate(entry.content.sql, 110)}}</code></td>
 
                     <td class="table-fit text-right">
-                        <a @click="scrollToEntry(getDuplicatedOrigin(entry))" class="badge badge-warning mr-2"
+                        <a @click.stop.prevent="scrollToEntry(getDuplicatedOrigin(entry))" class="badge badge-warning mr-2"
                            v-if="isDuplicated(entry)" role="button">
                             duplicated
                         </a>
@@ -681,10 +697,5 @@
 <style scoped>
     td {
         vertical-align: middle !important;
-    }
-
-    .table-hover tbody tr.highlight {
-        color: #111827;
-        background-color: #f3f4f6;
     }
 </style>
