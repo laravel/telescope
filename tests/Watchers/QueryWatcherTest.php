@@ -3,6 +3,8 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Carbon\Carbon;
+use Illuminate\Database\Connection;
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
@@ -100,5 +102,42 @@ SQL
             , $entry->content['sql']);
 
         $this->assertSame('testbench', $entry->content['connection']);
+    }
+
+    public function test_query_watcher_can_prepare_bindings_for_nonstandard_connections()
+    {
+        $event = new QueryExecuted(<<<'SQL'
+select
+Method: post
+URL: https://fms.example.com/fmi/data/vLatest/databases/Database_Name/layouts/dapi_layout/_find
+Data: {
+    "query": [
+        {
+            "kp_iti": "=ITI0130"
+        }
+    ],
+    "limit": 1
+}
+SQL,
+            ['kp_id' => '=ABC001'],
+            fake()->numberBetween(100, 999),
+            new Connection('filemaker'),
+        );
+
+        $sql = app()->make(QueryWatcher::class)->replaceBindings($event);
+
+        $this->assertSame(<<<'SQL'
+select
+Method: post
+URL: https://fms.example.com/fmi/data/vLatest/databases/Database_Name/layouts/dapi_layout/_find
+Data: {
+    "query": [
+        {
+            "kp_iti": "=ITI0130"
+        }
+    ],
+    "limit": 1
+}
+SQL, $sql);
     }
 }

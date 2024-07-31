@@ -119,7 +119,11 @@ class QueryWatcher extends Watcher
     protected function quoteStringBinding($event, $binding)
     {
         try {
-            return $event->connection->getPdo()->quote($binding);
+            $pdo = $event->connection->getPdo();
+
+            if ($pdo instanceof \PDO) {
+                return $pdo->quote($binding);
+            }
         } catch (\PDOException $e) {
             throw_if('IM001' !== $e->getCode(), $e);
         }
