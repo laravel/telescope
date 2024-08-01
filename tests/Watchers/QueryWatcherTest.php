@@ -120,7 +120,7 @@ Data: {
 }
 SQL,
             ['kp_id' => '=ABC001'],
-            fake()->numberBetween(100, 999),
+            500,
             new Connection('filemaker'),
         );
 
