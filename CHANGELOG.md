@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.1.1...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.2.0...5.x)
+
+## [v5.2.0](https://github.com/laravel/telescope/compare/v5.1.1...v5.2.0) - 2024-08-02
+
+* add support for non-standard PDOs by [@macbookandrew](https://github.com/macbookandrew) in https://github.com/laravel/telescope/pull/1499
 
 ## [v5.1.1](https://github.com/laravel/telescope/compare/v5.1.0...v5.1.1) - 2024-06-27
 
