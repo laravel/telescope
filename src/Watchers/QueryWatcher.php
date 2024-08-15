@@ -103,7 +103,12 @@ class QueryWatcher extends Watcher
                 $binding = $this->quoteStringBinding($event, $binding);
             }
 
-            $sql = preg_replace($regex, $binding, $sql, 1);
+            $sql = preg_replace(
+                $regex,
+                $binding,
+                $sql,
+                is_numeric($key) ? 1 : -1
+            );
         }
 
         return $sql;
