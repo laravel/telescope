@@ -81,8 +81,11 @@ SQL
 
     public function test_query_watcher_can_prepare_named_bindings()
     {
+        // using the "sequence"-condition twice is intentional
+        // to test whether named parameters can be used multiple times.
+
         $this->app->get('db')->statement(<<<'SQL'
-update "telescope_entries" set "content" = :content, "should_display_on_index" = :index_new where "type" = :type and "should_display_on_index" = :index_old and "family_hash" is null and "sequence" > :sequence and "created_at" < :created_at
+update "telescope_entries" set "content" = :content, "should_display_on_index" = :index_new where "type" = :type and "should_display_on_index" = :index_old and "family_hash" is null and "sequence" > :sequence and "sequence" > :sequence and "created_at" < :created_at
 SQL
             , [
                 'sequence' => 100,
@@ -97,7 +100,7 @@ SQL
 
         $this->assertSame(EntryType::QUERY, $entry->type);
         $this->assertSame(<<<'SQL'
-update "telescope_entries" set "content" = null, "should_display_on_index" = 0 where "type" = 'query' and "should_display_on_index" = 1 and "family_hash" is null and "sequence" > 100 and "created_at" < '2019-01-01 00:00:00'
+update "telescope_entries" set "content" = null, "should_display_on_index" = 0 where "type" = 'query' and "should_display_on_index" = 1 and "family_hash" is null and "sequence" > 100 and "sequence" > 100 and "created_at" < '2019-01-01 00:00:00'
 SQL
             , $entry->content['sql']);
 
