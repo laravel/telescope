@@ -744,6 +744,22 @@ class Telescope
     }
 
     /**
+     * Exclude the given cookies from being recorded.
+     *
+     * @param  array  $cookies
+     * @return static
+     */
+    public static function exceptCookies(array $cookies)
+    {
+        static::$exceptCookies = array_values(array_unique(array_merge(
+            static::$exceptCookies,
+            $cookies
+        )));
+
+        return new static;
+    }
+
+    /**
      * Hide the given request parameters.
      *
      * @param  array  $attributes

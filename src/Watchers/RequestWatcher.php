@@ -117,7 +117,7 @@ class RequestWatcher extends Watcher
     protected function cookies($cookies)
     {
         return collect($cookies)
-            ->execpt(Telescope::$exceptCookies)
+            ->except(Telescope::$exceptCookies)
             ->all();
     }
 
