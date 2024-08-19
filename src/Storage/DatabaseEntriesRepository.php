@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Storage;
 
 use DateTimeInterface;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -384,11 +385,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
 
             $this->table('telescope_entries')->truncate();
             $this->table('telescope_monitoring')->truncate();
-
-            Schema::enableForeignKeyConstraints();
-        } finally {
-            Schema::enableForeignKeyConstraints();
-
+        } catch (QueryException) {
             do {
                 $deleted = $this->table('telescope_entries')->take($this->chunkSize)->delete();
             } while ($deleted !== 0);
@@ -396,6 +393,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             do {
                 $deleted = $this->table('telescope_monitoring')->take($this->chunkSize)->delete();
             } while ($deleted !== 0);
+        } finally {
+            Schema::enableForeignKeyConstraints();
         }
     }
 
