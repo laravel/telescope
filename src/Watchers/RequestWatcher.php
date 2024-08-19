@@ -51,6 +51,7 @@ class RequestWatcher extends Watcher
             'controller_action' => optional($event->request->route())->getActionName(),
             'middleware' => array_values(optional($event->request->route())->gatherMiddleware() ?? []),
             'headers' => $this->headers($event->request->headers->all()),
+            'cookies' => $this->cookies($event->request->cookie()),
             'payload' => $this->payload($this->input($event->request)),
             'session' => $this->payload($this->sessionVariables($event->request)),
             'response_status' => $event->response->getStatusCode(),
@@ -105,6 +106,19 @@ class RequestWatcher extends Watcher
         return $this->hideParameters($headers,
             Telescope::$hiddenRequestHeaders
         );
+    }
+
+    /**
+     * Format the given cookies.
+     *
+     * @param  array  $cookies
+     * @return array
+     */
+    protected function cookies($cookies)
+    {
+        return collect($cookies)
+            ->execpt(Telescope::$exceptCookies)
+            ->all();
     }
 
     /**

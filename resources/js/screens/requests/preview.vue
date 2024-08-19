@@ -93,6 +93,9 @@
                         <a class="nav-link" :class="{active: currentTab=='session'}" href="#" v-on:click.prevent="currentTab='session'">Session</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='cookies'}" href="#" v-on:click.prevent="currentTab='cookies'">Cookies</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" :class="{active: currentTab=='response'}" href="#" v-on:click.prevent="currentTab='response'">Response</a>
                     </li>
                 </ul>

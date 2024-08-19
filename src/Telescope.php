@@ -93,6 +93,15 @@ class Telescope
     ];
 
     /**
+     * The list of cookies that should not be recorded.
+     *
+     * @var array
+     */
+    public static $exceptCookies = [
+        'XSRF-TOKEN',
+    ];
+
+    /**
      * The list of hidden response parameters.
      *
      * @var array
