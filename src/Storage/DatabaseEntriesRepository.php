@@ -390,10 +390,11 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             // This ensures that the tables are still cleared, even if truncation is not possible
 
             do {
-                // Delete rows in chunks from both tables to avoid hitting database limits on large deletions
-
                 $deleted = $this->table('telescope_entries')->take($this->chunkSize)->delete();
-                $deleted += $this->table('telescope_monitoring')->take($this->chunkSize)->delete();
+            } while ($deleted !== 0);
+
+            do {
+                $deleted = $this->table('telescope_monitoring')->take($this->chunkSize)->delete();
             } while ($deleted !== 0);
         } finally {
             Schema::enableForeignKeyConstraints();
