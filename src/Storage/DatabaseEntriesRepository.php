@@ -386,9 +386,6 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             $this->table('telescope_entries')->truncate();
             $this->table('telescope_monitoring')->truncate();
         } catch (QueryException) {
-            // Fallback to chunked deletion if truncation fails due to database restrictions or errors
-            // This ensures that the tables are still cleared, even if truncation is not possible
-
             do {
                 $deleted = $this->table('telescope_entries')->take($this->chunkSize)->delete();
             } while ($deleted !== 0);
