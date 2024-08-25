@@ -381,8 +381,6 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     public function clear()
     {
         try {
-            Schema::disableForeignKeyConstraints();
-
             $this->table('telescope_entries')->truncate();
             $this->table('telescope_monitoring')->truncate();
         } catch (QueryException) {
@@ -393,8 +391,6 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             do {
                 $deleted = $this->table('telescope_monitoring')->take($this->chunkSize)->delete();
             } while ($deleted !== 0);
-        } finally {
-            Schema::enableForeignKeyConstraints();
         }
     }
 
