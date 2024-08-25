@@ -381,8 +381,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     public function clear()
     {
         try {
-            $this->table('telescope_entries')->truncate();
-            $this->table('telescope_monitoring')->truncate();
+            $this->table('telescope_entries')->delete();
+            $this->table('telescope_monitoring')->delete();
         } catch (QueryException) {
             do {
                 $deleted = $this->table('telescope_entries')->take($this->chunkSize)->delete();
