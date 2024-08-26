@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.2.1...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.2.2...5.x)
+
+## [v5.2.2](https://github.com/laravel/telescope/compare/v5.2.1...v5.2.2) - 2024-08-26
+
+* Revert "[5.x] Enhance Telescope Clear Method" by [@taylorotwell](https://github.com/taylorotwell) in https://github.com/laravel/telescope/pull/1510
 
 ## [v5.2.1](https://github.com/laravel/telescope/compare/v5.2.0...v5.2.1) - 2024-08-20
 
