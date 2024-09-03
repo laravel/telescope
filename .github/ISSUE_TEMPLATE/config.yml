@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Feature request
-    url: https://github.com/laravel/breeze/pulls
+    url: https://github.com/laravel/telescope/pulls
     about: 'For ideas or feature requests, send in a pull request'
   - name: Support Questions & Other
     url: https://laravel.com/docs/contributions#support-questions
