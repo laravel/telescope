@@ -8,7 +8,6 @@ use Laravel\Telescope\Contracts\ClearableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
-use Laravel\Telescope\Telescope;
 
 class TelescopeServiceProvider extends ServiceProvider
 {

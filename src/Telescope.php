@@ -9,12 +9,12 @@ use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Str;
 use Illuminate\Support\Testing\Fakes\EventFake;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
 use Laravel\Telescope\Jobs\ProcessPendingUpdates;
-use Illuminate\Support\Facades\Context;
 use Throwable;
 
 class Telescope
@@ -122,7 +122,7 @@ class Telescope
     public static $shouldRecord = false;
 
     /**
-     * Checks if telescope is enabled or not (also uses sample rate config)
+     * Checks if telescope is enabled or not (also uses sample rate config).
      *
      * @return bool
      */
@@ -138,7 +138,8 @@ class Telescope
         if (config('telescope.sample_rate') < rand(0, 100)) {
             return false;
         }
-        Context::add("telescope_enabled", $telescope_enabled);
+        Context::add('telescope_enabled', $telescope_enabled);
+
         return $telescope_enabled;
     }
 
