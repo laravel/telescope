@@ -20,6 +20,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Sample Rate
+    |--------------------------------------------------------------------------
+    |
+    | This option may be used to set sample rate based (between 0 and 100)
+    | Useful when your application having alot of RPS (Also manages database size)
+    |
+    */
+
+    'sample_rate' => env('TELESCOPE_SAMPLE_RATE', 100),
+
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Domain
     |--------------------------------------------------------------------------
     |

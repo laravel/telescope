@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\EntryQueryOptions;
+use Laravel\Telescope\Telescope;
 
 abstract class EntryController extends Controller
 {
@@ -65,7 +66,7 @@ abstract class EntryController extends Controller
      */
     protected function status()
     {
-        if (! config('telescope.enabled', false)) {
+        if (! Telescope::isEnabled()) {
             return 'disabled';
         }
 
