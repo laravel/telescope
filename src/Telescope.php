@@ -133,10 +133,10 @@ class Telescope
         }
         $telescope_enabled = true;
         if (! config('telescope.enabled')) {
-            return false;
+            $telescope_enabled = false;
         }
-        if (config('telescope.sample_rate') < rand(0, 100)) {
-            return false;
+        else if (config('telescope.sample_rate') < rand(0, 100)) {
+            return $telescope_enabled = false;
         }
         Context::add('telescope_enabled', $telescope_enabled);
 
