@@ -66,6 +66,8 @@ class EntryModel extends Model
     {
         $this->whereType($query, $type)
                 ->whereBatchId($query, $options)
+                ->whereEmail($query, $options)
+                ->whereStatus($query, $options)
                 ->whereTag($query, $options)
                 ->whereFamilyHash($query, $options)
                 ->whereBeforeSequence($query, $options)
@@ -101,6 +103,38 @@ class EntryModel extends Model
     {
         $query->when($options->batchId, function ($query, $batchId) {
             return $query->where('batch_id', $batchId);
+        });
+
+        return $this;
+    }
+
+    /**
+     * Scope the query for the given email.
+     *
+     * @param $query
+     * @param EntryQueryOptions $options
+     * @return $this
+     */
+    protected function whereEmail($query, EntryQueryOptions $options)
+    {
+        $query->when($options->email, function ($query, $email) {
+            return $query->where('content->user','like','%'.$email.'%');
+        });
+
+        return $this;
+    }
+
+    /**
+     * Scope the query for the given status.
+     *
+     * @param $query
+     * @param EntryQueryOptions $options
+     * @return $this
+     */
+    protected function whereStatus($query, EntryQueryOptions $options)
+    {
+        $query->when($options->status, function ($query, $status) {
+            return $query->where('content->response_status','like','%'.$status.'%');
         });
 
         return $this;

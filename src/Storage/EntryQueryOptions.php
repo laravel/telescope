@@ -14,6 +14,19 @@ class EntryQueryOptions
     public $batchId;
 
     /**
+     * The email that entries should belong to.
+     *
+     * @var string
+     */
+    public $email;
+
+    /**
+     * The status that entries should belong to.
+     *
+     * @var string
+     */
+    public $status;
+    /**
      * The tag that must belong to retrieved entries.
      *
      * @var string
@@ -58,6 +71,8 @@ class EntryQueryOptions
     {
         return (new static)
                 ->batchId($request->batch_id)
+                ->email($request->email)
+                ->status($request->status)
                 ->uuids($request->uuids)
                 ->beforeSequence($request->before)
                 ->tag($request->tag)
@@ -89,6 +104,31 @@ class EntryQueryOptions
         return $this;
     }
 
+    /**
+     * Set the email that entries should belong to.
+     *
+     * @param string $email
+     * @return $this
+     */
+    public function email(?string $email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Set the status that entries should belong to.
+     *
+     * @param string $status
+     * @return $this
+     */
+    public function status(?string $status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
     /**
      * Set the list of UUIDs of entries tor retrieve.
      *
