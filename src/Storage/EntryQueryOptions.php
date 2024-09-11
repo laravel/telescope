@@ -130,6 +130,7 @@ class EntryQueryOptions
 
         return $this;
     }
+
     /**
      * Set the list of UUIDs of entries tor retrieve.
      *

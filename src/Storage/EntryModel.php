@@ -134,7 +134,7 @@ class EntryModel extends Model
     protected function whereStatus($query, EntryQueryOptions $options)
     {
         $query->when($options->status, function ($query, $status) {
-            return $query->where('content->response_status', 'like' ,'%'.$status.'%');
+            return $query->where('content->response_status', 'like', '%'.$status.'%');
         });
 
         return $this;
