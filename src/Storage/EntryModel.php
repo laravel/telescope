@@ -111,14 +111,14 @@ class EntryModel extends Model
     /**
      * Scope the query for the given email.
      *
-     * @param $query
-     * @param EntryQueryOptions $options
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return $this
      */
     protected function whereEmail($query, EntryQueryOptions $options)
     {
         $query->when($options->email, function ($query, $email) {
-            return $query->where('content->user','like','%'.$email.'%');
+            return $query->where('content->user', 'like', '%'.$email.'%');
         });
 
         return $this;
@@ -127,14 +127,14 @@ class EntryModel extends Model
     /**
      * Scope the query for the given status.
      *
-     * @param $query
-     * @param EntryQueryOptions $options
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return $this
      */
     protected function whereStatus($query, EntryQueryOptions $options)
     {
         $query->when($options->status, function ($query, $status) {
-            return $query->where('content->response_status','like','%'.$status.'%');
+            return $query->where('content->response_status', 'like' ,'%'.$status.'%');
         });
 
         return $this;

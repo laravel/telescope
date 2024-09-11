@@ -108,7 +108,7 @@ class EntryQueryOptions
     /**
      * Set the email that entries should belong to.
      *
-     * @param string $email
+     * @param  string  $email
      * @return $this
      */
     public function email(?string $email)
@@ -121,7 +121,7 @@ class EntryQueryOptions
     /**
      * Set the status that entries should belong to.
      *
-     * @param string $status
+     * @param  string  $status
      * @return $this
      */
     public function status(?string $status)
