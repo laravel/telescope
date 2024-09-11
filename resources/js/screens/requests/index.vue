@@ -13,6 +13,7 @@
         <tr slot="table-header">
             <th scope="col">Verb</th>
             <th scope="col">Path</th>
+            <th scope="col" class="text-center">Email</th>
             <th scope="col" class="text-center">Status</th>
             <th scope="col" class="text-right">Duration</th>
             <th scope="col">Happened</th>
@@ -28,6 +29,12 @@
             </td>
 
             <td :title="slotProps.entry.content.uri">{{truncate(slotProps.entry.content.uri, 50)}}</td>
+
+            <td class="table-fit text-center">
+                <span class="badge">
+                    {{slotProps.entry.content.user && slotProps.entry.content.user.email}}
+                </span>
+            </td>
 
             <td class="table-fit text-center">
                 <span class="badge" :class="'badge-'+requestStatusClass(slotProps.entry.content.response_status)">
