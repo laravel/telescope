@@ -280,7 +280,7 @@
             <h2 class="h6 m-0">{{this.title}}</h2>
 
             <div class="d-flex w-100 justify-content-end" style="gap: 12px;">
-                <div class="form-control-with-icon w-25" v-if="!hideSearch">
+                <div class="form-control-with-icon w-25" v-if="!hideSearch && (tag || entries.length > 0)">
                     <div class="icon-wrapper">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon">
                             <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
@@ -290,7 +290,7 @@
                            id="searchInput"
                            placeholder="Search Tag" v-model="tag" @input.stop="search('tag')">
                 </div>
-                <div class="form-control-with-icon w-25" v-if="!hideSearch">
+                <div class="form-control-with-icon w-25" v-if="!hideSearch && (status || entries.length > 0)">
                     <div class="icon-wrapper">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon">
                             <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
@@ -300,7 +300,7 @@
                            id="searchStatus"
                            placeholder="Search by status" v-model="status" @input.stop="search('status')">
                 </div>
-                <div class="form-control-with-icon w-25" v-if="!hideSearch">
+                <div class="form-control-with-icon w-25" v-if="!hideSearch && (email || entries.length > 0)">
                     <div class="icon-wrapper">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon">
                             <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
