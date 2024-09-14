@@ -1,33 +1,37 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
-    },
-    "devDependencies": {
-        "axios": "^1.7",
-        "bootstrap": "^4.5.0",
-        "highlight.js": "^11.3.1",
-        "jquery": "^3.5",
-        "laravel-mix": "^6.0.6",
-        "lodash": "^4.17.19",
-        "moment": "^2.29.4",
-        "moment-timezone": "^0.5.40",
-        "popper.js": "^1.12",
-        "resolve-url-loader": "^5.0.0",
-        "sass": "^1.15.2",
-        "sass-loader": "^11.0.1",
-        "sql-formatter": "^3.1.0",
-        "vue": "^2.5.7",
-        "vue-json-pretty": "^1.6.2",
-        "vue-loader": "^15.9.6",
-        "vue-router": "^3.0.1",
-        "vue-template-compiler": "^2.5.21",
-        "vue-copy-to-clipboard": "^1.0.3"
-    }
+  "private": true,
+  "scripts": {
+    "dev": "npm run development",
+    "development": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production"
+  },
+  "devDependencies": {
+    "axios": "^1.7",
+    "bootstrap": "^4.5.0",
+    "highlight.js": "^11.3.1",
+    "jquery": "^3.5",
+    "laravel-mix": "^6.0.6",
+    "lodash": "^4.17.19",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.40",
+    "popper.js": "^1.12",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.15.2",
+    "sass-loader": "^11.0.1",
+    "sql-formatter": "^3.1.0",
+    "vue": "^2.5.7",
+    "vue-json-pretty": "^1.6.2",
+    "vue-loader": "^15.9.6",
+    "vue-router": "^3.0.1",
+    "vue-template-compiler": "^2.5.21",
+    "vue-copy-to-clipboard": "^1.0.3"
+  },
+  "dependencies": {
+    "vuejs-datetimepicker": "^1.1.13",
+    "vue-the-mask": "^0.11.1"
+  }
 }

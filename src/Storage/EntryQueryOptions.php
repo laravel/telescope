@@ -21,6 +21,27 @@ class EntryQueryOptions
     public $tag;
 
     /**
+     * The tag that must belong to retrieved entries.
+     *
+     * @var string
+     */
+    public $searchData;
+
+    /**
+     * The tag that must belong to retrieved entries.
+     *
+     * @var string
+     */
+    public $fromDate;
+
+    /**
+     * The tag that must belong to retrieved entries.
+     *
+     * @var string
+     */
+    public $toDate;
+
+    /**
      * The family hash that must belong to retrieved entries.
      *
      * @var string
@@ -57,12 +78,12 @@ class EntryQueryOptions
     public static function fromRequest(Request $request)
     {
         return (new static)
-                ->batchId($request->batch_id)
-                ->uuids($request->uuids)
-                ->beforeSequence($request->before)
-                ->tag($request->tag)
-                ->familyHash($request->family_hash)
-                ->limit($request->take ?? 50);
+            ->batchId($request->batch_id)
+            ->uuids($request->uuids)
+            ->beforeSequence($request->before)
+            ->tag($request->tag)
+            ->familyHash($request->family_hash)
+            ->limit($request->take ?? 50);
     }
 
     /**
