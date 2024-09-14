@@ -2009,7 +2009,7 @@ var render = function render() {
     attrs: {
       type: "text",
       id: "searchInput",
-      placeholder: "Search Tag"
+      placeholder: "Search Tag1"
     },
     domProps: {
       value: _vm.tag
