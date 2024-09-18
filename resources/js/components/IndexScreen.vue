@@ -3,7 +3,6 @@ import $ from "jquery";
 import _ from "lodash";
 import axios from "axios";
 import { TheMask } from "vue-the-mask";
-
 export default {
   props: ["resource", "title", "showAllFamily", "hideSearch"],
   components: {
@@ -351,7 +350,7 @@ export default {
           type="text"
           class="form-control w-100"
           id="searchInput"
-          placeholder="Search Tag1"
+          placeholder="Search Tag"
           v-model="tag"
           @input.stop="search"
         />
