@@ -92,7 +92,7 @@ class EntryModel extends Model
      */
     protected function whereSearch($query, EntryQueryOptions $options)
     {
-        $query->where('content', 'like', '%' . $options->searchData . '%');
+        $query->where('content', 'like', '%'.$options->searchData.'%');
 
         return $this;
     }
@@ -106,12 +106,11 @@ class EntryModel extends Model
      */
     protected function whereDate($query, EntryQueryOptions $options)
     {
-        if ($options->fromDate != "" && $options->toDate != "") {
+        if ($options->fromDate != '' && $options->toDate != '') {
             $fromDate = date($options->fromDate);
             $toDate = date($options->toDate);
             $query->whereBetween('created_at', [$fromDate, $toDate]);
         }
-
 
         return $this;
     }
