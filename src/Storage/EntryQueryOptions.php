@@ -82,8 +82,49 @@ class EntryQueryOptions
             ->uuids($request->uuids)
             ->beforeSequence($request->before)
             ->tag($request->tag)
+            ->searchData($request->searchData)
+            ->fromDate($request->fromDate)
+            ->toDate($request->toDate)
             ->familyHash($request->family_hash)
             ->limit($request->take ?? 50);
+    }
+
+    /**
+     * Set the tag that must belong to retrieved entries.
+     *
+     * @param  string  $tag
+     * @return $this
+     */
+    public function searchData(?string $searchData)
+    {
+        $this->searchData = $searchData;
+
+        return $this;
+    }
+
+    /**
+     * Set the tag that must belong to retrieved entries.
+     *
+     * @param  string  $tag
+     * @return $this
+     */
+    public function fromDate(?string $fromDate)
+    {
+        $this->fromDate = $fromDate;
+
+        return $this;
+    }
+    /**
+     * Set the tag that must belong to retrieved entries.
+     *
+     * @param  string  $tag
+     * @return $this
+     */
+    public function toDate(?string $toDate)
+    {
+        $this->toDate = $toDate;
+
+        return $this;
     }
 
     /**
