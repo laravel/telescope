@@ -114,7 +114,7 @@ class EntryQueryOptions
 
         return $this;
     }
-    
+
     /**
      * Set the tag that must belong to retrieved entries.
      *
