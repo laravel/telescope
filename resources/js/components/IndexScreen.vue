@@ -354,7 +354,7 @@ export default {
         type="text"
         :masked="true"
         v-model="fromDate"
-        placeholder="YYYY/MM/DD H:m:s"
+        placeholder="From:(YYYY/MM/DD H:m:s)"
       ></the-mask>
 
       <the-mask
@@ -364,7 +364,7 @@ export default {
         type="text"
         :masked="true"
         v-model="toDate"
-        placeholder="YYYY/MM/DD H:m:s"
+        placeholder="To:(YYYY/MM/DD H:m:s)"
       ></the-mask>
     </div>
 

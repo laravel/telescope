@@ -2039,7 +2039,7 @@ var render = function render() {
       mask: "####/##/## ##:##:##",
       type: "text",
       masked: true,
-      placeholder: "YYYY/MM/DD H:m:s"
+      placeholder: "From:(YYYY/MM/DD H:m:s)"
     },
     model: {
       value: _vm.fromDate,
@@ -2054,7 +2054,7 @@ var render = function render() {
       mask: "####/##/## ##:##:##",
       type: "text",
       masked: true,
-      placeholder: "YYYY/MM/DD H:m:s"
+      placeholder: "To:(YYYY/MM/DD H:m:s)"
     },
     model: {
       value: _vm.toDate,
