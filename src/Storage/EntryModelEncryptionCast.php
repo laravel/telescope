@@ -1,12 +1,8 @@
 <?php
 
-
 namespace Laravel\Telescope\Storage;
 
-use App\ValueObjects\Address as AddressValueObject;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Support\Facades\Crypt;
 
@@ -37,7 +33,7 @@ class EntryModelEncryptionCast extends Json implements CastsAttributes
         ));
     }
 
-  /**
+    /**
      * Decode/Decrypt content attribute. Check that is encrypted.
      *
      * @return mixed
@@ -45,12 +41,12 @@ class EntryModelEncryptionCast extends Json implements CastsAttributes
     protected function decryptContent($content)
     {
         if (
-            !$content
-            || !$this->encryptionIsEnabled()
+            ! $content
+            || ! $this->encryptionIsEnabled()
             || substr($content, 0, 8) != 'encrypt:'
-        )
+        ) {
             return $content;
-
+        }
 
         return Crypt::decryptString(substr($content, 8, strlen($content)));
     }
@@ -63,7 +59,10 @@ class EntryModelEncryptionCast extends Json implements CastsAttributes
      */
     protected function encryptContent($content)
     {
-        if (!$content || !$this->encryptionIsEnabled()) return $content;
+        if (! $content || ! $this->encryptionIsEnabled()) {
+            return $content;
+        }
+
         return 'encrypt:'.Crypt::encryptString($content);
     }
 
@@ -72,7 +71,7 @@ class EntryModelEncryptionCast extends Json implements CastsAttributes
      *
      * @return bool
      */
-    function encryptionIsEnabled()
+    protected function encryptionIsEnabled()
     {
         return config('telescope.encryption');
     }

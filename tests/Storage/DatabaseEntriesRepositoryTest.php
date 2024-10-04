@@ -47,11 +47,11 @@ class DatabaseEntriesRepositoryTest extends FeatureTestCase
     {
         config()->set('telescope.encryption', true);
         $content = [
-            "test" => 123
+            'test' => 123
         ];
 
         $entry = EntryModelFactory::new()->create([
-            'content' => $content
+            'content' => $content,
         ]);
 
         $repository = new DatabaseEntriesRepository('testbench');
