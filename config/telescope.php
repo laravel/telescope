@@ -49,8 +49,8 @@ return [
     | Telescope Encryption
     |--------------------------------------------------------------------------
     |
-    | This configuration options is avilable for encrypt
-    | content attribute at the rest.
+    | This configuration option enables encryption at rest
+    | for the content attribute of the telescope_entry
     |
     */
 
