@@ -5,6 +5,8 @@ namespace Laravel\Telescope\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class EntryModel extends Model
 {
@@ -53,6 +55,20 @@ class EntryModel extends Model
      * @var bool
      */
     public $incrementing = false;
+
+
+    /**
+     * Accessor for check the content attribute
+     *
+     * @return Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function content(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => $this->decryptContent($value),
+            set: fn (string $value) => $this->encryptContent($value),
+        );
+    }
 
     /**
      * Scope the query for the given query options.
@@ -201,5 +217,43 @@ class EntryModel extends Model
     public static function newFactory()
     {
         return EntryModelFactory::new();
+    }
+
+   /**
+     * Decode/Decrypt content attribute. Check that is encrypted.
+     *
+     * @return string
+     */
+    protected function decryptContent($content)
+    {
+        if (
+            !$this->encryptionIsEnabled()
+            || substr($content, 0, 7) != 'encryp:'
+        )
+            return $content;
+
+        return Crypt::decryptString(substr($content, 7, strlen($content)));
+    }
+
+    /**
+     * Encode/Encrypt content attribute. Add 'encrypt' prefix for mark
+     * that string is encrypted.
+     *
+     * @return string
+     */
+    protected function encryptContent($content)
+    {
+        if (!$this->encryptionIsEnabled()) return $value;
+        return 'encryp:'.Crypt::encryptString($value);
+    }
+
+    /**
+     * Check that encryption is enabled.
+     *
+     * @return bool
+     */
+    function encryptionIsEnabled()
+    {
+        return config('telescope.encryption');
     }
 }

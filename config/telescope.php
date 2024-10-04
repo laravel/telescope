@@ -46,6 +46,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Encryption
+    |--------------------------------------------------------------------------
+    |
+    | This configuration options is avilable for encrypt
+    | content attribute at the rest.
+    |
+    */
+
+    'encryption' => env('TELESCOPE_ENCRYPTION', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Storage Driver
     |--------------------------------------------------------------------------
     |
