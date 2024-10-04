@@ -42,4 +42,20 @@ class DatabaseEntriesRepositoryTest extends FeatureTestCase
         $this->assertCount(1, $failedUpdates);
         $this->assertSame('missing-id', $failedUpdates->first()->uuid);
     }
+
+    public function test_content_is_encrypted()
+    {
+        config()->set('telescope.encryption', true);
+        $content = [
+            "test" => 123
+        ];
+
+        $entry = EntryModelFactory::new()->create([
+            'content' => $content
+        ]);
+
+        $repository = new DatabaseEntriesRepository('testbench');
+        $result = $repository->find($entry->uuid);
+        $this->assertSame($result->content, $content);
+    }
 }
