@@ -228,11 +228,11 @@ class EntryModel extends Model
     {
         if (
             !$this->encryptionIsEnabled()
-            || substr($content, 0, 7) != 'encryp:'
+            || substr($content, 0, 8) != 'encrypt:'
         )
             return $content;
 
-        return Crypt::decryptString(substr($content, 7, strlen($content)));
+        return Crypt::decryptString(substr($content, 8, strlen($content)));
     }
 
     /**
@@ -244,7 +244,7 @@ class EntryModel extends Model
     protected function encryptContent($content)
     {
         if (!$this->encryptionIsEnabled()) return $value;
-        return 'encryp:'.Crypt::encryptString($value);
+        return 'encrypt:'.Crypt::encryptString($value);
     }
 
     /**
