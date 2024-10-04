@@ -75,5 +75,4 @@ class EntryModelEncryptionCast extends Json implements CastsAttributes
     {
         return config('telescope.encryption');
     }
-
 }
