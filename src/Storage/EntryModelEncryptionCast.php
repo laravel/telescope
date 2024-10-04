@@ -5,6 +5,7 @@ namespace Laravel\Telescope\Storage;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Database\Eloquent\Model;
 
 class EntryModelEncryptionCast extends Json implements CastsAttributes
 {
