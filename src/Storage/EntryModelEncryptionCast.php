@@ -4,7 +4,6 @@ namespace Laravel\Telescope\Storage;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Casts\Json;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
 
 class EntryModelEncryptionCast extends Json implements CastsAttributes
@@ -28,7 +27,7 @@ class EntryModelEncryptionCast extends Json implements CastsAttributes
      *
      * @param  array<string, mixed>  $attributes
      */
-    public function get(Model $model, string $key, mixed $value, array $attributes)
+    public function get($model, string $key, mixed $value, array $attributes)
     {
         return parent::decode(
             $this->decryptContent($value)
@@ -41,7 +40,7 @@ class EntryModelEncryptionCast extends Json implements CastsAttributes
      * @param  array<string, mixed>  $attributes
      * @return array<string, string>
      */
-    public function set(Model $model, string $key, mixed $value, array $attributes)
+    public function set($model, string $key, mixed $value, array $attributes)
     {
         return $this->encryptContent(parent::encode(
             $value
