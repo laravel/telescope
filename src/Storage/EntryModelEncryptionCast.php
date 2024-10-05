@@ -3,12 +3,26 @@
 namespace Laravel\Telescope\Storage;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Crypt;
 
-class EntryModelEncryptionCast extends Json implements CastsAttributes
+class EntryModelEncryptionCast implements CastsAttributes
 {
+
+    /**
+     * The custom JSON encoder.
+     *
+     * @var callable|null
+     */
+    protected static $encoder;
+
+    /**
+     * The custom JSON decode.
+     *
+     * @var callable|null
+     */
+    protected static $decoder;
+
     /**
      * Cast the given value.
      *
@@ -16,7 +30,7 @@ class EntryModelEncryptionCast extends Json implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes)
     {
-        return parent::decode(
+        return $this->decode(
             $this->decryptContent($value)
         );
     }
@@ -29,7 +43,7 @@ class EntryModelEncryptionCast extends Json implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes)
     {
-        return $this->encryptContent(parent::encode(
+        return $this->encryptContent($this->encode(
             $value
         ));
     }
@@ -75,5 +89,39 @@ class EntryModelEncryptionCast extends Json implements CastsAttributes
     protected function encryptionIsEnabled()
     {
         return config('telescope.encryption');
+    }
+
+    /**
+     * Encode the given value.
+     */
+    public static function encode(mixed $value): mixed
+    {
+        return isset(static::$encoder) ? (static::$encoder)($value) : json_encode($value);
+    }
+
+    /**
+     * Decode the given value.
+     */
+    public static function decode(mixed $value, ?bool $associative = true): mixed
+    {
+        return isset(static::$decoder)
+                ? (static::$decoder)($value, $associative)
+                : json_decode($value, $associative);
+    }
+
+    /**
+     * Encode all values using the given callable.
+     */
+    public static function encodeUsing(?callable $encoder): void
+    {
+        static::$encoder = $encoder;
+    }
+
+    /**
+     * Decode all values using the given callable.
+     */
+    public static function decodeUsing(?callable $decoder): void
+    {
+        static::$decoder = $decoder;
     }
 }
