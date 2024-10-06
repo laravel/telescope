@@ -86,7 +86,7 @@ class EntryModelEncryptionCast implements CastsAttributes
      */
     protected function encryptionIsEnabled()
     {
-        return config('telescope.encryption');
+        return config('telescope.encryption', false);
     }
 
     /**
