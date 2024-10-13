@@ -223,6 +223,26 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a event entry.
+     *
+     * @return bool
+     */
+    public function isEvent()
+    {
+        return $this->type === EntryType::EVENT;
+    }
+
+    /**
+     * Determine if the incoming entry is a cache entry.
+     *
+     * @return bool
+     */
+    public function isCache()
+    {
+        return $this->type === EntryType::CACHE;
+    }
+
+    /**
      * Determine if the incoming entry is an authorization gate check.
      *
      * @return bool
