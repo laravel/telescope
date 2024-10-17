@@ -11,13 +11,6 @@ class EntryModel extends Model
     use HasFactory;
 
     /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'telescope_entries';
-
-    /**
      * The name of the "updated at" column.
      *
      * @var string
@@ -53,6 +46,16 @@ class EntryModel extends Model
      * @var bool
      */
     public $incrementing = false;
+
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable(): string
+    {
+        return config('telescope.storage.database.table', parent::getTable());
+    }
 
     /**
      * Scope the query for the given query options.
@@ -115,6 +118,7 @@ class EntryModel extends Model
      */
     protected function whereTag($query, EntryQueryOptions $options)
     {
+        $tags_table = config('telescope.storage.database.table');
         $query->when($options->tag, function ($query, $tag) {
             $tags = collect(explode(',', $tag))->map(fn ($tag) => trim($tag));
 
@@ -123,9 +127,9 @@ class EntryModel extends Model
             }
 
             return $query->whereIn('uuid', function ($query) use ($tags) {
-                $query->select('entry_uuid')->from('telescope_entries_tags')
+                $query->select('entry_uuid')->from($tags_table)
                     ->whereIn('entry_uuid', function ($query) use ($tags) {
-                        $query->select('entry_uuid')->from('telescope_entries_tags')->whereIn('tag', $tags->all());
+                        $query->select('entry_uuid')->from($tags_table)->whereIn('tag', $tags->all());
                     });
             });
         });
