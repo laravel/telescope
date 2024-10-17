@@ -119,16 +119,16 @@ class EntryModel extends Model
     protected function whereTag($query, EntryQueryOptions $options)
     {
         $tags_table = config('telescope.storage.database.table');
-        $query->when($options->tag, function ($query, $tag) {
+        $query->when($options->tag, function ($query, $tag) use ($tags_table) {
             $tags = collect(explode(',', $tag))->map(fn ($tag) => trim($tag));
 
             if ($tags->isEmpty()) {
                 return $query;
             }
 
-            return $query->whereIn('uuid', function ($query) use ($tags) {
+            return $query->whereIn('uuid', function ($query) use ($tags_table, $tags) {
                 $query->select('entry_uuid')->from($tags_table)
-                    ->whereIn('entry_uuid', function ($query) use ($tags) {
+                    ->whereIn('entry_uuid', function ($query) use ($tags_table, $tags) {
                         $query->select('entry_uuid')->from($tags_table)->whereIn('tag', $tags->all());
                     });
             });
