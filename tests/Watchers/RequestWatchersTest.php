@@ -109,11 +109,11 @@ class RequestWatchersTest extends FeatureTestCase
         $this->assertSame('********', $entry->content['headers']['php-auth-pw']);
     }
 
-    public function test_it_stores_and_displays_array_of_request_headers()
+    public function test_it_stores_and_displays_array_of_request_and_response_headers()
     {
         Route::post('/dashboard', function () {
             return response('success')->withHeaders([
-                'X-Foo' => ['first', 'second'],
+                'X-Foo' => ['third', 'fourth'],
             ]);
         });
 
@@ -125,6 +125,7 @@ class RequestWatchersTest extends FeatureTestCase
 
         $this->assertSame(EntryType::REQUEST, $entry->type);
         $this->assertSame('first, second', $entry->content['headers']['x-bar']);
+        $this->assertSame('third, fourth', $entry->content['response_headers']['x-foo']);
     }
 
     public function test_request_watcher_handles_file_uploads()

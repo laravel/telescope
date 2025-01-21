@@ -103,8 +103,7 @@ class RequestWatcher extends Watcher
             ->map(fn ($header) => implode(', ', $header))
             ->all();
 
-        return $this->hideParameters(
-            $headers,
+        return $this->hideParameters($headers,
             Telescope::$hiddenRequestHeaders
         );
     }
@@ -117,8 +116,7 @@ class RequestWatcher extends Watcher
      */
     protected function payload($payload)
     {
-        return $this->hideParameters(
-            $payload,
+        return $this->hideParameters($payload,
             Telescope::$hiddenRequestParameters
         );
     }
