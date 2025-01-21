@@ -10,7 +10,8 @@
             return {
                 entry: null,
                 batch: [],
-                currentTab: 'payload'
+                currentRequestTab: 'payload',
+                currentResponseTab: 'response'
             };
         }
     }
@@ -84,21 +85,33 @@
             <div class="card mt-5 overflow-hidden">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='payload'}" href="#" v-on:click.prevent="currentTab='payload'">Payload</a>
+                        <a class="nav-link" :class="{active: currentRequestTab=='payload'}" href="#" v-on:click.prevent="currentRequestTab='payload'">Payload</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='headers'}" href="#" v-on:click.prevent="currentTab='headers'">Headers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='session'}" href="#" v-on:click.prevent="currentTab='session'">Session</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='response'}" href="#" v-on:click.prevent="currentTab='response'">Response</a>
+                        <a class="nav-link" :class="{active: currentRequestTab=='headers'}" href="#" v-on:click.prevent="currentRequestTab='headers'">Headers</a>
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
-                    <copy-clipboard :data="slotProps.entry.content[currentTab]">
-                        <vue-json-pretty :data="slotProps.entry.content[currentTab]"></vue-json-pretty>
+                    <copy-clipboard :data="slotProps.entry.content[currentRequestTab]">
+                        <vue-json-pretty :data="slotProps.entry.content[currentRequestTab]"></vue-json-pretty>
+                    </copy-clipboard>
+                </div>
+            </div>
+            <div class="card mt-5">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentResponseTab=='response'}" href="#" v-on:click.prevent="currentResponseTab='response'">Response</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentResponseTab=='response_headers'}" href="#" v-on:click.prevent="currentResponseTab='response_headers'">Headers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentResponseTab=='session'}" href="#" v-on:click.prevent="currentResponseTab='session'">Session</a>
+                    </li>
+                </ul>
+                <div class="code-bg p-4 mb-0 text-white">
+                    <copy-clipboard :data="slotProps.entry.content[currentResponseTab]">
+                        <vue-json-pretty :data="slotProps.entry.content[currentResponseTab]"></vue-json-pretty>
                     </copy-clipboard>
                 </div>
             </div>
