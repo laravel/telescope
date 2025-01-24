@@ -5,7 +5,6 @@ namespace Laravel\Telescope\Tests\Watchers;
 use Dummies\DummyEvent;
 use Dummies\DummyEventListener;
 use Dummies\DummyEventSubscriber;
-use Dummies\DummyEventWithFormatForTelescope;
 use Dummies\DummyEventWithObject;
 use Dummies\DummyInvokableEventListener;
 use Dummies\DummyObject;
