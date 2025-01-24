@@ -113,7 +113,7 @@ class GateWatcherTest extends FeatureTestCase
 
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(271, $entry->content['line']);
+        $this->assertSame(303, $entry->content['line']);
         $this->assertSame('create', $entry->content['ability']);
         $this->assertSame('allowed', $entry->content['result']);
         $this->assertSame([[]], $entry->content['arguments']);
@@ -156,10 +156,32 @@ class GateWatcherTest extends FeatureTestCase
 
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(276, $entry->content['line']);
+        $this->assertSame(308, $entry->content['line']);
         $this->assertSame('update', $entry->content['ability']);
         $this->assertSame('denied', $entry->content['result']);
         $this->assertSame([[]], $entry->content['arguments']);
+    }
+
+    public function test_gate_watcher_calls_format_for_telescope_method_if_it_exists()
+    {
+        $this->app->setBasePath(dirname(__FILE__, 3));
+
+        Gate::policy(TestResourceWithFormatForTelescope::class, TestPolicy::class);
+
+        try {
+            (new TestController())->update(new TestResourceWithFormatForTelescope());
+        } catch (\Exception $ex) {
+            // ignore
+        }
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::GATE, $entry->type);
+        $this->assertSame(__FILE__, $entry->content['file']);
+        $this->assertSame(308, $entry->content['line']);
+        $this->assertSame('update', $entry->content['ability']);
+        $this->assertSame('denied', $entry->content['result']);
+        $this->assertSame([['Telescope', 'Laravel', 'PHP']], $entry->content['arguments']);
     }
 
     public function test_gate_watcher_registers_allowed_response_policy_entries()
@@ -178,7 +200,7 @@ class GateWatcherTest extends FeatureTestCase
 
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(266, $entry->content['line']);
+        $this->assertSame(298, $entry->content['line']);
         $this->assertSame('view', $entry->content['ability']);
         $this->assertSame('allowed', $entry->content['result']);
         $this->assertSame([[]], $entry->content['arguments']);
@@ -200,7 +222,7 @@ class GateWatcherTest extends FeatureTestCase
 
         $this->assertSame(EntryType::GATE, $entry->type);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(281, $entry->content['line']);
+        $this->assertSame(313, $entry->content['line']);
         $this->assertSame('delete', $entry->content['ability']);
         $this->assertSame('denied', $entry->content['result']);
         $this->assertSame([[]], $entry->content['arguments']);
@@ -255,6 +277,16 @@ class User implements Authenticatable
 class TestResource
 {
     //
+}
+
+class TestResourceWithFormatForTelescope
+{
+    public function formatForTelescope(): array
+    {
+        return [
+            'Telescope', 'Laravel', 'PHP',
+        ];
+    }
 }
 
 class TestController

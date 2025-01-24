@@ -99,7 +99,15 @@ class GateWatcher extends Watcher
     private function formatArguments($arguments)
     {
         return collect($arguments)->map(function ($argument) {
-            return $argument instanceof Model ? FormatModel::given($argument) : $argument;
+            if (is_object($argument) && method_exists($argument, 'formatForTelescope')) {
+                return $argument->formatForTelescope();
+            }
+
+            if ($argument instanceof Model) {
+                return FormatModel::given($argument);
+            }
+
+            return $argument;
         })->toArray();
     }
 }
