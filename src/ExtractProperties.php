@@ -31,7 +31,9 @@ class ExtractProperties
                     return [
                         $property->getName() => [
                             'class' => get_class($value),
-                            'properties' => json_decode(json_encode($value), true),
+                            'properties' => method_exists($value, 'formatForTelescope')
+                                ? $value->formatForTelescope()
+                                : json_decode(json_encode($value), true),
                         ],
                     ];
                 } else {

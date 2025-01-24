@@ -5,7 +5,10 @@ namespace Laravel\Telescope\Tests\Watchers;
 use Dummies\DummyEvent;
 use Dummies\DummyEventListener;
 use Dummies\DummyEventSubscriber;
+use Dummies\DummyEventWithFormatForTelescope;
+use Dummies\DummyEventWithObject;
 use Dummies\DummyInvokableEventListener;
+use Dummies\DummyObject;
 use Dummies\IgnoredEvent;
 use Illuminate\Support\Facades\Event;
 use Laravel\Telescope\EntryType;
@@ -58,6 +61,25 @@ class EventWatcherTest extends FeatureTestCase
         $this->assertContains('Telescope', $entry->content['payload']['data']);
         $this->assertContains('Laravel', $entry->content['payload']['data']);
         $this->assertContains('PHP', $entry->content['payload']['data']);
+    }
+
+    public function test_event_watcher_with_object_property_calls_format_for_telescope_method_if_it_exists()
+    {
+        Event::listen(DummyEventWithObject::class, function ($payload) {
+            //
+        });
+
+        event(new DummyEventWithObject());
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::EVENT, $entry->type);
+        $this->assertSame(DummyEventWithObject::class, $entry->content['name']);
+        $this->assertArrayHasKey('thing', $entry->content['payload']);
+        $this->assertSame(DummyObject::class, $entry->content['payload']['thing']['class']);
+        $this->assertContains('Telescope', $entry->content['payload']['thing']['properties']);
+        $this->assertContains('Laravel', $entry->content['payload']['thing']['properties']);
+        $this->assertContains('PHP', $entry->content['payload']['thing']['properties']);
     }
 
     public function test_event_watcher_registers_events_and_stores_payloads_with_subscriber_methods()
@@ -171,6 +193,26 @@ class DummyEvent
     public function handle()
     {
         //
+    }
+}
+
+class DummyEventWithObject
+{
+    public $thing;
+
+    public function __construct()
+    {
+        $this->thing = new DummyObject;
+    }
+}
+
+class DummyObject
+{
+    public function formatForTelescope(): array
+    {
+        return [
+            'Telescope', 'Laravel', 'PHP',
+        ];
     }
 }
 
