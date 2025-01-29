@@ -57,7 +57,7 @@ class ProcessPendingUpdates implements ShouldQueue
                 config('telescope.queue.connection')
             )->onQueue(
                 config('telescope.queue.queue')
-            )->delay(now()->addSeconds(10)),
+            )->delay(config('telescope.queue.delay') ? now()->addSeconds(config('telescope.queue.delay')) : null),
         );
     }
 }
