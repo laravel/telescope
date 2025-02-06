@@ -5,6 +5,7 @@ namespace Laravel\Telescope\Tests\Watchers;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\RequestWatcher;
@@ -175,5 +176,32 @@ class RequestWatchersTest extends FeatureTestCase
         $this->assertSame('GET', $entry->content['method']);
         $this->assertSame(200, $entry->content['response_status']);
         $this->assertSame('plain telescope response', $entry->content['response']);
+    }
+
+    public function test_request_watcher_calls_format_for_telescope_method_if_it_exists()
+    {
+        View::addNamespace('tests', __DIR__.'/../stubs/views');
+
+        Route::get('/fake-view', function () {
+            return Response::make(
+                View::make('tests::fake-view', ['items' => new FormatForTelescopeClass])
+            );
+        });
+
+        $this->get('/fake-view')->assertSuccessful();
+
+        $entry = $this->loadTelescopeEntries()->first();
+        $this->assertSame(EntryType::REQUEST, $entry->type);
+        $this->assertEquals(['Telescope', 'Laravel', 'PHP'], $entry->content['response']['data']['items']['properties']);
+    }
+}
+
+class FormatForTelescopeClass
+{
+    public function formatForTelescope(): array
+    {
+        return [
+            'Telescope', 'Laravel', 'PHP',
+        ];
     }
 }
