@@ -56,6 +56,7 @@ class GateWatcher extends Watcher
         Telescope::recordGate(IncomingEntry::make([
             'ability' => $ability,
             'result' => $this->gateResult($result),
+            'message' => $this->gateMessage($result),
             'arguments' => $this->formatArguments($arguments),
             'file' => $caller['file'] ?? null,
             'line' => $caller['line'] ?? null,
@@ -88,6 +89,21 @@ class GateWatcher extends Watcher
         }
 
         return $result ? 'allowed' : 'denied';
+    }
+
+    /**
+     * Get the message returned by the gate
+     *
+     * @param  bool|\Illuminate\Auth\Access\Response  $result
+     * @return null
+     */
+    private function gateMessage($result) : ?string
+    {
+        if ($result instanceof Response) {
+            return $result->message();
+        }
+
+        return null;
     }
 
     /**

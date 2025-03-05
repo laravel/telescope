@@ -35,6 +35,13 @@ export default {
                 </td>
             </tr>
 
+            <tr>
+                <td class="table-fit text-muted">Message</td>
+                <td>
+                    {{slotProps.entry.content.message}}
+                </td>
+            </tr>
+
             <tr v-if="slotProps.entry.content.file">
                 <td class="table-fit text-muted">Location</td>
                 <td>{{ slotProps.entry.content.file }}:{{ slotProps.entry.content.line }}</td>

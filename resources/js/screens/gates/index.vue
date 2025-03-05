@@ -13,6 +13,7 @@ export default {
         <tr slot="table-header">
             <th scope="col">Ability</th>
             <th scope="col">Result</th>
+            <th scope="col">Message</th>
             <th scope="col">Happened</th>
             <th scope="col"></th>
         </tr>
@@ -24,6 +25,10 @@ export default {
                 <span class="badge" :class="'badge-' + gateResultClass(slotProps.entry.content.result)">
                     {{ slotProps.entry.content.result }}
                 </span>
+            </td>
+
+            <td class="table-fit">
+                {{truncate(slotProps.entry.content.message, 30)}}
             </td>
 
             <td
