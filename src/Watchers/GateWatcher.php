@@ -92,12 +92,12 @@ class GateWatcher extends Watcher
     }
 
     /**
-     * Get the message returned by the gate
+     * Get the message returned by the gate.
      *
      * @param  bool|\Illuminate\Auth\Access\Response  $result
      * @return null
      */
-    private function gateMessage($result) : ?string
+    private function gateMessage($result): ?string
     {
         if ($result instanceof Response) {
             return $result->message();
