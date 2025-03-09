@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Illuminate\Contracts\View\View as ViewContract;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use ReflectionFunction;
@@ -38,15 +39,17 @@ class ViewWatcher extends Watcher
             return;
         }
 
-        /** @var View $view */
+        /** @var ViewContract $view */
         $view = $data[0];
 
-        Telescope::recordView(IncomingEntry::make(array_filter([
-            'name' => $view->getName(),
-            'path' => $this->extractPath($view),
-            'data' => $this->extractKeysFromData($view),
-            'composers' => $this->formatComposers($view),
-        ])));
+        if ($view instanceof View) {
+            Telescope::recordView(IncomingEntry::make(array_filter([
+                'name' => $view->getName(),
+                'path' => $this->extractPath($view),
+                'data' => $this->extractKeysFromData($view),
+                'composers' => $this->formatComposers($view),
+            ])));
+        }
     }
 
     /**
