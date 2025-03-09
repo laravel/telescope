@@ -4,9 +4,9 @@ namespace Laravel\Telescope\Watchers;
 
 use Closure;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use Illuminate\Contracts\View\View as ViewContract;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use ReflectionFunction;
