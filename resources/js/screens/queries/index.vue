@@ -13,7 +13,7 @@
 
 
         <template slot="row" slot-scope="slotProps">
-            <td :title="slotProps.entry.content.sql"><code>{{truncate(slotProps.entry.content.sql, 90)}}</code></td>
+            <td :title="slotProps.entry.content.sql"><code>{{slotProps.entry.content.sql}}</code></td>
 
             <td class="table-fit text-right text-muted">
                 <span class="badge badge-danger" v-if="slotProps.entry.content.slow">

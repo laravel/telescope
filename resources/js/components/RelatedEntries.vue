@@ -209,8 +209,8 @@
                 <tbody>
                     <tr v-for="entry in exceptions">
                         <td :title="entry.content.class">
-                            {{truncate(entry.content.class, 70)}}<br>
-                            <small class="text-muted text-break">{{truncate(entry.content.message, 200)}}</small>
+                            {{entry.content.class}}<br>
+                            <small class="text-muted text-break">{{entry.content.message}}</small>
                         </td>
 
                         <td class="table-fit">
@@ -237,7 +237,7 @@
 
                 <tbody>
                 <tr v-for="entry in logs">
-                    <td :title="entry.content.message">{{truncate(entry.content.message, 90)}}</td>
+                    <td :title="entry.content.message">{{entry.content.message}}</td>
                     <td class="table-fit">
                         <span class="badge" :class="'badge-'+logLevelClass(entry.content.level)">
                             {{entry.content.level}}
@@ -267,7 +267,7 @@
                 </thead>
                 <tbody>
                 <tr v-for="entry in queries">
-                    <td :title="entry.content.sql"><code>{{truncate(entry.content.sql, 110)}}</code></td>
+                    <td :title="entry.content.sql"><code>{{entry.content.sql}}</code></td>
 
                     <td class="table-fit text-right">
                         <span class="badge badge-danger" v-if="entry.content.slow">
@@ -302,7 +302,7 @@
 
                 <tbody>
                 <tr v-for="entry in models">
-                    <td :title="entry.content.model">{{truncate(entry.content.model, 100)}}</td>
+                    <td :title="entry.content.model">{{entry.content.model}}</td>
                     <td class="table-fit">
                         <span class="badge" :class="'badge-'+modelActionClass(entry.content.action)">
                             {{entry.content.action}}
@@ -332,7 +332,7 @@
 
                 <tbody>
                 <tr v-for="entry in gates">
-                    <td :title="entry.content.ability">{{truncate(entry.content.ability, 80)}}</td>
+                    <td :title="entry.content.ability">{{entry.content.ability}}</td>
                     <td class="table-fit">
                         <span class="badge" :class="'badge-'+gateResultClass(entry.content.result)">
                             {{entry.content.result}}
@@ -399,7 +399,7 @@
                 <tbody>
                 <tr v-for="entry in events">
                     <td :title="entry.content.name">
-                        {{truncate(entry.content.name, 80)}}
+                        {{entry.content.name}}
 
                         <span class="badge badge-info ml-2" v-if="entry.content.broadcast">
                             Broadcast
@@ -432,7 +432,7 @@
 
                 <tbody>
                 <tr v-for="entry in cache">
-                    <td :title="entry.content.key">{{truncate(entry.content.key, 100)}}</td>
+                    <td :title="entry.content.key">{{entry.content.key}}</td>
                     <td class="table-fit">
                         <span class="badge" :class="'badge-'+cacheActionTypeClass(entry.content.type)">
                             {{entry.content.type}}
@@ -463,7 +463,7 @@
 
                 <tbody>
                 <tr v-for="entry in redis">
-                    <td :title="entry.content.command">{{truncate(entry.content.command, 100)}}</td>
+                    <td :title="entry.content.command">{{entry.content.command}}</td>
                     <td class="table-fit text-right text-muted">{{entry.content.time}}ms</td>
 
                     <td class="table-fit">
@@ -566,9 +566,9 @@
 
                 <tbody>
                 <tr v-for="entry in views">
-                    <td>
+                    <td :title="entry.content.name">
                         {{entry.content.name}} <br/>
-                        <small class="text-muted">{{truncate(entry.content.path, 100)}}</small>
+                        <small class="text-muted" :title="entry.content.path">{{entry.content.path}}</small>
                     </td>
 
                     <td class="table-fit text-right text-muted">
@@ -606,7 +606,7 @@
                         </span>
                     </td>
 
-                    <td :title="entry.content.uri">{{truncate(entry.content.uri, 60)}}</td>
+                    <td :title="entry.content.uri">{{entry.content.uri}}</td>
 
                     <td class="table-fit">
                         <span class="badge" :class="'badge-'+requestStatusClass(entry.content.response_status !== undefined ? entry.content.response_status : null)">

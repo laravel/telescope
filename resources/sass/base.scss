@@ -119,6 +119,15 @@ svg.icon {
             padding: 0.75rem 1.25rem;
         }
 
+        // All table cells with a title attribute will be truncated if necessary
+        td[title] {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            max-width: 0;
+        }
+
         th {
             background-color: $table-headers-color;
             font-size: 0.875rem;

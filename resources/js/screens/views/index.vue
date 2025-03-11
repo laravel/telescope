@@ -20,9 +20,9 @@
 
         <template slot="row" slot-scope="slotProps">
 
-            <td>
+            <td :title="slotProps.entry.content.name">
                 {{slotProps.entry.content.name}} <br/>
-                <small class="text-muted">{{truncate(slotProps.entry.content.path, 100)}}</small>
+                <small class="text-muted" :title="slotProps.entry.content.path">{{slotProps.entry.content.path}}</small>
             </td>
 
             <td class="table-fit text-right text-muted">

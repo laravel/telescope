@@ -18,7 +18,7 @@
         </tr>
 
         <template slot="row" slot-scope="slotProps">
-            <td :title="slotProps.entry.content.message">{{truncate(slotProps.entry.content.message, 50)}}</td>
+            <td :title="slotProps.entry.content.message">{{slotProps.entry.content.message}}</td>
 
             <td class="table-fit">
                 <span class="badge" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">

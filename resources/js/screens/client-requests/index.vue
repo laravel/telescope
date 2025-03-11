@@ -27,7 +27,7 @@
                 </span>
             </td>
 
-            <td :title="slotProps.entry.content.uri">{{truncate(slotProps.entry.content.uri, 60)}}</td>
+            <td :title="slotProps.entry.content.uri">{{slotProps.entry.content.uri}}</td>
 
             <td class="table-fit">
                 <span class="badge" :class="'badge-'+requestStatusClass(slotProps.entry.content.response_status !== undefined ? slotProps.entry.content.response_status : null)">

@@ -20,7 +20,7 @@
 
         <template slot="row" slot-scope="slotProps">
             <td>
-                <span :title="slotProps.entry.content.name">{{truncate(slotProps.entry.content.name, 68)}}</span><br>
+                <span :title="slotProps.entry.content.name">{{slotProps.entry.content.name}}</span><br>
                 <small class="text-muted">
                     Connection: {{slotProps.entry.content.connection}} | Queue: {{slotProps.entry.content.queue}}
                 </small>
