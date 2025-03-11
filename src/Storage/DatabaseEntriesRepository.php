@@ -146,7 +146,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                 $entry->content = json_encode($entry->content, JSON_INVALID_UTF8_SUBSTITUTE);
 
                 return $entry->toArray();
-            })->toArray());
+            })->values()->toArray());
         });
 
         $this->storeTags($entries->pluck('tags', 'uuid'));
@@ -175,7 +175,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                         $exception->content, ['occurrences' => $occurrences + 1]
                     )),
                 ]);
-            })->toArray());
+            })->values()->toArray());
         });
 
         $this->storeTags($exceptions->pluck('tags', 'uuid'));
@@ -198,7 +198,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                             'tag' => $tag,
                         ];
                     });
-                })->all());
+                })->values()->all());
             } catch (UniqueConstraintViolationException $e) {
                 // Ignore tags that already exist...
             }
@@ -258,7 +258,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                             'entry_uuid' => $entry->uuid,
                             'tag' => $tag,
                         ];
-                    })->toArray()
+                    })->values()->toArray()
                 );
             } catch (UniqueConstraintViolationException $e) {
                 // Ignore tags that already exist...
