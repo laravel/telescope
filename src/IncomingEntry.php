@@ -347,6 +347,7 @@ class IncomingEntry
             'type' => $this->type,
             'content' => $this->content,
             'created_at' => $this->recordedAt->toDateTimeString(),
+            'should_display_on_index' => true
         ];
     }
 }

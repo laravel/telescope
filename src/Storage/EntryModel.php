@@ -3,7 +3,7 @@
 namespace Laravel\Telescope\Storage;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Jenssegers\Mongodb\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
 
 class EntryModel extends Model
