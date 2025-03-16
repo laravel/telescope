@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Tests\Http;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
@@ -33,6 +34,45 @@ class AvatarTest extends FeatureTestCase
     /**
      * @test
      */
+    public function it_can_generate_avatar_url()
+    {
+        $user = null;
+
+        Telescope::withoutRecording(function () use (&$user) {
+            $this->loadLaravelMigrations();
+
+            $user = UserEloquent::create([
+                'id' => 1,
+                'name' => 'Telescope',
+                'email' => 'telescope@laravel.com',
+                'password' => 'secret',
+            ]);
+        });
+
+        $this->actingAs($user);
+
+        $this->app->get(LoggerInterface::class)->error('Avatar path will be generated.', [
+            'exception' => 'Some error message',
+        ]);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->get("/telescope/telescope-api/logs/{$entry->uuid}")
+            ->assertOk()
+            ->assertJson([
+                'entry' => [
+                    'content' => [
+                        'user' => [
+                            'avatar' => 'https://www.gravatar.com/avatar/'.md5(Str::lower($user['email'])).'?s=200',
+                        ],
+                    ],
+                ],
+            ]);
+    }
+
+    /**
+     * @test
+     */
     public function it_can_register_custom_avatar_path()
     {
         $user = null;
@@ -47,6 +87,50 @@ class AvatarTest extends FeatureTestCase
                 'password' => 'secret',
             ]);
         });
+
+        Telescope::avatar(function ($id) {
+            return "/images/{$id}.jpg";
+        });
+
+        $this->actingAs($user);
+
+        $this->app->get(LoggerInterface::class)->error('Avatar path will be generated.', [
+            'exception' => 'Some error message',
+        ]);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->get("/telescope/telescope-api/logs/{$entry->uuid}")
+            ->assertOk()
+            ->assertJson([
+                'entry' => [
+                    'content' => [
+                        'user' => [
+                            'avatar' => '/images/1.jpg',
+                        ],
+                    ],
+                ],
+            ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_read_custom_avatar_path_on_null_email()
+    {
+        $user = null;
+
+        Telescope::withoutRecording(function () use (&$user) {
+            $this->loadLaravelMigrations();
+
+            $user = UserEloquent::create([
+                'id' => 1,
+                'name' => 'Telescope',
+                'email' => 'telescope@laravel.com',
+                'password' => 'secret',
+            ]);
+        });
+        $user->email = null;
 
         Telescope::avatar(function ($id) {
             return "/images/{$id}.jpg";
