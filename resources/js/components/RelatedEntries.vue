@@ -295,6 +295,7 @@
                 <thead>
                 <tr>
                     <th>Model</th>
+                    <th>Hydrated</th>
                     <th>Action</th>
                     <th></th>
                 </tr>
@@ -303,6 +304,7 @@
                 <tbody>
                 <tr v-for="entry in models">
                     <td :title="entry.content.model">{{truncate(entry.content.model, 100)}}</td>
+                    <td>{{entry.content?.count}}</td>
                     <td class="table-fit">
                         <span class="badge" :class="'badge-'+modelActionClass(entry.content.action)">
                             {{entry.content.action}}
