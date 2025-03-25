@@ -199,8 +199,8 @@ class ClientRequestWatcher extends Watcher
             return $request->data();
         }
 
-        if ($this->hasHeader('Content-Type') &&
-            str_contains($this->header('Content-Type')[0], 'text/plain')) {
+        if ($request->hasHeader('Content-Type') &&
+            str_contains($request->header('Content-Type')[0], 'text/plain')) {
 
             return $request->body();
         }
