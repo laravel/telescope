@@ -199,7 +199,7 @@ class ClientRequestWatcher extends Watcher
             return $request->data();
         }
 
-        if (Str::startsWith(strtolower($request->header('Content-Type') ?? ''), 'text/plain')) {
+        if ($contentType = $request->header('Content-Type') && Str::startsWith(strtolower($contentType[0] ?? ''), 'text/plain')) {
             $content = $request->body();
 
             return $this->contentWithinLimits($content) ? $content : 'Purged By Telescope';
