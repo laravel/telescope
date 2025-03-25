@@ -155,11 +155,15 @@ class ClientRequestWatcher extends Watcher
     /**
      * Format the given payload.
      *
-     * @param  array  $payload
-     * @return array
+     * @param  array|string  $payload
+     * @return array|string
      */
     protected function payload($payload)
     {
+        if (is_string($payload)) {
+            return $payload;
+        }
+
         return $this->hideParameters($payload,
             Telescope::$hiddenRequestParameters
         );
@@ -187,12 +191,18 @@ class ClientRequestWatcher extends Watcher
      * Extract the input from the given request.
      *
      * @param  \Illuminate\Http\Client\Request  $request
-     * @return array
+     * @return array|string
      */
     protected function input(Request $request)
     {
         if (! $request->isMultipart()) {
             return $request->data();
+        }
+
+        if ($this->hasHeader('Content-Type') &&
+            str_contains($this->header('Content-Type')[0], 'text/plain')) {
+
+            return $request->body();
         }
 
         return collect($request->data())->mapWithKeys(function ($data) {
