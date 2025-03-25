@@ -178,6 +178,25 @@ class RequestWatchersTest extends FeatureTestCase
         $this->assertSame('plain telescope response', $entry->content['response']);
     }
 
+    public function test_request_watcher_records_plain_text_payload()
+    {
+        Route::post('/receive-plain-text', function () {
+            return response()->json(['ok' => 'yeah']);
+        });
+
+        $this->call(
+            'POST',
+            '/receive-plain-text',
+            server: $this->transformHeadersToServerVars(['Content-type' => 'text/plain']),
+            content: 'plain-text-content'
+        );
+
+        $entry = $this->loadTelescopeEntries()->first();
+        $this->assertSame(EntryType::REQUEST, $entry->type);
+        $this->assertSame('POST', $entry->content['method']);
+        $this->assertSame('plain-text-content', $entry->content['payload']);
+    }
+
     public function test_request_watcher_calls_format_for_telescope_method_if_it_exists()
     {
         View::addNamespace('tests', __DIR__.'/../stubs/views');
