@@ -156,6 +156,47 @@ class AvatarTest extends FeatureTestCase
                 ],
             ]);
     }
+
+    /**
+     * @test
+     */
+    public function it_should_not_call_the_custom_avatar_when_no_user_was_authenticated_during_the_error()
+    {
+        $user = null;
+
+        Telescope::withoutRecording(function () use (&$user) {
+            $this->loadLaravelMigrations();
+
+            $user = UserEloquent::create([
+                'id' => 1,
+                'name' => 'Telescope',
+                'email' => 'telescope@laravel.com',
+                'password' => 'secret',
+            ]);
+        });
+
+        Telescope::avatar(function (string $id, ?string $email) {
+            return UserEloquent::find($id)->email;
+        });
+
+        $this->app->get(LoggerInterface::class)->error('Avatar path will be generated.', [
+            'exception' => 'Some error message',
+        ]);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->actingAs($user);
+
+        $this->get("/telescope/telescope-api/logs/{$entry->uuid}")
+            ->assertOk()
+            ->assertJsonMissing([
+                'entry' => [
+                    'content' => [
+                        'user'
+                    ]
+                ]
+            ]);
+    }
 }
 
 class UserEloquent extends Model implements Authenticatable

@@ -22,6 +22,10 @@ class Avatar
      */
     public static function url(array $user)
     {
+        if (empty($user['id'])) {
+            return;
+        }
+
         if (isset(static::$callback)) {
             return static::resolve($user);
         }
@@ -52,7 +56,7 @@ class Avatar
     protected static function resolve($user)
     {
         if (static::$callback !== null) {
-            return call_user_func(static::$callback, $user['id'] ?? null, $user['email'] ?? null);
+            return call_user_func(static::$callback, $user['id'], $user['email'] ?? null);
         }
     }
 }
