@@ -192,9 +192,9 @@ class AvatarTest extends FeatureTestCase
             ->assertJsonMissing([
                 'entry' => [
                     'content' => [
-                        'user'
-                    ]
-                ]
+                        'user',
+                    ],
+                ],
             ]);
     }
 }
