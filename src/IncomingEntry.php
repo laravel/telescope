@@ -253,6 +253,16 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry is a job.
+     *
+     * @return bool
+     */
+    public function isJob()
+    {
+        return $this->type === EntryType::JOB;
+    }
+    
+    /**
      * Determine if the incoming entry is a failed job.
      *
      * @return bool
