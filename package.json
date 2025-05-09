@@ -9,6 +9,8 @@
         "prod": "npm run production",
         "production": "mix --production"
     },
+
+    
     "devDependencies": {
         "axios": "^1.8",
         "bootstrap": "^4.5.0",
