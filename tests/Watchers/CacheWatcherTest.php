@@ -20,6 +20,10 @@ class CacheWatcherTest extends FeatureTestCase
                 'hidden' => [
                     'my-hidden-value-key',
                 ],
+                'ignore' => [
+                    'laravel:pulse:*',
+                    'ignored-key',
+                ],
             ],
         ]);
     }
@@ -110,5 +114,23 @@ class CacheWatcherTest extends FeatureTestCase
         $this->assertSame('hit', $entry->content['type']);
         $this->assertSame('my-hidden-value-key', $entry->content['key']);
         $this->assertSame('********', $entry->content['value']);
+    }
+
+    public function test_cache_watcher_does_not_record_cache_key_if_ignored()
+    {
+        $this->app->get(Repository::class)->put('ignored-key', 'laravel');
+        $this->app->get(Repository::class)->put('laravel:pulse:restart', 'laravel');
+        $this->app->get(Repository::class)->put('my-key', 'laravel');
+
+        $count = $this->loadTelescopeEntries()->count();
+        $entry = $this->loadTelescopeEntries()->first();
+
+
+        $this->assertSame(1, $count);
+
+        $this->assertSame(EntryType::CACHE, $entry->type);
+        $this->assertSame('set', $entry->content['type']);
+        $this->assertSame('my-key', $entry->content['key']);
+        $this->assertSame('laravel', $entry->content['value']);
     }
 }
