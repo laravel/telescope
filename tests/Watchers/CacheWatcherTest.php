@@ -125,7 +125,6 @@ class CacheWatcherTest extends FeatureTestCase
         $count = $this->loadTelescopeEntries()->count();
         $entry = $this->loadTelescopeEntries()->first();
 
-
         $this->assertSame(1, $count);
 
         $this->assertSame(EntryType::CACHE, $entry->type);
