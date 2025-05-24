@@ -116,7 +116,7 @@ class CacheWatcherTest extends FeatureTestCase
         $this->assertSame('********', $entry->content['value']);
     }
 
-    public function test_cache_watcher_does_not_record_cache_key_if_ignored()
+    public function test_cache_watcher_skips_recording_ignored_cache_keys()
     {
         $this->app->get(Repository::class)->put('ignored-key', 'laravel');
         $this->app->get(Repository::class)->put('laravel:pulse:restart', 'laravel');
