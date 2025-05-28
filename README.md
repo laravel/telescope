@@ -12,7 +12,7 @@
 Laravel Telescope is an elegant debug assistant for the Laravel framework. Telescope provides insight into the requests coming into your application, exceptions, log entries, database queries, queued jobs, mail, notifications, cache operations, scheduled tasks, variable dumps and more. Telescope makes a wonderful companion to your local Laravel development environment.
 
 <p align="center">
-<img src="[https://laravel.com/assets/img/examples/Screen_Shot_2018-10-09_at_1.47.23_PM.png](https://laravel.com/img/docs/telescope-example.png)">
+<img src="https://laravel.com/img/docs/telescope-example.png">
 </p>
 
 ## Official Documentation
