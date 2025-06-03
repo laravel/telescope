@@ -150,8 +150,8 @@ class CacheWatcher extends Watcher
         return Str::is(array_merge($this->options['ignore'] ?? [], [
             'illuminate:queue:restart',
             'framework/schedule*',
-            'telescope:*',
             'laravel:reverb:restart',
+            'telescope:*',
         ]), $event->key);
     }
 }
