@@ -151,6 +151,7 @@ class CacheWatcher extends Watcher
             'illuminate:queue:restart',
             'framework/schedule*',
             'telescope:*',
+            'laravel:reverb:restart',
         ]), $event->key);
     }
 }
