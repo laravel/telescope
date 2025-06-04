@@ -9,15 +9,16 @@ use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Js;
 use Illuminate\Support\Str;
 use Illuminate\Support\Testing\Fakes\EventFake;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
 use Laravel\Telescope\Jobs\ProcessPendingUpdates;
-use Throwable;
+
 use RuntimeException;
-use Illuminate\Support\HtmlString;
-use Illuminate\Support\Js;
+use Throwable;
 
 class Telescope
 {
@@ -123,7 +124,7 @@ class Telescope
      */
     public static $shouldRecord = false;
 
-        /**
+    /**
      * Get the CSS for the Horizon dashboard.
      *
      * @return Illuminate\Contracts\Support\Htmlable
@@ -134,7 +135,7 @@ class Telescope
             throw new RuntimeException('Unable to load the Telescope dashboard app CSS.');
         }
 
-        $styles = match(static::$useDarkTheme) {
+        $styles = match (static::$useDarkTheme) {
             true => @file_get_contents(__DIR__.'/../dist/styles-dark.css'),
             default => @file_get_contents(__DIR__.'/../dist/styles.css'),
         };

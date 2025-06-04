@@ -1,4 +1,4 @@
-@import "colors";
+@import 'colors';
 
 $font-family-base: Figtree, sans-serif;
 $font-weight-bold: 600;
@@ -101,4 +101,4 @@ $container-max-widths: (
     xl: 1140px,
 ) !default;
 
-@import "base";
+@import 'base';
