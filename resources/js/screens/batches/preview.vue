@@ -22,37 +22,25 @@ export default {
 </script>
 
 <template>
-    <preview-screen
-        title="Batch Details"
-        resource="batches"
-        :id="$route.params.id"
-        entry-point="true"
-    >
+    <preview-screen title="Batch Details" resource="batches" :id="$route.params.id" entry-point="true">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit text-muted">Status</td>
                 <td>
                     <small
                         class="badge badge-danger badge-sm"
-                        v-if="
-                            slotProps.entry.content.failedJobs > 0 &&
-                            slotProps.entry.content.progress < 100
-                        "
+                        v-if="slotProps.entry.content.failedJobs > 0 && slotProps.entry.content.progress < 100"
                     >
                         Failures
                     </small>
-                    <small
-                        class="badge badge-success badge-sm"
-                        v-if="slotProps.entry.content.progress == 100"
-                    >
+                    <small class="badge badge-success badge-sm" v-if="slotProps.entry.content.progress == 100">
                         Finished
                     </small>
                     <small
                         class="badge badge-secondary badge-sm"
                         v-if="
                             slotProps.entry.content.totalJobs == 0 ||
-                            (slotProps.entry.content.pendingJobs > 0 &&
-                                !slotProps.entry.content.failedJobs)
+                            (slotProps.entry.content.pendingJobs > 0 && !slotProps.entry.content.failedJobs)
                         "
                     >
                         Pending
@@ -81,10 +69,7 @@ export default {
             <tr>
                 <td class="table-fit text-muted">Batch</td>
                 <td>
-                    {{
-                        slotProps.entry.content.name ||
-                        slotProps.entry.content.id
-                    }}
+                    {{ slotProps.entry.content.name || slotProps.entry.content.id }}
                 </td>
             </tr>
 

@@ -38,11 +38,7 @@ export default {
     <div class="position-relative">
         <div class="copy-to-clipboard">
             <span v-if="copying" style="color: #ffffff">
-                <svg
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    style="width: 1.25rem; height: 1.25rem"
-                >
+                <svg fill="currentColor" viewBox="0 0 20 20" style="width: 1.25rem; height: 1.25rem">
                     <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
                     <path
                         fill-rule="evenodd"
@@ -60,9 +56,7 @@ export default {
                         fill="currentColor"
                         style="width: 1.25rem; height: 1.25rem"
                     >
-                        <path
-                            d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"
-                        ></path>
+                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
                         <path
                             d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
                         ></path>

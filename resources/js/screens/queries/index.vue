@@ -17,10 +17,7 @@ export default {}
             </td>
 
             <td class="table-fit text-right text-muted">
-                <span
-                    class="badge badge-danger"
-                    v-if="slotProps.entry.content.slow"
-                >
+                <span class="badge badge-danger" v-if="slotProps.entry.content.slow">
                     {{ slotProps.entry.content.time }}ms
                 </span>
 

@@ -13,12 +13,7 @@ export default {
 </script>
 
 <template>
-    <preview-screen
-        title="Command Details"
-        resource="commands"
-        :id="$route.params.id"
-        entry-point="true"
-    >
+    <preview-screen title="Command Details" resource="commands" :id="$route.params.id" entry-point="true">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit text-muted">Command</td>
@@ -59,12 +54,8 @@ export default {
                 </ul>
                 <div>
                     <div class="code-bg p-4 mb-0 text-white">
-                        <copy-clipboard
-                            :data="slotProps.entry.content[currentTab]"
-                        >
-                            <vue-json-pretty
-                                :data="slotProps.entry.content[currentTab]"
-                            ></vue-json-pretty>
+                        <copy-clipboard :data="slotProps.entry.content[currentTab]">
+                            <vue-json-pretty :data="slotProps.entry.content[currentTab]"></vue-json-pretty>
                         </copy-clipboard>
                     </div>
                 </div>

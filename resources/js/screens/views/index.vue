@@ -20,23 +20,14 @@ export default {
         <template slot="row" slot-scope="slotProps">
             <td>
                 {{ slotProps.entry.content.name }} <br />
-                <small class="text-muted">{{
-                    truncate(slotProps.entry.content.path, 100)
-                }}</small>
+                <small class="text-muted">{{ truncate(slotProps.entry.content.path, 100) }}</small>
             </td>
 
             <td class="table-fit text-right text-muted">
-                {{
-                    slotProps.entry.content.composers
-                        ? slotProps.entry.content.composers.length
-                        : 0
-                }}
+                {{ slotProps.entry.content.composers ? slotProps.entry.content.composers.length : 0 }}
             </td>
 
-            <td
-                class="table-fit text-muted"
-                :data-timeago="slotProps.entry.created_at"
-            >
+            <td class="table-fit text-muted" :data-timeago="slotProps.entry.created_at">
                 {{ timeAgo(slotProps.entry.created_at) }}
             </td>
 

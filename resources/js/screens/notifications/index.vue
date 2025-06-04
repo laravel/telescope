@@ -14,22 +14,14 @@ export default {}
         <template slot="row" slot-scope="slotProps">
             <td>
                 <span :title="slotProps.entry.content.notification">{{
-                    truncate(slotProps.entry.content.notification || "-", 70)
+                    truncate(slotProps.entry.content.notification || '-', 70)
                 }}</span>
 
-                <span
-                    class="badge badge-secondary ml-2"
-                    v-if="slotProps.entry.content.queued"
-                >
-                    Queued
-                </span>
+                <span class="badge badge-secondary ml-2" v-if="slotProps.entry.content.queued"> Queued </span>
 
                 <br />
 
-                <small
-                    class="text-muted"
-                    :title="slotProps.entry.content.notifiable"
-                >
+                <small class="text-muted" :title="slotProps.entry.content.notifiable">
                     Recipient:
                     {{ truncate(slotProps.entry.content.notifiable, 90) }}
                 </small>

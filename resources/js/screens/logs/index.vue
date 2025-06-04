@@ -23,12 +23,7 @@ export default {
             </td>
 
             <td class="table-fit">
-                <span
-                    class="badge"
-                    :class="
-                        'badge-' + logLevelClass(slotProps.entry.content.level)
-                    "
-                >
+                <span class="badge" :class="'badge-' + logLevelClass(slotProps.entry.content.level)">
                     {{ slotProps.entry.content.level }}
                 </span>
             </td>

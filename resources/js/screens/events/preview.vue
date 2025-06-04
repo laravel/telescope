@@ -11,23 +11,14 @@ export default {
 </script>
 
 <template>
-    <preview-screen
-        title="Event Details"
-        resource="events"
-        :id="$route.params.id"
-    >
+    <preview-screen title="Event Details" resource="events" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit text-muted">Event</td>
                 <td>
                     {{ slotProps.entry.content.name }}
 
-                    <span
-                        class="badge badge-secondary ml-2"
-                        v-if="slotProps.entry.content.broadcast"
-                    >
-                        Broadcast
-                    </span>
+                    <span class="badge badge-secondary ml-2" v-if="slotProps.entry.content.broadcast"> Broadcast </span>
                 </td>
             </tr>
         </template>
@@ -56,42 +47,24 @@ export default {
                 </ul>
                 <div>
                     <!-- Event Payload -->
-                    <div
-                        class="code-bg p-4 mb-0 text-white"
-                        v-show="currentTab == 'data'"
-                    >
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab == 'data'">
                         <copy-clipboard :data="slotProps.entry.content.payload">
-                            <vue-json-pretty
-                                :data="slotProps.entry.content.payload"
-                            ></vue-json-pretty>
+                            <vue-json-pretty :data="slotProps.entry.content.payload"></vue-json-pretty>
                         </copy-clipboard>
                     </div>
 
                     <!-- Event Listeners -->
                     <div v-show="currentTab == 'listeners'">
-                        <p
-                            v-if="
-                                slotProps.entry.content.listeners.length === 0
-                            "
-                            class="text-muted m-0 p-4"
-                        >
+                        <p v-if="slotProps.entry.content.listeners.length === 0" class="text-muted m-0 p-4">
                             No listeners
                         </p>
                         <table class="table mb-0" v-else>
                             <tbody>
-                                <tr
-                                    v-for="listener in slotProps.entry.content
-                                        .listeners"
-                                >
+                                <tr v-for="listener in slotProps.entry.content.listeners">
                                     <td class="card-bg-secondary">
                                         {{ listener.name }}
 
-                                        <span
-                                            class="badge badge-secondary ml-2"
-                                            v-if="listener.queued"
-                                        >
-                                            Queued
-                                        </span>
+                                        <span class="badge badge-secondary ml-2" v-if="listener.queued"> Queued </span>
                                     </td>
                                 </tr>
                             </tbody>

@@ -20,12 +20,7 @@ export default {
 </script>
 
 <template>
-    <preview-screen
-        title="Query Details"
-        resource="queries"
-        :id="$route.params.id"
-        v-on:ready="highlightSQL()"
-    >
+    <preview-screen title="Query Details" resource="queries" :id="$route.params.id" v-on:ready="highlightSQL()">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit text-muted">Connection</td>
@@ -36,20 +31,13 @@ export default {
 
             <tr v-if="slotProps.entry.content.file">
                 <td class="table-fit text-muted">Location</td>
-                <td>
-                    {{ slotProps.entry.content.file }}:{{
-                        slotProps.entry.content.line
-                    }}
-                </td>
+                <td>{{ slotProps.entry.content.file }}:{{ slotProps.entry.content.line }}</td>
             </tr>
 
             <tr>
                 <td class="table-fit text-muted">Duration</td>
                 <td>
-                    <span
-                        class="badge badge-danger"
-                        v-if="slotProps.entry.content.slow"
-                    >
+                    <span class="badge badge-danger" v-if="slotProps.entry.content.slow">
                         {{ slotProps.entry.content.time }}ms
                     </span>
 
@@ -66,12 +54,8 @@ export default {
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
-                    <copy-clipboard
-                        :data="formatSql(slotProps.entry.content.sql)"
-                    >
-                        <pre class="code-bg text-white" ref="sqlcode">{{
-                            formatSql(slotProps.entry.content.sql)
-                        }}</pre>
+                    <copy-clipboard :data="formatSql(slotProps.entry.content.sql)">
+                        <pre class="code-bg text-white" ref="sqlcode">{{ formatSql(slotProps.entry.content.sql) }}</pre>
                     </copy-clipboard>
                 </div>
             </div>

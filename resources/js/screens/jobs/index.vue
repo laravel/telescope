@@ -19,24 +19,15 @@ export default {
 
         <template slot="row" slot-scope="slotProps">
             <td>
-                <span :title="slotProps.entry.content.name">{{
-                    truncate(slotProps.entry.content.name, 68)
-                }}</span
+                <span :title="slotProps.entry.content.name">{{ truncate(slotProps.entry.content.name, 68) }}</span
                 ><br />
                 <small class="text-muted">
-                    Connection: {{ slotProps.entry.content.connection }} |
-                    Queue: {{ slotProps.entry.content.queue }}
+                    Connection: {{ slotProps.entry.content.connection }} | Queue: {{ slotProps.entry.content.queue }}
                 </small>
             </td>
 
             <td class="table-fit">
-                <span
-                    class="badge"
-                    :class="
-                        'badge-' +
-                        jobStatusClass(slotProps.entry.content.status)
-                    "
-                >
+                <span class="badge" :class="'badge-' + jobStatusClass(slotProps.entry.content.status)">
                     {{ slotProps.entry.content.status }}
                 </span>
             </td>

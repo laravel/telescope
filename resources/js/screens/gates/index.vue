@@ -21,13 +21,7 @@ export default {
             <td>{{ truncate(slotProps.entry.content.ability, 80) }}</td>
 
             <td class="table-fit">
-                <span
-                    class="badge"
-                    :class="
-                        'badge-' +
-                        gateResultClass(slotProps.entry.content.result)
-                    "
-                >
+                <span class="badge" :class="'badge-' + gateResultClass(slotProps.entry.content.result)">
                     {{ slotProps.entry.content.result }}
                 </span>
             </td>

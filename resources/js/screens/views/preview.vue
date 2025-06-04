@@ -48,10 +48,7 @@ export default {
                             >Data</a
                         >
                     </li>
-                    <li
-                        class="nav-item"
-                        v-if="slotProps.entry.content.composers"
-                    >
+                    <li class="nav-item" v-if="slotProps.entry.content.composers">
                         <a
                             class="nav-link"
                             :class="{ active: currentTab == 'composers' }"
@@ -63,22 +60,14 @@ export default {
                 </ul>
                 <div>
                     <!-- View Payload -->
-                    <div
-                        class="code-bg p-4 mb-0 text-white"
-                        v-show="currentTab == 'data'"
-                    >
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab == 'data'">
                         <copy-clipboard :data="slotProps.entry.content.data">
-                            <vue-json-pretty
-                                :data="slotProps.entry.content.data"
-                            ></vue-json-pretty>
+                            <vue-json-pretty :data="slotProps.entry.content.data"></vue-json-pretty>
                         </copy-clipboard>
                     </div>
 
                     <!-- View Composers -->
-                    <table
-                        class="table table-hover mb-0"
-                        v-show="currentTab == 'composers'"
-                    >
+                    <table class="table table-hover mb-0" v-show="currentTab == 'composers'">
                         <thead>
                             <tr>
                                 <th>Composer</th>
@@ -87,22 +76,12 @@ export default {
                         </thead>
 
                         <tbody>
-                            <tr
-                                v-for="(composer, key) in slotProps.entry
-                                    .content.composers"
-                                :key="key"
-                            >
+                            <tr v-for="(composer, key) in slotProps.entry.content.composers" :key="key">
                                 <td :title="composer.name">
                                     {{ composer.name }}
                                 </td>
                                 <td class="table-fit">
-                                    <span
-                                        class="badge"
-                                        :class="
-                                            'badge-' +
-                                            composerTypeClass(composer.type)
-                                        "
-                                    >
+                                    <span class="badge" :class="'badge-' + composerTypeClass(composer.type)">
                                         {{ composer.type }}
                                     </span>
                                 </td>

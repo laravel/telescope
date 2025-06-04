@@ -21,13 +21,7 @@ export default {
             <td>{{ truncate(slotProps.entry.content.key, 80) }}</td>
 
             <td class="table-fit">
-                <span
-                    class="badge"
-                    :class="
-                        'badge-' +
-                        cacheActionTypeClass(slotProps.entry.content.type)
-                    "
-                >
+                <span class="badge" :class="'badge-' + cacheActionTypeClass(slotProps.entry.content.type)">
                     {{ slotProps.entry.content.type }}
                 </span>
             </td>

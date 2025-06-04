@@ -15,12 +15,7 @@ export default {}
             <td :title="slotProps.entry.content.name">
                 {{ truncate(slotProps.entry.content.name, 80) }}
 
-                <span
-                    class="badge badge-secondary ml-2"
-                    v-if="slotProps.entry.content.broadcast"
-                >
-                    Broadcast
-                </span>
+                <span class="badge badge-secondary ml-2" v-if="slotProps.entry.content.broadcast"> Broadcast </span>
             </td>
 
             <td class="table-fit text-right text-muted">

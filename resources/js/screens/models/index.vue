@@ -21,13 +21,7 @@ export default {
             <td>{{ truncate(slotProps.entry.content.model, 70) }}</td>
 
             <td class="table-fit">
-                <span
-                    class="badge"
-                    :class="
-                        'badge-' +
-                        modelActionClass(slotProps.entry.content.action)
-                    "
-                >
+                <span class="badge" :class="'badge-' + modelActionClass(slotProps.entry.content.action)">
                     {{ slotProps.entry.content.action }}
                 </span>
             </td>

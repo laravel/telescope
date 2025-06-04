@@ -10,11 +10,7 @@ export default {
 </script>
 
 <template>
-    <preview-screen
-        title="Redis Command Details"
-        resource="redis"
-        :id="$route.params.id"
-    >
+    <preview-screen title="Redis Command Details" resource="redis" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit text-muted">Connection</td>
@@ -37,9 +33,7 @@ export default {
                     </li>
                 </ul>
 
-                <pre class="code-bg p-4 mb-0 text-white">{{
-                    slotProps.entry.content.command
-                }}</pre>
+                <pre class="code-bg p-4 mb-0 text-white">{{ slotProps.entry.content.command }}</pre>
             </div>
         </div>
     </preview-screen>

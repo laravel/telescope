@@ -28,12 +28,7 @@ export default {
                 <td>
                     {{ slotProps.entry.content.mailable }}
 
-                    <span
-                        class="badge badge-secondary ml-2"
-                        v-if="slotProps.entry.content.queued"
-                    >
-                        Queued
-                    </span>
+                    <span class="badge badge-secondary ml-2" v-if="slotProps.entry.content.queued"> Queued </span>
                 </td>
             </tr>
 
@@ -82,13 +77,7 @@ export default {
             <tr>
                 <td class="table-fit text-muted">Download</td>
                 <td>
-                    <a
-                        :href="
-                            Telescope.basePath +
-                            '/telescope-api/mail/' +
-                            $route.params.id +
-                            '/download'
-                        "
+                    <a :href="Telescope.basePath + '/telescope-api/mail/' + $route.params.id + '/download'"
                         >Download .eml file</a
                     >
                 </td>
@@ -98,12 +87,7 @@ export default {
         <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
             <div class="card">
                 <iframe
-                    :src="
-                        Telescope.basePath +
-                        '/telescope-api/mail/' +
-                        $route.params.id +
-                        '/preview'
-                    "
+                    :src="Telescope.basePath + '/telescope-api/mail/' + $route.params.id + '/preview'"
                     width="100%"
                     height="400"
                 ></iframe>

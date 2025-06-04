@@ -6,13 +6,7 @@ export default {}
     <index-screen title="Exceptions" resource="exceptions">
         <tr slot="table-header">
             <th scope="col" v-if="!$route.query.family_hash">Type</th>
-            <th
-                scope="col"
-                class="text-right"
-                v-if="!$route.query.family_hash && !$route.query.tag"
-            >
-                #
-            </th>
+            <th scope="col" class="text-right" v-if="!$route.query.family_hash && !$route.query.tag">#</th>
             <th scope="col" v-if="$route.query.family_hash">Message</th>
             <th scope="col" class="text-right">Happened</th>
             <th scope="col">Resolved</th>
@@ -20,40 +14,22 @@ export default {}
         </tr>
 
         <template slot="row" slot-scope="slotProps">
-            <td
-                :title="slotProps.entry.content.class"
-                v-if="!$route.query.family_hash"
-            >
+            <td :title="slotProps.entry.content.class" v-if="!$route.query.family_hash">
                 {{ truncate(slotProps.entry.content.class, 70) }}<br />
 
-                <small class="text-muted">{{
-                    truncate(slotProps.entry.content.message, 100)
-                }}</small>
+                <small class="text-muted">{{ truncate(slotProps.entry.content.message, 100) }}</small>
             </td>
 
-            <td
-                class="table-fit text-right text-muted"
-                v-if="!$route.query.family_hash && !$route.query.tag"
-            >
+            <td class="table-fit text-right text-muted" v-if="!$route.query.family_hash && !$route.query.tag">
                 <span>{{ slotProps.entry.content.occurrences }}</span>
             </td>
 
-            <td
-                :title="slotProps.entry.content.message"
-                v-if="$route.query.family_hash"
-            >
+            <td :title="slotProps.entry.content.message" v-if="$route.query.family_hash">
                 {{ truncate(slotProps.entry.content.message, 80) }}<br />
 
                 <small class="text-muted">
-                    <span
-                        v-if="
-                            slotProps.entry.content.user &&
-                            slotProps.entry.content.user.email
-                        "
-                    >
-                        User: {{ slotProps.entry.content.user.email }} ({{
-                            slotProps.entry.content.user.id
-                        }})
+                    <span v-if="slotProps.entry.content.user && slotProps.entry.content.user.email">
+                        User: {{ slotProps.entry.content.user.email }} ({{ slotProps.entry.content.user.id }})
                     </span>
 
                     <span v-else> User: N/A </span>
@@ -76,10 +52,7 @@ export default {}
                 >
                     {{ timeAgo(slotProps.entry.content.resolved_at) }}
                 </div>
-                <div
-                    v-if="!slotProps.entry.content.resolved_at"
-                    class="control-action text-center"
-                >
+                <div v-if="!slotProps.entry.content.resolved_at" class="control-action text-center">
                     <svg
                         viewBox="0 0 20 20"
                         version="1.1"

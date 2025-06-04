@@ -31,13 +31,7 @@ export default {
             <tr>
                 <td class="table-fit text-muted">Level</td>
                 <td>
-                    <span
-                        class="badge"
-                        :class="
-                            'badge-' +
-                            logLevelClass(slotProps.entry.content.level)
-                        "
-                    >
+                    <span class="badge" :class="'badge-' + logLevelClass(slotProps.entry.content.level)">
                         {{ slotProps.entry.content.level }}
                     </span>
                 </td>
@@ -70,21 +64,14 @@ export default {
                     <!-- Log Message -->
                     <div v-show="currentTab == 'message'">
                         <copy-clipboard :data="slotProps.entry.content.message">
-                            <pre class="code-bg p-4 mb-0 text-white">{{
-                                slotProps.entry.content.message
-                            }}</pre>
+                            <pre class="code-bg p-4 mb-0 text-white">{{ slotProps.entry.content.message }}</pre>
                         </copy-clipboard>
                     </div>
 
                     <!-- Context -->
-                    <div
-                        class="code-bg p-4 mb-0 text-white"
-                        v-show="currentTab == 'context'"
-                    >
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab == 'context'">
                         <copy-clipboard :data="slotProps.entry.content.context">
-                            <vue-json-pretty
-                                :data="slotProps.entry.content.context"
-                            ></vue-json-pretty>
+                            <vue-json-pretty :data="slotProps.entry.content.context"></vue-json-pretty>
                         </copy-clipboard>
                     </div>
                 </div>

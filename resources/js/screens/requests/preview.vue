@@ -18,23 +18,12 @@ export default {
 </script>
 
 <template>
-    <preview-screen
-        title="Request Details"
-        resource="requests"
-        :id="$route.params.id"
-        entry-point="true"
-    >
+    <preview-screen title="Request Details" resource="requests" :id="$route.params.id" entry-point="true">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit text-muted">Method</td>
                 <td>
-                    <span
-                        class="badge"
-                        :class="
-                            'badge-' +
-                            requestMethodClass(slotProps.entry.content.method)
-                        "
-                    >
+                    <span class="badge" :class="'badge-' + requestMethodClass(slotProps.entry.content.method)">
                         {{ slotProps.entry.content.method }}
                     </span>
                 </td>
@@ -50,7 +39,7 @@ export default {
             <tr v-if="slotProps.entry.content.middleware">
                 <td class="table-fit text-muted">Middleware</td>
                 <td>
-                    {{ slotProps.entry.content.middleware.join(", ") }}
+                    {{ slotProps.entry.content.middleware.join(', ') }}
                 </td>
             </tr>
 
@@ -64,15 +53,7 @@ export default {
             <tr>
                 <td class="table-fit text-muted">Status</td>
                 <td>
-                    <span
-                        class="badge"
-                        :class="
-                            'badge-' +
-                            requestStatusClass(
-                                slotProps.entry.content.response_status,
-                            )
-                        "
-                    >
+                    <span class="badge" :class="'badge-' + requestStatusClass(slotProps.entry.content.response_status)">
                         {{ slotProps.entry.content.response_status }}
                     </span>
                 </td>
@@ -80,19 +61,19 @@ export default {
 
             <tr>
                 <td class="table-fit text-muted">Duration</td>
-                <td>{{ slotProps.entry.content.duration || "-" }} ms</td>
+                <td>{{ slotProps.entry.content.duration || '-' }} ms</td>
             </tr>
 
             <tr>
                 <td class="table-fit text-muted">IP Address</td>
                 <td>
-                    {{ slotProps.entry.content.ip_address || "-" }}
+                    {{ slotProps.entry.content.ip_address || '-' }}
                 </td>
             </tr>
 
             <tr>
                 <td class="table-fit text-muted">Memory usage</td>
-                <td>{{ slotProps.entry.content.memory || "-" }} MB</td>
+                <td>{{ slotProps.entry.content.memory || '-' }} MB</td>
             </tr>
         </template>
 
@@ -119,12 +100,8 @@ export default {
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
-                    <copy-clipboard
-                        :data="slotProps.entry.content[currentRequestTab]"
-                    >
-                        <vue-json-pretty
-                            :data="slotProps.entry.content[currentRequestTab]"
-                        ></vue-json-pretty>
+                    <copy-clipboard :data="slotProps.entry.content[currentRequestTab]">
+                        <vue-json-pretty :data="slotProps.entry.content[currentRequestTab]"></vue-json-pretty>
                     </copy-clipboard>
                 </div>
             </div>
@@ -145,13 +122,10 @@ export default {
                         <a
                             class="nav-link"
                             :class="{
-                                active:
-                                    currentResponseTab == 'response_headers',
+                                active: currentResponseTab == 'response_headers',
                             }"
                             href="#"
-                            v-on:click.prevent="
-                                currentResponseTab = 'response_headers'
-                            "
+                            v-on:click.prevent="currentResponseTab = 'response_headers'"
                             >Headers</a
                         >
                     </li>
@@ -166,12 +140,8 @@ export default {
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
-                    <copy-clipboard
-                        :data="slotProps.entry.content[currentResponseTab]"
-                    >
-                        <vue-json-pretty
-                            :data="slotProps.entry.content[currentResponseTab]"
-                        ></vue-json-pretty>
+                    <copy-clipboard :data="slotProps.entry.content[currentResponseTab]">
+                        <vue-json-pretty :data="slotProps.entry.content[currentResponseTab]"></vue-json-pretty>
                     </copy-clipboard>
                 </div>
             </div>

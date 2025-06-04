@@ -18,22 +18,12 @@ export default {
 </script>
 
 <template>
-    <preview-screen
-        title="HTTP Client Request Details"
-        resource="client-requests"
-        :id="$route.params.id"
-    >
+    <preview-screen title="HTTP Client Request Details" resource="client-requests" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit text-muted">Method</td>
                 <td>
-                    <span
-                        class="badge"
-                        :class="
-                            'badge-' +
-                            requestMethodClass(slotProps.entry.content.method)
-                        "
-                    >
+                    <span class="badge" :class="'badge-' + requestMethodClass(slotProps.entry.content.method)">
                         {{ slotProps.entry.content.method }}
                     </span>
                 </td>
@@ -54,18 +44,16 @@ export default {
                         :class="
                             'badge-' +
                             requestStatusClass(
-                                slotProps.entry.content.response_status !==
-                                    undefined
+                                slotProps.entry.content.response_status !== undefined
                                     ? slotProps.entry.content.response_status
-                                    : null,
+                                    : null
                             )
                         "
                     >
                         {{
-                            slotProps.entry.content.response_status !==
-                            undefined
+                            slotProps.entry.content.response_status !== undefined
                                 ? slotProps.entry.content.response_status
-                                : "N/A"
+                                : 'N/A'
                         }}
                     </span>
                 </td>
@@ -73,7 +61,7 @@ export default {
 
             <tr>
                 <td class="table-fit text-muted">Duration</td>
-                <td>{{ slotProps.entry.content.duration || "-" }}ms</td>
+                <td>{{ slotProps.entry.content.duration || '-' }}ms</td>
             </tr>
         </template>
 
@@ -100,19 +88,12 @@ export default {
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
-                    <copy-clipboard
-                        :data="slotProps.entry.content[currentRequestTab]"
-                    >
-                        <vue-json-pretty
-                            :data="slotProps.entry.content[currentRequestTab]"
-                        ></vue-json-pretty>
+                    <copy-clipboard :data="slotProps.entry.content[currentRequestTab]">
+                        <vue-json-pretty :data="slotProps.entry.content[currentRequestTab]"></vue-json-pretty>
                     </copy-clipboard>
                 </div>
             </div>
-            <div
-                class="card mt-5 overflow-hidden"
-                v-if="slotProps.entry.content.response_status"
-            >
+            <div class="card mt-5 overflow-hidden" v-if="slotProps.entry.content.response_status">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
                         <a
@@ -137,21 +118,13 @@ export default {
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
                     <template v-if="currentResponseTab == 'response'">
-                        <copy-clipboard
-                            :data="slotProps.entry.content.response"
-                        >
-                            <vue-json-pretty
-                                :data="slotProps.entry.content.response"
-                            ></vue-json-pretty>
+                        <copy-clipboard :data="slotProps.entry.content.response">
+                            <vue-json-pretty :data="slotProps.entry.content.response"></vue-json-pretty>
                         </copy-clipboard>
                     </template>
                     <template v-if="currentResponseTab == 'headers'">
-                        <copy-clipboard
-                            :data="slotProps.entry.content.response_headers"
-                        >
-                            <vue-json-pretty
-                                :data="slotProps.entry.content.response_headers"
-                            ></vue-json-pretty>
+                        <copy-clipboard :data="slotProps.entry.content.response_headers">
+                            <vue-json-pretty :data="slotProps.entry.content.response_headers"></vue-json-pretty>
                         </copy-clipboard>
                     </template>
                 </div>

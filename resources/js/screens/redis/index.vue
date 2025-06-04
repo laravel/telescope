@@ -16,9 +16,7 @@ export default {}
                 <code>{{ truncate(slotProps.entry.content.command, 80) }}</code>
             </td>
 
-            <td class="table-fit text-right text-muted">
-                {{ slotProps.entry.content.time }}ms
-            </td>
+            <td class="table-fit text-right text-muted">{{ slotProps.entry.content.time }}ms</td>
 
             <td
                 class="table-fit text-muted"

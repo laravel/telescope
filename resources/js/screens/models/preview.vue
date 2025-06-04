@@ -18,11 +18,7 @@ export default {
 </script>
 
 <template>
-    <preview-screen
-        title="Model Action"
-        resource="models"
-        :id="$route.params.id"
-    >
+    <preview-screen title="Model Action" resource="models" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit text-muted">Model</td>
@@ -34,13 +30,7 @@ export default {
             <tr>
                 <td class="table-fit text-muted">Action</td>
                 <td>
-                    <span
-                        class="badge"
-                        :class="
-                            'badge-' +
-                            modelActionClass(slotProps.entry.content.action)
-                        "
-                    >
+                    <span class="badge" :class="'badge-' + modelActionClass(slotProps.entry.content.action)">
                         {{ slotProps.entry.content.action }}
                     </span>
                 </td>
@@ -57,10 +47,7 @@ export default {
         <div slot="after-attributes-card" slot-scope="slotProps">
             <div
                 class="card mt-5 overflow-hidden"
-                v-if="
-                    slotProps.entry.content.action != 'deleted' &&
-                    slotProps.entry.content.changes
-                "
+                v-if="slotProps.entry.content.action != 'deleted' && slotProps.entry.content.changes"
             >
                 <ul class="nav nav-pills">
                     <li class="nav-item">
@@ -70,9 +57,7 @@ export default {
 
                 <div class="code-bg p-4 mb-0 text-white">
                     <copy-clipboard :data="slotProps.entry.content.changes">
-                        <vue-json-pretty
-                            :data="slotProps.entry.content.changes"
-                        ></vue-json-pretty>
+                        <vue-json-pretty :data="slotProps.entry.content.changes"></vue-json-pretty>
                     </copy-clipboard>
                 </div>
             </div>

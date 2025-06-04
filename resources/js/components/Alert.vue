@@ -73,53 +73,20 @@ export default {
 </script>
 
 <template>
-    <div
-        class="modal"
-        id="alertModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="alertModalLabel"
-        aria-hidden="true"
-    >
+    <div class="modal" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
                     <p class="m-0 py-4">{{ message }}</p>
                 </div>
 
-                <div
-                    class="modal-footer justify-content-start flex-row-reverse"
-                >
-                    <button
-                        v-if="type == 'error'"
-                        class="btn btn-primary"
-                        @click="close"
-                    >
-                        Close
-                    </button>
+                <div class="modal-footer justify-content-start flex-row-reverse">
+                    <button v-if="type == 'error'" class="btn btn-primary" @click="close">Close</button>
 
-                    <button
-                        v-if="type == 'success'"
-                        class="btn btn-primary"
-                        @click="close"
-                    >
-                        Okay
-                    </button>
+                    <button v-if="type == 'success'" class="btn btn-primary" @click="close">Okay</button>
 
-                    <button
-                        v-if="type == 'confirmation'"
-                        class="btn btn-danger"
-                        @click="confirm"
-                    >
-                        Yes
-                    </button>
-                    <button
-                        v-if="type == 'confirmation'"
-                        class="btn"
-                        @click="cancel"
-                    >
-                        Cancel
-                    </button>
+                    <button v-if="type == 'confirmation'" class="btn btn-danger" @click="confirm">Yes</button>
+                    <button v-if="type == 'confirmation'" class="btn" @click="cancel">Cancel</button>
                 </div>
             </div>
         </div>

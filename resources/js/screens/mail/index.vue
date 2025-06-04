@@ -23,22 +23,14 @@ export default {
         <template slot="row" slot-scope="slotProps">
             <td>
                 <span :title="slotProps.entry.content.mailable">{{
-                    truncate(slotProps.entry.content.mailable || "-", 70)
+                    truncate(slotProps.entry.content.mailable || '-', 70)
                 }}</span>
 
-                <span
-                    class="badge badge-secondary ml-2"
-                    v-if="slotProps.entry.content.queued"
-                >
-                    Queued
-                </span>
+                <span class="badge badge-secondary ml-2" v-if="slotProps.entry.content.queued"> Queued </span>
 
                 <br />
 
-                <small
-                    class="text-muted"
-                    :title="slotProps.entry.content.subject"
-                >
+                <small class="text-muted" :title="slotProps.entry.content.subject">
                     Subject: {{ truncate(slotProps.entry.content.subject, 90) }}
                 </small>
             </td>

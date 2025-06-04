@@ -14,8 +14,7 @@ export default {}
         <template slot="row" slot-scope="slotProps">
             <td>
                 <code>{{
-                    truncate(slotProps.entry.content.description, 85) ||
-                    truncate(slotProps.entry.content.command, 85)
+                    truncate(slotProps.entry.content.description, 85) || truncate(slotProps.entry.content.command, 85)
                 }}</code>
             </td>
 

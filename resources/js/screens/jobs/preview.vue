@@ -25,23 +25,12 @@ export default {
 </script>
 
 <template>
-    <preview-screen
-        title="Job Details"
-        resource="jobs"
-        :id="$route.params.id"
-        entry-point="true"
-    >
+    <preview-screen title="Job Details" resource="jobs" :id="$route.params.id" entry-point="true">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit text-muted">Status</td>
                 <td>
-                    <span
-                        class="badge"
-                        :class="
-                            'badge-' +
-                            jobStatusClass(slotProps.entry.content.status)
-                        "
-                    >
+                    <span class="badge" :class="'badge-' + jobStatusClass(slotProps.entry.content.status)">
                         {{ slotProps.entry.content.status }}
                     </span>
                 </td>
@@ -71,14 +60,14 @@ export default {
             <tr>
                 <td class="table-fit text-muted">Tries</td>
                 <td>
-                    {{ slotProps.entry.content.tries || "-" }}
+                    {{ slotProps.entry.content.tries || '-' }}
                 </td>
             </tr>
 
             <tr>
                 <td class="table-fit text-muted">Timeout</td>
                 <td>
-                    {{ slotProps.entry.content.timeout || "-" }}
+                    {{ slotProps.entry.content.timeout || '-' }}
                 </td>
             </tr>
 
@@ -144,14 +133,9 @@ export default {
                     </li>
                 </ul>
                 <div>
-                    <div
-                        class="code-bg p-4 mb-0 text-white"
-                        v-show="currentTab == 'data'"
-                    >
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab == 'data'">
                         <copy-clipboard :data="slotProps.entry.content.data">
-                            <vue-json-pretty
-                                :data="slotProps.entry.content.data"
-                            ></vue-json-pretty>
+                            <vue-json-pretty :data="slotProps.entry.content.data"></vue-json-pretty>
                         </copy-clipboard>
                     </div>
                     <pre
@@ -169,9 +153,7 @@ export default {
                         v-if="slotProps.entry.content.exception"
                         v-show="currentTab == 'preview'"
                         :lines="slotProps.entry.content.exception.line_preview"
-                        :highlighted-line="
-                            slotProps.entry.content.exception.line
-                        "
+                        :highlighted-line="slotProps.entry.content.exception.line"
                     >
                     </code-preview>
                 </div>

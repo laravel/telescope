@@ -21,13 +21,7 @@ export default {
 
         <template slot="row" slot-scope="slotProps">
             <td class="table-fit pr-0">
-                <span
-                    class="badge"
-                    :class="
-                        'badge-' +
-                        requestMethodClass(slotProps.entry.content.method)
-                    "
-                >
+                <span class="badge" :class="'badge-' + requestMethodClass(slotProps.entry.content.method)">
                     {{ slotProps.entry.content.method }}
                 </span>
             </td>
@@ -37,23 +31,13 @@ export default {
             </td>
 
             <td class="table-fit text-center">
-                <span
-                    class="badge"
-                    :class="
-                        'badge-' +
-                        requestStatusClass(
-                            slotProps.entry.content.response_status,
-                        )
-                    "
-                >
+                <span class="badge" :class="'badge-' + requestStatusClass(slotProps.entry.content.response_status)">
                     {{ slotProps.entry.content.response_status }}
                 </span>
             </td>
 
             <td class="table-fit text-right text-muted">
-                <span v-if="slotProps.entry.content.duration"
-                    >{{ slotProps.entry.content.duration }}ms</span
-                >
+                <span v-if="slotProps.entry.content.duration">{{ slotProps.entry.content.duration }}ms</span>
                 <span v-else>-</span>
             </td>
 

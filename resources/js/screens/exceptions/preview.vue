@@ -38,11 +38,7 @@ export default {
 </script>
 
 <template>
-    <preview-screen
-        title="Exception Details"
-        resource="exceptions"
-        :id="$route.params.id"
-    >
+    <preview-screen title="Exception Details" resource="exceptions" :id="$route.params.id">
         <template slot="table-parameters" slot-scope="slotProps">
             <tr>
                 <td class="table-fit text-muted">Type</td>
@@ -53,11 +49,7 @@ export default {
 
             <tr>
                 <td class="table-fit text-muted">Location</td>
-                <td>
-                    {{ slotProps.entry.content.file }}:{{
-                        slotProps.entry.content.line
-                    }}
-                </td>
+                <td>{{ slotProps.entry.content.file }}:{{ slotProps.entry.content.line }}</td>
             </tr>
 
             <tr>
@@ -80,15 +72,10 @@ export default {
 
                 <td>
                     <span v-if="entry.content.resolved_at">
-                        {{ localTime(entry.content.resolved_at) }} ({{
-                            timeAgo(entry.content.resolved_at)
-                        }})
+                        {{ localTime(entry.content.resolved_at) }} ({{ timeAgo(entry.content.resolved_at) }})
                     </span>
                     <span v-if="!entry.content.resolved_at">
-                        <button
-                            class="btn btn-sm btn-success"
-                            v-on:click.prevent="markExceptionAsResolved(entry)"
-                        >
+                        <button class="btn btn-sm btn-success" v-on:click.prevent="markExceptionAsResolved(entry)">
                             Mark as resolved
                         </button>
                     </span>
@@ -142,11 +129,9 @@ export default {
                 </ul>
 
                 <div>
-                    <pre
-                        class="code-bg p-4 mb-0 text-white"
-                        v-show="currentTab == 'message'"
-                        >{{ slotProps.entry.content.message }}</pre
-                    >
+                    <pre class="code-bg p-4 mb-0 text-white" v-show="currentTab == 'message'">{{
+                        slotProps.entry.content.message
+                    }}</pre>
 
                     <code-preview
                         v-show="currentTab == 'location'"
@@ -155,21 +140,13 @@ export default {
                     >
                     </code-preview>
 
-                    <div
-                        class="code-bg p-4 mb-0 text-white"
-                        v-show="currentTab == 'context'"
-                    >
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab == 'context'">
                         <copy-clipboard :data="slotProps.entry.content.context">
-                            <vue-json-pretty
-                                :data="slotProps.entry.content.context"
-                            ></vue-json-pretty>
+                            <vue-json-pretty :data="slotProps.entry.content.context"></vue-json-pretty>
                         </copy-clipboard>
                     </div>
 
-                    <stack-trace
-                        :trace="slotProps.entry.content.trace"
-                        v-show="currentTab == 'trace'"
-                    ></stack-trace>
+                    <stack-trace :trace="slotProps.entry.content.trace" v-show="currentTab == 'trace'"></stack-trace>
                 </div>
             </div>
         </div>

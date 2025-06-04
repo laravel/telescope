@@ -22,41 +22,29 @@ export default {
         <template slot="row" slot-scope="slotProps">
             <td>
                 <span :title="slotProps.entry.content.name">{{
-                    truncate(
-                        slotProps.entry.content.name ||
-                            slotProps.entry.content.id,
-                        68,
-                    )
+                    truncate(slotProps.entry.content.name || slotProps.entry.content.id, 68)
                 }}</span
                 ><br />
                 <small class="text-muted">
-                    Connection: {{ slotProps.entry.content.connection }} |
-                    Queue: {{ slotProps.entry.content.queue }}
+                    Connection: {{ slotProps.entry.content.connection }} | Queue: {{ slotProps.entry.content.queue }}
                 </small>
             </td>
 
             <td>
                 <small
                     class="badge badge-danger badge-sm"
-                    v-if="
-                        slotProps.entry.content.failedJobs > 0 &&
-                        slotProps.entry.content.progress < 100
-                    "
+                    v-if="slotProps.entry.content.failedJobs > 0 && slotProps.entry.content.progress < 100"
                 >
                     Failures
                 </small>
-                <small
-                    class="badge badge-success badge-sm"
-                    v-if="slotProps.entry.content.progress == 100"
-                >
+                <small class="badge badge-success badge-sm" v-if="slotProps.entry.content.progress == 100">
                     Finished
                 </small>
                 <small
                     class="badge badge-secondary badge-sm"
                     v-if="
                         slotProps.entry.content.totalJobs == 0 ||
-                        (slotProps.entry.content.pendingJobs > 0 &&
-                            !slotProps.entry.content.failedJobs)
+                        (slotProps.entry.content.pendingJobs > 0 && !slotProps.entry.content.failedJobs)
                     "
                 >
                     Pending
@@ -65,9 +53,7 @@ export default {
             <td class="text-right text-muted">
                 {{ slotProps.entry.content.totalJobs }}
             </td>
-            <td class="text-right text-muted">
-                {{ slotProps.entry.content.progress }}%
-            </td>
+            <td class="text-right text-muted">{{ slotProps.entry.content.progress }}%</td>
 
             <td
                 class="table-fit text-muted"

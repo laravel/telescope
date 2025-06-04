@@ -220,10 +220,7 @@ export default {
         </ul>
         <div>
             <!-- Related Exceptions -->
-            <table
-                class="table table-hover mb-0"
-                v-show="currentTab == 'exceptions' && exceptions.length"
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'exceptions' && exceptions.length">
                 <thead>
                     <tr>
                         <th>Message</th>
@@ -235,9 +232,7 @@ export default {
                     <tr v-for="entry in exceptions">
                         <td :title="entry.content.class">
                             {{ truncate(entry.content.class, 70) }}<br />
-                            <small class="text-muted text-break">{{
-                                truncate(entry.content.message, 200)
-                            }}</small>
+                            <small class="text-muted text-break">{{ truncate(entry.content.message, 200) }}</small>
                         </td>
 
                         <td class="table-fit">
@@ -248,10 +243,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
@@ -265,10 +257,7 @@ export default {
             </table>
 
             <!-- Related Logs -->
-            <table
-                class="table table-hover mb-0"
-                v-show="currentTab == 'logs' && logs.length"
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'logs' && logs.length">
                 <thead>
                     <tr>
                         <th>Message</th>
@@ -283,13 +272,7 @@ export default {
                             {{ truncate(entry.content.message, 90) }}
                         </td>
                         <td class="table-fit">
-                            <span
-                                class="badge"
-                                :class="
-                                    'badge-' +
-                                    logLevelClass(entry.content.level)
-                                "
-                            >
+                            <span class="badge" :class="'badge-' + logLevelClass(entry.content.level)">
                                 {{ entry.content.level }}
                             </span>
                         </td>
@@ -302,10 +285,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
@@ -319,23 +299,17 @@ export default {
             </table>
 
             <!-- Related Queries -->
-            <table
-                class="table table-hover mb-0"
-                v-show="currentTab == 'queries' && queries.length"
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'queries' && queries.length">
                 <thead>
                     <tr>
                         <th>
                             Query<br /><small
-                                >{{ queries.length }} queries,
-                                {{ queriesSummary.duplicated }} of which are
+                                >{{ queries.length }} queries, {{ queriesSummary.duplicated }} of which are
                                 duplicated.</small
                             >
                         </th>
                         <th class="text-right">
-                            Duration<br /><small
-                                >{{ queriesSummary.time }}ms</small
-                            >
+                            Duration<br /><small>{{ queriesSummary.time }}ms</small>
                         </th>
                         <th></th>
                     </tr>
@@ -347,16 +321,11 @@ export default {
                         </td>
 
                         <td class="table-fit text-right">
-                            <span
-                                class="badge badge-danger"
-                                v-if="entry.content.slow"
-                            >
+                            <span class="badge badge-danger" v-if="entry.content.slow">
                                 {{ entry.content.time }}ms
                             </span>
 
-                            <span v-else class="text-muted">
-                                {{ entry.content.time }}ms
-                            </span>
+                            <span v-else class="text-muted"> {{ entry.content.time }}ms </span>
                         </td>
 
                         <td class="table-fit">
@@ -367,10 +336,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
@@ -384,10 +350,7 @@ export default {
             </table>
 
             <!-- Related Model Actions -->
-            <table
-                class="table table-hover mb-0"
-                v-show="currentTab == 'models' && models.length"
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'models' && models.length">
                 <thead>
                     <tr>
                         <th>Model</th>
@@ -404,13 +367,7 @@ export default {
                         </td>
                         <td>{{ entry.content?.count }}</td>
                         <td class="table-fit">
-                            <span
-                                class="badge"
-                                :class="
-                                    'badge-' +
-                                    modelActionClass(entry.content.action)
-                                "
-                            >
+                            <span class="badge" :class="'badge-' + modelActionClass(entry.content.action)">
                                 {{ entry.content.action }}
                             </span>
                         </td>
@@ -423,10 +380,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
@@ -440,10 +394,7 @@ export default {
             </table>
 
             <!-- Related Gates -->
-            <table
-                class="table table-hover mb-0"
-                v-show="currentTab == 'gates' && gates.length"
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'gates' && gates.length">
                 <thead>
                     <tr>
                         <th>Ability</th>
@@ -458,13 +409,7 @@ export default {
                             {{ truncate(entry.content.ability, 80) }}
                         </td>
                         <td class="table-fit">
-                            <span
-                                class="badge"
-                                :class="
-                                    'badge-' +
-                                    gateResultClass(entry.content.result)
-                                "
-                            >
+                            <span class="badge" :class="'badge-' + gateResultClass(entry.content.result)">
                                 {{ entry.content.result }}
                             </span>
                         </td>
@@ -477,10 +422,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
@@ -494,10 +436,7 @@ export default {
             </table>
 
             <!-- Related Jobs -->
-            <table
-                class="table table-hover mb-0"
-                v-show="currentTab == 'jobs' && jobs.length"
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'jobs' && jobs.length">
                 <thead>
                     <tr>
                         <th>Job</th>
@@ -509,24 +448,15 @@ export default {
                 <tbody>
                     <tr v-for="entry in jobs">
                         <td>
-                            <span :title="entry.content.name">{{
-                                truncate(entry.content.name, 68)
-                            }}</span
+                            <span :title="entry.content.name">{{ truncate(entry.content.name, 68) }}</span
                             ><br />
                             <small class="text-muted">
-                                Connection: {{ entry.content.connection }} |
-                                Queue: {{ entry.content.queue }}
+                                Connection: {{ entry.content.connection }} | Queue: {{ entry.content.queue }}
                             </small>
                         </td>
 
                         <td class="table-fit">
-                            <span
-                                class="badge"
-                                :class="
-                                    'badge-' +
-                                    jobStatusClass(entry.content.status)
-                                "
-                            >
+                            <span class="badge" :class="'badge-' + jobStatusClass(entry.content.status)">
                                 {{ entry.content.status }}
                             </span>
                         </td>
@@ -539,10 +469,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
@@ -556,10 +483,7 @@ export default {
             </table>
 
             <!-- Related Events -->
-            <table
-                class="table table-hover mb-0"
-                v-show="currentTab == 'events' && events.length"
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'events' && events.length">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -573,12 +497,7 @@ export default {
                         <td :title="entry.content.name">
                             {{ truncate(entry.content.name, 80) }}
 
-                            <span
-                                class="badge badge-info ml-2"
-                                v-if="entry.content.broadcast"
-                            >
-                                Broadcast
-                            </span>
+                            <span class="badge badge-info ml-2" v-if="entry.content.broadcast"> Broadcast </span>
                         </td>
 
                         <td class="table-fit text-right text-muted">
@@ -593,10 +512,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
@@ -610,10 +526,7 @@ export default {
             </table>
 
             <!-- Related Cache -->
-            <table
-                class="table table-hover mb-0"
-                v-show="currentTab == 'cache' && cache.length"
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'cache' && cache.length">
                 <thead>
                     <tr>
                         <th>Key</th>
@@ -628,13 +541,7 @@ export default {
                             {{ truncate(entry.content.key, 100) }}
                         </td>
                         <td class="table-fit">
-                            <span
-                                class="badge"
-                                :class="
-                                    'badge-' +
-                                    cacheActionTypeClass(entry.content.type)
-                                "
-                            >
+                            <span class="badge" :class="'badge-' + cacheActionTypeClass(entry.content.type)">
                                 {{ entry.content.type }}
                             </span>
                         </td>
@@ -647,10 +554,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
@@ -664,10 +568,7 @@ export default {
             </table>
 
             <!-- Related Redis Commands -->
-            <table
-                class="table table-hover mb-0"
-                v-show="currentTab == 'redis' && redis.length"
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'redis' && redis.length">
                 <thead>
                     <tr>
                         <th>Command</th>
@@ -681,9 +582,7 @@ export default {
                         <td :title="entry.content.command">
                             {{ truncate(entry.content.command, 100) }}
                         </td>
-                        <td class="table-fit text-right text-muted">
-                            {{ entry.content.time }}ms
-                        </td>
+                        <td class="table-fit text-right text-muted">{{ entry.content.time }}ms</td>
 
                         <td class="table-fit">
                             <router-link
@@ -693,10 +592,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
@@ -710,10 +606,7 @@ export default {
             </table>
 
             <!-- Related Mail -->
-            <table
-                class="table table-hover mb-0"
-                v-show="currentTab == 'mails' && mails.length"
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'mails' && mails.length">
                 <thead>
                     <tr>
                         <th>Mailable</th>
@@ -725,22 +618,14 @@ export default {
                     <tr v-for="entry in mails">
                         <td>
                             <span :title="entry.content.mailable">{{
-                                truncate(entry.content.mailable || "-", 70)
+                                truncate(entry.content.mailable || '-', 70)
                             }}</span>
 
-                            <span
-                                class="badge badge-secondary ml-2"
-                                v-if="entry.content.queued"
-                            >
-                                Queued
-                            </span>
+                            <span class="badge badge-secondary ml-2" v-if="entry.content.queued"> Queued </span>
 
                             <br />
 
-                            <small
-                                class="text-muted"
-                                :title="entry.content.subject"
-                            >
+                            <small class="text-muted" :title="entry.content.subject">
                                 Subject:
                                 {{ truncate(entry.content.subject, 90) }}
                             </small>
@@ -754,10 +639,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
@@ -771,10 +653,7 @@ export default {
             </table>
 
             <!-- Related Notifications -->
-            <table
-                class="table table-hover mb-0"
-                v-show="currentTab == 'notifications' && notifications.length"
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'notifications' && notifications.length">
                 <thead>
                     <tr>
                         <th>Notification</th>
@@ -787,22 +666,14 @@ export default {
                     <tr v-for="entry in notifications">
                         <td>
                             <span :title="entry.content.notification">{{
-                                truncate(entry.content.notification || "-", 70)
+                                truncate(entry.content.notification || '-', 70)
                             }}</span>
 
-                            <span
-                                class="badge badge-secondary ml-2"
-                                v-if="entry.content.queued"
-                            >
-                                Queued
-                            </span>
+                            <span class="badge badge-secondary ml-2" v-if="entry.content.queued"> Queued </span>
 
                             <br />
 
-                            <small
-                                class="text-muted"
-                                :title="entry.content.notifiable"
-                            >
+                            <small class="text-muted" :title="entry.content.notifiable">
                                 Recipient:
                                 {{ truncate(entry.content.notifiable, 90) }}
                             </small>
@@ -820,10 +691,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
@@ -837,10 +705,7 @@ export default {
             </table>
 
             <!-- Related Views -->
-            <table
-                class="table table-hover mb-0"
-                v-show="currentTab == 'views' && views.length"
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'views' && views.length">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -853,17 +718,11 @@ export default {
                     <tr v-for="entry in views">
                         <td>
                             {{ entry.content.name }} <br />
-                            <small class="text-muted">{{
-                                truncate(entry.content.path, 100)
-                            }}</small>
+                            <small class="text-muted">{{ truncate(entry.content.path, 100) }}</small>
                         </td>
 
                         <td class="table-fit text-right text-muted">
-                            {{
-                                entry.content.composers
-                                    ? entry.content.composers.length
-                                    : 0
-                            }}
+                            {{ entry.content.composers ? entry.content.composers.length : 0 }}
                         </td>
 
                         <td class="table-fit">
@@ -874,10 +733,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
@@ -891,12 +747,7 @@ export default {
             </table>
 
             <!-- Related Http Client Requests -->
-            <table
-                class="table table-hover mb-0"
-                v-show="
-                    currentTab == 'client_requests' && clientRequests.length
-                "
-            >
+            <table class="table table-hover mb-0" v-show="currentTab == 'client_requests' && clientRequests.length">
                 <thead>
                     <tr>
                         <th>Verb</th>
@@ -910,13 +761,7 @@ export default {
                 <tbody>
                     <tr v-for="entry in clientRequests">
                         <td class="table-fit pr-0">
-                            <span
-                                class="badge"
-                                :class="
-                                    'badge-' +
-                                    requestMethodClass(entry.content.method)
-                                "
-                            >
+                            <span class="badge" :class="'badge-' + requestMethodClass(entry.content.method)">
                                 {{ entry.content.method }}
                             </span>
                         </td>
@@ -931,17 +776,14 @@ export default {
                                 :class="
                                     'badge-' +
                                     requestStatusClass(
-                                        entry.content.response_status !==
-                                            undefined
+                                        entry.content.response_status !== undefined
                                             ? entry.content.response_status
-                                            : null,
+                                            : null
                                     )
                                 "
                             >
                                 {{
-                                    entry.content.response_status !== undefined
-                                        ? entry.content.response_status
-                                        : "N/A"
+                                    entry.content.response_status !== undefined ? entry.content.response_status : 'N/A'
                                 }}
                             </span>
                         </td>
@@ -962,10 +804,7 @@ export default {
                                 }"
                                 class="control-action"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
