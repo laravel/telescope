@@ -16,7 +16,6 @@ use Illuminate\Support\Testing\Fakes\EventFake;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
 use Laravel\Telescope\Jobs\ProcessPendingUpdates;
-
 use RuntimeException;
 use Throwable;
 
