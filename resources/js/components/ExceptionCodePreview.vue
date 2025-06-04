@@ -1,22 +1,22 @@
 <script type="text/ecmascript-6">
-    import hljs from 'highlight.js/lib/core';
-    import php from 'highlight.js/lib/languages/php';
+import hljs from 'highlight.js/lib/core';
+import php from 'highlight.js/lib/languages/php';
 
-    hljs.registerLanguage('php', php);
+hljs.registerLanguage('php', php);
 
-    export default {
-        props: ['lines', 'highlightedLine'],
+export default {
+    props: ['lines', 'highlightedLine'],
 
-        methods: {
-            highlight(line, number){
-                if (number == this.highlightedLine) {
-                    return line;
-                }
-
-                return hljs.highlight(line, { language: 'php' }).value;
+    methods: {
+        highlight(line, number){
+            if (number == this.highlightedLine) {
+                return line;
             }
+
+            return hljs.highlight(line, { language: 'php' }).value;
         }
     }
+}
 </script>
 
 <template>
@@ -29,7 +29,7 @@
 </template>
 
 <style scoped>
-    .highlight {
-        background-color: #ff647a;
-    }
+.highlight {
+    background-color: #ff647a;
+}
 </style>

@@ -934,7 +934,7 @@ export default {
                                         entry.content.response_status !==
                                             undefined
                                             ? entry.content.response_status
-                                            : null
+                                            : null,
                                     )
                                 "
                             >

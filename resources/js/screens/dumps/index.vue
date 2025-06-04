@@ -252,7 +252,11 @@ pre.sf-dump {
 }
 
 .entryPointDescription a {
-    font: 12px Menlo, Monaco, Consolas, monospace;
+    font:
+        12px Menlo,
+        Monaco,
+        Consolas,
+        monospace;
     color: white;
     text-decoration: underline;
 }

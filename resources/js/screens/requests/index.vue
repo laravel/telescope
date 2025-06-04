@@ -42,7 +42,7 @@ export default {
                     :class="
                         'badge-' +
                         requestStatusClass(
-                            slotProps.entry.content.response_status
+                            slotProps.entry.content.response_status,
                         )
                     "
                 >
