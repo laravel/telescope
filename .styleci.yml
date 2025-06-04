@@ -23,7 +23,6 @@ css:
   use-tabs: false
   print-width: 120
   double-quotes: false
-  trailing-commas: none
   finder:
     exclude:
       - "dist"
