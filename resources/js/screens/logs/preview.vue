@@ -1,26 +1,28 @@
 <script type="text/ecmascript-6">
-    import StylesMixin from './../../mixins/entriesStyles';
+import StylesMixin from './../../mixins/entriesStyles';
+import ExceptionCodePreview from './../../components/ExceptionCodePreview.vue';
+import Stacktrace from './../../components/Stacktrace.vue';
 
-    export default {
-        components: {
-            'code-preview': require('./../../components/ExceptionCodePreview').default,
-            'stack-trace': require('./../../components/Stacktrace').default
-        },
-
-
-        mixins: [
-            StylesMixin,
-        ],
+export default {
+    components: {
+        'code-preview': ExceptionCodePreview,
+        'stack-trace': Stacktrace
+    },
 
 
-        data(){
-            return {
-                entry: null,
-                batch: [],
-                currentTab: 'message'
-            };
-        },
-    }
+    mixins: [
+        StylesMixin,
+    ],
+
+
+    data(){
+        return {
+            entry: null,
+            batch: [],
+            currentTab: 'message'
+        };
+    },
+}
 </script>
 
 <template>
@@ -29,8 +31,14 @@
             <tr>
                 <td class="table-fit text-muted">Level</td>
                 <td>
-                    <span class="badge" :class="'badge-'+logLevelClass(slotProps.entry.content.level)">
-                        {{slotProps.entry.content.level}}
+                    <span
+                        class="badge"
+                        :class="
+                            'badge-' +
+                            logLevelClass(slotProps.entry.content.level)
+                        "
+                    >
+                        {{ slotProps.entry.content.level }}
                     </span>
                 </td>
             </tr>
@@ -40,24 +48,43 @@
             <div class="card mt-5 overflow-hidden">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='message'}" href="#" v-on:click.prevent="currentTab='message'">Log Message</a>
+                        <a
+                            class="nav-link"
+                            :class="{ active: currentTab == 'message' }"
+                            href="#"
+                            v-on:click.prevent="currentTab = 'message'"
+                            >Log Message</a
+                        >
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{active: currentTab=='context'}" href="#" v-on:click.prevent="currentTab='context'">Context</a>
+                        <a
+                            class="nav-link"
+                            :class="{ active: currentTab == 'context' }"
+                            href="#"
+                            v-on:click.prevent="currentTab = 'context'"
+                            >Context</a
+                        >
                     </li>
                 </ul>
                 <div>
                     <!-- Log Message -->
-                    <div v-show="currentTab=='message'">
+                    <div v-show="currentTab == 'message'">
                         <copy-clipboard :data="slotProps.entry.content.message">
-                            <pre class="code-bg p-4 mb-0 text-white">{{ slotProps.entry.content.message }}</pre>
+                            <pre class="code-bg p-4 mb-0 text-white">{{
+                                slotProps.entry.content.message
+                            }}</pre>
                         </copy-clipboard>
                     </div>
 
                     <!-- Context -->
-                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='context'">
+                    <div
+                        class="code-bg p-4 mb-0 text-white"
+                        v-show="currentTab == 'context'"
+                    >
                         <copy-clipboard :data="slotProps.entry.content.context">
-                            <vue-json-pretty :data="slotProps.entry.content.context"></vue-json-pretty>
+                            <vue-json-pretty
+                                :data="slotProps.entry.content.context"
+                            ></vue-json-pretty>
                         </copy-clipboard>
                     </div>
                 </div>
@@ -66,6 +93,4 @@
     </preview-screen>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

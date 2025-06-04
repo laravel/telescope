@@ -6,15 +6,11 @@
 *.md diff=markdown
 *.php diff=php
 
-public/*.css binary
-public/*.js binary
-
 /.github export-ignore
-/art export-ignore
 /tests export-ignore
-.editorconfig export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
+.editorconfig export-ignore
 .styleci.yml export-ignore
 CHANGELOG.md export-ignore
 package-lock.json export-ignore

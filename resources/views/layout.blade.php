@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('/vendor/telescope/favicon.ico') }}">
+
+    <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADQ0lEQVRYCbVXXXLaMBCWaGfIW+kNdIPCS9v0BeUEhRMEThByAuAEDSconCDkBJiX/jxBTxDfoDwm04mVb72WbbBkTIGdEZJ3V7ufdlc/SFGRtF41hHjqCCHbaE0hjMJU8GLa4HeNFoK/FOJiHgQt4u0luU9D659KiDc3QkQ96FqH+6aRfAow4yC4DOnDR14AvOJ/Qzge+CZX48tREHwa+3SdAHjVcoFJyjfxQH6IaFy5olEAcAbnFqsTRM1KqT/SORXdFC1Ec5FC8S7YRyZOAXDOjwo7Cu5zH05uM/OFUQKCdhRTCkAIKrhjcm4oAqAo6fnL8auEeCZfMcUAOCy+apdrq1zeWwDeFOSnD2wqkgjIFFFeC5XbxxZqgTfZ5he+wiD4MicuV7qZFTQKDDkgVo1zL3r0UaR0Ve92ZAizGRNAbnUCmRJA9FALXZZFtxCEqTAbXJNviVD0oPw94++OKAWmuc2NHrDizjbP/+X3Yfpv4bztn0qSXefEq7VhVNMIhPAXj1uO7BOA1xrQwVFuYuXtH9lGDdDFcjDBKG3ZuD1q/etb3oLWv4eo9L8sN/fuRcQzmgAQ32r5+f8zpqrWNJFXbkY0rkCKdgGF6BSk2AiFvTI1km1YacIGWmElzQOUUISCDFeJArZdfcq5dXmQQ61/wE7t2l1wrjligwjI0CkqMCNUe+krR8E5itG1awrGLCMEgOiP/SrpAwBds5wOoJPRes9BREfx5dTljqv9+RGyKulzmQDP9AGArkavoTmUHvAmXAfBxzgCyQHTAR/zKOQF2oAzR9NoCq2E6u9rSV5nHi04omM6Wtl9DrAr5jmdw4xp8bsgvh8IjI+m5Bs1QGTuuC/9VYnU9h7li9gpL6yswLmWpLWC45RA3NhvRw+5XALsvUOWZ82hM0Havpa8qCeI0oAm5QDEtYDwCkWCM1KI8wRp4i2dpIAeEsQwV3AMhbMRbNPzPDtPUgDkkq/Vly6GUDw5weZLd/fqTlOQd4eKV8jOAjz0J6GQV158N2xFwLpilPE2QjEdTbBBOS86J8vOCORdcjTECKq4ZCoT6knMsOo7n2NraS8Aq5idgELjBPwA4wqyRiKHQ9rzZo22POTv+Suv7yMtDTWEQwAAAABJRU5ErkJggg==">
 
     <meta name="robots" content="noindex, nofollow">
 
@@ -14,7 +15,9 @@
     <!-- Style sheets-->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600" rel="stylesheet" />
-    <link href="{{ asset(mix($cssFile, 'vendor/telescope')) }}" rel="stylesheet" type="text/css">
+
+    {{ Laravel\Telescope\Telescope::css() }}
+    {{ Laravel\Telescope\Telescope::js() }}
 </head>
 <body>
 <div id="telescope" v-cloak>
@@ -226,12 +229,5 @@
         </div>
     </div>
 </div>
-
-<!-- Global Telescope Object -->
-<script>
-    window.Telescope = @json($telescopeScriptVariables);
-</script>
-
-<script src="{{ asset(mix('app.js', 'vendor/telescope')) }}"></script>
 </body>
 </html>

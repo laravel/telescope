@@ -1,4 +1,4 @@
-@import 'colors';
+@import "colors";
 
 $font-family-base: Figtree, sans-serif;
 $font-weight-bold: 600;
@@ -91,14 +91,14 @@ $grid-breakpoints: (
     sm: 2px,
     md: 8px,
     lg: 9px,
-    xl: 10px
+    xl: 10px,
 ) !default;
 
 $container-max-widths: (
     sm: 1137px,
     md: 1138px,
     lg: 1139px,
-    xl: 1140px
+    xl: 1140px,
 ) !default;
 
-@import 'base';
+@import "base";

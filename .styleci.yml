@@ -1,4 +1,34 @@
 php:
   preset: laravel
-js: true
-css: true
+js:
+  tab-width: 4
+  use-tabs: false
+  print-width: 120
+  double-quotes: false
+  trailing-commas: es5
+  semicolons: true
+  arrow-parens: always
+  bracket-same-line: false
+  bracket-spacing: true
+  finder:
+    exclude:
+      - "dist"
+      - "node_modules"
+      - "vendor"
+    name:
+      - "*.js"
+      - "*.jsx"
+css:
+  tab-width: 4
+  use-tabs: false
+  print-width: 120
+  double-quotes: false
+  finder:
+    exclude:
+      - "dist"
+      - "node_modules"
+      - "vendor"
+    name:
+      - "*.css"
+      - "*.scss"
+      - "*.less"

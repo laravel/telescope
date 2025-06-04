@@ -14,9 +14,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('telescope::layout', [
-            'cssFile' => Telescope::$useDarkTheme ? 'app-dark.css' : 'app.css',
-            'telescopeScriptVariables' => Telescope::scriptVariables(),
-        ]);
+        return view('telescope::layout');
     }
 }
