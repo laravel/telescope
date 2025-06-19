@@ -36,6 +36,12 @@ svg.icon {
     }
 }
 
+.sidebar {
+    position: sticky;
+    top: 15px;
+    max-height: 100vh;
+}
+
 .sidebar .nav-item {
     a {
         color: $sidebar-nav-color;
