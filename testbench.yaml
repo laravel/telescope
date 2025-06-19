@@ -10,4 +10,4 @@ seeders:
 
 workbench:
   start: '/telescope'
-  user: 1
+  user: test@example.com

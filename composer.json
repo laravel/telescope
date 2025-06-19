@@ -59,7 +59,7 @@
             "@php ./vendor/bin/testbench telescope:publish --force",
             "@php ./vendor/bin/testbench migrate:refresh"
         ],
-        "start": [
+        "serve": [
             "@composer run build",
             "@php ./vendor/bin/testbench serve"
         ]
