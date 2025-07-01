@@ -48,13 +48,42 @@ class LogWatcher extends Watcher
             return;
         }
 
+        // Extract context for interpolation, and drop the 'telescope' entry
+        $context = Arr::except($event->context, ['telescope']);
+
+        // Interpolate the message with context values
+        $interpolatedMessage = $this->interpolate((string) $event->message, $context);
+
+        $context['_original_message'] = (string) $event->message;
+
         Telescope::recordLog(
             IncomingEntry::make([
                 'level' => $event->level,
-                'message' => (string) $event->message,
-                'context' => Arr::except($event->context, ['telescope']),
+                'message' => $interpolatedMessage,
+                'context' => $context,
             ])->tags($this->tags($event))
         );
+    }
+
+    /**
+     * Interpolate a message with context values.
+     *
+     * @param  string  $message
+     * @param  array   $context
+     * @return string
+     */
+    private function interpolate(string $message, array $context): string
+    {
+        // Build a replacement array with keys formatted as {key}
+        $replace = [];
+        foreach ($context as $key => $val) {
+            // Ensure that the value can be cast to string
+            if (is_scalar($val) || ( is_object($val) && method_exists($val, '__toString'))) {
+                $replace['{'.$key.'}'] = $val;
+            }
+        }
+
+        return strtr($message, $replace);
     }
 
     /**
