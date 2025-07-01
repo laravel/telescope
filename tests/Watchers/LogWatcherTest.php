@@ -32,6 +32,10 @@ class LogWatcherTest extends FeatureTestCase
                 'level' => 'error',
             ],
             'test_log_watcher_registers_entry_with_exception_key' => true,
+            'test_log_watcher_interpolates_message' => [
+                'enabled' => true,
+                'level' => 'info',
+            ],
         };
 
         $app->get('config')->set('telescope.watchers', [
