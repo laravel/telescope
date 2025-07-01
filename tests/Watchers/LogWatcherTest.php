@@ -2,7 +2,6 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
-use Illuminate\Contracts\Foundation\Application;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\LogWatcher;

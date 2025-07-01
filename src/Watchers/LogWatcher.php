@@ -69,7 +69,7 @@ class LogWatcher extends Watcher
      * Interpolate a message with context values.
      *
      * @param  string  $message
-     * @param  array   $context
+     * @param  array  $context
      * @return string
      */
     private function interpolate(string $message, array $context): string
@@ -78,7 +78,7 @@ class LogWatcher extends Watcher
         $replace = [];
         foreach ($context as $key => $val) {
             // Ensure that the value can be cast to string
-            if (is_scalar($val) || ( is_object($val) && method_exists($val, '__toString'))) {
+            if (is_scalar($val) || (is_object($val) && method_exists($val, '__toString'))) {
                 $replace['{'.$key.'}'] = $val;
             }
         }
