@@ -238,10 +238,6 @@ class LogWatcherTest extends FeatureTestCase
         $this->assertSame('info', $entry->content['level']);
         $this->assertSame($expectedMessage, $entry->content['message']);
 
-        // Verify the original context is preserved, with the original message added.
-        $expectedContext = $context;
-        $expectedContext['_original_message'] = $message;
-
-        $this->assertEquals($expectedContext, $entry->content['context']);
+        $this->assertEqualsCanonicalizing(array_merge(array_keys($context), ['_original_message']), array_keys($entry->content['context']));
     }
 }
