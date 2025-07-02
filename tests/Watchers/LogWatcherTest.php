@@ -237,7 +237,5 @@ class LogWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::LOG, $entry->type);
         $this->assertSame('info', $entry->content['level']);
         $this->assertSame($expectedMessage, $entry->content['message']);
-
-        $this->assertEqualsCanonicalizing(array_merge(array_keys($context), ['_original_message']), array_keys($entry->content['context']));
     }
 }
