@@ -46,7 +46,7 @@ class IncomingDumpEntry extends IncomingEntry
     private function entryPointDescription($entryPoint)
     {
         return match ($entryPoint->type) {
-            EntryType::REQUEST => $entryPoint->content['method'] . ' ' . $entryPoint->content['uri'],
+            EntryType::REQUEST => $entryPoint->content['method'].' '.$entryPoint->content['uri'],
             EntryType::JOB => $entryPoint->content['name'],
             EntryType::COMMAND => $entryPoint->content['command'],
             default => '',
