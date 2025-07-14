@@ -43,6 +43,12 @@ class RequestWatcher extends Watcher
         }
 
         $startTime = defined('LARAVEL_START') ? LARAVEL_START : $event->request->server('REQUEST_TIME_FLOAT');
+        $reqDuration = $startTime ? floor((microtime(true) - $startTime) * 1000) : null;
+        $minDuration = $this->getMinDuration();
+
+        if ($minDuration > 0 && $reqDuration > $minDuration) {
+            return;
+        }
 
         Telescope::recordRequest(IncomingEntry::make([
             'ip_address' => $event->request->ip(),
@@ -56,7 +62,7 @@ class RequestWatcher extends Watcher
             'response_headers' => $this->headers($event->response->headers->all()),
             'response_status' => $event->response->getStatusCode(),
             'response' => $this->response($event->response),
-            'duration' => $startTime ? floor((microtime(true) - $startTime) * 1000) : null,
+            'duration' => ,
             'memory' => round(memory_get_peak_usage(true) / 1024 / 1024, 1),
         ]));
     }
@@ -75,6 +81,16 @@ class RequestWatcher extends Watcher
                 return strtolower($method);
             })->all()
         );
+    }
+    
+    /**
+     * Get minimum request duration that can be logged.
+     *
+     * @return int
+     */
+    protected function getMinDuration()
+    {
+        return $this->options['min_request_duration'] ?? 0;
     }
 
     /**
