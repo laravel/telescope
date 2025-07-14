@@ -82,7 +82,7 @@ class RequestWatcher extends Watcher
             })->all()
         );
     }
-    
+
     /**
      * Get minimum request duration that can be logged.
      *
