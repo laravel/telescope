@@ -46,7 +46,7 @@ class RequestWatcher extends Watcher
         $reqDuration = $startTime ? floor((microtime(true) - $startTime) * 1000) : null;
         $minDuration = $this->getMinDuration();
 
-        if ($minDuration > 0 && $reqDuration > $minDuration) {
+        if ($minDuration > 0 && $reqDuration > 0 && $reqDuration > $minDuration) {
             return;
         }
 
