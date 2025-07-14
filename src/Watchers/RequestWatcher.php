@@ -62,7 +62,7 @@ class RequestWatcher extends Watcher
             'response_headers' => $this->headers($event->response->headers->all()),
             'response_status' => $event->response->getStatusCode(),
             'response' => $this->response($event->response),
-            'duration' => ,
+            'duration' => $reqDuration,
             'memory' => round(memory_get_peak_usage(true) / 1024 / 1024, 1),
         ]));
     }
