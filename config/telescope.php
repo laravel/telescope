@@ -197,6 +197,7 @@ return [
         Watchers\RequestWatcher::class => [
             'enabled' => env('TELESCOPE_REQUEST_WATCHER', true),
             'size_limit' => env('TELESCOPE_RESPONSE_SIZE_LIMIT', 64),
+            'min_duration' => env('TELESCOPE_MIN_DURATION', 0),
             'ignore_http_methods' => [],
             'ignore_status_codes' => [],
         ],
