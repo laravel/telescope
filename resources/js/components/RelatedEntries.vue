@@ -48,6 +48,8 @@ export default {
                 this.currentTab = 'views'
             } else if (this.queries.length) {
                 this.currentTab = 'queries'
+            } else if (this.duplicateQueries.length) {
+                this.currentTab = 'duplicate_queries'
             } else if (this.models.length) {
                 this.currentTab = 'models'
             } else if (this.jobs.length) {
@@ -141,11 +143,25 @@ export default {
             return _.filter(this.batch, {type: 'client_request'});
         },
 
+        duplicateQueries() {
+            const grouped = _.groupBy(this.queries, (q) => `${q.content.hash}-${q.content.connection}`);
+            return _.flatMap(grouped, group => {
+                return group.length > 1 ? group : [];
+            });
+        },
+
         queriesSummary() {
             return {
                 time: _.reduce(this.queries, (time, q) => { return time + parseFloat(q.content.time) }, 0.00).toFixed(2),
                 duplicated: this.queries.length - _.size(_.groupBy(this.queries, (q) => { return `${q.content.hash}-${q.content.connection}` })),
             };
+        },
+
+        duplicateQueriesDuration() {
+            return this.duplicateQueries.reduce((total, q) => {
+                const time = parseFloat(q.content?.time);
+                return total + (isNaN(time) ? 0 : time);
+            }, 0.0).toFixed(2);
         },
 
         tabs(){
@@ -154,6 +170,7 @@ export default {
                 {title: "Logs", type: "logs", count: this.logs.length},
                 {title: "Views", type: "views", count: this.views.length},
                 {title: "Queries", type: "queries", count: this.queries.length},
+                {title: "Duplicated Queries", type: "duplicate_queries", count: this.duplicateQueries.length},
                 {title: "Models", type: "models", count: this.models.length},
                 {title: "Gates", type: "gates", count: this.gates.length},
                 {title: "Jobs", type: "jobs", count: this.jobs.length},
@@ -347,6 +364,55 @@ export default {
                         </td>
                     </tr>
                 </tbody>
+            </table>
+
+            <!-- Related Duplicate Queries -->
+            <table
+                class="table table-hover mb-0"
+                v-show="currentTab === 'duplicate_queries' && duplicateQueries.length"
+            >
+                <thead>
+                    <tr>
+                        <th>
+                            Duplicate Queries
+                        </th>
+                        <th class="text-right">
+                            Duration<br />
+                            <small>{{ duplicateQueriesDuration }}ms</small>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="entry in duplicateQueries" :key="entry.id">
+                        <td :title="entry.content.sql">
+                            <code>{{ truncate(entry.content.sql, 110) }}</code>
+                        </td>
+                        <td class="table-fit text-right">
+                            <span class="badge badge-danger" v-if="entry.content.slow">
+                                {{ entry.content.time }}ms
+                            </span>
+                            <span v-else class="text-muted">
+                                {{ entry.content.time }}ms
+                            </span>
+                        </td>
+                        <td class="table-fit">
+                            <router-link
+                                :to="{ name: 'query-preview', params: { id: entry.id } }"
+                                class="control-action"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                            </router-link>
+                        </td>
+                    </tr>
+                </tbody>
+            <!-- table content -->
             </table>
 
             <!-- Related Model Actions -->

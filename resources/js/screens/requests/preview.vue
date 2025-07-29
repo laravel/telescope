@@ -13,6 +13,20 @@ export default {
             currentRequestTab: 'payload',
             currentResponseTab: 'response'
         };
+    },
+    computed: {
+        duplicateQueries() {
+            const all = this.entry?.content?.queries || [];
+            const grouped = all.reduce((acc, query) => {
+                const sql = query.sql.trim();
+                if (!acc[sql]) acc[sql] = [];
+                acc[sql].push(query);
+                return acc;
+            }, {});
+            return Object.values(grouped)
+                .filter(group => group.length > 1)
+                .flat();
+        }
     }
 }
 </script>
