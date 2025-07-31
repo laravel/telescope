@@ -37,7 +37,7 @@ class EntryQueryOptions
     /**
      * The list of UUIDs of entries tor retrieve.
      *
-     * @var mixed
+     * @var array|null
      */
     public $uuids;
 
@@ -68,7 +68,7 @@ class EntryQueryOptions
     /**
      * Create new entry query options for the given batch ID.
      *
-     * @param  string  $batchId
+     * @param  string|null  $batchId
      * @return static
      */
     public static function forBatchId(?string $batchId)
@@ -79,7 +79,7 @@ class EntryQueryOptions
     /**
      * Set the batch ID for the query.
      *
-     * @param  string  $batchId
+     * @param  string|null  $batchId
      * @return $this
      */
     public function batchId(?string $batchId)
@@ -90,9 +90,9 @@ class EntryQueryOptions
     }
 
     /**
-     * Set the list of UUIDs of entries tor retrieve.
+     * Set the list of UUIDs of entries to retrieve.
      *
-     * @param  array  $uuids
+     * @param  array|null  $uuids
      * @return $this
      */
     public function uuids(?array $uuids)
