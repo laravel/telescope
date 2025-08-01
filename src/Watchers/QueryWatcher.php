@@ -38,6 +38,7 @@ class QueryWatcher extends Watcher
         if ($caller = $this->getCallerFromStackTrace()) {
             Telescope::recordQuery(IncomingEntry::make([
                 'connection' => $event->connectionName,
+                'driver' => $event->connection->getDriverName(),
                 'bindings' => [],
                 'sql' => $this->replaceBindings($event),
                 'time' => number_format($time, 2, '.', ''),

@@ -12,8 +12,12 @@ export default {
                 hljs.highlightElement(this.$refs.sqlcode);
             });
         },
-        formatSql(sql) {
-            return format(sql);
+        formatSql(sql, language) {
+            let formatterConfig = {};
+            if (language) {
+                formatterConfig = { language: language }
+            }
+            return format(sql, formatterConfig);
         }
     }
 }
@@ -54,8 +58,8 @@ export default {
                     </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
-                    <copy-clipboard :data="formatSql(slotProps.entry.content.sql)">
-                        <pre class="code-bg text-white" ref="sqlcode">{{ formatSql(slotProps.entry.content.sql) }}</pre>
+                    <copy-clipboard :data="formatSql(slotProps.entry.content.sql, slotProps.entry.content.driver)">
+                        <pre class="code-bg text-white" ref="sqlcode">{{ formatSql(slotProps.entry.content.sql, slotProps.entry.content.driver) }}</pre>
                     </copy-clipboard>
                 </div>
             </div>
