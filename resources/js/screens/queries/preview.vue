@@ -1,7 +1,7 @@
 <script type="text/ecmascript-6">
 import hljs from 'highlight.js/lib/core';
 import sql from 'highlight.js/lib/languages/sql';
-import { format } from 'sql-formatter';
+import { format, supportedDialects } from 'sql-formatter';
 
 hljs.registerLanguage('sql', sql);
 
@@ -12,10 +12,16 @@ export default {
                 hljs.highlightElement(this.$refs.sqlcode);
             });
         },
-        formatSql(sql, language) {
+        formatSql(sql, driver) {
             let formatterConfig = {};
-            if (language) {
-                formatterConfig = { language: language }
+            if (driver) {
+                if (driver === 'pgsql') {
+                    driver = 'postgresql';
+                }
+
+                if (supportedDialects.includes(driver)) {
+                    formatterConfig = {language: driver};
+                }
             }
             return format(sql, formatterConfig);
         }
