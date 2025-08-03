@@ -14,6 +14,7 @@ export default {
         },
         formatSql(sql, driver) {
             let formatterConfig = {};
+
             if (driver) {
                 if (driver === 'pgsql') {
                     driver = 'postgresql';
@@ -23,6 +24,7 @@ export default {
                     formatterConfig = {language: driver};
                 }
             }
+
             return format(sql, formatterConfig);
         }
     }
