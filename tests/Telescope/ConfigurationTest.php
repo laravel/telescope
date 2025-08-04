@@ -24,7 +24,7 @@ class ConfigurationTest extends FeatureTestCase
         // Load fresh config to get default value
         $configPath = __DIR__.'/../../config/telescope.php';
         $defaultConfig = require $configPath;
-        
+
         $this->assertTrue($defaultConfig['copy_request_as_curl']);
     }
 

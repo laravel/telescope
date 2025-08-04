@@ -38,7 +38,7 @@ class CurlCopyTest extends FeatureTestCase
         $config = config('telescope');
         unset($config['copy_request_as_curl']);
         config(['telescope' => $config]);
-        
+
         // When config is missing, it should use the default value (true) from the scriptVariables method
         $scriptVariables = Telescope::scriptVariables();
         $this->assertTrue($scriptVariables['copyRequestAsCurl']);
