@@ -75,6 +75,13 @@ export default {
                 <td class="table-fit text-muted">Memory usage</td>
                 <td>{{ slotProps.entry.content.memory || '-' }} MB</td>
             </tr>
+
+            <tr v-if="window.Telescope.copyRequestAsCurl">
+                <td class="table-fit text-muted">cURL</td>
+                <td>
+                    <curl-copy :entry="slotProps.entry"></curl-copy>
+                </td>
+            </tr>
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">

@@ -99,6 +99,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Copy Request as cURL
+    |--------------------------------------------------------------------------
+    |
+    | When enabled, this option will add a "Copy as cURL" button to the
+    | request details page, allowing you to easily copy the request as
+    | a cURL command for testing and debugging purposes.
+    |
+    */
+
+    'copy_request_as_curl' => env('TELESCOPE_COPY_CURL', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Allowed / Ignored Paths & Commands
     |--------------------------------------------------------------------------
     |
