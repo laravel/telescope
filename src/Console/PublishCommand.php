@@ -33,10 +33,5 @@ class PublishCommand extends Command
             '--tag' => 'telescope-config',
             '--force' => $this->option('force'),
         ]);
-
-        $this->call('vendor:publish', [
-            '--tag' => 'telescope-assets',
-            '--force' => true,
-        ]);
     }
 }
