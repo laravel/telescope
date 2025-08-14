@@ -100,7 +100,7 @@ class ClientRequestWatcher extends Watcher
         $stream = $response->toPsrResponse()->getBody();
 
         if (! $stream->isSeekable()) {
-            return 'Stream Response';   
+            return 'Stream Response';
         }
 
         $content = $response->body();
