@@ -102,7 +102,7 @@ class ClientRequestWatcher extends Watcher
         if (! $stream->isSeekable()) {
             return 'Stream Response';   
         }
-        
+
         $content = $response->body();
         $stream->rewind();
 
