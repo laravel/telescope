@@ -104,6 +104,7 @@ class ClientRequestWatcher extends Watcher
         }
 
         $content = $response->body();
+
         $stream->rewind();
 
         if (is_string($content)) {
