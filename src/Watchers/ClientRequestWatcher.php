@@ -193,6 +193,10 @@ class ClientRequestWatcher extends Watcher
      */
     protected function input(Request $request)
     {
+        if ($request->hasHeader('Content-Type', 'text/plain')) {
+            return explode("\n", $request->body());
+        }
+        
         if (! $request->isMultipart()) {
             return $request->data();
         }
