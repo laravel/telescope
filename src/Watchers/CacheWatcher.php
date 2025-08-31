@@ -111,8 +111,8 @@ class CacheWatcher extends Watcher
     private function formatValue($event)
     {
         return (! $this->shouldHideValue($event))
-                    ? $event->value
-                    : '********';
+            ? $event->value
+            : '********';
     }
 
     /**
@@ -136,7 +136,8 @@ class CacheWatcher extends Watcher
     protected function formatExpiration(KeyWritten $event)
     {
         return property_exists($event, 'seconds')
-                ? $event->seconds : $event->minutes * 60;
+            ? $event->seconds
+            : $event->minutes * 60;
     }
 
     /**

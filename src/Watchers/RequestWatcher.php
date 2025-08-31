@@ -192,8 +192,8 @@ class RequestWatcher extends Watcher
             if (is_array(json_decode($content, true)) &&
                 json_last_error() === JSON_ERROR_NONE) {
                 return $this->contentWithinLimits($content)
-                        ? $this->hideParameters(json_decode($content, true), Telescope::$hiddenResponseParameters)
-                        : 'Purged By Telescope';
+                    ? $this->hideParameters(json_decode($content, true), Telescope::$hiddenResponseParameters)
+                    : 'Purged By Telescope';
             }
 
             if (Str::startsWith(strtolower($response->headers->get('Content-Type') ?? ''), 'text/plain')) {

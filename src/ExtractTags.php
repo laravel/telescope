@@ -71,8 +71,8 @@ class ExtractTags
     protected static function extractExplicitTags($job)
     {
         return $job instanceof CallQueuedListener
-                    ? static::tagsForListener($job)
-                    : static::explicitTags(static::targetsFor($job));
+            ? static::tagsForListener($job)
+            : static::explicitTags(static::targetsFor($job));
     }
 
     /**
@@ -161,8 +161,8 @@ class ExtractTags
     protected static function extractEvent($job)
     {
         return isset($job->data[0]) && is_object($job->data[0])
-                        ? $job->data[0]
-                        : new stdClass;
+            ? $job->data[0]
+            : new stdClass;
     }
 
     /**

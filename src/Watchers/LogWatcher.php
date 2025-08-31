@@ -103,10 +103,10 @@ class LogWatcher extends Watcher
         }
 
         $minimumTelescopeLogLevel = static::PRIORITIES[$this->options['level'] ?? 'debug']
-                ?? static::PRIORITIES[LogLevel::DEBUG];
+            ?? static::PRIORITIES[LogLevel::DEBUG];
 
         $eventLogLevel = static::PRIORITIES[$event->level]
-                ?? static::PRIORITIES[LogLevel::DEBUG];
+            ?? static::PRIORITIES[LogLevel::DEBUG];
 
         return $eventLogLevel < $minimumTelescopeLogLevel;
     }

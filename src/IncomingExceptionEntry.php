@@ -37,7 +37,8 @@ class IncomingExceptionEntry extends IncomingEntry
         $handler = app(ExceptionHandler::class);
 
         return method_exists($handler, 'shouldReport')
-                ? $handler->shouldReport($this->exception) : true;
+            ? $handler->shouldReport($this->exception)
+            : true;
     }
 
     /**
