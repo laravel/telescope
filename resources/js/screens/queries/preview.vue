@@ -20,6 +20,10 @@ export default {
                     driver = 'postgresql';
                 }
 
+                if (driver === 'sqlsrv') {
+                    driver = 'transactsql';
+                }
+
                 if (supportedDialects.includes(driver)) {
                     formatterConfig = {language: driver};
                 }
