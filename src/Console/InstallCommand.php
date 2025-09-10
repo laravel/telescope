@@ -29,7 +29,7 @@ class InstallCommand extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->comment('Publishing Telescope Service Provider...');
         $this->callSilent('vendor:publish', ['--tag' => 'telescope-provider']);
@@ -37,8 +37,10 @@ class InstallCommand extends Command
         $this->comment('Publishing Telescope Configuration...');
         $this->callSilent('vendor:publish', ['--tag' => 'telescope-config']);
 
-        $this->comment('Publishing Telescope Migrations...');
-        $this->callSilent('vendor:publish', ['--tag' => 'telescope-migrations']);
+        if (! $this->migrationExists('create_telescope_entries_table')) {
+            $this->comment('Publishing Telescope Migrations...');
+            $this->callSilent('vendor:publish', ['--tag' => 'telescope-migrations']);
+        }
 
         $this->registerTelescopeServiceProvider();
 
@@ -46,11 +48,32 @@ class InstallCommand extends Command
     }
 
     /**
+     * Check if a migration file with the given name exists.
+     *
+     * @param  string  $migrationName
+     * @return bool
+     */
+    protected function migrationExists(string $migrationName): bool
+    {
+        $migrationsPath = database_path('migrations');
+
+        $files = glob($migrationsPath.'/*.php');
+
+        foreach ($files as $file) {
+            if (preg_match('/\d{4}_\d{2}_\d{2}_\d{6}_'.$migrationName.'\.php$/', basename($file))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Register the Telescope service provider in the application configuration file.
      *
      * @return void
      */
-    protected function registerTelescopeServiceProvider()
+    protected function registerTelescopeServiceProvider(): void
     {
         if (method_exists(ServiceProvider::class, 'addProviderToBootstrapFile') &&
             ServiceProvider::addProviderToBootstrapFile(\App\Providers\TelescopeServiceProvider::class)) { // @phpstan-ignore-line
