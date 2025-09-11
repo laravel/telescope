@@ -18,7 +18,7 @@
         "popper.js": "^1.16",
         "sass": "^1.74.1",
         "sql-formatter": "^15.6.2",
-        "vite": "^5.4.19",
+        "vite": "^5.4.20",
         "vue": "^2.7.16",
         "vue-copy-to-clipboard": "^1.0.3",
         "vue-json-pretty": "^1.6.2",
