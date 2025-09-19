@@ -63,16 +63,16 @@ class NPlusOneWatcher extends Watcher
         $now = (int) (microtime(true) * 1000);
 
         $pattern = $this->normalize($sql);
-        $caller  = $this->caller();
-        $key     = sha1($pattern . '|' . $caller);
+        $caller = $this->caller();
+        $key = sha1($pattern . '|' . $caller);
 
         if (! isset(self::$batches[$key]) || $now - self::$batches[$key]['first'] > $this->windowMs) {
             self::$batches[$key] = [
-                'count'   => 0,
-                'first'   => $now,
+                'count' => 0,
+                'first' => $now,
                 'example' => $sql,
                 'pattern' => $pattern,
-                'caller'  => $caller,
+                'caller' => $caller,
             ];
         }
 
@@ -80,11 +80,11 @@ class NPlusOneWatcher extends Watcher
 
         if (self::$batches[$key]['count'] === $this->threshold) {
             Telescope::recordLog(IncomingEntry::make([
-                'level'   => 'warning',
+                'level' => 'warning',
                 'message' => 'N+1 detected at ' . $caller,
                 'context' => [
-                    'pattern'   => $pattern,
-                    'example'   => self::$batches[$key]['example'],
+                    'pattern' => $pattern,
+                    'example' => self::$batches[$key]['example'],
                     'threshold' => $this->threshold,
                     'window_ms' => $this->windowMs,
                 ],
@@ -105,6 +105,7 @@ class NPlusOneWatcher extends Watcher
         $s = preg_replace('/\b\d+\b/', '?', $s) ?: $s;
         $s = preg_replace('/\'(?:[^\'\\\\]|\\\\.)*\'/', '?', $s) ?: $s;
         $s = preg_replace('/\bin\s*\((?:\s*[^)]+)\)/', ' in (?)', $s) ?: $s;
+
         return trim($s);
     }
 
@@ -119,11 +120,12 @@ class NPlusOneWatcher extends Watcher
             if (! isset($frame['file'])) {
                 continue;
             }
-            if (Str::contains($frame['file'], DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR)) {
+            if (Str::contains($frame['file'], DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR)) {
                 continue;
             }
             $line = isset($frame['line']) ? (int) $frame['line'] : 0;
-            return $frame['file'] . ':' . $line;
+            
+            return $frame['file'].':'.$line;
         }
 
         return 'unknown:0';
