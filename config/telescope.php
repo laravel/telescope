@@ -204,5 +204,11 @@ return [
 
         Watchers\ScheduleWatcher::class => env('TELESCOPE_SCHEDULE_WATCHER', true),
         Watchers\ViewWatcher::class => env('TELESCOPE_VIEW_WATCHER', true),
+
+        Watchers\NPlusOneWatcher::class => [
+            'enabled'   => env('TELESCOPE_NPLUSONE_WATCHER', true),
+            'threshold' => 3,
+            'window'    => 1000,
+        ],
     ],
 ];
