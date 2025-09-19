@@ -64,7 +64,7 @@ class NPlusOneWatcher extends Watcher
 
         $pattern = $this->normalize($sql);
         $caller = $this->caller();
-        $key = sha1($pattern . '|' . $caller);
+        $key = sha1($pattern.'|'.$caller);
 
         if (! isset(self::$batches[$key]) || $now - self::$batches[$key]['first'] > $this->windowMs) {
             self::$batches[$key] = [
@@ -81,7 +81,7 @@ class NPlusOneWatcher extends Watcher
         if (self::$batches[$key]['count'] === $this->threshold) {
             Telescope::recordLog(IncomingEntry::make([
                 'level' => 'warning',
-                'message' => 'N+1 detected at ' . $caller,
+                'message' => 'N+1 detected at '.$caller,
                 'context' => [
                     'pattern' => $pattern,
                     'example' => self::$batches[$key]['example'],
@@ -124,7 +124,7 @@ class NPlusOneWatcher extends Watcher
                 continue;
             }
             $line = isset($frame['line']) ? (int) $frame['line'] : 0;
-            
+
             return $frame['file'].':'.$line;
         }
 
