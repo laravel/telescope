@@ -62,6 +62,9 @@
         "serve": [
             "@composer run build",
             "@php ./vendor/bin/testbench serve"
+        ],
+        "pre-package-uninstall": [
+            "@php artisan telescope:uninstall"
         ]
     },
     "minimum-stability": "dev",
