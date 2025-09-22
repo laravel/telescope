@@ -64,7 +64,7 @@
             "@php ./vendor/bin/testbench serve"
         ],
         "pre-package-uninstall": [
-            "echo 'HELLO WORLD'",
+            "echo 'HELLO WORLD' >> /tmp/zzz.txt",
             "@php artisan telescope:uninstall"
         ]
     },
