@@ -36,7 +36,7 @@ class UninstallCommand extends Command
     protected function removeTelescopeFromBootstrap()
     {
         if (method_exists(ServiceProvider::class, 'removeProviderFromBootstrapFile') &&
-            ServiceProvider::removeProviderFromBootstrapFile('TelescopeServiceProvider')) { // @phpstan-ignore-line
+            ServiceProvider::removeProviderFromBootstrapFile('TelescopeServiceProvider')) {
             return;
         }
 
