@@ -4,6 +4,7 @@ namespace Laravel\Telescope;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Telescope\Actions\UninstallAction;
 use Laravel\Telescope\Contracts\ClearableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\PrunableRepository;
@@ -104,6 +105,10 @@ class TelescopeServiceProvider extends ServiceProvider
                 Console\ResumeCommand::class,
                 Console\UninstallCommand::class,
             ]);
+
+            $this->app['events']->listen('composer_package.laravel/telescope:pre_uninstall', function ($event) {
+                $this->app->make(UninstallAction::class)->handle();
+            });
         }
     }
 
