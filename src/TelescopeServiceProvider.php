@@ -21,7 +21,6 @@ class TelescopeServiceProvider extends ServiceProvider
     {
         $this->registerCommands();
         $this->registerPublishing();
-
         $this->registerPrePackageUninstallListener();
 
         if (! config('telescope.enabled')) {
@@ -165,7 +164,10 @@ class TelescopeServiceProvider extends ServiceProvider
             ->give(config('telescope.storage.database.chunk'));
     }
 
-    protected function registerPrePackageUninstallListener()
+    /**
+     * Register a pre-package uninstallation listener.
+     */
+    protected function registerPrePackageUninstallListener(): void
     {
         $this->app['events']->listen('composer_package.laravel/telescope:pre_uninstall', function () {
             $this->app->make(UninstallAction::class)->handle();
