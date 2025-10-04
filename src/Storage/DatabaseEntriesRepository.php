@@ -192,8 +192,8 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     {
         $toInsert = [];
 
-        foreach($results as $uuid => $tags) {
-            foreach($tags as $tag) {
+        foreach ($results as $uuid => $tags) {
+            foreach ($tags as $tag) {
                 $toInsert[] = [
                     'entry_uuid' => $uuid,
                     'tag' => $tag,
