@@ -185,7 +185,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     /**
      * Store the tags for the given entries.
      *
-     * @param  \Illuminate\Support\Collection<string, \Laravel\Telescope\IncomingEntry>  $results
+     * @param  \Illuminate\Support\Collection<string, array<array-key, mixed>>  $results
      * @return void
      */
     protected function storeTags(Collection $results)
