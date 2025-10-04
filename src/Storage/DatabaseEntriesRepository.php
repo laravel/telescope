@@ -41,7 +41,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      * Create a new database repository.
      *
      * @param  string  $connection
-     * @param  int  $chunkSize
+     * @param  int|null  $chunkSize
      * @return void
      */
     public function __construct(string $connection, ?int $chunkSize = null)
@@ -126,7 +126,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     /**
      * Store the given array of entries.
      *
-     * @param  \Illuminate\Support\Collection|\Laravel\Telescope\IncomingEntry[]  $entries
+     * @param  \Illuminate\Support\Collection<int, \Laravel\Telescope\IncomingEntry>  $entries
      * @return void
      */
     public function store(Collection $entries)
@@ -155,7 +155,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     /**
      * Store the given array of exception entries.
      *
-     * @param  \Illuminate\Support\Collection|\Laravel\Telescope\IncomingEntry[]  $exceptions
+     * @param  \Illuminate\Support\Collection<int, \Laravel\Telescope\IncomingEntry>  $exceptions
      * @return void
      */
     protected function storeExceptions(Collection $exceptions)
@@ -185,25 +185,45 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     /**
      * Store the tags for the given entries.
      *
-     * @param  \Illuminate\Support\Collection  $results
+     * @param  \Illuminate\Support\Collection<string, \Laravel\Telescope\IncomingEntry>  $results
      * @return void
      */
     protected function storeTags(Collection $results)
     {
-        $results->chunk($this->chunkSize)->each(function ($chunked) {
-            try {
-                $this->table('telescope_entries_tags')->insert($chunked->flatMap(function ($tags, $uuid) {
-                    return collect($tags)->map(function ($tag) use ($uuid) {
-                        return [
-                            'entry_uuid' => $uuid,
-                            'tag' => $tag,
-                        ];
-                    });
-                })->all());
-            } catch (UniqueConstraintViolationException $e) {
-                // Ignore tags that already exist...
+        $toInsert = [];
+
+        foreach($results as $uuid => $tags) {
+            foreach($tags as $tag) {
+                $toInsert[] = [
+                    'entry_uuid' => $uuid,
+                    'tag' => $tag,
+                ];
+
+                if (count($toInsert) >= $this->chunkSize) {
+                    $this->insertChunkOfTags($toInsert);
+                    $toInsert = [];
+                }
             }
-        });
+        }
+
+        if ($toInsert !== []) {
+            $this->insertChunkOfTags($toInsert);
+        }
+    }
+
+    /**
+     * Insert a chunk of tags, ignoring unique constraint violations.
+     *
+     * @param  array<int, array{entry_uuid: string, tag: string}>  $results
+     * @return void
+     */
+    protected function insertChunkOfTags($results)
+    {
+        try {
+            $this->table('telescope_entries_tags')->insert($results);
+        } catch (UniqueConstraintViolationException $e) {
+            // Ignore tags that already exist...
+        }
     }
 
     /**
