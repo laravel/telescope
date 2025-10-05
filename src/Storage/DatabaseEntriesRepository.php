@@ -214,13 +214,13 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     /**
      * Insert a chunk of tags, ignoring unique constraint violations.
      *
-     * @param  array<int, array{entry_uuid: string, tag: string}>  $results
+     * @param  array<int, array{entry_uuid: string, tag: string}>  $tags
      * @return void
      */
-    protected function insertChunkOfTags($results)
+    protected function insertChunkOfTags($tags)
     {
         try {
-            $this->table('telescope_entries_tags')->insert($results);
+            $this->table('telescope_entries_tags')->insert($tags);
         } catch (UniqueConstraintViolationException $e) {
             // Ignore tags that already exist...
         }
