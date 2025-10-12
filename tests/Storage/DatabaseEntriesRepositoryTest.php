@@ -2,10 +2,14 @@
 
 namespace Laravel\Telescope\Tests\Storage;
 
-use Laravel\Telescope\Database\Factories\EntryModelFactory;
+use Illuminate\Support\Str;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\EntryUpdate;
-use Laravel\Telescope\Storage\DatabaseEntriesRepository;
+use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Tests\FeatureTestCase;
+use Laravel\Telescope\IncomingExceptionEntry;
+use Laravel\Telescope\Storage\DatabaseEntriesRepository;
+use Laravel\Telescope\Database\Factories\EntryModelFactory;
 
 class DatabaseEntriesRepositoryTest extends FeatureTestCase
 {
@@ -41,5 +45,31 @@ class DatabaseEntriesRepositoryTest extends FeatureTestCase
 
         $this->assertCount(1, $failedUpdates);
         $this->assertSame('missing-id', $failedUpdates->first()->uuid);
+    }
+
+    public function test_store_binary_content()
+    {
+        $batchId = Str::uuid();
+        $exception = new \Exception('message');
+
+        $entries = collect([
+            (new IncomingEntry(['message' => gzcompress('message')]))->batchId($batchId)->type(EntryType::LOG),
+            (new IncomingExceptionEntry($exception, [
+                'file' => $exception->getFile(), 
+                'line' => $exception->getLine(), 
+                'message' => gzcompress($exception->getMessage())
+            ]))->batchId($batchId)->type(EntryType::EXCEPTION)
+        ]);
+
+        $repository = new DatabaseEntriesRepository('testbench');
+
+        $repository->store($entries);
+
+        $entries->each(function ($entry) {
+            $this->assertDatabaseMissing('telescope_entries', [
+                'uuid' => $entry->uuid,
+                'content' => false
+            ]);
+        });
     }
 }

@@ -172,9 +172,10 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
 
                 return array_merge($exception->toArray(), [
                     'family_hash' => $exception->familyHash(),
-                    'content' => json_encode(array_merge(
-                        $exception->content, ['occurrences' => $occurrences + 1]
-                    )),
+                    'content' => json_encode(
+                        array_merge($exception->content, ['occurrences' => $occurrences + 1]),
+                        JSON_INVALID_UTF8_SUBSTITUTE
+                    ),
                 ]);
             })->toArray());
         });
