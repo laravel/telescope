@@ -84,7 +84,8 @@ class EntryModel extends Model
     protected function whereType($query, $type)
     {
         $query->when($type, function ($query, $type) {
-            return $query->where('type', $type);
+            return $query->where('type', $type)
+                        ->where('should_display_on_index', true);
         });
 
         return $this;
@@ -100,7 +101,8 @@ class EntryModel extends Model
     protected function whereBatchId($query, EntryQueryOptions $options)
     {
         $query->when($options->batchId, function ($query, $batchId) {
-            return $query->where('batch_id', $batchId);
+            return $query->where('batch_id', $batchId)
+                        ->where('should_display_on_index', true);
         });
 
         return $this;
@@ -134,7 +136,7 @@ class EntryModel extends Model
     }
 
     /**
-     * Scope the query for the given type.
+     * Scope the query for the given family hash.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
@@ -143,7 +145,8 @@ class EntryModel extends Model
     protected function whereFamilyHash($query, EntryQueryOptions $options)
     {
         $query->when($options->familyHash, function ($query, $hash) {
-            return $query->where('family_hash', $hash);
+            return $query->where('family_hash', $hash)
+                        ->where('should_display_on_index', true);
         });
 
         return $this;

@@ -36,6 +36,10 @@ return new class extends Migration
             $table->index('family_hash');
             $table->index('created_at');
             $table->index(['type', 'should_display_on_index']);
+            $table->index(['type', 'created_at'], 'idx_entries_type_created');
+            $table->index(['batch_id', 'type'], 'idx_entries_batch_type');
+            $table->index(['type', 'should_display_on_index', 'created_at'], 'idx_entries_type_display_created');
+            $table->index(['family_hash', 'type'], 'idx_entries_family_type');
         });
 
         $schema->create('telescope_entries_tags', function (Blueprint $table) {
@@ -45,6 +49,7 @@ return new class extends Migration
             $table->primary(['entry_uuid', 'tag']);
             $table->index('tag');
 
+            $table->index(['tag', 'entry_uuid'], 'idx_tags_tag_entry');
             $table->foreign('entry_uuid')
                 ->references('uuid')
                 ->on('telescope_entries')
