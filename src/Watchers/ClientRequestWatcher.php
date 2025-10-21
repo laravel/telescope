@@ -57,7 +57,8 @@ class ClientRequestWatcher extends Watcher
      */
     public function recordResponse(ResponseReceived $event)
     {
-        if (! Telescope::isRecording()) {
+        if (! Telescope::isRecording()||
+            $this->shouldIgnoreHosts($event)) {
             return;
         }
 
@@ -74,6 +75,20 @@ class ClientRequestWatcher extends Watcher
             ])
             ->tags([$event->request->toPsrRequest()->getUri()->getHost()])
         );
+    }
+
+    /**
+     * Determine whether to ignore this request based on its host.
+     *
+     * @param  mixed  $event
+     * @return bool
+     */
+    protected function shouldIgnoreHosts($event)
+    {
+        $host = $event->request->toPsrRequest()->getUri()->getHost();
+        $ignoreHosts = Arr::get($this->options, 'ignore_hosts', []);
+
+        return in_array($host, $ignoreHosts);
     }
 
     /**

@@ -143,7 +143,10 @@ return [
             'ignore' => [],
         ],
 
-        Watchers\ClientRequestWatcher::class => env('TELESCOPE_CLIENT_REQUEST_WATCHER', true),
+        Watchers\ClientRequestWatcher::class => [
+            env('TELESCOPE_CLIENT_REQUEST_WATCHER', true),
+            'ignore_hosts' => [],
+        ],
 
         Watchers\CommandWatcher::class => [
             'enabled' => env('TELESCOPE_COMMAND_WATCHER', true),
