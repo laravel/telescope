@@ -57,7 +57,7 @@ class ClientRequestWatcher extends Watcher
      */
     public function recordResponse(ResponseReceived $event)
     {
-        if (! Telescope::isRecording()||
+        if (! Telescope::isRecording() ||
             $this->shouldIgnoreHosts($event)) {
             return;
         }
