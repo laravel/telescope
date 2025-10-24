@@ -122,7 +122,7 @@ class EntryModel extends Model
                 return $query;
             }
 
-            return $query->join("telescope_entries_tags", function ($query) use ($tags) {
+            return $query->join('telescope_entries_tags', function ($query) use ($tags) {
                 $query->on('entry_uuid', '=', 'uuid')
                     ->whereIn('tag', $tags->all());
             });
