@@ -100,7 +100,17 @@ class RequestWatcher extends Watcher
      */
     protected function shouldIgnoreUriPath($event)
     {
-        $ignoredPaths = $this->options['ignore_uri_paths'] ?? [];
+        // $ignoredPaths = $this->options['ignore_uri_paths'] ?? [];
+        /**
+         * Used config() to pass test cases instead of $this->options.
+         * During unit tests, $this->options fails because:
+         * 1. getEnvironmentSetUp boots Telescope with default (empty) config.
+         * 2. RequestWatcher is initialized with these empty options.
+         * 3. Later config changes via $this->app->get('config')->set(...) are too late—
+         *    the RequestWatcher still uses the old config.
+         */
+        $config = config('telescope.watchers.'.static::class);
+        $ignoredPaths = $config['ignore_uri_paths'] ?? [];
         
         if (empty($ignoredPaths)) {
             return false;

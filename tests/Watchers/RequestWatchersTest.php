@@ -213,6 +213,46 @@ class RequestWatchersTest extends FeatureTestCase
         $this->assertSame(EntryType::REQUEST, $entry->type);
         $this->assertEquals(['Telescope', 'Laravel', 'PHP'], $entry->content['response']['data']['items']['properties']);
     }
+
+    public function test_request_watcher_ignores_uri_paths_if_configured()
+    {
+        $this->app->get('config')->set('telescope.watchers', [
+            \Laravel\Telescope\Watchers\RequestWatcher::class => [
+                'ignore_uri_paths' => [
+                    'ignored-route-1',
+                    '/ignored-route-2', // Test with leading slash
+                    'another/ignored-route/*', // Test with wildcard
+                ],
+                'enabled' => true,
+            ],
+        ]);
+
+        Route::get('/ignored-route-1', function () {
+            return 'Ignored 1';
+        });
+
+        Route::get('/ignored-route-2', function () {
+            return 'Ignored 2';
+        });
+
+        Route::get('/another/ignored-route/test', function () {
+            return 'Ignored 3';
+        });
+
+        Route::get('/recorded-route', function () {
+            return 'Recorded';
+        });
+
+        $this->get('/ignored-route-1')->assertSuccessful();
+        $this->get('/ignored-route-2')->assertSuccessful();
+        $this->get('/another/ignored-route/test')->assertSuccessful();
+        $this->get('/recorded-route')->assertSuccessful();
+
+        $entries = $this->loadTelescopeEntries();
+
+        $this->assertCount(1, $entries);
+        $this->assertSame('/recorded-route', $entries->first()->content['uri']);
+    }
 }
 
 class FormatForTelescopeClass
