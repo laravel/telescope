@@ -38,7 +38,8 @@ class RequestWatcher extends Watcher
     {
         if (! Telescope::isRecording() ||
             $this->shouldIgnoreHttpMethod($event) ||
-            $this->shouldIgnoreStatusCode($event)) {
+            $this->shouldIgnoreStatusCode($event) ||
+            $this->shouldIgnoreUriPath($event)) {
             return;
         }
 
@@ -89,6 +90,29 @@ class RequestWatcher extends Watcher
             $event->response->getStatusCode(),
             $this->options['ignore_status_codes'] ?? []
         );
+    }
+
+    /**
+     * Determine if the request should be ignored based on its path.
+     * 
+     * @param mixed $event
+     * @return bool
+     */
+    protected function shouldIgnoreUriPath($event)
+    {
+        $ignoredPaths = $this->options['ignore_uri_paths'] ?? [];
+
+        if (empty($ignoredPaths)) {
+            return false;
+        }
+
+        foreach ($ignoredPaths as $path) {
+            if ($event->request->is(ltrim($path, '/'))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
