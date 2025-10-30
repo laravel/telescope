@@ -101,18 +101,14 @@ class RequestWatcher extends Watcher
     protected function shouldIgnoreUriPath($event)
     {
         $ignoredPaths = $this->options['ignore_uri_paths'] ?? [];
-
+        
         if (empty($ignoredPaths)) {
             return false;
         }
-
-        foreach ($ignoredPaths as $path) {
-            if ($event->request->is(ltrim($path, '/'))) {
-                return true;
-            }
-        }
-
-        return false;
+        
+        return collect($ignoredPaths)->contains(function ($path) use ($event) {
+            return $event->request->is(ltrim($path, '/'));
+        });
     }
 
     /**
