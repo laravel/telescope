@@ -94,7 +94,7 @@ class RequestWatcher extends Watcher
 
     /**
      * Determine if the request should be ignored based on its path.
-     * 
+     *
      * @param  mixed  $event
      * @return bool
      */
