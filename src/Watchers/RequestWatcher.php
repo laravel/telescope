@@ -95,7 +95,7 @@ class RequestWatcher extends Watcher
     /**
      * Determine if the request should be ignored based on its path.
      * 
-     * @param mixed $event
+     * @param  mixed  $event
      * @return bool
      */
     protected function shouldIgnoreUriPath($event)
@@ -111,11 +111,11 @@ class RequestWatcher extends Watcher
          */
         $config = config('telescope.watchers.'.static::class);
         $ignoredPaths = $config['ignore_uri_paths'] ?? [];
-        
+
         if (empty($ignoredPaths)) {
             return false;
         }
-        
+
         return collect($ignoredPaths)->contains(function ($path) use ($event) {
             return $event->request->is(ltrim($path, '/'));
         });
