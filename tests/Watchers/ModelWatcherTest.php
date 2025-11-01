@@ -99,6 +99,28 @@ class ModelWatcherTest extends FeatureTestCase
             'password' => 1,
         ]);
     }
+    
+    public function test_model_watcher_skips_composite_key_models()
+    {
+        Telescope::withoutRecording(function () {
+            $this->app['db']->connection()->getSchemaBuilder()->create('composite_models', function ($table) {
+                $table->unsignedBigInteger('first_id');
+                $table->unsignedBigInteger('second_id');
+                $table->string('name');
+                $table->primary(['first_id', 'second_id']);
+            });
+        });
+
+        Telescope::startRecording();
+
+        CompositeModelEloquent::create([
+            'name' => 'Telescope',
+            'first_id' => 1,
+            'second_id' => 2,
+        ]);
+
+        $this->assertEmpty($this->loadTelescopeEntries());
+    }
 }
 
 class UserEloquent extends Model
@@ -106,4 +128,13 @@ class UserEloquent extends Model
     protected $table = 'users';
 
     protected $guarded = [];
+}
+
+class CompositeModelEloquent extends Model
+{
+    protected $table = 'composite_models';
+    protected $guarded = [];
+    protected $primaryKey = ['first_id', 'second_id'];
+    public $incrementing = false;
+    public $timestamps = false;
 }

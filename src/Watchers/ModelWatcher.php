@@ -41,7 +41,9 @@ class ModelWatcher extends Watcher
      */
     public function recordAction($event, $data)
     {
-        if (! Telescope::isRecording() || ! $this->shouldRecord($event)) {
+        if (! Telescope::isRecording() ||
+            ! $this->shouldRecord($event) ||
+            $this->isCompositeKeyModel($data)) {
             return;
         }
 
@@ -128,6 +130,19 @@ class ModelWatcher extends Watcher
         return Str::is([
             '*created*', '*updated*', '*restored*', '*deleted*', '*retrieved*',
         ], $eventName);
+    }
+
+    /**
+     * Determine if the event's model has a composite primary key.
+     *
+     * @param  array  $data
+     * @return bool
+     */
+    protected function isCompositeKeyModel($data)
+    {
+        $model = $data['model'] ?? ($data[0] ?? null);
+
+        return is_object($model) && is_array($model->getKeyName());
     }
 
     /**
