@@ -99,7 +99,7 @@ class ModelWatcherTest extends FeatureTestCase
             'password' => 1,
         ]);
     }
-    
+
     public function test_model_watcher_skips_composite_key_models()
     {
         Telescope::withoutRecording(function () {
