@@ -52,7 +52,7 @@ return [
     | This configuration options determines the storage driver that will
     | be used to store Telescope's data. In addition, you may set any
     | custom options as needed by the particular driver you choose.
-    |
+    | Available options: 'database', 'mongodb'
     */
 
     'driver' => env('TELESCOPE_DRIVER', 'database'),

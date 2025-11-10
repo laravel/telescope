@@ -9,6 +9,7 @@ use Laravel\Telescope\Contracts\ClearableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Storage\DatabaseEntriesRepository;
+use Laravel\Telescope\Storage\Mongodb\MongoDbEntriesRepository;
 
 class TelescopeServiceProvider extends ServiceProvider
 {
@@ -160,6 +161,29 @@ class TelescopeServiceProvider extends ServiceProvider
             ->give(config('telescope.storage.database.connection'));
 
         $this->app->when(DatabaseEntriesRepository::class)
+            ->needs('$chunkSize')
+            ->give(config('telescope.storage.database.chunk'));
+    }
+
+    protected function registerMongodbDriver()
+    {
+        $this->app->singleton(
+            EntriesRepository::class, MongoDbEntriesRepository::class
+        );
+
+        $this->app->singleton(
+            ClearableRepository::class, MongoDbEntriesRepository::class
+        );
+
+        $this->app->singleton(
+            PrunableRepository::class, MongoDbEntriesRepository::class
+        );
+
+        $this->app->when(MongoDbEntriesRepository::class)
+            ->needs('$connection')
+            ->give(config('telescope.storage.database.connection'));
+
+        $this->app->when(MongoDbEntriesRepository::class)
             ->needs('$chunkSize')
             ->give(config('telescope.storage.database.chunk'));
     }
