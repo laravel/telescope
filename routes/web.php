@@ -55,6 +55,7 @@ Route::get('/telescope-api/models/{telescopeEntryId}', 'ModelsController@show');
 // Requests entries...
 Route::post('/telescope-api/requests', 'RequestsController@index');
 Route::get('/telescope-api/requests/{telescopeEntryId}', 'RequestsController@show');
+Route::post('/telescope-api/requests/{telescopeEntryId}/copy-curl', 'RequestsController@copyCurl');
 
 // View entries...
 Route::post('/telescope-api/views', 'ViewsController@index');

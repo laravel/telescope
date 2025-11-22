@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\EntryQueryOptions;
+use Illuminate\Support\Facades\Http;
 
 abstract class EntryController extends Controller
 {
@@ -55,6 +56,41 @@ abstract class EntryController extends Controller
         return response()->json([
             'entry' => $entry,
             'batch' => $storage->get(null, EntryQueryOptions::forBatchId($entry->batchId)->limit(-1)),
+        ]);
+    }
+
+    public function copyCurl(EntriesRepository $storage, $id)
+    {
+        $entry = $storage->find($id);
+
+        if (! $entry) {
+            abort(404);
+        }
+
+        $method = strtoupper($entry->content['method']);
+        $url = url($entry->content['uri']);
+        $headers = $entry->content['headers'] ?? [];
+        $payload = $entry->content['payload'] ?? null;
+
+        $curl = "curl -X {$method}";
+
+        foreach ($headers as $key => $value) {
+            $v = is_array($value) ? implode(', ', $value) : $value;
+            $curl .= " -H " . escapeshellarg("$key: $v");
+        }
+
+        if (! empty($payload)) {
+            if (is_array($payload)) {
+                $payload = json_encode($payload);
+            }
+
+            $curl .= " --data " . escapeshellarg($payload);
+        }
+
+        $curl .= " $url";
+
+        return response()->json([
+            'curl' => $curl
         ]);
     }
 

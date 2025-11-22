@@ -22,6 +22,7 @@ export default {
 
             updateEntryTimeout: null,
             updateEntryTimer: 2500,
+            copiedSuccessfully: false,
         };
     },
 
@@ -122,6 +123,22 @@ export default {
 
                 this.updateEntry();
             }, this.updateEntryTimer);
+        },
+
+        /**
+        * Copy the request as cURL
+        */
+        copyCurl(){
+            axios.post(Telescope.basePath + '/telescope-api/' + this.resource + '/' + this.id + '/copy-curl')
+                .then(res => {
+                    navigator.clipboard.writeText(res.data.curl)
+                        .then(() => {
+                            this.copiedSuccessfully = true
+
+                            setTimeout(() => this.copiedSuccessfully = false, 1000)
+                        })
+                })
+                .catch(() => console.log('An error occured while copying cURL'))
         }
     }
 }
@@ -132,6 +149,15 @@ export default {
         <div class="card overflow-hidden">
             <div class="card-header d-flex align-items-center justify-content-between">
                 <h2 class="h6 m-0">{{ this.title }}</h2>
+                
+                <div v-if="ready && entry && (this.resource === 'requests')" class="text-end">
+                    <button style="min-width: 110px;" @click="copyCurl" class="btn btn-muted">
+                        <span v-if="!this.copiedSuccessfully">Copy cURL</span>
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon" fill="currentColor" aria-hidden="true">
+                            <path d="M16.707 5.293a1 1 0 00-1.414-1.414L7 12.172l-2.293-2.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l8-8z"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <div
