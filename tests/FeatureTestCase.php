@@ -22,7 +22,7 @@ use Orchestra\Testbench\TestCase;
 #[WithConfig('database.connections.testbench', [
     'driver' => 'sqlite',
     'database' => ':memory:',
-    'prefix' => ''
+    'prefix' => '',
 ])]
 class FeatureTestCase extends TestCase
 {
