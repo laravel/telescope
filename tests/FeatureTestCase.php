@@ -18,14 +18,6 @@ use Orchestra\Testbench\TestCase;
 
 #[WithMigration]
 #[WithConfig('logging.default', 'errorlog')]
-#[WithConfig('database.default', 'testbench')]
-#[WithConfig('telescope.storage.database.connection', 'testbench')]
-#[WithConfig('queue.batching.database', 'testbench')]
-#[WithConfig('database.connections.testbench', [
-    'driver' => 'sqlite',
-    'database' => ':memory:',
-    'prefix' => '',
-])]
 class FeatureTestCase extends TestCase
 {
     use WithWorkbench, RefreshDatabase;
@@ -85,6 +77,17 @@ class FeatureTestCase extends TestCase
     #[\Override]
     protected function defineEnvironment($app)
     {
+        $app->make('config')->set([
+            'database.default' => 'testbench',
+            'telescope.storage.database.connection' => 'testbench',
+            'queue.batching.database' => 'testbench',
+            'database.connections.testbench' => [
+                'driver' => 'sqlite',
+                'database' => ':memory:',
+                'prefix' => '',
+            ],
+        ]);
+
         $app->when(DatabaseEntriesRepository::class)
             ->needs('$connection')
             ->give('testbench');
