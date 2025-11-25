@@ -10,9 +10,6 @@ use Laravel\Telescope\Tests\FeatureTestCase;
 
 class ExtractTagTest extends FeatureTestCase
 {
-    /**
-     * @test
-     */
     public function test_extract_tag_from_array_containing_flat_collection()
     {
         $flat_collection = EntryModelFactory::new()->create();
@@ -23,9 +20,6 @@ class ExtractTagTest extends FeatureTestCase
         $this->assertSame($tag, $extracted_tag[0]);
     }
 
-    /**
-     * @test
-     */
     public function test_extract_tag_from_array_containing_deep_collection()
     {
         $deep_collection = EntryModelFactory::times(1)->create()->groupBy('type');
@@ -36,9 +30,6 @@ class ExtractTagTest extends FeatureTestCase
         $this->assertSame($tag, $extracted_tag[0]);
     }
 
-    /**
-     * @test
-     */
     public function test_extract_tag_from_mailable()
     {
         $deep_collection = EntryModelFactory::times(1)->create()->groupBy('type');

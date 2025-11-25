@@ -23,10 +23,9 @@
     "require-dev": {
         "ext-gd": "*",
         "guzzlehttp/guzzle": "^6.0|^7.0",
-        "laravel/octane": "^1.4|^2.0|dev-develop",
-        "orchestra/testbench": "^6.40|^7.37|^8.17|^9.0|^10.0",
-        "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^9.0|^10.5|^11.5"
+        "laravel/octane": "^1.4|^2.0",
+        "orchestra/testbench": "^6.47.1|^7.55|^8.36|^9.15|^10.8",
+        "phpstan/phpstan": "^1.10"
     },
     "autoload": {
         "psr-4": {
@@ -49,7 +48,10 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "audit": {
+            "block-insecure": false
+        }
     },
     "scripts": {
         "post-autoload-dump": "@composer run prepare",

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Event;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\EventWatcher;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class EventWatcherTest extends FeatureTestCase
 {
@@ -125,6 +126,7 @@ class EventWatcherTest extends FeatureTestCase
     /**
      * @dataProvider formatListenersProvider
      */
+    #[DataProvider('formatListenersProvider')]
     public function test_format_listeners($listener, $formatted)
     {
         Event::listen(DummyEvent::class, $listener);

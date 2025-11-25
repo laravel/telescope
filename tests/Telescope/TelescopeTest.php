@@ -33,10 +33,7 @@ class TelescopeTest extends FeatureTestCase
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
-    public function run_after_recording_callback()
+    public function test_run_after_recording_callback()
     {
         Telescope::afterRecording(function (Telescope $telescope, IncomingEntry $entry) {
             $this->count++;
@@ -49,10 +46,7 @@ class TelescopeTest extends FeatureTestCase
         $this->assertSame(2, $this->count);
     }
 
-    /**
-     * @test
-     */
-    public function after_recording_callback_can_store_and_flush()
+    public function test_after_recording_callback_can_store_and_flush()
     {
         Telescope::afterRecording(function (Telescope $telescope, IncomingEntry $entry) {
             if (count($telescope::$entriesQueue) > 1) {
@@ -74,10 +68,7 @@ class TelescopeTest extends FeatureTestCase
         $this->assertCount(1, Telescope::$entriesQueue);
     }
 
-    /**
-     * @test
-     */
-    public function run_after_store_callback()
+    public function test_run_after_store_callback()
     {
         $storedEntries = null;
         $storedBatchId = null;

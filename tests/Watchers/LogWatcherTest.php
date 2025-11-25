@@ -5,17 +5,18 @@ namespace Laravel\Telescope\Tests\Watchers;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\LogWatcher;
-use Psr\Log\LoggerInterface;
+use Orchestra\Testbench\Attributes\WithConfig;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Log\LogLevel;
+use Psr\Log\LoggerInterface;
 use stdClass;
 
+#[WithConfig('logging.default', 'syslog')]
 class LogWatcherTest extends FeatureTestCase
 {
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
-
-        $app->get('config')->set('logging.default', 'syslog');
 
         $config = match (method_exists($this, 'name') ? $this->name() : $this->getName(false)) {
             'test_log_watcher_registers_entry_for_any_level_by_default' => true,
@@ -60,6 +61,7 @@ class LogWatcherTest extends FeatureTestCase
     /**
      * @dataProvider logLevelProvider
      */
+    #[DataProvider('logLevelProvider')]
     public function test_log_watcher_registers_entry_for_any_level_by_default($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -81,6 +83,7 @@ class LogWatcherTest extends FeatureTestCase
     /**
      * @dataProvider logLevelProvider
      */
+    #[DataProvider('logLevelProvider')]
     public function test_log_watcher_only_registers_entries_for_the_specified_error_level_priority($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -106,6 +109,7 @@ class LogWatcherTest extends FeatureTestCase
     /**
      * @dataProvider logLevelProvider
      */
+    #[DataProvider('logLevelProvider')]
     public function test_log_watcher_only_registers_entries_for_the_specified_debug_level_priority($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -127,6 +131,7 @@ class LogWatcherTest extends FeatureTestCase
     /**
      * @dataProvider logLevelProvider
      */
+    #[DataProvider('logLevelProvider')]
     public function test_log_watcher_do_not_registers_entry_when_disabled_on_the_boolean_format($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -144,6 +149,7 @@ class LogWatcherTest extends FeatureTestCase
     /**
      * @dataProvider logLevelProvider
      */
+    #[DataProvider('logLevelProvider')]
     public function test_log_watcher_do_not_registers_entry_when_disabled_on_the_array_format($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -226,6 +232,7 @@ class LogWatcherTest extends FeatureTestCase
     /**
      * @dataProvider interpolationProvider
      */
+    #[DataProvider('interpolationProvider')]
     public function test_log_watcher_interpolates_message($message, $context, $expectedMessage)
     {
         $logger = $this->app->get(LoggerInterface::class);

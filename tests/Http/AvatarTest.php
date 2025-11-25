@@ -31,10 +31,7 @@ class AvatarTest extends FeatureTestCase
         ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_generate_avatar_url()
+    public function test_it_can_generate_avatar_url()
     {
         $user = null;
 
@@ -70,10 +67,7 @@ class AvatarTest extends FeatureTestCase
             ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_register_custom_avatar_path()
+    public function test_it_can_register_custom_avatar_path()
     {
         $user = null;
 
@@ -113,10 +107,7 @@ class AvatarTest extends FeatureTestCase
             ]);
     }
 
-    /**
-     * @test
-     */
-    public function it_can_read_custom_avatar_path_on_null_email()
+    public function test_it_can_read_custom_avatar_path_on_null_email()
     {
         $user = null;
 
