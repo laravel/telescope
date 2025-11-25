@@ -12,7 +12,6 @@ use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeServiceProvider;
 use Orchestra\Testbench\Attributes\WithConfig;
 use Orchestra\Testbench\Attributes\WithMigration;
-use Orchestra\Testbench\Concerns\WithLaravelMigrations;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase;
 
