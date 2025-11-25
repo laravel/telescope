@@ -10,10 +10,12 @@ use Laravel\Telescope\Storage\DatabaseEntriesRepository;
 use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeServiceProvider;
+use Orchestra\Testbench\Attributes\WithConfig;
 use Orchestra\Testbench\Concerns\WithLaravelMigrations;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase;
 
+#[WithConfig('logging.default', 'errorlog')]
 class FeatureTestCase extends TestCase
 {
     use WithWorkbench, RefreshDatabase, WithLaravelMigrations;
@@ -66,8 +68,6 @@ class FeatureTestCase extends TestCase
     protected function getEnvironmentSetUp($app)
     {
         $config = $app->get('config');
-
-        $config->set('logging.default', 'errorlog');
 
         $config->set('database.default', 'testbench');
 
