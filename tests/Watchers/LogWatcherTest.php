@@ -7,8 +7,8 @@ use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\LogWatcher;
 use Orchestra\Testbench\Attributes\WithConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use stdClass;
 
 #[WithConfig('logging.default', 'syslog')]
