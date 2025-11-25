@@ -11,10 +11,12 @@ use Laravel\Telescope\Storage\EntryModel;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeServiceProvider;
 use Orchestra\Testbench\Attributes\WithConfig;
+use Orchestra\Testbench\Attributes\WithMigration;
 use Orchestra\Testbench\Concerns\WithLaravelMigrations;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase;
 
+#[WithMigration]
 #[WithConfig('logging.default', 'errorlog')]
 #[WithConfig('database.default', 'testbench')]
 #[WithConfig('telescope.storage.database.connection', 'testbench')]
@@ -26,7 +28,7 @@ use Orchestra\Testbench\TestCase;
 ])]
 class FeatureTestCase extends TestCase
 {
-    use WithWorkbench, RefreshDatabase, WithLaravelMigrations;
+    use WithWorkbench, RefreshDatabase;
 
     /** {@inheritdoc} */
     #[\Override]
