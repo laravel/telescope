@@ -13,7 +13,9 @@ use Orchestra\Testbench\Attributes\WithConfig;
 use Psr\Log\LoggerInterface;
 
 #[WithConfig('logging.default', 'syslog')]
-#[WithConfig('telescope.watchers'.[LogWatcher::class => true])]
+#[WithConfig('telescope.watchers', [
+    LogWatcher::class => true,
+])]
 class AvatarTest extends FeatureTestCase
 {
     /** {@inheritdoc} */
