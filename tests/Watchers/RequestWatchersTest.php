@@ -9,16 +9,18 @@ use Illuminate\Support\Facades\View;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\RequestWatcher;
+use Orchestra\Testbench\Attributes\WithConfig;
 
+#[WithConfig('telescope.watchers', [
+    RequestWatcher::class => true,
+])]
 class RequestWatchersTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    /** {@inheritdoc} */
+    #[\Override]
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
-
-        $app->get('config')->set('telescope.watchers', [
-            RequestWatcher::class => true,
-        ]);
+        parent::defineEnvironment($app);
 
         if (! defined('LARAVEL_START')) {
             define('LARAVEL_START', microtime(true));

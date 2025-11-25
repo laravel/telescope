@@ -7,27 +7,22 @@ use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\CacheWatcher;
+use Orchestra\Testbench\Attributes\WithConfig;
 
+#[WithConfig('telescope.watchers', [
+    CacheWatcher::class => [
+        'enabled' => true,
+        'hidden' => [
+            'my-hidden-value-key',
+        ],
+        'ignore' => [
+            'laravel:pulse:*',
+            'ignored-key',
+        ],
+    ],
+])]
 class CacheWatcherTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $app->get('config')->set('telescope.watchers', [
-            CacheWatcher::class => [
-                'enabled' => true,
-                'hidden' => [
-                    'my-hidden-value-key',
-                ],
-                'ignore' => [
-                    'laravel:pulse:*',
-                    'ignored-key',
-                ],
-            ],
-        ]);
-    }
-
     public function test_cache_watcher_registers_missed_entries()
     {
         $this->app->get(Repository::class)->get('empty-key');

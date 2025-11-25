@@ -10,21 +10,16 @@ use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\QueryWatcher;
+use Orchestra\Testbench\Attributes\WithConfig;
 
+#[WithConfig('telescope.watchers', [
+    QueryWatcher::class => [
+        'enabled' => true,
+        'slow' => 0.2,
+    ],
+])]
 class QueryWatcherTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $app->get('config')->set('telescope.watchers', [
-            QueryWatcher::class => [
-                'enabled' => true,
-                'slow' => 0.2,
-            ],
-        ]);
-    }
-
     public function test_query_watcher_registers_database_queries()
     {
         $this->app->get('db')->table('telescope_entries')->count();

@@ -8,24 +8,25 @@ use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\RedisWatcher;
 use Mockery;
+use Orchestra\Testbench\Attributes\WithConfig;
 
+#[WithConfig('database.redis.client', 'phpredis')]
+#[WithConfig('telescope.watchers', [
+    RedisWatcher::class => true,
+])]
 class RedisWatcherTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    /** {@inheritdoc} */
+    #[\Override]
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        $this->markTestSkippedUnless(extension_loaded('redis'), 'The phpredis extension is required for this test.');
 
-        if (! extension_loaded('redis')) {
-            $this->markTestSkipped('The phpredis extension is required for this test.');
-        }
+        parent::defineEnvironment($app);
 
         $app->get('config')->set('database.redis.client', 'phpredis');
 
         $app['redis']->enableEvents();
-
-        $app->get('config')->set('telescope.watchers', [
-            RedisWatcher::class => true,
-        ]);
     }
 
     public function test_redis_watcher_registers_entries()

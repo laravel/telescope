@@ -9,21 +9,15 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\ExceptionWatcher;
+use Orchestra\Testbench\Attributes\WithConfig;
 use ParseError;
 
+#[WithConfig('logging.default', 'syslog')]
+#[WithConfig('telescope.watchers', [
+    ExceptionWatcher::class => true,
+])]
 class ExceptionWatcherTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $app->get('config')->set('logging.default', 'syslog');
-
-        $app->get('config')->set('telescope.watchers', [
-            ExceptionWatcher::class => true,
-        ]);
-    }
-
     public function test_exception_watcher_register_entries()
     {
         $handler = $this->app->get(ExceptionHandler::class);
@@ -37,7 +31,7 @@ class ExceptionWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::EXCEPTION, $entry->type);
         $this->assertSame(BananaException::class, $entry->content['class']);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(31, $entry->content['line']);
+        $this->assertSame(25, $entry->content['line']);
         $this->assertSame('Something went bananas.', $entry->content['message']);
         $this->assertArrayHasKey('trace', $entry->content);
     }
@@ -55,7 +49,7 @@ class ExceptionWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::EXCEPTION, $entry->type);
         $this->assertSame(BananaError::class, $entry->content['class']);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(49, $entry->content['line']);
+        $this->assertSame(43, $entry->content['line']);
         $this->assertSame('Something went bananas.', $entry->content['message']);
         $this->assertArrayHasKey('trace', $entry->content);
     }

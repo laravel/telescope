@@ -14,6 +14,8 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 class RouteTest extends FeatureTestCase
 {
+    /** {@inheritdoc} */
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

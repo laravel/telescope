@@ -8,20 +8,14 @@ use Illuminate\Support\Facades\Notification;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\NotificationWatcher;
+use Orchestra\Testbench\Attributes\WithConfig;
 
+#[WithConfig('mail.driver', 'array')]
+#[WithConfig('telescope.watchers', [
+    NotificationWatcher::class => true,
+])]
 class NotificationWatcherTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $app->get('config')->set('telescope.watchers', [
-            NotificationWatcher::class => true,
-        ]);
-
-        $app->get('config')->set('mail.driver', 'array');
-    }
-
     public function test_notification_watcher_registers_entry()
     {
         $this->performNotificationAssertions('mail', 'telescope@laravel.com');

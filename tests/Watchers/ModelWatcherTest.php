@@ -8,22 +8,17 @@ use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\ModelWatcher;
+use Orchestra\Testbench\Attributes\WithConfig;
 
+#[WithConfig('telescope.watchers', [
+    ModelWatcher::class => [
+        'enabled' => true,
+        'events' => ['eloquent.created*', 'eloquent.updated*', 'eloquent.retrieved*'],
+        'hydrations' => true,
+    ],
+])]
 class ModelWatcherTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $app->get('config')->set('telescope.watchers', [
-            ModelWatcher::class => [
-                'enabled' => true,
-                'events' => ['eloquent.created*', 'eloquent.updated*', 'eloquent.retrieved*'],
-                'hydrations' => true,
-            ],
-        ]);
-    }
-
     public function test_model_watcher_registers_entry()
     {
         Telescope::withoutRecording(function () {

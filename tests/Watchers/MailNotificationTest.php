@@ -10,21 +10,15 @@ use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\MailWatcher;
 use Laravel\Telescope\Watchers\NotificationWatcher;
+use Orchestra\Testbench\Attributes\WithConfig;
 
+#[WithConfig('mail.driver', 'array')]
+#[WithConfig('telescope.watchers', [
+    MailWatcher::class => true,
+    NotificationWatcher::class => true,
+])]
 class MailNotificationTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $app->get('config')->set('telescope.watchers', [
-            MailWatcher::class => true,
-            NotificationWatcher::class => true,
-        ]);
-
-        $app->get('config')->set('mail.driver', 'array');
-    }
-
     public function test_mail_watcher_registers_valid_html()
     {
         Notification::route('mail', 'to@laravel.com')

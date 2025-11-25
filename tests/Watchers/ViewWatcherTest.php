@@ -11,9 +11,9 @@ class ViewWatcherTest extends FeatureTestCase
 {
     protected $viewsDirectory = __DIR__.'/../stubs/views';
 
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         Event::subscribe(GenericListener::class);
 

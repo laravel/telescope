@@ -13,6 +13,8 @@ use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
 
 class AuthorizationTest extends FeatureTestCase
 {
+    /** {@inheritdoc} */
+    #[\Override]
     protected function getPackageProviders($app)
     {
         return array_merge(
@@ -21,6 +23,8 @@ class AuthorizationTest extends FeatureTestCase
         );
     }
 
+    /** {@inheritdoc} */
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -29,6 +33,8 @@ class AuthorizationTest extends FeatureTestCase
         $this->withoutMiddleware([ValidateCsrfToken::class]);
     }
 
+    /** {@inheritdoc} */
+    #[\Override]
     protected function tearDown(): void
     {
         parent::tearDown();

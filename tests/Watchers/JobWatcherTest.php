@@ -14,26 +14,19 @@ use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\JobWatcher;
+use Orchestra\Testbench\Attributes\WithConfig;
 use Orchestra\Testbench\Attributes\WithMigration;
 use Orchestra\Testbench\Factories\UserFactory;
 use Throwable;
 
 #[WithMigration('queue')]
+#[WithConfig('queue.failed.database', 'testbench')]
+#[WithConfig('logging.default', 'syslog')]
+#[WithConfig('telescope.watchers', [
+    JobWatcher::class => true,
+])]
 class JobWatcherTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $app->get('config')->set('telescope.watchers', [
-            JobWatcher::class => true,
-        ]);
-
-        $app->get('config')->set('queue.failed.database', 'testbench');
-
-        $app->get('config')->set('logging.default', 'syslog');
-    }
-
     public function test_job_registers_entry()
     {
         $this->app->get(Dispatcher::class)->dispatch(new MyDatabaseJob('Awesome Laravel'));

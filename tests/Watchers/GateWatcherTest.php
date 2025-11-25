@@ -9,16 +9,16 @@ use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\GateWatcher;
+use Orchestra\Testbench\Attributes\WithConfig;
 
+#[WithConfig('telescope.watchers', [
+    GateWatcher::class => true,
+])]
 class GateWatcherTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
-
-        $app->get('config')->set('telescope.watchers', [
-            GateWatcher::class => true,
-        ]);
+        parent::defineEnvironment($app);
 
         Gate::define('potato', function (User $user) {
             return $user->email === 'allow';

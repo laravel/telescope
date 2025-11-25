@@ -12,30 +12,16 @@ use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\BatchWatcher;
 use Laravel\Telescope\Watchers\JobWatcher;
+use Orchestra\Testbench\Attributes\WithConfig;
 
+#[WithConfig('logging.default', 'syslog')]
+#[WithConfig('queue.failed.database', 'testbench')]
+#[WithConfig('telescope.watchers', [
+    JobWatcher::class => true,
+    BatchWatcher::class => true,
+])]
 class BatchWatcherTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $app->get('config')->set('telescope.watchers', [
-            JobWatcher::class => true,
-            BatchWatcher::class => true,
-        ]);
-
-        $app->get('config')->set('queue.failed.database', 'testbench');
-
-        $app->get('config')->set('logging.default', 'syslog');
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->createJobsTable();
-    }
-
     public function test_job_dispatch_registers_entries()
     {
         $batch = $this->app->get(QueueingDispatcher::class)->batch([
@@ -76,7 +62,8 @@ class BatchWatcherTest extends FeatureTestCase
         $this->assertSame('on-demand', $entries[2]->content['queue']);
     }
 
-    private function createJobsTable(): void
+    /** {@inheritdoc} */
+    protected function afterRefreshingDatabase()
     {
         if (! Schema::hasTable('jobs')) {
             Schema::create('jobs', function (Blueprint $table) {

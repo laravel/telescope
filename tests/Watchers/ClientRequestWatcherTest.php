@@ -8,20 +8,20 @@ use Illuminate\Support\Facades\Http;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\ClientRequestWatcher;
+use Orchestra\Testbench\Attributes\WithConfig;
 
+#[WithConfig('telescope.watchers', [
+    ClientRequestWatcher::class => true,
+])]
 class ClientRequestWatcherTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    /** {@inheritdoc} */
+    #[\Override]
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        $this->markTestSkippedUnless(class_exists(\GuzzleHttp\Client::class), 'The "guzzlehttp/guzzle" composer package is required for this test.');
 
-        if (! class_exists(\GuzzleHttp\Client::class)) {
-            $this->markTestSkipped('The "guzzlehttp/guzzle" composer package is required for this test.');
-        }
-
-        $app->get('config')->set('telescope.watchers', [
-            ClientRequestWatcher::class => true,
-        ]);
+        parent::defineEnvironment($app);
     }
 
     public function test_client_request_watcher_registers_succesful_client_request_and_response()

@@ -16,10 +16,20 @@ use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase;
 
 #[WithConfig('logging.default', 'errorlog')]
+#[WithConfig('database.default', 'testbench')]
+#[WithConfig('telescope.storage.database.connection', 'testbench')]
+#[WithConfig('queue.batching.database', 'testbench')]
+#[WithConfig('database.connections.testbench', [
+    'driver' => 'sqlite',
+    'database' => ':memory:',
+    'prefix' => ''
+])]
 class FeatureTestCase extends TestCase
 {
     use WithWorkbench, RefreshDatabase, WithLaravelMigrations;
 
+    /** {@inheritdoc} */
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,6 +40,8 @@ class FeatureTestCase extends TestCase
         Telescope::$afterStoringHooks = [];
     }
 
+    /** {@inheritdoc} */
+    #[\Override]
     protected function tearDown(): void
     {
         Telescope::flushEntries();
@@ -40,6 +52,8 @@ class FeatureTestCase extends TestCase
         parent::tearDown();
     }
 
+    /** {@inheritdoc} */
+    #[\Override]
     protected function getPackageProviders($app)
     {
         return [
@@ -47,11 +61,15 @@ class FeatureTestCase extends TestCase
         ];
     }
 
+    /** {@inheritdoc} */
+    #[\Override]
     public function ignorePackageDiscoveriesFrom()
     {
         return ['*', 'spatie/laravel-ray'];
     }
 
+    /** {@inheritdoc} */
+    #[\Override]
     protected function resolveApplicationCore($app)
     {
         parent::resolveApplicationCore($app);
@@ -61,26 +79,10 @@ class FeatureTestCase extends TestCase
         });
     }
 
-    /**
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app)
+    /** {@inheritdoc} */
+    #[\Override]
+    protected function defineEnvironment($app)
     {
-        $config = $app->get('config');
-
-        $config->set('database.default', 'testbench');
-
-        $config->set('telescope.storage.database.connection', 'testbench');
-
-        $config->set('queue.batching.database', 'testbench');
-
-        $config->set('database.connections.testbench', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-            'prefix' => '',
-        ]);
-
         $app->when(DatabaseEntriesRepository::class)
             ->needs('$connection')
             ->give('testbench');

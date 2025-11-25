@@ -14,36 +14,6 @@ use stdClass;
 #[WithConfig('logging.default', 'syslog')]
 class LogWatcherTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $config = match (method_exists($this, 'name') ? $this->name() : $this->getName(false)) {
-            'test_log_watcher_registers_entry_for_any_level_by_default' => true,
-            'test_log_watcher_only_registers_entries_for_the_specified_error_level_priority' => [
-                'enabled' => true,
-                'level' => 'error',
-            ],
-            'test_log_watcher_only_registers_entries_for_the_specified_debug_level_priority' => [
-                'level' => 'debug',
-            ],
-            'test_log_watcher_do_not_registers_entry_when_disabled_on_the_boolean_format' => false,
-            'test_log_watcher_do_not_registers_entry_when_disabled_on_the_array_format' => [
-                'enabled' => false,
-                'level' => 'error',
-            ],
-            'test_log_watcher_registers_entry_with_exception_key' => true,
-            'test_log_watcher_interpolates_message' => [
-                'enabled' => true,
-                'level' => 'info',
-            ],
-        };
-
-        $app->get('config')->set('telescope.watchers', [
-            LogWatcher::class => $config,
-        ]);
-    }
-
     public static function logLevelProvider()
     {
         return [
@@ -62,6 +32,9 @@ class LogWatcherTest extends FeatureTestCase
      * @dataProvider logLevelProvider
      */
     #[DataProvider('logLevelProvider')]
+    #[WithConfig('telescope.watchers', [
+        LogWatcher::class => true,
+    ])]
     public function test_log_watcher_registers_entry_for_any_level_by_default($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -84,6 +57,12 @@ class LogWatcherTest extends FeatureTestCase
      * @dataProvider logLevelProvider
      */
     #[DataProvider('logLevelProvider')]
+    #[WithConfig(['telescope.watchers', [
+        LogWatcher::class => [
+            'enabled' => true,
+            'level' => 'error',
+        ],
+    ]])]
     public function test_log_watcher_only_registers_entries_for_the_specified_error_level_priority($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -110,6 +89,11 @@ class LogWatcherTest extends FeatureTestCase
      * @dataProvider logLevelProvider
      */
     #[DataProvider('logLevelProvider')]
+    #[WithConfig('telescope.watchers', [
+        LogWatcher::class => [
+            'level' => 'debug',
+        ],
+    ])]
     public function test_log_watcher_only_registers_entries_for_the_specified_debug_level_priority($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -132,6 +116,9 @@ class LogWatcherTest extends FeatureTestCase
      * @dataProvider logLevelProvider
      */
     #[DataProvider('logLevelProvider')]
+    #[WithConfig('telescope.watchers', [
+        LogWatcher::class => false,
+    ])]
     public function test_log_watcher_do_not_registers_entry_when_disabled_on_the_boolean_format($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -150,6 +137,12 @@ class LogWatcherTest extends FeatureTestCase
      * @dataProvider logLevelProvider
      */
     #[DataProvider('logLevelProvider')]
+    #[WithConfig('telescope.watchers', [
+        LogWatcher::class => [
+            'enabled' => false,
+            'level' => 'error',
+        ],
+    ])]
     public function test_log_watcher_do_not_registers_entry_when_disabled_on_the_array_format($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -164,6 +157,7 @@ class LogWatcherTest extends FeatureTestCase
         $this->assertNull($entry);
     }
 
+    #[WithConfig('telescope.watchers', [LogWatcher::class => true])]
     public function test_log_watcher_registers_entry_with_exception_key()
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -233,6 +227,12 @@ class LogWatcherTest extends FeatureTestCase
      * @dataProvider interpolationProvider
      */
     #[DataProvider('interpolationProvider')]
+    #[WithConfig('telescope.watchers', [
+        LogWatcher::class => [
+            'enabled' => true,
+            'level' => 'info',
+        ],
+    ])]
     public function test_log_watcher_interpolates_message($message, $context, $expectedMessage)
     {
         $logger = $this->app->get(LoggerInterface::class);

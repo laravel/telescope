@@ -6,18 +6,20 @@ use Illuminate\Contracts\Cache\Repository;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\DumpWatcher;
+use Orchestra\Testbench\Attributes\WithConfig;
 
+#[WithConfig('telescope.watchers', [
+    DumpWatcher::class => true,
+])]
 class DumpWatcherTest extends FeatureTestCase
 {
-    protected function getEnvironmentSetUp($app)
+    /** {@inheritdoc} */
+    #[\Override]
+    protected function defineEnvironment($app)
     {
-        parent::getEnvironmentSetUp($app);
+        parent::defineEnvironment($app);
 
         $app->make(Repository::class)->forever('telescope:dump-watcher', true);
-
-        $app->get('config')->set('telescope.watchers', [
-            DumpWatcher::class => true,
-        ]);
     }
 
     public function test_dump_watcher_register_entry()
