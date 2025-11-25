@@ -11,6 +11,8 @@ class ViewWatcherTest extends FeatureTestCase
 {
     protected $viewsDirectory = __DIR__.'/../stubs/views';
 
+    /** {@inheritdoc} */
+    #[\Override]
     protected function defineEnvironment($app)
     {
         parent::defineEnvironment($app);
