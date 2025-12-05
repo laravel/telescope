@@ -127,6 +127,11 @@ class EventWatcherTest extends FeatureTestCase
         Event::listen(DummyEvent::class, $listener);
 
         $method = new \ReflectionMethod(EventWatcher::class, 'formatListeners');
+
+        if (PHP_VERSION_ID < 80500) {
+            $method->setAccessible(true);
+        }
+
         $this->assertSame($formatted, $method->invoke(new EventWatcher, DummyEvent::class)[0]['name']);
     }
 
