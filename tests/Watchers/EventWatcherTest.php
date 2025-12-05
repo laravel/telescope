@@ -127,8 +127,6 @@ class EventWatcherTest extends FeatureTestCase
         Event::listen(DummyEvent::class, $listener);
 
         $method = new \ReflectionMethod(EventWatcher::class, 'formatListeners');
-        $method->setAccessible(true);
-
         $this->assertSame($formatted, $method->invoke(new EventWatcher, DummyEvent::class)[0]['name']);
     }
 

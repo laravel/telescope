@@ -130,8 +130,6 @@ class ExtractTags
     {
         return collect($targets)->map(function ($target) {
             return collect((new ReflectionClass($target))->getProperties())->map(function ($property) use ($target) {
-                $property->setAccessible(true);
-
                 if (PHP_VERSION_ID < 70400 || ! is_object($target) || $property->isInitialized($target)) {
                     return static::resolveValue($property->getValue($target));
                 }

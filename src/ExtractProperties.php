@@ -19,8 +19,6 @@ class ExtractProperties
     {
         return collect((new ReflectionClass($target))->getProperties())
             ->mapWithKeys(function ($property) use ($target) {
-                $property->setAccessible(true);
-
                 if (PHP_VERSION_ID >= 70400 && ! $property->isInitialized($target)) {
                     return [];
                 }
