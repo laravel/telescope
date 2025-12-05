@@ -5,8 +5,8 @@ namespace Laravel\Telescope\Watchers;
 use Closure;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Str;
+use Laravel\Telescope\ContextHelper;
 use Laravel\Telescope\ExtractProperties;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingEntry;
@@ -50,7 +50,7 @@ class EventWatcher extends Watcher
             'broadcast' => class_exists($eventName)
                 ? in_array(ShouldBroadcast::class, (array) class_implements($eventName))
                 : false,
-            'context' => $this->context(),
+            'context' => ContextHelper::get(),
         ])->tags(class_exists($eventName) && isset($payload[0]) ? ExtractTags::from($payload[0]) : []));
     }
 
@@ -157,21 +157,5 @@ class EventWatcher extends Watcher
     protected function eventIsIgnored($eventName)
     {
         return Str::is($this->options['ignore'] ?? [], $eventName);
-    }
-
-    /**
-     * Get the current context data.
-     *
-     * @return array|null
-     */
-    protected function context()
-    {
-        if (! class_exists(Context::class)) {
-            return null;
-        }
-
-        $context = Context::all();
-
-        return ! empty($context) ? $context : null;
     }
 }

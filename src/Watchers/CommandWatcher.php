@@ -3,7 +3,7 @@
 namespace Laravel\Telescope\Watchers;
 
 use Illuminate\Console\Events\CommandFinished;
-use Illuminate\Support\Facades\Context;
+use Laravel\Telescope\ContextHelper;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 
@@ -37,7 +37,7 @@ class CommandWatcher extends Watcher
             'exit_code' => $event->exitCode,
             'arguments' => $event->input->getArguments(),
             'options' => $event->input->getOptions(),
-            'context' => $this->context(),
+            'context' => ContextHelper::get(),
         ]));
     }
 
@@ -54,21 +54,5 @@ class CommandWatcher extends Watcher
             'schedule:finish',
             'package:discover',
         ]));
-    }
-
-    /**
-     * Get the current context data.
-     *
-     * @return array|null
-     */
-    protected function context()
-    {
-        if (! class_exists(Context::class)) {
-            return null;
-        }
-
-        $context = Context::all();
-
-        return ! empty($context) ? $context : null;
     }
 }

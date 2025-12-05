@@ -9,8 +9,8 @@ use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Queue;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Str;
+use Laravel\Telescope\ContextHelper;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\EntryUpdate;
 use Laravel\Telescope\ExceptionContext;
@@ -73,7 +73,7 @@ class JobWatcher extends Watcher
         $content = array_merge([
             'status' => 'pending',
         ], $this->defaultJobData($connection, $queue, $payload, $this->data($payload)), [
-            'context' => $this->context(),
+            'context' => ContextHelper::get(),
         ]);
 
         Telescope::recordJob(
@@ -277,21 +277,5 @@ class JobWatcher extends Watcher
         }
 
         return null;
-    }
-
-    /**
-     * Get the current context data.
-     *
-     * @return array|null
-     */
-    protected function context()
-    {
-        if (! class_exists(Context::class)) {
-            return null;
-        }
-
-        $context = Context::all();
-
-        return ! empty($context) ? $context : null;
     }
 }

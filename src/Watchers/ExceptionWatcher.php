@@ -4,7 +4,7 @@ namespace Laravel\Telescope\Watchers;
 
 use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Context;
+use Laravel\Telescope\ContextHelper;
 use Laravel\Telescope\ExceptionContext;
 use Laravel\Telescope\ExtractTags;
 use Laravel\Telescope\IncomingExceptionEntry;
@@ -53,7 +53,7 @@ class ExceptionWatcher extends Watcher
                 }),
                 'trace' => $trace,
                 'line_preview' => ExceptionContext::get($exception),
-                'request_context' => $this->requestContext(),
+                'request_context' => ContextHelper::get(),
             ])->tags($this->tags($event))
         );
     }
@@ -81,21 +81,5 @@ class ExceptionWatcher extends Watcher
     {
         return ! isset($event->context['exception']) ||
             ! $event->context['exception'] instanceof Throwable;
-    }
-
-    /**
-     * Get the current context data.
-     *
-     * @return array|null
-     */
-    protected function requestContext()
-    {
-        if (! class_exists(Context::class)) {
-            return null;
-        }
-
-        $context = Context::all();
-
-        return ! empty($context) ? $context : null;
     }
 }
