@@ -51,6 +51,15 @@ export default {
                             >Options</a
                         >
                     </li>
+                    <li class="nav-item" v-if="slotProps.entry.content.context">
+                        <a
+                            class="nav-link"
+                            :class="{ active: currentTab == 'context' }"
+                            href="#"
+                            v-on:click.prevent="currentTab = 'context'"
+                            >Context</a
+                        >
+                    </li>
                 </ul>
                 <div>
                     <div class="code-bg p-4 mb-0 text-white">

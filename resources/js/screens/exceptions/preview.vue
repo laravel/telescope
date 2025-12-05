@@ -23,6 +23,11 @@ export default {
                 && this.entry.content.context !== null;
         },
 
+        hasRequestContext() {
+            return this.entry.content.hasOwnProperty('request_context')
+                && this.entry.content.request_context !== null;
+        },
+
         markExceptionAsResolved(entry) {
             this.alertConfirm('Are you sure you want to mark this exception as resolved?', () => {
 
@@ -120,6 +125,17 @@ export default {
                     <li class="nav-item">
                         <a
                             class="nav-link"
+                            :class="{ active: currentTab == 'request_context' }"
+                            href="#"
+                            v-show="hasRequestContext()"
+                            v-on:click.prevent="currentTab = 'request_context'"
+                            >Request Context</a
+                        >
+                    </li>
+
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
                             :class="{ active: currentTab == 'trace' }"
                             href="#"
                             v-on:click.prevent="currentTab = 'trace'"
@@ -143,6 +159,12 @@ export default {
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab == 'context'">
                         <copy-clipboard :data="slotProps.entry.content.context">
                             <vue-json-pretty :data="slotProps.entry.content.context"></vue-json-pretty>
+                        </copy-clipboard>
+                    </div>
+
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab == 'request_context'">
+                        <copy-clipboard :data="slotProps.entry.content.request_context">
+                            <vue-json-pretty :data="slotProps.entry.content.request_context"></vue-json-pretty>
                         </copy-clipboard>
                     </div>
 

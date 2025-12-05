@@ -44,12 +44,28 @@ export default {
                             >Listeners</a
                         >
                     </li>
+                    <li class="nav-item" v-if="slotProps.entry.content.context">
+                        <a
+                            class="nav-link"
+                            :class="{ active: currentTab == 'context' }"
+                            href="#"
+                            v-on:click.prevent="currentTab = 'context'"
+                            >Context</a
+                        >
+                    </li>
                 </ul>
                 <div>
                     <!-- Event Payload -->
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab == 'data'">
                         <copy-clipboard :data="slotProps.entry.content.payload">
                             <vue-json-pretty :data="slotProps.entry.content.payload"></vue-json-pretty>
+                        </copy-clipboard>
+                    </div>
+
+                    <!-- Event Context -->
+                    <div class="code-bg p-4 mb-0 text-white" v-if="slotProps.entry.content.context" v-show="currentTab == 'context'">
+                        <copy-clipboard :data="slotProps.entry.content.context">
+                            <vue-json-pretty :data="slotProps.entry.content.context"></vue-json-pretty>
                         </copy-clipboard>
                     </div>
 

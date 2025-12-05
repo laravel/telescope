@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Laravel\Telescope\FormatModel;
@@ -58,6 +59,7 @@ class RequestWatcher extends Watcher
             'response' => $this->response($event->response),
             'duration' => $startTime ? floor((microtime(true) - $startTime) * 1000) : null,
             'memory' => round(memory_get_peak_usage(true) / 1024 / 1024, 1),
+            'context' => $this->context(),
         ]));
     }
 
@@ -254,5 +256,21 @@ class RequestWatcher extends Watcher
                 return json_decode(json_encode($value), true);
             }
         })->toArray();
+    }
+
+    /**
+     * Get the current context data.
+     *
+     * @return array|null
+     */
+    protected function context()
+    {
+        if (! class_exists(Context::class)) {
+            return null;
+        }
+
+        $context = Context::all();
+
+        return ! empty($context) ? $context : null;
     }
 }

@@ -138,6 +138,15 @@ export default {
                             >Session</a
                         >
                     </li>
+                    <li class="nav-item" v-if="slotProps.entry.content.context">
+                        <a
+                            class="nav-link"
+                            :class="{ active: currentResponseTab == 'context' }"
+                            href="#"
+                            v-on:click.prevent="currentResponseTab = 'context'"
+                            >Context</a
+                        >
+                    </li>
                 </ul>
                 <div class="code-bg p-4 mb-0 text-white">
                     <copy-clipboard :data="slotProps.entry.content[currentResponseTab]">
