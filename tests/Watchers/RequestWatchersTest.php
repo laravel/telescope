@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -214,6 +215,47 @@ class RequestWatchersTest extends FeatureTestCase
         $entry = $this->loadTelescopeEntries()->first();
         $this->assertSame(EntryType::REQUEST, $entry->type);
         $this->assertEquals(['Telescope', 'Laravel', 'PHP'], $entry->content['response']['data']['items']['properties']);
+    }
+
+    public function test_request_watcher_registers_context()
+    {
+        if (! class_exists(Context::class)) {
+            $this->markTestSkipped('Context is not available in this version of Laravel.');
+        }
+
+        Route::get('/context-test', function () {
+            Context::add('user_id', 555);
+            Context::add('correlation_id', 'corr-123');
+
+            return ['status' => 'ok'];
+        });
+
+        $this->get('/context-test')->assertSuccessful();
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::REQUEST, $entry->type);
+        $this->assertArrayHasKey('context', $entry->content);
+        $this->assertSame(555, $entry->content['context']['user_id']);
+        $this->assertSame('corr-123', $entry->content['context']['correlation_id']);
+    }
+
+    public function test_request_watcher_context_is_null_when_empty()
+    {
+        if (! class_exists(Context::class)) {
+            $this->markTestSkipped('Context is not available in this version of Laravel.');
+        }
+
+        Route::get('/empty-context-test', function () {
+            return ['status' => 'ok'];
+        });
+
+        $this->get('/empty-context-test')->assertSuccessful();
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::REQUEST, $entry->type);
+        $this->assertNull($entry->content['context'] ?? null);
     }
 }
 

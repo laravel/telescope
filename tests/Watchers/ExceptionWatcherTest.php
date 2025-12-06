@@ -6,6 +6,7 @@ use Error;
 use ErrorException;
 use Exception;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Support\Facades\Context;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\ExceptionWatcher;
@@ -85,6 +86,47 @@ class ExceptionWatcherTest extends FeatureTestCase
         }
 
         $this->assertArrayHasKey('trace', $entry->content);
+    }
+
+    public function test_exception_watcher_registers_request_context()
+    {
+        if (! class_exists(Context::class)) {
+            $this->markTestSkipped('Context is not available in this version of Laravel.');
+        }
+
+        Context::add('user_id', 789);
+        Context::add('session_id', 'sess-abc');
+
+        $handler = $this->app->get(ExceptionHandler::class);
+
+        $exception = new BananaException('Context test exception.');
+
+        $handler->report($exception);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::EXCEPTION, $entry->type);
+        $this->assertArrayHasKey('request_context', $entry->content);
+        $this->assertSame(789, $entry->content['request_context']['user_id']);
+        $this->assertSame('sess-abc', $entry->content['request_context']['session_id']);
+    }
+
+    public function test_exception_watcher_request_context_is_null_when_empty()
+    {
+        if (! class_exists(Context::class)) {
+            $this->markTestSkipped('Context is not available in this version of Laravel.');
+        }
+
+        $handler = $this->app->get(ExceptionHandler::class);
+
+        $exception = new BananaException('Empty context test exception.');
+
+        $handler->report($exception);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::EXCEPTION, $entry->type);
+        $this->assertNull($entry->content['request_context'] ?? null);
     }
 }
 

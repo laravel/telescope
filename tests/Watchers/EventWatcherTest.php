@@ -9,6 +9,7 @@ use Dummies\DummyEventWithObject;
 use Dummies\DummyInvokableEventListener;
 use Dummies\DummyObject;
 use Dummies\IgnoredEvent;
+use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Facades\Event;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
@@ -130,6 +131,47 @@ class EventWatcherTest extends FeatureTestCase
         $method->setAccessible(true);
 
         $this->assertSame($formatted, $method->invoke(new EventWatcher, DummyEvent::class)[0]['name']);
+    }
+
+    public function test_event_watcher_registers_context()
+    {
+        if (! class_exists(Context::class)) {
+            $this->markTestSkipped('Context is not available in this version of Laravel.');
+        }
+
+        Context::add('user_id', 456);
+        Context::add('request_id', 'req-789');
+
+        Event::listen(DummyEvent::class, function ($payload) {
+            //
+        });
+
+        event(new DummyEvent);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::EVENT, $entry->type);
+        $this->assertArrayHasKey('context', $entry->content);
+        $this->assertSame(456, $entry->content['context']['user_id']);
+        $this->assertSame('req-789', $entry->content['context']['request_id']);
+    }
+
+    public function test_event_watcher_context_is_null_when_empty()
+    {
+        if (! class_exists(Context::class)) {
+            $this->markTestSkipped('Context is not available in this version of Laravel.');
+        }
+
+        Event::listen(DummyEvent::class, function ($payload) {
+            //
+        });
+
+        event(new DummyEvent);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::EVENT, $entry->type);
+        $this->assertNull($entry->content['context'] ?? null);
     }
 
     public static function formatListenersProvider()

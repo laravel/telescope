@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Queue\Jobs\Job;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Context;
 use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
@@ -141,6 +142,51 @@ class JobWatcherTest extends FeatureTestCase
         $this->assertSame('default', $entry->content['queue']);
 
         $this->assertSame(sprintf('%s:%s', get_class($user), $user->getKey()), $entry->content['data']['user']);
+    }
+
+    public function test_job_registers_context()
+    {
+        if (! class_exists(Context::class)) {
+            $this->markTestSkipped('Context is not available in this version of Laravel.');
+        }
+
+        Context::add('user_id', 999);
+        Context::add('trace_id', 'trace-xyz');
+
+        $this->app->get(Dispatcher::class)->dispatch(new MyDatabaseJob('Context test job'));
+
+        $this->artisan('queue:work', [
+            'connection' => 'database',
+            '--once' => true,
+            '--queue' => 'on-demand',
+        ])->run();
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::JOB, $entry->type);
+        $this->assertArrayHasKey('context', $entry->content);
+        $this->assertSame(999, $entry->content['context']['user_id']);
+        $this->assertSame('trace-xyz', $entry->content['context']['trace_id']);
+    }
+
+    public function test_job_context_is_null_when_empty()
+    {
+        if (! class_exists(Context::class)) {
+            $this->markTestSkipped('Context is not available in this version of Laravel.');
+        }
+
+        $this->app->get(Dispatcher::class)->dispatch(new MyDatabaseJob('Empty context test'));
+
+        $this->artisan('queue:work', [
+            'connection' => 'database',
+            '--once' => true,
+            '--queue' => 'on-demand',
+        ])->run();
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::JOB, $entry->type);
+        $this->assertNull($entry->content['context'] ?? null);
     }
 }
 
