@@ -103,5 +103,4 @@ class ExportRequestTest extends FeatureTestCase
         $this->assertArrayHasKey('created_at', $json);
         $this->assertArrayHasKey('tags', $json);
     }
-
 }
