@@ -1,4 +1,5 @@
 <script type="text/ecmascript-6">
+import axios from 'axios';
 import StylesMixin from './../../mixins/entriesStyles';
 
 export default {
@@ -13,6 +14,20 @@ export default {
             currentRequestTab: 'payload',
             currentResponseTab: 'response'
         };
+    },
+
+   methods: {
+        exportRequest(id) {
+            const url = `/telescope/telescope-api/requests/${id}/export`
+
+            const link = document.createElement('a')
+            link.href = url
+            link.style.display = 'none'
+            
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+        }
     }
 }
 </script>
@@ -145,7 +160,13 @@ export default {
                     </copy-clipboard>
                 </div>
             </div>
-
+            <button
+                class="btn btn-muted mt-4 px-4 py-2"
+                @click="exportRequest(slotProps.entry.id)"
+                type="button"
+            >
+                Export as JSON
+            </button>
             <!-- Additional Information -->
             <related-entries :entry="entry" :batch="batch"> </related-entries>
         </div>

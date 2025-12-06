@@ -81,4 +81,39 @@ abstract class EntryController extends Controller
 
         return 'enabled';
     }
+
+    /**
+     * Export an entry with the given ID.
+     *
+     * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function export(EntriesRepository $storage, $id)
+    {
+        $entry = $storage->find($id);
+
+        $data = [
+            'id' => $entry->id,
+            'batch_id' => $entry->batchId,
+            'type' => $entry->type,
+            'content' => $entry->content,
+            'family_hash' => $entry->familyHash,
+            'sequence' => $entry->sequence,
+            'created_at' => $entry->createdAt ? $entry->createdAt->toDateTimeString() : null,
+            'tags' => $entry->tags ?? [],
+        ];
+
+        $filename = "telescope-{$entry->type}-{$entry->id}.json";
+
+        return response(
+            json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
+            200,
+            [
+                'Content-Type' => 'application/json',
+                'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+            ]
+        );
+    }
 }

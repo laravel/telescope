@@ -54,6 +54,7 @@ Route::get('/telescope-api/models/{telescopeEntryId}', 'ModelsController@show');
 
 // Requests entries...
 Route::post('/telescope-api/requests', 'RequestsController@index');
+Route::get('/telescope-api/requests/{telescopeEntryId}/export', 'RequestsController@export');
 Route::get('/telescope-api/requests/{telescopeEntryId}', 'RequestsController@show');
 
 // View entries...
