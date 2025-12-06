@@ -19,6 +19,6 @@ class ContextHelper
 
         $context = Context::all();
 
-        return ! empty($context) ? $context : null;
+        return !empty($context) ? $context : null;
     }
 }
