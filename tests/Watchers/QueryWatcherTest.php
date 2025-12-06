@@ -15,7 +15,7 @@ use Orchestra\Testbench\Attributes\WithConfig;
 #[WithConfig('telescope.watchers', [
     QueryWatcher::class => [
         'enabled' => true,
-        'slow' => 0.2,
+        'slow' => 0.1,
     ],
 ])]
 class QueryWatcherTest extends FeatureTestCase

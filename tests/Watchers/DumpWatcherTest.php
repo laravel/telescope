@@ -11,6 +11,7 @@ use Orchestra\Testbench\Attributes\WithConfig;
 #[WithConfig('telescope.watchers', [
     DumpWatcher::class => true,
 ])]
+#[WithConfig('cache.default', 'array')]
 class DumpWatcherTest extends FeatureTestCase
 {
     /** {@inheritdoc} */

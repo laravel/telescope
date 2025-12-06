@@ -32,7 +32,7 @@ class ExceptionWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::EXCEPTION, $entry->type);
         $this->assertSame(BananaException::class, $entry->content['class']);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(25, $entry->content['line']);
+        $this->assertSame(26, $entry->content['line']);
         $this->assertSame('Something went bananas.', $entry->content['message']);
         $this->assertArrayHasKey('trace', $entry->content);
     }
@@ -50,7 +50,7 @@ class ExceptionWatcherTest extends FeatureTestCase
         $this->assertSame(EntryType::EXCEPTION, $entry->type);
         $this->assertSame(BananaError::class, $entry->content['class']);
         $this->assertSame(__FILE__, $entry->content['file']);
-        $this->assertSame(43, $entry->content['line']);
+        $this->assertSame(44, $entry->content['line']);
         $this->assertSame('Something went bananas.', $entry->content['message']);
         $this->assertArrayHasKey('trace', $entry->content);
     }
