@@ -753,6 +753,7 @@ export default {
                         <th>Verb</th>
                         <th>URI</th>
                         <th>Status</th>
+                        <th class="text-right">Duration</th>
                         <th class="text-right">Happened</th>
                         <th></th>
                     </tr>
@@ -786,6 +787,11 @@ export default {
                                     entry.content.response_status !== undefined ? entry.content.response_status : 'N/A'
                                 }}
                             </span>
+                        </td>
+
+                        <td class="table-fit text-right text-muted">
+                            <span v-if="entry.content.duration">{{ entry.content.duration }}ms</span>
+                            <span v-else>-</span>
                         </td>
 
                         <td
