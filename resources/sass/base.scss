@@ -228,6 +228,16 @@ button:hover {
     color: $badge-danger-color;
 }
 
+.badge-purple {
+    background: $badge-purple-bg;
+    color: $badge-purple-color;
+}
+
+.badge-pink {
+    background: $badge-pink-bg;
+    color: $badge-pink-color;
+}
+
 .control-action {
     svg {
         fill: $control-action-icon-color;

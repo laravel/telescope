@@ -50,12 +50,13 @@ export default {
         },
 
         requestMethodClass(method) {
-            if (method == 'GET') return 'secondary';
-            if (method == 'OPTIONS') return 'secondary';
-            if (method == 'POST') return 'info';
-            if (method == 'PATCH') return 'info';
+            if (method == 'GET') return 'success';
+            if (method == 'POST') return 'warning';
             if (method == 'PUT') return 'info';
+            if (method == 'PATCH') return 'purple';
             if (method == 'DELETE') return 'danger';
+            if (method == 'HEAD') return 'success';
+            if (method == 'OPTIONS') return 'pink';
         },
     },
 };
