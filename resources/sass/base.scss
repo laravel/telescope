@@ -87,30 +87,6 @@ svg.icon {
                 padding: 0.2rem 0.5rem;
             }
         }
-
-        .form-control-with-icon {
-            position: relative;
-
-            .icon-wrapper {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                position: absolute;
-                top: 0;
-                left: 0.75rem;
-                bottom: 0;
-
-                .icon {
-                    fill: $text-muted;
-                }
-            }
-
-            .form-control {
-                padding-left: 2.25rem;
-                font-size: 0.875rem;
-                border-radius: 9999px;
-            }
-        }
     }
 
     .table {
@@ -350,4 +326,30 @@ button:hover {
     outline-offset: 2px;
     opacity: 0.7;
     z-index: 10;
+}
+
+ul, .card .card-header {
+    .form-control-with-icon {
+        position: relative;
+
+        .icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0.75rem;
+            bottom: 0;
+
+            .icon {
+                fill: $text-muted;
+            }
+        }
+
+        .form-control {
+            padding-left: 2.25rem;
+            font-size: 0.875rem;
+            border-radius: 9999px;
+        }
+    }
 }

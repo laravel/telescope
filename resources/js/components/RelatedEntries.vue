@@ -16,7 +16,8 @@ export default {
      */
     data(){
         return {
-            currentTab: 'exceptions'
+            currentTab: 'exceptions',
+            queryFilter: ''
         };
     },
 
@@ -148,6 +149,10 @@ export default {
             };
         },
 
+        queriesFiltered() {
+            return _.filter(this.queries, entry => { return entry.content.sql.toLowerCase().includes(this.queryFilter.toLowerCase()) });
+        },
+
         tabs(){
             return _.filter([
                 {title: "Exceptions", type: "exceptions", count: this.exceptions.length},
@@ -217,6 +222,23 @@ export default {
                     >
                 </div>
             </li>
+            <div v-if="currentTab == 'queries'" class="form-control-with-icon d-flex align-items-center justify-content-between ml-auto mr-3">
+                <div class="icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon">
+                        <path
+                            fill-rule="evenodd"
+                            d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                </div>
+                <input
+                    type="text"
+                    class="form-control w-100"
+                    placeholder="Search Query"
+                    v-model="queryFilter"
+                />
+            </div>
         </ul>
         <div>
             <!-- Related Exceptions -->
@@ -315,7 +337,7 @@ export default {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="entry in queries">
+                    <tr v-for="entry in queryFilter == '' ? queries : queriesFiltered">
                         <td :title="entry.content.sql">
                             <code>{{ truncate(entry.content.sql, 110) }}</code>
                         </td>
