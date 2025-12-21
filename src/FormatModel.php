@@ -22,11 +22,19 @@ class FormatModel
                 $model->getAttribute($model->getRelatedKey()),
             ];
         } else {
-            $keys = $model->getKey();
+            // FIX START: Check if the key is composite (array)
+            if (is_array($model->getKeyName())) {
+                $keys = array_map(function ($key) use ($model) {
+                    return $model->getAttribute($key);
+                }, $model->getKeyName());
+            } else {
+                $keys = $model->getKey();
+            }
+            // FIX END
         }
 
         return get_class($model).':'.implode('_', array_map(function ($value) {
-            return $value instanceof BackedEnum ? $value->value : $value;
-        }, Arr::wrap($keys)));
+                return $value instanceof BackedEnum ? $value->value : $value;
+            }, Arr::wrap($keys)));
     }
 }
