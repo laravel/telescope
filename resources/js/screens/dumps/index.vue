@@ -155,7 +155,7 @@ export default {
             <div v-html="dump"></div>
         </div>
 
-        <div v-if="ready && entries.length > 0" class="code-bg">
+        <div v-if="ready && entries.length > 0" class="code-bg sf-js-enabled">
             <transition-group tag="div" name="list">
                 <div v-for="entry in entries" :key="entry.id" class="p-3">
                     <div class="entryPointDescription d-flex justify-content-between align-items-center">
