@@ -27,7 +27,10 @@ class TelescopeServiceProvider extends ServiceProvider
             return;
         }
 
-        Route::middlewareGroup('telescope', config('telescope.middleware', []));
+        Route::middlewareGroup('telescope', [
+            ...config('telescope.middleware', []),
+            'sentinel:telescope',
+        ]);
 
         $this->registerRoutes();
         $this->registerResources();
