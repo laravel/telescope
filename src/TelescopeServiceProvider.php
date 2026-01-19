@@ -4,6 +4,7 @@ namespace Laravel\Telescope;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Sentinel\Http\Middleware\SentinelMiddleware;
 use Laravel\Telescope\Actions\UninstallAction;
 use Laravel\Telescope\Contracts\ClearableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository;
@@ -27,10 +28,12 @@ class TelescopeServiceProvider extends ServiceProvider
             return;
         }
 
-        Route::middlewareGroup('telescope', [
-            'sentinel:telescope',
-            ...config('telescope.middleware', ['web']),
-        ]);
+        $this->callAfterResolving('router', function ($router) {
+            $router->middlewareGroup('telescope', [
+                SentinelMiddleware::class.':telescope',
+                ...config('telescope.middleware', ['web']),
+            ]);
+        });
 
         $this->registerRoutes();
         $this->registerResources();

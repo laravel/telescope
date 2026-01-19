@@ -1,5 +1,6 @@
 providers:
   - Laravel\Telescope\TelescopeServiceProvider
+  - Laravel\Sentinel\SentinelServiceProvider
   - Workbench\App\Providers\TelescopeServiceProvider
 
 migrations:
