@@ -77,7 +77,7 @@ class InstallCommand extends Command
      * Register the Telescope service provider in the application configuration file.
      *
      * @return void
-     */    
+     */
     protected function registerTelescopeServiceProvider()
     {
         if (method_exists(ServiceProvider::class, 'addProviderToBootstrapFile') &&
