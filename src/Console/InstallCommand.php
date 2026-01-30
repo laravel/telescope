@@ -65,7 +65,7 @@ class InstallCommand extends Command
             }
         }
 
-        if (!$telescopeMigrationExists) {
+        if (! $telescopeMigrationExists) {
             $this->callSilent('vendor:publish', ['--tag' => 'telescope-migrations']);
             $this->info('Telescope migrations published.');
         } else {
@@ -73,13 +73,11 @@ class InstallCommand extends Command
         }
     }
 
-
     /**
      * Register the Telescope service provider in the application configuration file.
      *
      * @return void
-     */
-    
+     */    
     protected function registerTelescopeServiceProvider()
     {
         if (method_exists(ServiceProvider::class, 'addProviderToBootstrapFile') &&
@@ -115,6 +113,4 @@ class InstallCommand extends Command
             file_get_contents(app_path('Providers/TelescopeServiceProvider.php'))
         ));
     }
-
-
 }
