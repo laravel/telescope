@@ -38,7 +38,7 @@ class InstallCommand extends Command
         $this->callSilent('vendor:publish', ['--tag' => 'telescope-config']);
 
         $this->comment('Publishing Telescope Migrations...');
-        $this->callSilent('vendor:publish', ['--tag' => 'telescope-migrations']);
+        $this->publishMigrationsIfNotExists();
 
         $this->registerTelescopeServiceProvider();
 
@@ -46,10 +46,40 @@ class InstallCommand extends Command
     }
 
     /**
+     * Publish migrations only if they don't already exist.
+     *
+     * @return void
+     */
+    protected function publishMigrationsIfNotExists()
+    {
+        $migrationPath = database_path('migrations');
+        $telescopeMigrationExists = false;
+
+        if (is_dir($migrationPath)) {
+            $files = scandir($migrationPath);
+            foreach ($files as $file) {
+                if (str_contains($file, 'create_telescope_entries_table')) {
+                    $telescopeMigrationExists = true;
+                    break;
+                }
+            }
+        }
+
+        if (!$telescopeMigrationExists) {
+            $this->callSilent('vendor:publish', ['--tag' => 'telescope-migrations']);
+            $this->info('Telescope migrations published.');
+        } else {
+            $this->comment('Telescope migrations already exist. Skipping migration publishing.');
+        }
+    }
+
+
+    /**
      * Register the Telescope service provider in the application configuration file.
      *
      * @return void
      */
+    
     protected function registerTelescopeServiceProvider()
     {
         if (method_exists(ServiceProvider::class, 'addProviderToBootstrapFile') &&
@@ -85,4 +115,6 @@ class InstallCommand extends Command
             file_get_contents(app_path('Providers/TelescopeServiceProvider.php'))
         ));
     }
+
+
 }
