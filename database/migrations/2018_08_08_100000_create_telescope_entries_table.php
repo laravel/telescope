@@ -54,6 +54,37 @@ return new class extends Migration
         $schema->create('telescope_monitoring', function (Blueprint $table) {
             $table->string('tag')->primary();
         });
+
+        $schema->create('telescope_security_whitelist', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->string('path_pattern');
+            $table->string('method')->nullable();
+            $table->json('path_params_rules')->nullable();
+            $table->json('query_rules')->nullable();
+            $table->json('payload_rules')->nullable();
+            $table->json('header_rules')->nullable();
+            $table->boolean('is_regex')->default(false);
+            $table->boolean('enabled')->default(true);
+            $table->timestamps();
+
+            $table->index('path_pattern');
+            $table->index('enabled');
+        });
+
+        $schema->create('telescope_global_security_rules', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('category'); // path_traversal, sql_injection, xss, command_injection, etc.
+            $table->json('patterns'); // Array of patterns to check for
+            $table->json('exclude_paths')->nullable(); // Paths to exclude from this rule
+            $table->boolean('enabled')->default(true);
+            $table->string('description')->nullable();
+            $table->timestamps();
+
+            $table->index('category');
+            $table->index('enabled');
+        });
     }
 
     /**
@@ -66,5 +97,7 @@ return new class extends Migration
         $schema->dropIfExists('telescope_entries_tags');
         $schema->dropIfExists('telescope_entries');
         $schema->dropIfExists('telescope_monitoring');
+        $schema->dropIfExists('telescope_security_whitelist');
+        $schema->dropIfExists('telescope_global_security_rules');
     }
 };

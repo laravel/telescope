@@ -34,6 +34,8 @@ import views from './screens/views/index.vue';
 import viewsPreview from './screens/views/preview.vue';
 import clientRequests from './screens/client-requests/index.vue';
 import clientRequestsPreview from './screens/client-requests/preview.vue';
+import security from './screens/security/index.vue';
+import securityPreview from './screens/security/preview.vue';
 
 export default [
     { path: '/', redirect: '/requests' },
@@ -252,5 +254,17 @@ export default [
         path: '/client-requests',
         name: 'client-requests',
         component: clientRequests,
+    },
+
+    {
+        path: '/security/:id',
+        name: 'security-preview',
+        component: securityPreview,
+    },
+
+    {
+        path: '/security',
+        name: 'security',
+        component: security,
     },
 ];

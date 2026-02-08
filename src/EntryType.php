@@ -22,4 +22,5 @@ class EntryType
     public const GATE = 'gate';
     public const VIEW = 'view';
     public const CLIENT_REQUEST = 'client_request';
+    public const SECURITY = 'security';
 }

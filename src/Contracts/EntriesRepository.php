@@ -78,4 +78,75 @@ interface EntriesRepository
      * @return void
      */
     public function stopMonitoring(array $tags);
+
+    /**
+     * Get the list of security whitelist patterns.
+     *
+     * @return array
+     */
+    public function securityWhitelist();
+
+    /**
+     * Add a pattern to the security whitelist.
+     *
+     * @param  array  $pattern
+     * @return int
+     */
+    public function addSecurityWhitelist(array $pattern);
+
+    /**
+     * Update a security whitelist pattern.
+     *
+     * @param  int  $id
+     * @param  array  $pattern
+     * @return void
+     */
+    public function updateSecurityWhitelist(int $id, array $pattern);
+
+    /**
+     * Remove a pattern from the security whitelist.
+     *
+     * @param  int  $id
+     * @return void
+     */
+    public function removeSecurityWhitelist(int $id);
+
+    /**
+     * Get all global security rules.
+     *
+     * @return array
+     */
+    public function globalSecurityRules();
+
+    /**
+     * Add a global security rule.
+     *
+     * @param  array  $rule
+     * @return int
+     */
+    public function addGlobalSecurityRule(array $rule);
+
+    /**
+     * Update a global security rule.
+     *
+     * @param  int  $id
+     * @param  array  $rule
+     * @return void
+     */
+    public function updateGlobalSecurityRule(int $id, array $rule);
+
+    /**
+     * Remove a global security rule.
+     *
+     * @param  int  $id
+     * @return void
+     */
+    public function removeGlobalSecurityRule(int $id);
+
+    /**
+     * Initialize default global security rules.
+     *
+     * @return void
+     */
+    public function initializeDefaultGlobalSecurityRules();
 }

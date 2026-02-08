@@ -528,6 +528,17 @@ class Telescope
     }
 
     /**
+     * Record the given security entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
+    public static function recordSecurity(IncomingEntry $entry)
+    {
+        static::record(EntryType::SECURITY, $entry);
+    }
+
+    /**
      * Record the given entry.
      *
      * @param  \Laravel\Telescope\IncomingEntry  $entry

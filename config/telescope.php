@@ -208,5 +208,16 @@ return [
 
         Watchers\ScheduleWatcher::class => env('TELESCOPE_SCHEDULE_WATCHER', true),
         Watchers\ViewWatcher::class => env('TELESCOPE_VIEW_WATCHER', true),
+
+        Watchers\SecurityWatcher::class => [
+            'enabled' => env('TELESCOPE_SECURITY_WATCHER', true),
+            'whitelist' => [
+                // Add your whitelisted endpoints here
+                // Examples:
+                // '/api/users',
+                // '/image/*',
+                // 'car?company_id={string}',
+            ],
+        ],
     ],
 ];

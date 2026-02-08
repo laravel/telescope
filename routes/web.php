@@ -76,6 +76,27 @@ Route::get('/telescope-api/redis/{telescopeEntryId}', 'RedisController@show');
 Route::post('/telescope-api/client-requests', 'ClientRequestController@index');
 Route::get('/telescope-api/client-requests/{telescopeEntryId}', 'ClientRequestController@show');
 
+// Security entries...
+Route::post('/telescope-api/security', 'SecurityController@index');
+Route::get('/telescope-api/security/{telescopeEntryId}', 'SecurityController@show');
+
+// Security Whitelist (with stricter rate limiting for security endpoints)
+Route::middleware('throttle:10,1')->group(function () {
+    Route::get('/telescope-api/security-whitelist', 'SecurityWhitelistController@index');
+    Route::post('/telescope-api/security-whitelist', 'SecurityWhitelistController@store');
+    Route::put('/telescope-api/security-whitelist/{id}', 'SecurityWhitelistController@update');
+    Route::delete('/telescope-api/security-whitelist/{id}', 'SecurityWhitelistController@destroy');
+});
+
+// Global Security Rules (with stricter rate limiting for security endpoints)
+Route::middleware('throttle:10,1')->group(function () {
+    Route::get('/telescope-api/global-security-rules', 'GlobalSecurityController@index');
+    Route::post('/telescope-api/global-security-rules/initialize-defaults', 'GlobalSecurityController@initializeDefaults');
+    Route::post('/telescope-api/global-security-rules', 'GlobalSecurityController@store');
+    Route::put('/telescope-api/global-security-rules/{id}', 'GlobalSecurityController@update');
+    Route::delete('/telescope-api/global-security-rules/{id}', 'GlobalSecurityController@destroy');
+});
+
 // Monitored Tags...
 Route::get('/telescope-api/monitored-tags', 'MonitoredTagController@index');
 Route::post('/telescope-api/monitored-tags/', 'MonitoredTagController@store');

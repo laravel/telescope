@@ -31,7 +31,7 @@ class EntryModelFactory extends Factory
                 EntryType::CACHE, EntryType::CLIENT_REQUEST, EntryType::COMMAND, EntryType::DUMP, EntryType::EVENT,
                 EntryType::EXCEPTION, EntryType::JOB, EntryType::LOG, EntryType::MAIL, EntryType::MODEL,
                 EntryType::NOTIFICATION, EntryType::QUERY, EntryType::REDIS, EntryType::REQUEST,
-                EntryType::SCHEDULED_TASK,
+                EntryType::SCHEDULED_TASK, EntryType::SECURITY,
             ]),
             'content' => [$this->faker->word() => $this->faker->word()],
         ];
