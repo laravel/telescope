@@ -27,5 +27,3 @@ class SecurityController extends EntryController
         return SecurityWatcher::class;
     }
 }
-
-

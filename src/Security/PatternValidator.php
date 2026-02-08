@@ -5,8 +5,6 @@ namespace Laravel\Telescope\Security;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Laravel\Telescope\Security\PathParameterExtractor;
-use Laravel\Telescope\Security\RegexValidator;
 
 class PatternValidator
 {
@@ -24,7 +22,7 @@ class PatternValidator
         $violations = [];
 
         if (! empty($pattern['path_params_rules'])) {
-            $pathParams = PathParameterExtractor::extract($pattern['path_pattern'], $path);
+            $pathParams = \Laravel\Telescope\Security\PathParameterExtractor::extract($pattern['path_pattern'], $path);
             $pathParamViolations = static::validatePathParameters($pattern['path_params_rules'], $pathParams);
             $violations = array_merge($violations, $pathParamViolations);
         }
@@ -42,17 +40,17 @@ class PatternValidator
             $payloadViolations = static::checkPathTraversalInArray($payload, 'payload');
             $violations = array_merge($violations, $payloadViolations);
         } elseif (is_string($payload) && (Str::contains($payload, '../') || Str::contains($payload, '..\\'))) {
-            $violations[] = "Payload contains path traversal attempt";
+            $violations[] = 'Payload contains path traversal attempt';
         }
 
         if (! empty($pattern['query_rules'])) {
             $queryViolations = static::validateQueryParameters($pattern['query_rules'], $request);
             $violations = array_merge($violations, $queryViolations);
-            
+
             $allowedParams = array_keys($pattern['query_rules']);
             $actualParams = array_keys($request->query->all());
             $unknownParams = array_diff($actualParams, $allowedParams);
-            
+
             if (! empty($unknownParams)) {
                 foreach ($unknownParams as $unknownParam) {
                     $violations[] = "Query parameter '{$unknownParam}' is not whitelisted";
@@ -63,13 +61,13 @@ class PatternValidator
         if (! empty($pattern['payload_rules'])) {
             $payloadViolations = static::validatePayload($pattern['payload_rules'], $request);
             $violations = array_merge($violations, $payloadViolations);
-            
+
             $allowedFields = array_keys($pattern['payload_rules']);
             $payload = $request->input();
             if (is_array($payload)) {
                 $actualFields = array_keys($payload);
                 $unknownFields = array_diff($actualFields, $allowedFields);
-                
+
                 if (! empty($unknownFields)) {
                     foreach ($unknownFields as $unknownField) {
                         $violations[] = "Payload field '{$unknownField}' is not whitelisted";
@@ -81,13 +79,13 @@ class PatternValidator
         if (! empty($pattern['header_rules'])) {
             $headerViolations = static::validateHeaders($pattern['header_rules'], $request);
             $violations = array_merge($violations, $headerViolations);
-            
+
             $allowedHeaders = array_map('strtolower', array_keys($pattern['header_rules']));
             $actualHeaders = collect($request->headers->all())->mapWithKeys(function ($value, $key) {
                 return [strtolower($key) => $value];
             })->keys()->all();
             $unknownHeaders = array_diff($actualHeaders, $allowedHeaders);
-            
+
             if (! empty($unknownHeaders)) {
                 foreach ($unknownHeaders as $unknownHeader) {
                     $violations[] = "Header '{$unknownHeader}' is not whitelisted";
@@ -251,7 +249,7 @@ class PatternValidator
         if (isset($rule['type'])) {
             $allowedTypes = is_array($rule['type']) ? $rule['type'] : [$rule['type']];
             $typeViolations = [];
-            
+
             $isValid = false;
             foreach ($allowedTypes as $type) {
                 $typeViolation = static::validateType($key, $value, $type, $context);
@@ -261,7 +259,7 @@ class PatternValidator
                 }
                 $typeViolations[] = $typeViolation;
             }
-            
+
             if (! $isValid && ! empty($typeViolations)) {
                 $typesList = implode(' or ', $allowedTypes);
                 $violations[] = "{$context} field '{$key}' must be one of: {$typesList}";
@@ -273,8 +271,8 @@ class PatternValidator
             if (! preg_match('/^[\/#~]/', $regex)) {
                 $regex = '#^'.$regex.'$#';
             }
-            
-            $validation = RegexValidator::validate($regex, "validation_rule_{$context}_{$key}");
+
+            $validation = \Laravel\Telescope\Security\RegexValidator::validate($regex, "validation_rule_{$context}_{$key}");
             if (! $validation['valid']) {
                 $violations[] = "{$context} field '{$key}' has an invalid regex pattern: {$validation['error']}";
             } else {
@@ -404,4 +402,3 @@ class PatternValidator
         return $violations;
     }
 }
-

@@ -438,6 +438,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
                     if (is_array($decoded) && (empty($decoded) || array_keys($decoded) !== range(0, count($decoded) - 1))) {
                         return $decoded;
                     }
+
                     return [];
                 };
 
@@ -472,6 +473,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             if (is_array($rules) && (empty($rules) || array_keys($rules) !== range(0, count($rules) - 1))) {
                 return json_encode($rules);
             }
+
             return '{}';
         };
 
@@ -512,6 +514,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             if (is_array($rules) && (empty($rules) || array_keys($rules) !== range(0, count($rules) - 1))) {
                 return json_encode($rules);
             }
+
             return '{}';
         };
 

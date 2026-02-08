@@ -38,50 +38,56 @@ class RegexValidator
      *
      * @param  string  $pattern
      * @param  string  $context
-     * @return array  ['valid' => bool, 'error' => string|null]
+     * @return array ['valid' => bool, 'error' => string|null]
      */
     public static function validate(string $pattern, string $context = 'pattern'): array
     {
         if (strlen($pattern) > self::MAX_PATTERN_LENGTH) {
-            $error = "Regex pattern too long (maximum: ".self::MAX_PATTERN_LENGTH." characters)";
+            $error = 'Regex pattern too long (maximum: '.self::MAX_PATTERN_LENGTH.' characters)';
             self::logInvalidPattern($pattern, $error, $context);
+
             return ['valid' => false, 'error' => $error];
         }
 
         if (empty(trim($pattern))) {
-            $error = "Regex pattern cannot be empty";
+            $error = 'Regex pattern cannot be empty';
             self::logInvalidPattern($pattern, $error, $context);
+
             return ['valid' => false, 'error' => $error];
         }
 
         $nestingDepth = self::calculateNestingDepth($pattern);
         if ($nestingDepth > self::MAX_NESTING_DEPTH) {
-            $error = "Regex pattern nesting too deep (maximum: ".self::MAX_NESTING_DEPTH." levels, found: {$nestingDepth})";
+            $error = 'Regex pattern nesting too deep (maximum: '.self::MAX_NESTING_DEPTH." levels, found: {$nestingDepth})";
             self::logInvalidPattern($pattern, $error, $context);
+
             return ['valid' => false, 'error' => $error];
         }
 
         foreach (self::DANGEROUS_PATTERNS as $dangerousPattern) {
             if (preg_match($dangerousPattern, $pattern)) {
-                $error = "Regex pattern contains potentially dangerous quantifier combinations that could cause ReDoS";
+                $error = 'Regex pattern contains potentially dangerous quantifier combinations that could cause ReDoS';
                 self::logInvalidPattern($pattern, $error, $context);
+
                 return ['valid' => false, 'error' => $error];
             }
         }
 
         $testPattern = $pattern;
-        
+
         if (! preg_match('/^[\/#~]/', $testPattern)) {
             $testPattern = '#'.$testPattern.'#';
         }
 
-        set_error_handler(function () {});
+        set_error_handler(function () {
+        });
         $result = @preg_match($testPattern, '');
         restore_error_handler();
 
         if ($result === false) {
-            $error = "Invalid regex pattern syntax";
+            $error = 'Invalid regex pattern syntax';
             self::logInvalidPattern($pattern, $error, $context);
+
             return ['valid' => false, 'error' => $error];
         }
 
@@ -146,5 +152,3 @@ class RegexValidator
         ]);
     }
 }
-
-

@@ -79,7 +79,7 @@ class SecurityWhitelistController extends Controller
         }
 
         $id = $this->entries->addSecurityWhitelist($validated);
-        
+
         Cache::forget('telescope:security-whitelist');
 
         return response()->json([
@@ -129,7 +129,7 @@ class SecurityWhitelistController extends Controller
         }
 
         $this->entries->updateSecurityWhitelist((int) $id, $validated);
-        
+
         Cache::forget('telescope:security-whitelist');
 
         return response()->json([
@@ -147,7 +147,7 @@ class SecurityWhitelistController extends Controller
     public function destroy(string $id)
     {
         $this->entries->removeSecurityWhitelist((int) $id);
-        
+
         Cache::forget('telescope:security-whitelist');
 
         return response()->json([
@@ -189,4 +189,3 @@ class SecurityWhitelistController extends Controller
         return null;
     }
 }
-

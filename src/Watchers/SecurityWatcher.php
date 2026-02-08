@@ -161,6 +161,7 @@ class SecurityWatcher extends Watcher
                 if (empty($rules)) {
                     return GlobalSecurityValidator::getDefaultPatterns();
                 }
+
                 return $rules;
             } catch (\Throwable $e) {
                 return GlobalSecurityValidator::getDefaultPatterns();
@@ -186,18 +187,19 @@ class SecurityWatcher extends Watcher
                 if ($matches[0] === '*') {
                     return '.*';
                 }
+
                 return preg_quote($matches[0], '#');
             }, $pattern);
-            
+
             $regexPattern = '#^'.$regexPattern.'$#';
-            
+
             try {
                 if (preg_match($regexPattern, $path, $matches)) {
                     array_shift($matches);
                     foreach ($matches as $capturedValue) {
                         $decoded = rawurldecode($capturedValue);
-                        if (str_contains($decoded, '..') || 
-                            str_contains($decoded, './') || 
+                        if (str_contains($decoded, '..') ||
+                            str_contains($decoded, './') ||
                             str_contains($decoded, '.\\') ||
                             str_contains($decoded, '%2e%2e') ||
                             str_contains($decoded, '%2f')) {
@@ -206,11 +208,14 @@ class SecurityWatcher extends Watcher
                                 'path' => $path,
                                 'captured_value' => $capturedValue,
                             ]);
+
                             return false;
                         }
                     }
+
                     return true;
                 }
+
                 return false;
             } catch (\Throwable $e) {
                 Log::warning('Telescope Security: Regex error in pathMatches', [
@@ -218,6 +223,7 @@ class SecurityWatcher extends Watcher
                     'path' => $path,
                     'error' => $e->getMessage(),
                 ]);
+
                 return false;
             }
         }

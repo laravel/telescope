@@ -3,8 +3,6 @@
 namespace Laravel\Telescope\Security;
 
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use Laravel\Telescope\Security\RegexValidator;
 
 class PathParameterExtractor
 {
@@ -40,17 +38,19 @@ class PathParameterExtractor
             if ($matches[0] === '*') {
                 return '.*';
             }
+
             return preg_quote($matches[0], '#');
         }, $pattern);
-        
+
         $regexPattern = '#^'.$regexPattern.'$#';
 
-        $validation = RegexValidator::validate($regexPattern, 'path_parameter_pattern');
+        $validation = \Laravel\Telescope\Security\RegexValidator::validate($regexPattern, 'path_parameter_pattern');
         if (! $validation['valid']) {
             Log::warning('Telescope Security: Invalid regex pattern in path parameter extraction', [
                 'pattern' => substr($pattern, 0, 100),
                 'error' => $validation['error'],
             ]);
+
             return [];
         }
 
@@ -70,6 +70,7 @@ class PathParameterExtractor
                 'path' => substr($actualPath, 0, 100),
                 'error' => $e->getMessage(),
             ]);
+
             return [];
         }
 

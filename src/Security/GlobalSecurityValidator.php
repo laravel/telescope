@@ -5,7 +5,6 @@ namespace Laravel\Telescope\Security;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Laravel\Telescope\Security\RegexValidator;
 
 class GlobalSecurityValidator
 {
@@ -209,7 +208,7 @@ class GlobalSecurityValidator
             if (Str::startsWith($pattern, '/') && Str::endsWith($pattern, '/')) {
                 $regex = substr($pattern, 1, -1);
 
-                $validation = RegexValidator::validate($regex, 'global_security_pattern');
+                $validation = \Laravel\Telescope\Security\RegexValidator::validate($regex, 'global_security_pattern');
                 if (! $validation['valid']) {
                     Log::warning('Telescope Security: Invalid or unsafe regex pattern in global security check', [
                         'pattern' => substr($pattern, 0, 100),
@@ -266,7 +265,7 @@ class GlobalSecurityValidator
                     "'; INSERT",
                     "' OR '1'='1",
                     "' OR 1=1",
-                    "UNION SELECT",
+                    'UNION SELECT',
                     "'; --",
                     "'; /*",
                     "'; #",

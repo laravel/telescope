@@ -40,6 +40,7 @@ class GlobalSecurityController extends Controller
 
         if (empty($rules)) {
             $defaults = GlobalSecurityValidator::getDefaultPatterns();
+
             return response()->json([
                 'rules' => $defaults,
                 'defaults_available' => true,
@@ -96,6 +97,7 @@ class GlobalSecurityController extends Controller
                         'pattern' => substr($pattern, 0, 100),
                         'error' => $regexCheck['error'],
                     ]);
+
                     return response()->json([
                         'success' => false,
                         'error' => 'Invalid regex pattern. Please check the pattern syntax and complexity.',
@@ -143,6 +145,7 @@ class GlobalSecurityController extends Controller
                         'pattern' => substr($pattern, 0, 100),
                         'error' => $regexCheck['error'],
                     ]);
+
                     return response()->json([
                         'success' => false,
                         'error' => 'Invalid regex pattern. Please check the pattern syntax and complexity.',
@@ -171,10 +174,10 @@ class GlobalSecurityController extends Controller
     {
         $this->entries->removeGlobalSecurityRule((int) $id);
         Cache::forget('telescope:global-security-rules');
+
         return response()->json([
             'success' => true,
             'rules' => $this->entries->globalSecurityRules(),
         ]);
     }
 }
-
