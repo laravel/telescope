@@ -77,4 +77,3 @@ class PathParameterExtractor
         return $params;
     }
 }
-
