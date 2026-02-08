@@ -414,9 +414,6 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
         do {
             $deleted = $this->table('telescope_monitoring')->take($this->chunkSize)->delete();
         } while ($deleted !== 0);
-
-        // Security whitelist and global security rules are NOT deleted here
-        // as they are configuration data, not entry data
     }
 
     /**
@@ -430,21 +427,17 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             ->where('enabled', true)
             ->get()
             ->map(function ($pattern) {
-                // Helper to decode JSON rules and ensure it's an associative array (object)
                 $decodeRules = function ($json) {
                     if (empty($json)) {
                         return [];
                     }
                     $decoded = json_decode($json, true);
-                    // If decode failed or is null, return empty array
                     if ($decoded === null) {
                         return [];
                     }
-                    // If it's already an associative array (object), return it
                     if (is_array($decoded) && (empty($decoded) || array_keys($decoded) !== range(0, count($decoded) - 1))) {
                         return $decoded;
                     }
-                    // Should never happen, but return empty array as fallback
                     return [];
                 };
 
@@ -472,16 +465,13 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function addSecurityWhitelist(array $pattern)
     {
-        // Ensure rules are objects, not arrays
         $normalizeRules = function ($rules) {
             if (empty($rules)) {
                 return '{}';
             }
-            // If it's already an object/associative array, encode it
             if (is_array($rules) && (empty($rules) || array_keys($rules) !== range(0, count($rules) - 1))) {
                 return json_encode($rules);
             }
-            // If it's a numeric array, convert to object (shouldn't happen)
             return '{}';
         };
 
@@ -511,16 +501,17 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      */
     public function updateSecurityWhitelist(int $id, array $pattern)
     {
-        // Ensure rules are objects, not arrays
+        if ($id <= 0) {
+            throw new \InvalidArgumentException('Invalid ID: must be positive integer');
+        }
+
         $normalizeRules = function ($rules) {
             if (empty($rules)) {
                 return '{}';
             }
-            // If it's already an object/associative array, encode it
             if (is_array($rules) && (empty($rules) || array_keys($rules) !== range(0, count($rules) - 1))) {
                 return json_encode($rules);
             }
-            // If it's a numeric array, convert to object (shouldn't happen)
             return '{}';
         };
 
@@ -666,7 +657,6 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
             try {
                 $this->addGlobalSecurityRule($rule);
             } catch (UniqueConstraintViolationException $e) {
-                // Rule might already exist, skip
             }
         }
     }

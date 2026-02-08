@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Security\PathParameterExtractor;
+use Laravel\Telescope\Security\RegexValidator;
 
 class PatternValidator
 {
@@ -22,14 +23,12 @@ class PatternValidator
     {
         $violations = [];
 
-        // Validate path parameters first
         if (! empty($pattern['path_params_rules'])) {
             $pathParams = PathParameterExtractor::extract($pattern['path_pattern'], $path);
             $pathParamViolations = static::validatePathParameters($pattern['path_params_rules'], $pathParams);
             $violations = array_merge($violations, $pathParamViolations);
         }
 
-        // Always check for path traversal in query parameters (default security)
         $queryParams = $request->query->all();
         foreach ($queryParams as $key => $value) {
             $stringValue = (string) $value;
@@ -38,7 +37,6 @@ class PatternValidator
             }
         }
 
-        // Always check for path traversal in payload (default security)
         $payload = $request->input();
         if (is_array($payload)) {
             $payloadViolations = static::checkPathTraversalInArray($payload, 'payload');
@@ -47,12 +45,10 @@ class PatternValidator
             $violations[] = "Payload contains path traversal attempt";
         }
 
-        // Validate query parameters against defined rules
         if (! empty($pattern['query_rules'])) {
             $queryViolations = static::validateQueryParameters($pattern['query_rules'], $request);
             $violations = array_merge($violations, $queryViolations);
             
-            // Check for unknown query parameters (not in whitelist)
             $allowedParams = array_keys($pattern['query_rules']);
             $actualParams = array_keys($request->query->all());
             $unknownParams = array_diff($actualParams, $allowedParams);
@@ -64,12 +60,10 @@ class PatternValidator
             }
         }
 
-        // Validate payload against defined rules
         if (! empty($pattern['payload_rules'])) {
             $payloadViolations = static::validatePayload($pattern['payload_rules'], $request);
             $violations = array_merge($violations, $payloadViolations);
             
-            // Check for unknown payload fields (not in whitelist)
             $allowedFields = array_keys($pattern['payload_rules']);
             $payload = $request->input();
             if (is_array($payload)) {
@@ -84,12 +78,10 @@ class PatternValidator
             }
         }
 
-        // Validate headers against defined rules
         if (! empty($pattern['header_rules'])) {
             $headerViolations = static::validateHeaders($pattern['header_rules'], $request);
             $violations = array_merge($violations, $headerViolations);
             
-            // Check for unknown headers (not in whitelist)
             $allowedHeaders = array_map('strtolower', array_keys($pattern['header_rules']));
             $actualHeaders = collect($request->headers->all())->mapWithKeys(function ($value, $key) {
                 return [strtolower($key) => $value];
@@ -133,30 +125,6 @@ class PatternValidator
         }
 
         return $violations;
-    }
-
-    /**
-     * Check if the path matches the pattern.
-     *
-     * @param  string  $pattern
-     * @param  string  $path
-     * @param  bool  $isRegex
-     * @return bool
-     */
-    protected static function matchesPath(string $pattern, string $path, bool $isRegex): bool
-    {
-        if ($isRegex) {
-            return (bool) preg_match('#^'.str_replace('#', '\#', $pattern).'$#', $path);
-        }
-
-        // Handle wildcard patterns
-        if (Str::contains($pattern, '*')) {
-            $pathPattern = str_replace('*', '.*', $pattern);
-            return (bool) preg_match('#^'.str_replace('#', '\#', $pathPattern).'$#', $path);
-        }
-
-        // Exact match
-        return $pattern === $path;
     }
 
     /**
@@ -265,17 +233,13 @@ class PatternValidator
     {
         $violations = [];
         $stringValue = (string) $value;
-        
-        // Ensure $stringValue is always defined for use in regex and length checks
 
-        // Check for path traversal attempts
         if ($rule['prevent_path_traversal'] ?? true) {
             if (Str::contains($stringValue, '../') || Str::contains($stringValue, '..\\')) {
                 $violations[] = "{$context} field '{$key}' contains path traversal attempt";
             }
         }
 
-        // Check for forbidden patterns
         if (! empty($rule['forbidden_patterns'])) {
             foreach ($rule['forbidden_patterns'] as $forbiddenPattern) {
                 if (Str::contains($stringValue, $forbiddenPattern)) {
@@ -284,50 +248,41 @@ class PatternValidator
             }
         }
 
-        // Type validation (supports single type or array of allowed types)
         if (isset($rule['type'])) {
             $allowedTypes = is_array($rule['type']) ? $rule['type'] : [$rule['type']];
             $typeViolations = [];
             
-            // Try each allowed type - if ANY matches, it's valid
             $isValid = false;
             foreach ($allowedTypes as $type) {
                 $typeViolation = static::validateType($key, $value, $type, $context);
                 if ($typeViolation === null) {
-                    // This type matches, value is valid
                     $isValid = true;
                     break;
                 }
                 $typeViolations[] = $typeViolation;
             }
             
-            // If none of the types matched, add violation
             if (! $isValid && ! empty($typeViolations)) {
                 $typesList = implode(' or ', $allowedTypes);
                 $violations[] = "{$context} field '{$key}' must be one of: {$typesList}";
             }
         }
 
-        // Regex validation (for custom type or explicit regex rules)
         if (isset($rule['regex']) && ! empty($rule['regex'])) {
             $regex = $rule['regex'];
-            // If regex doesn't start with delimiter, wrap it
             if (! preg_match('/^[\/#~]/', $regex)) {
                 $regex = '#^'.$regex.'$#';
             }
             
-            // FULL validation using RegexValidator::validate() - not just isSafe()
             $validation = RegexValidator::validate($regex, "validation_rule_{$context}_{$key}");
             if (! $validation['valid']) {
                 $violations[] = "{$context} field '{$key}' has an invalid regex pattern: {$validation['error']}";
             } else {
-                // Pattern is valid, now check if value matches
                 try {
                     if (! preg_match($regex, $stringValue)) {
                         $violations[] = "{$context} field '{$key}' does not match required pattern";
                     }
                 } catch (\Throwable $e) {
-                    // Should not happen after validation, but log just in case
                     Log::warning('Telescope Security: Regex execution failed after validation', [
                         'context' => $context,
                         'field' => $key,
@@ -341,7 +296,6 @@ class PatternValidator
             $violations[] = "{$context} field '{$key}' requires a regex pattern for custom type";
         }
 
-        // Min/Max length
         if (isset($rule['min_length']) && strlen($stringValue) < $rule['min_length']) {
             $violations[] = "{$context} field '{$key}' is too short (minimum: {$rule['min_length']})";
         }
@@ -384,8 +338,6 @@ class PatternValidator
                 break;
 
             case 'string_or_numeric':
-                // Accept both string and numeric values
-                // This is useful for IDs that can be either format
                 if (! is_string($value) && ! is_numeric($value)) {
                     return "{$context} field '{$key}' must be string or numeric";
                 }
@@ -419,8 +371,6 @@ class PatternValidator
                 break;
 
             case 'custom':
-                // Custom type requires regex to be set
-                // Validation happens in validateValue method via regex check
                 break;
         }
 

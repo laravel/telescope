@@ -5,6 +5,7 @@ namespace Laravel\Telescope\Security;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Laravel\Telescope\Security\RegexValidator;
 
 class GlobalSecurityValidator
 {
@@ -25,12 +26,10 @@ class GlobalSecurityValidator
                 continue;
             }
 
-            // Check if path is excluded
             if (static::isPathExcluded($path, $rule['exclude_paths'] ?? [])) {
                 continue;
             }
 
-            // Check query parameters
             $queryViolations = static::checkPatternsInData(
                 $request->query->all(),
                 $rule['patterns'] ?? [],
@@ -40,7 +39,6 @@ class GlobalSecurityValidator
             );
             $violations = array_merge($violations, $queryViolations);
 
-            // Check payload
             $payload = $request->input();
             if (is_array($payload)) {
                 $payloadViolations = static::checkPatternsInArray(

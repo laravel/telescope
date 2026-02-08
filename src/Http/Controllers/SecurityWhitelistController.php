@@ -60,7 +60,6 @@ class SecurityWhitelistController extends Controller
             'header_rules' => 'nullable|array',
         ]);
 
-        // Validate regex patterns if is_regex is true
         if ($validated['is_regex'] ?? false) {
             $regexCheck = RegexValidator::validate($validated['path_pattern'], 'whitelist_path_pattern');
             if (! $regexCheck['valid']) {
@@ -71,7 +70,6 @@ class SecurityWhitelistController extends Controller
             }
         }
 
-        // Validate custom regex in rules
         $regexError = $this->validateRulesRegex($validated);
         if ($regexError) {
             return response()->json([
@@ -80,10 +78,8 @@ class SecurityWhitelistController extends Controller
             ], 422);
         }
 
-        // Write to database FIRST
         $id = $this->entries->addSecurityWhitelist($validated);
         
-        // THEN clear cache (ensures cache miss will fetch new data)
         Cache::forget('telescope:security-whitelist');
 
         return response()->json([
@@ -114,7 +110,6 @@ class SecurityWhitelistController extends Controller
             'header_rules' => 'nullable|array',
         ]);
 
-        // Validate regex patterns if is_regex is true
         if ($validated['is_regex'] ?? false) {
             $regexCheck = RegexValidator::validate($validated['path_pattern'], 'whitelist_path_pattern');
             if (! $regexCheck['valid']) {
@@ -125,7 +120,6 @@ class SecurityWhitelistController extends Controller
             }
         }
 
-        // Validate custom regex in rules
         $regexError = $this->validateRulesRegex($validated);
         if ($regexError) {
             return response()->json([
@@ -134,10 +128,8 @@ class SecurityWhitelistController extends Controller
             ], 422);
         }
 
-        // Write to database FIRST
         $this->entries->updateSecurityWhitelist((int) $id, $validated);
         
-        // THEN clear cache (ensures cache miss will fetch new data)
         Cache::forget('telescope:security-whitelist');
 
         return response()->json([
@@ -154,10 +146,8 @@ class SecurityWhitelistController extends Controller
      */
     public function destroy(string $id)
     {
-        // Write to database FIRST
         $this->entries->removeSecurityWhitelist((int) $id);
         
-        // THEN clear cache (ensures cache miss will fetch new data)
         Cache::forget('telescope:security-whitelist');
 
         return response()->json([
