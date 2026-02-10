@@ -47,5 +47,27 @@ class MailWatcherTest extends FeatureTestCase
         $this->assertContains('bcc@laravel.com', $tags);
         $this->assertContains('cc1@laravel.com', $tags);
         $this->assertContains('cc2@laravel.com', $tags);
+        $this->assertSame([], $entry->content['attachments']);
+    }
+
+    public function test_mail_watcher_registers_attachments()
+    {
+        Mail::raw('Telescope is amazing!', static function ($message) {
+            $message->from('from@laravel.com')
+                ->to('to@laravel.com')
+                ->subject('Check this out!')
+                ->attachData('attachment content', 'document.pdf', [
+                    'mime' => 'application/pdf',
+                ]);
+        });
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::MAIL, $entry->type);
+        $this->assertCount(1, $entry->content['attachments']);
+        $this->assertSame('document.pdf', $entry->content['attachments'][0]['filename']);
+        $this->assertSame('application/pdf', $entry->content['attachments'][0]['mime_type']);
+        $this->assertSame(strlen('attachment content'), $entry->content['attachments'][0]['size']);
+        $this->assertSame(base64_encode('attachment content'), $entry->content['attachments'][0]['content']);
     }
 }

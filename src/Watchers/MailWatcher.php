@@ -46,6 +46,7 @@ class MailWatcher extends Watcher
             'subject' => $event->message->getSubject(),
             'html' => $body instanceof AbstractPart ? ($event->message->getHtmlBody() ?? $event->message->getTextBody()) : $body,
             'raw' => $event->message->toString(),
+            'attachments' => $this->formatAttachments($event->message->getAttachments()),
         ])->tags($this->tags($event->message, $event->data)));
     }
 
@@ -101,9 +102,29 @@ class MailWatcher extends Watcher
     }
 
     /**
+     * Format the attachments for the given message.
+     *
+     * @param  array  $attachments
+     * @return array
+     */
+    protected function formatAttachments(array $attachments)
+    {
+        return collect($attachments)->map(function ($attachment) {
+            $body = $attachment->getBody();
+
+            return [
+                'filename' => $attachment->getFilename(),
+                'mime_type' => $attachment->getContentType(),
+                'size' => strlen($body),
+                'content' => base64_encode($body),
+            ];
+        })->all();
+    }
+
+    /**
      * Extract the tags from the message.
      *
-     * @param  \Swift_Message  $message
+     * @param  \Symfony\Component\Mime\Email  $message
      * @param  array  $data
      * @return array
      */
