@@ -138,9 +138,17 @@ class MailWatcher extends Watcher
         return collect($attachments)->map(function ($attachment) {
             $body = $attachment->getBody();
 
+            $filename = method_exists($attachment, 'getFilename')
+                ? $attachment->getFilename()
+                : $attachment->getName();
+
+            $contentType = method_exists($attachment, 'getContentType')
+                ? $attachment->getContentType()
+                : $attachment->getMediaType().'/'.$attachment->getMediaSubtype();
+
             return [
-                'filename' => $attachment->getFilename(),
-                'mime_type' => $attachment->getContentType(),
+                'filename' => $filename,
+                'mime_type' => $contentType,
                 'size' => strlen($body),
                 'content' => base64_encode($body),
             ];
