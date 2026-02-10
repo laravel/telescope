@@ -7,6 +7,7 @@ Route::post('/telescope-api/mail', 'MailController@index');
 Route::get('/telescope-api/mail/{telescopeEntryId}', 'MailController@show');
 Route::get('/telescope-api/mail/{telescopeEntryId}/preview', 'MailHtmlController@show');
 Route::get('/telescope-api/mail/{telescopeEntryId}/download', 'MailEmlController@show');
+Route::get('/telescope-api/mail/{telescopeEntryId}/attachments/{index}', 'MailAttachmentController@show');
 
 // Exception entries...
 Route::post('/telescope-api/exceptions', 'ExceptionController@index');
