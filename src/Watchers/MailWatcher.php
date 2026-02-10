@@ -46,9 +46,7 @@ class MailWatcher extends Watcher
             'subject' => $event->message->getSubject(),
             'html' => $body instanceof AbstractPart ? ($event->message->getHtmlBody() ?? $event->message->getTextBody()) : $body,
             'raw' => $event->message->toString(),
-            'attachments' => method_exists($event->message, 'getAttachments')
-                ? $this->formatAttachments($event->message->getAttachments())
-                : [],
+            'attachments' => $this->extractAttachments($event->message),
         ])->tags($this->tags($event->message, $event->data)));
     }
 
@@ -101,6 +99,32 @@ class MailWatcher extends Watcher
 
             return [$key => $address];
         })->all();
+    }
+
+    /**
+     * Extract attachments from the message.
+     *
+     * @param  mixed  $message
+     * @return array
+     */
+    protected function extractAttachments($message)
+    {
+        // Symfony Mailer (Laravel 9+)
+        if (method_exists($message, 'getAttachments')) {
+            return $this->formatAttachments($message->getAttachments());
+        }
+
+        // SwiftMailer (Laravel 8)
+        if (method_exists($message, 'getChildren')) {
+            $attachments = collect($message->getChildren())
+                ->filter(fn ($child) => method_exists($child, 'getFilename') && $child->getFilename() !== null)
+                ->values()
+                ->all();
+
+            return $this->formatAttachments($attachments);
+        }
+
+        return [];
     }
 
     /**
