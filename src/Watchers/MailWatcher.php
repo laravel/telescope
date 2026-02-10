@@ -46,7 +46,9 @@ class MailWatcher extends Watcher
             'subject' => $event->message->getSubject(),
             'html' => $body instanceof AbstractPart ? ($event->message->getHtmlBody() ?? $event->message->getTextBody()) : $body,
             'raw' => $event->message->toString(),
-            'attachments' => $this->formatAttachments($event->message->getAttachments()),
+            'attachments' => method_exists($event->message, 'getAttachments')
+                ? $this->formatAttachments($event->message->getAttachments())
+                : [],
         ])->tags($this->tags($event->message, $event->data)));
     }
 
