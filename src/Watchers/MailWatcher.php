@@ -140,7 +140,7 @@ class MailWatcher extends Watcher
 
             $filename = method_exists($attachment, 'getFilename')
                 ? $attachment->getFilename()
-                : $attachment->getName();
+                : $attachment->getPreparedHeaders()->getHeaderParameter('Content-Disposition', 'filename');
 
             $contentType = method_exists($attachment, 'getContentType')
                 ? $attachment->getContentType()
