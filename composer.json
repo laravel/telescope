@@ -67,9 +67,6 @@
             "@php ./vendor/bin/testbench serve"
         ]
     },
-    "repositories": [
-        { "type": "vcs", "url": "https://github.com/laravel-labs/sentinel" }
-    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }
