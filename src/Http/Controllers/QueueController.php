@@ -33,7 +33,7 @@ class QueueController extends EntryController
         return response()->json([
             'entry' => $entry,
             'batch' => isset($entry->content['updated_batch_id'])
-                ? $storage->get(null, EntryQueryOptions::forBatchId($entry->content['updated_batch_id']))
+                ? $storage->get(null, EntryQueryOptions::forBatchId($entry->content['updated_batch_id'])->limit(-1))
                 : null,
         ]);
     }
