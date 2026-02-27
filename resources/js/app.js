@@ -15,7 +15,7 @@ import copyClipboard from './components/CopyClipboard.vue';
 
 import 'bootstrap';
 
-const LOCALSTORAGE_AUTOLOAD_KEY = 'telescope-autoLoadsNewEntries';
+const LOCALSTORAGE_AUTOLOAD_KEY = 'telescopeAutoLoadsNewEntries';
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
 
