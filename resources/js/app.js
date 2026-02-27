@@ -84,13 +84,8 @@ new Vue({
 
     methods: {
         autoLoadNewEntries() {
-            if (!this.autoLoadsNewEntries) {
-                this.autoLoadsNewEntries = true;
-                localStorage[LOCALSTORAGE_AUTOLOAD_KEY] = 1;
-            } else {
-                this.autoLoadsNewEntries = false;
-                localStorage[LOCALSTORAGE_AUTOLOAD_KEY] = 0;
-            }
+            this.autoLoadsNewEntries = !this.autoLoadsNewEntries
+            localStorage[LOCALSTORAGE_AUTOLOAD_KEY] = Number(this.autoLoadsNewEntries)
         },
 
         toggleRecording() {
