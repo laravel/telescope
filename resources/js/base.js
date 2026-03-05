@@ -13,6 +13,12 @@ export default {
          * Show the time ago format for the given time.
          */
         timeAgo(time) {
+            if (Telescope.timeFormat == 24) {
+                return moment(time).local().format('HH:mm:ss');
+            } else if (Telescope.timeFormat == 12) {
+                return moment(time).local().format('h:mm:ss A');
+            }
+
             moment.updateLocale('en', {
                 relativeTime: {
                     future: 'in %s',
@@ -48,7 +54,11 @@ export default {
          * Show the time in local time.
          */
         localTime(time) {
-            return moment(time).local().format('MMMM Do YYYY, h:mm:ss A');
+            let format = Telescope.timeFormat == 24
+                ? 'MMMM Do YYYY, HH:mm:ss'
+                : 'MMMM Do YYYY, h:mm:ss A';
+
+            return moment(time).local().format(format);
         },
 
         /**

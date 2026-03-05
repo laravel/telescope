@@ -99,6 +99,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Time Format
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the time format used in the Telescope dashboard.
+    | Supported values are "relative" (e.g. "3h ago"), "12" (12-hour with
+    | AM/PM), and "24" (24-hour).
+    |
+    */
+
+    'time_format' => env('TELESCOPE_TIME_FORMAT', 'relative'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Allowed / Ignored Paths & Commands
     |--------------------------------------------------------------------------
     |

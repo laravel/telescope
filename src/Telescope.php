@@ -866,6 +866,7 @@ class Telescope
             'path' => config('telescope.path'),
             'timezone' => config('app.timezone'),
             'recording' => ! cache('telescope:pause-recording'),
+            'timeFormat' => config('telescope.time_format', 'relative'),
         ];
     }
 }
