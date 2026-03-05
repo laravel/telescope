@@ -13,10 +13,14 @@ export default {
          * Show the time ago format for the given time.
          */
         timeAgo(time) {
-            if (Telescope.timeFormat == 24) {
-                return moment(time).local().format('HH:mm:ss');
-            } else if (Telescope.timeFormat == 12) {
-                return moment(time).local().format('h:mm:ss A');
+            if (Telescope.timeFormat == 24 || Telescope.timeFormat == 12) {
+                let localTime = moment(time).local();
+                let isOlderThanADay = moment().diff(localTime, 'hours') >= 24;
+                let timeFormat = Telescope.timeFormat == 24 ? 'HH:mm:ss' : 'h:mm:ss A';
+
+                return isOlderThanADay
+                    ? localTime.format('MMM D, ' + timeFormat)
+                    : localTime.format(timeFormat);
             }
 
             moment.updateLocale('en', {
