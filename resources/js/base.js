@@ -18,9 +18,7 @@ export default {
                 let isOlderThanADay = moment().diff(localTime, 'hours') >= 24;
                 let timeFormat = Telescope.timeFormat == 24 ? 'HH:mm:ss' : 'h:mm:ss A';
 
-                return isOlderThanADay
-                    ? localTime.format('MMM D, ' + timeFormat)
-                    : localTime.format(timeFormat);
+                return isOlderThanADay ? localTime.format('MMM D, ' + timeFormat) : localTime.format(timeFormat);
             }
 
             moment.updateLocale('en', {
@@ -58,9 +56,7 @@ export default {
          * Show the time in local time.
          */
         localTime(time) {
-            let format = Telescope.timeFormat == 24
-                ? 'MMMM Do YYYY, HH:mm:ss'
-                : 'MMMM Do YYYY, h:mm:ss A';
+            let format = Telescope.timeFormat == 24 ? 'MMMM Do YYYY, HH:mm:ss' : 'MMMM Do YYYY, h:mm:ss A';
 
             return moment(time).local().format(format);
         },
