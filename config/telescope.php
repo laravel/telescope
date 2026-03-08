@@ -99,6 +99,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Authentication Guard
+    |--------------------------------------------------------------------------
+    |
+    | This option defines the authentication guard used to authorize access
+    | to the Telescope dashboard. You may change this value if your
+    | application uses a guard other than the default "web".
+    |
+    */
+
+    'guard' => 'web',
+
+    /*
+    |--------------------------------------------------------------------------
     | Allowed / Ignored Paths & Commands
     |--------------------------------------------------------------------------
     |

@@ -26,9 +26,11 @@ class TelescopeApplicationServiceProvider extends ServiceProvider
     {
         $this->gate();
 
-        Telescope::auth(function ($request) {
+        $guard = config('telescope.guard', null);
+
+        Telescope::auth(function ($request) use ($guard) {
             return app()->environment('local') ||
-                   Gate::check('viewTelescope', [$request->user()]);
+                   Gate::check('viewTelescope', [$request->user($guard)]);
         });
     }
 
