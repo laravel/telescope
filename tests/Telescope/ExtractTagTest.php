@@ -2,6 +2,8 @@
 
 namespace Laravel\Telescope\Tests\Telescope;
 
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Events\CallQueuedListener;
 use Illuminate\Mail\Mailable;
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
 use Laravel\Telescope\ExtractTags;
@@ -40,6 +42,28 @@ class ExtractTagTest extends FeatureTestCase
 
         $this->assertSame($tag, $extracted_tag[0]);
     }
+
+    public function test_extract_tag_from_queued_listener_with_event_aware_tags_method()
+    {
+        $job = new CallQueuedListener(
+            EventAwareTaggedListener::class,
+            'handle',
+            [new EventAwareTaggableEvent]
+        );
+
+        $this->assertSame(['event-aware-tag'], ExtractTags::fromJob($job));
+    }
+
+    public function test_extract_tag_from_queued_listener_with_zero_argument_tags_method()
+    {
+        $job = new CallQueuedListener(
+            ZeroArgumentTaggedListener::class,
+            'handle',
+            [new EventAwareTaggableEvent]
+        );
+
+        $this->assertSame(['zero-argument-tag'], ExtractTags::fromJob($job));
+    }
 }
 
 class DummyMailableWithData extends Mailable
@@ -59,5 +83,36 @@ class DummyMailableWithData extends Mailable
             ->with([
                 'mail_data' => $this->mail_data,
             ]);
+    }
+}
+
+class EventAwareTaggableEvent
+{
+    public string $tag = 'event-aware-tag';
+}
+
+class EventAwareTaggedListener implements ShouldQueue
+{
+    public function handle(EventAwareTaggableEvent $event)
+    {
+        //
+    }
+
+    public function tags(EventAwareTaggableEvent $event)
+    {
+        return [$event->tag];
+    }
+}
+
+class ZeroArgumentTaggedListener implements ShouldQueue
+{
+    public function handle(EventAwareTaggableEvent $event)
+    {
+        //
+    }
+
+    public function tags()
+    {
+        return ['zero-argument-tag'];
     }
 }

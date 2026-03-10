@@ -9,6 +9,7 @@ use Illuminate\Events\CallQueuedListener;
 use Illuminate\Mail\SendQueuedMailable;
 use Illuminate\Notifications\SendQueuedNotifications;
 use ReflectionClass;
+use ReflectionMethod;
 use stdClass;
 
 class ExtractTags
@@ -83,11 +84,16 @@ class ExtractTags
      */
     protected static function tagsForListener($job)
     {
-        return collect(
-            [static::extractListener($job), static::extractEvent($job)]
-        )->map(function ($job) {
-            return static::from($job);
-        })->collapse()->unique()->toArray();
+        $listener = static::extractListener($job);
+        $event = static::extractEvent($job);
+
+        return collect([
+            static::explicitTagsForListener($listener, $event),
+            static::modelsFor([$listener])->map(function ($model) {
+                return FormatModel::given($model);
+            })->all(),
+            static::from($event),
+        ])->collapse()->unique()->toArray();
     }
 
     /**
@@ -101,6 +107,28 @@ class ExtractTags
         return collect($targets)->map(function ($target) {
             return method_exists($target, 'tags') ? $target->tags() : [];
         })->collapse()->unique()->all();
+    }
+
+    /**
+     * Determine explicit tags for the given queued listener.
+     *
+     * @param  object  $listener
+     * @param  mixed  $event
+     * @return array
+     */
+    protected static function explicitTagsForListener($listener, $event)
+    {
+        if (! method_exists($listener, 'tags')) {
+            return [];
+        }
+
+        $method = new ReflectionMethod($listener, 'tags');
+
+        return match (true) {
+            $method->getNumberOfRequiredParameters() === 0 => $listener->tags(),
+            $method->getNumberOfParameters() === 1 && ! $event instanceof stdClass => $listener->tags($event),
+            default => [],
+        };
     }
 
     /**
