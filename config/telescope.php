@@ -99,6 +99,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Sentinel Configuration
+    |--------------------------------------------------------------------------
+    |
+    | When running Telescope behind a reverse proxy (e.g. Docker, Laravel
+    | Sail, nginx), Sentinel may block access because the resolved client
+    | IP is no longer private. You may whitelist the CIDR ranges of your
+    | reverse proxy networks here so that requests originating from those
+    | addresses are allowed through.
+    |
+    | Example: TELESCOPE_SENTINEL_ALLOWED_REMOTE_ADDRS=172.16.0.0/12,10.0.0.0/8
+    |
+    */
+
+    'sentinel' => [
+        'allowed_remote_addrs' => array_filter(array_map(
+            'trim', explode(',', env('TELESCOPE_SENTINEL_ALLOWED_REMOTE_ADDRS', ''))
+        )),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Allowed / Ignored Paths & Commands
     |--------------------------------------------------------------------------
     |

@@ -5,6 +5,7 @@ namespace Laravel\Telescope;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sentinel\Http\Middleware\SentinelMiddleware;
+use Laravel\Sentinel\Sentinel;
 use Laravel\Telescope\Actions\UninstallAction;
 use Laravel\Telescope\Contracts\ClearableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository;
@@ -27,6 +28,8 @@ class TelescopeServiceProvider extends ServiceProvider
         if (! config('telescope.enabled')) {
             return;
         }
+
+        Sentinel::extend('telescope', fn ($app) => new TelescopeSentinelDriver(fn () => $app));
 
         Route::middlewareGroup('telescope', [
             SentinelMiddleware::class.':telescope',
