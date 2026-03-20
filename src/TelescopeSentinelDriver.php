@@ -3,13 +3,15 @@
 namespace Laravel\Telescope;
 
 use Illuminate\Http\Request;
-use Laravel\Sentinel\Drivers\Driver;
+use Laravel\Sentinel\Drivers\Laravel;
 use Symfony\Component\HttpFoundation\IpUtils;
 
-class TelescopeSentinelDriver extends Driver
+class TelescopeSentinelDriver extends Laravel
 {
     /**
      * Authorize access for the request.
+     *
+     * @throws \RuntimeException
      */
     public function authorize(Request $request): bool
     {
@@ -23,7 +25,7 @@ class TelescopeSentinelDriver extends Driver
             return true;
         }
 
-        return $this->authorizeAccessingViaReverseProxies($request);
+        return parent::authorize($request);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Laravel\Telescope\Tests;
 use Illuminate\Http\Request;
 use Laravel\Sentinel\Sentinel;
 use Laravel\Telescope\TelescopeSentinelDriver;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 class TelescopeSentinelDriverTest extends FeatureTestCase
@@ -203,7 +204,7 @@ class TelescopeSentinelDriverTest extends FeatureTestCase
     // Tunnel services — not allowed unless explicitly configured
     // ---------------------------------------------------------------
 
-    public function test_expose_tunnel_not_allowed_when_loopback_not_configured(): void
+    public function test_expose_tunnel_blocked_with_trusted_proxy(): void
     {
         // Docker networks configured but NOT loopback — Expose is blocked
         $driver = $this->createDriver('local', ['172.16.0.0/12', '10.0.0.0/8']);
@@ -215,13 +216,28 @@ class TelescopeSentinelDriverTest extends FeatureTestCase
             forwardedFor: '203.0.113.50',
         );
 
-        // REMOTE_ADDR 127.0.0.1 is NOT in the configured ranges, so not allowed
-        // Falls through to authorizeAccessingViaReverseProxies which blocks
-        // (non-private resolved IP from trusted proxy)
+        // REMOTE_ADDR 127.0.0.1 is NOT in the configured ranges, so not allowed.
+        // Falls through to parent Laravel driver which blocks via
+        // authorizeAccessingViaReverseProxies (non-private resolved IP from trusted proxy).
         $this->assertFalse($driver->authorize($request));
     }
 
-    public function test_ngrok_tunnel_not_allowed_when_loopback_not_configured(): void
+    public function test_expose_tunnel_throws_without_trusted_proxy(): void
+    {
+        // Without trusted proxies, the parent Laravel driver throws RuntimeException
+        // for known tunnel hostnames — this protection is preserved.
+        $driver = $this->createDriver('local', ['172.16.0.0/12']);
+
+        $request = $this->createRequest(
+            remoteAddr: '127.0.0.1',
+            host: 'myapp.sharedwithexpose.com',
+        );
+
+        $this->expectException(RuntimeException::class);
+        $driver->authorize($request);
+    }
+
+    public function test_ngrok_tunnel_blocked_with_trusted_proxy(): void
     {
         $driver = $this->createDriver('local', ['172.16.0.0/12']);
 
@@ -233,6 +249,19 @@ class TelescopeSentinelDriverTest extends FeatureTestCase
         );
 
         $this->assertFalse($driver->authorize($request));
+    }
+
+    public function test_ngrok_tunnel_throws_without_trusted_proxy(): void
+    {
+        $driver = $this->createDriver('local', ['172.16.0.0/12']);
+
+        $request = $this->createRequest(
+            remoteAddr: '127.0.0.1',
+            host: 'abc123.ngrok-free.app',
+        );
+
+        $this->expectException(RuntimeException::class);
+        $driver->authorize($request);
     }
 
     // ---------------------------------------------------------------
@@ -377,7 +406,7 @@ class TelescopeSentinelDriverTest extends FeatureTestCase
         $this->assertTrue($driver->authorize($request));
     }
 
-    public function test_expose_blocked_with_docker_only_config(): void
+    public function test_expose_blocked_with_docker_only_config_and_trusted_proxy(): void
     {
         // Only Docker networks allowed — Expose (127.0.0.1) is not in range
         $driver = $this->createDriver('local', ['172.16.0.0/12', '10.0.0.0/8', '192.168.0.0/16']);
@@ -392,7 +421,20 @@ class TelescopeSentinelDriverTest extends FeatureTestCase
         $this->assertFalse($driver->authorize($request));
     }
 
-    public function test_ngrok_blocked_with_docker_only_config(): void
+    public function test_expose_throws_with_docker_only_config_without_trusted_proxy(): void
+    {
+        $driver = $this->createDriver('local', ['172.16.0.0/12', '10.0.0.0/8', '192.168.0.0/16']);
+
+        $request = $this->createRequest(
+            remoteAddr: '127.0.0.1',
+            host: 'myapp.sharedwithexpose.com',
+        );
+
+        $this->expectException(RuntimeException::class);
+        $driver->authorize($request);
+    }
+
+    public function test_ngrok_blocked_with_docker_only_config_and_trusted_proxy(): void
     {
         $driver = $this->createDriver('local', ['172.16.0.0/12', '10.0.0.0/8', '192.168.0.0/16']);
 
