@@ -108,7 +108,15 @@ return [
     | reverse proxy networks here so that requests originating from those
     | addresses are allowed through.
     |
+    | Common ranges:
+    |   - Docker / Sail:    172.16.0.0/12, 10.0.0.0/8
+    |   - Home / office:    192.168.0.0/16
+    |   - nginx same host:  127.0.0.1
+    |
     | Example: TELESCOPE_SENTINEL_ALLOWED_REMOTE_ADDRS=172.16.0.0/12,10.0.0.0/8
+    |
+    | Note: Adding 127.0.0.1 will also allow tunnel services (Expose,
+    | ngrok, Cloudflare Tunnel) that connect from loopback.
     |
     */
 
