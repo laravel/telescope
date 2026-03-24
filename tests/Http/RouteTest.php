@@ -2,6 +2,7 @@
 
 namespace Laravel\Telescope\Tests\Http;
 
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Testing\TestResponse;
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
@@ -20,7 +21,7 @@ class RouteTest extends FeatureTestCase
     {
         parent::setUp();
 
-        $this->withoutMiddleware([Authorize::class, VerifyCsrfToken::class, ValidateCsrfToken::class]);
+        $this->withoutMiddleware([Authorize::class, VerifyCsrfToken::class, ValidateCsrfToken::class, PreventRequestForgery::class]);
 
         $this->registerAssertJsonExactFragmentMacro();
     }

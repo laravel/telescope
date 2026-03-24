@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Tests\Http;
 
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -31,6 +32,7 @@ class AuthorizationTest extends FeatureTestCase
 
         $this->withoutMiddleware([VerifyCsrfToken::class]);
         $this->withoutMiddleware([ValidateCsrfToken::class]);
+        $this->withoutMiddleware([PreventRequestForgery::class]);
     }
 
     /** {@inheritdoc} */
