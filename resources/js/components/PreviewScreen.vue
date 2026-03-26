@@ -19,6 +19,7 @@ export default {
             entry: null,
             batch: null,
             ready: false,
+            copied: false,
 
             updateEntryTimeout: null,
             updateEntryTimer: 2500,
@@ -103,6 +104,22 @@ export default {
 
 
         /**
+         * Copy the entry as Markdown to the clipboard.
+         */
+        copyMarkdown() {
+            axios.get(Telescope.basePath + '/telescope-api/' + this.resource + '/' + this.id + '/markdown')
+                .then(response => {
+                    navigator.clipboard.writeText(response.data).then(() => {
+                        this.copied = true;
+                        setTimeout(() => { this.copied = false }, 2000);
+                    });
+                })
+                .catch(() => {
+                    this.alertError('Failed to copy markdown.');
+                });
+        },
+
+        /**
          * Update the existing entry if needed.
          */
         updateEntry(){
@@ -132,6 +149,16 @@ export default {
         <div class="card overflow-hidden">
             <div class="card-header d-flex align-items-center justify-content-between">
                 <h2 class="h6 m-0">{{ this.title }}</h2>
+
+                <button v-if="ready && entry" class="btn btn-primary" @click="copyMarkdown">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="width: 1.1rem; height: 1.1rem; vertical-align: text-bottom; margin-right: 0.3rem;">
+                        <path v-if="!copied" d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
+                        <path v-if="!copied" d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"></path>
+                        <path v-if="copied" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                        <path v-if="copied" fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    {{ copied ? 'Copied!' : 'Copy as Markdown' }}
+                </button>
             </div>
 
             <div

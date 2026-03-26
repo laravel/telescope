@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\View;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\Storage\EntryQueryOptions;
 
@@ -56,6 +57,36 @@ abstract class EntryController extends Controller
             'entry' => $entry,
             'batch' => $storage->get(null, EntryQueryOptions::forBatchId($entry->batchId)->limit(-1)),
         ]);
+    }
+
+    /**
+     * Get the entry as a Markdown document.
+     *
+     * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function markdown(EntriesRepository $storage, $id)
+    {
+        $entry = $storage->find($id);
+
+        $view = "telescope::markdown.{$entry->type}";
+
+        abort_unless(View::exists($view), 404);
+
+        $batch = $storage->get(null, EntryQueryOptions::forBatchId($entry->batchId)->limit(-1));
+
+        $serialized = $entry->jsonSerialize();
+
+        return response(
+            view($view, array_merge($entry->content, [
+                'createdAt' => $entry->createdAt,
+                'tags' => $serialized['tags'] ?? [],
+                'batch' => collect($batch)->where('id', '!=', $entry->id),
+            ]))->render(),
+            200,
+            ['Content-Type' => 'text/markdown']
+        );
     }
 
     /**
