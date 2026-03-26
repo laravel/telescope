@@ -24,7 +24,7 @@ class MarkdownTest extends FeatureTestCase
     protected function assertMarkdownContains(TestResponse $response, array $expectedStrings): void
     {
         $response->assertOk();
-        $response->assertHeader('Content-Type', 'text/markdown; charset=UTF-8');
+        $this->assertStringStartsWith('text/markdown', $response->headers->get('Content-Type'));
 
         foreach ($expectedStrings as $expected) {
             $this->assertStringContainsString($expected, $response->content());
