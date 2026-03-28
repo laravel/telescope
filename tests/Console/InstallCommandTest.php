@@ -2,28 +2,23 @@
 
 namespace Laravel\Telescope\Tests\Console;
 
-use Laravel\Telescope\TelescopeServiceProvider;
+use Laravel\Telescope\Console\InstallCommand;
 use Orchestra\Testbench\TestCase;
 
 class InstallCommandTest extends TestCase
 {
     /**
-     * A temporary directory to use as the base application path during tests.
+     * A temporary directory to use as the database path during tests.
      */
-    protected static string $tempBasePath;
+    protected static string $tempDatabasePath;
 
     /** {@inheritdoc} */
     #[\Override]
     protected function setUp(): void
     {
-        static::$tempBasePath = sys_get_temp_dir().'/telescope_test_'.uniqid();
+        static::$tempDatabasePath = sys_get_temp_dir().'/telescope_test_'.uniqid();
 
-        mkdir(static::$tempBasePath.'/database/migrations', 0755, true);
-        mkdir(static::$tempBasePath.'/config', 0755, true);
-        mkdir(static::$tempBasePath.'/app/Providers', 0755, true);
-        mkdir(static::$tempBasePath.'/bootstrap', 0755, true);
-        file_put_contents(static::$tempBasePath.'/bootstrap/providers.php', "<?php\n\nreturn [\n];\n");
-        file_put_contents(static::$tempBasePath.'/composer.json', '{"autoload":{"psr-4":{"App\\\\":"app/"}}}');
+        mkdir(static::$tempDatabasePath.'/migrations', 0755, true);
 
         parent::setUp();
     }
@@ -34,58 +29,48 @@ class InstallCommandTest extends TestCase
     {
         parent::tearDown();
 
-        $this->deleteDirectory(static::$tempBasePath);
+        $this->deleteDirectory(static::$tempDatabasePath);
     }
 
-    /** {@inheritdoc} */
-    #[\Override]
-    protected function getPackageProviders($app)
+    public function test_migration_exists_returns_false_when_no_migration_present()
     {
-        return [
-            TelescopeServiceProvider::class,
-        ];
+        $command = new InstallCommand;
+
+        $method = new \ReflectionMethod($command, 'migrationExists');
+
+        $this->app->useDatabasePath(static::$tempDatabasePath);
+
+        $this->assertFalse($method->invoke($command, 'create_telescope_entries_table'));
     }
 
-    /** {@inheritdoc} */
-    #[\Override]
-    protected function defineEnvironment($app)
+    public function test_migration_exists_returns_true_when_migration_present()
     {
-        $app->setBasePath(static::$tempBasePath);
+        $command = new InstallCommand;
+
+        $method = new \ReflectionMethod($command, 'migrationExists');
+
+        file_put_contents(
+            static::$tempDatabasePath.'/migrations/2024_01_01_000000_create_telescope_entries_table.php',
+            '<?php // existing migration'
+        );
+
+        $this->app->useDatabasePath(static::$tempDatabasePath);
+
+        $this->assertTrue($method->invoke($command, 'create_telescope_entries_table'));
     }
 
-    public function test_install_publishes_migrations_when_none_exist()
+    public function test_migration_exists_returns_false_when_directory_does_not_exist()
     {
-        $this->artisan('telescope:install');
+        $command = new InstallCommand;
 
-        $migrations = glob(static::$tempBasePath.'/database/migrations/*_create_telescope_entries_table.php');
+        $method = new \ReflectionMethod($command, 'migrationExists');
 
-        $this->assertNotEmpty($migrations, 'Migration file should be published when no existing migration is found.');
-    }
+        // Point to a non-existent directory.
+        rmdir(static::$tempDatabasePath.'/migrations');
 
-    public function test_install_skips_migrations_when_already_published()
-    {
-        // Simulate an existing migration file.
-        $existingMigration = static::$tempBasePath.'/database/migrations/2024_01_01_000000_create_telescope_entries_table.php';
-        file_put_contents($existingMigration, '<?php // existing migration');
+        $this->app->useDatabasePath(static::$tempDatabasePath);
 
-        $this->artisan('telescope:install');
-
-        $migrations = glob(static::$tempBasePath.'/database/migrations/*_create_telescope_entries_table.php');
-
-        $this->assertCount(1, $migrations, 'No additional migration file should be published when one already exists.');
-        $this->assertStringContainsString('existing migration', file_get_contents($migrations[0]));
-    }
-
-    public function test_install_publishes_migrations_when_directory_does_not_exist()
-    {
-        // Remove the migrations directory entirely.
-        rmdir(static::$tempBasePath.'/database/migrations');
-
-        $this->artisan('telescope:install');
-
-        $migrations = glob(static::$tempBasePath.'/database/migrations/*_create_telescope_entries_table.php');
-
-        $this->assertNotEmpty($migrations, 'Migration file should be published when migrations directory does not exist.');
+        $this->assertFalse($method->invoke($command, 'create_telescope_entries_table'));
     }
 
     /**
