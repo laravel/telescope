@@ -23,6 +23,7 @@ class InstallCommandTest extends TestCase
         mkdir(static::$tempBasePath.'/app/Providers', 0755, true);
         mkdir(static::$tempBasePath.'/bootstrap', 0755, true);
         file_put_contents(static::$tempBasePath.'/bootstrap/providers.php', "<?php\n\nreturn [\n];\n");
+        file_put_contents(static::$tempBasePath.'/composer.json', '{"autoload":{"psr-4":{"App\\\\":"app/"}}}');
 
         parent::setUp();
     }
@@ -49,10 +50,7 @@ class InstallCommandTest extends TestCase
     #[\Override]
     protected function defineEnvironment($app)
     {
-        $app->useAppPath(static::$tempBasePath.'/app');
-        $app->useConfigPath(static::$tempBasePath.'/config');
-        $app->useDatabasePath(static::$tempBasePath.'/database');
-        $app->useBootstrapPath(static::$tempBasePath.'/bootstrap');
+        $app->setBasePath(static::$tempBasePath);
     }
 
     public function test_install_publishes_migrations_when_none_exist()
