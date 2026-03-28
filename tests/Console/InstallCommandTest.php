@@ -37,6 +37,7 @@ class InstallCommandTest extends TestCase
         $command = new InstallCommand;
 
         $method = new \ReflectionMethod($command, 'migrationExists');
+        $method->setAccessible(true);
 
         $this->app->useDatabasePath(static::$tempDatabasePath);
 
@@ -48,6 +49,7 @@ class InstallCommandTest extends TestCase
         $command = new InstallCommand;
 
         $method = new \ReflectionMethod($command, 'migrationExists');
+        $method->setAccessible(true);
 
         file_put_contents(
             static::$tempDatabasePath.'/migrations/2024_01_01_000000_create_telescope_entries_table.php',
@@ -64,6 +66,7 @@ class InstallCommandTest extends TestCase
         $command = new InstallCommand;
 
         $method = new \ReflectionMethod($command, 'migrationExists');
+        $method->setAccessible(true);
 
         // Point to a non-existent directory.
         rmdir(static::$tempDatabasePath.'/migrations');
