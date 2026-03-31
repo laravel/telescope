@@ -89,6 +89,7 @@ export default {
         <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
             <div class="card">
                 <iframe
+                    sandbox=""
                     :src="Telescope.basePath + '/telescope-api/mail/' + $route.params.id + '/preview'"
                     width="100%"
                     height="400"
