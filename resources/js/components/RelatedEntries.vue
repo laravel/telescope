@@ -148,6 +148,20 @@ export default {
             };
         },
 
+        duplicatedQueryIds() {
+            const grouped = _.groupBy(this.queries, (q) => { return `${q.content.hash}-${q.content.connection}` });
+            const duplicated = [];
+
+            _.forEach(grouped, (group) => {
+                if (group.length > 1) {
+                    // All queries in this group are duplicates
+                    group.forEach(query => duplicated.push(query.id));
+                }
+            });
+
+            return duplicated;
+        },
+
         tabs(){
             return _.filter([
                 {title: "Exceptions", type: "exceptions", count: this.exceptions.length},
@@ -204,7 +218,7 @@ export default {
                     role="button"
                     aria-haspopup="true"
                     aria-expanded="false"
-                    >More</a
+                >More</a
                 >
                 <div class="dropdown-menu">
                     <a
@@ -213,7 +227,7 @@ export default {
                         href="#"
                         v-for="tab in dropdownTabs"
                         v-on:click.prevent="activateTab(tab.type)"
-                        >{{ tab.title }} ({{ tab.count }})</a
+                    >{{ tab.title }} ({{ tab.count }})</a
                     >
                 </div>
             </li>
@@ -222,556 +236,561 @@ export default {
             <!-- Related Exceptions -->
             <table class="table table-hover mb-0" v-show="currentTab == 'exceptions' && exceptions.length">
                 <thead>
-                    <tr>
-                        <th>Message</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Message</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="entry in exceptions">
-                        <td :title="entry.content.class">
-                            {{ truncate(entry.content.class, 70) }}<br />
-                            <small class="text-muted text-break">{{ truncate(entry.content.message, 200) }}</small>
-                        </td>
+                <tr v-for="entry in exceptions">
+                    <td :title="entry.content.class">
+                        {{ truncate(entry.content.class, 70) }}<br />
+                        <small class="text-muted text-break">{{ truncate(entry.content.message, 200) }}</small>
+                    </td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'exception-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!-- Related Logs -->
             <table class="table table-hover mb-0" v-show="currentTab == 'logs' && logs.length">
                 <thead>
-                    <tr>
-                        <th>Message</th>
-                        <th scope="col">Level</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Message</th>
+                    <th scope="col">Level</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="entry in logs">
-                        <td :title="entry.content.message">
-                            {{ truncate(entry.content.message, 90) }}
-                        </td>
-                        <td class="table-fit">
+                <tr v-for="entry in logs">
+                    <td :title="entry.content.message">
+                        {{ truncate(entry.content.message, 90) }}
+                    </td>
+                    <td class="table-fit">
                             <span class="badge" :class="'badge-' + logLevelClass(entry.content.level)">
                                 {{ entry.content.level }}
                             </span>
-                        </td>
+                    </td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'log-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!-- Related Queries -->
             <table class="table table-hover mb-0" v-show="currentTab == 'queries' && queries.length">
                 <thead>
-                    <tr>
-                        <th>
-                            Query<br /><small
-                                >{{ queries.length }} queries, {{ queriesSummary.duplicated }} of which are
-                                duplicated.</small
-                            >
-                        </th>
-                        <th class="text-right">
-                            Duration<br /><small>{{ queriesSummary.time }}ms</small>
-                        </th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>
+                        Query<br /><small
+                    >{{ queries.length }} queries, {{ queriesSummary.duplicated }} of which are
+                        duplicated.</small
+                    >
+                    </th>
+                    <th class="text-right">
+                        Duration<br /><small>{{ queriesSummary.time }}ms</small>
+                    </th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="entry in queries">
-                        <td :title="entry.content.sql">
-                            <code>{{ truncate(entry.content.sql, 110) }}</code>
-                        </td>
+                <tr v-for="entry in queries">
+                    <td :title="entry.content.sql">
+                            <span class="badge badge-warning mr-2" v-if="duplicatedQueryIds.includes(entry.id)" title="Duplicate query">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style="width: 14px; height: 14px; display: inline-block; vertical-align: middle;">
+                                    <path fill="currentColor" fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                        <code>{{ truncate(entry.content.sql, 110) }}</code>
+                    </td>
 
-                        <td class="table-fit text-right">
+                    <td class="table-fit text-right">
                             <span class="badge badge-danger" v-if="entry.content.slow">
                                 {{ entry.content.time }}ms
                             </span>
 
-                            <span v-else class="text-muted"> {{ entry.content.time }}ms </span>
-                        </td>
+                        <span v-else class="text-muted"> {{ entry.content.time }}ms </span>
+                    </td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'query-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!-- Related Model Actions -->
             <table class="table table-hover mb-0" v-show="currentTab == 'models' && models.length">
                 <thead>
-                    <tr>
-                        <th>Model</th>
-                        <th>Hydrated</th>
-                        <th>Action</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Model</th>
+                    <th>Hydrated</th>
+                    <th>Action</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="entry in models">
-                        <td :title="entry.content.model">
-                            {{ truncate(entry.content.model, 100) }}
-                        </td>
-                        <td>{{ entry.content?.count }}</td>
-                        <td class="table-fit">
+                <tr v-for="entry in models">
+                    <td :title="entry.content.model">
+                        {{ truncate(entry.content.model, 100) }}
+                    </td>
+                    <td>{{ entry.content?.count }}</td>
+                    <td class="table-fit">
                             <span class="badge" :class="'badge-' + modelActionClass(entry.content.action)">
                                 {{ entry.content.action }}
                             </span>
-                        </td>
+                    </td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'model-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!-- Related Gates -->
             <table class="table table-hover mb-0" v-show="currentTab == 'gates' && gates.length">
                 <thead>
-                    <tr>
-                        <th>Ability</th>
-                        <th>Result</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Ability</th>
+                    <th>Result</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="entry in gates">
-                        <td :title="entry.content.ability">
-                            {{ truncate(entry.content.ability, 80) }}
-                        </td>
-                        <td class="table-fit">
+                <tr v-for="entry in gates">
+                    <td :title="entry.content.ability">
+                        {{ truncate(entry.content.ability, 80) }}
+                    </td>
+                    <td class="table-fit">
                             <span class="badge" :class="'badge-' + gateResultClass(entry.content.result)">
                                 {{ entry.content.result }}
                             </span>
-                        </td>
+                    </td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'gate-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!-- Related Jobs -->
             <table class="table table-hover mb-0" v-show="currentTab == 'jobs' && jobs.length">
                 <thead>
-                    <tr>
-                        <th>Job</th>
-                        <th scope="col">Status</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Job</th>
+                    <th scope="col">Status</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="entry in jobs">
-                        <td>
+                <tr v-for="entry in jobs">
+                    <td>
                             <span :title="entry.content.name">{{ truncate(entry.content.name, 68) }}</span
                             ><br />
-                            <small class="text-muted">
-                                Connection: {{ entry.content.connection }} | Queue: {{ entry.content.queue }}
-                            </small>
-                        </td>
+                        <small class="text-muted">
+                            Connection: {{ entry.content.connection }} | Queue: {{ entry.content.queue }}
+                        </small>
+                    </td>
 
-                        <td class="table-fit">
+                    <td class="table-fit">
                             <span class="badge" :class="'badge-' + jobStatusClass(entry.content.status)">
                                 {{ entry.content.status }}
                             </span>
-                        </td>
+                    </td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'job-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!-- Related Events -->
             <table class="table table-hover mb-0" v-show="currentTab == 'events' && events.length">
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th class="text-right">Listeners</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th class="text-right">Listeners</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="entry in events">
-                        <td :title="entry.content.name">
-                            {{ truncate(entry.content.name, 80) }}
+                <tr v-for="entry in events">
+                    <td :title="entry.content.name">
+                        {{ truncate(entry.content.name, 80) }}
 
-                            <span class="badge badge-info ml-2" v-if="entry.content.broadcast"> Broadcast </span>
-                        </td>
+                        <span class="badge badge-info ml-2" v-if="entry.content.broadcast"> Broadcast </span>
+                    </td>
 
-                        <td class="table-fit text-right text-muted">
-                            {{ entry.content.listeners.length }}
-                        </td>
+                    <td class="table-fit text-right text-muted">
+                        {{ entry.content.listeners.length }}
+                    </td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'event-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!-- Related Cache -->
             <table class="table table-hover mb-0" v-show="currentTab == 'cache' && cache.length">
                 <thead>
-                    <tr>
-                        <th>Key</th>
-                        <th>Action</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Key</th>
+                    <th>Action</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="entry in cache">
-                        <td :title="entry.content.key">
-                            {{ truncate(entry.content.key, 100) }}
-                        </td>
-                        <td class="table-fit">
+                <tr v-for="entry in cache">
+                    <td :title="entry.content.key">
+                        {{ truncate(entry.content.key, 100) }}
+                    </td>
+                    <td class="table-fit">
                             <span class="badge" :class="'badge-' + cacheActionTypeClass(entry.content.type)">
                                 {{ entry.content.type }}
                             </span>
-                        </td>
+                    </td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'cache-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!-- Related Redis Commands -->
             <table class="table table-hover mb-0" v-show="currentTab == 'redis' && redis.length">
                 <thead>
-                    <tr>
-                        <th>Command</th>
-                        <th class="text-right">Duration</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Command</th>
+                    <th class="text-right">Duration</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="entry in redis">
-                        <td :title="entry.content.command">
-                            {{ truncate(entry.content.command, 100) }}
-                        </td>
-                        <td class="table-fit text-right text-muted">{{ entry.content.time }}ms</td>
+                <tr v-for="entry in redis">
+                    <td :title="entry.content.command">
+                        {{ truncate(entry.content.command, 100) }}
+                    </td>
+                    <td class="table-fit text-right text-muted">{{ entry.content.time }}ms</td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'redis-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!-- Related Mail -->
             <table class="table table-hover mb-0" v-show="currentTab == 'mails' && mails.length">
                 <thead>
-                    <tr>
-                        <th>Mailable</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Mailable</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="entry in mails">
-                        <td>
+                <tr v-for="entry in mails">
+                    <td>
                             <span :title="entry.content.mailable">{{
-                                truncate(entry.content.mailable || '-', 70)
-                            }}</span>
+                                    truncate(entry.content.mailable || '-', 70)
+                                }}</span>
 
-                            <span class="badge badge-secondary ml-2" v-if="entry.content.queued"> Queued </span>
+                        <span class="badge badge-secondary ml-2" v-if="entry.content.queued"> Queued </span>
 
-                            <br />
+                        <br />
 
-                            <small class="text-muted" :title="entry.content.subject">
-                                Subject:
-                                {{ truncate(entry.content.subject, 90) }}
-                            </small>
-                        </td>
+                        <small class="text-muted" :title="entry.content.subject">
+                            Subject:
+                            {{ truncate(entry.content.subject, 90) }}
+                        </small>
+                    </td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'mail-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!-- Related Notifications -->
             <table class="table table-hover mb-0" v-show="currentTab == 'notifications' && notifications.length">
                 <thead>
-                    <tr>
-                        <th>Notification</th>
-                        <th>Channel</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Notification</th>
+                    <th>Channel</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="entry in notifications">
-                        <td>
+                <tr v-for="entry in notifications">
+                    <td>
                             <span :title="entry.content.notification">{{
-                                truncate(entry.content.notification || '-', 70)
-                            }}</span>
+                                    truncate(entry.content.notification || '-', 70)
+                                }}</span>
 
-                            <span class="badge badge-secondary ml-2" v-if="entry.content.queued"> Queued </span>
+                        <span class="badge badge-secondary ml-2" v-if="entry.content.queued"> Queued </span>
 
-                            <br />
+                        <br />
 
-                            <small class="text-muted" :title="entry.content.notifiable">
-                                Recipient:
-                                {{ truncate(entry.content.notifiable, 90) }}
-                            </small>
-                        </td>
+                        <small class="text-muted" :title="entry.content.notifiable">
+                            Recipient:
+                            {{ truncate(entry.content.notifiable, 90) }}
+                        </small>
+                    </td>
 
-                        <td class="table-fit text-muted">
-                            {{ truncate(entry.content.channel, 20) }}
-                        </td>
+                    <td class="table-fit text-muted">
+                        {{ truncate(entry.content.channel, 20) }}
+                    </td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'notification-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!-- Related Views -->
             <table class="table table-hover mb-0" v-show="currentTab == 'views' && views.length">
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th class="text-right">Composers</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th class="text-right">Composers</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="entry in views">
-                        <td>
-                            {{ entry.content.name }} <br />
-                            <small class="text-muted">{{ truncate(entry.content.path, 100) }}</small>
-                        </td>
+                <tr v-for="entry in views">
+                    <td>
+                        {{ entry.content.name }} <br />
+                        <small class="text-muted">{{ truncate(entry.content.path, 100) }}</small>
+                    </td>
 
-                        <td class="table-fit text-right text-muted">
-                            {{ entry.content.composers ? entry.content.composers.length : 0 }}
-                        </td>
+                    <td class="table-fit text-right text-muted">
+                        {{ entry.content.composers ? entry.content.composers.length : 0 }}
+                    </td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'view-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
             <!-- Related Http Client Requests -->
             <table class="table table-hover mb-0" v-show="currentTab == 'client_requests' && clientRequests.length">
                 <thead>
-                    <tr>
-                        <th>Verb</th>
-                        <th>URI</th>
-                        <th>Status</th>
-                        <th class="text-right">Duration</th>
-                        <th class="text-right">Happened</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Verb</th>
+                    <th>URI</th>
+                    <th>Status</th>
+                    <th class="text-right">Duration</th>
+                    <th class="text-right">Happened</th>
+                    <th></th>
+                </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="entry in clientRequests">
-                        <td class="table-fit pr-0">
+                <tr v-for="entry in clientRequests">
+                    <td class="table-fit pr-0">
                             <span class="badge" :class="'badge-' + requestMethodClass(entry.content.method)">
                                 {{ entry.content.method }}
                             </span>
-                        </td>
+                    </td>
 
-                        <td :title="entry.content.uri">
-                            {{ truncate(entry.content.uri, 60) }}
-                        </td>
+                    <td :title="entry.content.uri">
+                        {{ truncate(entry.content.uri, 60) }}
+                    </td>
 
-                        <td class="table-fit">
+                    <td class="table-fit">
                             <span
                                 class="badge"
                                 :class="
@@ -787,39 +806,39 @@ export default {
                                     entry.content.response_status !== undefined ? entry.content.response_status : 'N/A'
                                 }}
                             </span>
-                        </td>
+                    </td>
 
-                        <td class="table-fit text-right text-muted">
-                            <span v-if="entry.content.duration">{{ entry.content.duration }}ms</span>
-                            <span v-else>-</span>
-                        </td>
+                    <td class="table-fit text-right text-muted">
+                        <span v-if="entry.content.duration">{{ entry.content.duration }}ms</span>
+                        <span v-else>-</span>
+                    </td>
 
-                        <td
-                            class="table-fit text-right text-muted"
-                            :data-timeago="entry.created_at"
-                            :title="entry.created_at"
-                        >
-                            {{ timeAgo(entry.created_at) }}
-                        </td>
+                    <td
+                        class="table-fit text-right text-muted"
+                        :data-timeago="entry.created_at"
+                        :title="entry.created_at"
+                    >
+                        {{ timeAgo(entry.created_at) }}
+                    </td>
 
-                        <td class="table-fit">
-                            <router-link
-                                :to="{
+                    <td class="table-fit">
+                        <router-link
+                            :to="{
                                     name: 'client-request-preview',
                                     params: { id: entry.id },
                                 }"
-                                class="control-action"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-                            </router-link>
-                        </td>
-                    </tr>
+                            class="control-action"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </router-link>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
