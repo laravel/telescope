@@ -44,7 +44,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      * @param  int  $chunkSize
      * @return void
      */
-    public function __construct(string $connection, int $chunkSize = null)
+    public function __construct(string $connection, ?int $chunkSize = null)
     {
         $this->connection = $connection;
 
