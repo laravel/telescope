@@ -106,7 +106,7 @@ class ViewWatcher extends Watcher
     /**
      * Get all view composers for the given event.
      *
-     * @param  string $eventName
+     * @param  string  $eventName
      * @return \Illuminate\Support\Collection
      */
     protected function getComposersForEvent($eventName)
