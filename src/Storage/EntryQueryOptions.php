@@ -21,6 +21,13 @@ class EntryQueryOptions
     public $tag;
 
     /**
+     * The tags that must belong to retrieved entries.
+     *
+     * @var string
+     */
+    public $tags;
+
+    /**
      * The family hash that must belong to retrieved entries.
      *
      * @var string
@@ -61,6 +68,7 @@ class EntryQueryOptions
                 ->uuids($request->uuids)
                 ->beforeSequence($request->before)
                 ->tag($request->tag)
+                ->tags($request->tags)
                 ->familyHash($request->family_hash)
                 ->limit($request->take ?? 50);
     }
@@ -124,6 +132,19 @@ class EntryQueryOptions
     public function tag(?string $tag)
     {
         $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Set the tags that must all belong to retrieved entries.
+     *
+     * @param  string|null  $tags
+     * @return $this
+     */
+    public function tags(?string $tags)
+    {
+        $this->tags = $tags;
 
         return $this;
     }

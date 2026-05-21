@@ -15,6 +15,7 @@ export default {
     data() {
         return {
             tag: '',
+            tags: '',
             familyHash: '',
             entries: [],
             ready: false,
@@ -46,6 +47,8 @@ export default {
         this.familyHash = this.$route.query.family_hash || '';
 
         this.tag = this.$route.query.tag || '';
+
+        this.tags = this.$route.query.tags || '';
 
         this.loadEntries((entries) => {
             this.entries = entries;
@@ -90,6 +93,10 @@ export default {
                 this.tag = '';
             }
 
+            if (!this.$route.query.tags) {
+                this.tags = '';
+            }
+
             this.ready = false;
 
             this.loadEntries((entries) => {
@@ -107,6 +114,7 @@ export default {
         loadEntries(after){
             axios.post(Telescope.basePath + '/telescope-api/' + this.resource +
                     '?tag=' + this.tag +
+                    '&tags=' + this.tags +
                     '&before=' + this.lastEntryIndex +
                     '&take=' + this.entriesPerRequest +
                     '&family_hash=' + this.familyHash
@@ -133,6 +141,7 @@ export default {
             this.newEntriesTimeout = setTimeout(() => {
                 axios.post(Telescope.basePath + '/telescope-api/' + this.resource +
                         '?tag=' + this.tag +
+                        '&tags=' + this.tags +
                         '&take=1' +
                         '&family_hash=' + this.familyHash
                 ).then(response => {

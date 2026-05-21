@@ -67,6 +67,7 @@ class EntryModel extends Model
         $this->whereType($query, $type)
                 ->whereBatchId($query, $options)
                 ->whereTag($query, $options)
+                ->whereTags($query, $options)
                 ->whereFamilyHash($query, $options)
                 ->whereBeforeSequence($query, $options)
                 ->filter($query, $options);
@@ -140,6 +141,34 @@ class EntryModel extends Model
      * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
      * @return $this
      */
+    protected function whereTags($query, EntryQueryOptions $options)
+    {
+        $query->when($options->tags, function ($query, $tag) {
+            $tags = collect(explode(',', $tag))->map(fn ($tag) => trim($tag));
+
+            if ($tags->isEmpty()) {
+                return $query;
+            }
+
+            return $query->whereIn('uuid', function ($query) use ($tags) {
+                $query->select('entry_uuid')
+                    ->from('telescope_entries_tags')
+                    ->whereIn('tag', $tags->all())
+                    ->groupBy('entry_uuid')
+                    ->havingRaw('COUNT(DISTINCT tag) = ?', [$tags->count()]);
+            });
+        });
+
+        return $this;
+    }
+
+    /**
+     * Scope the query for the given type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return $this
+     */
     protected function whereFamilyHash($query, EntryQueryOptions $options)
     {
         $query->when($options->familyHash, function ($query, $hash) {
@@ -174,7 +203,7 @@ class EntryModel extends Model
      */
     protected function filter($query, EntryQueryOptions $options)
     {
-        if ($options->familyHash || $options->tag || $options->batchId) {
+        if ($options->familyHash || $options->tag || $options->tags || $options->batchId) {
             return $this;
         }
 
