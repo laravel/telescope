@@ -67,6 +67,7 @@ class EntryModel extends Model
         $this->whereType($query, $type)
                 ->whereBatchId($query, $options)
                 ->whereTag($query, $options)
+                ->whereEndpoint($query, $options)
                 ->whereFamilyHash($query, $options)
                 ->whereBeforeSequence($query, $options)
                 ->filter($query, $options);
@@ -134,6 +135,48 @@ class EntryModel extends Model
     }
 
     /**
+     * Scope the query for the given endpoint pattern.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Laravel\Telescope\Storage\EntryQueryOptions  $options
+     * @return $this
+     */
+    protected function whereEndpoint($query, EntryQueryOptions $options)
+    {
+        $query->when($options->endpoint, function ($query, $endpoint) {
+            $patterns = collect(explode(',', $endpoint))->map(fn ($pattern) => trim($pattern))->filter();
+
+            if ($patterns->isEmpty()) {
+                return $query;
+            }
+
+            return $query->where(function ($query) use ($patterns) {
+                foreach ($patterns as $pattern) {
+                    $query->orWhere(function ($query) use ($pattern) {
+                        $method = null;
+                        $path = $pattern;
+
+                        if (str_contains($pattern, ':')) {
+                            [$method, $path] = explode(':', $pattern, 2);
+                            $method = strtoupper(trim($method));
+                            $path = trim($path);
+                        }
+
+                        if ($method && $method !== '*') {
+                            $query->where('content->method', $method);
+                        }
+
+                        $like = '%'.str_replace('*', '%', ltrim($path, '/')).'%';
+                        $query->where('content->uri', 'like', $like);
+                    });
+                }
+            });
+        });
+
+        return $this;
+    }
+
+    /**
      * Scope the query for the given type.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -174,7 +217,7 @@ class EntryModel extends Model
      */
     protected function filter($query, EntryQueryOptions $options)
     {
-        if ($options->familyHash || $options->tag || $options->batchId) {
+        if ($options->familyHash || $options->tag || $options->batchId || $options->endpoint) {
             return $this;
         }
 

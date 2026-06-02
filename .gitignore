@@ -6,6 +6,7 @@
 /phpunit.xml
 /.vscode
 /node_modules
+/hot
 /laravel
 /vendor
 composer.phar

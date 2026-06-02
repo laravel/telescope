@@ -10,6 +10,7 @@ use Laravel\Telescope\Contracts\ClearableRepository;
 use Laravel\Telescope\Contracts\EntriesRepository as Contract;
 use Laravel\Telescope\Contracts\PrunableRepository;
 use Laravel\Telescope\Contracts\TerminableRepository;
+use Laravel\Telescope\EndpointMatcher;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\IncomingEntry;
@@ -36,6 +37,13 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
      * @var array|null
      */
     protected $monitoredTags;
+
+    /**
+     * The endpoints currently being monitored.
+     *
+     * @var array|null
+     */
+    protected $monitoredEndpoints;
 
     /**
      * Create a new database repository.
@@ -367,6 +375,78 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     }
 
     /**
+     * Load the monitored endpoints from storage.
+     *
+     * @return void
+     */
+    public function loadMonitoredEndpoints()
+    {
+        try {
+            $this->monitoredEndpoints = $this->monitoringEndpoints();
+        } catch (\Throwable $e) {
+            $this->monitoredEndpoints = [];
+        }
+    }
+
+    /**
+     * Determine if the given URI and method match a monitored endpoint.
+     *
+     * @param  string  $uri
+     * @param  string  $method
+     * @return bool
+     */
+    public function isMonitoringEndpoint(string $uri, string $method)
+    {
+        if (is_null($this->monitoredEndpoints)) {
+            $this->loadMonitoredEndpoints();
+        }
+
+        return EndpointMatcher::matchesAny($uri, $method, $this->monitoredEndpoints);
+    }
+
+    /**
+     * Get the list of endpoints currently being monitored.
+     *
+     * @return array
+     */
+    public function monitoringEndpoints()
+    {
+        return $this->table('telescope_monitored_endpoints')->pluck('endpoint')->all();
+    }
+
+    /**
+     * Begin monitoring the given list of endpoints.
+     *
+     * @param  array  $endpoints
+     * @return void
+     */
+    public function monitorEndpoints(array $endpoints)
+    {
+        $endpoints = array_diff($endpoints, $this->monitoringEndpoints());
+
+        if (empty($endpoints)) {
+            return;
+        }
+
+        $this->table('telescope_monitored_endpoints')
+                    ->insert(collect($endpoints)
+                    ->mapWithKeys(function ($endpoint) {
+                        return ['endpoint' => $endpoint];
+                    })->all());
+    }
+
+    /**
+     * Stop monitoring the given list of endpoints.
+     *
+     * @param  array  $endpoints
+     * @return void
+     */
+    public function stopMonitoringEndpoints(array $endpoints)
+    {
+        $this->table('telescope_monitored_endpoints')->whereIn('endpoint', $endpoints)->delete();
+    }
+
+    /**
      * Prune all of the entries older than the given date.
      *
      * @param  \DateTimeInterface  $before
@@ -407,6 +487,10 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
         do {
             $deleted = $this->table('telescope_monitoring')->take($this->chunkSize)->delete();
         } while ($deleted !== 0);
+
+        do {
+            $deleted = $this->table('telescope_monitored_endpoints')->take($this->chunkSize)->delete();
+        } while ($deleted !== 0);
     }
 
     /**
@@ -417,6 +501,7 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     public function terminate()
     {
         $this->monitoredTags = null;
+        $this->monitoredEndpoints = null;
     }
 
     /**

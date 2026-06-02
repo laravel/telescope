@@ -250,6 +250,7 @@ class Telescope
     {
         if ($loadMonitoredTags) {
             app(EntriesRepository::class)->loadMonitoredTags();
+            app(EntriesRepository::class)->loadMonitoredEndpoints();
         }
 
         $recordingPaused = false;
@@ -300,6 +301,32 @@ class Telescope
     public static function isRecording()
     {
         return static::$shouldRecord && ! app('events') instanceof EventFake;
+    }
+
+    /**
+     * Determine if the current HTTP request matches a monitored endpoint.
+     *
+     * @return bool
+     */
+    public static function handlingMonitoredEndpoint()
+    {
+        if (app()->runningInConsole()) {
+            return false;
+        }
+
+        try {
+            $request = app('request');
+        } catch (Throwable) {
+            return false;
+        }
+
+        if (! $request) {
+            return false;
+        }
+
+        $uri = str_replace($request->root(), '', $request->fullUrl()) ?: '/';
+
+        return app(EntriesRepository::class)->isMonitoringEndpoint($uri, $request->method());
     }
 
     /**
@@ -815,6 +842,16 @@ class Telescope
      */
     public static function css()
     {
+        if ($hot = static::viteDevServerUrl()) {
+            $styles = static::$useDarkTheme
+                ? 'resources/sass/styles-dark.scss'
+                : 'resources/sass/styles.scss';
+
+            return new HtmlString(
+                '<link rel="stylesheet" href="'.$hot.'/'.$styles.'">'
+            );
+        }
+
         if (($app = @file_get_contents(__DIR__.'/../dist/app.css')) === false) {
             throw new RuntimeException('Unable to load the Telescope dashboard app CSS.');
         }
@@ -841,11 +878,18 @@ class Telescope
      */
     public static function js()
     {
+        $telescope = Js::from(static::scriptVariables());
+
+        if ($hot = static::viteDevServerUrl()) {
+            return new HtmlString(<<<HTML
+                <script>window.Telescope = {$telescope};</script>
+                <script type="module" src="{$hot}/resources/js/app.js"></script>
+                HTML);
+        }
+
         if (($js = @file_get_contents(__DIR__.'/../dist/app.js')) === false) {
             throw new RuntimeException('Unable to load the Telescope dashboard JavaScript.');
         }
-
-        $telescope = Js::from(static::scriptVariables());
 
         return new HtmlString(<<<HTML
             <script type="module">
@@ -853,6 +897,70 @@ class Telescope
                 {$js}
             </script>
             HTML);
+    }
+
+    /**
+     * Get the Vite dev server URL if the hot file is present.
+     *
+     * @return string|null
+     */
+    protected static function viteDevServerUrl()
+    {
+        $hotFile = __DIR__.'/../hot';
+
+        if (! file_exists($hotFile)) {
+            return null;
+        }
+
+        if ($override = config('telescope.vite_url')) {
+            return rtrim($override, '/');
+        }
+
+        $url = trim((string) file_get_contents($hotFile));
+
+        if ($url === '') {
+            return null;
+        }
+
+        return static::resolveViteDevServerUrl($url);
+    }
+
+    /**
+     * Resolve the Vite dev server URL for the current request.
+     *
+     * Browsers block public origins from loading assets on loopback (localhost).
+     * When Telescope is accessed via a network IP or hostname, use that same
+     * host for the Vite dev server instead of localhost.
+     *
+     * @param  string  $url
+     * @return string
+     */
+    protected static function resolveViteDevServerUrl(string $url): string
+    {
+        if (app()->runningInConsole()) {
+            return rtrim($url, '/');
+        }
+
+        try {
+            $request = request();
+        } catch (Throwable) {
+            return rtrim($url, '/');
+        }
+
+        if (! $request) {
+            return rtrim($url, '/');
+        }
+
+        $host = $request->getHost();
+
+        if (in_array($host, ['localhost', '127.0.0.1', '[::1]'], true)) {
+            return rtrim($url, '/');
+        }
+
+        $parsed = parse_url($url);
+        $port = $parsed['port'] ?? 5173;
+
+        return 'http://'.$host.':'.$port;
     }
 
     /**

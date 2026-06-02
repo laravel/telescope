@@ -182,6 +182,23 @@ class IncomingEntry
     }
 
     /**
+     * Determine if the incoming entry belongs to a monitored endpoint.
+     *
+     * @return bool
+     */
+    public function hasMonitoredEndpoint()
+    {
+        if ($this->isRequest()) {
+            return app(EntriesRepository::class)->isMonitoringEndpoint(
+                $this->content['uri'] ?? '/',
+                $this->content['method'] ?? 'GET'
+            );
+        }
+
+        return Telescope::handlingMonitoredEndpoint();
+    }
+
+    /**
      * Determine if the incoming entry is a request.
      *
      * @return bool

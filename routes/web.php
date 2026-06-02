@@ -81,6 +81,11 @@ Route::get('/telescope-api/monitored-tags', 'MonitoredTagController@index');
 Route::post('/telescope-api/monitored-tags/', 'MonitoredTagController@store');
 Route::post('/telescope-api/monitored-tags/delete', 'MonitoredTagController@destroy');
 
+// Monitored Endpoints...
+Route::get('/telescope-api/monitored-endpoints', 'MonitoredEndpointController@index');
+Route::post('/telescope-api/monitored-endpoints/', 'MonitoredEndpointController@store');
+Route::post('/telescope-api/monitored-endpoints/delete', 'MonitoredEndpointController@destroy');
+
 // Toggle Recording...
 Route::post('/telescope-api/toggle-recording', 'RecordingController@toggle');
 

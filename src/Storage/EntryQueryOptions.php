@@ -21,6 +21,13 @@ class EntryQueryOptions
     public $tag;
 
     /**
+     * The endpoint pattern that retrieved entries must match.
+     *
+     * @var string
+     */
+    public $endpoint;
+
+    /**
      * The family hash that must belong to retrieved entries.
      *
      * @var string
@@ -61,6 +68,7 @@ class EntryQueryOptions
                 ->uuids($request->uuids)
                 ->beforeSequence($request->before)
                 ->tag($request->tag)
+                ->endpoint($request->endpoint)
                 ->familyHash($request->family_hash)
                 ->limit($request->take ?? 50);
     }
@@ -124,6 +132,19 @@ class EntryQueryOptions
     public function tag(?string $tag)
     {
         $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Set the endpoint pattern that retrieved entries must match.
+     *
+     * @param  string|null  $endpoint
+     * @return $this
+     */
+    public function endpoint(?string $endpoint)
+    {
+        $this->endpoint = $endpoint;
 
         return $this;
     }

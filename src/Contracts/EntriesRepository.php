@@ -78,4 +78,43 @@ interface EntriesRepository
      * @return void
      */
     public function stopMonitoring(array $tags);
+
+    /**
+     * Load the monitored endpoints from storage.
+     *
+     * @return void
+     */
+    public function loadMonitoredEndpoints();
+
+    /**
+     * Determine if the given URI and method match a monitored endpoint.
+     *
+     * @param  string  $uri
+     * @param  string  $method
+     * @return bool
+     */
+    public function isMonitoringEndpoint(string $uri, string $method);
+
+    /**
+     * Get the list of endpoints currently being monitored.
+     *
+     * @return array
+     */
+    public function monitoringEndpoints();
+
+    /**
+     * Begin monitoring the given list of endpoints.
+     *
+     * @param  array  $endpoints
+     * @return void
+     */
+    public function monitorEndpoints(array $endpoints);
+
+    /**
+     * Stop monitoring the given list of endpoints.
+     *
+     * @param  array  $endpoints
+     * @return void
+     */
+    public function stopMonitoringEndpoints(array $endpoints);
 }
