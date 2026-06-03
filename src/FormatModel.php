@@ -16,11 +16,17 @@ class FormatModel
      */
     public static function given($model)
     {
+        $keyName = $model->getKeyName();
+
         if ($model instanceof Pivot && ! $model->incrementing) {
             $keys = [
                 $model->getAttribute($model->getForeignKey()),
                 $model->getAttribute($model->getRelatedKey()),
             ];
+        } elseif (is_array($keyName)) {
+            $keys = array_map(function ($key) use ($model) {
+                return $model->getAttribute($key);
+            }, $keyName);
         } else {
             $keys = $model->getKey();
         }

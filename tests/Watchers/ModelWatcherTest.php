@@ -3,6 +3,8 @@
 namespace Laravel\Telescope\Tests\Watchers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Telescope;
@@ -86,6 +88,32 @@ class ModelWatcherTest extends FeatureTestCase
         $this->assertCount(1, $this->loadTelescopeEntries());
     }
 
+    public function test_model_watcher_registers_entry_for_models_with_composite_keys()
+    {
+        Telescope::withoutRecording(function () {
+            Schema::create('composite_key_models', function (Blueprint $table) {
+                $table->unsignedInteger('first_id');
+                $table->unsignedInteger('second_id');
+                $table->string('name');
+            });
+        });
+
+        CompositeKeyModel::query()
+            ->create([
+                'first_id' => 1,
+                'second_id' => 2,
+                'name' => 'Telescope',
+            ]);
+
+        $entry = $this->loadTelescopeEntries()
+            ->where('type', EntryType::MODEL)
+            ->first();
+
+        $this->assertSame(EntryType::MODEL, $entry->type);
+        $this->assertSame('created', $entry->content['action']);
+        $this->assertSame(CompositeKeyModel::class.':1_2', $entry->content['model']);
+    }
+
     protected function createUser()
     {
         UserEloquent::create([
@@ -99,6 +127,19 @@ class ModelWatcherTest extends FeatureTestCase
 class UserEloquent extends Model
 {
     protected $table = 'users';
+
+    protected $guarded = [];
+}
+
+class CompositeKeyModel extends Model
+{
+    protected $table = 'composite_key_models';
+
+    protected $primaryKey = ['first_id', 'second_id'];
+
+    public $incrementing = false;
+
+    public $timestamps = false;
 
     protected $guarded = [];
 }
