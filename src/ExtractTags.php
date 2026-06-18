@@ -9,6 +9,7 @@ use Illuminate\Events\CallQueuedListener;
 use Illuminate\Mail\SendQueuedMailable;
 use Illuminate\Notifications\SendQueuedNotifications;
 use ReflectionClass;
+use ReflectionMethod;
 use stdClass;
 
 class ExtractTags
@@ -99,7 +100,15 @@ class ExtractTags
     protected static function explicitTags(array $targets)
     {
         return collect($targets)->map(function ($target) {
-            return method_exists($target, 'tags') ? $target->tags() : [];
+            if (! method_exists($target, 'tags')) {
+                return [];
+            }
+
+            if ((new ReflectionMethod($target, 'tags'))->getNumberOfRequiredParameters() > 0) {
+                return [];
+            }
+
+            return $target->tags();
         })->collapse()->unique()->all();
     }
 

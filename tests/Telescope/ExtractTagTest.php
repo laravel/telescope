@@ -40,6 +40,40 @@ class ExtractTagTest extends FeatureTestCase
 
         $this->assertSame($tag, $extracted_tag[0]);
     }
+
+    public function test_extract_tags_from_object_with_tags_method_requiring_arguments()
+    {
+        $listener = new DummyListenerWithEventTags;
+
+        $tags = ExtractTags::from($listener);
+
+        $this->assertSame([], $tags);
+    }
+
+    public function test_extract_tags_from_object_with_tags_method_without_arguments()
+    {
+        $job = new DummyJobWithTags;
+
+        $tags = ExtractTags::from($job);
+
+        $this->assertSame(['custom-tag'], $tags);
+    }
+}
+
+class DummyListenerWithEventTags
+{
+    public function tags(\stdClass $event): array
+    {
+        return ['shipment'];
+    }
+}
+
+class DummyJobWithTags
+{
+    public function tags(): array
+    {
+        return ['custom-tag'];
+    }
 }
 
 class DummyMailableWithData extends Mailable
