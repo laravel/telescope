@@ -7,13 +7,17 @@ use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Queue\Events\JobFailed;
+use Illuminate\Queue\Events\JobProcessed;
 use Illuminate\Queue\Jobs\Job;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
+use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\JobWatcher;
+use Mockery as m;
 use Orchestra\Testbench\Attributes\WithConfig;
 use Orchestra\Testbench\Attributes\WithMigration;
 use Orchestra\Testbench\Factories\UserFactory;
@@ -91,6 +95,49 @@ class JobWatcherTest extends FeatureTestCase
         $this->assertArrayNotHasKey('args', $entry->content['exception']['trace'][0]);
         $this->assertSame(MyFailedDatabaseJob::class, $entry->content['exception']['trace'][0]['class']);
         $this->assertSame('handle', $entry->content['exception']['trace'][0]['function']);
+    }
+
+    public function test_processed_job_clears_stale_failure_state_left_by_a_duplicate_reservation()
+    {
+        // A long-running job whose runtime exceeds the queue's retry_after can be
+        // reserved twice: a second worker fails it with MaxAttemptsExceededException
+        // (JobFailed) while the original worker eventually completes it (JobProcessed).
+        // Both events target the same telescope_uuid, so the processed update must not
+        // leave behind the failure's exception payload or "failed" tag.
+        Telescope::startRecording(false);
+
+        $watcher = new JobWatcher;
+
+        $entry = $watcher->recordJob('redis', 'default', [
+            'job' => 'Illuminate\Queue\CallQueuedHandler@call',
+            'displayName' => MyDatabaseJob::class,
+            'maxTries' => 1,
+            'timeout' => 30,
+            'data' => ['payload' => 'long-running'],
+        ]);
+
+        $job = m::mock(Job::class);
+        $job->shouldReceive('payload')->andReturn(['telescope_uuid' => $entry->uuid]);
+
+        $watcher->recordFailedJob(new JobFailed(
+            'redis', $job, new Exception(MyDatabaseJob::class.' has been attempted too many times.')
+        ));
+
+        $watcher->recordProcessedJob(new JobProcessed('redis', $job));
+
+        $stored = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::JOB, $stored->type);
+        $this->assertSame('processed', $stored->content['status']);
+        $this->assertNull($stored->content['exception']);
+
+        $hasFailedTag = $this->app['db']->connection('testbench')
+            ->table('telescope_entries_tags')
+            ->where('entry_uuid', $entry->uuid)
+            ->where('tag', 'failed')
+            ->exists();
+
+        $this->assertFalse($hasFailedTag, 'The "failed" tag must be removed once the job is processed.');
     }
 
     public function test_it_handles_pushed_jobs()

@@ -101,8 +101,8 @@ class JobWatcher extends Watcher
         }
 
         Telescope::recordUpdate(EntryUpdate::make(
-            $uuid, EntryType::JOB, ['status' => 'processed']
-        ));
+            $uuid, EntryType::JOB, ['status' => 'processed', 'exception' => null]
+        )->removeTags(['failed']));
 
         $this->updateBatch($event->job->payload());
     }
