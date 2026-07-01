@@ -106,6 +106,15 @@ class TelescopeTest extends FeatureTestCase
 
         $this->assertFalse(Telescope::isRecording());
     }
+
+    public function test_dashboard_javascript_line_endings_are_normalized()
+    {
+        $javascript = Telescope::js()->toHtml();
+
+        $this->assertStringContainsString('<script type="module">', $javascript);
+        $this->assertStringContainsString('window.Telescope =', $javascript);
+        $this->assertStringNotContainsString("\r", $javascript);
+    }
 }
 
 class MySyncJob implements ShouldQueue

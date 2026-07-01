@@ -845,6 +845,8 @@ class Telescope
             throw new RuntimeException('Unable to load the Telescope dashboard JavaScript.');
         }
 
+        $js = str_replace(["\r\n", "\r"], "\n", $js);
+
         $telescope = Js::from(static::scriptVariables());
 
         return new HtmlString(<<<HTML
