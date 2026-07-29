@@ -117,6 +117,13 @@ class Telescope
     public static $useDarkTheme = false;
 
     /**
+     * The CSP nonce to use for style and script tags.
+     *
+     * @var string
+     */
+    public static $nonceAttribute = '';
+
+    /**
      * Indicates if Telescope should record entries.
      *
      * @var bool
@@ -796,6 +803,19 @@ class Telescope
     }
 
     /**
+     * Set the CSP nonce to use for style and script tags.
+     *
+     * @param  string  $nonce
+     * @return static
+     */
+    public static function cspNonce($nonce)
+    {
+        static::$nonceAttribute = " nonce=\"{$nonce}\"";
+
+        return new static;
+    }
+
+    /**
      * Register the Telescope user avatar callback.
      *
      * @param  \Closure  $callback
@@ -828,9 +848,11 @@ class Telescope
             throw new RuntimeException('Unable to load the '.(static::$useDarkTheme ? 'dark' : 'light').' Telescope dashboard styles.');
         }
 
+        $nonceAttribute = static::$nonceAttribute;
+
         return new HtmlString(<<<HTML
-            <style>{$app}</style>
-            <style>{$styles}</style>
+            <style{$nonceAttribute}>{$app}</style>
+            <style{$nonceAttribute}>{$styles}</style>
         HTML);
     }
 
@@ -849,8 +871,10 @@ class Telescope
 
         $telescope = Js::from(static::scriptVariables());
 
+        $nonceAttribute = static::$nonceAttribute;
+
         return new HtmlString(<<<HTML
-            <script type="module">
+            <script type="module"{$nonceAttribute}>
                 window.Telescope = {$telescope};
                 {$js}
             </script>
