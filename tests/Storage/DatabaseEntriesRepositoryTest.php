@@ -2,7 +2,9 @@
 
 namespace Laravel\Telescope\Tests\Storage;
 
+use Illuminate\Database\Events\TransactionBeginning;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
 use Laravel\Telescope\EntryType;
@@ -119,5 +121,41 @@ class DatabaseEntriesRepositoryTest extends FeatureTestCase
                 'content' => false,
             ]);
         });
+    }
+
+    public function test_store_exceptions_wraps_writes_in_a_transaction_to_avoid_deadlocks()
+    {
+        $transactions = 0;
+
+        Event::listen(TransactionBeginning::class, function () use (&$transactions) {
+            $transactions++;
+        });
+
+        $exception = new \Exception('message');
+
+        $entry = fn () => collect([
+            (new IncomingExceptionEntry($exception, [
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'message' => $exception->getMessage(),
+            ]))->batchId((string) Str::uuid())->type(EntryType::EXCEPTION),
+        ]);
+
+        $repository = new DatabaseEntriesRepository('testbench');
+
+        $repository->store($entry());
+        $repository->store($entry());
+
+        $this->assertGreaterThan(0, $transactions);
+
+        $stored = DB::connection('testbench')->table('telescope_entries')
+            ->where('type', EntryType::EXCEPTION)
+            ->orderBy('sequence')
+            ->get();
+
+        $this->assertCount(2, $stored);
+        $this->assertEquals(0, $stored[0]->should_display_on_index);
+        $this->assertEquals(1, $stored[1]->should_display_on_index);
+        $this->assertSame(2, json_decode($stored[1]->content, true)['occurrences']);
     }
 }

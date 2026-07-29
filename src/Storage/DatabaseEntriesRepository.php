@@ -161,23 +161,25 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     protected function storeExceptions(Collection $exceptions)
     {
         $exceptions->chunk($this->chunkSize)->each(function ($chunked) {
-            $this->table('telescope_entries')->insert($chunked->map(function ($exception) {
-                $occurrences = $this->countExceptionOccurences($exception);
+            DB::connection($this->connection)->transaction(function () use ($chunked) {
+                $this->table('telescope_entries')->insert($chunked->map(function ($exception) {
+                    $occurrences = $this->countExceptionOccurences($exception);
 
-                $this->table('telescope_entries')
-                        ->where('type', EntryType::EXCEPTION)
-                        ->where('family_hash', $exception->familyHash())
-                        ->where('should_display_on_index', true)
-                        ->update(['should_display_on_index' => false]);
+                    $this->table('telescope_entries')
+                            ->where('type', EntryType::EXCEPTION)
+                            ->where('family_hash', $exception->familyHash())
+                            ->where('should_display_on_index', true)
+                            ->update(['should_display_on_index' => false]);
 
-                return array_merge($exception->toArray(), [
-                    'family_hash' => $exception->familyHash(),
-                    'content' => json_encode(
-                        array_merge($exception->content, ['occurrences' => $occurrences + 1]),
-                        JSON_INVALID_UTF8_SUBSTITUTE
-                    ),
-                ]);
-            })->toArray());
+                    return array_merge($exception->toArray(), [
+                        'family_hash' => $exception->familyHash(),
+                        'content' => json_encode(
+                            array_merge($exception->content, ['occurrences' => $occurrences + 1]),
+                            JSON_INVALID_UTF8_SUBSTITUTE
+                        ),
+                    ]);
+                })->toArray());
+            }, 3);
         });
 
         $this->storeTags($exceptions->pluck('tags', 'uuid'));
