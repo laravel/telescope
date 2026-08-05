@@ -20,11 +20,9 @@ class BatchWatcher extends Watcher
     }
 
     /**
-     * Record a job being created.
+     * Record a batch being dispatched.
      *
-     * @param  string  $connection
-     * @param  string  $queue
-     * @param  array  $payload
+     * @param  \Illuminate\Bus\Events\BatchDispatched  $event
      * @return \Laravel\Telescope\IncomingEntry|null
      */
     public function recordBatch(BatchDispatched $event)
