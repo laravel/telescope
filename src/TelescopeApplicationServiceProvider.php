@@ -27,8 +27,9 @@ class TelescopeApplicationServiceProvider extends ServiceProvider
         $this->gate();
 
         Telescope::auth(function ($request) {
-            return app()->environment('local') ||
-                   Gate::check('viewTelescope', [$request->user()]);
+            return app()->environment('local')
+                || in_array($_SERVER['REMOTE_ADDR'] ?? null, ['127.0.0.1', '::1'])
+                || Gate::check('viewTelescope', [$request->user()]);
         });
     }
 
