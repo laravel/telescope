@@ -890,7 +890,7 @@ class Telescope
      */
     public static function cspNonce($nonce)
     {
-        static::$nonceAttribute = " nonce=\"{$nonce}\"";
+        static::$nonceAttribute = ' nonce="'.htmlspecialchars($nonce, ENT_QUOTES, 'UTF-8').'"';
 
         return new static;
     }

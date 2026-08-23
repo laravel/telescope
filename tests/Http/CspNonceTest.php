@@ -48,4 +48,15 @@ class CspNonceTest extends FeatureTestCase
             ->assertSeeHtml("<style nonce=\"{$nonce}\">")
             ->assertSeeHtml("<script type=\"module\" nonce=\"{$nonce}\">");
     }
+
+    public function test_csp_nonce_value_is_escaped_when_rendered()
+    {
+        Telescope::cspNonce('"><script>alert(1)</script>');
+
+        $response = $this->get('/telescope');
+
+        $response->assertOk()
+            ->assertDontSeeHtml('<script>alert(1)</script>')
+            ->assertSeeHtml('&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;', false);
+    }
 }
