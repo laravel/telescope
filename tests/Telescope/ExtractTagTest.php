@@ -2,6 +2,8 @@
 
 namespace Laravel\Telescope\Tests\Telescope;
 
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Events\CallQueuedListener;
 use Illuminate\Mail\Mailable;
 use Laravel\Telescope\Database\Factories\EntryModelFactory;
 use Laravel\Telescope\ExtractTags;
@@ -39,6 +41,59 @@ class ExtractTagTest extends FeatureTestCase
         $extracted_tag = ExtractTags::from($mailable);
 
         $this->assertSame($tag, $extracted_tag[0]);
+    }
+
+    public function test_extract_tags_for_queued_listener_with_event_aware_tags_method()
+    {
+        $job = new CallQueuedListener(
+            ListenerWithEventAwareTags::class,
+            'handle',
+            [new DummyTaggableEvent]
+        );
+
+        $this->assertSame(['from-event'], ExtractTags::fromJob($job));
+    }
+
+    public function test_extract_tags_for_queued_listener_with_no_argument_tags_method()
+    {
+        $job = new CallQueuedListener(
+            ListenerWithNoArgumentTags::class,
+            'handle',
+            [new DummyTaggableEvent]
+        );
+
+        $this->assertSame(['static-tag'], ExtractTags::fromJob($job));
+    }
+}
+
+class DummyTaggableEvent
+{
+    public $tag = 'from-event';
+}
+
+class ListenerWithEventAwareTags implements ShouldQueue
+{
+    public function handle(DummyTaggableEvent $event)
+    {
+        //
+    }
+
+    public function tags(DummyTaggableEvent $event)
+    {
+        return [$event->tag];
+    }
+}
+
+class ListenerWithNoArgumentTags implements ShouldQueue
+{
+    public function handle(DummyTaggableEvent $event)
+    {
+        //
+    }
+
+    public function tags()
+    {
+        return ['static-tag'];
     }
 }
 

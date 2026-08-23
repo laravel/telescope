@@ -9,6 +9,7 @@ use Illuminate\Events\CallQueuedListener;
 use Illuminate\Mail\SendQueuedMailable;
 use Illuminate\Notifications\SendQueuedNotifications;
 use ReflectionClass;
+use ReflectionMethod;
 use stdClass;
 
 class ExtractTags
@@ -83,11 +84,41 @@ class ExtractTags
      */
     protected static function tagsForListener($job)
     {
-        return collect(
-            [static::extractListener($job), static::extractEvent($job)]
-        )->map(function ($job) {
-            return static::from($job);
-        })->collapse()->unique()->toArray();
+        $listener = static::extractListener($job);
+        $event = static::extractEvent($job);
+
+        return collect([
+            static::tagsForListenerInstance($listener, $event),
+            static::from($event),
+        ])->collapse()->unique()->toArray();
+    }
+
+    /**
+     * Determine the explicit or model-based tags for the given listener instance.
+     *
+     * Horizon documents queued listener tagging with an event-aware signature
+     * such as `tags(OrderShipped $event): array`, so we can't blindly call
+     * `tags()` without arguments as we do for other taggable targets.
+     *
+     * @param  mixed  $listener
+     * @param  mixed  $event
+     * @return array
+     */
+    protected static function tagsForListenerInstance($listener, $event)
+    {
+        if (method_exists($listener, 'tags')) {
+            if ((new ReflectionMethod($listener, 'tags'))->getNumberOfParameters() > 0) {
+                return $event instanceof stdClass ? [] : $listener->tags($event);
+            }
+
+            if ($tags = $listener->tags()) {
+                return $tags;
+            }
+        }
+
+        return static::modelsFor([$listener])->map(function ($model) {
+            return FormatModel::given($model);
+        })->all();
     }
 
     /**
