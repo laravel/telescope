@@ -364,6 +364,17 @@ class Telescope
      * @param  \Laravel\Telescope\IncomingEntry  $entry
      * @return void
      */
+    public static function recordAi(IncomingEntry $entry)
+    {
+        static::record(EntryType::AI, $entry);
+    }
+
+    /**
+     * Record the given entry.
+     *
+     * @param  \Laravel\Telescope\IncomingEntry  $entry
+     * @return void
+     */
     public static function recordBatch($entry)
     {
         static::record(EntryType::BATCH, $entry);

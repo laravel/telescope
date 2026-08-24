@@ -1,5 +1,14 @@
 export default {
     methods: {
+        aiStatusClass(status) {
+            if (status === 'running') return 'info';
+            if (status === 'completed') return 'success';
+            if (status === 'waiting_for_approval') return 'warning';
+            if (status === 'failed') return 'danger';
+
+            return 'secondary';
+        },
+
         cacheActionTypeClass(type) {
             if (type === 'hit') return 'success';
             if (type === 'set') return 'info';

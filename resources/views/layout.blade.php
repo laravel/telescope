@@ -102,6 +102,15 @@
                             <span>Jobs</span>
                         </router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link active-class="active" to="/ai" class="nav-link d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M10 2.75a.75.75 0 01.75.75v1.25a4.5 4.5 0 004.5 4.5h1.25a.75.75 0 010 1.5h-1.25a4.5 4.5 0 00-4.5 4.5v1.25a.75.75 0 01-1.5 0v-1.25a4.5 4.5 0 00-4.5-4.5H3.5a.75.75 0 010-1.5h1.25a4.5 4.5 0 004.5-4.5V3.5a.75.75 0 01.75-.75z" />
+                                <path d="M4.5 1.75a.75.75 0 01.75.75v.5A1.75 1.75 0 007 4.75h.5a.75.75 0 010 1.5H7A1.75 1.75 0 005.25 8v.5a.75.75 0 01-1.5 0V8A1.75 1.75 0 002 6.25h-.5a.75.75 0 010-1.5H2A1.75 1.75 0 003.75 3v-.5a.75.75 0 01.75-.75z" />
+                            </svg>
+                            <span>AI</span>
+                        </router-link>
+                    </li>
 
 
                     <li class="nav-item mt-3">

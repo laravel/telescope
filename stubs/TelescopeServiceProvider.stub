@@ -22,6 +22,8 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
         $isLocal = $this->app->environment('local');
 
         Telescope::filter(function (IncomingEntry $entry) use ($isLocal) {
+            // AI entries are intentionally not kept by type outside local environments.
+            // Add monitored tags to retain only the specific AI runs you need to inspect.
             return $isLocal ||
                    $entry->isReportableException() ||
                    $entry->isFailedRequest() ||

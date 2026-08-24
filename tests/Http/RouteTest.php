@@ -44,6 +44,7 @@ class RouteTest extends FeatureTestCase
             'Schedule' => ['/telescope/telescope-api/schedule', EntryType::SCHEDULED_TASK],
             'Redis' => ['/telescope/telescope-api/redis', EntryType::REDIS],
             'Client Requests' => ['/telescope/telescope-api/client-requests', EntryType::CLIENT_REQUEST],
+            'AI' => ['/telescope/telescope-api/ai', EntryType::AI],
         ];
     }
 
@@ -72,6 +73,30 @@ class RouteTest extends FeatureTestCase
             ->assertJsonExactFragment($entryType, 'entries.0.type')
             ->assertJsonExactFragment($entry->sequence, 'entries.0.sequence')
             ->assertJsonExactFragment($entry->batch_id, 'entries.0.batch_id');
+    }
+
+    public function test_ai_show_route()
+    {
+        $entry = EntryModelFactory::new()->create(['type' => EntryType::AI]);
+
+        $this->get("/telescope/telescope-api/ai/{$entry->uuid}")
+            ->assertSuccessful()
+            ->assertJsonStructure(['entry', 'batch'])
+            ->assertJsonExactFragment($entry->uuid, 'entry.id')
+            ->assertJsonExactFragment(EntryType::AI, 'entry.type')
+            ->assertJsonExactFragment($entry->uuid, 'batch.0.id');
+    }
+
+    public function test_ai_index_route_returns_entries_and_status()
+    {
+        $entry = EntryModelFactory::new()->create(['type' => EntryType::AI]);
+
+        $this->post('/telescope/telescope-api/ai')
+            ->assertSuccessful()
+            ->assertJsonStructure(['entries' => [], 'status'])
+            ->assertJsonExactFragment($entry->uuid, 'entries.0.id')
+            ->assertJsonExactFragment(EntryType::AI, 'entries.0.type')
+            ->assertJsonExactFragment('enabled', 'status');
     }
 
     private function registerAssertJsonExactFragmentMacro()

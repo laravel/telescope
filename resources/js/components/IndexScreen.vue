@@ -224,10 +224,10 @@ export default {
          * Update the existing entries if needed.
          */
         updateEntries(){
-            if (this.resource !== 'jobs') return;
+            if (! this.pendingEntryStatuses().length) return;
 
             this.updateEntriesTimeout = setTimeout(() => {
-                let uuids = _.chain(this.entries).filter(entry => entry.content.status === 'pending').map('id').value();
+                let uuids = _.chain(this.entries).filter(entry => this.isPendingEntry(entry)).map('id').value();
 
                 if (uuids.length) {
                     axios.post(Telescope.basePath + '/telescope-api/' + this.resource, {
@@ -238,13 +238,26 @@ export default {
                         this.entries = _.map(this.entries, entry => {
                             if (!_.includes(uuids, entry.id)) return entry;
 
-                            return _.find(response.data.entries, {id: entry.id});
+                            return _.find(response.data.entries, {id: entry.id}) || entry;
                         });
                     })
                 }
 
                 this.updateEntries();
             }, this.updateEntriesTimer);
+        },
+
+
+        pendingEntryStatuses(){
+            return {
+                jobs: ['pending'],
+                ai: ['running', 'waiting_for_approval'],
+            }[this.resource] || [];
+        },
+
+
+        isPendingEntry(entry){
+            return _.includes(this.pendingEntryStatuses(), _.get(entry, 'content.status'));
         },
 
 
