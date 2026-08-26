@@ -129,6 +129,12 @@ class ClientRequestWatcher extends Watcher
                     : 'Purged By Telescope';
             }
 
+            if ($xml = $this->parseXml($content)) {
+                return $this->contentWithinLimits($content)
+                    ? $this->hideParameters($xml, Telescope::$hiddenResponseParameters)
+                    : 'Purged By Telescope';
+            }
+
             if (Str::startsWith(strtolower($response->header('Content-Type') ?? ''), 'text/plain')) {
                 return $this->contentWithinLimits($content) ? $content : 'Purged By Telescope';
             }
@@ -208,6 +214,10 @@ class ClientRequestWatcher extends Watcher
     protected function input(Request $request)
     {
         if (! $request->isMultipart()) {
+            if ($xml = $this->parseXml($request->body())) {
+                return $xml;
+            }
+
             return $request->data();
         }
 
@@ -238,6 +248,36 @@ class ClientRequestWatcher extends Watcher
 
             return [$data['name'] => $value];
         })->toArray();
+    }
+
+    /**
+     * Parse XML content into an array.
+     *
+     * @param  string|null  $content
+     * @return array|null
+     */
+    protected function parseXml($content)
+    {
+        if (! is_string($content) || trim($content) === '') {
+            return null;
+        }
+
+        $previous = libxml_use_internal_errors(true);
+
+        try {
+            $xml = simplexml_load_string($content, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+            if ($xml === false) {
+                return null;
+            }
+
+            $array = json_decode(json_encode($xml), true);
+
+            return is_array($array) ? $array : null;
+        } finally {
+            libxml_clear_errors();
+            libxml_use_internal_errors($previous);
+        }
     }
 
     /**

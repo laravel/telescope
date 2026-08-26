@@ -281,4 +281,61 @@ class ClientRequestWatcherTest extends FeatureTestCase
         $this->assertSame('first, second', $entry->content['headers']['x-foo']);
         $this->assertSame('single', $entry->content['headers']['x-bar']);
     }
+
+    public function test_client_request_watcher_registers_xml_response()
+    {
+        $xmlContent = '<?xml version="1.0" encoding="UTF-8"?><response><message>success</message><status>200</status></response>';
+
+        Http::fake([
+            '*' => Http::response($xmlContent, 200, ['Content-Type' => 'application/xml']),
+        ]);
+
+        Http::get('https://laravel.com/fake-xml-response');
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::CLIENT_REQUEST, $entry->type);
+        $this->assertSame('GET', $entry->content['method']);
+        $this->assertSame(200, $entry->content['response_status']);
+        $this->assertSame([
+            'message' => 'success',
+            'status' => '200',
+        ], $entry->content['response']);
+    }
+
+    public function test_client_request_watcher_registers_xml_request_payload()
+    {
+        $xmlPayload = '<?xml version="1.0"?><request><user>taylor</user><action>login</action></request>';
+
+        Http::fake(['*' => '']);
+
+        Http::withBody($xmlPayload, 'application/xml')
+            ->post('https://laravel.com/fake-xml-request');
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::CLIENT_REQUEST, $entry->type);
+        $this->assertSame('POST', $entry->content['method']);
+        $this->assertSame([
+            'user' => 'taylor',
+            'action' => 'login',
+        ], $entry->content['payload']);
+    }
+
+    public function test_client_request_watcher_purges_large_xml_response()
+    {
+        $xmlContent = '<response><data>'.str_repeat('x', 70000).'</data></response>';
+
+        Http::fake([
+            '*' => Http::response($xmlContent, 200, ['Content-Type' => 'application/xml']),
+        ]);
+
+        Http::get('https://laravel.com/fake-large-xml-response');
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::CLIENT_REQUEST, $entry->type);
+        $this->assertSame('GET', $entry->content['method']);
+        $this->assertSame('Purged By Telescope', $entry->content['response']);
+    }
 }
