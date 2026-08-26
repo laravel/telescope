@@ -6,7 +6,9 @@ use Illuminate\Support\Str;
 use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
+use Orchestra\Testbench\Attributes\RequiresLaravel;
 
+#[RequiresLaravel('>=11.19.0')]
 class CspNonceTest extends FeatureTestCase
 {
     /** {@inheritdoc} */
