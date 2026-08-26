@@ -17,7 +17,7 @@ use Orchestra\Testbench\Attributes\WithConfig;
         'enabled' => true,
         'slow' => 0.2,
     ],
-])]
+], defer: false)]
 class QueryWatcherTest extends FeatureTestCase
 {
     public function test_query_watcher_registers_database_queries()

@@ -29,7 +29,7 @@
         "ext-gd": "*",
         "guzzlehttp/guzzle": "^6.0|^7.0",
         "laravel/octane": "^1.4|^2.0",
-        "orchestra/testbench": "^6.47.1|^7.55|^8.36|^9.15|^10.8|^11.0",
+        "orchestra/testbench": "^6.48|^7.57|^8.38|^9.15|^10.8|^11.0",
         "phpstan/phpstan": "^1.10"
     },
     "autoload": {

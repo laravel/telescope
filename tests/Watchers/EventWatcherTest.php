@@ -23,7 +23,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
             IgnoredEvent::class,
         ],
     ],
-])]
+], defer: false)]
 class EventWatcherTest extends FeatureTestCase
 {
     public function test_event_watcher_registers_any_events()

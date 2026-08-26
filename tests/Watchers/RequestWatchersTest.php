@@ -13,7 +13,7 @@ use Orchestra\Testbench\Attributes\WithConfig;
 
 #[WithConfig('telescope.watchers', [
     RequestWatcher::class => true,
-])]
+], defer: false)]
 class RequestWatchersTest extends FeatureTestCase
 {
     /** {@inheritdoc} */
