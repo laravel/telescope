@@ -20,7 +20,7 @@ use Orchestra\Testbench\Attributes\WithConfig;
             'ignored-key',
         ],
     ],
-])]
+], defer: false)]
 class CacheWatcherTest extends FeatureTestCase
 {
     public function test_cache_watcher_registers_missed_entries()

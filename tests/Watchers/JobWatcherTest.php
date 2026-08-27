@@ -28,7 +28,7 @@ use Throwable;
 #[WithConfig('logging.default', 'syslog')]
 #[WithConfig('telescope.watchers', [
     JobWatcher::class => true,
-])]
+], defer: false)]
 class JobWatcherTest extends FeatureTestCase
 {
     public function test_job_registers_entry()

@@ -12,12 +12,14 @@ use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\QueryWatcher;
 use Orchestra\Testbench\Attributes\WithConfig;
 
+use function Orchestra\Testbench\laravel_version_compare;
+
 #[WithConfig('telescope.watchers', [
     QueryWatcher::class => [
         'enabled' => true,
         'slow' => 0.2,
     ],
-])]
+], defer: false)]
 class QueryWatcherTest extends FeatureTestCase
 {
     public function test_query_watcher_registers_database_queries()
@@ -27,7 +29,10 @@ class QueryWatcherTest extends FeatureTestCase
         $entry = $this->loadTelescopeEntries()->first();
 
         $this->assertSame(EntryType::QUERY, $entry->type);
-        $this->assertSame('select count(*) as aggregate from "telescope_entries"', $entry->content['sql']);
+        $this->assertSame(match (true) {
+            laravel_version_compare('13.10.0', '>=') => 'select count(*) as "aggregate" from "telescope_entries"',
+            default => 'select count(*) as aggregate from "telescope_entries"',
+        }, $entry->content['sql']);
         $this->assertSame('testbench', $entry->content['connection']);
         $this->assertSame('sqlite', $entry->content['driver']);
         $this->assertFalse($entry->content['slow']);
