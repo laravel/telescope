@@ -16,7 +16,7 @@ use Orchestra\Testbench\Attributes\WithConfig;
         'events' => ['eloquent.created*', 'eloquent.updated*', 'eloquent.retrieved*'],
         'hydrations' => true,
     ],
-])]
+], defer: false)]
 class ModelWatcherTest extends FeatureTestCase
 {
     public function test_model_watcher_registers_entry()

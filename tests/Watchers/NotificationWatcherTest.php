@@ -13,7 +13,7 @@ use Orchestra\Testbench\Attributes\WithConfig;
 #[WithConfig('mail.driver', 'array')]
 #[WithConfig('telescope.watchers', [
     NotificationWatcher::class => true,
-])]
+], defer: false)]
 class NotificationWatcherTest extends FeatureTestCase
 {
     public function test_notification_watcher_registers_entry()

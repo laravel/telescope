@@ -34,7 +34,7 @@ class LogWatcherTest extends FeatureTestCase
     #[DataProvider('logLevelProvider')]
     #[WithConfig('telescope.watchers', [
         LogWatcher::class => true,
-    ])]
+    ], defer: false)]
     public function test_log_watcher_registers_entry_for_any_level_by_default($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -62,7 +62,7 @@ class LogWatcherTest extends FeatureTestCase
             'enabled' => true,
             'level' => 'error',
         ],
-    ]])]
+    ]], defer: false)]
     public function test_log_watcher_only_registers_entries_for_the_specified_error_level_priority($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -93,7 +93,7 @@ class LogWatcherTest extends FeatureTestCase
         LogWatcher::class => [
             'level' => 'debug',
         ],
-    ])]
+    ], defer: false)]
     public function test_log_watcher_only_registers_entries_for_the_specified_debug_level_priority($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -118,7 +118,7 @@ class LogWatcherTest extends FeatureTestCase
     #[DataProvider('logLevelProvider')]
     #[WithConfig('telescope.watchers', [
         LogWatcher::class => false,
-    ])]
+    ], defer: false)]
     public function test_log_watcher_do_not_registers_entry_when_disabled_on_the_boolean_format($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -142,7 +142,7 @@ class LogWatcherTest extends FeatureTestCase
             'enabled' => false,
             'level' => 'error',
         ],
-    ])]
+    ], defer: false)]
     public function test_log_watcher_do_not_registers_entry_when_disabled_on_the_array_format($level)
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -157,7 +157,9 @@ class LogWatcherTest extends FeatureTestCase
         $this->assertNull($entry);
     }
 
-    #[WithConfig('telescope.watchers', [LogWatcher::class => true])]
+    #[WithConfig('telescope.watchers', [
+        LogWatcher::class => true,
+    ], defer: false)]
     public function test_log_watcher_registers_entry_with_exception_key()
     {
         $logger = $this->app->get(LoggerInterface::class);
@@ -232,7 +234,7 @@ class LogWatcherTest extends FeatureTestCase
             'enabled' => true,
             'level' => 'info',
         ],
-    ])]
+    ], defer: false)]
     public function test_log_watcher_interpolates_message($message, $context, $expectedMessage)
     {
         $logger = $this->app->get(LoggerInterface::class);

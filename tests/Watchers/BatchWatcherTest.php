@@ -19,7 +19,7 @@ use Orchestra\Testbench\Attributes\WithConfig;
 #[WithConfig('telescope.watchers', [
     JobWatcher::class => true,
     BatchWatcher::class => true,
-])]
+], defer: false)]
 class BatchWatcherTest extends FeatureTestCase
 {
     public function test_job_dispatch_registers_entries()
