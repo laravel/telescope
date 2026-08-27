@@ -818,7 +818,7 @@ class Telescope
     /**
      * Get the CSS for the Telescope dashboard.
      *
-     * @return Illuminate\Contracts\Support\Htmlable
+     * @return \Illuminate\Contracts\Support\Htmlable
      */
     public static function css()
     {
