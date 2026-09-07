@@ -76,6 +76,10 @@ Route::get('/telescope-api/redis/{telescopeEntryId}', 'RedisController@show');
 Route::post('/telescope-api/client-requests', 'ClientRequestController@index');
 Route::get('/telescope-api/client-requests/{telescopeEntryId}', 'ClientRequestController@show');
 
+// AI entries...
+Route::post('/telescope-api/ai', 'AiController@index');
+Route::get('/telescope-api/ai/{telescopeEntryId}', 'AiController@show');
+
 // Monitored Tags...
 Route::get('/telescope-api/monitored-tags', 'MonitoredTagController@index');
 Route::post('/telescope-api/monitored-tags/', 'MonitoredTagController@store');

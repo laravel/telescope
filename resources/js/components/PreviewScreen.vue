@@ -67,6 +67,8 @@ export default {
 
     methods: {
         prepareEntry() {
+            clearTimeout(this.updateEntryTimeout);
+
             document.title = this.title + " - Telescope";
             this.ready = false;
 
@@ -106,8 +108,7 @@ export default {
          * Update the existing entry if needed.
          */
         updateEntry(){
-            if (this.resource != 'jobs') return;
-            if (this.entry.content.status !== 'pending') return;
+            if (! this.isPendingEntry(this.entry)) return;
 
             this.updateEntryTimeout = setTimeout(() => {
                 this.loadEntry((response) => {
@@ -118,10 +119,23 @@ export default {
                     this.$parent.batch = response.data.batch;
 
                     this.ready = true;
-                });
 
-                this.updateEntry();
+                    this.updateEntry();
+                });
             }, this.updateEntryTimer);
+        },
+
+
+        pendingEntryStatuses(){
+            return {
+                jobs: ['pending'],
+                ai: ['running', 'waiting_for_approval'],
+            }[this.resource] || [];
+        },
+
+
+        isPendingEntry(entry){
+            return entry && _.includes(this.pendingEntryStatuses(), _.get(entry, 'content.status'));
         }
     }
 }

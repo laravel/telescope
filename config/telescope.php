@@ -136,6 +136,39 @@ return [
     */
 
     'watchers' => [
+        /*
+         * The AI watcher records summary information about Laravel AI runs by default.
+         * Prompt content, messages, tool arguments, tool results, and raw provider
+         * payloads are opt-in and are still redacted and size limited. Lifecycle
+         * summaries are capped to prevent large looping runs from growing without bound.
+         */
+        Watchers\AiWatcher::class => [
+            'enabled' => env('TELESCOPE_AI_WATCHER', true),
+            'content' => false,
+            'messages' => false,
+            'tool_arguments' => false,
+            'tool_results' => false,
+            'raw' => false,
+            'size_limit' => 64,
+            'max_steps' => 50,
+            'max_tools' => 50,
+            'max_failovers' => 25,
+            'max_approvals' => 25,
+            'hidden' => [
+                'password',
+                'password_confirmation',
+                'token',
+                'access_token',
+                'refresh_token',
+                'secret',
+                'api-key',
+                'api_key',
+                'apiKey',
+                'authorization',
+                'cookie',
+            ],
+        ],
+
         Watchers\BatchWatcher::class => env('TELESCOPE_BATCH_WATCHER', true),
 
         Watchers\CacheWatcher::class => [
