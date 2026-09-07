@@ -23,8 +23,8 @@ class ListCommandTest extends FeatureTestCase
 
     public function test_list_filters_by_type()
     {
-        $this->request();
-        $this->exception(['message' => 'fail']);
+        $this->createRequest();
+        $this->createException(['message' => 'fail']);
 
         Artisan::call('telescope:list', ['type' => 'request']);
         $output = Artisan::output();
@@ -44,8 +44,8 @@ class ListCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $this->request(['uri' => '/a'], ['batch_id' => $batchId]);
-        $this->request(['uri' => '/b']);
+        $this->createRequest(['uri' => '/a'], ['batch_id' => $batchId]);
+        $this->createRequest(['uri' => '/b']);
 
         Artisan::call('telescope:list', ['--batch' => $batchId]);
         $output = Artisan::output();
@@ -56,8 +56,8 @@ class ListCommandTest extends FeatureTestCase
 
     public function test_list_filters_by_tag()
     {
-        $tagged = $this->request(['uri' => '/tagged']);
-        $this->request(['uri' => '/untagged']);
+        $tagged = $this->createRequest(['uri' => '/tagged']);
+        $this->createRequest(['uri' => '/untagged']);
 
         DB::table('telescope_entries_tags')->insert(['entry_uuid' => $tagged->uuid, 'tag' => 'Auth:42']);
 
@@ -70,8 +70,8 @@ class ListCommandTest extends FeatureTestCase
 
     public function test_list_pages_backwards_with_the_before_cursor()
     {
-        $this->request(['uri' => '/older'], ['sequence' => 1]);
-        $this->request(['uri' => '/newer'], ['sequence' => 2]);
+        $this->createRequest(['uri' => '/older'], ['sequence' => 1]);
+        $this->createRequest(['uri' => '/newer'], ['sequence' => 2]);
 
         Artisan::call('telescope:list', ['type' => 'request', '--before' => 2]);
         $output = Artisan::output();
@@ -85,7 +85,7 @@ class ListCommandTest extends FeatureTestCase
         $last = null;
 
         foreach (range(1, 3) as $sequence) {
-            $last = $this->request([], ['sequence' => $sequence]);
+            $last = $this->createRequest([], ['sequence' => $sequence]);
         }
 
         Artisan::call('telescope:list', ['type' => 'request', '--limit' => 2]);
@@ -99,7 +99,7 @@ class ListCommandTest extends FeatureTestCase
 
     public function test_list_rejects_a_non_positive_limit()
     {
-        $this->request();
+        $this->createRequest();
 
         foreach (['abc', '0', '-1'] as $limit) {
             $this->assertSame(1, $this->artisan('telescope:list', ['type' => 'request', '--limit' => $limit]));
@@ -115,8 +115,8 @@ class ListCommandTest extends FeatureTestCase
 
     public function test_list_summarizes_mixed_entry_types_when_no_type_is_given()
     {
-        $this->request();
-        $this->entry(EntryType::CACHE, ['type' => 'hit', 'key' => 'user:1']);
+        $this->createRequest();
+        $this->createEntry(EntryType::CACHE, ['type' => 'hit', 'key' => 'user:1']);
 
         Artisan::call('telescope:list');
         $output = Artisan::output();
@@ -128,7 +128,7 @@ class ListCommandTest extends FeatureTestCase
 
     public function test_list_outputs_json()
     {
-        $entry = $this->request();
+        $entry = $this->createRequest();
 
         Artisan::call('telescope:list', ['type' => 'request', '--json' => true]);
         $json = json_decode(Artisan::output(), true);

@@ -22,7 +22,7 @@ class ShowCommandTest extends FeatureTestCase
 
     public function test_show_displays_request_entry()
     {
-        $entry = $this->request([
+        $entry = $this->createRequest([
             'uri' => '/api/users', 'duration' => 145, 'controller_action' => 'UserController@index',
             'middleware' => ['web'],
         ]);
@@ -39,7 +39,7 @@ class ShowCommandTest extends FeatureTestCase
 
     public function test_show_displays_exception_entry()
     {
-        $entry = $this->exception([
+        $entry = $this->createException([
             'class' => 'InvalidArgumentException', 'message' => 'Something went wrong',
             'file' => 'app/Http/Controllers/UserController.php', 'line' => 38,
         ]);
@@ -55,7 +55,7 @@ class ShowCommandTest extends FeatureTestCase
 
     public function test_show_displays_a_failed_job_with_its_exception()
     {
-        $job = $this->entry(EntryType::JOB, [
+        $job = $this->createEntry(EntryType::JOB, [
             'name' => 'App\Jobs\SyncOrders', 'status' => 'failed', 'queue' => 'default',
             'connection' => 'redis', 'tries' => 3, 'data' => ['order_id' => 7],
             'exception' => [
@@ -77,9 +77,9 @@ class ShowCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $request = $this->request(['uri' => '/api/users'], ['sequence' => 100, 'batch_id' => $batchId]);
-        $this->query(['sql' => 'select * from "users"'], ['sequence' => 101, 'batch_id' => $batchId]);
-        $this->exception([], ['sequence' => 102, 'batch_id' => $batchId]);
+        $request = $this->createRequest(['uri' => '/api/users'], ['sequence' => 100, 'batch_id' => $batchId]);
+        $this->createQuery(['sql' => 'select * from "users"'], ['sequence' => 101, 'batch_id' => $batchId]);
+        $this->createException([], ['sequence' => 102, 'batch_id' => $batchId]);
 
         $this->assertSame(0, $this->artisan('telescope:show', ['id' => $request->uuid]));
 
@@ -95,8 +95,8 @@ class ShowCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $this->request(['method' => 'POST', 'uri' => '/orders', 'response_status' => 500], ['sequence' => 100, 'batch_id' => $batchId]);
-        $exception = $this->exception(['message' => 'Boom'], ['sequence' => 101, 'batch_id' => $batchId]);
+        $this->createRequest(['method' => 'POST', 'uri' => '/orders', 'response_status' => 500], ['sequence' => 100, 'batch_id' => $batchId]);
+        $exception = $this->createException(['message' => 'Boom'], ['sequence' => 101, 'batch_id' => $batchId]);
 
         Artisan::call('telescope:show', ['id' => $exception->uuid]);
 
@@ -107,9 +107,9 @@ class ShowCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $request = $this->request([], ['sequence' => 100, 'batch_id' => $batchId]);
-        $this->entry(EntryType::DUMP, ['dump' => '<pre>needle</pre>'], ['sequence' => 101, 'batch_id' => $batchId]);
-        $this->entry(EntryType::VIEW, ['name' => 'welcome', 'path' => '/v.blade.php'], ['sequence' => 102, 'batch_id' => $batchId]);
+        $request = $this->createRequest([], ['sequence' => 100, 'batch_id' => $batchId]);
+        $this->createEntry(EntryType::DUMP, ['dump' => '<pre>needle</pre>'], ['sequence' => 101, 'batch_id' => $batchId]);
+        $this->createEntry(EntryType::VIEW, ['name' => 'welcome', 'path' => '/v.blade.php'], ['sequence' => 102, 'batch_id' => $batchId]);
 
         Artisan::call('telescope:show', ['id' => $request->uuid]);
         $output = Artisan::output();
@@ -124,10 +124,10 @@ class ShowCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $request = $this->request([], ['sequence' => 100, 'batch_id' => $batchId]);
+        $request = $this->createRequest([], ['sequence' => 100, 'batch_id' => $batchId]);
 
         foreach (['select first', 'select second'] as $index => $sql) {
-            $this->query(['sql' => $sql, 'hash' => "h{$index}"], ['sequence' => 101 + $index, 'batch_id' => $batchId]);
+            $this->createQuery(['sql' => $sql, 'hash' => "h{$index}"], ['sequence' => 101 + $index, 'batch_id' => $batchId]);
         }
 
         Artisan::call('telescope:show', ['id' => $request->uuid]);
@@ -140,10 +140,10 @@ class ShowCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $request = $this->request([], ['sequence' => 100, 'batch_id' => $batchId]);
+        $request = $this->createRequest([], ['sequence' => 100, 'batch_id' => $batchId]);
 
         foreach ([[101, 150.0, true], [102, 2.0, false]] as [$sequence, $time, $slow]) {
-            $this->query([
+            $this->createQuery([
                 'sql' => 'select * from users', 'time' => $time, 'slow' => $slow, 'hash' => 'dup1',
                 'file' => '/app/Http/Controllers/UserController.php', 'line' => 3,
             ], ['sequence' => $sequence, 'batch_id' => $batchId]);
@@ -164,10 +164,10 @@ class ShowCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $request = $this->request([], ['sequence' => 100, 'batch_id' => $batchId]);
+        $request = $this->createRequest([], ['sequence' => 100, 'batch_id' => $batchId]);
 
         foreach (['hit', 'hit', 'hit', 'missed', 'set'] as $action) {
-            $this->entry(EntryType::CACHE, ['type' => $action, 'key' => 'user:1'], ['batch_id' => $batchId]);
+            $this->createEntry(EntryType::CACHE, ['type' => $action, 'key' => 'user:1'], ['batch_id' => $batchId]);
         }
 
         Artisan::call('telescope:show', ['id' => $request->uuid]);
@@ -179,8 +179,8 @@ class ShowCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $request = $this->request([], ['sequence' => 100, 'batch_id' => $batchId]);
-        $this->entry(EntryType::CACHE, ['type' => 'set', 'key' => 'user:1'], ['batch_id' => $batchId]);
+        $request = $this->createRequest([], ['sequence' => 100, 'batch_id' => $batchId]);
+        $this->createEntry(EntryType::CACHE, ['type' => 'set', 'key' => 'user:1'], ['batch_id' => $batchId]);
 
         Artisan::call('telescope:show', ['id' => $request->uuid]);
         $output = Artisan::output();
@@ -191,8 +191,8 @@ class ShowCommandTest extends FeatureTestCase
 
     public function test_show_latest_shortcut()
     {
-        $this->request(['uri' => '/old'], ['sequence' => 1]);
-        $this->exception(['message' => 'Latest'], ['sequence' => 2]);
+        $this->createRequest(['uri' => '/old'], ['sequence' => 1]);
+        $this->createException(['message' => 'Latest'], ['sequence' => 2]);
 
         $this->assertSame(0, $this->artisan('telescope:show', ['id' => 'latest']));
 
@@ -205,8 +205,8 @@ class ShowCommandTest extends FeatureTestCase
 
     public function test_show_latest_type_shortcut()
     {
-        $this->request(['uri' => '/api/test'], ['sequence' => 1]);
-        $this->exception(['message' => 'Error'], ['sequence' => 2]);
+        $this->createRequest(['uri' => '/api/test'], ['sequence' => 1]);
+        $this->createException(['message' => 'Error'], ['sequence' => 2]);
 
         Artisan::call('telescope:show', ['id' => 'latest:request']);
         $output = Artisan::output();
@@ -219,9 +219,9 @@ class ShowCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $request = $this->request([], ['sequence' => 100, 'batch_id' => $batchId]);
-        $this->query([], ['sequence' => 101, 'batch_id' => $batchId]);
-        $this->entry(EntryType::CACHE, ['type' => 'hit', 'key' => 'test'], ['sequence' => 102, 'batch_id' => $batchId]);
+        $request = $this->createRequest([], ['sequence' => 100, 'batch_id' => $batchId]);
+        $this->createQuery([], ['sequence' => 101, 'batch_id' => $batchId]);
+        $this->createEntry(EntryType::CACHE, ['type' => 'hit', 'key' => 'test'], ['sequence' => 102, 'batch_id' => $batchId]);
 
         Artisan::call('telescope:show', ['id' => $request->uuid, '--type' => 'query']);
         $output = Artisan::output();
@@ -234,9 +234,9 @@ class ShowCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $request = $this->request([], ['sequence' => 100, 'batch_id' => $batchId]);
-        $this->query([], ['sequence' => 101, 'batch_id' => $batchId]);
-        $this->entry(EntryType::CACHE, ['type' => 'hit', 'key' => 'spaced'], ['sequence' => 102, 'batch_id' => $batchId]);
+        $request = $this->createRequest([], ['sequence' => 100, 'batch_id' => $batchId]);
+        $this->createQuery([], ['sequence' => 101, 'batch_id' => $batchId]);
+        $this->createEntry(EntryType::CACHE, ['type' => 'hit', 'key' => 'spaced'], ['sequence' => 102, 'batch_id' => $batchId]);
 
         $this->assertSame(0, $this->artisan('telescope:show', ['id' => $request->uuid, '--type' => 'query, cache']));
 
@@ -250,8 +250,8 @@ class ShowCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $request = $this->request([], ['sequence' => 100, 'batch_id' => $batchId]);
-        $this->query([], ['sequence' => 101, 'batch_id' => $batchId]);
+        $request = $this->createRequest([], ['sequence' => 100, 'batch_id' => $batchId]);
+        $this->createQuery([], ['sequence' => 101, 'batch_id' => $batchId]);
 
         $this->assertSame(0, $this->artisan('telescope:show', ['id' => $request->uuid, '--type' => 'log']));
 
@@ -262,8 +262,8 @@ class ShowCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $request = $this->request([], ['sequence' => 100, 'batch_id' => $batchId]);
-        $this->query([
+        $request = $this->createRequest([], ['sequence' => 100, 'batch_id' => $batchId]);
+        $this->createQuery([
             'sql' => 'select * from users where '.str_repeat('id = 1 or ', 20).'id = 2',
         ], ['sequence' => 101, 'batch_id' => $batchId]);
 
@@ -276,7 +276,7 @@ class ShowCommandTest extends FeatureTestCase
 
     public function test_show_omits_units_for_values_the_entry_does_not_have()
     {
-        $job = $this->entry(EntryType::JOB, [
+        $job = $this->createEntry(EntryType::JOB, [
             'name' => 'App\Jobs\SyncOrders', 'status' => 'processed', 'queue' => 'default',
             'connection' => 'redis', 'tries' => null, 'timeout' => null, 'data' => [],
         ]);
@@ -288,7 +288,7 @@ class ShowCommandTest extends FeatureTestCase
 
     public function test_show_displays_event_listeners()
     {
-        $entry = $this->entry(EntryType::EVENT, [
+        $entry = $this->createEntry(EntryType::EVENT, [
             'name' => 'App\Events\OrderShipped', 'broadcast' => false, 'payload' => [],
             'listeners' => [['name' => 'App\Listeners\SendShipmentNotification@handle', 'queued' => true]],
         ]);
@@ -300,7 +300,7 @@ class ShowCommandTest extends FeatureTestCase
 
     public function test_show_displays_mail_addresses()
     {
-        $entry = $this->entry(EntryType::MAIL, [
+        $entry = $this->createEntry(EntryType::MAIL, [
             'mailable' => 'App\Mail\Welcome', 'subject' => 'Welcome', 'queued' => false,
             'to' => ['alice@example.com' => 'Alice'], 'from' => ['noreply@example.com' => null],
         ]);
@@ -314,9 +314,9 @@ class ShowCommandTest extends FeatureTestCase
     {
         $batchId = (string) Str::uuid();
 
-        $request = $this->request([], ['sequence' => 100, 'batch_id' => $batchId]);
-        $this->query([], ['sequence' => 101, 'batch_id' => $batchId]);
-        $this->entry(EntryType::CACHE, ['type' => 'hit', 'key' => 'test'], ['sequence' => 102, 'batch_id' => $batchId]);
+        $request = $this->createRequest([], ['sequence' => 100, 'batch_id' => $batchId]);
+        $this->createQuery([], ['sequence' => 101, 'batch_id' => $batchId]);
+        $this->createEntry(EntryType::CACHE, ['type' => 'hit', 'key' => 'test'], ['sequence' => 102, 'batch_id' => $batchId]);
 
         Artisan::call('telescope:show', ['id' => $request->uuid, '--json' => true, '--type' => 'query']);
         $json = json_decode(Artisan::output(), true);
@@ -340,7 +340,7 @@ class ShowCommandTest extends FeatureTestCase
 
     public function test_show_latest_type_with_no_matching_entries()
     {
-        $this->request();
+        $this->createRequest();
 
         $this->assertSame(1, $this->artisan('telescope:show', ['id' => 'latest:exception']));
         $this->assertStringContainsString('No exception entries found.', Artisan::output());
@@ -354,7 +354,7 @@ class ShowCommandTest extends FeatureTestCase
 
     public function test_show_validates_type_option()
     {
-        $entry = $this->request();
+        $entry = $this->createRequest();
 
         $this->assertSame(1, $this->artisan('telescope:show', ['id' => $entry->uuid, '--type' => 'foobar']));
         $this->assertStringContainsString('Invalid entry type: foobar', Artisan::output());

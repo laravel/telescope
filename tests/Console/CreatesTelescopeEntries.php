@@ -15,7 +15,7 @@ trait CreatesTelescopeEntries
      * @param  array  $attributes
      * @return \Laravel\Telescope\Storage\EntryModel
      */
-    protected function entry(string $type, array $content = [], array $attributes = [])
+    protected function createEntry(string $type, array $content = [], array $attributes = [])
     {
         return EntryModelFactory::new()->create($attributes + [
             'type' => $type,
@@ -30,9 +30,9 @@ trait CreatesTelescopeEntries
      * @param  array  $attributes
      * @return \Laravel\Telescope\Storage\EntryModel
      */
-    protected function request(array $content = [], array $attributes = [])
+    protected function createRequest(array $content = [], array $attributes = [])
     {
-        return $this->entry(EntryType::REQUEST, $content + [
+        return $this->createEntry(EntryType::REQUEST, $content + [
             'method' => 'GET', 'uri' => '/test', 'response_status' => 200,
             'duration' => 50, 'memory' => 8, 'ip_address' => '127.0.0.1',
             'middleware' => [], 'payload' => [], 'response' => [],
@@ -46,9 +46,9 @@ trait CreatesTelescopeEntries
      * @param  array  $attributes
      * @return \Laravel\Telescope\Storage\EntryModel
      */
-    protected function query(array $content = [], array $attributes = [])
+    protected function createQuery(array $content = [], array $attributes = [])
     {
-        return $this->entry(EntryType::QUERY, $content + [
+        return $this->createEntry(EntryType::QUERY, $content + [
             'sql' => 'select 1', 'time' => 1.0, 'connection' => 'testbench', 'slow' => false, 'hash' => 'h1',
         ], $attributes);
     }
@@ -60,9 +60,9 @@ trait CreatesTelescopeEntries
      * @param  array  $attributes
      * @return \Laravel\Telescope\Storage\EntryModel
      */
-    protected function exception(array $content = [], array $attributes = [])
+    protected function createException(array $content = [], array $attributes = [])
     {
-        return $this->entry(EntryType::EXCEPTION, $content + [
+        return $this->createEntry(EntryType::EXCEPTION, $content + [
             'class' => 'RuntimeException', 'message' => 'Test', 'file' => 'test.php',
             'line' => 1, 'trace' => [], 'occurrences' => 1,
         ], $attributes);
