@@ -188,6 +188,8 @@ class Telescope
                 'horizon',
                 'horizon:work',
                 'horizon:supervisor',
+                'telescope:list',
+                'telescope:show',
             ], config('telescope.ignoreCommands', []), config('telescope.ignore_commands', []))
         );
     }
