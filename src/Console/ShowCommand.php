@@ -54,9 +54,9 @@ class ShowCommand extends Command
 
             $batchId = $entry->content['updated_batch_id'] ?? $entry->batchId;
 
-            $types = Str::of($this->option('type'))->explode(',')->map('trim')->filter();
+            $types = Str::of($this->option('type'))->explode(',')->map(fn ($type) => trim($type))->filter();
 
-            if (! $this->validEntryTypes(...$types)) {
+            if (! $this->ensureValidEntryTypes(...$types)) {
                 return 1;
             }
 
@@ -69,15 +69,13 @@ class ShowCommand extends Command
                 ->values();
 
             if ($this->option('json')) {
-                $this->line(json_encode(['entry' => $entry, 'batch' => $batchEntries->all()], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+                $this->line($this->jsonBlock(['entry' => $entry, 'batch' => $batchEntries->all()]));
 
                 return;
             }
 
-            $batchByType = $batchEntries->groupBy('type');
-
             $this->renderEntry($entry);
-            $this->renderBatchContext($batchId, $batchByType);
+            $this->renderBatchContext($batchId, $batchEntries->groupBy('type'), $types);
         });
     }
 
@@ -93,7 +91,7 @@ class ShowCommand extends Command
         if ($id === 'latest' || str_starts_with($id, 'latest:')) {
             $type = $id === 'latest' ? null : Str::after($id, 'latest:');
 
-            if ($type && ! $this->validEntryTypes($type)) {
+            if ($type && ! $this->ensureValidEntryTypes($type)) {
                 return null;
             }
 
@@ -141,12 +139,12 @@ class ShowCommand extends Command
     {
         $content = $entry->content;
 
-        $this->info('Request: '.($content['method'] ?? '').' '.($content['uri'] ?? '').' → '.($content['response_status'] ?? ''));
+        $this->info('Request: '.($content['method'] ?? '').' '.($content['uri'] ?? '').' -> '.($content['response_status'] ?? ''));
 
         $this->details($entry, [
             'Controller' => $content['controller_action'] ?? 'Closure',
-            'Duration' => ($content['duration'] ?? '').'ms',
-            'Memory' => ($content['memory'] ?? '').'MB',
+            'Duration' => $this->unit($content['duration'] ?? null, 'ms'),
+            'Memory' => $this->unit($content['memory'] ?? null, 'MB'),
             'IP' => $content['ip_address'] ?? '',
             'Middleware' => implode(', ', (array) ($content['middleware'] ?? [])),
             'User' => $this->formatUser($content['user'] ?? []),
@@ -181,7 +179,7 @@ class ShowCommand extends Command
             $this->info('Code Context');
 
             $this->table([], collect($content['line_preview'])->map(fn ($code, $lineNo) => [
-                $lineNo == ($content['line'] ?? 0) ? "<fg=red>{$lineNo} →</>" : $lineNo,
+                $lineNo == ($content['line'] ?? 0) ? "<fg=red>{$lineNo} ></>" : $lineNo,
                 $code,
             ])->values());
         }
@@ -206,7 +204,7 @@ class ShowCommand extends Command
             'Queue' => $content['queue'] ?? '',
             'Connection' => $content['connection'] ?? '',
             'Tries' => (string) ($content['tries'] ?? ''),
-            'Timeout' => ($content['timeout'] ?? '').'s',
+            'Timeout' => $this->unit($content['timeout'] ?? null, 's'),
         ]);
 
         $this->block('Data', $content['data'] ?? null, 500);
@@ -226,9 +224,13 @@ class ShowCommand extends Command
     protected function renderGenericEntry(EntryResult $entry): void
     {
         $content = $entry->content;
-        $config = $this->entryFieldConfig($entry->type, $content) + ['subtitle' => '', 'fields' => [], 'list' => null, 'blocks' => []];
+        $config = $this->entryFieldConfig($entry->type, $content) + [
+            'label' => ucfirst($entry->type), 'subtitle' => '', 'fields' => [], 'list' => null, 'blocks' => [],
+        ];
 
-        $this->info(rtrim("{$config['label']}: {$config['subtitle']}", ': '));
+        $this->info($config['subtitle'] === ''
+            ? $config['label']
+            : "{$config['label']}: {$config['subtitle']}");
 
         $this->details($entry, $config['fields']);
 
@@ -255,7 +257,7 @@ class ShowCommand extends Command
                 'label' => 'Query',
                 'fields' => [
                     'Connection' => $content['connection'] ?? '',
-                    'Duration' => ($content['time'] ?? '').'ms'.(! empty($content['slow']) ? '  <fg=red>SLOW</>' : ''),
+                    'Duration' => $this->unit($content['time'] ?? null, 'ms').(! empty($content['slow']) ? '  <fg=red>SLOW</>' : ''),
                     'Source' => isset($content['file']) ? ($content['file']).':'.($content['line'] ?? '') : '',
                     'SQL' => $content['sql'] ?? '',
                 ],
@@ -265,7 +267,7 @@ class ShowCommand extends Command
                 'label' => 'Cache', 'subtitle' => $content['type'] ?? '',
                 'fields' => [
                     'Key' => $content['key'] ?? '',
-                    'Expiration' => isset($content['expiration']) ? $content['expiration'].'s' : '',
+                    'Expiration' => $this->unit($content['expiration'] ?? null, 's'),
                 ],
                 'blocks' => ['Value' => 'value'],
             ],
@@ -306,7 +308,7 @@ class ShowCommand extends Command
                 'label' => 'Client Request', 'subtitle' => ($content['method'] ?? '').' '.($content['uri'] ?? ''),
                 'fields' => [
                     'Status' => isset($content['response_status']) ? $this->colorStatus((int) $content['response_status']) : 'N/A',
-                    'Duration' => ($content['duration'] ?? '').'ms',
+                    'Duration' => $this->unit($content['duration'] ?? null, 'ms'),
                 ],
                 'blocks' => ['Payload' => 'payload', 'Response' => 'response'],
             ],
@@ -341,7 +343,7 @@ class ShowCommand extends Command
                 'label' => 'Redis',
                 'fields' => [
                     'Connection' => $content['connection'] ?? '',
-                    'Duration' => ($content['time'] ?? '').'ms',
+                    'Duration' => $this->unit($content['time'] ?? null, 'ms'),
                     'Command' => $content['command'] ?? '',
                 ],
             ],
@@ -357,37 +359,33 @@ class ShowCommand extends Command
      *
      * @param  string|null  $batchId
      * @param  \Illuminate\Support\Collection  $batchByType
+     * @param  \Illuminate\Support\Collection  $requestedTypes
      * @return void
      */
-    protected function renderBatchContext(?string $batchId, Collection $batchByType): void
+    protected function renderBatchContext(?string $batchId, Collection $batchByType, Collection $requestedTypes): void
     {
         if ($batchByType->isEmpty()) {
+            if ($requestedTypes->isNotEmpty()) {
+                $this->line('No batch entries of type '.$requestedTypes->implode(', ').'.');
+            }
+
             return;
         }
 
-        $this->info('Related Entries — batch '.$this->shortUuid($batchId));
+        $this->info('Related Entries - batch '.$this->shortUuid($batchId));
+
+        $detailed = [EntryType::QUERY, EntryType::EXCEPTION, EntryType::CACHE, EntryType::LOG];
 
         $this->renderBatchQueries($batchByType->get(EntryType::QUERY, collect()));
         $this->renderBatchExceptions($batchByType->get(EntryType::EXCEPTION, collect()));
         $this->renderBatchCache($batchByType->get(EntryType::CACHE, collect()));
         $this->renderBatchLogs($batchByType->get(EntryType::LOG, collect()));
 
-        $compactTypes = [
-            EntryType::REQUEST => 'Request', EntryType::VIEW => 'Views', EntryType::MODEL => 'Models',
-            EntryType::EVENT => 'Events', EntryType::GATE => 'Gates',
-            EntryType::MAIL => 'Mail', EntryType::NOTIFICATION => 'Notifications',
-            EntryType::REDIS => 'Redis', EntryType::CLIENT_REQUEST => 'Client Requests',
-            EntryType::JOB => 'Jobs', EntryType::COMMAND => 'Commands',
-            EntryType::SCHEDULED_TASK => 'Schedule',
-        ];
+        foreach ($batchByType->except($detailed) as $type => $entries) {
+            $label = Str::plural(Str::headline($type));
 
-        foreach ($compactTypes as $type => $label) {
-            $entries = $batchByType->get($type, collect());
-
-            if ($entries->isNotEmpty()) {
-                $this->listing("{$label} ({$entries->count()})", $entries->take(5)->map(fn ($related) => $this->summarizeEntry($related))->all());
-                $this->more($entries->count(), 5, $label);
-            }
+            $this->listing("{$label} ({$entries->count()})", $entries->take(5)->map(fn ($related) => $this->summarizeEntry($related))->all());
+            $this->more($entries->count(), 5, $label);
         }
     }
 
@@ -410,9 +408,9 @@ class ShowCommand extends Command
             ->filter(fn ($group) => $group->count() > 1);
 
         $this->info(
-            "Queries — {$queries->count()} total, {$totalTime}ms".
+            "Queries - {$queries->count()} total, {$totalTime}ms".
             ($slowCount > 0 ? ", {$slowCount} slow" : '').
-            ($duplicates->isNotEmpty() ? ", {$duplicates->count()} duplicate groups" : '')
+            ($duplicates->isNotEmpty() ? ', '.$duplicates->count().' duplicate '.Str::plural('group', $duplicates->count()) : '')
         );
 
         $this->table(
@@ -445,16 +443,18 @@ class ShowCommand extends Command
             return;
         }
 
-        $this->info("Exceptions — {$exceptions->count()}");
+        $this->info("Exceptions - {$exceptions->count()}");
 
         $this->table(
             ['UUID', 'Exception', 'Location'],
-            $exceptions->map(fn ($exception) => [
+            $exceptions->take(10)->map(fn ($exception) => [
                 $this->shortUuid($exception->id),
                 ($exception->content['class'] ?? '').': '.$this->limit($exception->content['message'] ?? '', 80),
                 ($exception->content['file'] ?? '').':'.($exception->content['line'] ?? ''),
             ])
         );
+
+        $this->more($exceptions->count(), 10, 'exceptions');
     }
 
     /**
@@ -471,9 +471,10 @@ class ShowCommand extends Command
 
         $hits = $cacheEntries->filter(fn ($cacheEntry) => ($cacheEntry->content['type'] ?? '') === 'hit')->count();
         $misses = $cacheEntries->filter(fn ($cacheEntry) => ($cacheEntry->content['type'] ?? '') === 'missed')->count();
-        $hitRate = $hits + $misses > 0 ? round($hits / ($hits + $misses) * 100, 1) : 0;
+        $lookups = $hits + $misses;
 
-        $this->info("Cache — {$hits} hits, {$misses} misses — {$hitRate}% hit rate");
+        $this->info("Cache - {$hits} hits, {$misses} misses".
+            ($lookups > 0 ? ' - '.round($hits / $lookups * 100, 1).'% hit rate' : ''));
 
         $this->table(
             ['Action', 'Key'],
@@ -498,7 +499,7 @@ class ShowCommand extends Command
             return;
         }
 
-        $this->info("Logs — {$logs->count()}");
+        $this->info("Logs - {$logs->count()}");
 
         $this->table(
             ['Level', 'Message'],

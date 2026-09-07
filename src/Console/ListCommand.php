@@ -3,7 +3,6 @@
 namespace Laravel\Telescope\Console;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Laravel\Telescope\Console\Concerns\FormatsOutput;
 use Laravel\Telescope\Contracts\EntriesRepository;
@@ -23,7 +22,7 @@ class ListCommand extends Command
      * @var string
      */
     protected $signature = 'telescope:list
-        {type? : Entry type (request, query, exception, job, cache, mail, log, event, gate, model, notification, redis, view, command, schedule, client_request, batch, dump)}
+        {type? : Entry type (omit or pass an invalid type to list the valid ones)}
         {--tag= : Filter by tag}
         {--batch= : Filter by batch ID}
         {--family= : Filter by family hash}
@@ -49,16 +48,20 @@ class ListCommand extends Command
         return Telescope::withoutRecording(function () use ($storage) {
             $type = $this->argument('type');
 
-            if ($type && ! $this->validEntryTypes($type)) {
+            if ($type && ! $this->ensureValidEntryTypes($type)) {
                 return 1;
             }
 
-            $limit = (int) $this->option('limit');
+            if (! ctype_digit((string) $this->option('limit')) || ($limit = (int) $this->option('limit')) < 1) {
+                $this->error('The --limit option must be a positive integer.');
 
-            $entries = $storage->get($type, $this->queryOptions($limit));
+                return 1;
+            }
+
+            $entries = collect($storage->get($type, $this->queryOptions($limit)));
 
             if ($this->option('json')) {
-                $this->line(json_encode($entries->all(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+                $this->line($this->jsonBlock($entries->all()));
 
                 return;
             }
@@ -69,13 +72,15 @@ class ListCommand extends Command
                 return;
             }
 
-            $this->renderTable($type, $entries);
+            [$headers, $row] = $this->tableColumns($type);
 
-            $nextPage = $limit > 0 && $entries->count() >= $limit
+            $this->table($headers, $entries->map($row)->all());
+
+            $nextPage = $entries->count() >= $limit
                 ? "Use --before={$entries->last()->sequence} for next page"
                 : 'No more entries';
 
-            $this->info("Showing {$entries->count()} entries — {$nextPage}");
+            $this->info('Showing '.$entries->count().' '.Str::plural('entry', $entries->count())." - {$nextPage}");
         });
     }
 
@@ -96,20 +101,6 @@ class ListCommand extends Command
     }
 
     /**
-     * Render the entries table for the given entry type.
-     *
-     * @param  string|null  $type
-     * @param  \Illuminate\Support\Collection  $entries
-     * @return void
-     */
-    protected function renderTable(?string $type, Collection $entries): void
-    {
-        [$headers, $row] = $this->tableColumns($type);
-
-        $this->table($headers, $entries->map($row)->all());
-    }
-
-    /**
      * Get the table headers and row formatter for the given entry type.
      *
      * @param  string|null  $type
@@ -125,7 +116,7 @@ class ListCommand extends Command
                     $this->colorMethod($entry->content['method'] ?? ''),
                     Str::limit($entry->content['uri'] ?? '', 40),
                     $this->colorStatus((int) ($entry->content['response_status'] ?? 0)),
-                    ($entry->content['duration'] ?? '').'ms',
+                    $this->unit($entry->content['duration'] ?? null, 'ms'),
                     $this->humanTime($entry->createdAt),
                 ],
             ],
@@ -134,7 +125,7 @@ class ListCommand extends Command
                 fn ($entry) => [
                     $this->shortUuid($entry->id),
                     Str::limit($entry->content['sql'] ?? '', 60),
-                    ($entry->content['time'] ?? '').'ms',
+                    $this->unit($entry->content['time'] ?? null, 'ms'),
                     ! empty($entry->content['slow']) ? '<fg=red>Yes</>' : 'No',
                     $entry->content['connection'] ?? '',
                     $this->humanTime($entry->createdAt),
@@ -204,7 +195,7 @@ class ListCommand extends Command
                     $this->colorMethod($entry->content['method'] ?? ''),
                     Str::limit($entry->content['uri'] ?? '', 40),
                     isset($entry->content['response_status']) ? $this->colorStatus((int) $entry->content['response_status']) : 'N/A',
-                    ($entry->content['duration'] ?? '').'ms',
+                    $this->unit($entry->content['duration'] ?? null, 'ms'),
                     $this->humanTime($entry->createdAt),
                 ],
             ],

@@ -3,13 +3,15 @@
 namespace Laravel\Telescope\Tests\Console;
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Laravel\Telescope\Database\Factories\EntryModelFactory;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Tests\FeatureTestCase;
 
 class ListCommandTest extends FeatureTestCase
 {
+    use CreatesTelescopeEntries;
+
     /**
      * Indicates if console output should be mocked.
      *
@@ -21,105 +23,124 @@ class ListCommandTest extends FeatureTestCase
 
     public function test_list_filters_by_type()
     {
-        EntryModelFactory::new()->create(['type' => EntryType::REQUEST, 'content' => [
-            'method' => 'GET', 'uri' => '/test', 'response_status' => 200,
-            'duration' => 100, 'hostname' => 'localhost',
-        ]]);
-        EntryModelFactory::new()->create(['type' => EntryType::EXCEPTION, 'content' => [
-            'class' => 'RuntimeException', 'message' => 'fail', 'hostname' => 'localhost',
-        ]]);
+        $this->request();
+        $this->exception(['message' => 'fail']);
 
         Artisan::call('telescope:list', ['type' => 'request']);
         $output = Artisan::output();
 
         $this->assertStringContainsString('/test', $output);
-        $this->assertStringContainsString('Showing 1 entries', $output);
+        $this->assertStringNotContainsString('fail', $output);
+        $this->assertStringContainsString('Showing 1 entry', $output);
     }
 
     public function test_list_validates_type_argument()
     {
         $this->assertSame(1, $this->artisan('telescope:list', ['type' => 'foobar']));
+        $this->assertStringContainsString('Invalid entry type: foobar', Artisan::output());
     }
 
     public function test_list_filters_by_batch()
     {
         $batchId = (string) Str::uuid();
 
-        EntryModelFactory::new()->create([
-            'type' => EntryType::REQUEST,
-            'batch_id' => $batchId,
-            'content' => ['method' => 'GET', 'uri' => '/a', 'response_status' => 200, 'duration' => 50, 'hostname' => 'localhost'],
-        ]);
-        EntryModelFactory::new()->create([
-            'type' => EntryType::REQUEST,
-            'content' => ['method' => 'POST', 'uri' => '/b', 'response_status' => 201, 'duration' => 80, 'hostname' => 'localhost'],
-        ]);
+        $this->request(['uri' => '/a'], ['batch_id' => $batchId]);
+        $this->request(['uri' => '/b']);
 
-        Artisan::call('telescope:list', ['type' => 'request', '--batch' => $batchId]);
+        Artisan::call('telescope:list', ['--batch' => $batchId]);
         $output = Artisan::output();
 
         $this->assertStringContainsString('/a', $output);
         $this->assertStringNotContainsString('/b', $output);
     }
 
-    public function test_list_respects_limit()
+    public function test_list_filters_by_tag()
     {
-        EntryModelFactory::new()->count(5)->create([
-            'type' => EntryType::REQUEST,
-            'content' => ['method' => 'GET', 'uri' => '/test', 'response_status' => 200, 'duration' => 50, 'hostname' => 'localhost'],
-        ]);
+        $tagged = $this->request(['uri' => '/tagged']);
+        $this->request(['uri' => '/untagged']);
+
+        DB::table('telescope_entries_tags')->insert(['entry_uuid' => $tagged->uuid, 'tag' => 'Auth:42']);
+
+        Artisan::call('telescope:list', ['type' => 'request', '--tag' => 'Auth:42']);
+        $output = Artisan::output();
+
+        $this->assertStringContainsString('/tagged', $output);
+        $this->assertStringNotContainsString('/untagged', $output);
+    }
+
+    public function test_list_pages_backwards_with_the_before_cursor()
+    {
+        $this->request(['uri' => '/older'], ['sequence' => 1]);
+        $this->request(['uri' => '/newer'], ['sequence' => 2]);
+
+        Artisan::call('telescope:list', ['type' => 'request', '--before' => 2]);
+        $output = Artisan::output();
+
+        $this->assertStringContainsString('/older', $output);
+        $this->assertStringNotContainsString('/newer', $output);
+    }
+
+    public function test_list_prints_a_cursor_when_the_page_is_full()
+    {
+        $last = null;
+
+        foreach (range(1, 3) as $sequence) {
+            $last = $this->request([], ['sequence' => $sequence]);
+        }
 
         Artisan::call('telescope:list', ['type' => 'request', '--limit' => 2]);
-        $output = Artisan::output();
 
-        $this->assertStringContainsString('Showing 2 entries', $output);
-        $this->assertStringContainsString('--before=', $output);
-    }
-
-    public function test_list_shows_warning_when_empty()
-    {
-        $this->assertSame(0, $this->artisan('telescope:list', ['type' => 'request']));
-    }
-
-    public function test_list_shows_all_entry_types()
-    {
-        EntryModelFactory::new()->create(['type' => EntryType::REQUEST, 'content' => [
-            'method' => 'GET', 'uri' => '/test', 'response_status' => 200, 'duration' => 50, 'hostname' => 'localhost',
-        ]]);
-        EntryModelFactory::new()->create(['type' => EntryType::EXCEPTION, 'content' => [
-            'class' => 'RuntimeException', 'message' => 'fail', 'hostname' => 'localhost',
-        ]]);
-
-        Artisan::call('telescope:list');
-        $output = Artisan::output();
-
-        $this->assertStringContainsString('Showing 2 entries', $output);
-        $this->assertStringContainsString('request', $output);
-        $this->assertStringContainsString('exception', $output);
-    }
-
-    public function test_list_cursor_has_more_false_when_all_returned()
-    {
-        EntryModelFactory::new()->count(3)->create([
-            'type' => EntryType::REQUEST,
-            'content' => ['method' => 'GET', 'uri' => '/test', 'response_status' => 200, 'duration' => 50, 'hostname' => 'localhost'],
-        ]);
+        $this->assertStringContainsString('Showing 2 entries - Use --before=2 for next page', Artisan::output());
 
         Artisan::call('telescope:list', ['type' => 'request', '--limit' => 20]);
 
         $this->assertStringContainsString('No more entries', Artisan::output());
     }
 
+    public function test_list_rejects_a_non_positive_limit()
+    {
+        $this->request();
+
+        foreach (['abc', '0', '-1'] as $limit) {
+            $this->assertSame(1, $this->artisan('telescope:list', ['type' => 'request', '--limit' => $limit]));
+            $this->assertStringContainsString('--limit option must be a positive integer', Artisan::output());
+        }
+    }
+
+    public function test_list_shows_warning_when_empty()
+    {
+        $this->assertSame(0, $this->artisan('telescope:list', ['type' => 'request']));
+        $this->assertStringContainsString('No entries found.', Artisan::output());
+    }
+
+    public function test_list_summarizes_mixed_entry_types_when_no_type_is_given()
+    {
+        $this->request();
+        $this->entry(EntryType::CACHE, ['type' => 'hit', 'key' => 'user:1']);
+
+        Artisan::call('telescope:list');
+        $output = Artisan::output();
+
+        $this->assertStringContainsString('Showing 2 entries', $output);
+        $this->assertStringContainsString('GET /test -> 200', $output);
+        $this->assertStringContainsString('hit user:1', $output);
+    }
+
     public function test_list_outputs_json()
     {
-        $entry = EntryModelFactory::new()->create(['type' => EntryType::REQUEST, 'content' => [
-            'method' => 'GET', 'uri' => '/test', 'response_status' => 200, 'duration' => 50, 'hostname' => 'localhost',
-        ]]);
+        $entry = $this->request();
 
         Artisan::call('telescope:list', ['type' => 'request', '--json' => true]);
         $json = json_decode(Artisan::output(), true);
 
         $this->assertSame($entry->uuid, $json[0]['id']);
         $this->assertSame('/test', $json[0]['content']['uri']);
+    }
+
+    public function test_list_outputs_an_empty_json_array_when_empty()
+    {
+        Artisan::call('telescope:list', ['type' => 'request', '--json' => true]);
+
+        $this->assertSame([], json_decode(Artisan::output(), true));
     }
 }

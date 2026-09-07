@@ -2,42 +2,42 @@
 
 namespace Laravel\Telescope\Console\Concerns;
 
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\EntryType;
-use ReflectionClass;
 
 trait FormatsOutput
 {
-    /**
-     * Get all valid entry types.
-     *
-     * @return string[]
-     */
-    protected function entryTypes(): array
-    {
-        return array_values((new ReflectionClass(EntryType::class))->getConstants());
-    }
-
     /**
      * Verify the given entry types are valid, printing an error if not.
      *
      * @param  string  ...$types
      * @return bool
      */
-    protected function validEntryTypes(string ...$types): bool
+    protected function ensureValidEntryTypes(string ...$types): bool
     {
-        $invalid = collect($types)->diff($this->entryTypes());
+        $invalid = collect($types)->diff(EntryType::all());
 
         if ($invalid->isEmpty()) {
             return true;
         }
 
         $this->error('Invalid entry type: '.$invalid->implode(', '));
-        $this->line('Valid types: '.implode(', ', $this->entryTypes()));
+        $this->line('Valid types: '.implode(', ', EntryType::all()));
 
         return false;
+    }
+
+    /**
+     * Append a unit to the given value, or return an empty string if it has none.
+     *
+     * @param  mixed  $value
+     * @param  string  $unit
+     * @return string
+     */
+    protected function unit($value, string $unit): string
+    {
+        return $value === null || $value === '' ? '' : $value.$unit;
     }
 
     /**
@@ -54,12 +54,12 @@ trait FormatsOutput
     /**
      * Format a timestamp as a human readable difference.
      *
-     * @param  mixed  $date
+     * @param  \Carbon\CarbonInterface  $date
      * @return string
      */
     protected function humanTime($date): string
     {
-        return Carbon::parse($date)->diffForHumans();
+        return $date->diffForHumans();
     }
 
     /**
@@ -89,6 +89,7 @@ trait FormatsOutput
             EntryType::CLIENT_REQUEST => ($content['method'] ?? '').' '.Str::limit($content['uri'] ?? '', 40).' -> '.($content['response_status'] ?? 'N/A'),
             EntryType::COMMAND => $content['command'] ?? '',
             EntryType::SCHEDULED_TASK => ($content['command'] ?? '').' ['.($content['expression'] ?? '').']',
+            EntryType::DUMP => Str::limit(trim(strip_tags($content['dump'] ?? '')), 80),
             default => Str::limit(json_encode($content), 80),
         };
     }

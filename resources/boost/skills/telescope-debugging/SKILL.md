@@ -11,13 +11,15 @@ Telescope records every request, job, and command as a **batch**: the entry itse
 
 2. **Show the batch.** Run `php artisan telescope:show <uuid>`, or `php artisan telescope:show latest:request`. The output is the entry's own detail followed by Queries, Exceptions, Cache, and Logs sections, all from the same batch.
 
-3. **Diagnose from the flags.** In the Queries table, `DUP` marks queries that share one SQL pattern, which usually indicates an N+1, and the Source column names the file and line that ran them. `SLOW` marks queries over the configured threshold. The Cache header states hits, misses, and hit rate. An exception entry shows the message, code context, and stack trace.
+3. **Diagnose from the flags.** In the Queries table, `DUP` marks queries that share one SQL pattern, which usually indicates an N+1, and the Source column names the file and line that ran them, shortened to a basename -- use `--json` for the full path. `SLOW` marks queries over the configured threshold. The Cache header states hits, misses, and hit rate. An exception entry shows the message, code context, and stack trace.
 
 4. **Done** when the finding names a file and line or a specific query, not a symptom.
 
 ### JSON output
 
-Both commands accept `--json`. Prefer it over the tables when you need exact values, want to filter, or the table output would be long. `telescope:list --json` prints an array of entries. `telescope:show --json` prints `{"entry": {...}, "batch": [...]}`, with the batch in chronological order and already filtered by `--type`. Every entry has `id`, `sequence`, `batch_id`, `type`, `content`, `tags`, `family_hash`, and `created_at`. The `content` keys match what the Telescope UI shows for that type, for example `sql`, `time`, `slow`, `file`, `line` on a query, or `class`, `message`, `file`, `line`, `trace` on an exception.
+Both commands accept `--json`. Prefer it over the tables when you need exact values, want to filter, or the table output would be long. `telescope:list --json` prints an array of entries. `telescope:show --json` prints `{"entry": {...}, "batch": [...]}`, with the batch in chronological order and already filtered by `--type`. `telescope:list --json` prints `[]` rather than a message when nothing matches.
+
+Every entry has `id`, `batch_id`, `type`, `content`, `family_hash`, and `created_at`. The `content` keys match what the Telescope UI shows for that type, for example `sql`, `time`, `slow`, `file`, `line` on a query, or `class`, `message`, `file`, `line`, `trace` on an exception. Two fields are not populated by these commands: `tags` is always `[]` (filter with `--tag` instead of reading it back), and `sequence` is `null` when the entry was addressed by UUID.
 
 ```bash
 # Exception class, message, and location for the latest exception
@@ -38,9 +40,9 @@ php artisan telescope:list job --json | jq '.[] | select(.content.status == "fai
 
 ### Reference
 
-- `latest`, `latest:request`, `latest:exception`, and `latest:job` resolve to the most recent entry of that type, so no UUID lookup is needed.
+- `latest` and `latest:{type}` -- for any entry type, so `latest:query` and `latest:job` work too -- resolve to the most recent entry, so no UUID lookup is needed.
 - `--json` on either command skips truncation entirely, so `--full` is only needed for table output.
 - `telescope:show <id> --full` disables truncation of SQL, messages, and payloads.
 - `telescope:show <id> --type=query,exception` limits the batch context to those types when a request produced hundreds of entries.
-- `telescope:list --tag=Auth:42` filters to one authenticated user, since Telescope tags entries with `Auth:<user id>`. `--batch=<id>` lists everything from one request. `--before=<sequence>` pages backwards using the cursor printed in the footer.
+- `telescope:list --tag=Auth:42` filters to one authenticated user, since Telescope tags entries with `Auth:<user id>`. `--batch=<id>` lists everything from one request. `--before=<sequence>` pages backwards using the cursor printed in the footer. `--family=<hash>` groups recurrences of one exception; read the hash from `--json` output's `family_hash`.
 - Run either command with `--help` for the full option list and valid entry types.
