@@ -10,6 +10,15 @@ use Laravel\Telescope\Tests\FeatureTestCase;
 
 class ListCommandTest extends FeatureTestCase
 {
+    /**
+     * Indicates if console output should be mocked.
+     *
+     * Disabled so Artisan::output() captures the real command output.
+     *
+     * @var bool
+     */
+    public $mockConsoleOutput = false;
+
     public function test_list_filters_by_type()
     {
         EntryModelFactory::new()->create(['type' => EntryType::REQUEST, 'content' => [
@@ -29,8 +38,7 @@ class ListCommandTest extends FeatureTestCase
 
     public function test_list_validates_type_argument()
     {
-        $this->artisan('telescope:list', ['type' => 'foobar'])
-            ->assertFailed();
+        $this->assertSame(1, $this->artisan('telescope:list', ['type' => 'foobar']));
     }
 
     public function test_list_filters_by_batch()
@@ -70,8 +78,7 @@ class ListCommandTest extends FeatureTestCase
 
     public function test_list_shows_warning_when_empty()
     {
-        $this->artisan('telescope:list', ['type' => 'request'])
-            ->assertSuccessful();
+        $this->assertSame(0, $this->artisan('telescope:list', ['type' => 'request']));
     }
 
     public function test_list_shows_all_entry_types()

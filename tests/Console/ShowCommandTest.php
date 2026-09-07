@@ -10,6 +10,15 @@ use Laravel\Telescope\Tests\FeatureTestCase;
 
 class ShowCommandTest extends FeatureTestCase
 {
+    /**
+     * Indicates if console output should be mocked.
+     *
+     * Disabled so Artisan::output() captures the real command output.
+     *
+     * @var bool
+     */
+    public $mockConsoleOutput = false;
+
     public function test_show_displays_request_entry()
     {
         $entry = EntryModelFactory::new()->create([
@@ -22,8 +31,7 @@ class ShowCommandTest extends FeatureTestCase
             ],
         ]);
 
-        $this->artisan('telescope:show', ['id' => $entry->uuid])
-            ->assertSuccessful();
+        $this->assertSame(0, $this->artisan('telescope:show', ['id' => $entry->uuid]));
     }
 
     public function test_show_displays_exception_entry()
@@ -37,8 +45,7 @@ class ShowCommandTest extends FeatureTestCase
             ],
         ]);
 
-        $this->artisan('telescope:show', ['id' => $entry->uuid])
-            ->assertSuccessful();
+        $this->assertSame(0, $this->artisan('telescope:show', ['id' => $entry->uuid]));
     }
 
     public function test_show_displays_batch_context()
@@ -79,8 +86,7 @@ class ShowCommandTest extends FeatureTestCase
             ],
         ]);
 
-        $this->artisan('telescope:show', ['id' => $request->uuid])
-            ->assertSuccessful();
+        $this->assertSame(0, $this->artisan('telescope:show', ['id' => $request->uuid]));
     }
 
     public function test_show_latest_shortcut()
@@ -99,8 +105,7 @@ class ShowCommandTest extends FeatureTestCase
             'content' => ['class' => 'RuntimeException', 'message' => 'Latest', 'file' => 'test.php', 'line' => 1, 'trace' => [], 'hostname' => 'localhost', 'occurrences' => 1],
         ]);
 
-        $this->artisan('telescope:show', ['id' => 'latest'])
-            ->assertSuccessful();
+        $this->assertSame(0, $this->artisan('telescope:show', ['id' => 'latest']));
     }
 
     public function test_show_latest_type_shortcut()
@@ -245,14 +250,12 @@ class ShowCommandTest extends FeatureTestCase
 
     public function test_show_entry_not_found()
     {
-        $this->artisan('telescope:show', ['id' => 'nonexistent-uuid'])
-            ->assertFailed();
+        $this->assertSame(1, $this->artisan('telescope:show', ['id' => 'nonexistent-uuid']));
     }
 
     public function test_show_latest_with_no_entries()
     {
-        $this->artisan('telescope:show', ['id' => 'latest'])
-            ->assertFailed();
+        $this->assertSame(1, $this->artisan('telescope:show', ['id' => 'latest']));
     }
 
     public function test_show_latest_type_with_no_matching_entries()
@@ -262,8 +265,7 @@ class ShowCommandTest extends FeatureTestCase
             'payload' => [], 'response' => [], 'headers' => [], 'response_headers' => [], 'session' => [], 'middleware' => [], 'ip_address' => '127.0.0.1', 'memory' => 8,
         ]]);
 
-        $this->artisan('telescope:show', ['id' => 'latest:exception'])
-            ->assertFailed();
+        $this->assertSame(1, $this->artisan('telescope:show', ['id' => 'latest:exception']));
     }
 
     public function test_show_displays_event_listeners()
