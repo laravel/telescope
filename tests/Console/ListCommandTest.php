@@ -109,4 +109,17 @@ class ListCommandTest extends FeatureTestCase
 
         $this->assertStringContainsString('No more entries', Artisan::output());
     }
+
+    public function test_list_outputs_json()
+    {
+        $entry = EntryModelFactory::new()->create(['type' => EntryType::REQUEST, 'content' => [
+            'method' => 'GET', 'uri' => '/test', 'response_status' => 200, 'duration' => 50, 'hostname' => 'localhost',
+        ]]);
+
+        Artisan::call('telescope:list', ['type' => 'request', '--json' => true]);
+        $json = json_decode(Artisan::output(), true);
+
+        $this->assertSame($entry->uuid, $json[0]['id']);
+        $this->assertSame('/test', $json[0]['content']['uri']);
+    }
 }

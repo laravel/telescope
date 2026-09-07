@@ -220,6 +220,81 @@ class ShowCommandTest extends FeatureTestCase
         $this->assertStringContainsString('1 duplicate groups', $output);
     }
 
+    public function test_show_batch_entries_are_chronological()
+    {
+        $batchId = (string) Str::uuid();
+
+        $request = EntryModelFactory::new()->create([
+            'sequence' => 100,
+            'type' => EntryType::REQUEST,
+            'batch_id' => $batchId,
+            'content' => ['method' => 'GET', 'uri' => '/test', 'response_status' => 200, 'duration' => 50, 'hostname' => 'localhost', 'payload' => [], 'response' => [], 'headers' => [], 'response_headers' => [], 'session' => [], 'middleware' => [], 'ip_address' => '127.0.0.1', 'memory' => 8],
+        ]);
+
+        foreach (['select first', 'select second'] as $index => $sql) {
+            EntryModelFactory::new()->create([
+                'sequence' => 101 + $index,
+                'type' => EntryType::QUERY,
+                'batch_id' => $batchId,
+                'content' => ['sql' => $sql, 'time' => 1.0, 'connection' => 'testbench', 'slow' => false, 'hostname' => 'localhost', 'hash' => "h{$index}"],
+            ]);
+        }
+
+        Artisan::call('telescope:show', ['id' => $request->uuid]);
+        $output = Artisan::output();
+
+        $this->assertLessThan(strpos($output, 'select second'), strpos($output, 'select first'));
+    }
+
+    public function test_show_exception_context_includes_request()
+    {
+        $batchId = (string) Str::uuid();
+
+        EntryModelFactory::new()->create([
+            'sequence' => 100,
+            'type' => EntryType::REQUEST,
+            'batch_id' => $batchId,
+            'content' => ['method' => 'POST', 'uri' => '/orders', 'response_status' => 500, 'duration' => 50, 'hostname' => 'localhost', 'payload' => [], 'response' => [], 'headers' => [], 'response_headers' => [], 'session' => [], 'middleware' => [], 'ip_address' => '127.0.0.1', 'memory' => 8],
+        ]);
+
+        $exception = EntryModelFactory::new()->create([
+            'sequence' => 101,
+            'type' => EntryType::EXCEPTION,
+            'batch_id' => $batchId,
+            'content' => ['class' => 'RuntimeException', 'message' => 'Boom', 'file' => 'test.php', 'line' => 1, 'trace' => [], 'hostname' => 'localhost', 'occurrences' => 1],
+        ]);
+
+        Artisan::call('telescope:show', ['id' => $exception->uuid]);
+
+        $this->assertStringContainsString('POST /orders -> 500', Artisan::output());
+    }
+
+    public function test_show_full_option_disables_truncation()
+    {
+        $batchId = (string) Str::uuid();
+        $sql = 'select * from users where '.str_repeat('id = 1 or ', 20).'id = 2';
+
+        $request = EntryModelFactory::new()->create([
+            'sequence' => 100,
+            'type' => EntryType::REQUEST,
+            'batch_id' => $batchId,
+            'content' => ['method' => 'GET', 'uri' => '/test', 'response_status' => 200, 'duration' => 50, 'hostname' => 'localhost', 'payload' => [], 'response' => [], 'headers' => [], 'response_headers' => [], 'session' => [], 'middleware' => [], 'ip_address' => '127.0.0.1', 'memory' => 8],
+        ]);
+
+        EntryModelFactory::new()->create([
+            'sequence' => 101,
+            'type' => EntryType::QUERY,
+            'batch_id' => $batchId,
+            'content' => ['sql' => $sql, 'time' => 1.0, 'connection' => 'testbench', 'slow' => false, 'hostname' => 'localhost', 'hash' => 'h1'],
+        ]);
+
+        Artisan::call('telescope:show', ['id' => $request->uuid]);
+        $this->assertStringNotContainsString('id = 2', Artisan::output());
+
+        Artisan::call('telescope:show', ['id' => $request->uuid, '--full' => true]);
+        $this->assertStringContainsString('id = 2', Artisan::output());
+    }
+
     public function test_show_batch_has_cache_stats()
     {
         $batchId = (string) Str::uuid();
@@ -243,6 +318,12 @@ class ShowCommandTest extends FeatureTestCase
             'content' => ['type' => 'missed', 'key' => 'user:2', 'hostname' => 'localhost'],
         ]);
 
+        EntryModelFactory::new()->create([
+            'type' => EntryType::CACHE,
+            'batch_id' => $batchId,
+            'content' => ['type' => 'set', 'key' => 'user:2', 'hostname' => 'localhost'],
+        ]);
+
         Artisan::call('telescope:show', ['id' => $request->uuid]);
 
         $this->assertStringContainsString('3 hits, 1 misses — 75% hit rate', Artisan::output());
@@ -256,6 +337,21 @@ class ShowCommandTest extends FeatureTestCase
     public function test_show_latest_with_no_entries()
     {
         $this->assertSame(1, $this->artisan('telescope:show', ['id' => 'latest']));
+    }
+
+    public function test_show_validates_latest_type()
+    {
+        $this->assertSame(1, $this->artisan('telescope:show', ['id' => 'latest:foobar']));
+    }
+
+    public function test_show_validates_type_option()
+    {
+        $entry = EntryModelFactory::new()->create(['type' => EntryType::REQUEST, 'content' => [
+            'method' => 'GET', 'uri' => '/test', 'response_status' => 200, 'duration' => 50, 'hostname' => 'localhost',
+            'payload' => [], 'response' => [], 'headers' => [], 'response_headers' => [], 'session' => [], 'middleware' => [], 'ip_address' => '127.0.0.1', 'memory' => 8,
+        ]]);
+
+        $this->assertSame(1, $this->artisan('telescope:show', ['id' => $entry->uuid, '--type' => 'foobar']));
     }
 
     public function test_show_latest_type_with_no_matching_entries()
@@ -297,5 +393,38 @@ class ShowCommandTest extends FeatureTestCase
         Artisan::call('telescope:show', ['id' => $entry->uuid]);
 
         $this->assertStringContainsString('Alice <alice@example.com>', Artisan::output());
+    }
+
+    public function test_show_outputs_json()
+    {
+        $batchId = (string) Str::uuid();
+
+        $request = EntryModelFactory::new()->create([
+            'sequence' => 100,
+            'type' => EntryType::REQUEST,
+            'batch_id' => $batchId,
+            'content' => ['method' => 'GET', 'uri' => '/test', 'response_status' => 200, 'duration' => 50, 'hostname' => 'localhost', 'payload' => [], 'response' => [], 'headers' => [], 'response_headers' => [], 'session' => [], 'middleware' => [], 'ip_address' => '127.0.0.1', 'memory' => 8],
+        ]);
+
+        EntryModelFactory::new()->create([
+            'sequence' => 101,
+            'type' => EntryType::QUERY,
+            'batch_id' => $batchId,
+            'content' => ['sql' => 'select 1', 'time' => 1.0, 'connection' => 'testbench', 'slow' => false, 'hostname' => 'localhost', 'hash' => 'h1'],
+        ]);
+
+        EntryModelFactory::new()->create([
+            'sequence' => 102,
+            'type' => EntryType::CACHE,
+            'batch_id' => $batchId,
+            'content' => ['type' => 'hit', 'key' => 'test', 'hostname' => 'localhost'],
+        ]);
+
+        Artisan::call('telescope:show', ['id' => $request->uuid, '--json' => true, '--type' => 'query']);
+        $json = json_decode(Artisan::output(), true);
+
+        $this->assertSame($request->uuid, $json['entry']['id']);
+        $this->assertCount(1, $json['batch']);
+        $this->assertSame('select 1', $json['batch'][0]['content']['sql']);
     }
 }

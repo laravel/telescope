@@ -26,7 +26,9 @@ class ShowCommand extends Command
      */
     protected $signature = 'telescope:show
         {id : Entry UUID, "latest", or "latest:{type}" (e.g. latest:exception)}
-        {--type= : Filter batch entries to specific type(s), comma-separated}';
+        {--type= : Filter batch entries to specific type(s), comma-separated}
+        {--full : Do not truncate SQL, messages, or payloads}
+        {--json : Output the entry and its batch as JSON}';
 
     /**
      * The console command description.
@@ -52,15 +54,27 @@ class ShowCommand extends Command
 
             $batchId = $entry->content['updated_batch_id'] ?? $entry->batchId;
 
+            $types = Str::of($this->option('type'))->explode(',')->map('trim')->filter();
+
+            if (! $this->validEntryTypes(...$types)) {
+                return 1;
+            }
+
             $batchEntries = $batchId
-                ? collect($storage->get(null, EntryQueryOptions::forBatchId($batchId)->limit(-1)))
+                ? collect($storage->get(null, EntryQueryOptions::forBatchId($batchId)->limit(-1)))->reverse()->values()
                 : collect();
 
-            $batchByType = $batchEntries->reject(fn ($other) => $other->id === $entry->id)->groupBy('type');
+            $batchEntries = $batchEntries->reject(fn ($other) => $other->id === $entry->id)
+                ->when($types->isNotEmpty(), fn ($entries) => $entries->whereIn('type', $types))
+                ->values();
 
-            if ($types = $this->option('type')) {
-                $batchByType = $batchByType->only(array_map('trim', explode(',', $types)));
+            if ($this->option('json')) {
+                $this->line(json_encode(['entry' => $entry, 'batch' => $batchEntries->all()], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+                return;
             }
+
+            $batchByType = $batchEntries->groupBy('type');
 
             $this->renderEntry($entry);
             $this->renderBatchContext($batchId, $batchByType);
@@ -78,6 +92,10 @@ class ShowCommand extends Command
     {
         if ($id === 'latest' || str_starts_with($id, 'latest:')) {
             $type = $id === 'latest' ? null : Str::after($id, 'latest:');
+
+            if ($type && ! $this->validEntryTypes($type)) {
+                return null;
+            }
 
             $entry = collect($storage->get($type, (new EntryQueryOptions)->limit(1)))->first();
 
@@ -355,7 +373,7 @@ class ShowCommand extends Command
         $this->renderBatchLogs($batchByType->get(EntryType::LOG, collect()));
 
         $compactTypes = [
-            EntryType::VIEW => 'Views', EntryType::MODEL => 'Models',
+            EntryType::REQUEST => 'Request', EntryType::VIEW => 'Views', EntryType::MODEL => 'Models',
             EntryType::EVENT => 'Events', EntryType::GATE => 'Gates',
             EntryType::MAIL => 'Mail', EntryType::NOTIFICATION => 'Notifications',
             EntryType::REDIS => 'Redis', EntryType::CLIENT_REQUEST => 'Client Requests',
@@ -403,7 +421,7 @@ class ShowCommand extends Command
                 $index + 1,
                 $this->shortUuid($query->id),
                 round((float) ($query->content['time'] ?? 0), 2).'ms',
-                Str::limit($query->content['sql'] ?? '', 60),
+                $this->limit($query->content['sql'] ?? '', 60),
                 isset($query->content['file']) ? basename($query->content['file']).':'.($query->content['line'] ?? '') : '',
                 trim(
                     (! empty($query->content['slow']) ? '<fg=red>SLOW</> ' : '').
@@ -433,7 +451,7 @@ class ShowCommand extends Command
             ['UUID', 'Exception', 'Location'],
             $exceptions->map(fn ($exception) => [
                 $this->shortUuid($exception->id),
-                ($exception->content['class'] ?? '').': '.Str::limit($exception->content['message'] ?? '', 80),
+                ($exception->content['class'] ?? '').': '.$this->limit($exception->content['message'] ?? '', 80),
                 ($exception->content['file'] ?? '').':'.($exception->content['line'] ?? ''),
             ])
         );
@@ -453,7 +471,7 @@ class ShowCommand extends Command
 
         $hits = $cacheEntries->filter(fn ($cacheEntry) => ($cacheEntry->content['type'] ?? '') === 'hit')->count();
         $misses = $cacheEntries->filter(fn ($cacheEntry) => ($cacheEntry->content['type'] ?? '') === 'missed')->count();
-        $hitRate = round($hits / $cacheEntries->count() * 100, 1);
+        $hitRate = $hits + $misses > 0 ? round($hits / ($hits + $misses) * 100, 1) : 0;
 
         $this->info("Cache — {$hits} hits, {$misses} misses — {$hitRate}% hit rate");
 
@@ -461,7 +479,7 @@ class ShowCommand extends Command
             ['Action', 'Key'],
             $cacheEntries->take(10)->map(fn ($cacheEntry) => [
                 $this->colorCacheAction($cacheEntry->content['type'] ?? ''),
-                Str::limit($cacheEntry->content['key'] ?? '', 60),
+                $this->limit($cacheEntry->content['key'] ?? '', 60),
             ])
         );
 
@@ -486,7 +504,7 @@ class ShowCommand extends Command
             ['Level', 'Message'],
             $logs->take(10)->map(fn ($log) => [
                 $this->colorLevel($log->content['level'] ?? ''),
-                Str::limit($log->content['message'] ?? '', 80),
+                $this->limit($log->content['message'] ?? '', 80),
             ])
         );
 
@@ -543,7 +561,19 @@ class ShowCommand extends Command
 
         $this->info($label);
 
-        $this->line(is_string($value) ? Str::limit($value, $limit) : $this->jsonBlock($value, $limit));
+        $this->line($this->limit(is_string($value) ? $value : $this->jsonBlock($value), $limit));
+    }
+
+    /**
+     * Truncate the given value unless the --full option was given.
+     *
+     * @param  string  $value
+     * @param  int  $limit
+     * @return string
+     */
+    protected function limit(string $value, int $limit): string
+    {
+        return $this->option('full') ? $value : Str::limit($value, $limit);
     }
 
     /**

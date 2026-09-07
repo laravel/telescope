@@ -6,9 +6,40 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Laravel\Telescope\EntryResult;
 use Laravel\Telescope\EntryType;
+use ReflectionClass;
 
 trait FormatsOutput
 {
+    /**
+     * Get all valid entry types.
+     *
+     * @return string[]
+     */
+    protected function entryTypes(): array
+    {
+        return array_values((new ReflectionClass(EntryType::class))->getConstants());
+    }
+
+    /**
+     * Verify the given entry types are valid, printing an error if not.
+     *
+     * @param  string  ...$types
+     * @return bool
+     */
+    protected function validEntryTypes(string ...$types): bool
+    {
+        $invalid = collect($types)->diff($this->entryTypes());
+
+        if ($invalid->isEmpty()) {
+            return true;
+        }
+
+        $this->error('Invalid entry type: '.$invalid->implode(', '));
+        $this->line('Valid types: '.implode(', ', $this->entryTypes()));
+
+        return false;
+    }
+
     /**
      * Get a shortened UUID for display.
      *
@@ -148,13 +179,10 @@ trait FormatsOutput
      * Format a value as a pretty-printed JSON block.
      *
      * @param  mixed  $data
-     * @param  int|null  $limit
      * @return string
      */
-    protected function jsonBlock($data, ?int $limit = null): string
+    protected function jsonBlock($data): string
     {
-        $json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-
-        return $limit ? Str::limit($json, $limit) : $json;
+        return json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 }

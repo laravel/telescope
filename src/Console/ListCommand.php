@@ -10,7 +10,6 @@ use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\Storage\EntryQueryOptions;
 use Laravel\Telescope\Telescope;
-use ReflectionClass;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'telescope:list')]
@@ -29,7 +28,8 @@ class ListCommand extends Command
         {--batch= : Filter by batch ID}
         {--family= : Filter by family hash}
         {--limit=20 : Max entries to show}
-        {--before= : Pagination cursor (sequence ID)}';
+        {--before= : Pagination cursor (sequence ID)}
+        {--json : Output entries as JSON}';
 
     /**
      * The console command description.
@@ -49,18 +49,19 @@ class ListCommand extends Command
         return Telescope::withoutRecording(function () use ($storage) {
             $type = $this->argument('type');
 
-            $types = (new ReflectionClass(EntryType::class))->getConstants();
-
-            if ($type && ! in_array($type, $types)) {
-                $this->error("Invalid entry type: {$type}");
-                $this->line('Valid types: '.implode(', ', $types));
-
+            if ($type && ! $this->validEntryTypes($type)) {
                 return 1;
             }
 
             $limit = (int) $this->option('limit');
 
             $entries = $storage->get($type, $this->queryOptions($limit));
+
+            if ($this->option('json')) {
+                $this->line(json_encode($entries->all(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+                return;
+            }
 
             if ($entries->isEmpty()) {
                 $this->warn('No entries found.');
