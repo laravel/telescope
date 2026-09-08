@@ -144,4 +144,24 @@ Data: {
 }
 SQL, $sql);
     }
+
+    public function test_query_watcher_handles_named_bindings_with_shared_prefix()
+    {
+        $this->app->get('db')->statement(<<<'SQL'
+update "telescope_entries" set "content" = :content1, "should_display_on_index" = :content10 where "type" = :type
+SQL
+            , [
+                'content1' => 'a',
+                'content10' => 'b',
+                'type' => 'query',
+            ]);
+
+        $entry = $this->loadTelescopeEntries()->first();
+
+        $this->assertSame(EntryType::QUERY, $entry->type);
+        $this->assertSame(<<<'SQL'
+update "telescope_entries" set "content" = 'a', "should_display_on_index" = 'b' where "type" = 'query'
+SQL
+            , $entry->content['sql']);
+    }
 }
