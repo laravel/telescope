@@ -19,6 +19,7 @@ export default {
             entry: null,
             batch: null,
             ready: false,
+            requestController: new AbortController(),
 
             updateEntryTimeout: null,
             updateEntryTimer: 2500,
@@ -45,6 +46,7 @@ export default {
      * Clean after the component is destroyed.
      */
     destroyed() {
+        this.requestController.abort();
         clearTimeout(this.updateEntryTimeout);
     },
 
@@ -67,13 +69,19 @@ export default {
 
     methods: {
         prepareEntry() {
+            this.requestController.abort();
+            this.requestController = new AbortController();
+            clearTimeout(this.updateEntryTimeout);
+
             document.title = this.title + " - Telescope";
             this.ready = false;
 
-            let unwatch = this.$watch('ready', newVal => {
+            if (this.unwatchReady) this.unwatchReady();
+
+            this.unwatchReady = this.$watch('ready', newVal => {
                 if (newVal) {
                     this.$emit('ready');
-                    unwatch();
+                    this.unwatchReady();
                 }
             });
 
@@ -92,12 +100,16 @@ export default {
 
 
         loadEntry(after){
-            axios.get(Telescope.basePath + '/telescope-api/' + this.resource + '/' + this.id).then(response => {
+            const {signal} = this.requestController;
+
+            return axios.get(Telescope.basePath + '/telescope-api/' + this.resource + '/' + this.id, {signal}).then(response => {
+                if (signal.aborted) return;
+
                 if (_.isFunction(after)) {
                     after(response);
                 }
             }).catch(error => {
-                this.ready = true;
+                if (!signal.aborted) this.ready = true;
             })
         },
 
@@ -106,6 +118,9 @@ export default {
          * Update the existing entry if needed.
          */
         updateEntry(){
+            const {signal} = this.requestController;
+
+            if (signal.aborted) return;
             if (this.resource != 'jobs') return;
             if (this.entry.content.status !== 'pending') return;
 
@@ -118,9 +133,9 @@ export default {
                     this.$parent.batch = response.data.batch;
 
                     this.ready = true;
+                }).then(() => {
+                    if (!signal.aborted) this.updateEntry();
                 });
-
-                this.updateEntry();
             }, this.updateEntryTimer);
         }
     }

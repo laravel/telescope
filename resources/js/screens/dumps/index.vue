@@ -12,6 +12,7 @@ export default {
             dump: null,
             entries: [],
             ready: false,
+            requestController: new AbortController(),
             newEntriesTimeout: null,
             newEntriesTimer: 2000,
             recordingStatus: 'enabled',
@@ -38,19 +39,32 @@ export default {
      * Clean after the component is destroyed.
      */
     destroyed() {
+        this.requestController.abort();
         clearTimeout(this.newEntriesTimeout);
     },
 
 
     methods: {
         loadEntries(){
-            axios.post(Telescope.basePath + '/telescope-api/dumps').then(response => {
+            const {signal} = this.requestController;
+
+            if (signal.aborted) return;
+
+            return axios.post(Telescope.basePath + '/telescope-api/dumps', {}, {signal}).then(response => {
+                if (signal.aborted) return;
+
                 this.ready = true;
                 this.dump = response.data.dump;
                 this.entries = response.data.entries;
                 this.recordingStatus = response.data.status;
 
                 this.$nextTick(() => this.triggerDumps());
+
+                this.checkForNewEntries();
+            }).catch(() => {
+                if (signal.aborted) return;
+
+                this.ready = true;
 
                 this.checkForNewEntries();
             });
@@ -61,8 +75,14 @@ export default {
          * Keep checking if there are new entries.
          */
         checkForNewEntries(){
+            const {signal} = this.requestController;
+
+            if (signal.aborted) return;
+
             this.newEntriesTimeout = setTimeout(() => {
-                axios.post(Telescope.basePath + '/telescope-api/dumps?take=1').then(response => {
+                axios.post(Telescope.basePath + '/telescope-api/dumps?take=1', {}, {signal}).then(response => {
+                    if (signal.aborted) return;
+
                     this.recordingStatus = response.data.status;
 
                     if (response.data.entries.length && !this.entries.length) {
@@ -72,7 +92,9 @@ export default {
                     } else {
                         this.checkForNewEntries();
                     }
-                })
+                }).catch(() => {
+                    if (!signal.aborted) this.checkForNewEntries();
+                });
             }, this.newEntriesTimer);
         },
 
