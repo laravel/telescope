@@ -1,6 +1,11 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.23.0...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.24.0...5.x)
+
+## [v5.24.0](https://github.com/laravel/telescope/compare/v5.23.0...v5.24.0) - 2026-09-08
+
+* Add telescope cli commands by [@pushpak1300](https://github.com/pushpak1300) in https://github.com/laravel/telescope/pull/1763
+* Cancel in-flight requests when navigating between screens by [@pushpak1300](https://github.com/pushpak1300) in https://github.com/laravel/telescope/pull/1764
 
 ## [v5.23.0](https://github.com/laravel/telescope/compare/v5.22.1...v5.23.0) - 2026-08-27
 
