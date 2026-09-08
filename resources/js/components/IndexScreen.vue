@@ -89,13 +89,9 @@ export default {
             this.loadingNewEntries = false;
             this.loadingMoreEntries = false;
 
-            if (!this.$route.query.family_hash) {
-                this.familyHash = '';
-            }
+            this.familyHash = this.$route.query.family_hash || '';
 
-            if (!this.$route.query.tag) {
-                this.tag = '';
-            }
+            this.tag = this.$route.query.tag || '';
 
             this.ready = false;
 
@@ -115,14 +111,12 @@ export default {
         loadEntries(after){
             const {signal} = this.requestController;
 
-            if (signal.aborted) return;
-
             return axios.post(Telescope.basePath + '/telescope-api/' + this.resource +
                     '?tag=' + this.tag +
                     '&before=' + this.lastEntryIndex +
                     '&take=' + this.entriesPerRequest +
                     '&family_hash=' + this.familyHash,
-                    {}, {signal}
+                    null, {signal}
             ).then(response => {
                 if (signal.aborted) return;
 
@@ -137,12 +131,14 @@ export default {
                             this.familyHash || this.showAllFamily ? response.data.entries : _.uniqBy(response.data.entries, entry => entry.family_hash || _.uniqueId())
                     );
                 }
-            }).catch(() => {
+            }).catch(error => {
                 if (signal.aborted) return;
 
                 this.ready = true;
                 this.loadingNewEntries = false;
                 this.loadingMoreEntries = false;
+
+                if (!this.mayRetry(error, signal)) return;
 
                 this.checkForNewEntries();
                 this.updateEntries();
@@ -156,8 +152,6 @@ export default {
         checkForNewEntries(){
             const {signal} = this.requestController;
 
-            if (signal.aborted) return;
-
             clearTimeout(this.newEntriesTimeout);
 
             this.newEntriesTimeout = setTimeout(() => {
@@ -165,7 +159,7 @@ export default {
                         '?tag=' + this.tag +
                         '&take=1' +
                         '&family_hash=' + this.familyHash,
-                        {}, {signal}
+                        null, {signal}
                 ).then(response => {
                     if (!signal.aborted) {
                         this.recordingStatus = response.data.status;
@@ -182,8 +176,8 @@ export default {
                             this.checkForNewEntries();
                         }
                     }
-                }).catch(() => {
-                    if (!signal.aborted) this.checkForNewEntries();
+                }).catch(error => {
+                    if (this.mayRetry(error, signal)) this.checkForNewEntries();
                 });
             }, this.newEntriesTimer);
         },
@@ -211,9 +205,7 @@ export default {
                 this.hasNewEntries = false;
                 this.lastEntryIndex = '';
 
-                clearTimeout(this.newEntriesTimeout);
-
-                this.$router.push({query: _.assign({}, this.$route.query, {tag: this.tag})});
+                this.$router.push({query: _.assign({}, this.$route.query, {tag: this.tag})}).catch(() => {});
             });
         },
 
@@ -259,35 +251,32 @@ export default {
         updateEntries(){
             const {signal} = this.requestController;
 
-            if (signal.aborted) return;
             if (this.resource !== 'jobs') return;
 
             clearTimeout(this.updateEntriesTimeout);
 
-            this.updateEntriesTimeout = setTimeout(async () => {
+            this.updateEntriesTimeout = setTimeout(() => {
                 let uuids = _.chain(this.entries).filter(entry => entry.content.status === 'pending').map('id').value();
 
-                try {
-                    if (uuids.length) {
-                        const response = await axios.post(Telescope.basePath + '/telescope-api/' + this.resource, {
-                            uuids: uuids
-                        }, {signal});
+                if (!uuids.length) return this.updateEntries();
 
-                        if (signal.aborted) return;
+                axios.post(Telescope.basePath + '/telescope-api/' + this.resource, {
+                    uuids: uuids
+                }, {signal}).then(response => {
+                    if (signal.aborted) return;
 
-                        this.recordingStatus = response.data.status;
+                    this.recordingStatus = response.data.status;
 
-                        this.entries = _.map(this.entries, entry => {
-                            if (!_.includes(uuids, entry.id)) return entry;
+                    this.entries = _.map(this.entries, entry => {
+                        if (!_.includes(uuids, entry.id)) return entry;
 
-                            return _.find(response.data.entries, {id: entry.id}) || entry;
-                        });
-                    }
-                } catch (error) {
-                    // Retry failed requests on the next polling interval.
-                } finally {
-                    if (!signal.aborted) this.updateEntries();
-                }
+                        return _.find(response.data.entries, {id: entry.id}) || entry;
+                    });
+
+                    this.updateEntries();
+                }).catch(error => {
+                    if (this.mayRetry(error, signal)) this.updateEntries();
+                });
             }, this.updateEntriesTimer);
         },
 

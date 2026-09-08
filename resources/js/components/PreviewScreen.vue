@@ -21,6 +21,7 @@ export default {
             ready: false,
             requestController: new AbortController(),
 
+            unwatchReady: null,
             updateEntryTimeout: null,
             updateEntryTimer: 2500,
         };
@@ -78,10 +79,10 @@ export default {
 
             if (this.unwatchReady) this.unwatchReady();
 
-            this.unwatchReady = this.$watch('ready', newVal => {
+            const unwatch = this.unwatchReady = this.$watch('ready', newVal => {
                 if (newVal) {
                     this.$emit('ready');
-                    this.unwatchReady();
+                    unwatch();
                 }
             });
 
@@ -109,7 +110,11 @@ export default {
                     after(response);
                 }
             }).catch(error => {
-                if (!signal.aborted) this.ready = true;
+                if (signal.aborted) return;
+
+                this.ready = true;
+
+                if (this.mayRetry(error, signal)) this.updateEntry();
             })
         },
 
@@ -118,11 +123,8 @@ export default {
          * Update the existing entry if needed.
          */
         updateEntry(){
-            const {signal} = this.requestController;
-
-            if (signal.aborted) return;
             if (this.resource != 'jobs') return;
-            if (this.entry.content.status !== 'pending') return;
+            if (!this.entry || this.entry.content.status !== 'pending') return;
 
             this.updateEntryTimeout = setTimeout(() => {
                 this.loadEntry((response) => {
@@ -133,8 +135,8 @@ export default {
                     this.$parent.batch = response.data.batch;
 
                     this.ready = true;
-                }).then(() => {
-                    if (!signal.aborted) this.updateEntry();
+
+                    this.updateEntry();
                 });
             }, this.updateEntryTimer);
         }

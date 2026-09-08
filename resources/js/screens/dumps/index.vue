@@ -48,9 +48,7 @@ export default {
         loadEntries(){
             const {signal} = this.requestController;
 
-            if (signal.aborted) return;
-
-            return axios.post(Telescope.basePath + '/telescope-api/dumps', {}, {signal}).then(response => {
+            return axios.post(Telescope.basePath + '/telescope-api/dumps', null, {signal}).then(response => {
                 if (signal.aborted) return;
 
                 this.ready = true;
@@ -61,12 +59,12 @@ export default {
                 this.$nextTick(() => this.triggerDumps());
 
                 this.checkForNewEntries();
-            }).catch(() => {
+            }).catch(error => {
                 if (signal.aborted) return;
 
                 this.ready = true;
 
-                this.checkForNewEntries();
+                if (this.mayRetry(error, signal)) this.checkForNewEntries();
             });
         },
 
@@ -77,10 +75,10 @@ export default {
         checkForNewEntries(){
             const {signal} = this.requestController;
 
-            if (signal.aborted) return;
+            clearTimeout(this.newEntriesTimeout);
 
             this.newEntriesTimeout = setTimeout(() => {
-                axios.post(Telescope.basePath + '/telescope-api/dumps?take=1', {}, {signal}).then(response => {
+                axios.post(Telescope.basePath + '/telescope-api/dumps?take=1', null, {signal}).then(response => {
                     if (signal.aborted) return;
 
                     this.recordingStatus = response.data.status;
@@ -92,8 +90,8 @@ export default {
                     } else {
                         this.checkForNewEntries();
                     }
-                }).catch(() => {
-                    if (!signal.aborted) this.checkForNewEntries();
+                }).catch(error => {
+                    if (this.mayRetry(error, signal)) this.checkForNewEntries();
                 });
             }, this.newEntriesTimer);
         },
