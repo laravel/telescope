@@ -62,7 +62,6 @@ class DatabaseEntriesRepository implements Contract, ClearableRepository, Prunab
     public function find($id): EntryResult
     {
         $entry = EntryModel::on($this->connection)
-                        // ponytail: hex-only prefixes resolve to the newest match; widen shortUuid() if it ever collides
                         ->when(strlen((string) $id) < 36 && ctype_xdigit((string) $id),
                             fn ($query) => $query->where('uuid', 'like', $id.'%')->orderByDesc('sequence'),
                             fn ($query) => $query->whereUuid($id))
