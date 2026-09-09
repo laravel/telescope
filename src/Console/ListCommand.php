@@ -28,6 +28,7 @@ class ListCommand extends Command
         {--family= : Filter by family hash}
         {--limit=20 : Max entries to show}
         {--before= : Pagination cursor (sequence ID)}
+        {--full-uuid : Display complete entry UUIDs}
         {--json : Output entries as JSON}';
 
     /**
@@ -112,7 +113,7 @@ class ListCommand extends Command
             EntryType::REQUEST => [
                 ['UUID', 'Method', 'URI', 'Status', 'Duration', 'Created'],
                 fn ($entry) => [
-                    $this->shortUuid($entry->id),
+                    $this->formatUuid($entry->id),
                     $this->colorMethod($entry->content['method'] ?? ''),
                     Str::limit($entry->content['uri'] ?? '', 40),
                     $this->colorStatus((int) ($entry->content['response_status'] ?? 0)),
@@ -123,7 +124,7 @@ class ListCommand extends Command
             EntryType::QUERY => [
                 ['UUID', 'SQL', 'Time', 'Slow', 'Connection', 'Created'],
                 fn ($entry) => [
-                    $this->shortUuid($entry->id),
+                    $this->formatUuid($entry->id),
                     Str::limit($entry->content['sql'] ?? '', 60),
                     $this->unit($entry->content['time'] ?? null, 'ms'),
                     ! empty($entry->content['slow']) ? '<fg=red>Yes</>' : 'No',
@@ -134,7 +135,7 @@ class ListCommand extends Command
             EntryType::EXCEPTION => [
                 ['UUID', 'Class', 'Message', 'Occurrences', 'Created'],
                 fn ($entry) => [
-                    $this->shortUuid($entry->id),
+                    $this->formatUuid($entry->id),
                     class_basename($entry->content['class'] ?? ''),
                     Str::limit($entry->content['message'] ?? '', 50),
                     $entry->content['occurrences'] ?? 1,
@@ -144,7 +145,7 @@ class ListCommand extends Command
             EntryType::JOB => [
                 ['UUID', 'Name', 'Queue', 'Status', 'Created'],
                 fn ($entry) => [
-                    $this->shortUuid($entry->id),
+                    $this->formatUuid($entry->id),
                     class_basename($entry->content['name'] ?? ''),
                     $entry->content['queue'] ?? '',
                     $this->colorJobStatus($entry->content['status'] ?? ''),
@@ -154,7 +155,7 @@ class ListCommand extends Command
             EntryType::CACHE => [
                 ['UUID', 'Action', 'Key', 'Created'],
                 fn ($entry) => [
-                    $this->shortUuid($entry->id),
+                    $this->formatUuid($entry->id),
                     $this->colorCacheAction($entry->content['type'] ?? ''),
                     Str::limit($entry->content['key'] ?? '', 50),
                     $this->humanTime($entry->createdAt),
@@ -163,7 +164,7 @@ class ListCommand extends Command
             EntryType::LOG => [
                 ['UUID', 'Level', 'Message', 'Created'],
                 fn ($entry) => [
-                    $this->shortUuid($entry->id),
+                    $this->formatUuid($entry->id),
                     $this->colorLevel($entry->content['level'] ?? ''),
                     Str::limit($entry->content['message'] ?? '', 60),
                     $this->humanTime($entry->createdAt),
@@ -172,7 +173,7 @@ class ListCommand extends Command
             EntryType::MAIL => [
                 ['UUID', 'Mailable', 'Subject', 'To', 'Created'],
                 fn ($entry) => [
-                    $this->shortUuid($entry->id),
+                    $this->formatUuid($entry->id),
                     class_basename($entry->content['mailable'] ?? ''),
                     Str::limit($entry->content['subject'] ?? '', 40),
                     Str::limit(implode(', ', array_keys($entry->content['to'] ?? [])), 30),
@@ -182,7 +183,7 @@ class ListCommand extends Command
             EntryType::COMMAND => [
                 ['UUID', 'Command', 'Exit Code', 'Created'],
                 fn ($entry) => [
-                    $this->shortUuid($entry->id),
+                    $this->formatUuid($entry->id),
                     Str::limit($entry->content['command'] ?? '', 50),
                     $entry->content['exit_code'] ?? '',
                     $this->humanTime($entry->createdAt),
@@ -191,7 +192,7 @@ class ListCommand extends Command
             EntryType::CLIENT_REQUEST => [
                 ['UUID', 'Method', 'URI', 'Status', 'Duration', 'Created'],
                 fn ($entry) => [
-                    $this->shortUuid($entry->id),
+                    $this->formatUuid($entry->id),
                     $this->colorMethod($entry->content['method'] ?? ''),
                     Str::limit($entry->content['uri'] ?? '', 40),
                     isset($entry->content['response_status']) ? $this->colorStatus((int) $entry->content['response_status']) : 'N/A',
@@ -209,5 +210,16 @@ class ListCommand extends Command
                 ],
             ],
         };
+    }
+
+    /**
+     * Format the UUID for table output.
+     *
+     * @param  string  $uuid
+     * @return string
+     */
+    protected function formatUuid(string $uuid): string
+    {
+        return $this->option('full-uuid') ? $uuid : $this->shortUuid($uuid);
     }
 }
