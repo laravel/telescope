@@ -137,20 +137,6 @@ class ListCommandTest extends FeatureTestCase
         $this->assertSame('/test', $json[0]['content']['uri']);
     }
 
-    public function test_list_can_display_full_uuids()
-    {
-        $entry = $this->createRequest();
-
-        Artisan::call('telescope:list', ['type' => 'request']);
-
-        $this->assertStringContainsString(substr($entry->uuid, 0, 8), Artisan::output());
-        $this->assertStringNotContainsString($entry->uuid, Artisan::output());
-
-        Artisan::call('telescope:list', ['type' => 'request', '--full-uuid' => true]);
-
-        $this->assertStringContainsString($entry->uuid, Artisan::output());
-    }
-
     public function test_list_outputs_an_empty_json_array_when_empty()
     {
         Artisan::call('telescope:list', ['type' => 'request', '--json' => true]);

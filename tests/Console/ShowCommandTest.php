@@ -37,6 +37,15 @@ class ShowCommandTest extends FeatureTestCase
         $this->assertStringContainsString('127.0.0.1', $output);
     }
 
+    public function test_show_accepts_a_shortened_uuid()
+    {
+        $entry = $this->createRequest(['uri' => '/api/users']);
+
+        $this->assertSame(0, $this->artisan('telescope:show', ['id' => substr($entry->uuid, 0, 8)]));
+
+        $this->assertStringContainsString('Request: GET /api/users -> 200', Artisan::output());
+    }
+
     public function test_show_displays_exception_entry()
     {
         $entry = $this->createException([
