@@ -32,6 +32,7 @@ export default {
                     if (this.$route.params.id !== entry.id) return;
 
                     this.entry = response.data.entry;
+                    entry.content = response.data.entry.content;
                 })
             });
         },
@@ -73,11 +74,11 @@ export default {
                 <td class="table-fit text-muted">Resolved at</td>
 
                 <td>
-                    <span v-if="entry.content.resolved_at">
-                        {{ localTime(entry.content.resolved_at) }} ({{ timeAgo(entry.content.resolved_at) }})
+                    <span v-if="slotProps.entry.content.resolved_at">
+                        {{ localTime(slotProps.entry.content.resolved_at) }} ({{ timeAgo(slotProps.entry.content.resolved_at) }})
                     </span>
-                    <span v-if="!entry.content.resolved_at">
-                        <button class="btn btn-sm btn-success" v-on:click.prevent="markExceptionAsResolved(entry)">
+                    <span v-if="!slotProps.entry.content.resolved_at">
+                        <button class="btn btn-sm btn-success" v-on:click.prevent="markExceptionAsResolved(slotProps.entry)">
                             Mark as resolved
                         </button>
                     </span>
