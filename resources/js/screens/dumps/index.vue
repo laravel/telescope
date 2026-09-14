@@ -12,6 +12,7 @@ export default {
             dump: null,
             entries: [],
             ready: false,
+            requestController: new AbortController(),
             newEntriesTimeout: null,
             newEntriesTimer: 2000,
             recordingStatus: 'enabled',
@@ -38,13 +39,18 @@ export default {
      * Clean after the component is destroyed.
      */
     destroyed() {
+        this.requestController.abort();
         clearTimeout(this.newEntriesTimeout);
     },
 
 
     methods: {
         loadEntries(){
-            axios.post(Telescope.basePath + '/telescope-api/dumps').then(response => {
+            const {signal} = this.requestController;
+
+            return axios.post(Telescope.basePath + '/telescope-api/dumps', null, {signal}).then(response => {
+                if (signal.aborted) return;
+
                 this.ready = true;
                 this.dump = response.data.dump;
                 this.entries = response.data.entries;
@@ -53,6 +59,12 @@ export default {
                 this.$nextTick(() => this.triggerDumps());
 
                 this.checkForNewEntries();
+            }).catch(error => {
+                if (signal.aborted) return;
+
+                this.ready = true;
+
+                if (this.mayRetry(error, signal)) this.checkForNewEntries();
             });
         },
 
@@ -61,8 +73,14 @@ export default {
          * Keep checking if there are new entries.
          */
         checkForNewEntries(){
+            const {signal} = this.requestController;
+
+            clearTimeout(this.newEntriesTimeout);
+
             this.newEntriesTimeout = setTimeout(() => {
-                axios.post(Telescope.basePath + '/telescope-api/dumps?take=1').then(response => {
+                axios.post(Telescope.basePath + '/telescope-api/dumps?take=1', null, {signal}).then(response => {
+                    if (signal.aborted) return;
+
                     this.recordingStatus = response.data.status;
 
                     if (response.data.entries.length && !this.entries.length) {
@@ -72,7 +90,9 @@ export default {
                     } else {
                         this.checkForNewEntries();
                     }
-                })
+                }).catch(error => {
+                    if (this.mayRetry(error, signal)) this.checkForNewEntries();
+                });
             }, this.newEntriesTimer);
         },
 

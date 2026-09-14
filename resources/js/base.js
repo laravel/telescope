@@ -67,6 +67,26 @@ export default {
         debouncer: _.debounce((callback) => callback(), 500),
 
         /**
+         * Determine if a failed request may be polled again.
+         */
+        mayRetry(error, signal) {
+            if (signal.aborted) return false;
+
+            // The server answered, so another attempt returns the same result...
+            if (error.response) {
+                this.alertError(
+                    'Telescope stopped listening for new entries. The server returned a ' +
+                        error.response.status +
+                        ' response.'
+                );
+
+                return false;
+            }
+
+            return true;
+        },
+
+        /**
          * Show an error message.
          */
         alertError(message) {

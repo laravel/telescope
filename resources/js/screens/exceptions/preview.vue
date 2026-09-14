@@ -29,6 +29,8 @@ export default {
                 axios.put(Telescope.basePath + '/telescope-api/exceptions/' + entry.id, {
                     'resolved_at': 'now',
                 }).then(response => {
+                    if (this.$route.params.id !== entry.id) return;
+
                     this.entry = response.data.entry;
                 })
             });

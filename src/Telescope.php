@@ -188,6 +188,8 @@ class Telescope
                 'horizon',
                 'horizon:work',
                 'horizon:supervisor',
+                'telescope:list',
+                'telescope:show',
             ], config('telescope.ignoreCommands', []), config('telescope.ignore_commands', []))
         );
     }
@@ -829,7 +831,7 @@ class Telescope
     /**
      * Get the CSS for the Telescope dashboard.
      *
-     * @return Illuminate\Contracts\Support\Htmlable
+     * @return \Illuminate\Contracts\Support\Htmlable
      */
     public static function css()
     {

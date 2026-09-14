@@ -11,7 +11,8 @@ export default {
         return {
             tags: [],
             ready: false,
-            newTag: ''
+            newTag: '',
+            requestController: new AbortController()
         };
     },
 
@@ -22,11 +23,23 @@ export default {
         document.title = "Monitoring - Telescope";
 
 
-        axios.get(Telescope.basePath + '/telescope-api/monitored-tags').then(response => {
+        const {signal} = this.requestController;
+
+        axios.get(Telescope.basePath + '/telescope-api/monitored-tags', {signal}).then(response => {
+            if (signal.aborted) return;
+
             this.tags = response.data.tags;
 
             this.ready = true;
         })
+    },
+
+
+    /**
+     * Clean after the component is destroyed.
+     */
+    destroyed() {
+        this.requestController.abort();
     },
 
 
