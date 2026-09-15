@@ -3,6 +3,7 @@
 namespace Laravel\Telescope\Watchers;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Laravel\Telescope\EntryType;
 use Laravel\Telescope\EntryUpdate;
 use Laravel\Telescope\IncomingEntry;
@@ -17,6 +18,13 @@ class AiWatcher extends Watcher
      * @var array<string, string>
      */
     protected $entryUuids = [];
+
+    /**
+     * The queued entry updates keyed by Laravel AI invocation ID.
+     *
+     * @var array<string, \Laravel\Telescope\EntryUpdate>
+     */
+    protected $updates = [];
 
     /**
      * The provider step summaries keyed by Laravel AI invocation ID.
@@ -112,15 +120,17 @@ class AiWatcher extends Watcher
     public function register($app)
     {
         foreach (static::$events as $event => $listener) {
-            if (is_int($event)) {
-                $event = $listener;
-                $listener = 'recordAiEvent';
-            }
-
             if (class_exists($event)) {
                 $app['events']->listen($event, [$this, $listener]);
             }
         }
+
+        // Runs never span a storage boundary, so any state left over is a leak...
+        Telescope::afterStoring(function () {
+            $this->flushState();
+
+            return true;
+        });
     }
 
     /**
@@ -179,20 +189,19 @@ class AiWatcher extends Watcher
             return null;
         }
 
-        $uuid = $this->entryUuid($event->invocationId ?? $event->prompt->invocationId ?? null);
+        $invocationId = $event->invocationId ?? $event->prompt->invocationId ?? null;
+        $uuid = $this->entryUuid($invocationId);
 
         if (! $uuid) {
             return null;
         }
 
-        $update = EntryUpdate::make($uuid, EntryType::AI, [
+        $update = $this->recordChanges($invocationId, $uuid, [
             'status' => 'failed',
             'exception' => $this->summarizeException($event->exception),
         ])->addTags(['failed']);
 
-        Telescope::recordUpdate($update);
-
-        $this->flushInvocationState($event->invocationId ?? $event->prompt->invocationId ?? null);
+        $this->flushInvocationState($invocationId);
 
         return $update;
     }
@@ -355,17 +364,6 @@ class AiWatcher extends Watcher
     }
 
     /**
-     * Record a Laravel AI event.
-     *
-     * @param  object  $event
-     * @return void
-     */
-    public function recordAiEvent(object $event)
-    {
-        //
-    }
-
-    /**
      * Record a Laravel AI run start.
      *
      * @param  object  $event
@@ -381,6 +379,12 @@ class AiWatcher extends Watcher
         $invocationId = $event->invocationId ?? $event->prompt->invocationId ?? null;
 
         if (is_string($invocationId) && isset($this->entryUuids[$invocationId])) {
+            // Provider failover re-prompts under the same invocation with a new provider...
+            $this->recordChanges($invocationId, $this->entryUuids[$invocationId], $this->filled([
+                'provider' => $this->providerName($event->prompt->provider ?? null),
+                'model' => $event->prompt->model ?? null,
+            ]));
+
             return null;
         }
 
@@ -396,11 +400,13 @@ class AiWatcher extends Watcher
             'tool_count' => 0,
             'failover_count' => 0,
             'approval_count' => 0,
-        ]), $this->validUuid($invocationId) ? $invocationId : null);
+        ]), Str::isUuid($invocationId) ? $invocationId : null);
+
+        $entry->tags(array_filter([$this->className($event->prompt->agent ?? null)]));
 
         if (is_string($invocationId) && $invocationId !== '') {
             $this->entryUuids[$invocationId] = $entry->uuid;
-            $entry->withFamilyHash($invocationId);
+            $entry->withFamilyHash($event->prompt->parentInvocationId ?? $invocationId);
         }
 
         Telescope::recordAi($entry);
@@ -420,19 +426,19 @@ class AiWatcher extends Watcher
             return null;
         }
 
-        $uuid = $this->entryUuid($event->invocationId ?? $event->response->invocationId ?? null);
+        $invocationId = $event->invocationId ?? $event->response->invocationId ?? null;
+        $uuid = $this->entryUuid($invocationId);
 
         if (! $uuid) {
             return null;
         }
 
         $response = $this->summarizeResponse($event->response);
-        $invocationId = $event->invocationId ?? $event->response->invocationId ?? null;
-        $pendingApprovalCount = max($response['pending_approval_count'] ?? 0, $this->pendingApprovalCount($invocationId));
-        $stepCount = max($response['step_count'] ?? 0, $this->stepCount($invocationId));
-        $toolCount = max($response['tool_call_count'] ?? 0, $this->toolCount($invocationId));
-        $failoverCount = $this->failoverCount($invocationId);
-        $approvalCount = $this->approvalCount($invocationId);
+        $pendingApprovalCount = max($response['pending_approval_count'] ?? 0, $this->pendingApprovalCounts[$invocationId] ?? 0);
+        $stepCount = max($response['step_count'] ?? 0, $this->stepCounts[$invocationId] ?? 0);
+        $toolCount = max($response['tool_call_count'] ?? 0, $this->toolCounts[$invocationId] ?? 0);
+        $failoverCount = $this->failoverCounts[$invocationId] ?? 0;
+        $approvalCount = $this->approvalCounts[$invocationId] ?? 0;
         $status = $pendingApprovalCount > 0 ? 'waiting_for_approval' : 'completed';
 
         $changes = $this->filled([
@@ -449,13 +455,10 @@ class AiWatcher extends Watcher
 
         $changes['exception'] = null;
 
-        $update = EntryUpdate::make($uuid, EntryType::AI, $changes)->removeTags(['failed']);
+        $update = $this->recordChanges($invocationId, $uuid, $changes)->removeTags(['failed']);
 
-        Telescope::recordUpdate($update);
-
-        if ($status === 'completed') {
-            $this->flushInvocationState($invocationId);
-        }
+        // A paused run resumes under a new invocation ID, so this one is finished...
+        $this->flushInvocationState($invocationId);
 
         return $update;
     }
@@ -484,16 +487,10 @@ class AiWatcher extends Watcher
         $this->failoverCounts[$invocationId] = ($this->failoverCounts[$invocationId] ?? 0) + 1;
         $this->limitCachedSummaries($this->failovers[$invocationId], 'max_failovers');
 
-        $failovers = $this->limitedSummaries($this->failovers[$invocationId], 'max_failovers');
-
-        $update = EntryUpdate::make($uuid, EntryType::AI, [
-            'failovers' => $failovers,
+        return $this->recordChanges($invocationId, $uuid, [
+            'failovers' => array_values($this->failovers[$invocationId]),
             'failover_count' => $this->failoverCounts[$invocationId],
         ]);
-
-        Telescope::recordUpdate($update);
-
-        return $update;
     }
 
     /**
@@ -522,17 +519,11 @@ class AiWatcher extends Watcher
         $this->approvalCounts[$invocationId] = ($this->approvalCounts[$invocationId] ?? 0) + 1;
         $this->limitCachedSummaries($this->approvals[$invocationId], 'max_approvals');
 
-        $approvals = $this->limitedSummaries($this->approvals[$invocationId], 'max_approvals');
-
-        $update = EntryUpdate::make($uuid, EntryType::AI, [
-            'approvals' => $approvals,
+        return $this->recordChanges($invocationId, $uuid, [
+            'approvals' => array_values($this->approvals[$invocationId]),
             'approval_count' => $this->approvalCounts[$invocationId],
             'pending_approval_count' => $pendingApprovalCount,
         ]);
-
-        Telescope::recordUpdate($update);
-
-        return $update;
     }
 
     /**
@@ -566,16 +557,10 @@ class AiWatcher extends Watcher
         );
         $this->limitCachedSummaries($this->tools[$invocationId], 'max_tools');
 
-        $tools = $this->limitedSummaries(array_values($this->tools[$invocationId]), 'max_tools');
-
-        $update = EntryUpdate::make($uuid, EntryType::AI, [
-            'tools' => $tools,
-            'tool_count' => $this->toolCounts[$invocationId] ?? count($tools),
+        return $this->recordChanges($invocationId, $uuid, [
+            'tools' => array_values($this->tools[$invocationId]),
+            'tool_count' => $this->toolCounts[$invocationId],
         ]);
-
-        Telescope::recordUpdate($update);
-
-        return $update;
     }
 
     /**
@@ -598,12 +583,7 @@ class AiWatcher extends Watcher
             return null;
         }
 
-        if (is_numeric($event->stepNumber)) {
-            $this->stepCounts[$invocationId] = max(
-                $this->stepCounts[$invocationId] ?? 0,
-                (int) $event->stepNumber
-            );
-        } elseif (! isset($this->steps[$invocationId][$event->stepNumber])) {
+        if (! isset($this->steps[$invocationId][$event->stepNumber])) {
             $this->stepCounts[$invocationId] = ($this->stepCounts[$invocationId] ?? 0) + 1;
         }
 
@@ -616,14 +596,30 @@ class AiWatcher extends Watcher
         ksort($this->steps[$invocationId]);
         $this->limitCachedSummaries($this->steps[$invocationId], 'max_steps');
 
-        $steps = $this->limitedSummaries(array_values($this->steps[$invocationId]), 'max_steps');
-
-        $update = EntryUpdate::make($uuid, EntryType::AI, [
-            'steps' => $steps,
-            'step_count' => $this->stepCounts[$invocationId] ?? count($steps),
+        return $this->recordChanges($invocationId, $uuid, [
+            'steps' => array_values($this->steps[$invocationId]),
+            'step_count' => $this->stepCounts[$invocationId],
         ]);
+    }
 
-        Telescope::recordUpdate($update);
+    /**
+     * Merge changes into the single queued entry update for an invocation.
+     *
+     * @param  string  $invocationId
+     * @param  string  $uuid
+     * @param  array  $changes
+     * @return \Laravel\Telescope\EntryUpdate
+     */
+    protected function recordChanges($invocationId, $uuid, array $changes)
+    {
+        $update = $this->updates[$invocationId] ??= EntryUpdate::make($uuid, EntryType::AI, []);
+
+        $update->change($changes);
+
+        // One update per run keeps storage to a single read and write per entry...
+        if (! in_array($update, Telescope::$updatesQueue, true)) {
+            Telescope::recordUpdate($update);
+        }
 
         return $update;
     }
@@ -733,23 +729,6 @@ class AiWatcher extends Watcher
             'agent' => $this->className($event->agent ?? null),
             'tool' => $this->toolName($event->tool ?? null),
             'tool_class' => $this->className($event->tool ?? null),
-        ]);
-    }
-
-    /**
-     * Summarize a Laravel AI tool call without storing arguments by default.
-     *
-     * @param  object  $toolCall
-     * @return array
-     */
-    protected function summarizeToolCall(object $toolCall)
-    {
-        return $this->filled([
-            'id' => $toolCall->id ?? null,
-            'name' => $toolCall->name ?? null,
-            'result_id' => $toolCall->resultId ?? null,
-            'reasoning_id' => $toolCall->reasoningId ?? null,
-            'arguments' => $this->safePayload($toolCall->arguments ?? null, 'tool_arguments'),
         ]);
     }
 
@@ -939,24 +918,6 @@ class AiWatcher extends Watcher
     }
 
     /**
-     * Limit stored lifecycle summaries while keeping total counts separately.
-     *
-     * @param  array  $summaries
-     * @param  string  $option
-     * @return array
-     */
-    protected function limitedSummaries(array $summaries, $option)
-    {
-        $limit = $this->options[$option] ?? 50;
-
-        if (! is_numeric($limit) || $limit < 1) {
-            return [];
-        }
-
-        return array_slice($summaries, -((int) $limit));
-    }
-
-    /**
      * Limit cached lifecycle summaries while preserving their correlation keys.
      *
      * @param  array  $summaries
@@ -1028,15 +989,16 @@ class AiWatcher extends Watcher
     protected function toArray($value)
     {
         if (is_object($value) && method_exists($value, 'toArray')) {
-            return $value->toArray();
+            $value = $value->toArray();
+        } elseif (is_object($value)) {
+            // Messages and tool calls are plain objects; expand them so nested keys can be redacted...
+            $encoded = json_encode($value, JSON_INVALID_UTF8_SUBSTITUTE);
+
+            return $encoded === false ? ['class' => get_class($value)] : json_decode($encoded, true);
         }
 
-        if (is_array($value)) {
-            return array_map(fn ($item) => $this->toArray($item), $value);
-        }
-
-        return is_object($value)
-            ? ['class' => get_class($value)]
+        return is_array($value)
+            ? array_map(fn ($item) => $this->toArray($item), $value)
             : $value;
     }
 
@@ -1168,72 +1130,7 @@ class AiWatcher extends Watcher
             return null;
         }
 
-        return $this->entryUuids[$invocationId] ?? ($this->validUuid($invocationId) ? $invocationId : null);
-    }
-
-    /**
-     * Count cached provider steps for an invocation.
-     *
-     * @param  mixed  $invocationId
-     * @return int
-     */
-    protected function stepCount($invocationId)
-    {
-        return is_string($invocationId) && isset($this->steps[$invocationId])
-            ? count($this->steps[$invocationId])
-            : 0;
-    }
-
-    /**
-     * Count cached tool invocations for an invocation.
-     *
-     * @param  mixed  $invocationId
-     * @return int
-     */
-    protected function toolCount($invocationId)
-    {
-        return is_string($invocationId) && isset($this->tools[$invocationId])
-            ? count($this->tools[$invocationId])
-            : 0;
-    }
-
-    /**
-     * Count cached provider failovers for an invocation.
-     *
-     * @param  mixed  $invocationId
-     * @return int
-     */
-    protected function failoverCount($invocationId)
-    {
-        return is_string($invocationId) && isset($this->failovers[$invocationId])
-            ? count($this->failovers[$invocationId])
-            : 0;
-    }
-
-    /**
-     * Count cached approval checkpoints for an invocation.
-     *
-     * @param  mixed  $invocationId
-     * @return int
-     */
-    protected function approvalCount($invocationId)
-    {
-        return is_string($invocationId) && isset($this->approvals[$invocationId])
-            ? count($this->approvals[$invocationId])
-            : 0;
-    }
-
-    /**
-     * Count cached pending tool approvals for an invocation.
-     *
-     * @param  mixed  $invocationId
-     * @return int
-     */
-    protected function pendingApprovalCount($invocationId)
-    {
-        return is_string($invocationId) && isset($this->pendingApprovalCounts[$invocationId])
-            ? $this->pendingApprovalCounts[$invocationId]
-            : 0;
+        return $this->entryUuids[$invocationId] ?? (Str::isUuid($invocationId) ? $invocationId : null);
     }
 
     /**
@@ -1250,6 +1147,7 @@ class AiWatcher extends Watcher
 
         unset(
             $this->entryUuids[$invocationId],
+            $this->updates[$invocationId],
             $this->steps[$invocationId],
             $this->tools[$invocationId],
             $this->failovers[$invocationId],
@@ -1260,6 +1158,17 @@ class AiWatcher extends Watcher
             $this->approvalCounts[$invocationId],
             $this->pendingApprovalCounts[$invocationId]
         );
+    }
+
+    /**
+     * Flush all cached lifecycle state.
+     *
+     * @return void
+     */
+    protected function flushState()
+    {
+        $this->entryUuids = $this->updates = $this->steps = $this->tools = $this->failovers = $this->approvals = [];
+        $this->stepCounts = $this->toolCounts = $this->failoverCounts = $this->approvalCounts = $this->pendingApprovalCounts = [];
     }
 
     /**
@@ -1327,17 +1236,5 @@ class AiWatcher extends Watcher
         $encoded = json_encode($value, JSON_INVALID_UTF8_SUBSTITUTE);
 
         return $encoded === false ? null : json_decode($encoded, true);
-    }
-
-    /**
-     * Determine if a value is a UUID string.
-     *
-     * @param  mixed  $value
-     * @return bool
-     */
-    protected function validUuid($value)
-    {
-        return is_string($value) &&
-            preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $value) === 1;
     }
 }

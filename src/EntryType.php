@@ -32,6 +32,7 @@ class EntryType
     public static function all()
     {
         return [
+            self::AI,
             self::BATCH,
             self::CACHE,
             self::CLIENT_REQUEST,

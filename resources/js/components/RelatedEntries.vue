@@ -76,10 +76,6 @@ export default {
             if(window.history.replaceState) {
                 window.history.replaceState(null, null, '#' + this.currentTab);
             }
-        },
-
-        aiStatusLabel(status) {
-            return status ? status.replace(/_/g, ' ') : 'unknown';
         }
     },
 

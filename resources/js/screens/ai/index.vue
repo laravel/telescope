@@ -5,17 +5,11 @@ export default {
     mixins: [
         StylesMixin,
     ],
-
-    methods: {
-        statusLabel(status) {
-            return status ? status.replace(/_/g, ' ') : 'unknown';
-        },
-    },
 }
 </script>
 
 <template>
-    <index-screen title="AI" resource="ai">
+    <index-screen title="AI" resource="ai" show-all-family="true">
         <tr slot="table-header">
             <th scope="col">Agent</th>
             <th scope="col">Status</th>
@@ -37,7 +31,7 @@ export default {
 
             <td class="table-fit">
                 <span class="badge" :class="'badge-' + aiStatusClass(slotProps.entry.content.status)">
-                    {{ statusLabel(slotProps.entry.content.status) }}
+                    {{ aiStatusLabel(slotProps.entry.content.status) }}
                 </span>
             </td>
 

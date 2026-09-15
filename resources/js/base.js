@@ -10,6 +10,22 @@ export default {
 
     methods: {
         /**
+         * Get the entry statuses that are still being updated for the given resource.
+         */
+        pendingEntryStatuses(resource) {
+            return {jobs: ['pending'], ai: ['running']}[resource] || [];
+        },
+
+
+        /**
+         * Determine if the given entry is still being updated.
+         */
+        isPendingEntry(resource, entry) {
+            return _.includes(this.pendingEntryStatuses(resource), _.get(entry, 'content.status'));
+        },
+
+
+        /**
          * Show the time ago format for the given time.
          */
         timeAgo(time) {

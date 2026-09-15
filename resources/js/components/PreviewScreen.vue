@@ -123,7 +123,7 @@ export default {
          * Update the existing entry if needed.
          */
         updateEntry(){
-            if (! this.isPendingEntry(this.entry)) return;
+            if (! this.isPendingEntry(this.resource, this.entry)) return;
 
             this.updateEntryTimeout = setTimeout(() => {
                 this.loadEntry((response) => {
@@ -138,19 +138,6 @@ export default {
                     this.updateEntry();
                 });
             }, this.updateEntryTimer);
-        },
-
-
-        pendingEntryStatuses(){
-            return {
-                jobs: ['pending'],
-                ai: ['running', 'waiting_for_approval'],
-            }[this.resource] || [];
-        },
-
-
-        isPendingEntry(entry){
-            return entry && _.includes(this.pendingEntryStatuses(), _.get(entry, 'content.status'));
         }
     }
 }

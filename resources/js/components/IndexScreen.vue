@@ -251,12 +251,12 @@ export default {
         updateEntries(){
             const {signal} = this.requestController;
 
-            if (! this.pendingEntryStatuses().length) return;
+            if (! this.pendingEntryStatuses(this.resource).length) return;
 
             clearTimeout(this.updateEntriesTimeout);
 
             this.updateEntriesTimeout = setTimeout(() => {
-                let uuids = _.chain(this.entries).filter(entry => this.isPendingEntry(entry)).map('id').value();
+                let uuids = _.chain(this.entries).filter(entry => this.isPendingEntry(this.resource, entry)).map('id').value();
 
                 if (!uuids.length) return this.updateEntries();
 
@@ -278,19 +278,6 @@ export default {
                     if (this.mayRetry(error, signal)) this.updateEntries();
                 });
             }, this.updateEntriesTimer);
-        },
-
-
-        pendingEntryStatuses(){
-            return {
-                jobs: ['pending'],
-                ai: ['running', 'waiting_for_approval'],
-            }[this.resource] || [];
-        },
-
-
-        isPendingEntry(entry){
-            return _.includes(this.pendingEntryStatuses(), _.get(entry, 'content.status'));
         },
 
 

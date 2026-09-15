@@ -9,6 +9,10 @@ export default {
             return 'secondary';
         },
 
+        aiStatusLabel(status) {
+            return status ? status.replace(/_/g, ' ') : 'unknown';
+        },
+
         cacheActionTypeClass(type) {
             if (type === 'hit') return 'success';
             if (type === 'set') return 'info';

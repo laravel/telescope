@@ -136,12 +136,6 @@ return [
     */
 
     'watchers' => [
-        /*
-         * The AI watcher records summary information about Laravel AI runs by default.
-         * Prompt content, messages, tool arguments, tool results, and raw provider
-         * payloads are opt-in and are still redacted and size limited. Lifecycle
-         * summaries are capped to prevent large looping runs from growing without bound.
-         */
         Watchers\AiWatcher::class => [
             'enabled' => env('TELESCOPE_AI_WATCHER', true),
             'content' => false,

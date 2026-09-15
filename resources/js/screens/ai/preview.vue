@@ -15,10 +15,6 @@ export default {
     },
 
     methods: {
-        statusLabel(status) {
-            return status ? status.replace(/_/g, ' ') : 'unknown';
-        },
-
         optional(value) {
             return value === undefined || value === null || value === '' ? '-' : value;
         },
@@ -50,11 +46,7 @@ export default {
                 return null;
             }
 
-            let total = Object.keys(content.usage).reduce((tokens, key) => {
-                return tokens + (Number(content.usage[key]) || 0);
-            }, 0);
-
-            return total || null;
+            return (Number(content.usage.prompt_tokens) || 0) + (Number(content.usage.completion_tokens) || 0) || null;
         },
 
         captured(value) {
@@ -72,7 +64,7 @@ export default {
                 <td class="table-fit text-muted">Status</td>
                 <td>
                     <span class="badge" :class="'badge-' + aiStatusClass(slotProps.entry.content.status)">
-                        {{ statusLabel(slotProps.entry.content.status) }}
+                        {{ aiStatusLabel(slotProps.entry.content.status) }}
                     </span>
                 </td>
             </tr>

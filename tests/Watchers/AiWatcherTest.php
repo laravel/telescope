@@ -270,7 +270,7 @@ class AiWatcherTest extends FeatureTestCase
         $update = $watcher->recordStepCompleted(new AiWatcherStepCompletedEventFake($invocationId));
         $step = $update->changes['steps'][0];
 
-        $this->assertSame($update, Telescope::$updatesQueue[1]);
+        $this->assertSame($update, Telescope::$updatesQueue[0]);
         $this->assertSame(1, $update->changes['step_count']);
         $this->assertSame('completed', $step['status']);
         $this->assertSame(123.4, $step['duration']);
@@ -446,7 +446,7 @@ class AiWatcherTest extends FeatureTestCase
         $update = $watcher->recordToolInvoked(new AiWatcherToolInvokedEventFake($invocationId));
         $tool = $update->changes['tools'][0];
 
-        $this->assertSame($update, Telescope::$updatesQueue[1]);
+        $this->assertSame($update, Telescope::$updatesQueue[0]);
         $this->assertSame(1, $update->changes['tool_count']);
         $this->assertSame('completed', $tool['status']);
         $this->assertSame(45.6, $tool['duration']);
@@ -643,8 +643,8 @@ class AiWatcherTest extends FeatureTestCase
 
         try {
             $events->setValue(null, [
-                AiWatcherDummyEvent::class,
-                'Laravel\\Ai\\Events\\MissingEvent',
+                AiWatcherDummyEvent::class => 'recordPromptingAgent',
+                'Laravel\\Ai\\Events\\MissingEvent' => 'recordPromptingAgent',
             ]);
 
             $originalListenersCount = count($this->app['events']->getListeners(AiWatcherDummyEvent::class));
@@ -743,13 +743,10 @@ class AiWatcherTest extends FeatureTestCase
     {
         $watcher = new ExposesAiWatcherHelpers;
 
-        $toolCall = $watcher->toolCallSummary(new AiWatcherToolCallFake);
         $toolResult = $watcher->toolResultSummary(new AiWatcherToolResultFake);
 
-        $this->assertArrayNotHasKey('arguments', $toolCall);
         $this->assertArrayNotHasKey('arguments', $toolResult);
         $this->assertArrayNotHasKey('result', $toolResult);
-        $this->assertArrayNotHasKey('reasoning_encrypted_content', $toolCall);
     }
 
     public function test_tool_payloads_are_opt_in_and_redacted()
@@ -760,18 +757,18 @@ class AiWatcherTest extends FeatureTestCase
             'hidden' => ['api_key', 'authorization', 'nested.token'],
         ]);
 
-        $toolCall = $watcher->toolCallSummary(new AiWatcherToolCallFake(arguments: [
+        $arguments = $watcher->payload([
             'apiKey' => 'secret',
             'Authorization' => 'bearer',
             'api-key' => 'key',
             'nested' => ['token' => 'abc'],
-        ]));
+        ], 'tool_arguments');
         $toolResult = $watcher->toolResultSummary(new AiWatcherToolResultFake);
 
-        $this->assertSame('********', $toolCall['arguments']['apiKey']);
-        $this->assertSame('********', $toolCall['arguments']['Authorization']);
-        $this->assertSame('********', $toolCall['arguments']['api-key']);
-        $this->assertSame('********', $toolCall['arguments']['nested']['token']);
+        $this->assertSame('********', $arguments['apiKey']);
+        $this->assertSame('********', $arguments['Authorization']);
+        $this->assertSame('********', $arguments['api-key']);
+        $this->assertSame('********', $arguments['nested']['token']);
         $this->assertSame('********', $toolResult['arguments']['api_key']);
         $this->assertSame('ok', $toolResult['result']['status']);
     }
@@ -815,6 +812,159 @@ class AiWatcherTest extends FeatureTestCase
         $this->assertSame(RuntimeException::class, $summary['class']);
         $this->assertSame(json_decode('"Invalid \ufffd secret"'), $summary['message']);
         $this->assertSame(123, $summary['code']);
+    }
+
+    public function test_terminal_completion_uses_running_totals_when_summaries_are_capped()
+    {
+        Telescope::startRecording(false);
+
+        $watcher = new AiWatcher(['max_steps' => 1, 'max_tools' => 1, 'max_failovers' => 1, 'max_approvals' => 1]);
+        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
+            $invocationId = '01992a3a-0030-7000-8000-000000000000',
+            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
+        ));
+        $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId, stepNumber: 0));
+        $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId, stepNumber: 1));
+        $watcher->recordInvokingTool(new AiWatcherToolEventFake($invocationId, toolInvocationId: 'first-tool'));
+        $watcher->recordInvokingTool(new AiWatcherToolEventFake($invocationId, toolInvocationId: 'second-tool'));
+        $watcher->recordAgentFailedOver(new AiWatcherFailedOverEventFake($invocationId));
+        $watcher->recordAgentFailedOver(new AiWatcherFailedOverEventFake($invocationId));
+        $watcher->recordToolApprovalRequested(new AiWatcherApprovalRequestedEventFake($invocationId));
+        $watcher->recordToolApprovalResolved(new AiWatcherApprovalResolvedEventFake($invocationId));
+
+        $update = $watcher->recordAgentStreamed(new AiWatcherTerminalEventFake(
+            $invocationId,
+            new AiWatcherResponseFake($invocationId, steps: [], toolCalls: [])
+        ));
+
+        $this->assertSame(2, $update->changes['step_count']);
+        $this->assertSame(2, $update->changes['tool_count']);
+        $this->assertSame(2, $update->changes['failover_count']);
+        $this->assertSame(2, $update->changes['approval_count']);
+    }
+
+    public function test_step_count_counts_zero_based_steps()
+    {
+        Telescope::startRecording(false);
+
+        $watcher = new AiWatcher;
+        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
+            $invocationId = '01992a3a-0031-7000-8000-000000000000',
+            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
+        ));
+
+        $update = $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId, stepNumber: 0));
+        $this->assertSame(1, $update->changes['step_count']);
+
+        $update = $watcher->recordStepCompleted(new AiWatcherStepCompletedEventFake($invocationId, stepNumber: 0));
+        $this->assertSame(1, $update->changes['step_count']);
+    }
+
+    public function test_run_lifecycle_shares_a_single_queued_update()
+    {
+        Telescope::startRecording(false);
+
+        $watcher = new AiWatcher;
+        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
+            $invocationId = '01992a3a-0032-7000-8000-000000000000',
+            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
+        ));
+
+        $stepUpdate = $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId));
+        $watcher->recordInvokingTool(new AiWatcherToolEventFake($invocationId));
+        $update = $watcher->recordAgentPrompted(new AiWatcherTerminalEventFake(
+            $invocationId,
+            new AiWatcherResponseFake($invocationId)
+        ));
+
+        $this->assertCount(1, Telescope::$updatesQueue);
+        $this->assertSame($stepUpdate, $update);
+        $this->assertSame('completed', $update->changes['status']);
+        $this->assertCount(1, $update->changes['steps']);
+        $this->assertCount(1, $update->changes['tools']);
+    }
+
+    public function test_failover_re_prompt_updates_provider_and_model()
+    {
+        Telescope::startRecording(false);
+
+        $watcher = new AiWatcher;
+        $invocationId = '01992a3a-0033-7000-8000-000000000000';
+        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
+            $invocationId,
+            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
+        ));
+
+        $this->assertNull($watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
+            $invocationId,
+            new AiWatcherPromptFake(prompt: 'hidden prompt', model: 'claude-test', invocationId: $invocationId)
+        )));
+
+        $this->assertCount(1, Telescope::$entriesQueue);
+        $this->assertSame('claude-test', Telescope::$updatesQueue[0]->changes['model']);
+    }
+
+    public function test_run_start_is_tagged_with_agent_class()
+    {
+        Telescope::startRecording(false);
+
+        $entry = (new AiWatcher)->recordPromptingAgent(new AiWatcherAgentEventFake(
+            $invocationId = '01992a3a-0034-7000-8000-000000000000',
+            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
+        ));
+
+        $this->assertSame([AiWatcherAgentFake::class], $entry->tags);
+    }
+
+    public function test_run_waiting_for_approval_flushes_cached_state()
+    {
+        Telescope::startRecording(false);
+
+        $watcher = new AiWatcher;
+        $event = new AiWatcherAgentEventFake(
+            $invocationId = '01992a3a-0035-7000-8000-000000000000',
+            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
+        );
+
+        $watcher->recordPromptingAgent($event);
+        $update = $watcher->recordAgentPrompted(new AiWatcherTerminalEventFake(
+            $invocationId,
+            new AiWatcherResponseFake($invocationId, pendingApprovals: ['approval'])
+        ));
+
+        $this->assertSame('waiting_for_approval', $update->changes['status']);
+        $this->assertNotNull($watcher->recordPromptingAgent($event));
+    }
+
+    public function test_cached_state_is_flushed_after_storing()
+    {
+        Telescope::startRecording(false);
+
+        $watcher = new AiWatcher;
+        $watcher->register($this->app);
+        $event = new AiWatcherAgentEventFake(
+            $invocationId = '01992a3a-0036-7000-8000-000000000000',
+            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
+        );
+
+        $this->assertNotNull($watcher->recordPromptingAgent($event));
+        $this->assertNull($watcher->recordPromptingAgent($event));
+
+        $this->assertTrue(collect(Telescope::$afterStoringHooks)->every->__invoke([], 'batch-id'));
+
+        $this->assertNotNull($watcher->recordPromptingAgent($event));
+    }
+
+    public function test_nested_message_objects_are_expanded_and_redacted()
+    {
+        $watcher = new ExposesAiWatcherHelpers(['messages' => true, 'hidden' => ['api_key']]);
+
+        $summary = $watcher->responseSummary(new AiWatcherResponseFake('01992a3a-0037-7000-8000-000000000000', messages: [
+            (object) ['role' => 'assistant', 'content' => 'hi', 'toolCalls' => [(object) ['arguments' => ['api_key' => 'secret']]]],
+        ]));
+
+        $this->assertSame('hi', $summary['messages'][0]['content']);
+        $this->assertSame('********', $summary['messages'][0]['toolCalls'][0]['arguments']['api_key']);
     }
 }
 
@@ -931,9 +1081,9 @@ class AiWatcherStepCompletedEventFake extends AiWatcherStepEventFake
 
     public $time = 123.4;
 
-    public function __construct($invocationId)
+    public function __construct($invocationId, $stepNumber = 1)
     {
-        parent::__construct($invocationId);
+        parent::__construct($invocationId, $stepNumber);
 
         $this->response = new AiWatcherStepResponseFake;
     }
@@ -1016,11 +1166,6 @@ class ExposesAiWatcherHelpers extends AiWatcher
         return $this->summarizePrompt($prompt);
     }
 
-    public function toolCallSummary(object $toolCall)
-    {
-        return $this->summarizeToolCall($toolCall);
-    }
-
     public function toolResultSummary(object $toolResult)
     {
         return $this->summarizeToolResult($toolResult);
@@ -1083,26 +1228,6 @@ class AiWatcherProviderFake
 class AiWatcherConversationUserFake
 {
     public $id = 123;
-}
-
-class AiWatcherToolCallFake
-{
-    public $id = 'tool-call-id';
-
-    public $name = 'lookup';
-
-    public $arguments = ['api_key' => 'secret'];
-
-    public $resultId = 'result-id';
-
-    public $reasoningId = 'reasoning-id';
-
-    public $reasoningEncryptedContent = 'encrypted';
-
-    public function __construct($arguments = null)
-    {
-        $this->arguments = $arguments ?? $this->arguments;
-    }
 }
 
 class AiWatcherToolResultFake
