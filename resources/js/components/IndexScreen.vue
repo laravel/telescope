@@ -251,12 +251,12 @@ export default {
         updateEntries(){
             const {signal} = this.requestController;
 
-            if (! this.pendingEntryStatuses(this.resource).length) return;
+            if (this.resource !== 'jobs') return;
 
             clearTimeout(this.updateEntriesTimeout);
 
             this.updateEntriesTimeout = setTimeout(() => {
-                let uuids = _.chain(this.entries).filter(entry => this.isPendingEntry(this.resource, entry)).map('id').value();
+                let uuids = _.chain(this.entries).filter(entry => entry.content.status === 'pending').map('id').value();
 
                 if (!uuids.length) return this.updateEntries();
 

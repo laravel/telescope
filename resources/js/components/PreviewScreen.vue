@@ -123,7 +123,8 @@ export default {
          * Update the existing entry if needed.
          */
         updateEntry(){
-            if (! this.isPendingEntry(this.resource, this.entry)) return;
+            if (this.resource != 'jobs') return;
+            if (!this.entry || this.entry.content.status !== 'pending') return;
 
             this.updateEntryTimeout = setTimeout(() => {
                 this.loadEntry((response) => {

@@ -91,19 +91,6 @@ class ClientRequestWatcher extends Watcher
     }
 
     /**
-     * Determine if the content is within the set limits.
-     *
-     * @param  string  $content
-     * @return bool
-     */
-    public function contentWithinLimits($content)
-    {
-        $limit = $this->options['size_limit'] ?? 64;
-
-        return mb_strlen($content) / 1000 <= $limit;
-    }
-
-    /**
      * Format the given response object.
      *
      * @param  \Illuminate\Http\Client\Response  $response
@@ -179,24 +166,6 @@ class ClientRequestWatcher extends Watcher
         return $this->hideParameters($payload,
             Telescope::$hiddenRequestParameters
         );
-    }
-
-    /**
-     * Hide the given parameters.
-     *
-     * @param  array  $data
-     * @param  array  $hidden
-     * @return mixed
-     */
-    protected function hideParameters($data, $hidden)
-    {
-        foreach ($hidden as $parameter) {
-            if (Arr::get($data, $parameter)) {
-                Arr::set($data, $parameter, '********');
-            }
-        }
-
-        return $data;
     }
 
     /**

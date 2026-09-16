@@ -519,11 +519,11 @@ export default {
                         </td>
 
                         <td class="table-fit text-right text-muted">
-                            {{ entry.content.step_count || 0 }}
+                            {{ (entry.content.steps || []).length }}
                         </td>
 
                         <td class="table-fit text-right text-muted">
-                            {{ entry.content.tool_count || 0 }}
+                            {{ (entry.content.tools || []).length }}
                         </td>
 
                         <td class="table-fit">

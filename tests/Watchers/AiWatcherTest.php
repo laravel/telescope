@@ -2,1350 +2,293 @@
 
 namespace Laravel\Telescope\Tests\Watchers;
 
+use Illuminate\Support\Facades\DB;
+use Laravel\Ai\Ai;
+use Laravel\Ai\AiServiceProvider;
+use Laravel\Ai\Approvals\PendingApproval;
+use Laravel\Ai\Events\AgentFailedOver;
+use Laravel\Ai\Responses\AgentResponse;
+use Laravel\Ai\Responses\Data\ToolCall;
 use Laravel\Telescope\EntryType;
-use Laravel\Telescope\Telescope;
+use Laravel\Telescope\Tests\Fixtures\Ai\Agent;
+use Laravel\Telescope\Tests\Fixtures\Ai\FailoverAgent;
+use Laravel\Telescope\Tests\Fixtures\Ai\FailoverException;
+use Laravel\Telescope\Tests\Fixtures\Ai\RefundTool;
+use Laravel\Telescope\Tests\Fixtures\Ai\ToolAgent;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use Laravel\Telescope\Watchers\AiWatcher;
+use Orchestra\Testbench\Attributes\DefineEnvironment;
 use RuntimeException;
 
+#[DefineEnvironment('watchAiRuns')]
 class AiWatcherTest extends FeatureTestCase
 {
+    /** {@inheritdoc} */
     #[\Override]
-    protected function setUp(): void
+    protected function getPackageProviders($app)
     {
-        parent::setUp();
-
-        Telescope::$updatesQueue = [];
+        // Providers are registered before the environment is defined, so this cannot wait for the skip below...
+        return array_merge(
+            class_exists(AiServiceProvider::class) ? [AiServiceProvider::class] : [],
+            parent::getPackageProviders($app)
+        );
     }
 
-    public function test_prompting_agent_records_running_ai_entry()
+    /** {@inheritdoc} */
+    #[\Override]
+    protected function defineEnvironment($app)
     {
-        Telescope::startRecording(false);
+        $this->markTestSkippedUnless(class_exists(AiServiceProvider::class), 'The "laravel/ai" composer package is required for this test.');
 
-        $watcher = new AiWatcher;
-        $entry = $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0000-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
+        parent::defineEnvironment($app);
 
-        $this->assertCount(1, Telescope::$entriesQueue);
-        $this->assertSame($entry, Telescope::$entriesQueue[0]);
-        $this->assertSame($invocationId, $entry->uuid);
-        $this->assertSame($invocationId, $entry->familyHash);
-        $this->assertSame(EntryType::AI, $entry->type);
-        $this->assertSame('running', $entry->content['status']);
-        $this->assertSame($invocationId, $entry->content['invocation_id']);
-        $this->assertFalse($entry->content['streaming']);
-        $this->assertSame(AiWatcherAgentFake::class, $entry->content['agent']);
+        $app->make('config')->set([
+            'ai.default' => 'openai',
+            'ai.providers.openai' => ['driver' => 'openai', 'key' => 'test-key'],
+            'ai.providers.anthropic' => ['driver' => 'anthropic', 'key' => 'test-key'],
+        ]);
+    }
+
+    /**
+     * Watch AI runs, and nothing else.
+     */
+    protected function watchAiRuns($app)
+    {
+        $app->make('config')->set('telescope.watchers', [
+            AiWatcher::class => ['enabled' => true],
+        ]);
+    }
+
+    /**
+     * Opt the watcher into recording prompt, response, and tool content.
+     */
+    protected function recordContent($app)
+    {
+        $app->make('config')->set('telescope.watchers', [
+            AiWatcher::class => ['enabled' => true, 'content' => true],
+        ]);
+    }
+
+    /**
+     * Opt into recording content, but with a size limit nothing can fit within.
+     */
+    protected function recordContentWithoutRoom($app)
+    {
+        $app->make('config')->set('telescope.watchers', [
+            AiWatcher::class => ['enabled' => true, 'content' => true, 'size_limit' => 0],
+        ]);
+    }
+
+    public function test_it_records_a_completed_agent_run()
+    {
+        Agent::fake(['Sure, I can help with that.']);
+
+        Agent::make()->prompt('How do I refund an order?');
+
+        $entry = $this->loadTelescopeEntries()->firstWhere('type', EntryType::AI);
+
+        $this->assertSame('completed', $entry->content['status']);
+        $this->assertSame(Agent::class, $entry->content['agent']);
         $this->assertSame('openai', $entry->content['provider']);
-        $this->assertSame('gpt-test', $entry->content['model']);
-        $this->assertSame([], $entry->content['steps']);
+        $this->assertSame('gpt-5', $entry->content['model']);
+        $this->assertFalse($entry->content['streaming']);
+        $this->assertSame('stop', $entry->content['finish_reason']);
+        $this->assertArrayHasKey('prompt_tokens', $entry->content['usage']);
+        $this->assertCount(1, $entry->content['steps']);
+        $this->assertSame('completed', $entry->content['steps'][0]['status']);
+        $this->assertSame(0, $entry->content['steps'][0]['step']);
+        $this->assertSame('openai', $entry->content['steps'][0]['provider']);
         $this->assertSame([], $entry->content['tools']);
-        $this->assertSame([], $entry->content['failovers']);
-        $this->assertSame([], $entry->content['approvals']);
-        $this->assertSame(0, $entry->content['step_count']);
-        $this->assertSame(0, $entry->content['tool_count']);
-        $this->assertSame(0, $entry->content['failover_count']);
-        $this->assertSame(0, $entry->content['approval_count']);
-        $this->assertArrayNotHasKey('prompt', $entry->content);
+        $this->assertNull($entry->content['exception']);
+
+        $this->assertContains(Agent::class, DB::table('telescope_entries_tags')
+            ->where('entry_uuid', $entry->getKey())->pluck('tag')->all());
     }
 
-    public function test_streaming_agent_records_running_ai_entry()
+    public function test_it_records_a_streamed_agent_run()
     {
-        Telescope::startRecording(false);
+        Agent::fake(['Streamed answer.']);
 
-        $entry = (new AiWatcher)->recordStreamingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0001-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
+        iterator_to_array(Agent::make()->stream('How do I refund an order?'));
 
-        $this->assertSame($entry, Telescope::$entriesQueue[0]);
-        $this->assertSame($invocationId, $entry->uuid);
+        $entry = $this->loadTelescopeEntries()->firstWhere('type', EntryType::AI);
+
+        $this->assertSame('completed', $entry->content['status']);
         $this->assertTrue($entry->content['streaming']);
     }
 
-    public function test_ai_run_start_uses_generated_telescope_uuid_when_invocation_id_is_not_a_uuid()
+    public function test_it_does_not_record_prompt_or_response_content_by_default()
     {
-        Telescope::startRecording(false);
+        Agent::fake(['Sure, I can help with that.']);
 
-        $entry = (new AiWatcher)->recordPromptingAgent(new AiWatcherAgentEventFake(
-            'not-a-uuid',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: 'not-a-uuid')
-        ));
+        Agent::make()->prompt('My password is hunter2.');
 
-        $this->assertNotSame('not-a-uuid', $entry->uuid);
-        $this->assertSame('not-a-uuid', $entry->familyHash);
-        $this->assertSame('not-a-uuid', $entry->content['invocation_id']);
+        $entry = $this->loadTelescopeEntries()->firstWhere('type', EntryType::AI);
+
+        $this->assertNull($entry->content['prompt']);
+        $this->assertNull($entry->content['response']);
+        $this->assertNull($entry->content['steps'][0]['text']);
     }
 
-    public function test_ai_run_start_ignores_duplicate_invocation_ids()
+    #[DefineEnvironment('recordContent')]
+    public function test_it_records_prompt_and_response_content_when_enabled()
     {
-        Telescope::startRecording(false);
+        Agent::fake(['Sure, I can help with that.']);
 
-        $watcher = new AiWatcher;
-        $event = new AiWatcherAgentEventFake(
-            '01992a3a-0002-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: '01992a3a-0002-7000-8000-000000000000')
-        );
+        Agent::make()->prompt('How do I refund an order?');
 
-        $this->assertNotNull($watcher->recordPromptingAgent($event));
-        $this->assertNull($watcher->recordPromptingAgent($event));
-        $this->assertCount(1, Telescope::$entriesQueue);
+        $entry = $this->loadTelescopeEntries()->firstWhere('type', EntryType::AI);
+
+        $this->assertSame('How do I refund an order?', $entry->content['prompt']);
+        $this->assertSame('Sure, I can help with that.', $entry->content['response']);
+        $this->assertSame('Sure, I can help with that.', $entry->content['steps'][0]['text']);
     }
 
-    public function test_agent_prompted_updates_running_ai_entry()
+    #[DefineEnvironment('recordContentWithoutRoom')]
+    public function test_it_purges_content_that_exceeds_the_size_limit()
     {
-        Telescope::startRecording(false);
+        Agent::fake([str_repeat('a', 1500)]);
 
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0003-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
+        Agent::make()->prompt(str_repeat('b', 1500));
 
-        $update = $watcher->recordAgentPrompted(new AiWatcherTerminalEventFake(
-            $invocationId,
-            new AiWatcherResponseFake($invocationId)
-        ));
+        $entry = $this->loadTelescopeEntries()->firstWhere('type', EntryType::AI);
 
-        $this->assertSame($update, Telescope::$updatesQueue[0]);
-        $this->assertSame($invocationId, $update->uuid);
-        $this->assertSame(EntryType::AI, $update->type);
-        $this->assertSame('completed', $update->changes['status']);
-        $this->assertSame('stop', $update->changes['finish_reason']);
-        $this->assertSame(['prompt_tokens' => 10], $update->changes['usage']);
-        $this->assertSame(2, $update->changes['step_count']);
-        $this->assertSame(1, $update->changes['tool_count']);
-        $this->assertSame(0, $update->changes['pending_approval_count']);
-        $this->assertArrayHasKey('exception', $update->changes);
-        $this->assertNull($update->changes['exception']);
-        $this->assertSame('completed', $update->changes['status']);
-        $this->assertArrayNotHasKey('text', $update->changes['response']);
-        $this->assertArrayNotHasKey('raw', $update->changes['response']);
+        $this->assertSame('Purged By Telescope', $entry->content['prompt']);
+        $this->assertSame('Purged By Telescope', $entry->content['response']);
     }
 
-    public function test_agent_streamed_updates_running_ai_entry_waiting_for_approval()
+    #[DefineEnvironment('recordContent')]
+    public function test_it_records_tool_invocations()
     {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordStreamingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0004-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $update = $watcher->recordAgentStreamed(new AiWatcherTerminalEventFake(
-            $invocationId,
-            new AiWatcherResponseFake($invocationId, steps: [], pendingApprovals: ['approval'], events: [
-                new AiWatcherStreamEndEventFake('stop'),
-            ])
-        ));
-
-        $this->assertSame($update, Telescope::$updatesQueue[0]);
-        $this->assertSame('waiting_for_approval', $update->changes['status']);
-        $this->assertSame('stop', $update->changes['finish_reason']);
-        $this->assertSame(1, $update->changes['pending_approval_count']);
-    }
-
-    public function test_uuid_shaped_terminal_events_can_update_without_local_start_map()
-    {
-        Telescope::startRecording(false);
-
-        $update = (new AiWatcher)->recordAgentPrompted(new AiWatcherTerminalEventFake(
-            $invocationId = '01992a3a-0006-7000-8000-000000000000',
-            new AiWatcherResponseFake($invocationId)
-        ));
-
-        $this->assertSame($invocationId, $update->uuid);
-    }
-
-    public function test_terminal_updates_use_mapped_uuid_for_non_uuid_invocation_ids()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $entry = $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            'not-a-uuid',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: 'not-a-uuid')
-        ));
-
-        $update = $watcher->recordAgentPrompted(new AiWatcherTerminalEventFake(
-            'not-a-uuid',
-            new AiWatcherResponseFake('not-a-uuid')
-        ));
-
-        $this->assertSame($entry->uuid, $update->uuid);
-    }
-
-    public function test_agent_failed_updates_running_ai_entry()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0005-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $update = $watcher->recordAgentFailed(new AiWatcherFailedEventFake(
-            $invocationId,
-            new RuntimeException('Provider failed', 500)
-        ));
-
-        $this->assertSame($update, Telescope::$updatesQueue[0]);
-        $this->assertSame('failed', $update->changes['status']);
-        $this->assertSame(RuntimeException::class, $update->changes['exception']['class']);
-        $this->assertArrayNotHasKey('message', $update->changes['exception']);
-        $this->assertSame(500, $update->changes['exception']['code']);
-        $this->assertSame(['failed'], $update->tagsChanges['added']);
-    }
-
-    public function test_terminal_events_clear_cached_invocation_state()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $event = new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0022-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        );
-
-        $this->assertNotNull($watcher->recordPromptingAgent($event));
-        $watcher->recordAgentPrompted(new AiWatcherTerminalEventFake(
-            $invocationId,
-            new AiWatcherResponseFake($invocationId)
-        ));
-        $this->assertNotNull($watcher->recordPromptingAgent($event));
-
-        $failedEvent = new AiWatcherAgentEventFake(
-            $failedInvocationId = '01992a3a-0023-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $failedInvocationId)
-        );
-
-        $this->assertNotNull($watcher->recordPromptingAgent($failedEvent));
-        $watcher->recordAgentFailed(new AiWatcherFailedEventFake(
-            $failedInvocationId,
-            new RuntimeException('Provider failed')
-        ));
-        $this->assertNotNull($watcher->recordPromptingAgent($failedEvent));
-    }
-
-    public function test_starting_step_appends_running_step_summary()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0007-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $update = $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId));
-
-        $this->assertSame($update, Telescope::$updatesQueue[0]);
-        $this->assertSame($invocationId, $update->uuid);
-        $this->assertSame(1, $update->changes['step_count']);
-        $this->assertSame([
-            'step_number' => 1,
-            'agent' => AiWatcherAgentFake::class,
-            'provider' => 'openai',
-            'model' => 'gpt-test',
-            'final' => false,
-            'status' => 'running',
-            'message_count' => 2,
-        ], $update->changes['steps'][0]);
-    }
-
-    public function test_step_completed_updates_existing_step_summary()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0008-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-        $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId));
-
-        $update = $watcher->recordStepCompleted(new AiWatcherStepCompletedEventFake($invocationId));
-        $step = $update->changes['steps'][0];
-
-        $this->assertSame($update, Telescope::$updatesQueue[0]);
-        $this->assertSame(1, $update->changes['step_count']);
-        $this->assertSame('completed', $step['status']);
-        $this->assertSame(123.4, $step['duration']);
-        $this->assertSame('stop', $step['finish_reason']);
-        $this->assertSame(['prompt_tokens' => 10], $step['usage']);
-        $this->assertSame(['provider' => 'openai', 'model' => 'gpt-test'], $step['meta']);
-        $this->assertSame(1, $step['tool_call_count']);
-        $this->assertTrue($step['has_structured']);
-        $this->assertArrayNotHasKey('text', $step);
-        $this->assertArrayNotHasKey('provider_content_blocks', $step);
-    }
-
-    public function test_steps_are_sorted_by_step_number()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0010-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $update = $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId, stepNumber: 2));
-        $update = $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId, stepNumber: 1));
-
-        $this->assertSame([1, 2], array_column($update->changes['steps'], 'step_number'));
-    }
-
-    public function test_lifecycle_summaries_are_limited()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher([
-            'max_steps' => 1,
-            'max_tools' => 1,
-            'max_failovers' => 1,
-            'max_approvals' => 1,
+        ToolAgent::fake([
+            new ToolCall('call-1', 'refund-order', ['order' => 123, 'password' => 'hunter2']),
+            'The order was refunded.',
         ]);
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0024-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
 
-        $stepUpdate = $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId, stepNumber: 1));
-        $stepUpdate = $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId, stepNumber: 2));
-        $toolUpdate = $watcher->recordInvokingTool(new AiWatcherToolEventFake($invocationId, toolInvocationId: 'first-tool'));
-        $toolUpdate = $watcher->recordInvokingTool(new AiWatcherToolEventFake($invocationId, toolInvocationId: 'second-tool'));
-        $failoverUpdate = $watcher->recordAgentFailedOver(new AiWatcherFailedOverEventFake($invocationId));
-        $failoverUpdate = $watcher->recordAgentFailedOver(new AiWatcherFailedOverEventFake($invocationId, model: 'gpt-next'));
-        $approvalUpdate = $watcher->recordToolApprovalRequested(new AiWatcherApprovalRequestedEventFake($invocationId));
-        $approvalUpdate = $watcher->recordToolApprovalResolved(new AiWatcherApprovalResolvedEventFake($invocationId));
+        ToolAgent::make()->prompt('Refund order 123.');
 
-        $this->assertSame([2], array_column($stepUpdate->changes['steps'], 'step_number'));
-        $this->assertSame(2, $stepUpdate->changes['step_count']);
-        $this->assertSame(['second-tool'], array_column($toolUpdate->changes['tools'], 'id'));
-        $this->assertSame(2, $toolUpdate->changes['tool_count']);
-        $this->assertSame(['gpt-next'], array_column($failoverUpdate->changes['failovers'], 'model'));
-        $this->assertSame(2, $failoverUpdate->changes['failover_count']);
-        $this->assertSame(['resolved'], array_column($approvalUpdate->changes['approvals'], 'status'));
-        $this->assertSame(2, $approvalUpdate->changes['approval_count']);
-    }
+        $entry = $this->loadTelescopeEntries()->firstWhere('type', EntryType::AI);
 
-    public function test_step_updates_use_mapped_uuid_for_non_uuid_invocation_ids()
-    {
-        Telescope::startRecording(false);
+        $this->assertSame('completed', $entry->content['status']);
+        $this->assertCount(2, $entry->content['steps']);
+        $this->assertCount(1, $entry->content['tools']);
 
-        $watcher = new AiWatcher;
-        $entry = $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            'not-a-uuid',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: 'not-a-uuid')
-        ));
+        $tool = $entry->content['tools'][0];
 
-        $update = $watcher->recordStartingStep(new AiWatcherStepEventFake('not-a-uuid'));
-
-        $this->assertSame($entry->uuid, $update->uuid);
-    }
-
-    public function test_terminal_completion_does_not_reset_cached_step_count()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0011-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-        $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId));
-
-        $update = $watcher->recordAgentStreamed(new AiWatcherTerminalEventFake(
-            $invocationId,
-            new AiWatcherResponseFake($invocationId, steps: [])
-        ));
-
-        $this->assertSame(1, $update->changes['step_count']);
-    }
-
-    public function test_terminal_completion_does_not_reset_cached_tool_count()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0015-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-        $watcher->recordInvokingTool(new AiWatcherToolEventFake($invocationId));
-
-        $update = $watcher->recordAgentStreamed(new AiWatcherTerminalEventFake(
-            $invocationId,
-            new AiWatcherResponseFake($invocationId, toolCalls: [])
-        ));
-
-        $this->assertSame(1, $update->changes['tool_count']);
-    }
-
-    public function test_step_failed_updates_step_summary_with_exception()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher(['content' => true]);
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0009-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $update = $watcher->recordStepFailed(new AiWatcherStepFailedEventFake($invocationId));
-        $step = $update->changes['steps'][0];
-
-        $this->assertSame('failed', $step['status']);
-        $this->assertSame(55.5, $step['duration']);
-        $this->assertSame(RuntimeException::class, $step['exception']['class']);
-        $this->assertSame('Step failed', $step['exception']['message']);
-    }
-
-    public function test_invoking_tool_appends_running_tool_summary()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0012-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $update = $watcher->recordInvokingTool(new AiWatcherToolEventFake($invocationId));
-        $tool = $update->changes['tools'][0];
-
-        $this->assertSame($update, Telescope::$updatesQueue[0]);
-        $this->assertSame(1, $update->changes['tool_count']);
-        $this->assertSame('tool-invocation-id', $tool['id']);
-        $this->assertSame(AiWatcherAgentFake::class, $tool['agent']);
-        $this->assertSame('lookup_weather', $tool['tool']);
-        $this->assertSame(AiWatcherNamedToolFake::class, $tool['tool_class']);
-        $this->assertSame('running', $tool['status']);
-        $this->assertArrayNotHasKey('arguments', $tool);
-    }
-
-    public function test_tool_invoked_updates_existing_tool_summary()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher([
-            'tool_arguments' => true,
-            'tool_results' => true,
-            'hidden' => ['api_key'],
-        ]);
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0013-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-        $watcher->recordInvokingTool(new AiWatcherToolEventFake($invocationId));
-
-        $update = $watcher->recordToolInvoked(new AiWatcherToolInvokedEventFake($invocationId));
-        $tool = $update->changes['tools'][0];
-
-        $this->assertSame($update, Telescope::$updatesQueue[0]);
-        $this->assertSame(1, $update->changes['tool_count']);
         $this->assertSame('completed', $tool['status']);
-        $this->assertSame(45.6, $tool['duration']);
-        $this->assertSame('********', $tool['arguments']['api_key']);
-        $this->assertSame('sunny', $tool['result']['forecast']);
+        $this->assertSame('refund-order', $tool['tool']);
+        $this->assertSame(RefundTool::class, $tool['tool_class']);
+        $this->assertSame(123, $tool['arguments']['order']);
+        $this->assertSame('********', $tool['arguments']['password']);
+        $this->assertSame('Refunded order 123.', $tool['result']);
+        $this->assertIsFloat($tool['duration']);
     }
 
-    public function test_tool_failed_updates_tool_summary_with_exception()
+    #[DefineEnvironment('recordContent')]
+    public function test_it_records_a_failed_tool_invocation()
     {
-        Telescope::startRecording(false);
+        ToolAgent::fake([
+            new ToolCall('call-1', 'explode', []),
+            'Recovered.',
+        ]);
 
-        $watcher = new AiWatcher(['content' => true]);
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0014-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
+        try {
+            ToolAgent::make()->prompt('Explode, please.');
+        } catch (RuntimeException) {
+            //
+        }
 
-        $update = $watcher->recordToolFailed(new AiWatcherToolFailedEventFake($invocationId));
-        $tool = $update->changes['tools'][0];
+        $entry = $this->loadTelescopeEntries()->firstWhere('type', EntryType::AI);
+        $tool = $entry->content['tools'][0];
 
         $this->assertSame('failed', $tool['status']);
-        $this->assertSame(12.3, $tool['duration']);
         $this->assertSame(RuntimeException::class, $tool['exception']['class']);
-        $this->assertSame('Tool failed', $tool['exception']['message']);
+        $this->assertSame('Tool exploded.', $tool['exception']['message']);
     }
 
-    public function test_tool_updates_use_mapped_uuid_for_non_uuid_invocation_ids()
+    public function test_it_records_a_failed_agent_run()
     {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $entry = $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            'not-a-uuid',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: 'not-a-uuid')
-        ));
-
-        $update = $watcher->recordInvokingTool(new AiWatcherToolEventFake('not-a-uuid'));
-
-        $this->assertSame($entry->uuid, $update->uuid);
-    }
-
-    public function test_agent_failed_over_appends_safe_failover_summary()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0016-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $update = $watcher->recordAgentFailedOver(new AiWatcherFailedOverEventFake($invocationId));
-        $failover = $update->changes['failovers'][0];
-
-        $this->assertSame($update, Telescope::$updatesQueue[0]);
-        $this->assertSame(1, $update->changes['failover_count']);
-        $this->assertSame('failed_over', $failover['status']);
-        $this->assertSame(AiWatcherAgentFake::class, $failover['agent']);
-        $this->assertSame('openai', $failover['provider']);
-        $this->assertSame('gpt-test', $failover['model']);
-        $this->assertSame(RuntimeException::class, $failover['exception']['class']);
-        $this->assertArrayNotHasKey('message', $failover['exception']);
-    }
-
-    public function test_tool_approval_requested_appends_safe_checkpoint()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0017-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $update = $watcher->recordToolApprovalRequested(new AiWatcherApprovalRequestedEventFake($invocationId));
-        $approval = $update->changes['approvals'][0];
-        $pendingApproval = $approval['pending_approvals'][0];
-
-        $this->assertSame($update, Telescope::$updatesQueue[0]);
-        $this->assertSame(1, $update->changes['approval_count']);
-        $this->assertSame(1, $update->changes['pending_approval_count']);
-        $this->assertSame('requested', $approval['status']);
-        $this->assertSame(AiWatcherAgentFake::class, $approval['agent']);
-        $this->assertSame('conversation-id', $approval['conversation_id']);
-        $this->assertSame(AiWatcherConversationUserFake::class, $approval['conversation_user']['class']);
-        $this->assertSame(123, $approval['conversation_user']['id']);
-        $this->assertSame(1, $approval['pending_approval_count']);
-        $this->assertSame('approval-id', $pendingApproval['id']);
-        $this->assertSame('lookup_weather', $pendingApproval['name']);
-        $this->assertArrayNotHasKey('arguments', $pendingApproval);
-        $this->assertArrayNotHasKey('reason', $pendingApproval);
-    }
-
-    public function test_tool_approval_resolved_appends_safe_checkpoint()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0018-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $update = $watcher->recordToolApprovalResolved(new AiWatcherApprovalResolvedEventFake($invocationId));
-        $approval = $update->changes['approvals'][0];
-        $toolResult = $approval['tool_results'][0];
-
-        $this->assertSame(1, $update->changes['approval_count']);
-        $this->assertSame(0, $update->changes['pending_approval_count']);
-        $this->assertSame('resolved', $approval['status']);
-        $this->assertSame(1, $approval['tool_result_count']);
-        $this->assertSame('tool-result-id', $toolResult['id']);
-        $this->assertSame('lookup', $toolResult['name']);
-        $this->assertSame('result-id', $toolResult['result_id']);
-        $this->assertFalse($toolResult['denied']);
-        $this->assertArrayNotHasKey('arguments', $toolResult);
-        $this->assertArrayNotHasKey('result', $toolResult);
-    }
-
-    public function test_approval_payloads_are_opt_in_and_redacted()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher([
-            'content' => true,
-            'tool_arguments' => true,
-            'tool_results' => true,
-            'hidden' => ['api_key'],
-        ]);
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0019-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $requested = $watcher->recordToolApprovalRequested(new AiWatcherApprovalRequestedEventFake($invocationId));
-        $resolved = $watcher->recordToolApprovalResolved(new AiWatcherApprovalResolvedEventFake($invocationId));
-
-        $pendingApproval = $requested->changes['approvals'][0]['pending_approvals'][0];
-        $toolResult = $resolved->changes['approvals'][1]['tool_results'][0];
-
-        $this->assertSame('********', $pendingApproval['arguments']['api_key']);
-        $this->assertSame('Needs approval', $pendingApproval['reason']);
-        $this->assertSame('********', $toolResult['arguments']['api_key']);
-        $this->assertSame('ok', $toolResult['result']['status']);
-    }
-
-    public function test_approval_updates_use_mapped_uuid_for_non_uuid_invocation_ids()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $entry = $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            'not-a-uuid',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: 'not-a-uuid')
-        ));
-
-        $update = $watcher->recordToolApprovalRequested(new AiWatcherApprovalRequestedEventFake('not-a-uuid'));
-
-        $this->assertSame($entry->uuid, $update->uuid);
-    }
-
-    public function test_terminal_completion_preserves_cached_failover_and_approval_counts()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0020-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-        $watcher->recordAgentFailedOver(new AiWatcherFailedOverEventFake($invocationId));
-        $watcher->recordToolApprovalRequested(new AiWatcherApprovalRequestedEventFake($invocationId));
-
-        $update = $watcher->recordAgentStreamed(new AiWatcherTerminalEventFake(
-            $invocationId,
-            new AiWatcherResponseFake($invocationId, pendingApprovals: [])
-        ));
-
-        $this->assertSame(1, $update->changes['failover_count']);
-        $this->assertSame(1, $update->changes['approval_count']);
-        $this->assertSame(1, $update->changes['pending_approval_count']);
-        $this->assertSame('waiting_for_approval', $update->changes['status']);
-    }
-
-    public function test_ai_watcher_registers_available_ai_events()
-    {
-        $events = new \ReflectionProperty(AiWatcher::class, 'events');
-
-        if (PHP_VERSION_ID < 80500) {
-            $events->setAccessible(true);
-        }
-
-        $originalEvents = $events->getValue();
+        Agent::fake([fn () => throw new RuntimeException('The provider is down.')]);
 
         try {
-            $events->setValue(null, [
-                AiWatcherDummyEvent::class => 'recordPromptingAgent',
-                'Laravel\\Ai\\Events\\MissingEvent' => 'recordPromptingAgent',
-            ]);
-
-            $originalListenersCount = count($this->app['events']->getListeners(AiWatcherDummyEvent::class));
-            $originalMissingEventListenersCount = count($this->app['events']->getListeners('Laravel\\Ai\\Events\\MissingEvent'));
-
-            (new AiWatcher)->register($this->app);
-
-            $this->assertCount($originalListenersCount + 1, $this->app['events']->getListeners(AiWatcherDummyEvent::class));
-            $this->assertCount($originalMissingEventListenersCount, $this->app['events']->getListeners('Laravel\\Ai\\Events\\MissingEvent'));
-        } finally {
-            $events->setValue(null, $originalEvents);
-        }
-    }
-
-    public function test_ai_watcher_does_not_register_or_record_when_disabled()
-    {
-        $events = new \ReflectionProperty(AiWatcher::class, 'events');
-        $watchers = new \ReflectionProperty(Telescope::class, 'watchers');
-        $registerWatchers = new \ReflectionMethod(Telescope::class, 'registerWatchers');
-
-        if (PHP_VERSION_ID < 80500) {
-            $events->setAccessible(true);
-            $watchers->setAccessible(true);
-            $registerWatchers->setAccessible(true);
+            Agent::make()->prompt('How do I refund an order?');
+        } catch (RuntimeException) {
+            //
         }
 
-        $originalEvents = $events->getValue();
-        $originalWatchers = $watchers->getValue();
+        $entry = $this->loadTelescopeEntries()->firstWhere('type', EntryType::AI);
 
-        try {
-            $events->setValue(null, [
-                AiWatcherAgentEventFake::class => 'recordPromptingAgent',
-            ]);
-            $watchers->setValue(null, []);
-            $this->app['config']->set('telescope.watchers', [
-                AiWatcher::class => [
-                    'enabled' => false,
-                ],
-            ]);
+        $this->assertSame('failed', $entry->content['status']);
+        $this->assertSame(RuntimeException::class, $entry->content['exception']['class']);
+        $this->assertSame('The provider is down.', $entry->content['exception']['message']);
+        $this->assertCount(1, $entry->content['steps']);
+        $this->assertSame('failed', $entry->content['steps'][0]['status']);
 
-            $registerWatchers->invoke(null, $this->app);
-
-            $this->assertFalse(Telescope::hasWatcher(AiWatcher::class));
-
-            Telescope::startRecording(false);
-
-            $this->app['events']->dispatch(new AiWatcherAgentEventFake(
-                '01992a3a-0021-7000-8000-000000000000',
-                new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: '01992a3a-0021-7000-8000-000000000000')
-            ));
-
-            $this->assertSame([], array_values(array_filter(
-                Telescope::$entriesQueue,
-                fn ($entry) => $entry->type === EntryType::AI
-            )));
-        } finally {
-            $events->setValue(null, $originalEvents);
-            $watchers->setValue(null, $originalWatchers);
-        }
+        $this->assertContains('failed', DB::table('telescope_entries_tags')
+            ->where('entry_uuid', $entry->getKey())->pluck('tag')->all());
     }
 
-    public function test_prompt_summary_omits_content_by_default()
+    public function test_it_records_a_run_that_fails_over_to_another_provider()
     {
-        $summary = (new ExposesAiWatcherHelpers)->promptSummary(new AiWatcherPromptFake(
-            prompt: 'secret prompt',
-            attachments: ['first', 'second'],
-        ));
+        $attempts = 0;
 
-        $this->assertArrayNotHasKey('prompt', $summary);
-        $this->assertSame(2, $summary['attachment_count']);
-        $this->assertSame(AiWatcherAgentFake::class, $summary['agent']);
-        $this->assertSame('openai', $summary['provider']);
+        FailoverAgent::fake([function () use (&$attempts) {
+            return ++$attempts === 1
+                ? throw new FailoverException('Rate limited.')
+                : 'Recovered on the second provider.';
+        }]);
+
+        FailoverAgent::make()->prompt('How do I refund an order?');
+
+        $entries = $this->loadTelescopeEntries()->where('type', EntryType::AI);
+
+        $this->assertCount(1, $entries, 'A failover must reuse the entry of the invocation it retries.');
+
+        $entry = $entries->first();
+
+        $this->assertSame('completed', $entry->content['status']);
+        $this->assertSame('anthropic', $entry->content['provider']);
+        $this->assertCount(1, $entry->content['failovers']);
+        $this->assertSame('openai', $entry->content['failovers'][0]['provider']);
+        $this->assertSame('Rate limited.', $entry->content['failovers'][0]['exception']['message']);
+
+        $this->assertNotContains('failed', DB::table('telescope_entries_tags')
+            ->where('entry_uuid', $entry->getKey())->pluck('tag')->all());
     }
 
-    public function test_opted_in_content_is_redacted_and_size_limited()
+    #[DefineEnvironment('recordContent')]
+    public function test_it_records_a_run_paused_for_tool_approval()
     {
-        $watcher = new ExposesAiWatcherHelpers([
-            'content' => true,
-            'size_limit' => 1,
-            'hidden' => ['password', 'nested.token'],
+        Agent::fake([
+            AgentResponse::fakeWithPendingApprovals([
+                new PendingApproval('call-1', 'refund-order', ['order' => 123], 'Refunds need a human.'),
+            ]),
         ]);
 
-        $summary = $watcher->promptSummary(new AiWatcherPromptFake(prompt: [
-            'message' => 'hello',
-            'password' => 'secret',
-            'nested' => ['token' => 'abc'],
-        ]));
+        Agent::make()->prompt('Refund order 123.');
 
-        $this->assertSame('hello', $summary['prompt']['message']);
-        $this->assertSame('********', $summary['prompt']['password']);
-        $this->assertSame('********', $summary['prompt']['nested']['token']);
-        $this->assertSame('Purged By Telescope', $watcher->payload(str_repeat('x', 2000), 'content'));
+        $entry = $this->loadTelescopeEntries()->firstWhere('type', EntryType::AI);
+
+        $this->assertSame('waiting_for_approval', $entry->content['status']);
+        $this->assertCount(1, $entry->content['pending_approvals']);
+        $this->assertSame('call-1', $entry->content['pending_approvals'][0]['id']);
+        $this->assertSame('refund-order', $entry->content['pending_approvals'][0]['tool']);
+        $this->assertSame('Refunds need a human.', $entry->content['pending_approvals'][0]['reason']);
+        $this->assertSame(['order' => 123], $entry->content['pending_approvals'][0]['arguments']);
     }
 
-    public function test_tool_summaries_omit_sensitive_payloads_by_default()
+    public function test_it_ignores_events_for_runs_it_did_not_start()
     {
-        $watcher = new ExposesAiWatcherHelpers;
-
-        $toolResult = $watcher->toolResultSummary(new AiWatcherToolResultFake);
-
-        $this->assertArrayNotHasKey('arguments', $toolResult);
-        $this->assertArrayNotHasKey('result', $toolResult);
-    }
-
-    public function test_tool_payloads_are_opt_in_and_redacted()
-    {
-        $watcher = new ExposesAiWatcherHelpers([
-            'tool_arguments' => true,
-            'tool_results' => true,
-            'hidden' => ['api_key', 'authorization', 'nested.token'],
-        ]);
-
-        $arguments = $watcher->payload([
-            'apiKey' => 'secret',
-            'Authorization' => 'bearer',
-            'api-key' => 'key',
-            'nested' => ['token' => 'abc'],
-        ], 'tool_arguments');
-        $toolResult = $watcher->toolResultSummary(new AiWatcherToolResultFake);
-
-        $this->assertSame('********', $arguments['apiKey']);
-        $this->assertSame('********', $arguments['Authorization']);
-        $this->assertSame('********', $arguments['api-key']);
-        $this->assertSame('********', $arguments['nested']['token']);
-        $this->assertSame('********', $toolResult['arguments']['api_key']);
-        $this->assertSame('ok', $toolResult['result']['status']);
-    }
-
-    public function test_step_response_summary_stores_counts_and_safe_metadata()
-    {
-        $summary = (new ExposesAiWatcherHelpers)->stepResponseSummary(new AiWatcherStepResponseFake);
-
-        $this->assertSame('stop', $summary['finish_reason']);
-        $this->assertSame(['prompt_tokens' => 10], $summary['usage']);
-        $this->assertSame(['provider' => 'openai', 'model' => 'gpt-test'], $summary['meta']);
-        $this->assertSame(1, $summary['tool_call_count']);
-        $this->assertSame(1, $summary['pending_approval_count']);
-        $this->assertTrue($summary['has_structured']);
-        $this->assertArrayNotHasKey('text', $summary);
-        $this->assertArrayNotHasKey('raw', $summary);
-        $this->assertArrayNotHasKey('provider_content_blocks', $summary);
-    }
-
-    public function test_raw_response_payloads_are_opt_in_and_redacted()
-    {
-        $watcher = new ExposesAiWatcherHelpers([
-            'raw' => true,
-            'hidden' => ['api_key'],
-        ]);
-        $response = new AiWatcherResponseFake('invocation-id');
-        $response->raw = new AiWatcherRawResponseFake(['api_key' => 'secret', 'result' => 'ok']);
-
-        $summary = $watcher->responseSummary($response);
-
-        $this->assertSame('********', $summary['raw']['api_key']);
-        $this->assertSame('ok', $summary['raw']['result']);
-    }
-
-    public function test_exception_summary_is_safe()
-    {
-        $summary = (new ExposesAiWatcherHelpers(['content' => true]))->exceptionSummary(
-            new RuntimeException("Invalid \xB1 secret", 123)
-        );
-
-        $this->assertSame(RuntimeException::class, $summary['class']);
-        $this->assertSame(json_decode('"Invalid \ufffd secret"'), $summary['message']);
-        $this->assertSame(123, $summary['code']);
-    }
-
-    public function test_terminal_completion_uses_running_totals_when_summaries_are_capped()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher(['max_steps' => 1, 'max_tools' => 1, 'max_failovers' => 1, 'max_approvals' => 1]);
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0030-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-        $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId, stepNumber: 0));
-        $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId, stepNumber: 1));
-        $watcher->recordInvokingTool(new AiWatcherToolEventFake($invocationId, toolInvocationId: 'first-tool'));
-        $watcher->recordInvokingTool(new AiWatcherToolEventFake($invocationId, toolInvocationId: 'second-tool'));
-        $watcher->recordAgentFailedOver(new AiWatcherFailedOverEventFake($invocationId));
-        $watcher->recordAgentFailedOver(new AiWatcherFailedOverEventFake($invocationId));
-        $watcher->recordToolApprovalRequested(new AiWatcherApprovalRequestedEventFake($invocationId));
-        $watcher->recordToolApprovalResolved(new AiWatcherApprovalResolvedEventFake($invocationId));
-
-        $update = $watcher->recordAgentStreamed(new AiWatcherTerminalEventFake(
-            $invocationId,
-            new AiWatcherResponseFake($invocationId, steps: [], toolCalls: [])
-        ));
-
-        $this->assertSame(2, $update->changes['step_count']);
-        $this->assertSame(2, $update->changes['tool_count']);
-        $this->assertSame(2, $update->changes['failover_count']);
-        $this->assertSame(2, $update->changes['approval_count']);
-    }
-
-    public function test_step_count_counts_zero_based_steps()
-    {
-        Telescope::startRecording(false);
-
         $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0031-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
 
-        $update = $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId, stepNumber: 0));
-        $this->assertSame(1, $update->changes['step_count']);
-
-        $update = $watcher->recordStepCompleted(new AiWatcherStepCompletedEventFake($invocationId, stepNumber: 0));
-        $this->assertSame(1, $update->changes['step_count']);
-    }
-
-    public function test_run_lifecycle_shares_a_single_queued_update()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0032-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $stepUpdate = $watcher->recordStartingStep(new AiWatcherStepEventFake($invocationId));
-        $watcher->recordInvokingTool(new AiWatcherToolEventFake($invocationId));
-        $update = $watcher->recordAgentPrompted(new AiWatcherTerminalEventFake(
-            $invocationId,
-            new AiWatcherResponseFake($invocationId)
-        ));
-
-        $this->assertCount(1, Telescope::$updatesQueue);
-        $this->assertSame($stepUpdate, $update);
-        $this->assertSame('completed', $update->changes['status']);
-        $this->assertCount(1, $update->changes['steps']);
-        $this->assertCount(1, $update->changes['tools']);
-    }
-
-    public function test_failover_re_prompt_updates_provider_and_model()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $invocationId = '01992a3a-0033-7000-8000-000000000000';
-        $watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId,
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $this->assertNull($watcher->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId,
-            new AiWatcherPromptFake(prompt: 'hidden prompt', model: 'claude-test', invocationId: $invocationId)
+        $this->assertNull($watcher->recordFailedOver(new AgentFailedOver(
+            'missing-invocation',
+            Agent::make(),
+            Ai::textProviderFor(Agent::make(), 'openai'),
+            'gpt-5',
+            new FailoverException('Rate limited.'),
         )));
 
-        $this->assertCount(1, Telescope::$entriesQueue);
-        $this->assertSame('claude-test', Telescope::$updatesQueue[0]->changes['model']);
-    }
-
-    public function test_run_start_is_tagged_with_agent_class()
-    {
-        Telescope::startRecording(false);
-
-        $entry = (new AiWatcher)->recordPromptingAgent(new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0034-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        ));
-
-        $this->assertSame([AiWatcherAgentFake::class], $entry->tags);
-    }
-
-    public function test_run_waiting_for_approval_flushes_cached_state()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $event = new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0035-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        );
-
-        $watcher->recordPromptingAgent($event);
-        $update = $watcher->recordAgentPrompted(new AiWatcherTerminalEventFake(
-            $invocationId,
-            new AiWatcherResponseFake($invocationId, pendingApprovals: ['approval'])
-        ));
-
-        $this->assertSame('waiting_for_approval', $update->changes['status']);
-        $this->assertNotNull($watcher->recordPromptingAgent($event));
-    }
-
-    public function test_cached_state_is_flushed_after_storing()
-    {
-        Telescope::startRecording(false);
-
-        $watcher = new AiWatcher;
-        $watcher->register($this->app);
-        $event = new AiWatcherAgentEventFake(
-            $invocationId = '01992a3a-0036-7000-8000-000000000000',
-            new AiWatcherPromptFake(prompt: 'hidden prompt', invocationId: $invocationId)
-        );
-
-        $this->assertNotNull($watcher->recordPromptingAgent($event));
-        $this->assertNull($watcher->recordPromptingAgent($event));
-
-        $this->assertTrue(collect(Telescope::$afterStoringHooks)->every->__invoke([], 'batch-id'));
-
-        $this->assertNotNull($watcher->recordPromptingAgent($event));
-    }
-
-    public function test_nested_message_objects_are_expanded_and_redacted()
-    {
-        $watcher = new ExposesAiWatcherHelpers(['messages' => true, 'hidden' => ['api_key']]);
-
-        $summary = $watcher->responseSummary(new AiWatcherResponseFake('01992a3a-0037-7000-8000-000000000000', messages: [
-            (object) ['role' => 'assistant', 'content' => 'hi', 'toolCalls' => [(object) ['arguments' => ['api_key' => 'secret']]]],
-        ]));
-
-        $this->assertSame('hi', $summary['messages'][0]['content']);
-        $this->assertSame('********', $summary['messages'][0]['toolCalls'][0]['arguments']['api_key']);
-    }
-}
-
-class AiWatcherDummyEvent
-{
-    //
-}
-
-class AiWatcherAgentEventFake
-{
-    public function __construct(
-        public $invocationId,
-        public $prompt,
-    ) {
-        //
-    }
-}
-
-class AiWatcherTerminalEventFake
-{
-    public function __construct(
-        public $invocationId,
-        public $response,
-    ) {
-        //
-    }
-}
-
-class AiWatcherFailedEventFake
-{
-    public function __construct(
-        public $invocationId,
-        public $exception,
-    ) {
-        //
-    }
-}
-
-class AiWatcherFailedOverEventFake
-{
-    public $agent;
-
-    public $provider;
-
-    public $exception;
-
-    public function __construct(
-        public $invocationId,
-        public $model = 'gpt-test',
-    ) {
-        $this->agent = new AiWatcherAgentFake;
-        $this->provider = new AiWatcherProviderFake;
-        $this->exception = new RuntimeException('Provider failed over');
-    }
-}
-
-class AiWatcherApprovalRequestedEventFake
-{
-    public $agent;
-
-    public $pendingApprovals;
-
-    public $conversationUser;
-
-    public function __construct(
-        public $invocationId,
-        public $conversationId = 'conversation-id',
-    ) {
-        $this->agent = new AiWatcherAgentFake;
-        $this->pendingApprovals = [new AiWatcherPendingApprovalFake];
-        $this->conversationUser = new AiWatcherConversationUserFake;
-    }
-}
-
-class AiWatcherApprovalResolvedEventFake
-{
-    public $agent;
-
-    public $toolResults;
-
-    public $conversationUser;
-
-    public function __construct(
-        public $invocationId,
-        public $conversationId = 'conversation-id',
-    ) {
-        $this->agent = new AiWatcherAgentFake;
-        $this->toolResults = [new AiWatcherToolResultFake];
-        $this->conversationUser = new AiWatcherConversationUserFake;
-    }
-}
-
-class AiWatcherStepEventFake
-{
-    public $agent;
-
-    public $provider;
-
-    public function __construct(
-        public $invocationId,
-        public $stepNumber = 1,
-        public $model = 'gpt-test',
-        public $isFinalStep = false,
-        public $messages = ['first', 'second'],
-    ) {
-        $this->agent = new AiWatcherAgentFake;
-        $this->provider = new AiWatcherProviderFake;
-    }
-}
-
-class AiWatcherStepCompletedEventFake extends AiWatcherStepEventFake
-{
-    public $response;
-
-    public $time = 123.4;
-
-    public function __construct($invocationId, $stepNumber = 1)
-    {
-        parent::__construct($invocationId, $stepNumber);
-
-        $this->response = new AiWatcherStepResponseFake;
-    }
-}
-
-class AiWatcherStepFailedEventFake extends AiWatcherStepEventFake
-{
-    public $exception;
-
-    public $time = 55.5;
-
-    public function __construct($invocationId)
-    {
-        parent::__construct($invocationId);
-
-        $this->exception = new RuntimeException('Step failed');
-    }
-}
-
-class AiWatcherToolEventFake
-{
-    public $agent;
-
-    public $tool;
-
-    public function __construct(
-        public $invocationId,
-        public $toolInvocationId = 'tool-invocation-id',
-        public $arguments = ['api_key' => 'secret'],
-    ) {
-        $this->agent = new AiWatcherAgentFake;
-        $this->tool = new AiWatcherNamedToolFake;
-    }
-}
-
-class AiWatcherToolInvokedEventFake extends AiWatcherToolEventFake
-{
-    public $result = ['forecast' => 'sunny'];
-
-    public $time = 45.6;
-}
-
-class AiWatcherToolFailedEventFake extends AiWatcherToolEventFake
-{
-    public $exception;
-
-    public $time = 12.3;
-
-    public function __construct($invocationId)
-    {
-        parent::__construct($invocationId);
-
-        $this->exception = new RuntimeException('Tool failed');
-    }
-}
-
-class AiWatcherPendingApprovalFake
-{
-    public $id = 'approval-id';
-
-    public $tool = 'lookup_weather';
-
-    public $arguments = ['api_key' => 'secret'];
-
-    public $reason = 'Needs approval';
-}
-
-class AiWatcherNamedToolFake
-{
-    public function name()
-    {
-        return 'lookup_weather';
-    }
-}
-
-class ExposesAiWatcherHelpers extends AiWatcher
-{
-    public function promptSummary(object $prompt)
-    {
-        return $this->summarizePrompt($prompt);
-    }
-
-    public function toolResultSummary(object $toolResult)
-    {
-        return $this->summarizeToolResult($toolResult);
-    }
-
-    public function stepResponseSummary(object $response)
-    {
-        return $this->summarizeStepResponse($response);
-    }
-
-    public function responseSummary(object $response)
-    {
-        return $this->summarizeResponse($response);
-    }
-
-    public function exceptionSummary(\Throwable $exception)
-    {
-        return $this->summarizeException($exception);
-    }
-
-    public function payload($value, $option)
-    {
-        return $this->safePayload($value, $option);
-    }
-}
-
-class AiWatcherPromptFake
-{
-    public $agent;
-
-    public $provider;
-
-    public function __construct(
-        public $prompt,
-        public $attachments = [],
-        public $model = 'gpt-test',
-        public $timeout = 30,
-        public $invocationId = 'invocation-id',
-        public $parentInvocationId = null,
-        public $parentToolInvocationId = null,
-    ) {
-        $this->agent = new AiWatcherAgentFake;
-        $this->provider = new AiWatcherProviderFake;
-    }
-}
-
-class AiWatcherAgentFake
-{
-    //
-}
-
-class AiWatcherProviderFake
-{
-    public function name()
-    {
-        return 'openai';
-    }
-}
-
-class AiWatcherConversationUserFake
-{
-    public $id = 123;
-}
-
-class AiWatcherToolResultFake
-{
-    public $id = 'tool-result-id';
-
-    public $name = 'lookup';
-
-    public $arguments = ['api_key' => 'secret'];
-
-    public $result = ['status' => 'ok'];
-
-    public $resultId = 'result-id';
-
-    public $denied = false;
-}
-
-class AiWatcherStepResponseFake
-{
-    public $text = 'step text';
-
-    public $toolCalls = ['tool'];
-
-    public $finishReason;
-
-    public $usage;
-
-    public $meta;
-
-    public $structured = ['answer' => true];
-
-    public $providerContentBlocks = [['text' => 'hidden']];
-
-    public $pendingApprovals = ['approval'];
-
-    public function __construct()
-    {
-        $this->finishReason = new AiWatcherEnumFake('stop');
-        $this->usage = new AiWatcherArrayableFake(['prompt_tokens' => 10]);
-        $this->meta = new AiWatcherArrayableFake(['provider' => 'openai', 'model' => 'gpt-test']);
-    }
-}
-
-class AiWatcherEnumFake
-{
-    public function __construct(public $value)
-    {
-        //
-    }
-}
-
-class AiWatcherArrayableFake
-{
-    public function __construct(public $payload)
-    {
-        //
-    }
-
-    public function toArray()
-    {
-        return $this->payload;
-    }
-}
-
-class AiWatcherRawResponseFake
-{
-    public function __construct(public $payload)
-    {
-        //
-    }
-
-    public function json()
-    {
-        return $this->payload;
-    }
-}
-
-class AiWatcherResponseFake
-{
-    public $usage;
-
-    public $meta;
-
-    public $raw = null;
-
-    public function __construct(
-        public $invocationId,
-        public $steps = null,
-        public $toolCalls = ['tool'],
-        public $toolResults = [],
-        public $messages = [],
-        public $pendingApprovals = [],
-        public $text = 'hidden text',
-        public $events = [],
-    ) {
-        $this->usage = new AiWatcherArrayableFake(['prompt_tokens' => 10]);
-        $this->meta = new AiWatcherArrayableFake(['provider' => 'openai', 'model' => 'gpt-test']);
-        $this->steps ??= [
-            new AiWatcherResponseStepFake('tool_calls'),
-            new AiWatcherResponseStepFake('stop'),
-        ];
-    }
-}
-
-class AiWatcherStreamEndEventFake
-{
-    public function __construct(public $reason)
-    {
-        //
-    }
-}
-
-class AiWatcherResponseStepFake
-{
-    public $finishReason;
-
-    public function __construct($finishReason)
-    {
-        $this->finishReason = new AiWatcherEnumFake($finishReason);
+        $this->assertEmpty($this->loadTelescopeEntries());
     }
 }
