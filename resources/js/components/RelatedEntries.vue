@@ -52,6 +52,8 @@ export default {
                 this.currentTab = 'models'
             } else if (this.jobs.length) {
                 this.currentTab = 'jobs'
+            } else if (this.ai.length) {
+                this.currentTab = 'ai'
             } else if (this.mails.length) {
                 this.currentTab = 'mails'
             } else if (this.notifications.length) {
@@ -113,6 +115,10 @@ export default {
             return _.filter(this.batch, {type: 'job'});
         },
 
+        ai() {
+            return _.filter(this.batch, {type: 'ai'});
+        },
+
         events() {
             return _.filter(this.batch, {type: 'event'});
         },
@@ -157,6 +163,7 @@ export default {
                 {title: "Models", type: "models", count: this.models.length},
                 {title: "Gates", type: "gates", count: this.gates.length},
                 {title: "Jobs", type: "jobs", count: this.jobs.length},
+                {title: "AI", type: "ai", count: this.ai.length},
                 {title: "Mail", type: "mails", count: this.mails.length},
                 {title: "Notifications", type: "notifications", count: this.notifications.length},
                 {title: "Events", type: "events", count: this.events.length},
@@ -171,7 +178,7 @@ export default {
         },
 
         dropdownTabs(){
-            return _.slice(this.tabs, 7, 10);
+            return _.slice(this.tabs, 7);
         },
 
         dropdownTabSelected(){
@@ -465,6 +472,64 @@ export default {
                             <router-link
                                 :to="{
                                     name: 'job-preview',
+                                    params: { id: entry.id },
+                                }"
+                                class="control-action"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM6.75 9.25a.75.75 0 000 1.5h4.59l-2.1 1.95a.75.75 0 001.02 1.1l3.5-3.25a.75.75 0 000-1.1l-3.5-3.25a.75.75 0 10-1.02 1.1l2.1 1.95H6.75z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                            </router-link>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Related AI Runs -->
+            <table class="table table-hover mb-0" v-show="currentTab == 'ai' && ai.length">
+                <thead>
+                    <tr>
+                        <th>Agent</th>
+                        <th scope="col">Status</th>
+                        <th class="text-right">Steps</th>
+                        <th class="text-right">Tools</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr v-for="entry in ai">
+                        <td>
+                            <span :title="entry.content.agent">{{ truncate(entry.content.agent || '-', 68) }}</span
+                            ><br />
+                            <small class="text-muted">
+                                Provider: {{ entry.content.provider || '-' }} | Model:
+                                {{ truncate(entry.content.model || '-', 40) }}
+                            </small>
+                        </td>
+
+                        <td class="table-fit">
+                            <span class="badge" :class="'badge-' + aiStatusClass(entry.content.status)">
+                                {{ aiStatusLabel(entry.content.status) }}
+                            </span>
+                        </td>
+
+                        <td class="table-fit text-right text-muted">
+                            {{ (entry.content.steps || []).length }}
+                        </td>
+
+                        <td class="table-fit text-right text-muted">
+                            {{ (entry.content.tools || []).length }}
+                        </td>
+
+                        <td class="table-fit">
+                            <router-link
+                                :to="{
+                                    name: 'ai-preview',
                                     params: { id: entry.id },
                                 }"
                                 class="control-action"

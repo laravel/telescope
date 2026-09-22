@@ -4,6 +4,7 @@ namespace Laravel\Telescope;
 
 class EntryType
 {
+    public const AI = 'ai';
     public const BATCH = 'batch';
     public const CACHE = 'cache';
     public const COMMAND = 'command';
@@ -31,6 +32,7 @@ class EntryType
     public static function all()
     {
         return [
+            self::AI,
             self::BATCH,
             self::CACHE,
             self::CLIENT_REQUEST,

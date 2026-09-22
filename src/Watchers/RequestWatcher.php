@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as IlluminateResponse;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Laravel\Telescope\FormatModel;
@@ -126,24 +125,6 @@ class RequestWatcher extends Watcher
     }
 
     /**
-     * Hide the given parameters.
-     *
-     * @param  array  $data
-     * @param  array  $hidden
-     * @return mixed
-     */
-    protected function hideParameters($data, $hidden)
-    {
-        foreach ($hidden as $parameter) {
-            if (Arr::get($data, $parameter)) {
-                Arr::set($data, $parameter, '********');
-            }
-        }
-
-        return $data;
-    }
-
-    /**
      * Extract the session variables from the given request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -217,19 +198,6 @@ class RequestWatcher extends Watcher
         }
 
         return 'HTML Response';
-    }
-
-    /**
-     * Determine if the content is within the set limits.
-     *
-     * @param  string  $content
-     * @return bool
-     */
-    public function contentWithinLimits($content)
-    {
-        $limit = $this->options['size_limit'] ?? 64;
-
-        return intdiv(mb_strlen($content), 1000) <= $limit;
     }
 
     /**

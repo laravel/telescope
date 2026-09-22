@@ -136,6 +136,12 @@ return [
     */
 
     'watchers' => [
+        Watchers\AiWatcher::class => [
+            'enabled' => env('TELESCOPE_AI_WATCHER', true),
+            'content' => env('TELESCOPE_AI_WATCHER_CONTENT', false),
+            'size_limit' => env('TELESCOPE_RESPONSE_SIZE_LIMIT', 64),
+        ],
+
         Watchers\BatchWatcher::class => env('TELESCOPE_BATCH_WATCHER', true),
 
         Watchers\CacheWatcher::class => [

@@ -5,6 +5,7 @@ namespace Laravel\Telescope\Tests\Telescope;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Laravel\Telescope\Contracts\EntriesRepository;
+use Laravel\Telescope\EntryType;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
@@ -28,6 +29,16 @@ class TelescopeTest extends FeatureTestCase
         Telescope::$afterRecordingHook = null;
 
         parent::tearDown();
+    }
+
+    public function test_ai_entries_can_be_recorded()
+    {
+        Telescope::startRecording(false);
+
+        Telescope::recordAi($entry = IncomingEntry::make(['status' => 'running']));
+
+        $this->assertSame($entry, Telescope::$entriesQueue[0]);
+        $this->assertSame(EntryType::AI, Telescope::$entriesQueue[0]->type);
     }
 
     public function test_run_after_recording_callback()

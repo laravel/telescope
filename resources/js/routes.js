@@ -34,6 +34,8 @@ import views from './screens/views/index.vue';
 import viewsPreview from './screens/views/preview.vue';
 import clientRequests from './screens/client-requests/index.vue';
 import clientRequestsPreview from './screens/client-requests/preview.vue';
+import ai from './screens/ai/index.vue';
+import aiPreview from './screens/ai/preview.vue';
 
 export default [
     { path: '/', redirect: '/requests' },
@@ -252,5 +254,17 @@ export default [
         path: '/client-requests',
         name: 'client-requests',
         component: clientRequests,
+    },
+
+    {
+        path: '/ai/:id',
+        name: 'ai-preview',
+        component: aiPreview,
+    },
+
+    {
+        path: '/ai',
+        name: 'ai',
+        component: ai,
     },
 ];
