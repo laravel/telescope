@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.25.0...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.26.0...5.x)
+
+## [v5.26.0](https://github.com/laravel/telescope/compare/v5.25.0...v5.26.0) - 2026-09-22
+
+* Add 'set-cookie' to hidden request headers by [@samuelwei](https://github.com/samuelwei) in https://github.com/laravel/telescope/pull/1769
 
 ## [v5.25.0](https://github.com/laravel/telescope/compare/v5.24.0...v5.25.0) - 2026-09-09
 
