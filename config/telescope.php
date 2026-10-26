@@ -46,6 +46,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Telescope Path
+    |--------------------------------------------------------------------------
+    |
+    | This is the subdirectory where Telescope will be accessible from. This is
+    | useful if you want to serve Telescope from a nested path within your
+    | application. Note that the behavior of this setting is different from the
+    | 'path' setting in that the paths of Telescope's internal API are affected.
+    |
+    */
+
+    'subdirectory' => env('TELESCOPE_SUBDIRECTORY'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Telescope Storage Driver
     |--------------------------------------------------------------------------
     |
