@@ -50,7 +50,7 @@ class TelescopeServiceProvider extends ServiceProvider
         Route::group([
             'domain' => config('telescope.domain', null),
             'namespace' => 'Laravel\Telescope\Http\Controllers',
-            'prefix' => config('telescope.path'),
+            'prefix' => Telescope::path(),
             'middleware' => 'telescope',
         ], function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
