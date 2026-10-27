@@ -1,7 +1,10 @@
 <?php
 
 namespace Laravel\Telescope\Tests\Http;
+use Illuminate\Http\Request;
+use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 class SubdirectoryTest extends FeatureTestCase
 {
     protected $subdirectory = 'app';
@@ -42,5 +45,45 @@ class SubdirectoryTest extends FeatureTestCase
             'slash root' => ['/', '/', ''],
             'null path' => [null, null, ''],
         ];
+    }
+
+    /**
+     * @dataProvider pathsProvider
+     */
+    #[DataProvider('pathsProvider')]
+    public function test_route_prefixes($subdirectory, $path, $expected)
+    {
+        $this->subdirectory = $subdirectory;
+        $this->path = $path;
+        $this->refreshApplication();
+
+        $this->assertSame($expected, Telescope::path());
+        $this->assertSame(url($expected), route('telescope'));
+        $this->assertSame($path, Telescope::scriptVariables()['path']);
+        $this->assertSame($subdirectory, Telescope::scriptVariables()['subdirectory']);
+        $this->assertSame(trim($expected.'/{view?}', '/'), $this->app['router']->getRoutes()->getByName('telescope')->uri());
+
+        foreach ($this->app['router']->getRoutes() as $route) {
+            if (str_starts_with($route->getActionName(), 'Laravel\\Telescope\\Http\\Controllers\\')) {
+                $this->assertContains('telescope', $route->middleware());
+                $this->assertSame(config('telescope.domain'), $route->getDomain());
+
+                if ($expected !== '') {
+                    $this->assertStringStartsWith($expected.'/', $route->uri());
+                }
+            }
+        }
+
+        foreach ([
+            ['POST', 'telescope-api/requests', 'RequestsController@index'],
+            ['GET', 'telescope-api/requests/entry-id', 'RequestsController@show'],
+            ['GET', 'telescope-api/mail/entry-id/preview', 'MailHtmlController@show'],
+            ['GET', 'telescope-api/mail/entry-id/download', 'MailEmlController@show'],
+            ['GET', 'requests/entry-id', 'HomeController@index'],
+        ] as [$method, $uri, $action]) {
+            $route = $this->app['router']->getRoutes()->match(Request::create('/'.trim($expected.'/'.$uri, '/'), $method));
+
+            $this->assertSame('Laravel\\Telescope\\Http\\Controllers\\'.$action, $route->getActionName());
+        }
     }
 }
