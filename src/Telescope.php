@@ -241,9 +241,17 @@ class Telescope
                 (config('horizon.path') ?? 'horizon').'*',
                 'vendor/horizon*',
             ])
+            ->when(trim(config('telescope.subdirectory') ?? '', '/') !== '', function ($paths) {
+                $subdirectory = trim(config('telescope.subdirectory'), '/');
+
+                return $paths->merge([
+                    $subdirectory.'/telescope-api*',
+                    $subdirectory.'/vendor/telescope*',
+                ]);
+            })
             ->merge(config('telescope.ignore_paths', []))
-            ->unless(is_null(config('telescope.path')), function ($paths) {
-                return $paths->prepend(config('telescope.path').'*');
+            ->when(static::path() !== '', function ($paths) {
+                return $paths->prepend(static::path().'*');
             })
             ->all()
         );
