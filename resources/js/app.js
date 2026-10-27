@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Base from './base';
+import Base, { resolveBasePath } from './base';
 import axios from 'axios';
 import Routes from './routes';
 import VueRouter from 'vue-router';
