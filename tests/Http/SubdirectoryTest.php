@@ -1,6 +1,7 @@
 <?php
 
 namespace Laravel\Telescope\Tests\Http;
+use Laravel\Telescope\Tests\FeatureTestCase;
 class SubdirectoryTest extends FeatureTestCase
 {
     protected $subdirectory = 'app';
