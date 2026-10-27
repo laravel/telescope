@@ -1,10 +1,12 @@
 <?php
 
 namespace Laravel\Telescope\Tests\Http;
+
 use Illuminate\Http\Request;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+
 class SubdirectoryTest extends FeatureTestCase
 {
     protected $subdirectory = 'app';
