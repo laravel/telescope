@@ -46,7 +46,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Telescope Path
+    | Telescope Subdirectory
     |--------------------------------------------------------------------------
     |
     | This is the subdirectory where Telescope will be accessible from. This is
