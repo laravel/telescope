@@ -143,6 +143,16 @@ class TelescopeTest extends FeatureTestCase
         $this->assertTrue($approved('/apps/admin/debug'));
         $this->assertFalse($approved('/orders'));
     }
+
+    public function test_root_dashboard_path_does_not_exclude_all_application_requests()
+    {
+        config(['telescope.subdirectory' => '/', 'telescope.path' => '/']);
+
+        $approved = (fn () => static::requestIsToApprovedUri(Request::create('/orders')))
+            ->bindTo(null, Telescope::class)();
+
+        $this->assertTrue($approved);
+    }
 }
 
 class MySyncJob implements ShouldQueue
