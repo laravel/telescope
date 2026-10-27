@@ -29,19 +29,12 @@ window.Popper = popper;
 
 moment.tz.setDefault(Telescope.timezone);
 
-window.Telescope.basePath = '/' + window.Telescope.path;
-
-let routerBasePath = window.Telescope.basePath + '/';
-
-if (window.Telescope.path === '' || window.Telescope.path === '/') {
-    routerBasePath = '/';
-    window.Telescope.basePath = '';
-}
+window.Telescope.basePath = resolveBasePath(window.Telescope.path, window.Telescope.subdirectory);
 
 const router = new VueRouter({
     routes: Routes,
     mode: 'history',
-    base: routerBasePath,
+    base: window.Telescope.basePath + '/',
 });
 
 Vue.component('vue-json-pretty', VueJsonPretty);
