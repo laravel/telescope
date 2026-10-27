@@ -4,6 +4,7 @@ namespace Laravel\Telescope\Tests\Telescope;
 
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
 use Laravel\Telescope\Contracts\EntriesRepository;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
@@ -114,6 +115,33 @@ class TelescopeTest extends FeatureTestCase
         $this->assertStringContainsString('<script type="module">', $javascript);
         $this->assertStringContainsString('window.Telescope =', $javascript);
         $this->assertStringNotContainsString("\r", $javascript);
+    }
+
+    public function test_prefixed_telescope_requests_are_not_recorded()
+    {
+        config(['telescope.subdirectory' => '/apps/admin/', 'telescope.path' => '/debug/']);
+
+        $approved = fn ($path) => (fn () => static::requestIsToApprovedUri(Request::create($path)))
+            ->bindTo(null, Telescope::class)();
+
+        foreach ([
+            '/apps/admin/debug',
+            '/apps/admin/debug/telescope-api/requests',
+            '/apps/admin/telescope-api/requests',
+            '/apps/admin/vendor/telescope/app.js',
+            '/telescope-api/requests',
+            '/vendor/telescope/app.js',
+        ] as $path) {
+            $this->assertFalse($approved($path), $path);
+        }
+
+        $this->assertTrue($approved('/apps/admin/orders'));
+        $this->assertTrue($approved('/orders'));
+
+        config(['telescope.only_paths' => ['apps/admin/debug*']]);
+
+        $this->assertTrue($approved('/apps/admin/debug'));
+        $this->assertFalse($approved('/orders'));
     }
 }
 
