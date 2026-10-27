@@ -5,6 +5,7 @@ namespace Laravel\Telescope\Tests\Http;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Http\Request;
+use Illuminate\Support\Js;
 use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
@@ -93,6 +94,23 @@ class SubdirectoryTest extends FeatureTestCase
         }
     }
 
+    public function test_prefixed_dashboard_and_api()
+    {
+        $this->withoutMiddleware([Authorize::class, VerifyCsrfToken::class, ValidateCsrfToken::class, PreventRequestForgery::class]);
+
+        $this->get('/app/telescope/requests')
+            ->assertOk()
+            ->assertSeeHtml('<style>')
+            ->assertSeeHtml('<script type="module">')
+            ->assertSeeHtml('window.Telescope = '.Js::from(Telescope::scriptVariables()).';');
+
+        $this->post('/app/telescope/telescope-api/requests')
+            ->assertSuccessful()
+            ->assertJsonStructure(['entries' => []]);
+
+        $this->get('/app/telescope/telescope-api/monitored-tags')->assertSuccessful();
+        $this->get('/telescope')->assertNotFound();
+    }
 
     public function test_prefixed_routes_still_require_authorization()
     {
