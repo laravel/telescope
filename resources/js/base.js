@@ -116,3 +116,18 @@ export default {
         },
     },
 };
+
+/**
+ * Resolve the base path of the Telescope dashboard.
+ *
+ * The subdirectory and path are joined with empty segments removed so that the
+ * base path is clean when either the subdirectory or path is empty. An empty
+ * result resolves to "" so URLs may be built from the domain root.
+ */
+export function resolveBasePath(path, subdirectory) {
+    const segments = [subdirectory, path]
+        .map((segment) => String(segment ?? '').replace(/^\/+|\/+$/g, ''))
+        .filter((segment) => segment !== '');
+
+    return segments.length ? '/' + segments.join('/') : '';
+}
