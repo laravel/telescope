@@ -2,9 +2,13 @@
 
 namespace Laravel\Telescope\Tests\Http;
 
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Http\Request;
+use Laravel\Telescope\Http\Middleware\Authorize;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\Tests\FeatureTestCase;
+use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 class SubdirectoryTest extends FeatureTestCase
@@ -86,6 +90,21 @@ class SubdirectoryTest extends FeatureTestCase
             $route = $this->app['router']->getRoutes()->match(Request::create('/'.trim($expected.'/'.$uri, '/'), $method));
 
             $this->assertSame('Laravel\\Telescope\\Http\\Controllers\\'.$action, $route->getActionName());
+        }
+    }
+
+
+    public function test_prefixed_routes_still_require_authorization()
+    {
+        $this->withoutMiddleware([VerifyCsrfToken::class, ValidateCsrfToken::class, PreventRequestForgery::class]);
+
+        Telescope::auth(fn () => false);
+
+        try {
+            $this->get('/app/telescope')->assertForbidden();
+            $this->post('/app/telescope/telescope-api/requests')->assertForbidden();
+        } finally {
+            Telescope::auth(null);
         }
     }
 
