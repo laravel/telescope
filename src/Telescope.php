@@ -892,6 +892,7 @@ class Telescope
     {
         return [
             'path' => config('telescope.path'),
+            'subdirectory' => config('telescope.subdirectory'),
             'timezone' => config('app.timezone'),
             'recording' => ! cache('telescope:pause-recording'),
         ];
