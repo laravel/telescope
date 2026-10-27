@@ -56,7 +56,7 @@ return [
     |
     */
 
-    'subdirectory' => env('TELESCOPE_SUBDIRECTORY'),
+    'subdirectory' => env('TELESCOPE_SUBDIRECTORY', ''),
 
     /*
     |--------------------------------------------------------------------------
