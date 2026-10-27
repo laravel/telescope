@@ -871,6 +871,19 @@ class Telescope
     }
 
     /**
+     * Get the URI path for the Telescope dashboard and API.
+     *
+     * @return string
+     */
+    public static function path()
+    {
+        return collect([config('telescope.subdirectory'), config('telescope.path')])
+            ->map(fn ($segment) => trim($segment ?? '', '/'))
+            ->reject(fn ($segment) => $segment === '')
+            ->implode('/');
+    }
+
+    /**
      * Get the default JavaScript variables for Telescope.
      *
      * @return array
