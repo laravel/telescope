@@ -86,4 +86,17 @@ class SubdirectoryTest extends FeatureTestCase
             $this->assertSame('Laravel\\Telescope\\Http\\Controllers\\'.$action, $route->getActionName());
         }
     }
+
+    public function test_prefixed_routes_preserve_the_configured_domain()
+    {
+        $this->domain = 'telescope.example.com';
+        $this->refreshApplication();
+
+        $this->assertSame('http://telescope.example.com/app/telescope', route('telescope'));
+
+        $route = $this->app['router']->getRoutes()->match(Request::create('http://telescope.example.com/app/telescope'));
+
+        $this->assertSame($this->domain, $route->getDomain());
+        $this->assertContains('telescope', $route->middleware());
+    }
 }
