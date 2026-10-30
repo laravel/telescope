@@ -90,6 +90,7 @@ export default {
             <div class="card">
                 <iframe
                     :src="Telescope.basePath + '/telescope-api/mail/' + $route.params.id + '/preview'"
+                    sandbox="allow-popups allow-popups-to-escape-sandbox"
                     width="100%"
                     height="400"
                 ></iframe>

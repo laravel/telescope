@@ -11,11 +11,15 @@ class MailHtmlController extends Controller
      * Get the HTML content of the given email.
      *
      * @param  \Laravel\Telescope\Contracts\EntriesRepository  $storage
-     * @param  int  $id
-     * @return mixed
+     * @param  string  $id
+     * @return \Illuminate\Http\Response
      */
     public function show(EntriesRepository $storage, $id)
     {
-        return $storage->find($id)->content['html'];
+        return response($storage->find($id)->content['html'], 200, [
+            'Content-Type' => 'text/html; charset=UTF-8',
+            'Content-Security-Policy' => 'sandbox allow-popups allow-popups-to-escape-sandbox',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
     }
 }
