@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
+use Psr\Http\Message\StreamInterface;
 use Symfony\Component\HttpFoundation\File\File;
 
 class ClientRequestWatcher extends Watcher
@@ -216,6 +217,14 @@ class ClientRequestWatcher extends Watcher
                 $value = [
                     'name' => $data['filename'] ?? $data['contents']->getClientOriginalName(),
                     'size' => ($data['contents']->getSize() / 1000).'KB',
+                    'headers' => $data['headers'] ?? [],
+                ];
+            } elseif ($data['contents'] instanceof StreamInterface) {
+                $filesize = $data['contents']->getSize();
+
+                $value = [
+                    'name' => $data['filename'] ?? null,
+                    'size' => $filesize !== null ? ($filesize / 1000).'KB' : null,
                     'headers' => $data['headers'] ?? [],
                 ];
             } elseif (is_resource($data['contents'])) {

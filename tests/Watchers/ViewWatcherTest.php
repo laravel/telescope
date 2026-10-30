@@ -17,6 +17,8 @@ class ViewWatcherTest extends FeatureTestCase
     {
         parent::defineEnvironment($app);
 
+        $this->viewsDirectory = realpath($this->viewsDirectory);
+
         Event::subscribe(GenericListener::class);
 
         View::addNamespace('tests', $this->viewsDirectory);
