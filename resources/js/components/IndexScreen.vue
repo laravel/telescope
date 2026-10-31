@@ -205,7 +205,7 @@ export default {
                 this.hasNewEntries = false;
                 this.lastEntryIndex = '';
 
-                this.$router.push({query: _.assign({}, this.$route.query, {tag: this.tag})}).catch(() => {});
+                this.$router.push({query: _.assign({}, this.$route.query, {tag: this.tag})});
             });
         },
 
