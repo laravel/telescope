@@ -1,6 +1,26 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.26.0...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.27.0...5.x)
+
+## [v5.27.0](https://github.com/laravel/telescope/compare/v5.26.0...v5.27.0) - 2026-10-31
+
+### What's Changed
+
+* Format non-SQL driver queries as JSON in the query preview by [@GromNaN](https://github.com/GromNaN) in https://github.com/laravel/telescope/pull/1770
+* Bump source-map-js from 1.2.1 to 1.2.2 by [@dependabot](https://github.com/dependabot)[bot] in https://github.com/laravel/telescope/pull/1772
+* Remove security policy in favor of the org-wide default by [@pushpak1300](https://github.com/pushpak1300) in https://github.com/laravel/telescope/pull/1774
+* Bump axios from 1.18.0 to 1.20.0 by [@dependabot](https://github.com/dependabot)[bot] in https://github.com/laravel/telescope/pull/1771
+* Bump moment from 2.30.1 to 2.31.0 by [@dependabot](https://github.com/dependabot)[bot] in https://github.com/laravel/telescope/pull/1775
+* Bump shivammathur/setup-php from 2.37.2 to 2.40.0 in the github-actions group by [@dependabot](https://github.com/dependabot)[bot] in https://github.com/laravel/telescope/pull/1777
+* Bump follow-redirects from 1.16.0 to 1.16.1 by [@dependabot](https://github.com/dependabot)[bot] in https://github.com/laravel/telescope/pull/1778
+* Fix failing CI tests by [@pushpak1300](https://github.com/pushpak1300) in https://github.com/laravel/telescope/pull/1782
+* Sandbox the mail preview by [@pushpak1300](https://github.com/pushpak1300) in https://github.com/laravel/telescope/pull/1781
+
+### New Contributors
+
+* [@GromNaN](https://github.com/GromNaN) made their first contribution in https://github.com/laravel/telescope/pull/1770
+
+**Full Changelog**: https://github.com/laravel/telescope/compare/v5.26.0...v5.27.0
 
 ## [v5.26.0](https://github.com/laravel/telescope/compare/v5.25.0...v5.26.0) - 2026-09-22
 
