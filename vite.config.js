@@ -1,8 +1,8 @@
-import vue2 from '@vitejs/plugin-vue2';
+import vue from '@vitejs/plugin-vue';
 
 /** @type {import('vite').UserConfig} */
 export default {
-    plugins: [vue2()],
+    plugins: [vue()],
     build: {
         assetsDir: '',
         rollupOptions: {
@@ -16,7 +16,7 @@ export default {
     },
     resolve: {
         alias: {
-            vue: 'vue/dist/vue.esm.js',
+            vue: 'vue/dist/vue.esm-bundler.js',
         },
     },
 };

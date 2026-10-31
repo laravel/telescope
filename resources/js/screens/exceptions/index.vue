@@ -4,16 +4,18 @@ export default {}
 
 <template>
     <index-screen title="Exceptions" resource="exceptions">
-        <tr slot="table-header">
-            <th scope="col" v-if="!$route.query.family_hash">Type</th>
-            <th scope="col" class="text-right" v-if="!$route.query.family_hash && !$route.query.tag">#</th>
-            <th scope="col" v-if="$route.query.family_hash">Message</th>
-            <th scope="col" class="text-right">Happened</th>
-            <th scope="col">Resolved</th>
-            <th scope="col"></th>
-        </tr>
+        <template #table-header>
+            <tr>
+                <th scope="col" v-if="!$route.query.family_hash">Type</th>
+                <th scope="col" class="text-right" v-if="!$route.query.family_hash && !$route.query.tag">#</th>
+                <th scope="col" v-if="$route.query.family_hash">Message</th>
+                <th scope="col" class="text-right">Happened</th>
+                <th scope="col">Resolved</th>
+                <th scope="col"></th>
+            </tr>
+        </template>
 
-        <template slot="row" slot-scope="slotProps">
+        <template #row="slotProps">
             <td :title="slotProps.entry.content.class" v-if="!$route.query.family_hash">
                 {{ truncate(slotProps.entry.content.class, 70) }}<br />
 

@@ -11,7 +11,7 @@ export default {
 
 <template>
     <preview-screen title="Notification Details" resource="notifications" :id="$route.params.id">
-        <template slot="table-parameters" slot-scope="slotProps">
+        <template #table-parameters="slotProps">
             <tr>
                 <td class="table-fit text-muted">Channel</td>
                 <td>

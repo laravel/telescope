@@ -39,27 +39,19 @@ export default [
     { path: '/', redirect: '/requests' },
 
     {
-        path: '/mail/:id',
-        name: 'mail-preview',
-        component: mailPreview,
-    },
-
-    {
         path: '/mail',
-        name: 'mail',
-        component: mail,
-    },
-
-    {
-        path: '/exceptions/:id',
-        name: 'exception-preview',
-        component: exceptionsPreview,
+        children: [
+            { path: '', name: 'mail', component: mail },
+            { path: ':id', name: 'mail-preview', component: mailPreview },
+        ],
     },
 
     {
         path: '/exceptions',
-        name: 'exceptions',
-        component: exceptions,
+        children: [
+            { path: '', name: 'exceptions', component: exceptions },
+            { path: ':id', name: 'exception-preview', component: exceptionsPreview },
+        ],
     },
 
     {
@@ -69,147 +61,99 @@ export default [
     },
 
     {
-        path: '/logs/:id',
-        name: 'log-preview',
-        component: logsPreview,
-    },
-
-    {
         path: '/logs',
-        name: 'logs',
-        component: logs,
-    },
-
-    {
-        path: '/notifications/:id',
-        name: 'notification-preview',
-        component: notificationsPreview,
+        children: [
+            { path: '', name: 'logs', component: logs },
+            { path: ':id', name: 'log-preview', component: logsPreview },
+        ],
     },
 
     {
         path: '/notifications',
-        name: 'notifications',
-        component: notifications,
-    },
-
-    {
-        path: '/jobs/:id',
-        name: 'job-preview',
-        component: jobsPreview,
+        children: [
+            { path: '', name: 'notifications', component: notifications },
+            { path: ':id', name: 'notification-preview', component: notificationsPreview },
+        ],
     },
 
     {
         path: '/jobs',
-        name: 'jobs',
-        component: jobs,
-    },
-
-    {
-        path: '/batches/:id',
-        name: 'batch-preview',
-        component: batchesPreview,
+        children: [
+            { path: '', name: 'jobs', component: jobs },
+            { path: ':id', name: 'job-preview', component: jobsPreview },
+        ],
     },
 
     {
         path: '/batches',
-        name: 'batches',
-        component: batches,
-    },
-
-    {
-        path: '/events/:id',
-        name: 'event-preview',
-        component: eventsPreview,
+        children: [
+            { path: '', name: 'batches', component: batches },
+            { path: ':id', name: 'batch-preview', component: batchesPreview },
+        ],
     },
 
     {
         path: '/events',
-        name: 'events',
-        component: events,
-    },
-
-    {
-        path: '/cache/:id',
-        name: 'cache-preview',
-        component: cachePreview,
+        children: [
+            { path: '', name: 'events', component: events },
+            { path: ':id', name: 'event-preview', component: eventsPreview },
+        ],
     },
 
     {
         path: '/cache',
-        name: 'cache',
-        component: cache,
-    },
-
-    {
-        path: '/queries/:id',
-        name: 'query-preview',
-        component: queriesPreview,
+        children: [
+            { path: '', name: 'cache', component: cache },
+            { path: ':id', name: 'cache-preview', component: cachePreview },
+        ],
     },
 
     {
         path: '/queries',
-        name: 'queries',
-        component: queries,
-    },
-
-    {
-        path: '/models/:id',
-        name: 'model-preview',
-        component: modelsPreview,
+        children: [
+            { path: '', name: 'queries', component: queries },
+            { path: ':id', name: 'query-preview', component: queriesPreview },
+        ],
     },
 
     {
         path: '/models',
-        name: 'models',
-        component: models,
-    },
-
-    {
-        path: '/requests/:id',
-        name: 'request-preview',
-        component: requestsPreview,
+        children: [
+            { path: '', name: 'models', component: models },
+            { path: ':id', name: 'model-preview', component: modelsPreview },
+        ],
     },
 
     {
         path: '/requests',
-        name: 'requests',
-        component: requests,
-    },
-
-    {
-        path: '/commands/:id',
-        name: 'command-preview',
-        component: commandsPreview,
+        children: [
+            { path: '', name: 'requests', component: requests },
+            { path: ':id', name: 'request-preview', component: requestsPreview },
+        ],
     },
 
     {
         path: '/commands',
-        name: 'commands',
-        component: commands,
-    },
-
-    {
-        path: '/schedule/:id',
-        name: 'schedule-preview',
-        component: schedulePreview,
+        children: [
+            { path: '', name: 'commands', component: commands },
+            { path: ':id', name: 'command-preview', component: commandsPreview },
+        ],
     },
 
     {
         path: '/schedule',
-        name: 'schedule',
-        component: schedule,
-    },
-
-    {
-        path: '/redis/:id',
-        name: 'redis-preview',
-        component: redisPreview,
+        children: [
+            { path: '', name: 'schedule', component: schedule },
+            { path: ':id', name: 'schedule-preview', component: schedulePreview },
+        ],
     },
 
     {
         path: '/redis',
-        name: 'redis',
-        component: redis,
+        children: [
+            { path: '', name: 'redis', component: redis },
+            { path: ':id', name: 'redis-preview', component: redisPreview },
+        ],
     },
 
     {
@@ -219,38 +163,26 @@ export default [
     },
 
     {
-        path: '/gates/:id',
-        name: 'gate-preview',
-        component: gatesPreview,
-    },
-
-    {
         path: '/gates',
-        name: 'gates',
-        component: gates,
-    },
-
-    {
-        path: '/views/:id',
-        name: 'view-preview',
-        component: viewsPreview,
+        children: [
+            { path: '', name: 'gates', component: gates },
+            { path: ':id', name: 'gate-preview', component: gatesPreview },
+        ],
     },
 
     {
         path: '/views',
-        name: 'views',
-        component: views,
-    },
-
-    {
-        path: '/client-requests/:id',
-        name: 'client-request-preview',
-        component: clientRequestsPreview,
+        children: [
+            { path: '', name: 'views', component: views },
+            { path: ':id', name: 'view-preview', component: viewsPreview },
+        ],
     },
 
     {
         path: '/client-requests',
-        name: 'client-requests',
-        component: clientRequests,
+        children: [
+            { path: '', name: 'client-requests', component: clientRequests },
+            { path: ':id', name: 'client-request-preview', component: clientRequestsPreview },
+        ],
     },
 ];

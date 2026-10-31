@@ -10,16 +10,18 @@ export default {
 
 <template>
     <index-screen title="Requests" resource="requests">
-        <tr slot="table-header">
-            <th scope="col">Verb</th>
-            <th scope="col">Path</th>
-            <th scope="col" class="text-center">Status</th>
-            <th scope="col" class="text-right">Duration</th>
-            <th scope="col">Happened</th>
-            <th scope="col"></th>
-        </tr>
+        <template #table-header>
+            <tr>
+                <th scope="col">Verb</th>
+                <th scope="col">Path</th>
+                <th scope="col" class="text-center">Status</th>
+                <th scope="col" class="text-right">Duration</th>
+                <th scope="col">Happened</th>
+                <th scope="col"></th>
+            </tr>
+        </template>
 
-        <template slot="row" slot-scope="slotProps">
+        <template #row="slotProps">
             <td class="table-fit pr-0">
                 <span class="badge" :class="'badge-' + requestMethodClass(slotProps.entry.content.method)">
                     {{ slotProps.entry.content.method }}

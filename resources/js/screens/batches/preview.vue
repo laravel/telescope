@@ -23,7 +23,7 @@ export default {
 
 <template>
     <preview-screen title="Batch Details" resource="batches" :id="$route.params.id" entry-point="true">
-        <template slot="table-parameters" slot-scope="slotProps">
+        <template #table-parameters="slotProps">
             <tr>
                 <td class="table-fit text-muted">Status</td>
                 <td>
