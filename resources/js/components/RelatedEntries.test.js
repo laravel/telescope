@@ -7,7 +7,12 @@ import RelatedEntries from './RelatedEntries.vue';
 
 const batch = [
     { id: 'log-id', type: 'log', content: { level: 'info', message: 'Logged' }, tags: [] },
-    { id: 'query-id', type: 'query', content: { sql: 'select 1', time: '1.00', connection: 'sqlite', hash: 'a' }, tags: [] },
+    {
+        id: 'query-id',
+        type: 'query',
+        content: { sql: 'select 1', time: '1.00', connection: 'sqlite', hash: 'a' },
+        tags: [],
+    },
 ];
 
 function mountRelatedEntries(router) {
