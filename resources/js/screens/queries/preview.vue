@@ -66,7 +66,7 @@ export default {
 
 <template>
     <preview-screen title="Query Details" resource="queries" :id="$route.params.id" v-on:ready="highlightQuery()">
-        <template slot="table-parameters" slot-scope="slotProps">
+        <template #table-parameters="slotProps">
             <tr>
                 <td class="table-fit text-muted">Connection</td>
                 <td>
@@ -91,22 +91,24 @@ export default {
             </tr>
         </template>
 
-        <div slot="after-attributes-card" slot-scope="slotProps">
-            <div class="card mt-5 overflow-hidden">
-                <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <a class="nav-link active">Query</a>
-                    </li>
-                </ul>
-                <div class="code-bg p-4 mb-0 text-white">
-                    <copy-clipboard :data="formatQuery(slotProps.entry.content.sql, slotProps.entry.content.driver)">
-                        <pre class="code-bg text-white"
-                            ref="querycode"
-                            :class="'language-' + queryLanguage(slotProps.entry.content.driver)"
-                        >{{ formatQuery(slotProps.entry.content.sql, slotProps.entry.content.driver) }}</pre>
-                    </copy-clipboard>
+        <template #after-attributes-card="slotProps">
+            <div>
+                <div class="card mt-5 overflow-hidden">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link active">Query</a>
+                        </li>
+                    </ul>
+                    <div class="code-bg p-4 mb-0 text-white">
+                        <copy-clipboard :data="formatQuery(slotProps.entry.content.sql, slotProps.entry.content.driver)">
+                            <pre class="code-bg text-white"
+                                ref="querycode"
+                                :class="'language-' + queryLanguage(slotProps.entry.content.driver)"
+                            >{{ formatQuery(slotProps.entry.content.sql, slotProps.entry.content.driver) }}</pre>
+                        </copy-clipboard>
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
     </preview-screen>
 </template>

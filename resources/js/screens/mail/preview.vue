@@ -24,7 +24,7 @@ export default {
 
 <template>
     <preview-screen title="Mail Details" resource="mail" :id="$route.params.id">
-        <template slot="table-parameters" slot-scope="slotProps">
+        <template #table-parameters="slotProps">
             <tr>
                 <td class="table-fit text-muted">Mailable</td>
                 <td>
@@ -86,16 +86,18 @@ export default {
             </tr>
         </template>
 
-        <div slot="after-attributes-card" slot-scope="slotProps" class="mt-5">
-            <div class="card">
-                <iframe
-                    :src="Telescope.basePath + '/telescope-api/mail/' + $route.params.id + '/preview'"
-                    sandbox="allow-popups allow-popups-to-escape-sandbox"
-                    width="100%"
-                    height="400"
-                ></iframe>
+        <template #after-attributes-card="slotProps">
+            <div class="mt-5">
+                <div class="card">
+                    <iframe
+                        :src="Telescope.basePath + '/telescope-api/mail/' + $route.params.id + '/preview'"
+                        sandbox="allow-popups allow-popups-to-escape-sandbox"
+                        width="100%"
+                        height="400"
+                    ></iframe>
+                </div>
             </div>
-        </div>
+        </template>
     </preview-screen>
 </template>
 

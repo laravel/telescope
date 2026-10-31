@@ -38,7 +38,7 @@ export default {
     /**
      * Clean after the component is destroyed.
      */
-    destroyed() {
+    unmounted() {
         this.requestController.abort();
         clearTimeout(this.newEntriesTimeout);
     },

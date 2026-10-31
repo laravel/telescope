@@ -11,7 +11,7 @@ export default {
 
 <template>
     <preview-screen title="Redis Command Details" resource="redis" :id="$route.params.id">
-        <template slot="table-parameters" slot-scope="slotProps">
+        <template #table-parameters="slotProps">
             <tr>
                 <td class="table-fit text-muted">Connection</td>
                 <td>
@@ -25,16 +25,18 @@ export default {
             </tr>
         </template>
 
-        <div slot="after-attributes-card" slot-scope="slotProps">
-            <div class="card mt-5 overflow-hidden">
-                <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <a class="nav-link active">Command</a>
-                    </li>
-                </ul>
+        <template #after-attributes-card="slotProps">
+            <div>
+                <div class="card mt-5 overflow-hidden">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link active">Command</a>
+                        </li>
+                    </ul>
 
-                <pre class="code-bg p-4 mb-0 text-white">{{ slotProps.entry.content.command }}</pre>
+                    <pre class="code-bg p-4 mb-0 text-white">{{ slotProps.entry.content.command }}</pre>
+                </div>
             </div>
-        </div>
+        </template>
     </preview-screen>
 </template>

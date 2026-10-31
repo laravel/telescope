@@ -72,7 +72,7 @@ export default {
         activateTab(tab){
             this.currentTab = tab;
             if(window.history.replaceState) {
-                window.history.replaceState(null, null, '#' + this.currentTab);
+                window.history.replaceState(window.history.state, '', '#' + this.currentTab);
             }
         }
     },

@@ -1,8 +1,8 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
 import Base from './base';
 import axios from 'axios';
 import Routes from './routes';
-import VueRouter from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
 import moment from 'moment-timezone';
@@ -23,8 +23,6 @@ if (token) {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 }
 
-Vue.use(VueRouter);
-
 window.Popper = popper;
 
 moment.tz.setDefault(Telescope.timezone);
@@ -38,26 +36,12 @@ if (window.Telescope.path === '' || window.Telescope.path === '/') {
     window.Telescope.basePath = '';
 }
 
-const router = new VueRouter({
+const router = createRouter({
     routes: Routes,
-    mode: 'history',
-    base: routerBasePath,
+    history: createWebHistory(routerBasePath),
 });
 
-Vue.component('vue-json-pretty', VueJsonPretty);
-Vue.component('related-entries', relatedEntries);
-Vue.component('index-screen', indexScreen);
-Vue.component('preview-screen', previewScreen);
-Vue.component('alert', alert);
-Vue.component('copy-clipboard', copyClipboard);
-
-Vue.mixin(Base);
-
-new Vue({
-    el: '#telescope',
-
-    router,
-
+const app = createApp({
     data() {
         return {
             alert: {
@@ -78,7 +62,7 @@ new Vue({
         window.addEventListener('keydown', this.keydownListener);
     },
 
-    destroyed() {
+    unmounted() {
         window.removeEventListener('keydown', this.keydownListener);
     },
 
@@ -110,3 +94,16 @@ new Vue({
         },
     },
 });
+
+app.use(router);
+
+app.component('vue-json-pretty', VueJsonPretty);
+app.component('related-entries', relatedEntries);
+app.component('index-screen', indexScreen);
+app.component('preview-screen', previewScreen);
+app.component('alert', alert);
+app.component('copy-clipboard', copyClipboard);
+
+app.mixin(Base);
+
+app.mount('#telescope');

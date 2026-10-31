@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
+import { h } from 'vue';
 import Preview from './preview.vue';
 
 /**
@@ -20,9 +21,9 @@ function mountPreview(content) {
     const PreviewScreenStub = {
         name: 'preview-screen',
         props: ['resource', 'title', 'id'],
-        render(h) {
+        render() {
             const slot = (name) => {
-                const scoped = this.$scopedSlots[name];
+                const scoped = this.$slots[name];
 
                 return scoped ? scoped({ entry }) : [];
             };
@@ -34,16 +35,18 @@ function mountPreview(content) {
     const CopyClipboardStub = {
         name: 'copy-clipboard',
         props: ['data'],
-        render(h) {
-            return h('div', { class: 'copy-clipboard-stub' }, this.$slots.default);
+        render() {
+            return h('div', { class: 'copy-clipboard-stub' }, this.$slots.default?.());
         },
     };
 
     return shallowMount(Preview, {
-        mocks: { $route: { params: { id: 'entry-id' } } },
-        stubs: {
-            'preview-screen': PreviewScreenStub,
-            'copy-clipboard': CopyClipboardStub,
+        global: {
+            mocks: { $route: { params: { id: 'entry-id' } } },
+            stubs: {
+                'preview-screen': PreviewScreenStub,
+                'copy-clipboard': CopyClipboardStub,
+            },
         },
     });
 }
