@@ -10,14 +10,16 @@ export default {
 
 <template>
     <index-screen title="Logs" resource="logs">
-        <tr slot="table-header">
-            <th scope="col">Message</th>
-            <th scope="col">Level</th>
-            <th scope="col">Happened</th>
-            <th scope="col"></th>
-        </tr>
+        <template #table-header>
+            <tr>
+                <th scope="col">Message</th>
+                <th scope="col">Level</th>
+                <th scope="col">Happened</th>
+                <th scope="col"></th>
+            </tr>
+        </template>
 
-        <template slot="row" slot-scope="slotProps">
+        <template #row="slotProps">
             <td :title="slotProps.entry.content.message">
                 {{ truncate(slotProps.entry.content.message, 50) }}
             </td>

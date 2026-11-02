@@ -4,14 +4,16 @@ export default {}
 
 <template>
     <index-screen title="Notifications" resource="notifications">
-        <tr slot="table-header">
-            <th scope="col">Notification</th>
-            <th scope="col">Channel</th>
-            <th scope="col">Happened</th>
-            <th scope="col"></th>
-        </tr>
+        <template #table-header>
+            <tr>
+                <th scope="col">Notification</th>
+                <th scope="col">Channel</th>
+                <th scope="col">Happened</th>
+                <th scope="col"></th>
+            </tr>
+        </template>
 
-        <template slot="row" slot-scope="slotProps">
+        <template #row="slotProps">
             <td>
                 <span :title="slotProps.entry.content.notification">{{
                     truncate(slotProps.entry.content.notification || '-', 70)

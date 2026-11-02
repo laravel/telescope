@@ -10,14 +10,16 @@ export default {
 
 <template>
     <index-screen title="Views" resource="views">
-        <tr slot="table-header">
-            <th scope="col">Name</th>
-            <th scope="col" class="text-right">Composers</th>
-            <th scope="col">Happened</th>
-            <th scope="col"></th>
-        </tr>
+        <template #table-header>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col" class="text-right">Composers</th>
+                <th scope="col">Happened</th>
+                <th scope="col"></th>
+            </tr>
+        </template>
 
-        <template slot="row" slot-scope="slotProps">
+        <template #row="slotProps">
             <td>
                 {{ slotProps.entry.content.name }} <br />
                 <small class="text-muted">{{ truncate(slotProps.entry.content.path, 100) }}</small>

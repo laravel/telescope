@@ -15,14 +15,16 @@ export default {
 
 <template>
     <index-screen title="Mail" resource="mail">
-        <tr slot="table-header">
-            <th scope="col">Mailable</th>
-            <th scope="col" class="text-right">Recipients</th>
-            <th scope="col">Happened</th>
-            <th scope="col"></th>
-        </tr>
+        <template #table-header>
+            <tr>
+                <th scope="col">Mailable</th>
+                <th scope="col" class="text-right">Recipients</th>
+                <th scope="col">Happened</th>
+                <th scope="col"></th>
+            </tr>
+        </template>
 
-        <template slot="row" slot-scope="slotProps">
+        <template #row="slotProps">
             <td>
                 <span :title="slotProps.entry.content.mailable">{{
                     truncate(slotProps.entry.content.mailable || '-', 70)

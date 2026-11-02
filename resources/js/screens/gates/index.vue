@@ -10,15 +10,17 @@ export default {
 
 <template>
     <index-screen title="Gates" resource="gates">
-        <tr slot="table-header">
-            <th scope="col">Ability</th>
-            <th scope="col">Result</th>
-            <th scope="col">Message</th>
-            <th scope="col">Happened</th>
-            <th scope="col"></th>
-        </tr>
+        <template #table-header>
+            <tr>
+                <th scope="col">Ability</th>
+                <th scope="col">Result</th>
+                <th scope="col">Message</th>
+                <th scope="col">Happened</th>
+                <th scope="col"></th>
+            </tr>
+        </template>
 
-        <template slot="row" slot-scope="slotProps">
+        <template #row="slotProps">
             <td>{{ truncate(slotProps.entry.content.ability, 80) }}</td>
 
             <td class="table-fit">

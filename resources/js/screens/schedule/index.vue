@@ -4,14 +4,16 @@ export default {}
 
 <template>
     <index-screen title="Schedule" resource="schedule">
-        <tr slot="table-header">
-            <th scope="col">Command</th>
-            <th scope="col">Expression</th>
-            <th scope="col">Happened</th>
-            <th scope="col"></th>
-        </tr>
+        <template #table-header>
+            <tr>
+                <th scope="col">Command</th>
+                <th scope="col">Expression</th>
+                <th scope="col">Happened</th>
+                <th scope="col"></th>
+            </tr>
+        </template>
 
-        <template slot="row" slot-scope="slotProps">
+        <template #row="slotProps">
             <td>
                 <code>{{
                     truncate(slotProps.entry.content.description, 85) || truncate(slotProps.entry.content.command, 85)

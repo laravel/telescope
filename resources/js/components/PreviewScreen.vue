@@ -11,6 +11,8 @@ export default {
     },
 
 
+    emits: ['ready'],
+
     /**
      * The component's data.
      */
@@ -46,7 +48,7 @@ export default {
     /**
      * Clean after the component is destroyed.
      */
-    destroyed() {
+    unmounted() {
         this.requestController.abort();
         clearTimeout(this.updateEntryTimeout);
     },
@@ -148,7 +150,7 @@ export default {
     <div>
         <div class="card overflow-hidden">
             <div class="card-header d-flex align-items-center justify-content-between">
-                <h2 class="h6 m-0">{{ this.title }}</h2>
+                <h2 class="h6 m-0">{{ title }}</h2>
             </div>
 
             <div

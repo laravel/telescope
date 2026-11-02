@@ -1,12 +1,8 @@
 <script type="text/ecmascript-6">
-import CopyToClipboard from 'vue-copy-to-clipboard'
+import copy from 'copy-to-clipboard'
 
 export default {
     props: ['data'],
-
-    components: {
-        CopyToClipboard
-    },
 
     data() {
         return {
@@ -15,7 +11,9 @@ export default {
     },
 
     methods: {
-        async handleCopy() {
+        handleCopy() {
+            copy(this.copyText);
+
             this.copying = true;
 
             setTimeout(() => this.copying = false, 1000);
@@ -48,21 +46,19 @@ export default {
                 </svg>
             </span>
 
-            <copy-to-clipboard v-else :text="copyText" @copy="handleCopy">
-                <a href="#">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        style="width: 1.25rem; height: 1.25rem"
-                    >
-                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
-                        <path
-                            d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
-                        ></path>
-                    </svg>
-                </a>
-            </copy-to-clipboard>
+            <a v-else href="#" @click.prevent="handleCopy">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    style="width: 1.25rem; height: 1.25rem"
+                >
+                    <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
+                    <path
+                        d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"
+                    ></path>
+                </svg>
+            </a>
         </div>
         <slot></slot>
     </div>
