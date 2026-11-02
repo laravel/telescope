@@ -28,5 +28,9 @@
         "vue": "^3.5.44",
         "vue-json-pretty": "^2.6.0",
         "vue-router": "^4.6.4"
+    },
+    "overrides": {
+        "glob": "^14.0.2",
+        "minimatch": "^11.0.1"
     }
 }
