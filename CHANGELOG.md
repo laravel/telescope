@@ -1,6 +1,18 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.27.0...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.28.0...5.x)
+
+## [v5.28.0](https://github.com/laravel/telescope/compare/v5.27.0...v5.28.0) - 2026-11-02
+
+### What's Changed
+
+* Bump undici from 8.11.2 to 8.12.3 by [@dependabot](https://github.com/dependabot)[bot] in https://github.com/laravel/telescope/pull/1784
+* Bump vite from 5.4.21 to 8.3.5 by [@dependabot](https://github.com/dependabot)[bot] in https://github.com/laravel/telescope/pull/1787
+* Bump follow-redirects from 1.16.1 to 1.16.2 by [@dependabot](https://github.com/dependabot)[bot] in https://github.com/laravel/telescope/pull/1786
+* Upgrade the dashboard to Vue 3, Vue Router 4 and Vite 8 by [@pushpak1300](https://github.com/pushpak1300) in https://github.com/laravel/telescope/pull/1783
+* Fix Guzzle, minimatch and glob security advisories by [@pushpak1300](https://github.com/pushpak1300) in https://github.com/laravel/telescope/pull/1788
+
+**Full Changelog**: https://github.com/laravel/telescope/compare/v5.27.0...v5.28.0
 
 ## [v5.27.0](https://github.com/laravel/telescope/compare/v5.26.0...v5.27.0) - 2026-10-31
 
