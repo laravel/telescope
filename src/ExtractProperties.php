@@ -23,7 +23,7 @@ class ExtractProperties
                     $property->setAccessible(true);
                 }
 
-                if (PHP_VERSION_ID >= 70400 && ! $property->isInitialized($target)) {
+                if (! $property->isInitialized($target)) {
                     return [];
                 }
 
