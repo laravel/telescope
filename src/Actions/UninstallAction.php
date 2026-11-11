@@ -8,8 +8,6 @@ class UninstallAction
 {
     public function handle(): void
     {
-        if (method_exists(ServiceProvider::class, 'removeProviderFromBootstrapFile')) {
-            ServiceProvider::removeProviderFromBootstrapFile('TelescopeServiceProvider');
-        }
+        ServiceProvider::removeProviderFromBootstrapFile('TelescopeServiceProvider');
     }
 }

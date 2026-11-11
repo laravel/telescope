@@ -78,11 +78,7 @@ class ExceptionWatcherTest extends FeatureTestCase
         $this->assertStringContainsString("eval()'d code", $entry->content['file']);
         $this->assertSame(1, $entry->content['line']);
 
-        if (\PHP_VERSION_ID < 80000) {
-            $this->assertSame('syntax error, unexpected end of file', $entry->content['message']);
-        } else {
-            $this->assertSame("Unclosed '('", $entry->content['message']);
-        }
+        $this->assertSame("Unclosed '('", $entry->content['message']);
 
         $this->assertArrayHasKey('trace', $entry->content);
     }

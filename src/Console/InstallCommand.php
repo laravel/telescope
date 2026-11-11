@@ -52,8 +52,7 @@ class InstallCommand extends Command
      */
     protected function registerTelescopeServiceProvider()
     {
-        if (method_exists(ServiceProvider::class, 'addProviderToBootstrapFile') &&
-            ServiceProvider::addProviderToBootstrapFile(\App\Providers\TelescopeServiceProvider::class)) { // @phpstan-ignore-line
+        if (ServiceProvider::addProviderToBootstrapFile(\App\Providers\TelescopeServiceProvider::class)) { // @phpstan-ignore-line
             return;
         }
 
