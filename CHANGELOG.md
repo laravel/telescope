@@ -1,6 +1,14 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/telescope/compare/v5.28.0...5.x)
+## [Unreleased](https://github.com/laravel/telescope/compare/v5.29.0...5.x)
+
+## [v5.29.0](https://github.com/laravel/telescope/compare/v5.28.0...v5.29.0) - 2026-11-11
+
+### What's Changed
+
+* Dependency floor bump by [@pushpak1300](https://github.com/pushpak1300) in https://github.com/laravel/telescope/pull/1789
+
+**Full Changelog**: https://github.com/laravel/telescope/compare/v5.28.0...v5.29.0
 
 ## [v5.28.0](https://github.com/laravel/telescope/compare/v5.27.0...v5.28.0) - 2026-11-02
 
